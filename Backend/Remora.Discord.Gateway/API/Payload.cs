@@ -21,6 +21,7 @@
 //
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Remora.Discord.Gateway.API
@@ -40,7 +41,7 @@ namespace Remora.Discord.Gateway.API
         /// Gets the data structure for the event.
         /// </summary>
         [JsonProperty("d")]
-        public JsonProperty Data { get; }
+        public JObject Data { get; }
 
         /// <summary>
         /// Gets the sequence number of the event. This is always null when <see cref="Operation"/> is not
@@ -63,7 +64,7 @@ namespace Remora.Discord.Gateway.API
         /// <param name="data">The JSON data.</param>
         /// <param name="sequenceNumber">The sequence number, if the payload is an event.</param>
         /// <param name="eventName">The name of the event.</param>
-        public Payload(OperationCode operation, JsonProperty data, int? sequenceNumber = null, string? eventName = null)
+        public Payload(OperationCode operation, JObject data, int? sequenceNumber = null, string? eventName = null)
         {
             this.Operation = operation;
             this.Data = data;
