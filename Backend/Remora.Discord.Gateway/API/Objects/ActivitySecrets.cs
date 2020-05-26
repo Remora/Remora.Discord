@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of secrets used for interacting with the activity.
     /// </summary>
-    public class ActivitySecrets
+    internal sealed class ActivitySecrets
     {
         /// <summary>
         /// Gets the secret used for joining the party.

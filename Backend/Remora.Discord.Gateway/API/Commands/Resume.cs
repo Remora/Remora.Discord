@@ -25,7 +25,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a resume command.
     /// </summary>
-    public class Resume
+    internal sealed class Resume
     {
         /// <summary>
         /// Gets the session token.

@@ -30,7 +30,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
     /// </summary>
-    public class ActivityTimestamps
+    internal sealed class ActivityTimestamps
     {
         /// <summary>
         /// Gets the start timestamp.

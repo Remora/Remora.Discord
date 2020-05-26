@@ -25,7 +25,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Enumerates the various statuses a user can have.
     /// </summary>
-    public enum UserStatus
+    internal enum UserStatus
     {
         /// <summary>
         /// The user is online and active.

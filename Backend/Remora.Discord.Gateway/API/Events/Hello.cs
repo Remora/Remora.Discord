@@ -1,5 +1,5 @@
 //
-//  ActivityFlags.cs
+//  Hello.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,44 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Remora.Discord.Gateway.API.Objects
+namespace Remora.Discord.Gateway.API.Events
 {
     /// <summary>
-    /// Enumerates the flags an activity can have.
+    /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
-    [Flags]
-    internal enum ActivityFlags
+    internal sealed class Hello
     {
         /// <summary>
-        /// The activity has a specific instance.
+        /// Gets the heartbeat interval in milliseconds.
         /// </summary>
-        Instance = 1 << 0,
+        public ulong HeartbeatInterval { get; }
 
         /// <summary>
-        /// The activity can be joined.
+        /// Initializes a new instance of the <see cref="Hello"/> class.
         /// </summary>
-        Join = 1 << 1,
-
-        /// <summary>
-        /// The activity can be spectated.
-        /// </summary>
-        Spectate = 1 << 2,
-
-        /// <summary>
-        /// The activity can be sent a join request.
-        /// </summary>
-        JoinRequest = 1 << 3,
-
-        /// <summary>
-        /// The activity is synchronized? Discord's documentation is unclear.
-        /// </summary>
-        Sync = 1 << 4,
-
-        /// <summary>
-        /// The activity is currently ongoing? Discord's documentation is unclear.
-        /// </summary>
-        Play = 1 << 5
+        /// <param name="heartbeatInterval">The heartbeat interval.</param>
+        public Hello(ulong heartbeatInterval)
+        {
+            this.HeartbeatInterval = heartbeatInterval;
+        }
     }
 }

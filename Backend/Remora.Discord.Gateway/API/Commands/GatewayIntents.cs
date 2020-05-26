@@ -28,7 +28,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// Enumerates the gateway intents that can be specified.
     /// </summary>
     [Flags]
-    public enum GatewayIntents
+    internal enum GatewayIntents
     {
         /// <summary>
         /// Subscribes to the following events:

@@ -25,7 +25,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a party size object.
     /// </summary>
-    public class PartySize
+    internal sealed class PartySize
     {
         /// <summary>
         /// Gets the current number of people in the party.

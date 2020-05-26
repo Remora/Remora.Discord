@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of descriptive assets related to an activity.
     /// </summary>
-    public class ActivityAssets
+    internal sealed class ActivityAssets
     {
         /// <summary>
         /// Gets the ID for a large image related to the activity. Usually, this is a snowflake.

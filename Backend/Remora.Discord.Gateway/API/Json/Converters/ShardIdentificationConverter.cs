@@ -29,7 +29,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
     /// <summary>
     /// Converts <see cref="ShardIdentification"/> values to and from JSON.
     /// </summary>
-    public class ShardIdentificationConverter : JsonConverter<ShardIdentification>
+    internal class ShardIdentificationConverter : JsonConverter<ShardIdentification>
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, ShardIdentification? value, JsonSerializer serializer)

@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a party of people in an activity.
     /// </summary>
-    public class ActivityParty
+    internal sealed class ActivityParty
     {
         /// <summary>
         /// Gets the ID of the party.

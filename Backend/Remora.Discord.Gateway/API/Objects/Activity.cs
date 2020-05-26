@@ -30,7 +30,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents information about an activity Discord is aware of.
     /// </summary>
-    public sealed class Activity
+    internal sealed class Activity
     {
         /// <summary>
         /// Gets the name of the activity.

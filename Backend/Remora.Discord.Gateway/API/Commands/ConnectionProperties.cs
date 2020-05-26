@@ -28,7 +28,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a set of connection properties sent to the Discord gateway.
     /// </summary>
-    public sealed class ConnectionProperties
+    internal sealed class ConnectionProperties
     {
         /// <summary>
         /// Gets the operating system in use by the connection.
