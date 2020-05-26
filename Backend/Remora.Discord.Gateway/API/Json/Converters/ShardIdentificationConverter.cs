@@ -32,8 +32,13 @@ namespace Remora.Discord.Gateway.API.Json.Converters
     public class ShardIdentificationConverter : JsonConverter<ShardIdentification>
     {
         /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, ShardIdentification value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, ShardIdentification? value, JsonSerializer serializer)
         {
+            if (value is null)
+            {
+                return;
+            }
+
             writer.WriteStartArray();
             writer.WriteValue(value.ShardID);
             writer.WriteValue(value.ShardCount);
@@ -45,7 +50,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
         (
             JsonReader reader,
             Type objectType,
-            ShardIdentification existingValue,
+            ShardIdentification? existingValue,
             bool hasExistingValue,
             JsonSerializer serializer
         )
