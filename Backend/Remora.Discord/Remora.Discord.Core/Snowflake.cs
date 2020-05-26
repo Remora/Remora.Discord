@@ -124,30 +124,35 @@ namespace Remora.Discord.Core
         }
 
         /// <inheritdoc/>
+        [PublicAPI]
         public override string ToString()
         {
             return this.Value.ToString();
         }
 
         /// <inheritdoc/>
+        [PublicAPI]
         public override bool Equals(object? obj)
         {
             return obj is Snowflake other && Equals(other);
         }
 
         /// <inheritdoc/>
+        [PublicAPI]
         public bool Equals(Snowflake other)
         {
             return this.Value == other.Value;
         }
 
         /// <inheritdoc/>
+        [PublicAPI]
         public override int GetHashCode()
         {
             return this.Value.GetHashCode();
         }
 
         /// <inheritdoc/>
+        [PublicAPI]
         public int CompareTo(Snowflake other)
         {
             return this.Value.CompareTo(other.Value);
@@ -162,6 +167,7 @@ namespace Remora.Discord.Core
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
         /// <returns>true if the relationship holds; otherwise, false.</returns>
+        [PublicAPI]
         public static bool operator <(Snowflake left, Snowflake right)
         {
             return left.CompareTo(right) < 0;
@@ -176,6 +182,7 @@ namespace Remora.Discord.Core
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
         /// <returns>true if the relationship holds; otherwise, false.</returns>
+        [PublicAPI]
         public static bool operator >(Snowflake left, Snowflake right)
         {
             return left.CompareTo(right) > 0;
@@ -190,6 +197,7 @@ namespace Remora.Discord.Core
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
         /// <returns>true if the relationship holds; otherwise, false.</returns>
+        [PublicAPI]
         public static bool operator <=(Snowflake left, Snowflake right)
         {
             return left.CompareTo(right) <= 0;
@@ -204,6 +212,7 @@ namespace Remora.Discord.Core
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
         /// <returns>true if the relationship holds; otherwise, false.</returns>
+        [PublicAPI]
         public static bool operator >=(Snowflake left, Snowflake right)
         {
             return left.CompareTo(right) >= 0;
