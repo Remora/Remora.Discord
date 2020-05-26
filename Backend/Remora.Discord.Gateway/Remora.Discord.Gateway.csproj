@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="API\Events" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord\Remora.Discord.Core\Remora.Discord.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="API\Objects\ActivityTimestamps.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivityType.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivityEmoji.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivityParty.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivityAssets.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivitySecrets.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\ActivityFlags.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Commands\ConnectionProperties.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Commands\ShardIdentification.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+</Project>
