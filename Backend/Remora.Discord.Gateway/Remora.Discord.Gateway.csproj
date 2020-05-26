@@ -40,5 +40,8 @@
       <Compile Update="API\Commands\ShardIdentification.cs">
         <DependentUpon>Identify.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\PartySize.cs">
+        <DependentUpon>ActivityParty.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

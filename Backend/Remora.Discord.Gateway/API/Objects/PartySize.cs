@@ -20,11 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Newtonsoft.Json;
+using Remora.Discord.Gateway.API.Json.Converters;
+
 namespace Remora.Discord.Gateway.API.Objects
 {
     /// <summary>
     /// Represents a party size object.
     /// </summary>
+    [JsonConverter(typeof(PartySizeConverter))]
     internal sealed class PartySize
     {
         /// <summary>
