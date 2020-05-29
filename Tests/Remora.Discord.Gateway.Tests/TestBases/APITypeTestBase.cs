@@ -23,9 +23,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Remora.Discord.Gateway.API;
-using Remora.Discord.Gateway.API.Events;
-using Remora.Discord.Gateway.API.Json.ContractResolvers;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Services;
 using Remora.Results;
@@ -133,17 +130,20 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             );
 
             await using var ms = new MemoryStream();
-            using var writer = new JsonTextWriter(new StreamWriter(ms));
+            var writer = new JsonTextWriter(new StreamWriter(ms));
 
             this.DiscordJsonService.Serializer.Serialize(writer, deserialized);
 
             ms.Seek(0, SeekOrigin.Begin);
             sampleData.Seek(0, SeekOrigin.Begin);
 
-            for (var i = 0; i < ms.Length; i++)
-            {
-                Assert.Equal(ms.ReadByte(), sampleData.ReadByte());
-            }
+            var serializedReader = new StreamReader(ms);
+            var originalReader = new StreamReader(sampleData);
+
+            var serialized = await serializedReader.ReadToEndAsync();
+            var original = await originalReader.ReadToEndAsync();
+
+            Assert.Equal(serialized, original);
         }
     }
 }
