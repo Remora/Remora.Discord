@@ -34,8 +34,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
     /// Acts as a base class for testing API types in the Discord API. This class contains common baseline tests for all
     /// types.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class APITypeTestBase<TType>
+    public abstract class APITypeTestBase
     {
         /// <summary>
         /// Gets the sample data service.
@@ -48,7 +47,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
         protected DiscordJsonService DiscordJsonService { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="APITypeTestBase{TType}"/> class.
+        /// Initializes a new instance of the <see cref="APITypeTestBase"/> class.
         /// </summary>
         public APITypeTestBase()
         {

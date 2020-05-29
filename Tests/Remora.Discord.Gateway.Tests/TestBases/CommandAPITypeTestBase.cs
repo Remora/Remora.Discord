@@ -29,7 +29,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
     /// Acts as a base class for command API types.
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class CommandAPITypeTestBase<TType> : APITypeTestBase<TType>
+    public abstract class CommandAPITypeTestBase<TType> : APITypeTestBase
     {
         /// <inheritdoc />
         protected sealed override RetrieveEntityResult<Stream> GetSampleData() =>
