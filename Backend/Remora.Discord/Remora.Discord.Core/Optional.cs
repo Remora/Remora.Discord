@@ -71,7 +71,7 @@ namespace Remora.Discord.Core
         /// </summary>
         /// <param name="value">The contained value.</param>
         [PublicAPI]
-        public Optional(TValue value)
+        public Optional([AllowNull] TValue value)
         {
             _value = value;
             this.HasValue = true;
