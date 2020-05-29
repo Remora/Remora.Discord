@@ -22,6 +22,7 @@
 
 using Newtonsoft.Json;
 using Remora.Discord.Gateway.API.Json.ContractResolvers;
+using Remora.Discord.Gateway.API.Json.Converters;
 
 namespace Remora.Discord.Gateway.Services
 {
@@ -44,6 +45,8 @@ namespace Remora.Discord.Gateway.Services
             {
                 ContractResolver = new DiscordContractResolver()
             };
+
+            this.Serializer.Converters.Add(new PayloadConverter());
         }
     }
 }

@@ -91,7 +91,25 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
                 return genericConverter;
             }
 
+            if (TryGetPayloadConverter(objectType, out var payloadConverter))
+            {
+                return payloadConverter;
+            }
+
             return base.ResolveContractConverter(objectType);
+        }
+
+        private bool TryGetPayloadConverter(Type objectType, [NotNullWhen(true)] out JsonConverter? result)
+        {
+            result = null;
+
+            if (objectType != typeof(Payload<>) && objectType != typeof(EventPayload<>))
+            {
+                return false;
+            }
+
+            result = new PayloadConverter();
+            return true;
         }
 
         /// <summary>

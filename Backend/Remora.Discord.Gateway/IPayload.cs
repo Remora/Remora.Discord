@@ -1,5 +1,5 @@
 //
-//  Payload.cs
+//  IPayload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Newtonsoft.Json;
-
-namespace Remora.Discord.Gateway.API
+namespace Remora.Discord.Gateway
 {
     /// <summary>
-    /// Represents a payload from the Discord gateway.
+    /// Marker interface for payload classes.
     /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    internal class Payload<TData> : IPayload
+    public interface IPayload
     {
-        /// <summary>
-        /// Gets the data structure for the event.
-        /// </summary>
-        [JsonProperty("d")]
-        public TData Data { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
-        /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
-        {
-            this.Data = data;
-        }
     }
 }

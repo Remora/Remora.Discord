@@ -24,6 +24,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Remora.Discord.Gateway.API;
+using Remora.Discord.Gateway.API.Events;
+using Remora.Discord.Gateway.API.Json.ContractResolvers;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Services;
 using Remora.Results;
@@ -77,16 +79,12 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var payload = this.DiscordJsonService.Serializer.Deserialize<Payload>
+            var payload = this.DiscordJsonService.Serializer.Deserialize<IPayload>
             (
                 new JsonTextReader(new StreamReader(sampleData))
             );
 
             Assert.NotNull(payload);
-
-            var deserialized = payload!.Data.ToObject<TType>(this.DiscordJsonService.Serializer);
-
-            Assert.NotNull(deserialized);
         }
 
         /// <summary>
@@ -103,7 +101,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var payload = this.DiscordJsonService.Serializer.Deserialize<Payload>
+            var payload = this.DiscordJsonService.Serializer.Deserialize<Payload<Hello>>
             (
                 new JsonTextReader(new StreamReader(sampleData))
             );
@@ -112,10 +110,6 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             this.DiscordJsonService.Serializer.Serialize(writer, payload);
 
             Assert.NotNull(payload);
-
-            var deserialized = payload!.Data.ToObject<TType>(this.DiscordJsonService.Serializer);
-
-            this.DiscordJsonService.Serializer.Serialize(writer, deserialized);
         }
 
         /// <summary>
@@ -133,7 +127,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var deserialized = this.DiscordJsonService.Serializer.Deserialize<Payload>
+            var deserialized = this.DiscordJsonService.Serializer.Deserialize<Payload<Hello>>
             (
                 new JsonTextReader(new StreamReader(sampleData))
             );

@@ -1,5 +1,5 @@
 //
-//  Payload.cs
+//  EventPayload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,24 +25,24 @@ using Newtonsoft.Json;
 namespace Remora.Discord.Gateway.API
 {
     /// <summary>
-    /// Represents a payload from the Discord gateway.
+    /// Represents a Discord event payload.
     /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    internal class Payload<TData> : IPayload
+    /// <typeparam name="TEventData">The event data.</typeparam>
+    internal sealed class EventPayload<TEventData> : Payload<TEventData>
     {
         /// <summary>
-        /// Gets the data structure for the event.
+        /// Gets the sequence number of the event.
         /// </summary>
-        [JsonProperty("d")]
-        public TData Data { get; }
+        [JsonProperty("s")]
+        public int SequenceNumber { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
+        /// Initializes a new instance of the <see cref="EventPayload{TEventData}"/> class.
         /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
+        /// <param name="data">The event data.</param>
+        public EventPayload(TEventData data)
+            : base(data)
         {
-            this.Data = data;
         }
     }
 }

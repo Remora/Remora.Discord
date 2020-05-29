@@ -43,5 +43,8 @@
       <Compile Update="API\Objects\PartySize.cs">
         <DependentUpon>ActivityParty.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\EventPayload.cs">
+        <DependentUpon>Payload.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>
