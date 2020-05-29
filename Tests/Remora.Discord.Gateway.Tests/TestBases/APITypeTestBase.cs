@@ -101,7 +101,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var payload = this.DiscordJsonService.Serializer.Deserialize<Payload<Hello>>
+            var payload = this.DiscordJsonService.Serializer.Deserialize<IPayload>
             (
                 new JsonTextReader(new StreamReader(sampleData))
             );
@@ -127,7 +127,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var deserialized = this.DiscordJsonService.Serializer.Deserialize<Payload<Hello>>
+            var deserialized = this.DiscordJsonService.Serializer.Deserialize<IPayload>
             (
                 new JsonTextReader(new StreamReader(sampleData))
             );
