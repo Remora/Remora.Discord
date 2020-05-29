@@ -1,5 +1,5 @@
 //
-//  PayloadConverter.cs
+//  PayloadCreationConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ using Remora.Discord.Gateway.API.Events;
 namespace Remora.Discord.Gateway.API.Json.Converters
 {
     /// <inheritdoc />
-    public class PayloadConverter : CustomCreationConverter<IPayload>
+    public class PayloadCreationConverter : CustomCreationConverter<IPayload>
     {
         /// <inheritdoc/>
         public override IPayload Create(Type objectType)

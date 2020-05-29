@@ -46,7 +46,7 @@ namespace Remora.Discord.Gateway.Services
                 ContractResolver = new DiscordContractResolver()
             };
 
-            this.Serializer.Converters.Add(new PayloadConverter());
+            this.Serializer.Converters.Add(new PayloadCreationConverter());
         }
     }
 }
