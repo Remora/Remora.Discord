@@ -30,56 +30,61 @@ namespace Remora.Discord.Gateway.API
         /// <summary>
         /// An event was dispatched.
         /// </summary>
-        Dispatch,
+        Dispatch = 0,
 
         /// <summary>
         /// Fired periodically by the client to keep the connection alive.
         /// </summary>
-        Heartbeat,
+        Heartbeat = 1,
 
         /// <summary>
         /// Starts a new session during the initial handshake.
         /// </summary>
-        Identify,
+        Identify = 2,
 
         /// <summary>
         /// Update the client's presence.
         /// </summary>
-        PresenceUpdate,
+        PresenceUpdate = 3,
 
         /// <summary>
         /// Used to join/leave or move between voice channels.
         /// </summary>
-        VoiceStateUpdate,
+        VoiceStateUpdate = 4,
+
+        /// <summary>
+        /// This opcode is unknown.
+        /// </summary>
+        Unknown = 5,
 
         /// <summary>
         /// Resume a previous session that was disconnected.
         /// </summary>
-        Resume,
+        Resume = 6,
 
         /// <summary>
         /// You should attempt to reconnect and resume immediately.
         /// </summary>
-        Reconnect,
+        Reconnect = 7,
 
         /// <summary>
         /// Request information about offline guild members in a large guild.
         /// </summary>
-        RequestGuildMembers,
+        RequestGuildMembers = 8,
 
         /// <summary>
         /// The session has been invalidated. You should reconnect and identify/resume accordingly.
         /// </summary>
-        InvalidSession,
+        InvalidSession = 9,
 
         /// <summary>
         /// Sent immediately after connecting. Contains the heartbeat interval to use.
         /// </summary>
-        Hello,
+        Hello = 10,
 
         /// <summary>
         /// Sent in response to receiving a heartbeat to acknowledge that it has been received.
         /// </summary>
-        HeartbeatAcknowledge
+        HeartbeatAcknowledge = 11
     }
 }
