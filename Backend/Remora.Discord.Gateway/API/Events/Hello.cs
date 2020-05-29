@@ -25,7 +25,7 @@ namespace Remora.Discord.Gateway.API.Events
     /// <summary>
     /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
-    internal sealed class Hello
+    public sealed class Hello
     {
         /// <summary>
         /// Gets the heartbeat interval in milliseconds.
