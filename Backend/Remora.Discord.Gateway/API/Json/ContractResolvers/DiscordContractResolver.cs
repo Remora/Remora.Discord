@@ -33,6 +33,51 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
     /// <inheritdoc />
     public sealed class DiscordContractResolver : DefaultContractResolver
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscordContractResolver"/> class.
+        /// </summary>
+        public DiscordContractResolver()
+        {
+            this.NamingStrategy = new SnakeCaseNamingStrategy();
+        }
+
+        /// <inheritdoc/>
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        {
+            var createdProperty = base.CreateProperty(member, memberSerialization);
+            if (createdProperty.IsRequiredSpecified)
+            {
+                return createdProperty;
+            }
+
+            var memberType = member.ReflectedType;
+            if (memberType is null)
+            {
+                return createdProperty;
+            }
+
+            if (memberType.IsGenericType && memberType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                createdProperty.Required = Required.AllowNull;
+                return createdProperty;
+            }
+
+            var nullableAttributeType = Type.GetType("System.Runtime.CompilerServices.NullableAttribute");
+            if (nullableAttributeType is null)
+            {
+                return createdProperty;
+            }
+
+            if (!(memberType.GetCustomAttribute(nullableAttributeType) is null))
+            {
+                createdProperty.Required = Required.AllowNull;
+                return createdProperty;
+            }
+
+            createdProperty.Required = Required.Always;
+            return createdProperty;
+        }
+
         /// <inheritdoc />
         protected override JsonConverter? ResolveContractConverter(Type objectType)
         {
