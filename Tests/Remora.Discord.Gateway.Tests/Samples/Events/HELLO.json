@@ -1,0 +1,8 @@
+{
+    "op": 10,
+    "d": {
+        "heartbeat_interval": 4500
+    },
+    "s": null,
+    "t": null
+}
