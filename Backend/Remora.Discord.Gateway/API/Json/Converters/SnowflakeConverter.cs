@@ -27,36 +27,57 @@ using Remora.Discord.Core;
 namespace Remora.Discord.Gateway.API.Json.Converters
 {
     /// <inheritdoc />
-    public class SnowflakeConverter : JsonConverter<Snowflake>
+    public class SnowflakeConverter : JsonConverter<Snowflake?>
     {
         /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, Snowflake value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, Snowflake? value, JsonSerializer serializer)
         {
+            if (value is null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
             writer.WriteValue(value.Value.ToString());
         }
 
         /// <inheritdoc />
-        public override Snowflake ReadJson
+        public override Snowflake? ReadJson
         (
             JsonReader reader,
             Type objectType,
-            Snowflake existingValue,
+            Snowflake? existingValue,
             bool hasExistingValue,
             JsonSerializer serializer
         )
         {
-            var rawValue = reader.ReadAsString();
-            if (rawValue is null)
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
+            if (reader.TokenType != JsonToken.String && reader.TokenType != JsonToken.Integer)
             {
                 throw new JsonException();
             }
 
-            if (!Snowflake.TryParse(rawValue, out var snowflake))
+            var rawValue = reader.Value;
+            if (rawValue is string stringValue)
             {
-                throw new JsonException();
+                if (!Snowflake.TryParse(stringValue, out var snowflake))
+                {
+                    throw new JsonException();
+                }
+
+                return snowflake.Value;
             }
 
-            return snowflake.Value;
+            if (rawValue is long longValue)
+            {
+                return new Snowflake((ulong)longValue);
+            }
+
+            throw new JsonException();
         }
     }
 }
