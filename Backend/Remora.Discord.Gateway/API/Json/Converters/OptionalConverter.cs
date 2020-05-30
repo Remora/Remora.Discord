@@ -22,6 +22,7 @@
 
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Json.Converters
@@ -35,12 +36,13 @@ namespace Remora.Discord.Gateway.API.Json.Converters
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, Optional<TValue> value, JsonSerializer serializer)
         {
-            if (!value.HasValue)
+            if (value.Value is null)
             {
+                writer.WriteNull();
                 return;
             }
 
-            serializer.Serialize(writer, value.Value, typeof(TValue));
+            serializer.Serialize(writer, value.Value);
         }
 
         /// <inheritdoc />
