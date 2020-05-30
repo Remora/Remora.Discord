@@ -66,11 +66,6 @@ namespace Remora.Discord.Gateway.API.Json.Converters
                 throw new JsonException();
             }
 
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
             var shardCount = reader.ReadAsInt32();
             if (!shardCount.HasValue)
             {

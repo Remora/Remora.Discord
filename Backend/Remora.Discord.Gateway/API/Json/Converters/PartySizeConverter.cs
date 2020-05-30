@@ -67,11 +67,6 @@ namespace Remora.Discord.Gateway.API.Json.Converters
                 throw new JsonException();
             }
 
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
             var maxSize = reader.ReadAsInt32();
             if (!maxSize.HasValue)
             {
