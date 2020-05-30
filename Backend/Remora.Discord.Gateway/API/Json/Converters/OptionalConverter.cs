@@ -22,7 +22,6 @@
 
 using System;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Json.Converters
