@@ -35,7 +35,7 @@ namespace Remora.Discord.Core
     /// value would never be serialized, but a nullable with a null value would (albeit as "null").
     /// </summary>
     /// <typeparam name="TValue">The inner type.</typeparam>
-    public readonly struct Optional<TValue>
+    public readonly struct Optional<TValue> : IOptional
     {
         [MaybeNull, AllowNull]
         private readonly TValue _value;
@@ -60,9 +60,7 @@ namespace Remora.Discord.Core
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the optional contains a value.
-        /// </summary>
+        /// <inheritdoc />
         [PublicAPI]
         public bool HasValue { get; }
 
