@@ -170,7 +170,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
             var eventType = eventTypes.FirstOrDefault(t => t.Name == eventName.Pascalize());
             if (eventType is null)
             {
-                return jsonObject.ToObject<Payload<JObject>>(serializer);
+                return jsonObject.ToObject<EventPayload<JObject>>(serializer);
             }
 
             var eventObject = jsonObject.ToObject(typeof(EventPayload<>).MakeGenericType(eventType), serializer);
