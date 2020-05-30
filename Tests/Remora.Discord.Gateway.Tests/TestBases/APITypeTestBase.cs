@@ -129,7 +129,12 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             );
 
             await using var ms = new MemoryStream();
-            var writer = new JsonTextWriter(new StreamWriter(ms));
+            var writer = new JsonTextWriter(new StreamWriter(ms))
+            {
+                IndentChar = ' ',
+                Formatting = Formatting.Indented,
+                Indentation = 4
+            };
 
             this.DiscordJsonService.Serializer.Serialize(writer, deserialized);
             await writer.FlushAsync();
@@ -140,12 +145,10 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             var serializedReader = new StreamReader(ms);
             var originalReader = new StreamReader(sampleData);
 
-            var serialized = await serializedReader.ReadToEndAsync();
-            var original = (await originalReader.ReadToEndAsync())
-                .Replace(" ", string.Empty)
-                .Replace("\n", string.Empty);
+            var serialized = await serializedReader.ReadToEndAsync() + '\n';
+            var original = await originalReader.ReadToEndAsync();
 
-            Assert.Equal(serialized, original);
+            Assert.Equal(original, serialized);
         }
     }
 }
