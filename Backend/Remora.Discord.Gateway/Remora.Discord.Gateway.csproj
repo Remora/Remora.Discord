@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Humanizer.Core" Version="2.8.11" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="Remora.Results" Version="1.1.0" />
     </ItemGroup>
 
     <ItemGroup>

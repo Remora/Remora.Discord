@@ -21,27 +21,84 @@
 //
 
 using System;
+using System.IO;
+using System.Linq;
+using Humanizer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Remora.Discord.Gateway.API.Commands;
 using Remora.Discord.Gateway.API.Events;
+using Remora.Results;
 
 namespace Remora.Discord.Gateway.API.Json.Converters
 {
     /// <inheritdoc />
-    public class PayloadCreationConverter : CustomCreationConverter<IPayload>
+    public class PayloadCreationConverter : JsonConverter
     {
-        /// <inheritdoc/>
-        public override IPayload Create(Type objectType)
-        {
-            throw new NotImplementedException();
-        }
+        [field: ThreadStatic]
+        private static bool IsDisabled { get; set; }
+
+        /// <inheritdoc />
+        public override bool CanRead => !IsDisabled;
+
+        /// <inheritdoc />
+        public override bool CanWrite => !IsDisabled;
 
         /// <inheritdoc />
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(IPayload);
+            return objectType.GetInterfaces().Contains(typeof(IPayload)) || objectType == typeof(IPayload);
+        }
+
+        /// <inheritdoc />
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+        {
+            if (value is null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            IsDisabled = true;
+
+            var getOperationCode = GetOperationCode(value.GetType());
+            if (!getOperationCode.IsSuccess)
+            {
+                throw new JsonException();
+            }
+
+            var operationCode = getOperationCode.Entity;
+            var jsonObject = JObject.FromObject(value, serializer);
+
+            jsonObject.AddFirst(new JProperty("op", (long)operationCode));
+            if (operationCode != OperationCode.Dispatch)
+            {
+                jsonObject.Add("s", null);
+                jsonObject.Add("t", null);
+            }
+            else
+            {
+                if (!value.GetType().IsGenericType)
+                {
+                    throw new JsonException();
+                }
+
+                var genericArguments = value.GetType().GetGenericArguments();
+                if (genericArguments.Length <= 0)
+                {
+                    throw new JsonException();
+                }
+
+                var dataType = genericArguments[0];
+
+                var dataName = dataType.Name.Underscore().Transform(To.UpperCase);
+                jsonObject.Add("t", dataName);
+            }
+
+            jsonObject.WriteTo(writer);
+            IsDisabled = false;
         }
 
         /// <inheritdoc/>
@@ -53,10 +110,12 @@ namespace Remora.Discord.Gateway.API.Json.Converters
             JsonSerializer serializer
         )
         {
+            IsDisabled = true;
+
             var jsonObject = JObject.Load(reader);
             var operationCode = (OperationCode)jsonObject.Value<long>("op");
 
-            return operationCode switch
+            var obj = operationCode switch
             {
                 // Commands
                 OperationCode.Heartbeat => jsonObject.ToObject<Payload<Heartbeat>>(serializer),
@@ -74,6 +133,33 @@ namespace Remora.Discord.Gateway.API.Json.Converters
                 OperationCode.InvalidSession => throw new NotImplementedException(),
                 OperationCode.HeartbeatAcknowledge => throw new NotImplementedException(),
                 _ => jsonObject.ToObject<Payload<JObject>>(serializer)
+            };
+
+            IsDisabled = false;
+
+            return obj;
+        }
+
+        private RetrieveEntityResult<OperationCode> GetOperationCode(Type objectType)
+        {
+            return objectType switch
+            {
+                // Commands
+                _ when objectType == typeof(Payload<Heartbeat>) => OperationCode.Heartbeat,
+                _ when objectType == typeof(Payload<Identify>) => OperationCode.Identify,
+                _ when objectType == typeof(Payload<RequestGuildMembers>) => OperationCode.RequestGuildMembers,
+                _ when objectType == typeof(Payload<Resume>) => OperationCode.Resume,
+                _ when objectType == typeof(Payload<UpdateStatus>) => OperationCode.PresenceUpdate,
+                _ when objectType == typeof(Payload<UpdateVoiceState>) => OperationCode.VoiceStateUpdate,
+
+                // Events
+                _ when objectType == typeof(Payload<Hello>) => OperationCode.Hello,
+                _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
+                => OperationCode.Dispatch,
+                // _ when objectType == typeof(Payload<Reconnect>) => OperationCode.Reconnect,
+                // _ when objectType == typeof(Payload<InvalidSession>) => OperationCode.InvalidSession,
+                // _ when objectType == typeof(Payload<HeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
+                _ => RetrieveEntityResult<OperationCode>.FromError("Unknown type.")
             };
         }
 
