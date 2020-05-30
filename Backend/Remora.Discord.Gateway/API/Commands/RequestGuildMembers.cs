@@ -28,7 +28,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command used to request guild members.
     /// </summary>
-    internal sealed class RequestGuildMembers
+    public sealed class RequestGuildMembers
     {
         /// <summary>
         /// Gets the ID of the guild that members should be requested from.

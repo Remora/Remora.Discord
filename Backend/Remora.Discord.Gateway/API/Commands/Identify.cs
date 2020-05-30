@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
-    internal sealed class Identify
+    public sealed class Identify
     {
         /// <summary>
         /// Gets the authentication token.

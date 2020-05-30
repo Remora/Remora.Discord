@@ -30,7 +30,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command to update the status of a user.
     /// </summary>
-    internal sealed class UpdateStatus
+    public sealed class UpdateStatus
     {
         /// <summary>
         /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.

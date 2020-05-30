@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command to update the voice state of the client.
     /// </summary>
-    internal sealed class UpdateVoiceState
+    public sealed class UpdateVoiceState
     {
         /// <summary>
         /// Gets the guild that the status should be updated in.

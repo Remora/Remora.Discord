@@ -29,7 +29,7 @@ namespace Remora.Discord.Gateway.API.Commands
     /// Represents an identification set for a sharded connection.
     /// </summary>
     [JsonConverter(typeof(ShardIdentificationConverter))]
-    internal sealed class ShardIdentification
+    public sealed class ShardIdentification
     {
         /// <summary>
         /// Gets the ID of this shard.
