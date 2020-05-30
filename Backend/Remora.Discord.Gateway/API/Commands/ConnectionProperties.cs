@@ -56,7 +56,8 @@ namespace Remora.Discord.Gateway.API.Commands
         /// <param name="operatingSystem">The operating system.</param>
         /// <param name="browser">The browser.</param>
         /// <param name="device">The device.</param>
-        public ConnectionProperties(string operatingSystem, string browser, string device)
+        [JsonConstructor]
+        public ConnectionProperties([JsonProperty("$os")] string operatingSystem, string browser, string device)
         {
             this.OperatingSystem = operatingSystem;
             this.Browser = browser;
