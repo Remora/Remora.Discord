@@ -153,6 +153,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
                 _ when objectType == typeof(Payload<Hello>) => OperationCode.Hello,
                 _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
                 => OperationCode.Dispatch,
+
                 // _ when objectType == typeof(Payload<Reconnect>) => OperationCode.Reconnect,
                 // _ when objectType == typeof(Payload<InvalidSession>) => OperationCode.InvalidSession,
                 // _ when objectType == typeof(Payload<HeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
