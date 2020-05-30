@@ -15,10 +15,6 @@
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
         <PackageReference Include="Xunit.SkippableFact" Version="1.4.8" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="API\Commands" />
-    </ItemGroup>
     
     <ItemGroup>
         <Content Include="Samples\**\*">
