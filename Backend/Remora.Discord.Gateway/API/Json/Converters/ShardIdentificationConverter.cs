@@ -29,13 +29,14 @@ namespace Remora.Discord.Gateway.API.Json.Converters
     /// <summary>
     /// Converts <see cref="ShardIdentification"/> values to and from JSON.
     /// </summary>
-    internal class ShardIdentificationConverter : JsonConverter<ShardIdentification>
+    internal class ShardIdentificationConverter : JsonConverter<ShardIdentification?>
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, ShardIdentification? value, JsonSerializer serializer)
         {
             if (value is null)
             {
+                writer.WriteNull();
                 return;
             }
 
@@ -46,7 +47,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
         }
 
         /// <inheritdoc />
-        public override ShardIdentification ReadJson
+        public override ShardIdentification? ReadJson
         (
             JsonReader reader,
             Type objectType,
@@ -55,6 +56,11 @@ namespace Remora.Discord.Gateway.API.Json.Converters
             JsonSerializer serializer
         )
         {
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+
             if (reader.TokenType != JsonToken.StartArray)
             {
                 throw new JsonException();
