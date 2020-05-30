@@ -9,17 +9,20 @@
         },
         "compress": true,
         "large_threshold": 250,
-        "guild_subscriptions": false,
-        "shard": [0, 1],
+        "shard": [
+            0,
+            1
+        ],
         "presence": {
+            "since": 91879201,
             "game": {
                 "name": "Cards Against Humanity",
                 "type": 0
             },
             "status": "dnd",
-            "since": 91879201,
             "afk": false
         },
+        "guild_subscriptions": false,
         "intents": 7
     },
     "s": null,
