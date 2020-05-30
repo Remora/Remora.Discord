@@ -23,6 +23,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Remora.Discord.Gateway.API.Objects;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -46,7 +47,7 @@ namespace Remora.Discord.Gateway.API.Commands
         /// <summary>
         /// Gets the user's status.
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(StringEnumConverter), typeof(SnakeCaseNamingStrategy))]
         public UserStatus Status { get; }
 
         /// <summary>
