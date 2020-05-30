@@ -45,36 +45,9 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var createdProperty = base.CreateProperty(member, memberSerialization);
-            if (createdProperty.IsRequiredSpecified)
-            {
-                return createdProperty;
-            }
+            createdProperty = ConfigurePropertyRequirementContract(createdProperty, member);
+            createdProperty = ConfigurePropertySerializationContract(createdProperty, member);
 
-            var memberType = member.ReflectedType;
-            if (memberType is null)
-            {
-                return createdProperty;
-            }
-
-            if (memberType.IsGenericType && memberType.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                createdProperty.Required = Required.AllowNull;
-                return createdProperty;
-            }
-
-            var nullableAttributeType = Type.GetType("System.Runtime.CompilerServices.NullableAttribute");
-            if (nullableAttributeType is null)
-            {
-                return createdProperty;
-            }
-
-            if (!(memberType.GetCustomAttribute(nullableAttributeType) is null))
-            {
-                createdProperty.Required = Required.AllowNull;
-                return createdProperty;
-            }
-
-            createdProperty.Required = Required.Always;
             return createdProperty;
         }
 
@@ -97,6 +70,59 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
             }
 
             return base.ResolveContractConverter(objectType);
+        }
+
+        private JsonProperty ConfigurePropertySerializationContract(JsonProperty createdProperty, MemberInfo member)
+        {
+            if (!(member is PropertyInfo propertyInfo))
+            {
+                return createdProperty;
+            }
+
+            var memberType = propertyInfo.PropertyType;
+            if (!memberType.IsGenericType || memberType.GetGenericTypeDefinition() != typeof(Optional<>))
+            {
+                return createdProperty;
+            }
+
+            createdProperty.ShouldSerialize = o =>
+            {
+                var currentValue = propertyInfo.GetValue(o);
+                if (currentValue is IOptional optional)
+                {
+                    return optional.HasValue;
+                }
+
+                // Serialize by default
+                return true;
+            };
+
+            return createdProperty;
+        }
+
+        private JsonProperty ConfigurePropertyRequirementContract(JsonProperty createdProperty, MemberInfo member)
+        {
+            if (createdProperty.IsRequiredSpecified)
+            {
+                return createdProperty;
+            }
+
+            if (!(member is PropertyInfo propertyInfo))
+            {
+                return createdProperty;
+            }
+
+            var memberType = propertyInfo.PropertyType;
+            if (memberType.IsGenericType && memberType.GetGenericTypeDefinition() == typeof(Optional<>))
+            {
+                var innerType = memberType.GenericTypeArguments[0];
+
+                createdProperty.Required = IsTypeNullable(innerType) ? Required.Default : Required.DisallowNull;
+                return createdProperty;
+            }
+
+            createdProperty.Required = IsTypeNullable(memberType) ? Required.AllowNull : Required.Always;
+            return createdProperty;
         }
 
         private bool TryGetPayloadConverter(Type objectType, [NotNullWhen(true)] out JsonConverter? result)
@@ -136,7 +162,7 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
 
             try
             {
-                var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeParameters);
+                var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
                 var createdConverter = Activator.CreateInstance(optionalType) as JsonConverter;
 
                 if (createdConverter is null)
@@ -195,6 +221,34 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
 
             result = createdInstance;
             return true;
+        }
+
+        /// <summary>
+        /// Determines whether the given type is logically nullable (that is, some variant of the T? pattern).
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is nullable; otherwise, false.</returns>
+        private bool IsTypeNullable(Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return true;
+            }
+
+            var nullableAttributeType = Type.GetType("System.Runtime.CompilerServices.NullableAttribute");
+            if (nullableAttributeType is null)
+            {
+                // If we don't have access to nullability attributes, assume that we're not in a nullable context.
+                return !type.IsValueType;
+            }
+
+            if (!(type.GetCustomAttribute(nullableAttributeType) is null))
+            {
+                // If there's a nullable attribute, this type is for sure nullable
+                return true;
+            }
+
+            return !type.IsValueType;
         }
     }
 }
