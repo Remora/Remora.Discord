@@ -25,7 +25,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Enumerates the activity types supported by Discord.
     /// </summary>
-    internal enum ActivityType
+    public enum ActivityType
     {
         /// <summary>
         /// The user is playing a game.

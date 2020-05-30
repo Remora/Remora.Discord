@@ -27,7 +27,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents an emoji displayed in an activity.
     /// </summary>
-    internal sealed class ActivityEmoji
+    public sealed class ActivityEmoji
     {
         /// <summary>
         /// Gets the name of the emoji.

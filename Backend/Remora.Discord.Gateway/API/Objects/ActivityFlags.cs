@@ -28,7 +28,7 @@ namespace Remora.Discord.Gateway.API.Objects
     /// Enumerates the flags an activity can have.
     /// </summary>
     [Flags]
-    internal enum ActivityFlags
+    public enum ActivityFlags
     {
         /// <summary>
         /// The activity has a specific instance.
