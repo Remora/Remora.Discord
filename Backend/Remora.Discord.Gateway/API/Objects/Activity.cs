@@ -51,7 +51,7 @@ namespace Remora.Discord.Gateway.API.Objects
         /// Gets the time when the activity was added to the user's session.
         /// </summary>
         [JsonConverter(typeof(UnixDateTimeConverter))]
-        public DateTimeOffset CreatedAt { get; }
+        public Optional<DateTimeOffset> CreatedAt { get; }
 
         /// <summary>
         /// Gets the time at which the activity started and/or ended.
@@ -118,7 +118,7 @@ namespace Remora.Discord.Gateway.API.Objects
         (
             string name,
             ActivityType type,
-            DateTimeOffset createdAt,
+            Optional<DateTimeOffset> createdAt,
             Optional<Uri?> url = default,
             Optional<ActivityTimestamps> timestamps = default,
             Optional<string?> details = default,
