@@ -160,11 +160,25 @@ namespace Remora.Discord.Gateway.API.Json.Converters
             };
         }
 
-        private IPayload DeserializeDispatch(JObject jsonObject, JsonSerializer serializer)
+        private IPayload? DeserializeDispatch(JObject jsonObject, JsonSerializer serializer)
         {
             var eventName = jsonObject.Value<string>("t");
+            var eventNamespace = typeof(Hello).Namespace;
+            var eventTypes = typeof(Hello).Assembly.ExportedTypes.Where(t => t.Namespace == eventNamespace);
 
-            throw new NotImplementedException();
+            var eventType = eventTypes.FirstOrDefault(t => t.Name == eventName.Pascalize());
+            if (eventType is null)
+            {
+                return jsonObject.ToObject<Payload<JObject>>(serializer);
+            }
+
+            var eventObject = jsonObject.ToObject(typeof(EventPayload<>).MakeGenericType(eventType), serializer);
+            if (!(eventObject is IPayload))
+            {
+                throw new JsonException();
+            }
+
+            return (IPayload)eventObject;
         }
     }
 }
