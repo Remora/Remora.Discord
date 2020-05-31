@@ -157,7 +157,7 @@ namespace Remora.Discord.Gateway.API.Json.Converters
                 // _ when objectType == typeof(Payload<Reconnect>) => OperationCode.Reconnect,
                 // _ when objectType == typeof(Payload<InvalidSession>) => OperationCode.InvalidSession,
                 // _ when objectType == typeof(Payload<HeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
-                _ => RetrieveEntityResult<OperationCode>.FromError("Unknown type.")
+                _ => RetrieveEntityResult<OperationCode>.FromError("Unknown operation code.")
             };
         }
 
