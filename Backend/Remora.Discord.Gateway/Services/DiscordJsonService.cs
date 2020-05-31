@@ -50,7 +50,7 @@ namespace Remora.Discord.Gateway.Services
             this.Serializer.Converters.Add(new HeartbeatConverter());
             this.Serializer.Converters.Add(new ShardIdentificationConverter());
             this.Serializer.Converters.Add(new SnowflakeConverter());
-            this.Serializer.Converters.Add(new PayloadCreationConverter());
+            this.Serializer.Converters.Add(new PayloadConverter());
         }
     }
 }

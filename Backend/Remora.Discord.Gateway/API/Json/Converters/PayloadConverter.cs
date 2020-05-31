@@ -1,5 +1,5 @@
 //
-//  PayloadCreationConverter.cs
+//  PayloadConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -32,7 +32,7 @@ using Remora.Results;
 namespace Remora.Discord.Gateway.API.Json.Converters
 {
     /// <inheritdoc />
-    public class PayloadCreationConverter : JsonConverter
+    public class PayloadConverter : JsonConverter
     {
         [field: ThreadStatic]
         private static bool IsDisabled { get; set; }

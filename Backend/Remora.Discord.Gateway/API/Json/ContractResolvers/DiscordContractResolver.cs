@@ -134,7 +134,7 @@ namespace Remora.Discord.Gateway.API.Json.ContractResolvers
                 return false;
             }
 
-            result = new PayloadCreationConverter();
+            result = new PayloadConverter();
             return true;
         }
 
