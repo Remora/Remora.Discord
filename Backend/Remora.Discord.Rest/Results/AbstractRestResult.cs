@@ -24,25 +24,22 @@ using System;
 using System.Net;
 using System.Reflection;
 using JetBrains.Annotations;
+using Remora.Discord.Rest.Abstractions.Results;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.Abstractions.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
     /// Represents an abstract REST API result.
     /// </summary>
     /// <typeparam name="TActualResult">The actual result type.</typeparam>
-    public abstract class AbstractRestResult<TActualResult> : ResultBase<TActualResult>
+    public abstract class AbstractRestResult<TActualResult> : ResultBase<TActualResult>, IRestResult
         where TActualResult : ResultBase<TActualResult>
     {
-        /// <summary>
-        /// Gets the HTTP error code, if any.
-        /// </summary>
+        /// <inheritdoc />
         public HttpStatusCode? HttpError { get; }
 
-        /// <summary>
-        /// Gets the Discord error, if any.
-        /// </summary>
+        /// <inheritdoc />
         public DiscordError? DiscordError { get; }
 
         /// <summary>

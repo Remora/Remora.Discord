@@ -39,7 +39,7 @@ namespace Remora.Discord.Rest.Abstractions
         /// <param name="before">The ID of the audit log entry to limit searches before.</param>
         /// <param name="limit">The number of log entries to limit the request to.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<RetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
+        Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
         (
             Snowflake userID,
             AuditLogEvent actionType,

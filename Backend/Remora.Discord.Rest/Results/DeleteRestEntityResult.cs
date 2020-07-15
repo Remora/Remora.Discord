@@ -23,13 +23,16 @@
 using System;
 using System.Net;
 using JetBrains.Annotations;
+using Remora.Discord.Rest.Abstractions.Results;
 
-namespace Remora.Discord.Rest.Abstractions.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
     /// Represents an attempt to create an entity via the REST API.
     /// </summary>
-    public class DeleteRestEntityResult : AbstractRestResult<DeleteRestEntityResult>
+    public class DeleteRestEntityResult :
+        AbstractRestResult<DeleteRestEntityResult>,
+        IDeleteRestEntityResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteRestEntityResult"/> class.

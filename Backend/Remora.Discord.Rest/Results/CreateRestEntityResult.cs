@@ -24,14 +24,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using JetBrains.Annotations;
+using Remora.Discord.Rest.Abstractions.Results;
 
-namespace Remora.Discord.Rest.Abstractions.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
     /// Represents an attempt to create an entity via the REST API.
     /// </summary>
     /// <typeparam name="TEntity">The entity to create.</typeparam>
-    public class CreateRestEntityResult<TEntity> : AbstractRestResult<CreateRestEntityResult<TEntity>>
+    public class CreateRestEntityResult<TEntity> :
+        AbstractRestResult<CreateRestEntityResult<TEntity>>,
+        ICreateRestEntityResult<TEntity>
     {
         /// <summary>
         /// Holds the actual entity value.
@@ -39,10 +42,7 @@ namespace Remora.Discord.Rest.Abstractions.Results
         [MaybeNull, AllowNull]
         private readonly TEntity _entity = default!;
 
-        /// <summary>
-        /// Gets the entity that was created.
-        /// </summary>
-        [PublicAPI]
+        /// <inheritdoc />
         public TEntity Entity
         {
             get

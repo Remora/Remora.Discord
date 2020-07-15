@@ -1,5 +1,5 @@
 //
-//  ModifyRestEntityResult.cs
+//  RetrieveRestEntityResult.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,14 +24,17 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using JetBrains.Annotations;
+using Remora.Discord.Rest.Abstractions.Results;
 
-namespace Remora.Discord.Rest.Abstractions.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
     /// Represents an attempt to create an entity via the REST API.
     /// </summary>
-    /// <typeparam name="TEntity">The entity type to modify.</typeparam>
-    public class ModifyRestEntityResult<TEntity> : AbstractRestResult<ModifyRestEntityResult<TEntity>>
+    /// <typeparam name="TEntity">The entity to create.</typeparam>
+    public class RetrieveRestEntityResult<TEntity> :
+        AbstractRestResult<RetrieveRestEntityResult<TEntity>>,
+        IRetrieveRestEntityResult<TEntity>
     {
         /// <summary>
         /// Holds the actual entity value.
@@ -39,10 +42,7 @@ namespace Remora.Discord.Rest.Abstractions.Results
         [MaybeNull, AllowNull]
         private readonly TEntity _entity = default!;
 
-        /// <summary>
-        /// Gets the entity modified entity.
-        /// </summary>
-        [PublicAPI]
+        /// <inheritdoc />
         public TEntity Entity
         {
             get
@@ -57,17 +57,17 @@ namespace Remora.Discord.Rest.Abstractions.Results
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModifyRestEntityResult{TEntity}"/> class.
+        /// Initializes a new instance of the <see cref="RetrieveRestEntityResult{TEntity}"/> class.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        private ModifyRestEntityResult(TEntity entity)
+        private RetrieveRestEntityResult(TEntity entity)
         {
             _entity = entity;
         }
 
-        /// <inheritdoc cref="ModifyRestEntityResult{TResultType}"/>
+        /// <inheritdoc cref="RetrieveRestEntityResult{TResultType}"/>
         [UsedImplicitly]
-        private ModifyRestEntityResult
+        private RetrieveRestEntityResult
         (
             string? errorReason,
             Exception? exception = null
@@ -76,9 +76,9 @@ namespace Remora.Discord.Rest.Abstractions.Results
         {
         }
 
-        /// <inheritdoc cref="ModifyRestEntityResult{TResultType}"/>
+        /// <inheritdoc cref="RetrieveRestEntityResult{TResultType}"/>
         [UsedImplicitly]
-        private ModifyRestEntityResult
+        private RetrieveRestEntityResult
         (
             string? errorReason,
             DiscordError? discordError = null
@@ -87,9 +87,9 @@ namespace Remora.Discord.Rest.Abstractions.Results
         {
         }
 
-        /// <inheritdoc cref="ModifyRestEntityResult{TResultType}"/>
+        /// <inheritdoc cref="RetrieveRestEntityResult{TResultType}"/>
         [UsedImplicitly]
-        private ModifyRestEntityResult
+        private RetrieveRestEntityResult
         (
             string? errorReason,
             HttpStatusCode? statusCode = null
@@ -101,21 +101,21 @@ namespace Remora.Discord.Rest.Abstractions.Results
         /// <summary>
         /// Creates a new successful result.
         /// </summary>
-        /// <param name="entity">The modified entity.</param>
+        /// <param name="entity">The entity that was retrieved.</param>
         /// <returns>A successful result.</returns>
         [PublicAPI, Pure]
-        public static ModifyRestEntityResult<TEntity> FromSuccess(TEntity entity)
+        public static RetrieveRestEntityResult<TEntity> FromSuccess(TEntity entity)
         {
-            return new ModifyRestEntityResult<TEntity>(entity);
+            return new RetrieveRestEntityResult<TEntity>(entity);
         }
 
         /// <summary>
         /// Implicitly converts a compatible value to a successful result.
         /// </summary>
-        /// <param name="entity">The modified entity.</param>
+        /// <param name="entity">The entity.</param>
         /// <returns>The successful result.</returns>
         [PublicAPI, Pure]
-        public static implicit operator ModifyRestEntityResult<TEntity>(TEntity entity)
+        public static implicit operator RetrieveRestEntityResult<TEntity>(TEntity entity)
         {
             return FromSuccess(entity);
         }
