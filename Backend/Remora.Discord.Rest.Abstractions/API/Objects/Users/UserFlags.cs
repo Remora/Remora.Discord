@@ -21,13 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest.Abstractions
 {
     /// <summary>
     /// Enumerates various user account flags.
     /// </summary>
-    [Flags]
+    [PublicAPI, Flags]
     public enum UserFlags
     {
         /// <summary>

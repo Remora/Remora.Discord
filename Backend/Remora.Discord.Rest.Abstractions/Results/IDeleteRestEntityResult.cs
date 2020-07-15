@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Rest.Abstractions.Results
 {
     /// <summary>
     /// Represents a REST API result that deletes an entity.
     /// </summary>
+    [PublicAPI]
     public interface IDeleteRestEntityResult : IRestResult
     {
     }

@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Rest.Abstractions
 {
     /// <summary>
     /// Represents the Discord User API.
     /// </summary>
+    [PublicAPI]
     public interface IDiscordRestUserAPI
     {
     }

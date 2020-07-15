@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Rest.Abstractions.Results
 {
     /// <summary>
     /// Enumerates the various Discord error codes.
     /// </summary>
+    [PublicAPI]
     public enum DiscordError
     {
         /// <summary>

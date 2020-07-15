@@ -20,12 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Rest.Abstractions.Results
 {
     /// <summary>
     /// Represents a REST API result that creates an entity.
     /// </summary>
     /// <typeparam name="TEntity">The created entity type.</typeparam>
+    [PublicAPI]
     public interface ICreateRestEntityResult<out TEntity> : IRestResult
     {
         /// <summary>
