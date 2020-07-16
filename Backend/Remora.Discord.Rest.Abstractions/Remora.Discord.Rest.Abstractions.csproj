@@ -12,4 +12,8 @@
       <PackageReference Include="Remora.Results.Abstractions" Version="1.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="API\Objects\Messages" />
+    </ItemGroup>
+
 </Project>
