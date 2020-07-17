@@ -1,5 +1,5 @@
 //
-//  IPermissionOverwrite.cs
+//  IAllowedMentions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,33 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions.Permissions
+namespace Remora.Discord.Rest.Abstractions.Channels
 {
     /// <summary>
-    /// Represents a channel- or category-specific permission overwrite.
+    /// Represents a set of allowed mentions.
     /// </summary>
-    public interface IPermissionOverwrite
+    public interface IAllowedMentions
     {
         /// <summary>
-        /// Gets the ID of the role or user ID that the overwrite affects.
+        /// Gets a list of mention types to parse. The contents of this field has a mutally exclusive relationship with
+        /// the <see cref="Roles"/> and <see cref="Users"/> fields - that is, if that type is contained in this field,
+        /// the corresponding field in the type may not appear.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<IReadOnlyList<MentionType>> Parse { get; }
 
         /// <summary>
-        /// Gets the type of the overwrite.
+        /// Gets a list of allowed roles to mention.
         /// </summary>
-        PermissionOverwriteType Type { get; }
+        Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
         /// <summary>
-        /// Gets the set of permissions that are explicitly allowed.
+        /// Gets a list of allowed users to mention.
         /// </summary>
-        DiscordPermission Allow { get; }
-
-        /// <summary>
-        /// Gets the set of permissions that are explicitly denied.
-        /// </summary>
-        DiscordPermission Deny { get; }
+        Optional<IReadOnlyList<Snowflake>> Users { get; }
     }
 }

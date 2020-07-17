@@ -1,5 +1,5 @@
 //
-//  IPermissionOverwrite.cs
+//  TargetUserType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,33 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Core;
-
-namespace Remora.Discord.Rest.Abstractions.Permissions
+namespace Remora.Discord.Rest.Abstractions.Invites
 {
     /// <summary>
-    /// Represents a channel- or category-specific permission overwrite.
+    /// Enumerates various target user types.
     /// </summary>
-    public interface IPermissionOverwrite
+    public enum TargetUserType
     {
         /// <summary>
-        /// Gets the ID of the role or user ID that the overwrite affects.
+        /// The user is invited to a stream.
         /// </summary>
-        Snowflake ID { get; }
-
-        /// <summary>
-        /// Gets the type of the overwrite.
-        /// </summary>
-        PermissionOverwriteType Type { get; }
-
-        /// <summary>
-        /// Gets the set of permissions that are explicitly allowed.
-        /// </summary>
-        DiscordPermission Allow { get; }
-
-        /// <summary>
-        /// Gets the set of permissions that are explicitly denied.
-        /// </summary>
-        DiscordPermission Deny { get; }
+        Stream = 1
     }
 }

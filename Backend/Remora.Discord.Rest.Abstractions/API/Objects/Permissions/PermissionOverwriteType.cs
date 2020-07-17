@@ -1,5 +1,5 @@
 //
-//  IPermissionOverwrite.cs
+//  PermissionOverwriteType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,33 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Core;
-
 namespace Remora.Discord.Rest.Abstractions.Permissions
 {
     /// <summary>
-    /// Represents a channel- or category-specific permission overwrite.
+    /// Enumerates permission overwrite types.
     /// </summary>
-    public interface IPermissionOverwrite
+    public enum PermissionOverwriteType
     {
         /// <summary>
-        /// Gets the ID of the role or user ID that the overwrite affects.
+        /// This overwrite is for a specific member.
         /// </summary>
-        Snowflake ID { get; }
+        Member = 0,
 
         /// <summary>
-        /// Gets the type of the overwrite.
+        /// This overwrite is for a specific role.
         /// </summary>
-        PermissionOverwriteType Type { get; }
-
-        /// <summary>
-        /// Gets the set of permissions that are explicitly allowed.
-        /// </summary>
-        DiscordPermission Allow { get; }
-
-        /// <summary>
-        /// Gets the set of permissions that are explicitly denied.
-        /// </summary>
-        DiscordPermission Deny { get; }
+        Role = 1
     }
 }
