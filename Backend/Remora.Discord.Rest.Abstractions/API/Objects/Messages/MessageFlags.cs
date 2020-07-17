@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  MessageFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,40 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using System;
 using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Enumerates various message flags.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    [PublicAPI, Flags]
+    public enum MessageFlags
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// The message has been published to subscribed channels.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Crossposted = 1 << 0,
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// The message originated from a message in another channel.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        IsCrosspost = 1 << 1,
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// No embeds should be included when serializing the message.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
+        SuppressEmbeds = 1 << 2,
 
         /// <summary>
-        /// Gets a list of partial integration objects.
+        /// The source message for this crosspost has been deleted.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        SourceMessageDeleted = 1 << 3,
+
+        /// <summary>
+        /// This message came from the urgent message system.
+        /// </summary>
+        Urgent = 1 << 4
     }
 }

@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Users
 {
     /// <summary>
     /// Enumerates the various premium levels.

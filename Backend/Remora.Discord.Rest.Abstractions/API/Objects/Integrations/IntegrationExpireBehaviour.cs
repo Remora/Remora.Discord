@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IntegrationExpireBehaviour.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
-
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Integrations
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Enumerates various expiration behaviours.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public enum IntegrationExpireBehaviour
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// A role is removed.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        RemoveRole = 0,
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// The user is kicked.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
-
-        /// <summary>
-        /// Gets a list of audit log entries.
-        /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
-
-        /// <summary>
-        /// Gets a list of partial integration objects.
-        /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        Kick = 1
     }
 }

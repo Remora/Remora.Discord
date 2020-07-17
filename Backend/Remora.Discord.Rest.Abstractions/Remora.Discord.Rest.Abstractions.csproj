@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="API\Objects\Messages" />
+      <Folder Include="API\Objects\Activities" />
     </ItemGroup>
 
 </Project>

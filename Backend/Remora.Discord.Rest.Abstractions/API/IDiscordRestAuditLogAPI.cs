@@ -23,6 +23,7 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.AuditLogs;
 using Remora.Discord.Rest.Abstractions.Results;
 
 namespace Remora.Discord.Rest.Abstractions

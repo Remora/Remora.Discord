@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IReaction.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
+using Remora.Discord.Rest.Abstractions.Emojis;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Reactions
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents a reaction to a message.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IReaction
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the number of times this emoji has been used to react.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        int Count { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets a value indicating whether the current user has reacted using this emoji.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        bool HasCurrentUserReacted { get; }
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// Gets the partial emoji information.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
-
-        /// <summary>
-        /// Gets a list of partial integration objects.
-        /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        IEmoji Emoji { get; }
     }
 }

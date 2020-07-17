@@ -1,5 +1,5 @@
 //
-//  IAuditLogEntry.cs
+//  IEmoji.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,50 +21,54 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.Users;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Emojis
 {
     /// <summary>
-    /// Represents an entry in the audit log.
+    /// Represents an emoji.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLogEntry
+    public interface IEmoji
     {
         /// <summary>
-        /// Gets the ID of the log entry target. Typically, this is a snowflake.
+        /// Gets the ID of the emoji.
         /// </summary>
-        string? TargetID { get; }
+        Snowflake? ID { get; }
 
         /// <summary>
-        /// Gets a list of audit log changes.
+        /// Gets the name of the emoji.
         /// </summary>
-        Optional<IReadOnlyList<IAuditLogChange>> Changes { get; }
+        string? Name { get; }
 
         /// <summary>
-        /// Gets the user who made the changes.
+        /// Gets a list of roles this emoji is whitelisted to.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
         /// <summary>
-        /// Gets the ID of the entry.
+        /// Gets the user that created this emoji.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<IUser> User { get; }
 
         /// <summary>
-        /// Gets the type of action that occurred.
+        /// Gets a value indicating whether this emoji must be wrapped in colons.
         /// </summary>
-        AuditLogEvent ActionType { get; }
+        Optional<bool> RequireColons { get; }
 
         /// <summary>
-        /// Gets additional info for certain action types.
+        /// Gets a value indicating whether this emoji is managed.
         /// </summary>
-        Optional<IOptionalAuditLogInfo> Options { get; }
+        Optional<bool> IsManaged { get; }
 
         /// <summary>
-        /// Gets the reason for the change (0-512 characters).
+        /// Gets a value indicating whether this emoji is animated.
         /// </summary>
-        Optional<string> Reason { get; }
+        Optional<bool> IsAnimated { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
+        /// </summary>
+        Optional<bool> IsAvailable { get; }
     }
 }

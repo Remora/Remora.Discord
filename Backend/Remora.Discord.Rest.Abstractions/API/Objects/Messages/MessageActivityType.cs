@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  MessageActivityType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
-
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Enumerates various activity types.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public enum MessageActivityType
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// An invitation to join the activity.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Join = 1,
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// An invitation to spectate the activity.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        Spectate = 2,
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// An invitation to listen to the activity.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
+        Listen = 3,
 
         /// <summary>
-        /// Gets a list of partial integration objects.
+        /// A request to join the activity.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        JoinRequest = 4
     }
 }

@@ -22,8 +22,9 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.Users;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Webhooks
 {
     /// <summary>
     /// Represents a webhook object.

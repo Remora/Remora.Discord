@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IEmbedProvider.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents information about an embed provider.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IEmbedProvider
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the name of the provider.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Optional<string> Name { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets the URL of the provider.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
-
-        /// <summary>
-        /// Gets a list of audit log entries.
-        /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
-
-        /// <summary>
-        /// Gets a list of partial integration objects.
-        /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        Optional<string> Url { get; }
     }
 }

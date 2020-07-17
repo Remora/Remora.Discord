@@ -1,5 +1,5 @@
 //
-//  IPartialIntegration.cs
+//  IEmbedAuthor.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,35 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents a partial integration object.
+    /// Represents information about an embed author.
     /// </summary>
-    [PublicAPI]
-    public interface IPartialIntegration
+    public interface IEmbedAuthor
     {
         /// <summary>
-        /// Gets the ID of the integration.
+        /// Gets the name of the author.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<string> Name { get; }
 
         /// <summary>
-        /// Gets the name of the integration.
+        /// Gets the Url of the author.
         /// </summary>
-        string Name { get; }
+        Optional<string> Url { get; }
 
         /// <summary>
-        /// Gets the type of integration.
+        /// Gets the proxied URL of the thumbnail.
         /// </summary>
-        string Type { get; }
-
-        /// <summary>
-        /// Gets the integration's account information.
-        /// </summary>
-        IAccount Account { get; }
+        Optional<string> ProxyUrl { get; }
     }
 }

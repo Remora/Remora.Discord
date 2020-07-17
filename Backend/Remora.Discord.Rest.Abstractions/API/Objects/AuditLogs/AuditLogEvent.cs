@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.AuditLogs
 {
     /// <summary>
     /// Enumerates various possible audit log events.

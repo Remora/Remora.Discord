@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IEmbedVideo.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents information about a video in an embed.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IEmbedVideo
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the source URL of the video.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Optional<string> Url { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets the height of the video.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        Optional<int> Height { get; }
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// Gets the width of the video.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
-
-        /// <summary>
-        /// Gets a list of partial integration objects.
-        /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        Optional<int> Width { get; }
     }
 }

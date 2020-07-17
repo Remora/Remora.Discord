@@ -1,5 +1,5 @@
 //
-//  UserFlags.cs
+//  MessageType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,85 +20,86 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using JetBrains.Annotations;
-
-namespace Remora.Discord.Rest.Abstractions.Users
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Enumerates various user account flags.
+    /// Enumerates message types.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum UserFlags
+    public enum MessageType
     {
         /// <summary>
-        /// No flags.
+        /// A normal message.
         /// </summary>
-        None = 0,
+        Default = 0,
 
         /// <summary>
-        /// The user is a Discord employee.
+        /// A member has joined the group DM.
         /// </summary>
-        DiscordEmployee = 1 << 0,
+        RecipientAdd = 1,
 
         /// <summary>
-        /// The user is a Discord partner.
+        /// A member has left the group DM.
         /// </summary>
-        DiscordPartner = 1 << 1,
+        RecipientRemove = 2,
 
         /// <summary>
-        /// The user is part of HypeSquad events.
+        /// Someone is calling.
         /// </summary>
-        HypeSquadEvents = 1 << 2,
+        Call = 3,
 
         /// <summary>
-        /// The user is a bug hunter (level 1).
+        /// The name of the channel changed.
         /// </summary>
-        BugHunterLevel1 = 1 << 3,
+        ChannelNameChange = 4,
 
         /// <summary>
-        /// The user is part of House Bravery.
+        /// The channel's icon changed.
         /// </summary>
-        HouseBravery = 1 << 6,
+        ChannelIconChange = 5,
 
         /// <summary>
-        /// The user is part of House Brilliance.
+        /// A message was pinned.
         /// </summary>
-        HouseBrilliance = 1 << 7,
+        ChannelPinnedMessage = 6,
 
         /// <summary>
-        /// The user is part of House Balance.
+        /// A guild member joined.
         /// </summary>
-        HouseBalance = 1 << 8,
+        GuildMemberJoin = 7,
 
         /// <summary>
-        /// The user is an early supporter.
+        /// A user boosted the server.
         /// </summary>
-        EarlySupporter = 1 << 9,
+        UserPremiumGuildSubscription = 8,
 
         /// <summary>
-        /// The user is a team user.
+        /// A user boosted the server to tier 1.
         /// </summary>
-        TeamUser = 1 << 10,
+        UserPremiumGuildSubscriptionTier1 = 9,
 
         /// <summary>
-        /// The user is a system user.
+        /// A user boosted the server to tier 2.
         /// </summary>
-        System = 1 << 12,
+        UserPremiumGuildSubscriptionTier2 = 10,
 
         /// <summary>
-        /// The user is a bug hunter (level 2).
+        /// A user boosted the server to tier 3.
         /// </summary>
-        BugHunterLevel2 = 1 << 14,
+        UserPremiumGuildSubscriptionTier3 = 11,
 
         /// <summary>
-        /// The user is a verified bot.
+        /// Someone followed the channel.
         /// </summary>
-        VerifiedBot = 1 << 16,
+        ChannelFollowAdd = 12,
 
         /// <summary>
-        /// The user is a verified bot developer.
+        /// The server has been disqualified for inclusion into guild discovery.
         /// </summary>
-        VerifiedBotDeveloper = 1 << 17
+        GuildDiscoveryDisqualified = 14,
+
+        /// <summary>
+        /// The server has qualified for inclusion into guild discovery.
+        /// </summary>
+        GuildDiscoveryQualified = 15
     }
 }

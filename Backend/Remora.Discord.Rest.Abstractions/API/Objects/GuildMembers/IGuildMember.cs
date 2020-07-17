@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IGuildMember.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,51 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
+using Remora.Discord.Core;
 using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.GuildMembers
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents information about a guild member.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IGuildMember
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the user this guild member represents.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Optional<IUser> User { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets the user's guild nickname.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        string? Nickname { get; }
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// Gets the roles the user has.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
+        IReadOnlyList<Snowflake> Roles { get; }
 
         /// <summary>
-        /// Gets a list of partial integration objects.
+        /// Gets when the user joined the guild.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        DateTime JoinedAt { get; }
+
+        /// <summary>
+        /// Gets when the user started boosting the guild.
+        /// </summary>
+        Optional<DateTime?> PremiumSince { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is deafened in voice channels.
+        /// </summary>
+        bool IsDeaf { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is muted in voice channels.
+        /// </summary>
+        bool IsMuted { get; }
     }
 }

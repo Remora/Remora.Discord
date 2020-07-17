@@ -23,7 +23,7 @@
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.AuditLogs
 {
     /// <summary>
     /// Represents a change to an audit log value.

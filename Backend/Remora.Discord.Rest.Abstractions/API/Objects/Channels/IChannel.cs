@@ -23,7 +23,9 @@
 using System;
 using System.Collections.Generic;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.Images;
 using Remora.Discord.Rest.Abstractions.Permissions;
+using Remora.Discord.Rest.Abstractions.Users;
 
 namespace Remora.Discord.Rest.Abstractions.Channels
 {

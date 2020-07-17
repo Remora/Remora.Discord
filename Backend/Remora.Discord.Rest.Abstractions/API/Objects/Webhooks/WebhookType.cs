@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Webhooks
 {
     /// <summary>
     /// Enumerates various types of webhooks.

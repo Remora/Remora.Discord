@@ -22,8 +22,9 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.Images;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Users
 {
     /// <summary>
     /// Represents a Discord user.

@@ -23,7 +23,7 @@
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions
+namespace Remora.Discord.Rest.Abstractions.Integrations
 {
     /// <summary>
     /// Represents an integration account.

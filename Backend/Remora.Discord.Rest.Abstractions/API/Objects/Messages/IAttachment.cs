@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IAttachment.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,48 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents an attachment in a message.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IAttachment
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the ID of the attachment.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets the filename of the attachment.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        string Filename { get; }
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// Gets the size of the file in bytes.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
+        int Size { get; }
 
         /// <summary>
-        /// Gets a list of partial integration objects.
+        /// Gets the source URL of the file.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        string Url { get; }
+
+        /// <summary>
+        /// Gets the proxied URL of the file.
+        /// </summary>
+        string ProxyUrl { get; }
+
+        /// <summary>
+        /// Gets the height of the file (if image).
+        /// </summary>
+        int? Height { get; }
+
+        /// <summary>
+        /// Gets the width of the file (if image).
+        /// </summary>
+        int? Width { get; }
     }
 }

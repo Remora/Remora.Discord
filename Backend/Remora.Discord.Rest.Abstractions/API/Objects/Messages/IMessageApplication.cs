@@ -1,5 +1,5 @@
 //
-//  IAuditLog.cs
+//  IMessageApplication.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Integrations;
-using Remora.Discord.Rest.Abstractions.Users;
-using Remora.Discord.Rest.Abstractions.Webhooks;
+using Remora.Discord.Core;
+using Remora.Discord.Rest.Abstractions.Images;
 
-namespace Remora.Discord.Rest.Abstractions.AuditLogs
+namespace Remora.Discord.Rest.Abstractions.Messages
 {
     /// <summary>
-    /// Represents an audit log page.
+    /// Represents an application linked to a message.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLog
+    public interface IMessageApplication
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
+        /// Gets the ID of the application.
         /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets a list of users found in the audit log.
+        /// Gets the cover image of the application.
         /// </summary>
-        IReadOnlyList<IUser> Users { get; }
+        Optional<IImageHash> CoverImage { get; }
 
         /// <summary>
-        /// Gets a list of audit log entries.
+        /// Gets the description of the application.
         /// </summary>
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
+        string Description { get; }
 
         /// <summary>
-        /// Gets a list of partial integration objects.
+        /// Gets the application's icon.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        IImageHash? Icon { get; }
+
+        /// <summary>
+        /// Gets the name of the application.
+        /// </summary>
+        string Name { get; }
     }
 }
