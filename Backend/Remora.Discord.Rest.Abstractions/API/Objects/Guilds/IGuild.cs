@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Abstractions.Channels;
 using Remora.Discord.Rest.Abstractions.Emojis;
+using Remora.Discord.Rest.Abstractions.Gateway.Presence;
 using Remora.Discord.Rest.Abstractions.Images;
 using Remora.Discord.Rest.Abstractions.Permissions;
 using Remora.Discord.Rest.Abstractions.Voice;
