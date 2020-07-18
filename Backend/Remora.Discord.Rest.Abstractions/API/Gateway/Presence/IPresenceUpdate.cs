@@ -1,5 +1,5 @@
 //
-//  IGuildMember.cs
+//  IPresenceUpdate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,46 +25,56 @@ using System.Collections.Generic;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Abstractions.Users;
 
-namespace Remora.Discord.Rest.Abstractions.GuildMembers
+namespace Remora.Discord.Rest.Abstractions.Gateway.Presence
 {
     /// <summary>
-    /// Represents information about a guild member.
+    /// Represents a presence update event from the gateway.
     /// </summary>
-    public interface IGuildMember
+    public interface IPresenceUpdate
     {
         /// <summary>
-        /// Gets the user this guild member represents.
+        /// Gets the user the presence is being updated for.
         /// </summary>
-        Optional<IUser> User { get; }
+        IUser User { get; }
 
         /// <summary>
-        /// Gets the user's guild nickname.
-        /// </summary>
-        string? Nickname { get; }
-
-        /// <summary>
-        /// Gets the roles the user has.
+        /// Gets the roles the user is in.
         /// </summary>
         IReadOnlyList<Snowflake> Roles { get; }
 
         /// <summary>
-        /// Gets when the user joined the guild.
+        /// Gets the user's current activity.
         /// </summary>
-        DateTime JoinedAt { get; }
+        IActivity? Game { get; }
 
         /// <summary>
-        /// Gets when the user started boosting the guild.
+        /// Gets the ID of the guild.
+        /// </summary>
+        Snowflake GuildID { get; }
+
+        /// <summary>
+        /// Gets the current status of the user.
+        /// </summary>
+        ClientStatus Status { get; }
+
+        /// <summary>
+        /// Gets the user's current activities.
+        /// </summary>
+        IReadOnlyList<IActivity> Activities { get; }
+
+        /// <summary>
+        /// Gets the user's platform-dependent status.
+        /// </summary>
+        IClientStatuses ClientStatus { get; }
+
+        /// <summary>
+        /// Gets the time when the user started boosting the guild.
         /// </summary>
         Optional<DateTime?> PremiumSince { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the user is deafened in voice channels.
+        /// Gets the user's nickname, if one is set.
         /// </summary>
-        bool IsDeaf { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the user is muted in voice channels.
-        /// </summary>
-        bool IsMuted { get; }
+        Optional<string?> Nickname { get; }
     }
 }

@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Abstractions.Channels;
-using Remora.Discord.Rest.Abstractions.GuildMembers;
+using Remora.Discord.Rest.Abstractions.Guilds;
 using Remora.Discord.Rest.Abstractions.Reactions;
 using Remora.Discord.Rest.Abstractions.Users;
 
