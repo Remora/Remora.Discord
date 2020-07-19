@@ -107,7 +107,7 @@ namespace Remora.Discord.Rest.Results
         public static TActualResult FromError
         (
             string errorReason,
-            DiscordError? discordError = null
+            DiscordError discordError
         )
         {
             var constructor = typeof(TActualResult).GetConstructor
@@ -138,7 +138,7 @@ namespace Remora.Discord.Rest.Results
         public static TActualResult FromError
         (
             string errorReason,
-            HttpStatusCode? httpStatusCode = null
+            HttpStatusCode httpStatusCode
         )
         {
             var constructor = typeof(TActualResult).GetConstructor
