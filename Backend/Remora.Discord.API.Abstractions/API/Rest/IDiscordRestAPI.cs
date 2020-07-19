@@ -32,6 +32,7 @@ namespace Remora.Discord.API.Abstractions
         IDiscordRestAuditLogAPI,
         IDiscordRestChannelAPI,
         IDiscordRestEmojiAPI,
+        IDiscordRestGatewayAPI,
         IDiscordRestGuildAPI,
         IDiscordRestInviteAPI,
         IDiscordRestUserAPI,

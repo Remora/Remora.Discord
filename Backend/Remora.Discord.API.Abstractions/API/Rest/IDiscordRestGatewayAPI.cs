@@ -1,5 +1,5 @@
 //
-//  IDiscordGatewayAPI.cs
+//  IDiscordRestGatewayAPI.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions
     /// <summary>
     /// Represents the Discord Gateway REST API.
     /// </summary>
-    public interface IDiscordGatewayAPI
+    public interface IDiscordRestGatewayAPI
     {
         /// <summary>
         /// Gets a gateway endpoint.
