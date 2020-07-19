@@ -20,7 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.API.Abstractions.Voice;
 
 namespace Remora.Discord.API.Abstractions
 {
@@ -30,5 +34,11 @@ namespace Remora.Discord.API.Abstractions
     [PublicAPI]
     public interface IDiscordRestVoiceAPI
     {
+        /// <summary>
+        /// Gets the available voice regions.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IVoiceRegion>> ListVoiceRegionsAsync(CancellationToken ct = default);
     }
 }
