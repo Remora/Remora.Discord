@@ -23,6 +23,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -30,72 +31,46 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents information about an activity Discord is aware of.
     /// </summary>
-    public sealed class Activity
+    public sealed class Activity : IActivity
     {
-        /// <summary>
-        /// Gets the name of the activity.
-        /// </summary>
+        /// <inheritdoc />
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the type of the activity.
-        /// </summary>
+        /// <inheritdoc />
         public ActivityType Type { get; }
 
-        /// <summary>
-        /// Gets the stream URL. Used when <see cref="Type"/> is <see cref="ActivityType.Streaming"/>.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<Uri?> Url { get; }
 
-        /// <summary>
-        /// Gets the time when the activity was added to the user's session.
-        /// </summary>
+        /// <inheritdoc />
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public Optional<DateTimeOffset> CreatedAt { get; }
 
-        /// <summary>
-        /// Gets the time at which the activity started and/or ended.
-        /// </summary>
-        public Optional<ActivityTimestamps> Timestamps { get; }
+        /// <inheritdoc />
+        public Optional<IActivityTimestamps> Timestamps { get; }
 
-        /// <summary>
-        /// Gets a detail string about what the user is currently doing.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string?> Details { get; }
 
-        /// <summary>
-        /// Gets the user's current party status.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string?> State { get; }
 
-        /// <summary>
-        /// Gets the emoji used for a custom status.
-        /// </summary>
-        public Optional<ActivityEmoji?> Emoji { get; }
+        /// <inheritdoc />
+        public Optional<IActivityEmoji?> Emoji { get; }
 
-        /// <summary>
-        /// Gets information about the user's current party.
-        /// </summary>
-        public Optional<ActivityParty> Party { get; }
+        /// <inheritdoc />
+        public Optional<IActivityParty> Party { get; }
 
-        /// <summary>
-        /// Gets information about the assets associated with the user's current activity.
-        /// </summary>
-        public Optional<ActivityAssets> Assets { get; }
+        /// <inheritdoc />
+        public Optional<IActivityAssets> Assets { get; }
 
-        /// <summary>
-        /// Gets the secrets associated with the user's current activity.
-        /// </summary>
-        public Optional<ActivitySecrets> Secrets { get; }
+        /// <inheritdoc />
+        public Optional<IActivitySecrets> Secrets { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the activity is in an instanced session.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<bool> Instance { get; }
 
-        /// <summary>
-        /// Gets a set of descriptive flags that detail what the payload includes.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<ActivityFlags> Flags { get; }
 
         /// <summary>
@@ -120,13 +95,13 @@ namespace Remora.Discord.Gateway.API.Objects
             ActivityType type,
             Optional<DateTimeOffset> createdAt,
             Optional<Uri?> url = default,
-            Optional<ActivityTimestamps> timestamps = default,
+            Optional<IActivityTimestamps> timestamps = default,
             Optional<string?> details = default,
             Optional<string?> state = default,
-            Optional<ActivityEmoji?> emoji = default,
-            Optional<ActivityParty> party = default,
-            Optional<ActivityAssets> assets = default,
-            Optional<ActivitySecrets> secrets = default,
+            Optional<IActivityEmoji?> emoji = default,
+            Optional<IActivityParty> party = default,
+            Optional<IActivityAssets> assets = default,
+            Optional<IActivitySecrets> secrets = default,
             Optional<bool> instance = default,
             Optional<ActivityFlags> flags = default
         )

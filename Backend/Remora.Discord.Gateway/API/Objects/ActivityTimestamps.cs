@@ -23,6 +23,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -30,17 +31,13 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
     /// </summary>
-    public sealed class ActivityTimestamps
+    public sealed class ActivityTimestamps : IActivityTimestamps
     {
-        /// <summary>
-        /// Gets the start timestamp.
-        /// </summary>
+        /// <inheritdoc />
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public Optional<DateTimeOffset> Start { get; }
 
-        /// <summary>
-        /// Gets the end timestamp.
-        /// </summary>
+        /// <inheritdoc />
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public Optional<DateTimeOffset> End { get; }
 

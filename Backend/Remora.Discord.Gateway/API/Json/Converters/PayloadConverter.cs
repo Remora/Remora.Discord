@@ -25,6 +25,7 @@ using System.Linq;
 using Humanizer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Gateway.API.Commands;
 using Remora.Discord.Gateway.API.Events;
 using Remora.Results;

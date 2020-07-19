@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6E2D59EB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Gateway.Tests", "Tests\Remora.Discord.Gateway.Tests\Remora.Discord.Gateway.Tests.csproj", "{6BE67D97-794D-4E32-B58A-18755F5C4E38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Rest.Abstractions", "Backend\Remora.Discord.Rest.Abstractions\Remora.Discord.Rest.Abstractions.csproj", "{B3AEB4DB-6245-4D03-8D5F-3B835D432448}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.API.Abstractions", "Backend\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj", "{B3AEB4DB-6245-4D03-8D5F-3B835D432448}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Rest", "Backend\Remora.Discord.Rest\Remora.Discord.Rest.csproj", "{4C56EFE8-1CB5-4CFA-9F05-8ABAF84D8006}"
 EndProject

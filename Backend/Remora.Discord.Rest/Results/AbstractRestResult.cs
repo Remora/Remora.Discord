@@ -24,7 +24,7 @@ using System;
 using System.Net;
 using System.Reflection;
 using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Results;
+using Remora.Discord.API.Abstractions.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.Results

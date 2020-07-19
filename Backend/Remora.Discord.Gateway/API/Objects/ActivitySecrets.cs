@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -27,21 +28,15 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of secrets used for interacting with the activity.
     /// </summary>
-    public sealed class ActivitySecrets
+    public sealed class ActivitySecrets : IActivitySecrets
     {
-        /// <summary>
-        /// Gets the secret used for joining the party.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> Join { get; }
 
-        /// <summary>
-        /// Gets the secret used for spectating the party.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> Spectate { get; }
 
-        /// <summary>
-        /// Gets the secret used for joining a specific instanced match.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> Match { get; }
 
         /// <summary>

@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Remora.Discord.Rest.Abstractions\Remora.Discord.Rest.Abstractions.csproj" />
+      <PackageReference Include="Remora.Results" Version="1.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Results" Version="1.1.0" />
+      <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

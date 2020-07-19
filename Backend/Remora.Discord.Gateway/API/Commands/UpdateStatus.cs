@@ -24,6 +24,9 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.Gateway.API.Objects;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -31,49 +34,41 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command to update the status of a user.
     /// </summary>
-    public sealed class UpdateStatus
+    public sealed class UpdateStatus : IUpdateStatus
     {
-        /// <summary>
-        /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.
-        /// </summary>
+        /// <inheritdoc />
         [JsonConverter(typeof(UnixDateTimeConverter))]
         public DateTimeOffset? Since { get; }
 
-        /// <summary>
-        /// Gets the user's new activity.
-        /// </summary>
-        public Activity? Game { get; }
+        /// <inheritdoc />
+        public IActivity? Game { get; }
 
-        /// <summary>
-        /// Gets the user's status.
-        /// </summary>
+        /// <inheritdoc />
         [JsonConverter(typeof(StringEnumConverter), typeof(SnakeCaseNamingStrategy))]
-        public UserStatus Status { get; }
+        public ClientStatus Status { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is AFK.
-        /// </summary>
-        public bool Afk { get; }
+        /// <inheritdoc />
+        public bool IsAFK { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateStatus"/> class.
         /// </summary>
         /// <param name="status">The user's status.</param>
-        /// <param name="afk">Whether the user is AFK.</param>
+        /// <param name="isAFK">Whether the user is AFK.</param>
         /// <param name="since">The time that the client went idle.</param>
         /// <param name="game">The activity that the user is performing.</param>
         public UpdateStatus
         (
-            UserStatus status,
-            bool afk,
+            ClientStatus status,
+            bool isAFK,
             DateTimeOffset? since = null,
-            Activity? game = null
+            IActivity? game = null
         )
         {
             this.Since = since;
             this.Game = game;
             this.Status = status;
-            this.Afk = afk;
+            this.IsAFK = isAFK;
         }
     }
 }

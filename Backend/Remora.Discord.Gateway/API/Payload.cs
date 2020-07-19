@@ -21,6 +21,7 @@
 //
 
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions;
 
 namespace Remora.Discord.Gateway.API
 {

@@ -22,31 +22,24 @@
 
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Commands;
 
 namespace Remora.Discord.Gateway.API.Commands
 {
     /// <summary>
     /// Represents a set of connection properties sent to the Discord gateway.
     /// </summary>
-    public sealed class ConnectionProperties
+    public sealed class ConnectionProperties : IConnectionProperties
     {
-        /// <summary>
-        /// Gets the operating system in use by the connection.
-        /// </summary>
+        /// <inheritdoc />
         [JsonProperty("$os")]
         public string OperatingSystem { get; }
 
-        /// <summary>
-        /// Gets the browser in use by the connection. Typically, this is the name of the library that initialized the
-        /// connection.
-        /// </summary>
+        /// <inheritdoc />
         [JsonProperty("$browser")]
         public string Browser { get; }
 
-        /// <summary>
-        /// Gets the device in use by the connection. Typically, this is the name of the library that initializes the
-        /// connection.
-        /// </summary>
+        /// <inheritdoc />
         [JsonProperty("$device")]
         public string Device { get; }
 

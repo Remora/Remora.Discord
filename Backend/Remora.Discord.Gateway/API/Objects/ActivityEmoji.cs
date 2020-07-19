@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -27,21 +28,15 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents an emoji displayed in an activity.
     /// </summary>
-    public sealed class ActivityEmoji
+    public sealed class ActivityEmoji : IActivityEmoji
     {
-        /// <summary>
-        /// Gets the name of the emoji.
-        /// </summary>
+        /// <inheritdoc />
         public string Name { get; }
 
-        /// <summary>
-        /// Gets the ID of the emoji.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the emoji is animated.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<bool> Animated { get; }
 
         /// <summary>

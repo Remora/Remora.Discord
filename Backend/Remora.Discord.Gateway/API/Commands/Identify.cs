@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -27,49 +29,31 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
-    public sealed class Identify
+    public sealed class Identify : IIdentify
     {
-        /// <summary>
-        /// Gets the authentication token.
-        /// </summary>
+        /// <inheritdoc />
         public string Token { get; }
 
-        /// <summary>
-        /// Gets the connection properties.
-        /// </summary>
-        public ConnectionProperties Properties { get; }
+        /// <inheritdoc />
+        public IConnectionProperties Properties { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing a value that indicates whether the connection supports compressed
-        /// packets.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<bool> Compress { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the threshold value of total guild members before a guild is considered
-        /// large, and offline members will not automatically be sent.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<byte> LargeThreshold { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the sharding ID for this connection.
-        /// </summary>
-        public Optional<ShardIdentification> Shard { get; }
+        /// <inheritdoc />
+        public Optional<IShardIdentification> Shard { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing initial presence information.
-        /// </summary>
-        public Optional<UpdateStatus> Presence { get; }
+        /// <inheritdoc />
+        public Optional<IUpdateStatus> Presence { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing a value that indicates whether guild subscription events (such as
-        /// presence and typing) should be sent.
-        /// </summary>
-        public Optional<bool> GuildSubscriptions { get; }
+        /// <inheritdoc />
+        [JsonProperty("guild_subscriptions")]
+        public Optional<bool> DispatchGuildSubscriptions { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the gateway intents the connection wants to receive.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<GatewayIntents> Intents { get; }
 
         /// <summary>
@@ -81,17 +65,17 @@ namespace Remora.Discord.Gateway.API.Commands
         /// <param name="largeThreshold">The large guild threshold.</param>
         /// <param name="shard">The sharding ID.</param>
         /// <param name="presence">The initial presence.</param>
-        /// <param name="guildSubscriptions">Whether to receive subscription events.</param>
+        /// <param name="dispatchGuildSubscriptions">Whether to receive subscription events.</param>
         /// <param name="intents">The gateway intents.</param>
         public Identify
         (
             string token,
-            ConnectionProperties properties,
+            IConnectionProperties properties,
             Optional<bool> compress = default,
             Optional<byte> largeThreshold = default,
-            Optional<ShardIdentification> shard = default,
-            Optional<UpdateStatus> presence = default,
-            Optional<bool> guildSubscriptions = default,
+            Optional<IShardIdentification> shard = default,
+            Optional<IUpdateStatus> presence = default,
+            Optional<bool> dispatchGuildSubscriptions = default,
             Optional<GatewayIntents> intents = default
         )
         {
@@ -101,7 +85,7 @@ namespace Remora.Discord.Gateway.API.Commands
             this.LargeThreshold = largeThreshold;
             this.Shard = shard;
             this.Presence = presence;
-            this.GuildSubscriptions = guildSubscriptions;
+            this.DispatchGuildSubscriptions = dispatchGuildSubscriptions;
             this.Intents = intents;
         }
     }

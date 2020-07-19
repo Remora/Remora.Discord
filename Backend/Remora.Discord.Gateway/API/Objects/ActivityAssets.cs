@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -27,26 +28,18 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a set of descriptive assets related to an activity.
     /// </summary>
-    public sealed class ActivityAssets
+    public sealed class ActivityAssets : IActivityAssets
     {
-        /// <summary>
-        /// Gets the ID for a large image related to the activity. Usually, this is a snowflake.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> LargeImage { get; }
 
-        /// <summary>
-        /// Gets the text displayed when hovering over the large image.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> LargeText { get; }
 
-        /// <summary>
-        /// Gets the ID for a small image related to the activity. Usually, this is a snowflake.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> SmallImage { get; }
 
-        /// <summary>
-        /// Gets the text displayed when hovering over the small image.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> SmallText { get; }
 
         /// <summary>

@@ -23,7 +23,7 @@
 using System;
 using System.Net;
 using JetBrains.Annotations;
-using Remora.Discord.Rest.Abstractions.Results;
+using Remora.Discord.API.Abstractions.Results;
 
 namespace Remora.Discord.Rest.Results
 {

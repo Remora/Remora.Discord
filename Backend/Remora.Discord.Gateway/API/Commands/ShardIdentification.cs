@@ -21,6 +21,7 @@
 //
 
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.Gateway.API.Json.Converters;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -29,16 +30,12 @@ namespace Remora.Discord.Gateway.API.Commands
     /// Represents an identification set for a sharded connection.
     /// </summary>
     [JsonConverter(typeof(ShardIdentificationConverter))]
-    public sealed class ShardIdentification
+    public sealed class ShardIdentification : IShardIdentification
     {
-        /// <summary>
-        /// Gets the ID of this shard.
-        /// </summary>
+        /// <inheritdoc />
         public int ShardID { get; }
 
-        /// <summary>
-        /// Gets the total number of shards.
-        /// </summary>
+        /// <inheritdoc />
         public int ShardCount { get; }
 
         /// <summary>

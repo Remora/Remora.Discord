@@ -20,39 +20,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Commands;
+
 namespace Remora.Discord.Gateway.API.Commands
 {
     /// <summary>
     /// Represents a resume command.
     /// </summary>
-    public sealed class Resume
+    public sealed class Resume : IResume
     {
-        /// <summary>
-        /// Gets the session token.
-        /// </summary>
+        /// <inheritdoc />
         public string Token { get; }
 
-        /// <summary>
-        /// Gets the last session ID.
-        /// </summary>
+        /// <inheritdoc />
         public string SessionID { get; }
 
-        /// <summary>
-        /// Gets the last received sequence number.
-        /// </summary>
-        public int Seq { get; }
+        /// <inheritdoc />
+        [JsonProperty("seq")]
+        public int SequenceNumber { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Resume"/> class.
         /// </summary>
         /// <param name="token">The session token.</param>
         /// <param name="sessionID">The ID of the session.</param>
-        /// <param name="seq">The last received sequence number.</param>
-        public Resume(string token, string sessionID, int seq)
+        /// <param name="sequenceNumber">The last received sequence number.</param>
+        public Resume(string token, string sessionID, int sequenceNumber)
         {
             this.Token = token;
             this.SessionID = sessionID;
-            this.Seq = seq;
+            this.SequenceNumber = sequenceNumber;
         }
     }
 }

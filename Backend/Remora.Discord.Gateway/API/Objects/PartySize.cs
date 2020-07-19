@@ -21,6 +21,7 @@
 //
 
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Gateway.API.Json.Converters;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -29,16 +30,12 @@ namespace Remora.Discord.Gateway.API.Objects
     /// Represents a party size object.
     /// </summary>
     [JsonConverter(typeof(PartySizeConverter))]
-    public sealed class PartySize
+    public sealed class PartySize : IPartySize
     {
-        /// <summary>
-        /// Gets the current number of people in the party.
-        /// </summary>
+        /// <inheritdoc />
         public int CurrentSize { get; }
 
-        /// <summary>
-        /// Gets the maximum size of the party.
-        /// </summary>
+        /// <inheritdoc />
         public int MaxSize { get; }
 
         /// <summary>

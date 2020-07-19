@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Objects
@@ -27,24 +28,20 @@ namespace Remora.Discord.Gateway.API.Objects
     /// <summary>
     /// Represents a party of people in an activity.
     /// </summary>
-    public sealed class ActivityParty
+    public sealed class ActivityParty : IActivityParty
     {
-        /// <summary>
-        /// Gets the ID of the party.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> ID { get; }
 
-        /// <summary>
-        /// Gets the size of the party.
-        /// </summary>
-        public Optional<PartySize> Size { get; }
+        /// <inheritdoc />
+        public Optional<IPartySize> Size { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityParty"/> class.
         /// </summary>
         /// <param name="id">The ID of the party.</param>
         /// <param name="size">The size of the party.</param>
-        public ActivityParty(Optional<string> id = default, Optional<PartySize> size = default)
+        public ActivityParty(Optional<string> id = default, Optional<IPartySize> size = default)
         {
             this.ID = id;
             this.Size = size;

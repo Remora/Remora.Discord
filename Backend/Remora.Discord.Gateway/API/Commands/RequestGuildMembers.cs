@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -28,36 +29,24 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command used to request guild members.
     /// </summary>
-    public sealed class RequestGuildMembers
+    public sealed class RequestGuildMembers : IRequestGuildMembers
     {
-        /// <summary>
-        /// Gets the ID of the guild that members should be requested from.
-        /// </summary>
+        /// <inheritdoc />
         public Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets a query string that the requested usernames should start with.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> Query { get; }
 
-        /// <summary>
-        /// Gets a limiting number of users to fetch.
-        /// </summary>
+        /// <inheritdoc />
         public int Limit { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether we want to fetch the presences of the users.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<bool> Presences { get; }
 
-        /// <summary>
-        /// Gets a collection of user IDs that should be fetched.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<IReadOnlyCollection<Snowflake>> UserIDs { get; }
 
-        /// <summary>
-        /// Gets a nonce (unique string) to identify the incoming guild member chunks after the request has been accepted.
-        /// </summary>
+        /// <inheritdoc />
         public Optional<string> Nonce { get; }
 
         /// <summary>

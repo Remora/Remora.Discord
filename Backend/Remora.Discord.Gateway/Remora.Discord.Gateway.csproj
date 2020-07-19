@@ -11,14 +11,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
       <ProjectReference Include="..\Remora.Discord\Remora.Discord.Core\Remora.Discord.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Update="API\Objects\ActivityTimestamps.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivityType.cs">
         <DependentUpon>Activity.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Objects\ActivityEmoji.cs">
@@ -31,9 +29,6 @@
         <DependentUpon>Activity.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Objects\ActivitySecrets.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivityFlags.cs">
         <DependentUpon>Activity.cs</DependentUpon>
       </Compile>
       <Compile Update="API\Commands\ConnectionProperties.cs">

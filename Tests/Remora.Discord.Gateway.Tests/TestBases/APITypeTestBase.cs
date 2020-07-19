@@ -23,6 +23,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Services;
 using Remora.Results;

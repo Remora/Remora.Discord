@@ -20,16 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Commands;
+
 namespace Remora.Discord.Gateway.API.Commands
 {
     /// <summary>
     /// Represents a heartbeat command to or from Discord.
     /// </summary>
-    public class Heartbeat
+    public class Heartbeat : IHeartbeat
     {
-        /// <summary>
-        /// Gets the last sequence number received by the client.
-        /// </summary>
+        /// <inheritdoc />
         public long? LastSequenceNumber { get; }
 
         /// <summary>

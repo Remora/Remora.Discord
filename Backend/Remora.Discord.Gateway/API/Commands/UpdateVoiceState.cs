@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Gateway.API.Commands
@@ -27,27 +28,19 @@ namespace Remora.Discord.Gateway.API.Commands
     /// <summary>
     /// Represents a command to update the voice state of the client.
     /// </summary>
-    public sealed class UpdateVoiceState
+    public sealed class UpdateVoiceState : IUpdateVoiceState
     {
-        /// <summary>
-        /// Gets the guild that the status should be updated in.
-        /// </summary>
+        /// <inheritdoc />
         public Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the channel the client wants to join, or null if disconnecting.
-        /// </summary>
+        /// <inheritdoc />
         public Snowflake? ChannelID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the client is muted.
-        /// </summary>
-        public bool SelfMute { get; }
+        /// <inheritdoc />
+        public bool IsSelfMuted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the client is deafened.
-        /// </summary>
-        public bool SelfDeaf { get; }
+        /// <inheritdoc />
+        public bool IsSelfDeafened { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateVoiceState"/> class.
@@ -66,8 +59,8 @@ namespace Remora.Discord.Gateway.API.Commands
         {
             this.GuildID = guildID;
             this.ChannelID = channelID;
-            this.SelfMute = selfMute;
-            this.SelfDeaf = selfDeaf;
+            this.IsSelfMuted = selfMute;
+            this.IsSelfDeafened = selfDeaf;
         }
     }
 }

@@ -20,16 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Events;
+
 namespace Remora.Discord.Gateway.API.Events
 {
     /// <summary>
     /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
-    public sealed class Hello
+    public sealed class Hello : IHello
     {
-        /// <summary>
-        /// Gets the heartbeat interval in milliseconds.
-        /// </summary>
+        /// <inheritdoc />
         public ulong HeartbeatInterval { get; }
 
         /// <summary>

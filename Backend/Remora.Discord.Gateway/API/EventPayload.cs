@@ -21,6 +21,7 @@
 //
 
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions;
 
 namespace Remora.Discord.Gateway.API
 {
@@ -28,11 +29,9 @@ namespace Remora.Discord.Gateway.API
     /// Represents a Discord event payload.
     /// </summary>
     /// <typeparam name="TEventData">The event data.</typeparam>
-    internal sealed class EventPayload<TEventData> : Payload<TEventData>
+    internal sealed class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
     {
-        /// <summary>
-        /// Gets the sequence number of the event.
-        /// </summary>
+        /// <inheritdoc />
         [JsonProperty("s")]
         public int SequenceNumber { get; }
 
