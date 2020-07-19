@@ -21,8 +21,14 @@
 //
 
 using Newtonsoft.Json;
+using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.Gateway.API.Commands;
+using Remora.Discord.Gateway.API.Events;
 using Remora.Discord.Gateway.API.Json.ContractResolvers;
 using Remora.Discord.Gateway.API.Json.Converters;
+using Remora.Discord.Gateway.API.Objects;
 
 namespace Remora.Discord.Gateway.Services
 {
@@ -51,6 +57,24 @@ namespace Remora.Discord.Gateway.Services
             this.Serializer.Converters.Add(new ShardIdentificationConverter());
             this.Serializer.Converters.Add(new SnowflakeConverter());
             this.Serializer.Converters.Add(new PayloadConverter());
+
+            this.Serializer.Converters.Add(new InterfaceConverter<IHeartbeat, Heartbeat>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IIdentify, Identify>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IConnectionProperties, ConnectionProperties>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IShardIdentification, ShardIdentification>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IHeartbeat, Heartbeat>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IRequestGuildMembers, RequestGuildMembers>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IResume, Resume>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IUpdateStatus, UpdateStatus>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IUpdateVoiceState, UpdateVoiceState>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IHello, Hello>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivity, Activity>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivityAssets, ActivityAssets>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivityEmoji, ActivityEmoji>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivityParty, ActivityParty>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IPartySize, PartySize>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivitySecrets, ActivitySecrets>());
+            this.Serializer.Converters.Add(new InterfaceConverter<IActivityTimestamps, ActivityTimestamps>());
         }
     }
 }
