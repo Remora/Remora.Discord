@@ -80,9 +80,10 @@ namespace Remora.Discord.Rest
 
             try
             {
+                using var request = requestBuilder.Build();
                 using var response = await _httpClient.SendAsync
                 (
-                    requestBuilder.Build(),
+                    request,
                     HttpCompletionOption.ResponseHeadersRead,
                     ct
                 );
@@ -119,9 +120,10 @@ namespace Remora.Discord.Rest
 
             try
             {
+                using var request = requestBuilder.Build();
                 using var response = await _httpClient.SendAsync
                 (
-                    requestBuilder.Build(),
+                    request,
                     HttpCompletionOption.ResponseHeadersRead,
                     ct
                 );
@@ -161,9 +163,10 @@ namespace Remora.Discord.Rest
 
             try
             {
+                using var request = requestBuilder.Build();
                 using var response = await _httpClient.SendAsync
                 (
-                    requestBuilder.Build(),
+                    request,
                     HttpCompletionOption.ResponseHeadersRead,
                     ct
                 );
@@ -202,9 +205,10 @@ namespace Remora.Discord.Rest
 
             try
             {
+                using var request = requestBuilder.Build();
                 using var response = await _httpClient.SendAsync
                 (
-                    requestBuilder.Build(),
+                    request,
                     HttpCompletionOption.ResponseHeadersRead,
                     ct
                 );
@@ -243,9 +247,10 @@ namespace Remora.Discord.Rest
 
             try
             {
+                using var request = requestBuilder.Build();
                 using var response = await _httpClient.SendAsync
                 (
-                    requestBuilder.Build(),
+                    request,
                     HttpCompletionOption.ResponseHeadersRead,
                     ct
                 );
