@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Newtonsoft.Json;
 using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.Core;
 
@@ -37,30 +38,32 @@ namespace Remora.Discord.Gateway.API.Commands
         public Snowflake? ChannelID { get; }
 
         /// <inheritdoc />
+        [JsonProperty("self_mute")]
         public bool IsSelfMuted { get; }
 
         /// <inheritdoc />
+        [JsonProperty("self_deaf")]
         public bool IsSelfDeafened { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateVoiceState"/> class.
         /// </summary>
         /// <param name="guildID">The guild ID.</param>
-        /// <param name="selfMute">Whether the client is muted.</param>
-        /// <param name="selfDeaf">Whether the client is deafened.</param>
+        /// <param name="isSelfMuted">Whether the client is muted.</param>
+        /// <param name="isSelfDeafened">Whether the client is deafened.</param>
         /// <param name="channelID">The ID of the channel to move to, or null to disconnect.</param>
         public UpdateVoiceState
         (
             Snowflake guildID,
-            bool selfMute,
-            bool selfDeaf,
+            [JsonProperty("self_mute")] bool isSelfMuted,
+            [JsonProperty("self_deaf")] bool isSelfDeafened,
             Snowflake? channelID = null
         )
         {
             this.GuildID = guildID;
             this.ChannelID = channelID;
-            this.IsSelfMuted = selfMute;
-            this.IsSelfDeafened = selfDeaf;
+            this.IsSelfMuted = isSelfMuted;
+            this.IsSelfDeafened = isSelfDeafened;
         }
     }
 }

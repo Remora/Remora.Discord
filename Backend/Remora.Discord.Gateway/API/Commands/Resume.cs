@@ -46,7 +46,7 @@ namespace Remora.Discord.Gateway.API.Commands
         /// <param name="token">The session token.</param>
         /// <param name="sessionID">The ID of the session.</param>
         /// <param name="sequenceNumber">The last received sequence number.</param>
-        public Resume(string token, string sessionID, int sequenceNumber)
+        public Resume(string token, string sessionID, [JsonProperty("seq")] int sequenceNumber)
         {
             this.Token = token;
             this.SessionID = sessionID;

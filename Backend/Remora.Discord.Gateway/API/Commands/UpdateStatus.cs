@@ -48,6 +48,7 @@ namespace Remora.Discord.Gateway.API.Commands
         public ClientStatus Status { get; }
 
         /// <inheritdoc />
+        [JsonProperty("afk")]
         public bool IsAFK { get; }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Remora.Discord.Gateway.API.Commands
         public UpdateStatus
         (
             ClientStatus status,
-            bool isAFK,
+            [JsonProperty("afk")] bool isAFK,
             DateTimeOffset? since = null,
             IActivity? game = null
         )

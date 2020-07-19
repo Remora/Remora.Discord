@@ -75,7 +75,7 @@ namespace Remora.Discord.Gateway.API.Commands
             Optional<byte> largeThreshold = default,
             Optional<IShardIdentification> shard = default,
             Optional<IUpdateStatus> presence = default,
-            Optional<bool> dispatchGuildSubscriptions = default,
+            [JsonProperty("guild_subscriptions")] Optional<bool> dispatchGuildSubscriptions = default,
             Optional<GatewayIntents> intents = default
         )
         {
