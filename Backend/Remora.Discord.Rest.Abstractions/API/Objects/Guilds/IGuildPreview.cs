@@ -1,5 +1,5 @@
 //
-//  IInvite.cs
+//  IGuildPreview.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,50 +20,55 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Discord.Core;
-using Remora.Discord.Rest.Abstractions.Channels;
-using Remora.Discord.Rest.Abstractions.Guilds;
-using Remora.Discord.Rest.Abstractions.Users;
+using Remora.Discord.Rest.Abstractions.Emojis;
+using Remora.Discord.Rest.Abstractions.Images;
 
-namespace Remora.Discord.Rest.Abstractions.Invites
+namespace Remora.Discord.Rest.Abstractions.Guilds
 {
     /// <summary>
-    /// Represents an invite.
+    /// Represents a preview of a public guild.
     /// </summary>
-    public interface IInvite
+    public interface IGuildPreview
     {
         /// <summary>
-        /// Gets the unique invite code.
+        /// Gets the ID of the guild.
         /// </summary>
-        string Code { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets the guild this invite is for.
+        /// Gets the name of the guild.
         /// </summary>
-        Optional<IGuild> Guild { get; }
+        string Name { get; }
 
         /// <summary>
-        /// Gets the channel this invite is for.
+        /// Gets the guild's icon.
         /// </summary>
-        IChannel Channel { get; }
+        IImageHash? Icon { get; }
 
         /// <summary>
-        /// Gets the user who created the invite.
+        /// Gets the guild's splash banner.
         /// </summary>
-        Optional<IUser> Inviter { get; }
+        IImageHash? Splash { get; }
 
         /// <summary>
-        /// Gets the target user for this invite.
+        /// Gets the guild's Discovery splash banner.
         /// </summary>
-        Optional<IUser> TargetUser { get; }
+        IImageHash? DiscoverySplash { get; }
 
         /// <summary>
-        /// Gets the type of user target for this invite.
+        /// Gets a list of emojis in the server.
         /// </summary>
-        Optional<TargetUserType> TargetUserType { get; }
+        IReadOnlyList<IEmoji> Emojis { get; }
 
         /// <summary>
-        /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
+        /// Gets a list of guild features.
+        /// </summary>
+        IReadOnlyList<GuildFeature> Features { get; }
+
+        /// <summary>
+        /// Gets the approximate count of online members.
         /// </summary>
         Optional<int> ApproximatePresenceCount { get; }
 
@@ -71,5 +76,10 @@ namespace Remora.Discord.Rest.Abstractions.Invites
         /// Gets the approximate count of total members.
         /// </summary>
         Optional<int> ApproximateMemberCount { get; }
+
+        /// <summary>
+        /// Gets the description of the guild, if the guild is discoverable.
+        /// </summary>
+        string? Description { get; }
     }
 }

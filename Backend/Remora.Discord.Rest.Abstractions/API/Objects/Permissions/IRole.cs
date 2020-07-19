@@ -1,5 +1,5 @@
 //
-//  IInvite.cs
+//  IRole.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,56 +20,54 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Drawing;
 using Remora.Discord.Core;
-using Remora.Discord.Rest.Abstractions.Channels;
-using Remora.Discord.Rest.Abstractions.Guilds;
-using Remora.Discord.Rest.Abstractions.Users;
 
-namespace Remora.Discord.Rest.Abstractions.Invites
+namespace Remora.Discord.Rest.Abstractions.Permissions
 {
     /// <summary>
-    /// Represents an invite.
+    /// Represents a Discord role.
     /// </summary>
-    public interface IInvite
+    public interface IRole
     {
         /// <summary>
-        /// Gets the unique invite code.
+        /// Gets the ID of the role.
         /// </summary>
-        string Code { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets the guild this invite is for.
+        /// Gets the name of the role.
         /// </summary>
-        Optional<IGuild> Guild { get; }
+        string Name { get; }
 
         /// <summary>
-        /// Gets the channel this invite is for.
+        /// Gets the colour of the role.
         /// </summary>
-        IChannel Channel { get; }
+        Color Colour { get; }
 
         /// <summary>
-        /// Gets the user who created the invite.
+        /// Gets a value indicating whether the role is displayed separately in the sidebar.
         /// </summary>
-        Optional<IUser> Inviter { get; }
+        bool IsHoisted { get; }
 
         /// <summary>
-        /// Gets the target user for this invite.
+        /// Gets the position of the role.
         /// </summary>
-        Optional<IUser> TargetUser { get; }
+        int Position { get; }
 
         /// <summary>
-        /// Gets the type of user target for this invite.
+        /// Gets the permission set for this role.
         /// </summary>
-        Optional<TargetUserType> TargetUserType { get; }
+        DiscordPermission Permissions { get; }
 
         /// <summary>
-        /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
+        /// Gets a value indicating whether this role is managed by an integration.
         /// </summary>
-        Optional<int> ApproximatePresenceCount { get; }
+        bool IsManaged { get; }
 
         /// <summary>
-        /// Gets the approximate count of total members.
+        /// Gets a value indicating whether this role is mentionable.
         /// </summary>
-        Optional<int> ApproximateMemberCount { get; }
+        bool IsMentionable { get; }
     }
 }
