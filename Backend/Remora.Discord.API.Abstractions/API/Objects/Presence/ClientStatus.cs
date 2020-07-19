@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Abstractions.Presence
         /// <summary>
         /// The user is not to be disturbed.
         /// </summary>
-        DoNotDisturb,
+        DND,
 
         /// <summary>
         /// The user is online.
