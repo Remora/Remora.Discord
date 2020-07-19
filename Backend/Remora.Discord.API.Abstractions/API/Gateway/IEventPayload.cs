@@ -30,6 +30,6 @@ namespace Remora.Discord.API.Abstractions
         /// <summary>
         /// Gets the sequence number of the event.
         /// </summary>
-        public int SequenceNumber { get; }
+        int SequenceNumber { get; }
     }
 }
