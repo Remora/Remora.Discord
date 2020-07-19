@@ -20,7 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Channels;
+using Remora.Discord.API.Abstractions.Guilds;
+using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions
 {
@@ -30,5 +39,89 @@ namespace Remora.Discord.API.Abstractions
     [PublicAPI]
     public interface IDiscordRestUserAPI
     {
+        /// <summary>
+        /// Gets the user object of the requester's account.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default);
+
+        /// <summary>
+        /// Gets the user with the given ID.
+        /// </summary>
+        /// <param name="userID">The ID of the user.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default);
+
+        /// <summary>
+        /// Modifies the current user.
+        /// </summary>
+        /// <param name="username">The new username.</param>
+        /// <param name="avatar">The new avatar.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
+        (
+            Optional<string> username,
+            Optional<Stream?> avatar = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets the guilds the user is in.
+        /// </summary>
+        /// <param name="before">Get guilds before this guild ID.</param>
+        /// <param name="after">Get guilds after this guild ID.</param>
+        /// <param name="limit">The maximum number of guilds to get.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IReadOnlyList<IGuild>>> GetCurrentUserGuildsAsync
+        (
+            Optional<Snowflake> before = default,
+            Optional<Snowflake> after = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Leaves the given guild.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A deletion result which may or may not have succeeded.</returns>
+        Task<IDeleteRestEntityResult> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default);
+
+        /// <summary>
+        /// Gets a list of DM channels the user has. This always returns an empty array for bots.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync
+        (
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Creates a new DM channel with the given user.
+        /// </summary>
+        /// <param name="recipientID">The ID of the recipient.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A creation result which may or may not have succeeded.</returns>
+        Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
+        (
+            Snowflake recipientID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets a list of connection objects.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+        (
+            CancellationToken ct = default
+        );
     }
 }
