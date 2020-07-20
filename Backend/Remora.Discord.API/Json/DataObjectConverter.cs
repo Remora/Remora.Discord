@@ -22,7 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -38,14 +40,57 @@ namespace Remora.Discord.API.Json
     public class DataObjectConverter<TInterface, TImplementation> : JsonConverter<TInterface>
         where TImplementation : TInterface
     {
+        private delegate object? ObjectJsonConverterRead
+        (
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions option
+        );
+
+        private delegate void ObjectJsonConverterWrite
+        (
+            Utf8JsonWriter writer,
+            object? value,
+            JsonSerializerOptions options
+        );
+
+        [return: MaybeNull]
+        private delegate TType JsonConverterRead<out TType>
+        (
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions option
+        );
+
+        private delegate void JsonConverterWrite<in TType>
+        (
+            Utf8JsonWriter writer,
+            [AllowNull] TType value,
+            JsonSerializerOptions options
+        );
+
         private readonly ConstructorInfo _dtoConstructor;
         private readonly IReadOnlyList<PropertyInfo> _dtoProperties;
+
+        private readonly Dictionary<PropertyInfo, string> _nameOverrides;
+        private readonly Dictionary
+        <
+            PropertyInfo,
+            (JsonConverter Converter, ObjectJsonConverterRead Read, ObjectJsonConverterWrite Write)
+        > _converterOverrides;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataObjectConverter{TInterface, TImplementation}"/> class.
         /// </summary>
         public DataObjectConverter()
         {
+            _nameOverrides = new Dictionary<PropertyInfo, string>();
+            _converterOverrides = new Dictionary
+            <
+                PropertyInfo,
+                (JsonConverter Converter, ObjectJsonConverterRead Read, ObjectJsonConverterWrite Write)
+            >();
+
             var visibleType = typeof(TInterface);
             var visibleProperties = visibleType.GetProperties();
             var visiblePropertyTypes = visibleProperties.Select(p => p.PropertyType).ToArray();
@@ -62,6 +107,91 @@ namespace Remora.Discord.API.Json
                 implementationType.Name,
                 $"ctor({string.Join(", ", visiblePropertyTypes.Select(t => t.Name))})"
             );
+        }
+
+        /// <summary>
+        /// Overrides the name of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="name">The new name.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyName<TProperty>
+        (
+            Expression<Func<TInterface, TProperty>> propertyExpression,
+            string name
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _nameOverrides.Add(property, name);
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
+        (
+            Expression<Func<TInterface, TProperty>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var readDelegate = (JsonConverterRead<TProperty>)Delegate.CreateDelegate
+            (
+                typeof(JsonConverterRead<TProperty>),
+                converter,
+                nameof(JsonConverter<int>.Read)
+            );
+
+            var writeDelegate = (JsonConverterWrite<TProperty>)Delegate.CreateDelegate
+            (
+                typeof(JsonConverterWrite<TProperty>),
+                converter,
+                nameof(JsonConverter<int>.Write)
+            );
+
+            var readObjectDelegate = new ObjectJsonConverterRead
+            (
+                (ref Utf8JsonReader reader, Type convert, JsonSerializerOptions option) => readDelegate
+                (
+                    ref reader,
+                    convert,
+                    option
+                )
+            );
+
+            var writeObjectDelegate = new ObjectJsonConverterWrite
+            (
+                (writer, value, options) => writeDelegate(writer, (TProperty)value, options)
+            );
+
+            _converterOverrides.Add(property, (converter, readObjectDelegate, writeObjectDelegate));
+            return this;
         }
 
         /// <inheritdoc />
@@ -82,7 +212,7 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            var readProperties = new Dictionary<PropertyInfo, object>();
+            var readProperties = new Dictionary<PropertyInfo, object?>();
 
             while (reader.TokenType != JsonTokenType.EndObject)
             {
@@ -96,6 +226,11 @@ namespace Remora.Discord.API.Json
                 (
                     p =>
                     {
+                        if (_nameOverrides.TryGetValue(p, out var overriddenName))
+                        {
+                            return overriddenName == propertyName;
+                        }
+
                         var convertedName = options.PropertyNamingPolicy?.ConvertName(p.Name) ?? p.Name;
                         return convertedName == propertyName;
                     });
@@ -105,7 +240,22 @@ namespace Remora.Discord.API.Json
                     throw new JsonException($"No matching DTO property was found for JSON property \"{propertyName}\"");
                 }
 
-                var propertyValue = JsonSerializer.Deserialize(ref reader, dtoProperty.PropertyType, options);
+                var propertyType = dtoProperty.PropertyType;
+
+                object? propertyValue;
+                if
+                (
+                    _converterOverrides.TryGetValue(dtoProperty, out var tuple) &&
+                    tuple.Converter.CanConvert(propertyType)
+                )
+                {
+                    propertyValue = tuple.Read(ref reader, propertyType, options);
+                }
+                else
+                {
+                    propertyValue = JsonSerializer.Deserialize(ref reader, propertyType, options);
+                }
+
                 readProperties.Add(dtoProperty, propertyValue);
 
                 if (!reader.Read())
@@ -154,13 +304,7 @@ namespace Remora.Discord.API.Json
             JsonSerializerOptions options
         )
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            JsonSerializer.Serialize(writer, (TImplementation)value, options);
+            throw new NotImplementedException();
         }
     }
 }
