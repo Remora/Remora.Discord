@@ -4,4 +4,8 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Remora.Results" Version="1.1.0" />
+    </ItemGroup>
+
 </Project>

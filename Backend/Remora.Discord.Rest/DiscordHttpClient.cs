@@ -26,6 +26,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
 
@@ -38,22 +39,26 @@ namespace Remora.Discord.Rest
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _serializerOptions;
-
-        // TODO: Proper implementation
-        private readonly string _token;
+        private readonly ITokenStore _tokenStore;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordHttpClient"/> class.
         /// </summary>
         /// <param name="httpClient">The Http client.</param>
         /// <param name="serializerOptions">The serialization options.</param>
-        public DiscordHttpClient(HttpClient httpClient, JsonSerializerOptions serializerOptions)
+        /// <param name="tokenStore">The token store.</param>
+        public DiscordHttpClient
+        (
+            HttpClient httpClient,
+            JsonSerializerOptions serializerOptions,
+            ITokenStore tokenStore
+        )
         {
-            // TODO: Proper implementation
-            _token = string.Empty;
+            _tokenStore = tokenStore;
 
             _httpClient = httpClient;
             _serializerOptions = serializerOptions;
+            _tokenStore = tokenStore;
         }
 
         /// <summary>
@@ -73,7 +78,7 @@ namespace Remora.Discord.Rest
         {
             configureRequestBuilder ??= q => { };
 
-            var requestBuilder = new RestRequestBuilder(endpoint, _token);
+            var requestBuilder = new RestRequestBuilder(endpoint, _tokenStore.Token);
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Get);
@@ -113,7 +118,7 @@ namespace Remora.Discord.Rest
         {
             configureRequestBuilder ??= q => { };
 
-            var requestBuilder = new RestRequestBuilder(endpoint, _token);
+            var requestBuilder = new RestRequestBuilder(endpoint, _tokenStore.Token);
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Post);
@@ -156,7 +161,7 @@ namespace Remora.Discord.Rest
         {
             configureRequestBuilder ??= q => { };
 
-            var requestBuilder = new RestRequestBuilder(endpoint, _token);
+            var requestBuilder = new RestRequestBuilder(endpoint, _tokenStore.Token);
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Patch);
@@ -198,7 +203,7 @@ namespace Remora.Discord.Rest
         {
             configureRequestBuilder ??= q => { };
 
-            var requestBuilder = new RestRequestBuilder(endpoint, _token);
+            var requestBuilder = new RestRequestBuilder(endpoint, _tokenStore.Token);
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Delete);
@@ -240,7 +245,7 @@ namespace Remora.Discord.Rest
         {
             configureRequestBuilder ??= q => { };
 
-            var requestBuilder = new RestRequestBuilder(endpoint, _token);
+            var requestBuilder = new RestRequestBuilder(endpoint, _tokenStore.Token);
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Put);
@@ -257,12 +262,12 @@ namespace Remora.Discord.Rest
 
                 var entityResult = await UnpackResponseAsync(response, ct);
                 return !entityResult.IsSuccess
-                    ? DeleteRestEntityResult.FromError(entityResult)
-                    : DeleteRestEntityResult.FromSuccess();
+                    ? RestRequestResult.FromError(entityResult)
+                    : RestRequestResult.FromSuccess();
             }
             catch (Exception e)
             {
-                return DeleteRestEntityResult.FromError(e);
+                return RestRequestResult.FromError(e);
             }
         }
 
