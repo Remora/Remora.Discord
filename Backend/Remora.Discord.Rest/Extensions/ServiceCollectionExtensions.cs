@@ -30,7 +30,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.API.Gateway;
+using Remora.Discord.Rest.Json;
+using Remora.Discord.Rest.Polly;
 
 namespace Remora.Discord.Rest.Extensions
 {
@@ -49,7 +53,7 @@ namespace Remora.Discord.Rest.Extensions
         {
             var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
             serviceCollection
-                .AddHttpClient
+                .AddHttpClient<DiscordHttpClient>
                 (
                     "Discord",
                     (services, client) =>
@@ -77,6 +81,7 @@ namespace Remora.Discord.Rest.Extensions
                 (
                     b => b
                         .WaitAndRetryAsync(retryDelay)
+                        .WrapAsync(DiscordRateLimitPolicy.Create())
                 )
                 .AddPolicyHandler
                 (
@@ -104,11 +109,17 @@ namespace Remora.Discord.Rest.Extensions
 
             serviceCollection
                 .AddSingleton<Random>()
-                .AddSingleton<JsonSerializerOptions>()
+                .AddSingleton
+                (
+                    s => new JsonSerializerOptions
+                        {
+                            Converters = { new GatewayEndpointConverter() }
+                        }
+                )
                 .AddSingleton<ITokenStore>(s => new TokenStore(token()));
 
             serviceCollection
-                .AddScoped<DiscordHttpClient>();
+                .AddScoped<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>();
 
             return serviceCollection;
         }

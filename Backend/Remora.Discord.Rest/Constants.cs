@@ -32,6 +32,6 @@ namespace Remora.Discord.Rest
         /// <summary>
         /// Gets the base API URL.
         /// </summary>
-        public static Uri BaseURL { get; } = new Uri("https://discord.com/api");
+        public static Uri BaseURL { get; } = new Uri("https://discord.com/api/");
     }
 }
