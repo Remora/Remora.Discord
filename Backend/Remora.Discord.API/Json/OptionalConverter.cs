@@ -1,5 +1,5 @@
 //
-//  GatewayEndpoint.cs
+//  OptionalConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,36 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway;
+using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.API.Objects
+namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Represents a gateway endpoint.
+    /// Converts optional fields to their JSON representation.
     /// </summary>
-    public class GatewayEndpoint : IGatewayEndpoint
+    /// <typeparam name="TValue">The underlying type.</typeparam>
+    public class OptionalConverter<TValue> : JsonConverter<Optional<TValue>>
     {
         /// <inheritdoc />
-        public string Url { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Shards { get; }
-
-        /// <inheritdoc />
-        public Optional<ISessionStartLimit> SessionStartLimit { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GatewayEndpoint"/> class.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="shards">The suggested. shard count.</param>
-        /// <param name="sessionStartLimit">The session start limit.</param>
-        public GatewayEndpoint(string url, Optional<int> shards, Optional<ISessionStartLimit> sessionStartLimit)
+        public override Optional<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            this.Url = url;
-            this.Shards = shards;
-            this.SessionStartLimit = sessionStartLimit;
+            return new Optional<TValue>(JsonSerializer.Deserialize<TValue>(ref reader, options));
+        }
+
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
+        {
+            if (value.Value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            JsonSerializer.Serialize(writer, value.Value, options);
         }
     }
 }

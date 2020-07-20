@@ -31,9 +31,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Gateway;
+using Remora.Discord.API.API.Objects;
+using Remora.Discord.API.Json;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.API.Gateway;
-using Remora.Discord.Rest.Json;
 using Remora.Discord.Rest.Polly;
 
 namespace Remora.Discord.Rest.Extensions
@@ -112,9 +114,16 @@ namespace Remora.Discord.Rest.Extensions
                 .AddSingleton
                 (
                     s => new JsonSerializerOptions
+                    {
+                        Converters =
                         {
-                            Converters = { new GatewayEndpointConverter() }
-                        }
+                            new DataObjectConverter<IGatewayEndpoint, GatewayEndpoint>(),
+                            new DataObjectConverter<ISessionStartLimit, SessionStartLimit>(),
+                            new OptionalConverterFactory()
+                        },
+                        PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
+                        DictionaryKeyPolicy = new SnakeCaseNamingPolicy()
+                    }
                 )
                 .AddSingleton<ITokenStore>(s => new TokenStore(token()));
 
