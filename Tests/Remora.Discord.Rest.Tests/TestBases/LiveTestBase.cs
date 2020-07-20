@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Rest.Extensions;
 
@@ -39,11 +40,12 @@ namespace Remora.Discord.Rest.Tests.TestBases
         /// <summary>
         /// Initializes a new instance of the <see cref="LiveTestBase{TAPI}"/> class.
         /// </summary>
-        /// <param name="token">The token to use.</param>
-        protected LiveTestBase(string token = "")
+        protected LiveTestBase()
         {
+            var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN");
+
             var services = new ServiceCollection()
-                .AddDiscordRest(() => token)
+                .AddDiscordRest(() => token ?? string.Empty)
                 .BuildServiceProvider();
 
             this.API = services.GetRequiredService<TAPI>();
