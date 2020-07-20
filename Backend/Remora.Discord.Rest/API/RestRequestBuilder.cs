@@ -24,8 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text.Json;
 using System.Web;
 
@@ -62,11 +60,6 @@ namespace Remora.Discord.Rest.API
         private readonly List<HttpContent> _additionalContent;
 
         /// <summary>
-        /// Holds the authorization token.
-        /// </summary>
-        private readonly string _token;
-
-        /// <summary>
         /// Holds the configured Http request method.
         /// </summary>
         private HttpMethod _method = HttpMethod.Get;
@@ -75,11 +68,9 @@ namespace Remora.Discord.Rest.API
         /// Initializes a new instance of the <see cref="RestRequestBuilder"/> class.
         /// </summary>
         /// <param name="endpoint">The API endpoint.</param>
-        /// <param name="token">The authorization token.</param>
-        public RestRequestBuilder(string endpoint, string token)
+        public RestRequestBuilder(string endpoint)
         {
             _endpoint = endpoint;
-            _token = token;
 
             _queryParameters = new Dictionary<string, string>();
             _jsonConfigurators = new List<Action<Utf8JsonWriter>>();
@@ -151,17 +142,13 @@ namespace Remora.Discord.Rest.API
         /// <returns>The request message.</returns>
         public HttpRequestMessage Build()
         {
-            var requestUrl = new Uri(Constants.BaseURL, _endpoint);
-
             var queryParameters = HttpUtility.ParseQueryString(string.Empty);
             foreach (var (queryName, queryValue) in _queryParameters)
             {
                 queryParameters.Add(queryName, queryValue);
             }
 
-            requestUrl = new Uri(requestUrl, queryParameters.ToString());
-
-            var request = new HttpRequestMessage(_method, requestUrl);
+            var request = new HttpRequestMessage(_method, _endpoint + queryParameters);
 
             foreach (var (headerName, headerValue) in _additionalHeaders)
             {
@@ -199,14 +186,6 @@ namespace Remora.Discord.Rest.API
             {
                 request.Content = jsonBody;
             }
-
-            var assemblyName = Assembly.GetExecutingAssembly().GetName();
-
-            var name = assemblyName.Name;
-            var version = assemblyName.Version ?? new Version(1, 0, 0);
-            request.Headers.UserAgent.Add(new ProductInfoHeaderValue(name, version.ToString()));
-
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bot", _token);
 
             return request;
         }
