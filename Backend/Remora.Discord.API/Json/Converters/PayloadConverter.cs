@@ -73,7 +73,7 @@ namespace Remora.Discord.API.Json
                 OperationCode.Identify => DeserializePayload<IIdentify>(dataElement, options),
                 OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(dataElement, options),
                 OperationCode.Resume => DeserializePayload<IResume>(dataElement, options),
-                OperationCode.PresenceUpdate => DeserializePayload<IPresenceUpdate>(dataElement, options),
+                OperationCode.PresenceUpdate => DeserializePayload<IUpdateStatus>(dataElement, options),
                 OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(dataElement, options),
 
                 // Events
