@@ -26,6 +26,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Web;
+using Polly;
 
 namespace Remora.Discord.Rest.API
 {
@@ -186,6 +187,9 @@ namespace Remora.Discord.Rest.API
             {
                 request.Content = jsonBody;
             }
+
+            var context = new Context { { "endpoint", _endpoint } };
+            request.SetPolicyExecutionContext(context);
 
             return request;
         }

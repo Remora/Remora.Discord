@@ -71,14 +71,17 @@ namespace Remora.Discord.Rest.Polly
             bool continueOnCapturedContext
         )
         {
-            var dummyEndpoint = string.Empty;
+            if (!context.TryGetValue("endpoint", out var rawEndpoint) || !(rawEndpoint is string endpoint))
+            {
+                throw new InvalidOperationException("No endpoint set.");
+            }
 
             ConfiguredTaskAwaitable<HttpResponseMessage> requestAction;
             try
             {
                 await _semaphore.WaitAsync(cancellationToken);
 
-                if (!_rateLimitBuckets.TryGetValue(dummyEndpoint, out var rateLimitBucket))
+                if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
                 {
                     rateLimitBucket = _globalRateLimitBucket;
                 }
@@ -129,15 +132,15 @@ namespace Remora.Discord.Rest.Polly
                     return response;
                 }
 
-                if (!_rateLimitBuckets.TryGetValue(dummyEndpoint, out var rateLimitBucket))
+                if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
                 {
-                    _rateLimitBuckets.Add(dummyEndpoint, newLimits);
+                    _rateLimitBuckets.Add(endpoint, newLimits);
                     return response;
                 }
 
                 if (rateLimitBucket.ResetsAt < newLimits.ResetsAt)
                 {
-                    _rateLimitBuckets[dummyEndpoint] = newLimits;
+                    _rateLimitBuckets[endpoint] = newLimits;
                 }
 
                 return response;
