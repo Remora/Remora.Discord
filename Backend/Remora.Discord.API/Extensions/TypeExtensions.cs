@@ -47,6 +47,21 @@ namespace Remora.Discord.API.Extensions
         }
 
         /// <summary>
+        /// Determines whether the given type is a closed <see cref="Nullable{TValue}"/>.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a closed Nullable; otherwise, false.</returns>
+        public static bool IsNullable(this Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            return type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        /// <summary>
         /// Determines whether the given type allows null as a value.
         /// </summary>
         /// <param name="type">The type.</param>

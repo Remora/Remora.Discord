@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
       <ProjectReference Include="..\Remora.Discord.API\Remora.Discord.API.csproj" />
     </ItemGroup>
 

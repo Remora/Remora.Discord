@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  PartySize.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions.Activities;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API.Objects.Activities
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents a party size object.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    public class PartySize : IPartySize
     {
+        /// <inheritdoc />
+        public int CurrentSize { get; }
+
+        /// <inheritdoc />
+        public int MaxSize { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PartySize"/> class.
+        /// </summary>
+        /// <param name="currentSize">The current number of people in the party.</param>
+        /// <param name="maxSize">The maximum size of the party.</param>
+        public PartySize(int currentSize, int maxSize)
+        {
+            this.CurrentSize = currentSize;
+            this.MaxSize = maxSize;
+        }
     }
 }

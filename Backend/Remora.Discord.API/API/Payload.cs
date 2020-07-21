@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  Payload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents a payload from the Discord gateway.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
+    internal class Payload<TData> : IPayload
     {
+        /// <summary>
+        /// Gets the data structure for the event.
+        /// </summary>
+        public TData Data { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
+        /// </summary>
+        /// <param name="data">The JSON data.</param>
+        public Payload(TData data)
+        {
+            this.Data = data;
+        }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  Hello.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions.Events;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API.Events
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    public class Hello : IHello
     {
+        /// <inheritdoc />
+        public ulong HeartbeatInterval { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Hello"/> class.
+        /// </summary>
+        /// <param name="heartbeatInterval">The heartbeat interval.</param>
+        public Hello(ulong heartbeatInterval)
+        {
+            this.HeartbeatInterval = heartbeatInterval;
+        }
     }
 }

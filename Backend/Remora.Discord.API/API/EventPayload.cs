@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  EventPayload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents a Discord event payload.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    /// <typeparam name="TEventData">The event data.</typeparam>
+    internal class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
     {
+        /// <inheritdoc />
+        public int SequenceNumber { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventPayload{TEventData}"/> class.
+        /// </summary>
+        /// <param name="data">The event data.</param>
+        /// <param name="sequenceNumber">The sequence number.</param>
+        public EventPayload(TEventData data, int sequenceNumber)
+            : base(data)
+        {
+            this.SequenceNumber = sequenceNumber;
+        }
     }
 }

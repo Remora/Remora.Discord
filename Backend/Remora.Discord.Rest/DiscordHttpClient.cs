@@ -25,6 +25,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
@@ -47,11 +48,11 @@ namespace Remora.Discord.Rest
         public DiscordHttpClient
         (
             HttpClient httpClient,
-            JsonSerializerOptions serializerOptions
+            IOptions<JsonSerializerOptions> serializerOptions
         )
         {
             _httpClient = httpClient;
-            _serializerOptions = serializerOptions;
+            _serializerOptions = serializerOptions.Value;
         }
 
         /// <summary>

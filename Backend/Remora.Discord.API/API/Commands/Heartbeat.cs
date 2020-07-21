@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  Heartbeat.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions.Commands;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API.Commands
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents a heartbeat command to or from Discord.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    public class Heartbeat : IHeartbeat
     {
+        /// <inheritdoc />
+        public long? LastSequenceNumber { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Heartbeat"/> class.
+        /// </summary>
+        /// <param name="lastSequenceNumber">The last sequence number received by the client.</param>
+        public Heartbeat(long? lastSequenceNumber)
+        {
+            this.LastSequenceNumber = lastSequenceNumber;
+        }
     }
 }

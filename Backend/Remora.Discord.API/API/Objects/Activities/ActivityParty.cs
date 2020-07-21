@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  ActivityParty.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API.Objects.Activities
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents a party of people in an activity.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    public class ActivityParty : IActivityParty
     {
+        /// <inheritdoc />
+        public Optional<string> ID { get; }
+
+        /// <inheritdoc />
+        public Optional<IPartySize> Size { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ActivityParty"/> class.
+        /// </summary>
+        /// <param name="id">The ID of the party.</param>
+        /// <param name="size">The size of the party.</param>
+        public ActivityParty(Optional<string> id = default, Optional<IPartySize> size = default)
+        {
+            this.ID = id;
+            this.Size = size;
+        }
     }
 }

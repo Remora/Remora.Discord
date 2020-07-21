@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -41,44 +40,12 @@ namespace Remora.Discord.API.Json
     public class DataObjectConverter<TInterface, TImplementation> : JsonConverter<TInterface>
         where TImplementation : TInterface
     {
-        private delegate object? ObjectJsonConverterRead
-        (
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions option
-        );
-
-        private delegate void ObjectJsonConverterWrite
-        (
-            Utf8JsonWriter writer,
-            object? value,
-            JsonSerializerOptions options
-        );
-
-        [return: MaybeNull]
-        private delegate TType JsonConverterRead<out TType>
-        (
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions option
-        );
-
-        private delegate void JsonConverterWrite<in TType>
-        (
-            Utf8JsonWriter writer,
-            [AllowNull] TType value,
-            JsonSerializerOptions options
-        );
-
         private readonly ConstructorInfo _dtoConstructor;
         private readonly IReadOnlyList<PropertyInfo> _dtoProperties;
 
         private readonly Dictionary<PropertyInfo, string> _nameOverrides;
-        private readonly Dictionary
-        <
-            PropertyInfo,
-            (JsonConverter Converter, ObjectJsonConverterRead Read, ObjectJsonConverterWrite Write)
-        > _converterOverrides;
+        private readonly Dictionary<PropertyInfo, JsonConverterDelegates> _converterOverrides;
+        private readonly Dictionary<PropertyInfo, JsonConverterFactory> _converterFactoryOverrides;
 
         /// <summary>
         /// Holds a value indicating whether extra undefined properties should be allowed.
@@ -91,28 +58,149 @@ namespace Remora.Discord.API.Json
         public DataObjectConverter()
         {
             _nameOverrides = new Dictionary<PropertyInfo, string>();
-            _converterOverrides = new Dictionary
-            <
-                PropertyInfo,
-                (JsonConverter Converter, ObjectJsonConverterRead Read, ObjectJsonConverterWrite Write)
-            >();
+            _converterOverrides = new Dictionary<PropertyInfo, JsonConverterDelegates>();
+            _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
             var visibleType = typeof(TInterface);
             var visibleProperties = visibleType.GetProperties();
+
+            _dtoConstructor = FindBestMatchingConstructor(visibleProperties);
+            _dtoProperties = ReorderProperties(visibleProperties, _dtoConstructor);
+        }
+
+        /// <summary>
+        /// Reorders the input properties based on the order and names of the parameters in the given constructor.
+        /// </summary>
+        /// <param name="visibleProperties">The properties.</param>
+        /// <param name="constructor">The constructor.</param>
+        /// <returns>The reordered properties.</returns>
+        /// <exception cref="MissingMemberException">
+        /// Thrown if no match between a property and a parameter can be established.
+        /// </exception>
+        private IReadOnlyList<PropertyInfo> ReorderProperties
+        (
+            PropertyInfo[] visibleProperties,
+            ConstructorInfo constructor
+        )
+        {
+            var reorderedProperties = new List<PropertyInfo>(visibleProperties.Length);
+
+            var constructorParameters = constructor.GetParameters();
+            foreach (var constructorParameter in constructorParameters)
+            {
+                var matchingProperty = visibleProperties.FirstOrDefault
+                (
+                    p =>
+                        p.Name.Equals(constructorParameter.Name, StringComparison.InvariantCultureIgnoreCase) &&
+                        p.PropertyType == constructorParameter.ParameterType
+                );
+
+                if (matchingProperty is null)
+                {
+                    throw new MissingMemberException(typeof(TInterface).Name, constructorParameter.Name);
+                }
+
+                reorderedProperties.Add(matchingProperty);
+            }
+
+            return reorderedProperties;
+        }
+
+        /// <summary>
+        /// Finds the best matching constructor on the implementation type. A valid constructor must have a matching
+        /// set of types in its parameters as the visible properties that will be considered in serialization; the order
+        /// need not match.
+        /// </summary>
+        /// <param name="visibleProperties">The visible set of properties.</param>
+        /// <returns>The constructor.</returns>
+        /// <exception cref="MissingMethodException">Thrown if no appropriate constructor can be found.</exception>
+        private ConstructorInfo FindBestMatchingConstructor(PropertyInfo[] visibleProperties)
+        {
             var visiblePropertyTypes = visibleProperties.Select(p => p.PropertyType).ToArray();
 
             var implementationType = typeof(TImplementation);
-            var implementationConstructor = implementationType.GetConstructor
-            (
-                visiblePropertyTypes
-            );
 
-            _dtoProperties = visibleProperties;
-            _dtoConstructor = implementationConstructor ?? throw new MissingMethodException
+            var implementationConstructors = implementationType.GetConstructors();
+            if (implementationConstructors.Length == 1)
+            {
+                var singleCandidate = implementationConstructors[0];
+                return IsMatchingConstructor(singleCandidate, visiblePropertyTypes)
+                    ? singleCandidate
+                    : throw new MissingMethodException
+                    (
+                        implementationType.Name,
+                        $"ctor({string.Join(", ", visiblePropertyTypes.Select(t => t.Name))})"
+                    );
+            }
+
+            var matchingConstructors = implementationType.GetConstructors()
+                .Where(c => IsMatchingConstructor(c, visiblePropertyTypes)).ToList();
+
+            if (matchingConstructors.Count == 1)
+            {
+                return matchingConstructors[0];
+            }
+
+            throw new MissingMethodException
             (
                 implementationType.Name,
                 $"ctor({string.Join(", ", visiblePropertyTypes.Select(t => t.Name))})"
             );
+        }
+
+        private bool IsMatchingConstructor(ConstructorInfo constructor, IReadOnlyCollection<Type> visiblePropertyTypes)
+        {
+            if (constructor.GetParameters().Length != visiblePropertyTypes.Count)
+            {
+                return false;
+            }
+
+            var parameterTypeCounts = new Dictionary<Type, int>();
+            foreach (var parameterType in constructor.GetParameters().Select(p => p.ParameterType))
+            {
+                if (parameterTypeCounts.ContainsKey(parameterType))
+                {
+                    parameterTypeCounts[parameterType] += 1;
+                }
+                else
+                {
+                    parameterTypeCounts.Add(parameterType, 1);
+                }
+            }
+
+            var propertyTypeCounts = new Dictionary<Type, int>();
+            foreach (var propertyType in visiblePropertyTypes)
+            {
+                if (propertyTypeCounts.ContainsKey(propertyType))
+                {
+                    propertyTypeCounts[propertyType] += 1;
+                }
+                else
+                {
+                    propertyTypeCounts.Add(propertyType, 1);
+                }
+            }
+
+            if (parameterTypeCounts.Count != propertyTypeCounts.Count)
+            {
+                return false;
+            }
+
+            foreach (var (propertyType, propertyTypeCount) in propertyTypeCounts)
+            {
+                if (!parameterTypeCounts.TryGetValue(propertyType, out var parameterTypeCount))
+                {
+                    return false;
+                }
+
+                if (propertyTypeCount != parameterTypeCount)
+                {
+                    return false;
+                }
+            }
+
+            // This constructor matches
+            return true;
         }
 
         /// <summary>
@@ -181,36 +269,36 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
-            var readDelegate = (JsonConverterRead<TProperty>)Delegate.CreateDelegate
-            (
-                typeof(JsonConverterRead<TProperty>),
-                converter,
-                nameof(JsonConverter<int>.Read)
-            );
+            _converterOverrides.Add(property, JsonConverterDelegates.Create<TProperty>(converter));
 
-            var writeDelegate = (JsonConverterWrite<TProperty>)Delegate.CreateDelegate
-            (
-                typeof(JsonConverterWrite<TProperty>),
-                converter,
-                nameof(JsonConverter<int>.Write)
-            );
+            return this;
+        }
 
-            var readObjectDelegate = new ObjectJsonConverterRead
-            (
-                (ref Utf8JsonReader reader, Type convert, JsonSerializerOptions option) => readDelegate
-                (
-                    ref reader,
-                    convert,
-                    option
-                )
-            );
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converterFactory">The JSON converter factory.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
+        (
+            Expression<Func<TInterface, TProperty>> propertyExpression,
+            JsonConverterFactory converterFactory
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
 
-            var writeObjectDelegate = new ObjectJsonConverterWrite
-            (
-                (writer, value, options) => writeDelegate(writer, (TProperty)value, options)
-            );
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
 
-            _converterOverrides.Add(property, (converter, readObjectDelegate, writeObjectDelegate));
+            _converterFactoryOverrides.Add(property, converterFactory);
             return this;
         }
 
@@ -268,19 +356,10 @@ namespace Remora.Discord.API.Json
 
                 var propertyType = dtoProperty.PropertyType;
 
-                object? propertyValue;
-                if
-                (
-                    _converterOverrides.TryGetValue(dtoProperty, out var tuple) &&
-                    tuple.Converter.CanConvert(propertyType)
-                )
-                {
-                    propertyValue = tuple.Read(ref reader, propertyType, options);
-                }
-                else
-                {
-                    propertyValue = JsonSerializer.Deserialize(ref reader, propertyType, options);
-                }
+                var converter = GetConverter(dtoProperty, options);
+                var propertyValue = !(converter is null)
+                    ? converter.Read(ref reader, propertyType, options)
+                    : JsonSerializer.Deserialize(ref reader, propertyType, options);
 
                 // Verify nullability
                 if (!propertyType.AllowsNull() && propertyValue is null)
@@ -382,6 +461,44 @@ namespace Remora.Discord.API.Json
             }
 
             return options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name;
+        }
+
+        private JsonConverterDelegates? GetConverter(PropertyInfo dtoProperty, JsonSerializerOptions options)
+        {
+            if (_converterOverrides.TryGetValue(dtoProperty, out var converter))
+            {
+                return converter;
+            }
+
+            if (!_converterFactoryOverrides.TryGetValue(dtoProperty, out var converterFactory))
+            {
+                return null;
+            }
+
+            var genericCreateMethod = typeof(JsonConverterDelegates).GetMethod
+            (
+                nameof(JsonConverterDelegates.Create)
+            );
+
+            if (genericCreateMethod is null)
+            {
+                throw new MissingMethodException
+                (
+                    nameof(JsonConverterDelegates),
+                    nameof(JsonConverterDelegates.Create)
+                );
+            }
+
+            var createMethod = genericCreateMethod.MakeGenericMethod(dtoProperty.PropertyType);
+
+            var createdConverter = converterFactory.CreateConverter(dtoProperty.PropertyType, options);
+            var createdDelegates = createMethod.Invoke(null, new object?[] { createdConverter });
+            if (createdDelegates is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return (JsonConverterDelegates)createdDelegates;
         }
     }
 }

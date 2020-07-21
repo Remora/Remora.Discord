@@ -20,14 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.Gateway.Services;
+using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Tests.Services;
 using Remora.Results;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Remora.Discord.Gateway.Tests.TestBases
 {
@@ -43,17 +47,24 @@ namespace Remora.Discord.Gateway.Tests.TestBases
         protected SampleDataService SampleData { get; }
 
         /// <summary>
-        /// Gets the JSON service.
+        /// Gets the configured JSON serializer options.
         /// </summary>
-        protected DiscordJsonService DiscordJsonService { get; }
+        protected JsonSerializerOptions Options { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="APITypeTestBase"/> class.
         /// </summary>
         public APITypeTestBase()
         {
-            this.SampleData = new SampleDataService();
-            this.DiscordJsonService = new DiscordJsonService();
+            var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN") ?? string.Empty;
+
+            var services = new ServiceCollection()
+                .AddDiscordGateway(() => token)
+                .AddSingleton<SampleDataService>()
+                .BuildServiceProvider();
+
+            this.SampleData = services.GetRequiredService<SampleDataService>();
+            this.Options = services.GetRequiredService<IOptions<JsonSerializerOptions>>().Value;
         }
 
         /// <summary>
@@ -76,11 +87,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var payload = this.DiscordJsonService.Serializer.Deserialize<IPayload>
-            (
-                new JsonTextReader(new StreamReader(sampleData))
-            );
-
+            var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
             Assert.NotNull(payload);
         }
 
@@ -98,13 +105,10 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var payload = this.DiscordJsonService.Serializer.Deserialize<IPayload>
-            (
-                new JsonTextReader(new StreamReader(sampleData))
-            );
+            var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
 
-            using var writer = new JsonTextWriter(new StreamWriter(new MemoryStream()));
-            this.DiscordJsonService.Serializer.Serialize(writer, payload);
+            await using var stream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(stream, payload, this.Options);
 
             Assert.NotNull(payload);
         }
@@ -124,26 +128,17 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             }
 
             await using var sampleData = getSampleData.Entity;
-            var deserialized = this.DiscordJsonService.Serializer.Deserialize<IPayload>
-            (
-                new JsonTextReader(new StreamReader(sampleData))
-            );
+            var deserialized = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
 
-            await using var ms = new MemoryStream();
-            var writer = new JsonTextWriter(new StreamWriter(ms))
-            {
-                IndentChar = ' ',
-                Formatting = Formatting.Indented,
-                Indentation = 4
-            };
+            await using var stream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(stream, deserialized, this.Options);
 
-            this.DiscordJsonService.Serializer.Serialize(writer, deserialized);
-            await writer.FlushAsync();
+            await stream.FlushAsync();
 
-            ms.Seek(0, SeekOrigin.Begin);
+            stream.Seek(0, SeekOrigin.Begin);
             sampleData.Seek(0, SeekOrigin.Begin);
 
-            var serializedReader = new StreamReader(ms);
+            var serializedReader = new StreamReader(stream);
             var originalReader = new StreamReader(sampleData);
 
             var serialized = await serializedReader.ReadToEndAsync() + '\n';

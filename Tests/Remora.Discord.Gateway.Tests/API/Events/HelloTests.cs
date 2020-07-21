@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Gateway.API.Events;
+using Remora.Discord.API.API.Events;
 using Remora.Discord.Gateway.Tests.TestBases;
 
 namespace Remora.Discord.Gateway.Tests.API.Events

@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  ShardIdentification.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Abstractions.Commands;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.API.Commands
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Represents an identification set for a sharded connection.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    public class ShardIdentification : IShardIdentification
     {
+        /// <inheritdoc />
+        public int ShardID { get; }
+
+        /// <inheritdoc />
+        public int ShardCount { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShardIdentification"/> class.
+        /// </summary>
+        /// <param name="shardID">The shard ID.</param>
+        /// <param name="shardCount">The shard count.</param>
+        public ShardIdentification(int shardID, int shardCount)
+        {
+            this.ShardID = shardID;
+            this.ShardCount = shardCount;
+        }
     }
 }

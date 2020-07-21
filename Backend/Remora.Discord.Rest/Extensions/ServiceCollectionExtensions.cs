@@ -25,16 +25,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.API.Abstractions.Gateway;
-using Remora.Discord.API.API.Objects;
-using Remora.Discord.API.Json;
+using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.API.Gateway;
 using Remora.Discord.Rest.Polly;
@@ -54,6 +50,9 @@ namespace Remora.Discord.Rest.Extensions
         /// <returns>The service collection, with the services added.</returns>
         public static IServiceCollection AddDiscordRest(this IServiceCollection serviceCollection, Func<string> token)
         {
+            serviceCollection
+                .AddDiscordApi();
+
             var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
             serviceCollection
                 .AddHttpClient<DiscordHttpClient>
@@ -111,22 +110,6 @@ namespace Remora.Discord.Rest.Extensions
                 );
 
             serviceCollection
-                .AddSingleton<Random>()
-                .AddSingleton
-                (
-                    s => new JsonSerializerOptions
-                    {
-                        Converters =
-                        {
-                            new DataObjectConverter<IGatewayEndpoint, GatewayEndpoint>(),
-                            new DataObjectConverter<ISessionStartLimit, SessionStartLimit>()
-                                .WithPropertyConverter(st => st.ResetAfter, new MillisecondTimeSpanConverter()),
-                            new OptionalConverterFactory()
-                        },
-                        PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
-                        DictionaryKeyPolicy = new SnakeCaseNamingPolicy()
-                    }
-                )
                 .AddSingleton<ITokenStore>(s => new TokenStore(token()));
 
             serviceCollection

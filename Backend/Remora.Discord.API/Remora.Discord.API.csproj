@@ -5,11 +5,43 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.6" />
         <PackageReference Include="System.Text.Json" Version="4.7.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="API\Objects\Activities\ActivityAssets.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\ActivityEmoji.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\ActivityParty.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\ActivitySecrets.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\ActivityTimestamps.cs">
+        <DependentUpon>Activity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\PartySize.cs">
+        <DependentUpon>ActivityParty.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Commands\ConnectionProperties.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Commands\ShardIdentification.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\EventPayload.cs">
+        <DependentUpon>Payload.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

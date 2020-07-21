@@ -6,42 +6,12 @@
 
     <ItemGroup>
       <PackageReference Include="Humanizer.Core" Version="2.8.11" />
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
       <PackageReference Include="Remora.Results" Version="1.1.0" />
+        <PackageReference Include="System.Text.Json" Version="4.7.2" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
-      <ProjectReference Include="..\Remora.Discord\Remora.Discord.Core\Remora.Discord.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="API\Objects\ActivityTimestamps.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivityEmoji.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivityParty.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivityAssets.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\ActivitySecrets.cs">
-        <DependentUpon>Activity.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Commands\ConnectionProperties.cs">
-        <DependentUpon>Identify.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Commands\ShardIdentification.cs">
-        <DependentUpon>Identify.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\Objects\PartySize.cs">
-        <DependentUpon>ActivityParty.cs</DependentUpon>
-      </Compile>
-      <Compile Update="API\EventPayload.cs">
-        <DependentUpon>Payload.cs</DependentUpon>
-      </Compile>
+      <ProjectReference Include="..\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
     </ItemGroup>
 </Project>
