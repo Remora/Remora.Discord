@@ -90,14 +90,12 @@ namespace Remora.Discord.API.Extensions
                         o.Converters.Add
                         (
                             new DataObjectConverter<IRequestGuildMembers, RequestGuildMembers>()
-                                .WithPropertyName(r => r.GuildID, "guild_id")
                         );
 
                         o.Converters.Add
                         (
                             new DataObjectConverter<IResume, Resume>()
                                 .WithPropertyName(r => r.SequenceNumber, "seq")
-                                .WithPropertyName(r => r.SessionID, "session_id")
                         );
 
                         o.Converters.Add
@@ -116,7 +114,6 @@ namespace Remora.Discord.API.Extensions
                             new DataObjectConverter<IUpdateVoiceState, UpdateVoiceState>()
                                 .WithPropertyName(u => u.IsSelfMuted, "self_mute")
                                 .WithPropertyName(u => u.IsSelfDeafened, "self_deaf")
-                                .WithPropertyName(u => u.GuildID, "guild_id")
                         );
 
                         o.Converters.Add

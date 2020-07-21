@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -41,21 +42,38 @@ namespace Remora.Discord.API.Json
 
             var builder = new StringBuilder();
 
-            builder.Append(char.ToLowerInvariant(name[0]));
-            foreach (var c in name.Skip(1))
+            var wordBoundaries = new List<int>();
+
+            char? previous = null;
+            for (var index = 0; index < name.Length; index++)
             {
-                if (char.IsLower(c))
+                var c = name[index];
+
+                if (previous.HasValue && char.IsUpper(previous.Value) && char.IsLower(c))
                 {
-                    builder.Append(c);
+                    wordBoundaries.Add(index - 1);
                 }
-                else
+
+                if (previous.HasValue && char.IsLower(previous.Value) && char.IsUpper(c))
                 {
-                    builder.Append('_');
-                    builder.Append(char.ToLowerInvariant(c));
+                    wordBoundaries.Add(index);
                 }
+
+                previous = c;
             }
 
-            return builder.ToString();
+            for (var index = 0; index < name.Length; index++)
+            {
+                var c = name[index];
+                if (wordBoundaries.Contains(index))
+                {
+                    builder.Append('_');
+                }
+
+                builder.Append(char.ToLowerInvariant(c));
+            }
+
+            return builder.ToString().Trim('_');
         }
     }
 }
