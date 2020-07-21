@@ -84,6 +84,7 @@ namespace Remora.Discord.API.Extensions
                         o.Converters.Add
                         (
                             new DataObjectConverter<IIdentify, Identify>()
+                                .WithPropertyName(i => i.DispatchGuildSubscriptions, "guild_subscriptions")
                         );
 
                         o.Converters.Add
