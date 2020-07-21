@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
@@ -35,6 +36,7 @@ namespace Remora.Discord.Core
     /// value would never be serialized, but a nullable with a null value would (albeit as "null").
     /// </summary>
     /// <typeparam name="TValue">The inner type.</typeparam>
+    [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<TValue> : IOptional
     {
         [MaybeNull, AllowNull]
@@ -44,6 +46,7 @@ namespace Remora.Discord.Core
         /// Gets the value contained in the optional.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the optional does not contain a value.</exception>
+        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
         [MaybeNull]
         [PublicAPI]
         public TValue Value
@@ -63,6 +66,19 @@ namespace Remora.Discord.Core
         /// <inheritdoc />
         [PublicAPI]
         public bool HasValue { get; }
+
+        private string DebuggerDisplay
+        {
+            get
+            {
+                if (this.HasValue)
+                {
+                    return this.Value?.ToString() ?? "null";
+                }
+
+                return "Empty";
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Optional{TValue}"/> struct.
