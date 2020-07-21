@@ -65,7 +65,7 @@ namespace Remora.Discord.API.Json
             for (var index = 0; index < name.Length; index++)
             {
                 var c = name[index];
-                if (wordBoundaries.Contains(index))
+                if (wordBoundaries.Contains(index) && index != 0)
                 {
                     builder.Append('_');
                 }
@@ -73,7 +73,7 @@ namespace Remora.Discord.API.Json
                 builder.Append(char.ToLowerInvariant(c));
             }
 
-            return builder.ToString().Trim('_');
+            return builder.ToString();
         }
     }
 }
