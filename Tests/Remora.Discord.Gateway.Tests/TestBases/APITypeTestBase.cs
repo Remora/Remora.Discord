@@ -29,6 +29,7 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Tests.Services;
+using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -138,13 +139,10 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             stream.Seek(0, SeekOrigin.Begin);
             sampleData.Seek(0, SeekOrigin.Begin);
 
-            var serializedReader = new StreamReader(stream);
-            var originalReader = new StreamReader(sampleData);
+            var serialized = await JsonDocument.ParseAsync(stream);
+            var original = await JsonDocument.ParseAsync(sampleData);
 
-            var serialized = await serializedReader.ReadToEndAsync() + '\n';
-            var original = await originalReader.ReadToEndAsync();
-
-            Assert.Equal(original, serialized);
+            JsonAssert.Equivalent(original, serialized);
         }
     }
 }
