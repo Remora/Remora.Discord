@@ -39,17 +39,22 @@ namespace Remora.Discord.API.API.Objects
         /// <inheritdoc/>
         public TimeSpan ResetAfter { get; }
 
+        /// <inheritdoc />
+        public int MaxConcurrency { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionStartLimit"/> class.
         /// </summary>
         /// <param name="total">The total allowed session starts.</param>
         /// <param name="remaining">The remaining allowed session starts.</param>
         /// <param name="resetAfter">The time after which the limit resets.</param>
-        public SessionStartLimit(int total, int remaining, TimeSpan resetAfter)
+        /// <param name="maxConcurrency">The maximum degree of concurrency.</param>
+        public SessionStartLimit(int total, int remaining, TimeSpan resetAfter, int maxConcurrency)
         {
             this.Total = total;
             this.Remaining = remaining;
             this.ResetAfter = resetAfter;
+            this.MaxConcurrency = maxConcurrency;
         }
     }
 }
