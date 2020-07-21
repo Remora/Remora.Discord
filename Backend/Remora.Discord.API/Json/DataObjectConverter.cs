@@ -436,17 +436,14 @@ namespace Remora.Discord.API.Json
                 writer.WritePropertyName(jsonName);
 
                 var propertyType = dtoProperty.PropertyType;
-                if
-                (
-                    _converterOverrides.TryGetValue(dtoProperty, out var tuple) &&
-                    tuple.Converter.CanConvert(propertyType)
-                )
+                var converter = GetConverter(dtoProperty, options);
+                if (!(converter is null) && converter.Converter.CanConvert(propertyType))
                 {
-                    tuple.Write(writer, propertyValue, options);
+                    converter.Write(writer, propertyValue, options);
                 }
                 else
                 {
-                    JsonSerializer.Serialize(writer, propertyValue, options);
+                    JsonSerializer.Serialize(writer, propertyValue, propertyType, options);
                 }
             }
 

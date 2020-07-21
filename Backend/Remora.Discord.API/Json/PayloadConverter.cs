@@ -153,7 +153,7 @@ namespace Remora.Discord.API.Json
             }
             else
             {
-                JsonSerializer.Serialize(writer, payloadData, options);
+                JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
             }
 
             writer.WriteEndObject();
