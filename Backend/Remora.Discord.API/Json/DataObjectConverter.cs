@@ -80,6 +80,11 @@ namespace Remora.Discord.API.Json
         > _converterOverrides;
 
         /// <summary>
+        /// Holds a value indicating whether extra undefined properties should be allowed.
+        /// </summary>
+        private bool _allowExtraProperties;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataObjectConverter{TInterface, TImplementation}"/> class.
         /// </summary>
         public DataObjectConverter()
@@ -107,6 +112,18 @@ namespace Remora.Discord.API.Json
                 implementationType.Name,
                 $"ctor({string.Join(", ", visiblePropertyTypes.Select(t => t.Name))})"
             );
+        }
+
+        /// <summary>
+        /// Sets whether extra JSON properties without a matching DTO property are allowed. Such properties are, if
+        /// allowed, ignored. Otherwise, they throw a <see cref="JsonException"/>.
+        /// </summary>
+        /// <param name="allowExtraProperties">Whether to allow extra properties.</param>
+        /// <returns>The converter, with the new setting.</returns>
+        public DataObjectConverter<TInterface, TImplementation> AllowExtraProperties(bool allowExtraProperties)
+        {
+            _allowExtraProperties = allowExtraProperties;
+            return this;
         }
 
         /// <summary>
@@ -237,7 +254,18 @@ namespace Remora.Discord.API.Json
 
                 if (dtoProperty is null)
                 {
-                    throw new JsonException($"No matching DTO property was found for JSON property \"{propertyName}\"");
+                    if (!_allowExtraProperties)
+                    {
+                        throw new JsonException();
+                    }
+
+                    // No matching property - we'll skip it
+                    if (!reader.Read())
+                    {
+                        throw new JsonException();
+                    }
+
+                    continue;
                 }
 
                 var propertyType = dtoProperty.PropertyType;

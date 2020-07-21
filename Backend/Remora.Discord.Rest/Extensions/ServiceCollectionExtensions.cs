@@ -119,7 +119,8 @@ namespace Remora.Discord.Rest.Extensions
                         Converters =
                         {
                             new DataObjectConverter<IGatewayEndpoint, GatewayEndpoint>(),
-                            new DataObjectConverter<ISessionStartLimit, SessionStartLimit>(),
+                            new DataObjectConverter<ISessionStartLimit, SessionStartLimit>()
+                                .WithPropertyConverter(st => st.ResetAfter, new MillisecondTimeSpanConverter()),
                             new OptionalConverterFactory()
                         },
                         PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
