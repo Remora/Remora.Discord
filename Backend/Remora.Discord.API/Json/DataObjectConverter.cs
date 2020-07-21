@@ -28,7 +28,8 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.Rest.Extensions;
+using Remora.Discord.API.Extensions;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Json
 {
@@ -82,7 +83,7 @@ namespace Remora.Discord.API.Json
         /// <summary>
         /// Holds a value indicating whether extra undefined properties should be allowed.
         /// </summary>
-        private bool _allowExtraProperties;
+        private bool _allowExtraProperties = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataObjectConverter{TInterface, TImplementation}"/> class.
@@ -117,10 +118,12 @@ namespace Remora.Discord.API.Json
         /// <summary>
         /// Sets whether extra JSON properties without a matching DTO property are allowed. Such properties are, if
         /// allowed, ignored. Otherwise, they throw a <see cref="JsonException"/>.
+        ///
+        /// By default, this is true.
         /// </summary>
         /// <param name="allowExtraProperties">Whether to allow extra properties.</param>
         /// <returns>The converter, with the new setting.</returns>
-        public DataObjectConverter<TInterface, TImplementation> AllowExtraProperties(bool allowExtraProperties)
+        public DataObjectConverter<TInterface, TImplementation> AllowExtraProperties(bool allowExtraProperties = true)
         {
             _allowExtraProperties = allowExtraProperties;
             return this;
@@ -241,16 +244,8 @@ namespace Remora.Discord.API.Json
 
                 var dtoProperty = _dtoProperties.FirstOrDefault
                 (
-                    p =>
-                    {
-                        if (_nameOverrides.TryGetValue(p, out var overriddenName))
-                        {
-                            return overriddenName == propertyName;
-                        }
-
-                        var convertedName = options.PropertyNamingPolicy?.ConvertName(p.Name) ?? p.Name;
-                        return convertedName == propertyName;
-                    });
+                    p => GetJsonPropertyName(p, options) == propertyName
+                );
 
                 if (dtoProperty is null)
                 {
@@ -262,7 +257,10 @@ namespace Remora.Discord.API.Json
                     // No matching property - we'll skip it
                     if (!reader.Read())
                     {
-                        throw new JsonException();
+                        throw new JsonException
+                        (
+                            $"No matching DTO property for JSON property \"{propertyName}\" could be found."
+                        );
                     }
 
                     continue;
@@ -282,6 +280,12 @@ namespace Remora.Discord.API.Json
                 else
                 {
                     propertyValue = JsonSerializer.Deserialize(ref reader, propertyType, options);
+                }
+
+                // Verify nullability
+                if (!propertyType.AllowsNull() && propertyValue is null)
+                {
+                    throw new JsonException();
                 }
 
                 readProperties.Add(dtoProperty, propertyValue);
@@ -332,7 +336,52 @@ namespace Remora.Discord.API.Json
             JsonSerializerOptions options
         )
         {
-            throw new NotImplementedException();
+            writer.WriteStartObject();
+
+            foreach (var dtoProperty in _dtoProperties)
+            {
+                var propertyGetter = dtoProperty.GetGetMethod();
+                if (propertyGetter is null)
+                {
+                    continue;
+                }
+
+                var propertyValue = propertyGetter.Invoke(value, new object?[] { });
+
+                if (propertyValue is IOptional optional && !optional.HasValue)
+                {
+                    continue;
+                }
+
+                var jsonName = GetJsonPropertyName(dtoProperty, options);
+                writer.WritePropertyName(jsonName);
+
+                var propertyType = dtoProperty.PropertyType;
+                if
+                (
+                    _converterOverrides.TryGetValue(dtoProperty, out var tuple) &&
+                    tuple.Converter.CanConvert(propertyType)
+                )
+                {
+                    tuple.Write(writer, propertyValue, options);
+                }
+                else
+                {
+                    JsonSerializer.Serialize(writer, propertyValue, options);
+                }
+            }
+
+            writer.WriteEndObject();
+        }
+
+        private string GetJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)
+        {
+            if (_nameOverrides.TryGetValue(dtoProperty, out var overriddenName))
+            {
+                return overriddenName;
+            }
+
+            return options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name;
         }
     }
 }

@@ -21,9 +21,10 @@
 //
 
 using System;
+using System.Reflection;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.Extensions
+namespace Remora.Discord.API.Extensions
 {
     /// <summary>
     /// Defines extension methods to the <see cref="Type"/> class.
@@ -43,6 +44,34 @@ namespace Remora.Discord.Rest.Extensions
             }
 
             return type.GetGenericTypeDefinition() == typeof(Optional<>);
+        }
+
+        /// <summary>
+        /// Determines whether the given type allows null as a value.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type allows null; otherwise, false.</returns>
+        public static bool AllowsNull(this Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return true;
+            }
+
+            var nullableAttributeType = Type.GetType("System.Runtime.CompilerServices.NullableAttribute");
+            if (nullableAttributeType is null)
+            {
+                // If we don't have access to nullability attributes, assume that we're not in a nullable context.
+                return !type.IsValueType;
+            }
+
+            if (!(type.GetCustomAttribute(nullableAttributeType) is null))
+            {
+                // If there's a nullable attribute, this type is for sure nullable
+                return true;
+            }
+
+            return !type.IsValueType;
         }
     }
 }
