@@ -27,7 +27,6 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.API.API;
 using Remora.Discord.API.API.Events;
 using Remora.Results;
@@ -78,11 +77,13 @@ namespace Remora.Discord.API.Json
 
                 // Events
                 OperationCode.Hello => DeserializePayload<IHello>(dataElement, options),
+                OperationCode.Reconnect => DeserializePayload<IReconnect>(dataElement, options),
+                OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(dataElement, options),
+                OperationCode.HeartbeatAcknowledge => DeserializePayload<IHeartbeatAcknowledge>(dataElement, options),
                 OperationCode.Dispatch => DeserializeDispatch(realDocument, dataElement, options),
+
+                // Other
                 OperationCode.Unknown => new Payload<JsonElement>(dataElement),
-                OperationCode.Reconnect => throw new NotImplementedException(),
-                OperationCode.InvalidSession => throw new NotImplementedException(),
-                OperationCode.HeartbeatAcknowledge => throw new NotImplementedException(),
                 _ => new Payload<JsonElement>(dataElement)
             };
 
@@ -173,12 +174,13 @@ namespace Remora.Discord.API.Json
 
                 // Events
                 _ when objectType == typeof(Payload<IHello>) => OperationCode.Hello,
+                _ when objectType == typeof(Payload<IHeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
+                _ when objectType == typeof(Payload<IInvalidSession>) => OperationCode.InvalidSession,
+                _ when objectType == typeof(Payload<IReconnect>) => OperationCode.Reconnect,
                 _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
                 => OperationCode.Dispatch,
 
-                // _ when objectType == typeof(Payload<Reconnect>) => OperationCode.Reconnect,
-                // _ when objectType == typeof(Payload<InvalidSession>) => OperationCode.InvalidSession,
-                // _ when objectType == typeof(Payload<HeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
+                // Other
                 _ => RetrieveEntityResult<OperationCode>.FromError("Unknown operation code.")
             };
         }
