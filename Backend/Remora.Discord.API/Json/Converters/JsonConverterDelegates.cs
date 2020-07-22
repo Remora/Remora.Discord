@@ -128,7 +128,7 @@ namespace Remora.Discord.API.Json
 
             var writeObjectDelegate = new ObjectJsonConverterWrite
             (
-                (writer, value, options) => writeDelegate(writer, (TProperty)value, options)
+                (writer, value, options) => writeDelegate(writer, value is null ? default : (TProperty)value, options)
             );
 
             return new JsonConverterDelegates(converter, readObjectDelegate, writeObjectDelegate);
