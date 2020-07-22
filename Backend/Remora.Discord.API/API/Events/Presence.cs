@@ -1,5 +1,5 @@
 //
-//  PresenceUpdate.cs
+//  Presence.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -32,7 +32,7 @@ namespace Remora.Discord.API.API.Events
     /// <summary>
     /// Represents a presence update.
     /// </summary>
-    public class PresenceUpdate : IPresenceUpdate
+    public class Presence : IPresence
     {
         /// <inheritdoc />
         public IUser User { get; }
@@ -62,7 +62,7 @@ namespace Remora.Discord.API.API.Events
         public Optional<string?> Nickname { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PresenceUpdate"/> class.
+        /// Initializes a new instance of the <see cref="Presence"/> class.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="roles">The roles the user has.</param>
@@ -73,7 +73,7 @@ namespace Remora.Discord.API.API.Events
         /// <param name="clientStatus">The user's platform-dependent status.</param>
         /// <param name="premiumSince">When the user started boosting the guild.</param>
         /// <param name="nickname">The user's nickname.</param>
-        public PresenceUpdate
+        public Presence
         (
             IUser user,
             IReadOnlyList<Snowflake> roles,

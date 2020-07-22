@@ -131,7 +131,7 @@ namespace Remora.Discord.API.Extensions
 
                         o.Converters.Add
                         (
-                            new DataObjectConverter<IPresenceUpdate, PresenceUpdate>()
+                            new DataObjectConverter<IPresence, Presence>()
                                 .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter())
                         );
 

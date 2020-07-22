@@ -1,5 +1,5 @@
 //
-//  IPresenceUpdate.cs
+//  IGuildMembersChunk.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,62 +20,51 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Activities;
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions.Guilds;
+using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Presence
+namespace Remora.Discord.API.Abstractions.Events
 {
     /// <summary>
-    /// Represents a presence update event from the gateway.
+    /// Represents a chunk of guild members.
     /// </summary>
-    public interface IPresenceUpdate
+    public interface IGuildMembersChunk
     {
-        /// <summary>
-        /// Gets the user the presence is being updated for.
-        /// </summary>
-        IUser User { get; }
-
-        /// <summary>
-        /// Gets the roles the user is in.
-        /// </summary>
-        IReadOnlyList<Snowflake> Roles { get; }
-
-        /// <summary>
-        /// Gets the user's current activity.
-        /// </summary>
-        IActivity? Game { get; }
-
         /// <summary>
         /// Gets the ID of the guild.
         /// </summary>
         Snowflake GuildID { get; }
 
         /// <summary>
-        /// Gets the current status of the user.
+        /// Gets the members in this chunk.
         /// </summary>
-        ClientStatus Status { get; }
+        IReadOnlyList<IGuildMember> Members { get; }
 
         /// <summary>
-        /// Gets the user's current activities.
+        /// Gets the index of this chunk in the expected chunks of the response.
         /// </summary>
-        IReadOnlyList<IActivity> Activities { get; }
+        int ChunkIndex { get; }
 
         /// <summary>
-        /// Gets the user's platform-dependent status.
+        /// Gets the total number of expected chunks for this response.
         /// </summary>
-        IClientStatuses ClientStatus { get; }
+        int ChunkCount { get; }
 
         /// <summary>
-        /// Gets the time when the user started boosting the guild.
+        /// Gets a list of guild members that were not found.
         /// </summary>
-        Optional<DateTime?> PremiumSince { get; }
+        Optional<IReadOnlyList<Snowflake>> NotFound { get; }
 
         /// <summary>
-        /// Gets the user's nickname, if one is set.
+        /// Gets the presences of the returned members.
         /// </summary>
-        Optional<string?> Nickname { get; }
+        Optional<IReadOnlyList<IPresence>> Presences { get; }
+
+        /// <summary>
+        /// Gets the nonce used in the original request.
+        /// </summary>
+        Optional<string> Nonce { get; }
     }
 }

@@ -208,7 +208,7 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets the presences of the members in the guild.
         /// </summary>
-        Optional<IReadOnlyList<IPresenceUpdate>> Presences { get; }
+        Optional<IReadOnlyList<IPresence>> Presences { get; }
 
         /// <summary>
         /// Gets the maximum number of presences for the guild. The default value (currently 25000) is in effect when
