@@ -1,5 +1,5 @@
 //
-//  Payload.cs
+//  SendPayloadResult.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions;
+using System;
+using JetBrains.Annotations;
+using Remora.Results;
 
-namespace Remora.Discord.API.API
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents a payload from the Discord gateway.
+    /// Represents an attempt to create and maintain a connection to the Discord gateway.
     /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    public class Payload<TData> : IPayload
+    public class SendPayloadResult : ResultBase<SendPayloadResult>
     {
         /// <summary>
-        /// Gets the data structure for the event.
+        /// Initializes a new instance of the <see cref="SendPayloadResult"/> class.
         /// </summary>
-        public TData Data { get; }
+        private SendPayloadResult()
+        {
+        }
+
+        /// <inheritdoc cref="SendPayloadResult"/>
+        [UsedImplicitly]
+        private SendPayloadResult
+        (
+            string? errorReason,
+            Exception? exception = null
+        )
+            : base(errorReason, exception)
+        {
+        }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
+        /// Creates a new successful result.
         /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
+        /// <returns>A successful result.</returns>
+        [PublicAPI, Pure]
+        public static SendPayloadResult FromSuccess()
         {
-            this.Data = data;
+            return new SendPayloadResult();
         }
     }
 }

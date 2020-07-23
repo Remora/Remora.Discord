@@ -91,5 +91,15 @@ namespace Remora.Discord.Core
             _value = value;
             this.HasValue = true;
         }
+
+        /// <summary>
+        /// Implicitly converts actual values into an optional.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The created optional.</returns>
+        public static implicit operator Optional<TValue>([AllowNull] TValue value)
+        {
+            return new Optional<TValue>(value);
+        }
     }
 }

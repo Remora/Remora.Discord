@@ -1,5 +1,5 @@
 //
-//  Payload.cs
+//  GatewayConnectionStatus.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,41 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions;
-
-namespace Remora.Discord.API.API
+namespace Remora.Discord.Gateway
 {
     /// <summary>
-    /// Represents a payload from the Discord gateway.
+    /// Enumerates the various states the gateway client can be in.
     /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    public class Payload<TData> : IPayload
+    public enum GatewayConnectionStatus
     {
         /// <summary>
-        /// Gets the data structure for the event.
+        /// The client is completely offline.
         /// </summary>
-        public TData Data { get; }
+        Offline,
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
+        /// The client is disconnected, but active.
         /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
-        {
-            this.Data = data;
-        }
+        Disconnected,
+
+        /// <summary>
+        /// The client is connecting.
+        /// </summary>
+        Connecting,
+
+        /// <summary>
+        /// The client is connected and handling events.
+        /// </summary>
+        Connected,
+
+        /// <summary>
+        /// The client is terminating the connection.
+        /// </summary>
+        Disconnecting,
+
+        /// <summary>
+        /// The client is resuming a session.
+        /// </summary>
+        Resuming
     }
 }
