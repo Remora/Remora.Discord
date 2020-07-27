@@ -1,5 +1,5 @@
 //
-//  IGuildRoleDelete.cs
+//  EventResponseResult.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Core;
+using System;
+using JetBrains.Annotations;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents a role deletion.
+    /// Represents the result of a user-defined event response.
     /// </summary>
-    public interface IGuildRoleDelete : IGatewayEvent
+    public class EventResponseResult : ResultBase<EventResponseResult>
     {
         /// <summary>
-        /// Gets the ID of the guild.
+        /// Initializes a new instance of the <see cref="EventResponseResult"/> class.
         /// </summary>
-        Snowflake GuildID { get; }
+        private EventResponseResult()
+        {
+        }
+
+        /// <inheritdoc cref="EventResponseResult"/>
+        [UsedImplicitly]
+        private EventResponseResult
+        (
+            string? errorReason,
+            Exception? exception = null
+        )
+            : base(errorReason, exception)
+        {
+        }
 
         /// <summary>
-        /// Gets the ID of the role.
+        /// Creates a new successful result.
         /// </summary>
-        Snowflake RoleID { get; }
+        /// <returns>A successful result.</returns>
+        [PublicAPI, Pure]
+        public static EventResponseResult FromSuccess()
+        {
+            return new EventResponseResult();
+        }
     }
 }

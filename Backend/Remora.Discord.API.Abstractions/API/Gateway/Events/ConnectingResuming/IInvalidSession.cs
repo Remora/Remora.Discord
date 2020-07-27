@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a reconnection event from the gateway.
     /// </summary>
-    public interface IInvalidSession
+    public interface IInvalidSession : IGatewayEvent
     {
         /// <summary>
         /// Gets a value indicating whether the session is resumable.

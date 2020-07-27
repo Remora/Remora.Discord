@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the deletion of a message.
     /// </summary>
-    public interface IMessageDelete
+    public interface IMessageDelete : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the message.

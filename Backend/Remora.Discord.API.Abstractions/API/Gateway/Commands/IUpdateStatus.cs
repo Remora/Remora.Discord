@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Commands
     /// <summary>
     /// Represents a command to update the status of a user.
     /// </summary>
-    public interface IUpdateStatus
+    public interface IUpdateStatus : IGatewayCommand
     {
         /// <summary>
         /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.

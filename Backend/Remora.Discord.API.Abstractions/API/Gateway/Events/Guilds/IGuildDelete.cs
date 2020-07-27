@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the delete of a guild.
     /// </summary>
-    public interface IGuildDelete
+    public interface IGuildDelete : IGatewayEvent, IUnavailableGuild
     {
-        /// <summary>
-        /// Gets the deleted guild.
-        /// </summary>
-        IUnavailableGuild Guild { get; }
     }
 }

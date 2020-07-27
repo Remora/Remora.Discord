@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Commands
     /// <summary>
     /// Represents a command to update the voice state of the client.
     /// </summary>
-    public interface IUpdateVoiceState
+    public interface IUpdateVoiceState : IGatewayCommand
     {
         /// <summary>
         /// Gets the guild that the status should be updated in.

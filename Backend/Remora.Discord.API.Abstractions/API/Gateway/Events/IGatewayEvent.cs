@@ -1,5 +1,5 @@
 //
-//  HeartbeatAcknowledge.cs
+//  IGatewayEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Events;
-
-namespace Remora.Discord.API.API.Events
+namespace Remora.Discord.API.Abstractions.Events
 {
     /// <summary>
-    /// Represents a heartbeat acknowledgement.
+    /// Acts as a marker interface for gateway events.
     /// </summary>
-    public class HeartbeatAcknowledge : IHeartbeatAcknowledge
+    public interface IGatewayEvent : IGatewayPayloadData
     {
     }
 }

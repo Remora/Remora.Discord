@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the removal of a reaction from a message.
     /// </summary>
-    public interface IMessageReactionRemove
+    public interface IMessageReactionRemove : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the user.

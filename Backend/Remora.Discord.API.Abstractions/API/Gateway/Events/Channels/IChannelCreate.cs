@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the creation of a channel.
     /// </summary>
-    public interface IChannelCreate
+    public interface IChannelCreate : IGatewayEvent, IChannel
     {
-        /// <summary>
-        /// Gets the created channel.
-        /// </summary>
-        IChannel Channel { get; }
     }
 }

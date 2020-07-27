@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the creation of an invite.
     /// </summary>
-    public interface IInviteCreate
+    public interface IInviteCreate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the channel the invite is for.

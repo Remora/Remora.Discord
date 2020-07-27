@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Commands
     /// <summary>
     /// Represents a command used to request guild members.
     /// </summary>
-    public interface IRequestGuildMembers
+    public interface IRequestGuildMembers : IGatewayCommand
     {
         /// <summary>
         /// Gets the ID of the guild that members should be requested from.

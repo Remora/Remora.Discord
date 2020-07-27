@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a reconnection request. This interface defines no data.
     /// </summary>
-    public interface IReconnect
+    public interface IReconnect : IGatewayEvent
     {
     }
 }

@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents an update to a webhook in a channel.
     /// </summary>
-    public interface IWebhooksUpdate
+    public interface IWebhooksUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

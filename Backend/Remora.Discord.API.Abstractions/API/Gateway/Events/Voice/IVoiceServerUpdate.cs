@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents an update to a voice server of a guild.
     /// </summary>
-    public interface IVoiceServerUpdate
+    public interface IVoiceServerUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the voice server token.

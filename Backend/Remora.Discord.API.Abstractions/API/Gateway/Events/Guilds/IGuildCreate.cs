@@ -31,11 +31,7 @@ namespace Remora.Discord.API.Abstractions.Events
     ///     2. When a guild becomes available again to the client.
     ///     3. When the current user joins a new guild.
     /// </summary>
-    public interface IGuildCreate
+    public interface IGuildCreate : IGatewayEvent, IGuild
     {
-        /// <summary>
-        /// Gets the created guild.
-        /// </summary>
-        IGuild Guild { get; }
     }
 }

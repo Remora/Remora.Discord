@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a user being updated in the guild.
     /// </summary>
-    public interface IGuildMemberUpdate
+    public interface IGuildMemberUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild the member is in.

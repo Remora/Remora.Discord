@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the creation of a role.
     /// </summary>
-    public interface IGuildRoleCreate
+    public interface IGuildRoleCreate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

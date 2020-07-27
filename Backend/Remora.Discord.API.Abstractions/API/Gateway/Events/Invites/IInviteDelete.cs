@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the deletion of an invite link.
     /// </summary>
-    public interface IInviteDelete
+    public interface IInviteDelete : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID fo the channel the invite is for.

@@ -1,5 +1,5 @@
 //
-//  IUserUpdate.cs
+//  IGatewayPayloadData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Users;
-
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
-    /// Represents an update to a user.
+    /// Represents a marker interface for gateway payload data.
     /// </summary>
-    public interface IUserUpdate : IGatewayEvent, IUser
+    public interface IGatewayPayloadData
     {
     }
 }

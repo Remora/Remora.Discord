@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a user being removed from the guild.
     /// </summary>
-    public interface IGuildMemberRemove
+    public interface IGuildMemberRemove : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild the member was in.

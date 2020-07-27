@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a bulk deletion of a set of messages.
     /// </summary>
-    public interface IMessageDeleteBulk
+    public interface IMessageDeleteBulk : IGatewayEvent
     {
         /// <summary>
         /// Gets the IDs of the removed messages.

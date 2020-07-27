@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents an update to a guild's emojis.
     /// </summary>
-    public interface IGuildEmojisUpdate
+    public interface IGuildEmojisUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

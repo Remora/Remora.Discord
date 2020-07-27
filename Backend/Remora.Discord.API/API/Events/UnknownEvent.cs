@@ -1,5 +1,5 @@
 //
-//  IUserUpdate.cs
+//  UnknownEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions.Events;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.API.Events
 {
     /// <summary>
-    /// Represents an update to a user.
+    /// Represents an unknown event from the Discord gateway.
     /// </summary>
-    public interface IUserUpdate : IGatewayEvent, IUser
+    public class UnknownEvent : IUnknownEvent
     {
+        /// <inheritdoc />
+        public string Data { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnknownEvent"/> class.
+        /// </summary>
+        /// <param name="data">The JSON data that represents the payload.</param>
+        public UnknownEvent(string data)
+        {
+            this.Data = data;
+        }
     }
 }

@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the update of a channel.
     /// </summary>
-    public interface IChannelUpdate
+    public interface IChannelUpdate : IGatewayEvent, IChannel
     {
-        /// <summary>
-        /// Gets the updated channel.
-        /// </summary>
-        IChannel Channel { get; }
     }
 }

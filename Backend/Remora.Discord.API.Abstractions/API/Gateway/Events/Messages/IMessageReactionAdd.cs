@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the addition of a reaction to a message.
     /// </summary>
-    public interface IMessageReactionAdd
+    public interface IMessageReactionAdd : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the user.

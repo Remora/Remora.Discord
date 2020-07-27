@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Commands
     /// <summary>
     /// Represents a resume command.
     /// </summary>
-    public interface IResume
+    public interface IResume : IGatewayCommand
     {
         /// <summary>
         /// Gets the session token.

@@ -1,5 +1,5 @@
 //
-//  IHeartbeat.cs
+//  IGatewayCommand.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,13 +23,9 @@
 namespace Remora.Discord.API.Abstractions.Commands
 {
     /// <summary>
-    /// Represents a heartbeat command to or from Discord.
+    /// Represents a marker interface for gateway commands.
     /// </summary>
-    public interface IHeartbeat
+    public interface IGatewayCommand : IGatewayPayloadData
     {
-        /// <summary>
-        /// Gets the last sequence number received by the client.
-        /// </summary>
-        long? LastSequenceNumber { get; }
     }
 }

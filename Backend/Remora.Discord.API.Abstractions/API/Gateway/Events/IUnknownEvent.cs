@@ -1,5 +1,5 @@
 //
-//  IUserUpdate.cs
+//  IUnknownEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Users;
-
 namespace Remora.Discord.API.Abstractions.Events
 {
     /// <summary>
-    /// Represents an update to a user.
+    /// Represents an unknown event.
     /// </summary>
-    public interface IUserUpdate : IGatewayEvent, IUser
+    public interface IUnknownEvent : IGatewayEvent
     {
+        /// <summary>
+        /// Gets the JSON string that represents the unknown event.
+        /// </summary>
+        string Data { get; }
     }
 }

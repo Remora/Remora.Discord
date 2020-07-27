@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a pin or unpin of a message in a channel. This is not sent when a pinned message is deleted.
     /// </summary>
-    public interface IChannelPinsUpdate
+    public interface IChannelPinsUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

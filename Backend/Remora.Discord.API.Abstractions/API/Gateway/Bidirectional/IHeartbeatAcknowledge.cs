@@ -1,5 +1,5 @@
 //
-//  IUserUpdate.cs
+//  IHeartbeatAcknowledge.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Events;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions.Bidirectional
 {
     /// <summary>
-    /// Represents an update to a user.
+    /// Represents a heartbeat acknowledgement. This interface defines no data.
     /// </summary>
-    public interface IUserUpdate : IGatewayEvent, IUser
+    public interface IHeartbeatAcknowledge : IGatewayEvent, IGatewayCommand
     {
     }
 }

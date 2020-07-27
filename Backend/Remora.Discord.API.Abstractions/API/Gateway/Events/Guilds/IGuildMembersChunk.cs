@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a chunk of guild members.
     /// </summary>
-    public interface IGuildMembersChunk
+    public interface IGuildMembersChunk : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

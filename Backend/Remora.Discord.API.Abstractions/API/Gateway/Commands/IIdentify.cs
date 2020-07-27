@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Commands
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
-    public interface IIdentify
+    public interface IIdentify : IGatewayCommand
     {
         /// <summary>
         /// Gets the authentication token.

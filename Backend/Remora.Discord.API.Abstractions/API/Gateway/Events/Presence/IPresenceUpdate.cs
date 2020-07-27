@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the update of a user's presence.
     /// </summary>
-    public interface IPresenceUpdate
+    public interface IPresenceUpdate : IGatewayEvent, IPresence
     {
-        /// <summary>
-        /// Gets the updated presence.
-        /// </summary>
-        IPresence Presence { get; }
     }
 }

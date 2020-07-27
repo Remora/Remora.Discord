@@ -20,9 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Bidirectional;
 
-namespace Remora.Discord.API.API.Commands
+namespace Remora.Discord.API.API.Bidirectional
 {
     /// <summary>
     /// Represents a heartbeat command to or from Discord.

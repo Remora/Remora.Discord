@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a new user joining the guild.
     /// </summary>
-    public interface IGuildMemberAdd
+    public interface IGuildMemberAdd : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild the member is in.

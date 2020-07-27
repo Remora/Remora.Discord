@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the creation of a message.
     /// </summary>
-    public interface IMessageCreate
+    public interface IMessageCreate : IGatewayEvent, IMessage
     {
-        /// <summary>
-        /// Gets the message.
-        /// </summary>
-        IMessage Message { get; }
     }
 }

@@ -27,11 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the deletion of a channel.
     /// </summary>
-    public interface IChannelDelete
+    public interface IChannelDelete : IGatewayEvent, IChannel
     {
-        /// <summary>
-        /// Gets the deleted channel.
-        /// </summary>
-        IChannel Channel { get; }
     }
 }

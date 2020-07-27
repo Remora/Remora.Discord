@@ -28,7 +28,7 @@ namespace Remora.Discord.API.API
     /// Represents a payload from the Discord gateway.
     /// </summary>
     /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    public class Payload<TData> : IPayload
+    public class Payload<TData> : IPayload where TData : IGatewayPayloadData
     {
         /// <summary>
         /// Gets the data structure for the event.

@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a user being banned.
     /// </summary>
-    public interface IGuildBanAdd
+    public interface IGuildBanAdd : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

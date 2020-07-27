@@ -22,19 +22,23 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Bidirectional;
 using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.API.Abstractions.Events;
 using Remora.Discord.API.API;
+using Remora.Discord.API.API.Bidirectional;
 using Remora.Discord.API.API.Commands;
 using Remora.Discord.Core;
+using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
-using Remora.Results;
 
 namespace Remora.Discord.Gateway
 {
@@ -43,10 +47,31 @@ namespace Remora.Discord.Gateway
     /// </summary>
     public class DiscordGatewayClient
     {
-        private readonly CancellationTokenSource _tokenSource;
         private readonly IDiscordRestGatewayAPI _gatewayAPI;
         private readonly JsonSerializerOptions _jsonOptions;
         private readonly ITokenStore _tokenStore;
+        private readonly ClientWebSocket _clientWebSocket;
+        private readonly Random _random;
+
+        /// <summary>
+        /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
+        /// </summary>
+        private readonly ConcurrentQueue<IPayload> _payloadsToSend;
+
+        /// <summary>
+        /// Holds payloads that have been received by the gateway, but not yet distributed to the application.
+        /// </summary>
+        private readonly ConcurrentQueue<IPayload> _receivedPayloads;
+
+        /// <summary>
+        /// Holds the various responders currently subscribed to the gateway.
+        /// </summary>
+        private readonly ConcurrentDictionary<IResponder, int> _responders;
+
+        /// <summary>
+        /// Holds the currently running responders.
+        /// </summary>
+        private readonly ConcurrentQueue<Task<EventResponseResult>> _runningResponders;
 
         /// <summary>
         /// Holds the connection status.
@@ -54,9 +79,20 @@ namespace Remora.Discord.Gateway
         private GatewayConnectionStatus _connectionStatus;
 
         /// <summary>
-        /// Holds the websocket client.
+        /// Holds the last sequence number received by the gateway client.
         /// </summary>
-        private ClientWebSocket _clientWebSocket;
+        private int _lastSequenceNumber;
+
+        /// <summary>
+        /// Holds the time when the last heartbeat acknowledgement was received, using
+        /// <see cref="DateTime.ToBinary()"/>.
+        /// </summary>
+        private long _lastReceivedHeartbeatAck;
+
+        /// <summary>
+        /// Holds the session ID.
+        /// </summary>
+        private string? _sessionID;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
@@ -64,18 +100,50 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayAPI">The gateway API.</param>
         /// <param name="jsonOptions">The JSON options.</param>
         /// <param name="tokenStore">The token store.</param>
+        /// <param name="random">An entropy source.</param>
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
             JsonSerializerOptions jsonOptions,
-            ITokenStore tokenStore
+            ITokenStore tokenStore,
+            Random random
         )
         {
             _gatewayAPI = gatewayAPI;
             _jsonOptions = jsonOptions;
             _tokenStore = tokenStore;
-            _tokenSource = new CancellationTokenSource();
+            _random = random;
             _clientWebSocket = new ClientWebSocket();
+            _responders = new ConcurrentDictionary<IResponder, int>();
+            _runningResponders = new ConcurrentQueue<Task<EventResponseResult>>();
+
+            _payloadsToSend = new ConcurrentQueue<IPayload>();
+            _receivedPayloads = new ConcurrentQueue<IPayload>();
+
+            _connectionStatus = GatewayConnectionStatus.Offline;
+        }
+
+        /// <summary>
+        /// Subscribes the given responder to events from the gateway.
+        /// </summary>
+        /// <param name="responder">The responder to subscribe.</param>
+        public void SubscribeResponder(IResponder responder)
+        {
+            if (_responders.ContainsKey(responder))
+            {
+                return;
+            }
+
+            _responders.AddOrUpdate(responder, r => 0, (r, i) => 0);
+        }
+
+        /// <summary>
+        /// Unsubscribes the given responder from events from the gateway.
+        /// </summary>
+        /// <param name="responder">The responder to unsubscribe.</param>
+        public void UnsubscribeResponder(IResponder responder)
+        {
+            _responders.TryRemove(responder, out _);
         }
 
         /// <summary>
@@ -96,6 +164,8 @@ namespace Remora.Discord.Gateway
                 {
                     return GatewayConnectionResult.FromError("Already connecting.");
                 }
+
+                _connectionStatus = GatewayConnectionStatus.Connecting;
 
                 var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(ct);
                 if (!getGatewayEndpoint.IsSuccess)
@@ -133,60 +203,76 @@ namespace Remora.Discord.Gateway
                     );
                 }
 
+                // Set up the send task
+                var tokenSource = new CancellationTokenSource();
                 var heartbeatInterval = TimeSpan.FromMilliseconds(hello.Data.HeartbeatInterval);
-                var lastHeartbeat = DateTime.UtcNow;
 
-                var identifyPayload = new Payload<Identify>
+                var sendTask = Task.Factory.StartNew
                 (
-                    new Identify
-                    (
-                        _tokenStore.Token,
-                        new ConnectionProperties("Remora.Discord"),
-                        intents: GatewayIntents.DirectMessages,
-                        compress: false
-                    )
-                );
+                    () => GatewaySenderAsync(heartbeatInterval, tokenSource.Token),
+                    TaskCreationOptions.LongRunning
+                ).Unwrap();
 
-                var sendIdentify = await SendPayloadAsync(identifyPayload, ct);
-                if (!sendIdentify.IsSuccess)
+                // Attempt to connect or resume
+                var connectResult = await AttemptConnectionAsync(ct);
+                if (!connectResult.IsSuccess)
                 {
-                    return GatewayConnectionResult.FromError(sendIdentify);
+                    // We couldn't connect; bail out
+                    tokenSource.Cancel();
+
+                    await sendTask;
+                    return connectResult;
                 }
 
-                var receiveReady = await ReceivePayloadAsync(ct);
-                if (!receiveReady.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(receiveReady);
-                }
+                // Now, set up the receive task and start receiving events normally
+                var receiveTask = Task.Factory.StartNew
+                (
+                    () => GatewayReceiverAsync(tokenSource.Token),
+                    TaskCreationOptions.LongRunning
+                ).Unwrap();
 
-                if (!(receiveReady.Entity is Payload<IReady> ready))
-                {
-                    return GatewayConnectionResult.FromError
-                    (
-                        "The payload after identification was not a Ready payload."
-                    );
-                }
+                _connectionStatus = GatewayConnectionStatus.Connected;
 
-                long? lastSequenceNumber = null;
                 while (!ct.IsCancellationRequested)
                 {
-                    // Heartbeat, if required
-                    var now = DateTime.Now;
-                    if (now - lastHeartbeat > heartbeatInterval - TimeSpan.FromSeconds(1))
+                    // Process received events and dispatch them to the application
+                    if (_receivedPayloads.TryDequeue(out var payload))
                     {
-                        var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat(lastSequenceNumber));
-                        var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
-
-                        if (!sendHeartbeat.IsSuccess)
-                        {
-                            return GatewayConnectionResult.FromError(sendHeartbeat);
-                        }
+                        UnwrapAndDispatchEvent(payload, tokenSource.Token);
                     }
-
-                    // Get event
-                    // Broadcast to responders
-                    // await finished responders from past events
                 }
+
+                _connectionStatus = GatewayConnectionStatus.Disconnecting;
+
+                // Terminate the send and receive tasks
+                tokenSource.Cancel();
+
+                var sendShutdownResult = await sendTask;
+                if (!sendShutdownResult.IsSuccess)
+                {
+                    return GatewayConnectionResult.FromError(sendShutdownResult);
+                }
+
+                var receiveShutdownResult = await receiveTask;
+                if (!receiveShutdownResult.IsSuccess)
+                {
+                    return GatewayConnectionResult.FromError(receiveShutdownResult);
+                }
+
+                // Finish up the responders
+                foreach (var runningResponder in _runningResponders)
+                {
+                    await runningResponder;
+                }
+
+                await _clientWebSocket.CloseAsync
+                (
+                    WebSocketCloseStatus.NormalClosure,
+                    "Terminating connection by user request.",
+                    ct
+                );
+
+                _connectionStatus = GatewayConnectionStatus.Offline;
 
                 return GatewayConnectionResult.FromSuccess();
             }
@@ -194,6 +280,447 @@ namespace Remora.Discord.Gateway
             {
                 return GatewayConnectionResult.FromError(e);
             }
+        }
+
+        /// <summary>
+        /// Unwraps the given payload into its typed representation, dispatching all events for it.
+        /// </summary>
+        /// <param name="payload">The payload.</param>
+        /// <param name="ct">The cancellation token for the dispatched event.</param>
+        private void UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
+        {
+            switch (payload)
+            {
+                case Payload<IHeartbeat> heartbeat:
+                {
+                    DispatchEvent(heartbeat, ct);
+                    break;
+                }
+                case Payload<IHeartbeatAcknowledge> heartbeatAcknowledge:
+                {
+                    DispatchEvent(heartbeatAcknowledge, ct);
+                    break;
+                }
+                case Payload<IChannelCreate> channelCreate:
+                {
+                    DispatchEvent(channelCreate, ct);
+                    break;
+                }
+                case Payload<IChannelDelete> channelDelete:
+                {
+                    DispatchEvent(channelDelete, ct);
+                    break;
+                }
+                case Payload<IChannelPinsUpdate> channelPinsUpdate:
+                {
+                    DispatchEvent(channelPinsUpdate, ct);
+                    break;
+                }
+                case Payload<IHello> hello:
+                {
+                    DispatchEvent(hello, ct);
+                    break;
+                }
+                case Payload<IInvalidSession> invalidSession:
+                {
+                    DispatchEvent(invalidSession, ct);
+                    break;
+                }
+                case Payload<IReady> ready:
+                {
+                    DispatchEvent(ready, ct);
+                    break;
+                }
+                case Payload<IReconnect> reconnect:
+                {
+                    DispatchEvent(reconnect, ct);
+                    break;
+                }
+                case Payload<IResumed> resumed:
+                {
+                    DispatchEvent(resumed, ct);
+                    break;
+                }
+                case Payload<IGuildBanAdd> guildBanAdd:
+                {
+                    DispatchEvent(guildBanAdd, ct);
+                    break;
+                }
+                case Payload<IGuildBanRemove> guildBanRemove:
+                {
+                    DispatchEvent(guildBanRemove, ct);
+                    break;
+                }
+                case Payload<IGuildCreate> guildCreate:
+                {
+                    DispatchEvent(guildCreate, ct);
+                    break;
+                }
+                case Payload<IGuildDelete> guildDelete:
+                {
+                    DispatchEvent(guildDelete, ct);
+                    break;
+                }
+                case Payload<IGuildEmojisUpdate> guildEmojisUpdate:
+                {
+                    DispatchEvent(guildEmojisUpdate, ct);
+                    break;
+                }
+                case Payload<IGuildIntegrationsUpdate> guildIntegrationsUpdate:
+                {
+                    DispatchEvent(guildIntegrationsUpdate, ct);
+                    break;
+                }
+                case Payload<IGuildMemberAdd> guildMemberAdd:
+                {
+                    DispatchEvent(guildMemberAdd, ct);
+                    break;
+                }
+                case Payload<IGuildMemberRemove> guildMemberRemove:
+                {
+                    DispatchEvent(guildMemberRemove, ct);
+                    break;
+                }
+                case Payload<IGuildMembersChunk> guildMembersChunk:
+                {
+                    DispatchEvent(guildMembersChunk, ct);
+                    break;
+                }
+                case Payload<IGuildMemberUpdate> guildMemberUpdate:
+                {
+                    DispatchEvent(guildMemberUpdate, ct);
+                    break;
+                }
+                case Payload<IGuildRoleCreate> guildRoleCreate:
+                {
+                    DispatchEvent(guildRoleCreate, ct);
+                    break;
+                }
+                case Payload<IGuildRoleDelete> guildRoleDelete:
+                {
+                    DispatchEvent(guildRoleDelete, ct);
+                    break;
+                }
+                case Payload<IGuildRoleUpdate> guildRoleUpdate:
+                {
+                    DispatchEvent(guildRoleUpdate, ct);
+                    break;
+                }
+                case Payload<IGuildUpdate> guildUpdate:
+                {
+                    DispatchEvent(guildUpdate, ct);
+                    break;
+                }
+                case Payload<IInviteCreate> inviteCreate:
+                {
+                    DispatchEvent(inviteCreate, ct);
+                    break;
+                }
+                case Payload<IInviteDelete> inviteDelete:
+                {
+                    DispatchEvent(inviteDelete, ct);
+                    break;
+                }
+                case Payload<IMessageCreate> messageCreate:
+                {
+                    DispatchEvent(messageCreate, ct);
+                    break;
+                }
+                case Payload<IMessageDelete> messageDelete:
+                {
+                    DispatchEvent(messageDelete, ct);
+                    break;
+                }
+                case Payload<IMessageDeleteBulk> messageDeleteBulk:
+                {
+                    DispatchEvent(messageDeleteBulk, ct);
+                    break;
+                }
+                case Payload<IMessageReactionAdd> messageReactionAdd:
+                {
+                    DispatchEvent(messageReactionAdd, ct);
+                    break;
+                }
+                case Payload<IMessageReactionRemove> messageReactionRemove:
+                {
+                    DispatchEvent(messageReactionRemove, ct);
+                    break;
+                }
+                case Payload<IMessageReactionRemoveAll> messageReactionRemoveAll:
+                {
+                    DispatchEvent(messageReactionRemoveAll, ct);
+                    break;
+                }
+                case Payload<IMessageReactionRemoveEmoji> messageReactionRemoveEmoji:
+                {
+                    DispatchEvent(messageReactionRemoveEmoji, ct);
+                    break;
+                }
+                case Payload<IMessageUpdate> messageUpdate:
+                {
+                    DispatchEvent(messageUpdate, ct);
+                    break;
+                }
+                case Payload<IPresenceUpdate> presenceUpdate:
+                {
+                    DispatchEvent(presenceUpdate, ct);
+                    break;
+                }
+                case Payload<ITypingStart> typingStart:
+                {
+                    DispatchEvent(typingStart, ct);
+                    break;
+                }
+                case Payload<IUserUpdate> userUpdate:
+                {
+                    DispatchEvent(userUpdate, ct);
+                    break;
+                }
+                case Payload<IVoiceServerUpdate> voiceServerUpdate:
+                {
+                    DispatchEvent(voiceServerUpdate, ct);
+                    break;
+                }
+                case Payload<IVoiceStateUpdate> voiceStateUpdate:
+                {
+                    DispatchEvent(voiceStateUpdate, ct);
+                    break;
+                }
+                case Payload<IWebhooksUpdate> webhooksUpdate:
+                {
+                    DispatchEvent(webhooksUpdate, ct);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Dispatches the given event to all relevant gateway event responders.
+        /// </summary>
+        /// <param name="gatewayEvent">The event to dispatch.</param>
+        /// <param name="ct">The cancellation token to use.</param>
+        /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
+        private void DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
+            where TGatewayEvent : IGatewayEvent
+        {
+            var relevantResponders = _responders.Keys
+                .Where(r => r is IResponder<TGatewayEvent>)
+                .Cast<IResponder<TGatewayEvent>>();
+
+            foreach (var relevantResponder in relevantResponders)
+            {
+                _runningResponders.Enqueue(Task.Run(() => relevantResponder.RespondAsync(gatewayEvent.Data, ct), ct));
+            }
+        }
+
+        /// <summary>
+        /// Attempts to identify or resume the gateway connection.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A connection result which may or may not have succeeded.</returns>
+        private Task<GatewayConnectionResult> AttemptConnectionAsync(CancellationToken ct = default)
+        {
+            if (_sessionID is null)
+            {
+                // We've never connected before
+                return CreateNewSessionAsync(ct);
+            }
+
+            return ResumeExistingSessionAsync(ct);
+        }
+
+        /// <summary>
+        /// Creates a new session with the gateway, identifying the client.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A connection result which may or may not have succeeded.</returns>
+        private async Task<GatewayConnectionResult> CreateNewSessionAsync(CancellationToken ct = default)
+        {
+            var identifyPayload = new Payload<Identify>
+            (
+                new Identify
+                (
+                    _tokenStore.Token,
+                    new ConnectionProperties("Remora.Discord"),
+                    intents: GatewayIntents.DirectMessages,
+                    compress: false
+                )
+            );
+
+            _payloadsToSend.Enqueue(identifyPayload);
+
+            var receiveReady = await ReceivePayloadAsync(ct);
+            if (!receiveReady.IsSuccess)
+            {
+                return GatewayConnectionResult.FromError(receiveReady);
+            }
+
+            if (!(receiveReady.Entity is Payload<IReady> ready))
+            {
+                return GatewayConnectionResult.FromError
+                (
+                    "The payload after identification was not a Ready payload."
+                );
+            }
+
+            _sessionID = ready.Data.SessionID;
+            return GatewayConnectionResult.FromSuccess();
+        }
+
+        /// <summary>
+        /// Resumes an existing session with the gateway, replaying missed events.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A connection result which may or may not have succeeded.</returns>
+        private async Task<GatewayConnectionResult> ResumeExistingSessionAsync(CancellationToken ct = default)
+        {
+            if (_sessionID is null)
+            {
+                return GatewayConnectionResult.FromError("There's no previous session to resume.");
+            }
+
+            var resumePayload = new Payload<Resume>
+            (
+                new Resume
+                (
+                    _tokenStore.Token,
+                    _sessionID,
+                    _lastSequenceNumber
+                )
+            );
+
+            _payloadsToSend.Enqueue(resumePayload);
+
+            var receiveFirstEvent = await ReceivePayloadAsync(ct);
+            if (!receiveFirstEvent.IsSuccess)
+            {
+                return GatewayConnectionResult.FromError(receiveFirstEvent);
+            }
+
+            if (receiveFirstEvent.Entity is Payload<IInvalidSession>)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                return await CreateNewSessionAsync(ct);
+            }
+
+            // Push resumed events onto the queue
+            while (true)
+            {
+                if (ct.IsCancellationRequested)
+                {
+                    return GatewayConnectionResult.FromError("Operation was cancelled.");
+                }
+
+                var receiveEvent = await ReceivePayloadAsync(ct);
+                if (!receiveEvent.IsSuccess)
+                {
+                    return GatewayConnectionResult.FromError(receiveEvent);
+                }
+
+                if (receiveEvent.Entity is Payload<IResumed>)
+                {
+                    return GatewayConnectionResult.FromSuccess();
+                }
+
+                _receivedPayloads.Enqueue(receiveEvent.Entity);
+            }
+        }
+
+        /// <summary>
+        /// This method acts as the main entrypoint for the gateway sender task. It processes payloads that are
+        /// submitted by the application to the gateway, sending them to it.
+        /// </summary>
+        /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A sender result which may or may not have been successful. A failed result indicates that something
+        /// has gone wrong when sending a payload, and that the connection has been deemed nonviable. A nonviable
+        /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
+        private async Task<GatewaySenderResult> GatewaySenderAsync
+        (
+            TimeSpan heartbeatInterval,
+            CancellationToken ct = default
+        )
+        {
+            DateTime? lastHeartbeat = null;
+            while (!ct.IsCancellationRequested)
+            {
+                var lastHeartbeatAck = DateTime.FromBinary(Interlocked.Read(ref _lastReceivedHeartbeatAck));
+
+                // Heartbeat, if required
+                var now = DateTime.UtcNow;
+                if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - TimeSpan.FromMilliseconds(100))
+                {
+                    if (lastHeartbeatAck < lastHeartbeat)
+                    {
+                        // TODO: Reconnect
+                        return GatewaySenderResult.FromError
+                        (
+                            "The server did not respond in time with a heartbeat acknowledgement."
+                        );
+                    }
+
+                    // 32-bit reads are atomic, so this is fine
+                    var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat(_lastSequenceNumber));
+                    var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
+
+                    if (!sendHeartbeat.IsSuccess)
+                    {
+                        return GatewaySenderResult.FromError(sendHeartbeat);
+                    }
+
+                    lastHeartbeat = DateTime.UtcNow;
+                }
+
+                // Check if there are any user-submitted payloads to send
+                if (!_payloadsToSend.TryDequeue(out var payload))
+                {
+                    continue;
+                }
+
+                var sendResult = await SendPayloadAsync(payload, ct);
+                if (!sendResult.IsSuccess)
+                {
+                    return GatewaySenderResult.FromError(sendResult);
+                }
+            }
+
+            return GatewaySenderResult.FromSuccess();
+        }
+
+        /// <summary>
+        /// This method acts as the main entrypoint for the gateway receiver task. It processes payloads that are
+        /// sent from the gateway to the application, submitting them to it.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A receiver result which may or may not have been successful. A failed result indicates that
+        /// something has gone wrong when receiving a payload, and that the connection has been deemed nonviable. A
+        /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
+        private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken ct = default)
+        {
+            while (!ct.IsCancellationRequested)
+            {
+                var receivedPayload = await ReceivePayloadAsync(ct);
+                if (!receivedPayload.IsSuccess)
+                {
+                    return GatewayReceiverResult.FromError(receivedPayload);
+                }
+
+                // Update the sequence number
+                if (receivedPayload.Entity is IEventPayload eventPayload)
+                {
+                    Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
+                }
+
+                // Update the ack timestamp
+                if (receivedPayload.Entity is Payload<IHeartbeatAcknowledge>)
+                {
+                    Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
+                }
+
+                _receivedPayloads.Enqueue(receivedPayload.Entity);
+            }
+
+            return GatewayReceiverResult.FromSuccess();
         }
 
         /// <summary>
@@ -226,6 +753,11 @@ namespace Remora.Discord.Gateway
 
                 // Send the whole payload as one chunk
                 await _clientWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, ct);
+
+                if (_clientWebSocket.CloseStatus.HasValue)
+                {
+                    return SendPayloadResult.FromError(_clientWebSocket.CloseStatusDescription);
+                }
             }
             catch (Exception e)
             {
@@ -265,6 +797,12 @@ namespace Remora.Discord.Gateway
                 do
                 {
                     result = await _clientWebSocket.ReceiveAsync(buffer, ct);
+
+                    if (result.CloseStatus.HasValue)
+                    {
+                        return ReceivePayloadResult<IPayload>.FromError(result.CloseStatusDescription);
+                    }
+
                     await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
                 }
                 while (!result.EndOfMessage);

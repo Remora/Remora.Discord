@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the removal of all reaction from a message.
     /// </summary>
-    public interface IMessageReactionRemoveAll
+    public interface IMessageReactionRemoveAll : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the channel.

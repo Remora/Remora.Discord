@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents a user being unbanned.
     /// </summary>
-    public interface IGuildBanRemove
+    public interface IGuildBanRemove : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild.

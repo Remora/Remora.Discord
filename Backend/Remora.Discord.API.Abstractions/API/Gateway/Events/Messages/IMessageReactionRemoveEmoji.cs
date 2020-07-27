@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the removal of all instances of a given emoji from a message.
     /// </summary>
-    public interface IMessageReactionRemoveEmoji
+    public interface IMessageReactionRemoveEmoji : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the channel.

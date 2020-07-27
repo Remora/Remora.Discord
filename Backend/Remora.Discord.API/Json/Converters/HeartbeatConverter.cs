@@ -23,8 +23,8 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Abstractions.Commands;
-using Remora.Discord.API.API.Commands;
+using Remora.Discord.API.Abstractions.Bidirectional;
+using Remora.Discord.API.API.Bidirectional;
 
 namespace Remora.Discord.API.Json
 {

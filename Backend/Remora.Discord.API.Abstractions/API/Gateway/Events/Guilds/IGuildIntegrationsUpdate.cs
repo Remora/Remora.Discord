@@ -27,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents an update to a guild integration.
     /// </summary>
-    public interface IGuildIntegrationsUpdate
+    public interface IGuildIntegrationsUpdate : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the guild whose integrations were updated.

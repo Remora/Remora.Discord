@@ -1,5 +1,5 @@
 //
-//  IHeartbeatAcknowledge.cs
+//  HeartbeatAcknowledge.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,12 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Events
+using Remora.Discord.API.Abstractions.Bidirectional;
+
+namespace Remora.Discord.API.API.Bidirectional
 {
     /// <summary>
-    /// Represents a heartbeat acknowledgement. This interface defines no data.
+    /// Represents a heartbeat acknowledgement.
     /// </summary>
-    public interface IHeartbeatAcknowledge
+    public class HeartbeatAcknowledge : IHeartbeatAcknowledge
     {
     }
 }

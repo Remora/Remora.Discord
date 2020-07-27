@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Sent when a user starts typing in a channel.
     /// </summary>
-    public interface ITypingStart
+    public interface ITypingStart : IGatewayEvent
     {
         /// <summary>
         /// Gets the ID of the channel.

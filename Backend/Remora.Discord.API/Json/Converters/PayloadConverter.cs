@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Bidirectional;
 using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.API.Abstractions.Events;
 using Remora.Discord.API.API;
@@ -83,8 +84,8 @@ namespace Remora.Discord.API.Json
                 OperationCode.Dispatch => DeserializeDispatch(realDocument, dataElement, options),
 
                 // Other
-                OperationCode.Unknown => new Payload<JsonElement>(dataElement),
-                _ => new Payload<JsonElement>(dataElement)
+                OperationCode.Unknown => DeserializePayload<IUnknownEvent>(dataElement, options),
+                _ => throw new ArgumentOutOfRangeException()
             };
 
             return obj;
@@ -135,7 +136,8 @@ namespace Remora.Discord.API.Json
 
             writer.WritePropertyName("d");
 
-            var payloadDataProperty = value.GetType().GetProperty(nameof(Payload<int>.Data));
+            // We're using IHeartbeat here as a dummy type
+            var payloadDataProperty = value.GetType().GetProperty(nameof(Payload<IHeartbeat>.Data));
             if (payloadDataProperty is null)
             {
                 throw new JsonException();
@@ -186,6 +188,7 @@ namespace Remora.Discord.API.Json
         }
 
         private IPayload DeserializePayload<TData>(JsonElement dataProperty, JsonSerializerOptions options)
+            where TData : IGatewayPayloadData
         {
             var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
             return new Payload<TData>(data);
@@ -221,7 +224,7 @@ namespace Remora.Discord.API.Json
 
             if (eventType is null)
             {
-                return new EventPayload<JsonElement>(dataElement, sequenceNumber);
+                return new EventPayload<IUnknownEvent>(new UnknownEvent(dataElement.GetRawText()), sequenceNumber);
             }
 
             var eventData = JsonSerializer.Deserialize

@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents initial gateway state information.
     /// </summary>
-    public interface IReady
+    public interface IReady : IGatewayEvent
     {
         /// <summary>
         /// Gets the gateway version.

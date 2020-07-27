@@ -25,7 +25,7 @@ namespace Remora.Discord.API.Abstractions.Events
     /// <summary>
     /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
-    public interface IHello
+    public interface IHello : IGatewayEvent
     {
         /// <summary>
         /// Gets the heartbeat interval in milliseconds.
