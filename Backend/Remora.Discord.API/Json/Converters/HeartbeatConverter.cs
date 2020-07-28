@@ -60,7 +60,13 @@ namespace Remora.Discord.API.Json
                 return;
             }
 
-            writer.WriteNumberValue(value.LastSequenceNumber!.Value);
+            if (value.LastSequenceNumber is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            writer.WriteNumberValue(value.LastSequenceNumber.Value);
         }
     }
 }
