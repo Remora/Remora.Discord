@@ -21,7 +21,9 @@
 //
 
 using System;
+using System.Net.WebSockets;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Results
@@ -29,7 +31,7 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents the result of the gateway sender task, which handles continuous pushing of payloads to the gateway.
     /// </summary>
-    public class GatewaySenderResult : ResultBase<GatewaySenderResult>
+    public class GatewaySenderResult : AbstractGatewayResult<GatewaySenderResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GatewaySenderResult"/> class.
@@ -46,6 +48,28 @@ namespace Remora.Discord.Gateway.Results
             Exception? exception = null
         )
             : base(errorReason, exception)
+        {
+        }
+
+        /// <inheritdoc cref="GatewayConnectionResult"/>
+        [UsedImplicitly]
+        private GatewaySenderResult
+        (
+            string? errorReason,
+            GatewayCloseStatus closeStatus
+        )
+            : base(errorReason, closeStatus)
+        {
+        }
+
+        /// <inheritdoc cref="GatewayConnectionResult"/>
+        [UsedImplicitly]
+        private GatewaySenderResult
+        (
+            string? errorReason,
+            WebSocketCloseStatus closeStatus
+        )
+            : base(errorReason, closeStatus)
         {
         }
 

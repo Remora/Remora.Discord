@@ -38,23 +38,8 @@ namespace Remora.Discord.Gateway
         Disconnected,
 
         /// <summary>
-        /// The client is connecting.
-        /// </summary>
-        Connecting,
-
-        /// <summary>
         /// The client is connected and handling events.
         /// </summary>
-        Connected,
-
-        /// <summary>
-        /// The client is terminating the connection.
-        /// </summary>
-        Disconnecting,
-
-        /// <summary>
-        /// The client is resuming a session.
-        /// </summary>
-        Resuming
+        Connected
     }
 }

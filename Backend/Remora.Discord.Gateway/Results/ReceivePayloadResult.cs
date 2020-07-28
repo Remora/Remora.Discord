@@ -22,7 +22,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.WebSockets;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Results
@@ -31,7 +33,7 @@ namespace Remora.Discord.Gateway.Results
     /// Represents an attempt to receive a payload via the gateway.
     /// </summary>
     /// <typeparam name="TEntity">The entity to create.</typeparam>
-    public class ReceivePayloadResult<TEntity> : ResultBase<ReceivePayloadResult<TEntity>>
+    public class ReceivePayloadResult<TEntity> : AbstractGatewayResult<ReceivePayloadResult<TEntity>>
     {
         /// <summary>
         /// Holds the actual entity value.
@@ -73,6 +75,28 @@ namespace Remora.Discord.Gateway.Results
             Exception? exception = null
         )
             : base(errorReason, exception)
+        {
+        }
+
+        /// <inheritdoc cref="GatewayConnectionResult"/>
+        [UsedImplicitly]
+        private ReceivePayloadResult
+        (
+            string? errorReason,
+            GatewayCloseStatus closeStatus
+        )
+            : base(errorReason, closeStatus)
+        {
+        }
+
+        /// <inheritdoc cref="GatewayConnectionResult"/>
+        [UsedImplicitly]
+        private ReceivePayloadResult
+        (
+            string? errorReason,
+            WebSocketCloseStatus closeStatus
+        )
+            : base(errorReason, closeStatus)
         {
         }
 

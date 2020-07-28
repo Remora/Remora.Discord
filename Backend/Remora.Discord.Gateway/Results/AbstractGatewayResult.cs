@@ -1,5 +1,5 @@
 //
-//  AbstractRestResult.cs
+//  AbstractGatewayResult.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,42 +21,46 @@
 //
 
 using System;
-using System.Net;
+using System.Net.WebSockets;
 using System.Reflection;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.Results
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents an abstract REST API result.
+    /// Represents the result of a Discord gateway operation.
     /// </summary>
     /// <typeparam name="TActualResult">The actual result type.</typeparam>
-    public abstract class AbstractRestResult<TActualResult> : ResultBase<TActualResult>, IRestResult
-        where TActualResult : ResultBase<TActualResult>
+    public abstract class AbstractGatewayResult<TActualResult> : ResultBase<TActualResult>
+        where TActualResult : AbstractGatewayResult<TActualResult>
     {
-        /// <inheritdoc />
-        public HttpStatusCode? HttpError { get; }
-
-        /// <inheritdoc />
-        public DiscordError? DiscordError { get; }
+        /// <summary>
+        /// Gets the gateway close code, if any.
+        /// </summary>
+        public GatewayCloseStatus? GatewayCloseStatus { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
+        /// Gets the websocket close status, if any.
         /// </summary>
-        [PublicAPI]
-        protected AbstractRestResult()
+        public WebSocketCloseStatus? WebSocketCloseStatus { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AbstractGatewayResult{TActualResult}"/> class.
+        /// </summary>
+        protected AbstractGatewayResult()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
+        /// Initializes a new instance of the <see cref="AbstractGatewayResult{TActualResult}"/> class.
         /// </summary>
-        /// <param name="errorReason">A more detailed error description.</param>
-        /// <param name="exception">The exception that caused the error (if any).</param>
-        [PublicAPI]
-        protected AbstractRestResult
+        /// <param name="errorReason">A human-readable error description.</param>
+        /// <param name="exception">The exception that caused the error.</param>
+        [UsedImplicitly]
+        protected AbstractGatewayResult
         (
             string? errorReason,
             Exception? exception = null
@@ -66,65 +70,63 @@ namespace Remora.Discord.Rest.Results
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
+        /// Initializes a new instance of the <see cref="AbstractGatewayResult{TActualResult}"/> class.
         /// </summary>
-        /// <param name="errorReason">A more detailed error description.</param>
-        /// <param name="discordError">The Discord status code of the error (if any).</param>
-        [PublicAPI]
-        protected AbstractRestResult
+        /// <param name="errorReason">A human-readable error description. </param>
+        /// <param name="closeStatus">The close code, if any.</param>
+        protected AbstractGatewayResult
         (
             string? errorReason,
-            DiscordError? discordError = null
+            GatewayCloseStatus closeStatus
         )
             : base(errorReason)
         {
-            this.DiscordError = discordError;
+            this.GatewayCloseStatus = closeStatus;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
+        /// Initializes a new instance of the <see cref="AbstractGatewayResult{TActualResult}"/> class.
         /// </summary>
-        /// <param name="errorReason">A more detailed error description.</param>
-        /// <param name="httpError">The HTTP status code of the error (if any).</param>
-        [PublicAPI]
-        protected AbstractRestResult
+        /// <param name="errorReason">A human-readable error description. </param>
+        /// <param name="closeStatus">The close code, if any.</param>
+        protected AbstractGatewayResult
         (
             string? errorReason,
-            HttpStatusCode? httpError = null
+            WebSocketCloseStatus closeStatus
         )
             : base(errorReason)
         {
-            this.HttpError = httpError;
+            this.WebSocketCloseStatus = closeStatus;
         }
 
         /// <summary>
         /// Creates a failed result.
         /// </summary>
         /// <param name="errorReason">A more detailed error reason.</param>
-        /// <param name="discordError">The Discord error that caused the failure, if any.</param>
+        /// <param name="closeStatus">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
         [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,
-            DiscordError discordError
+            GatewayCloseStatus closeStatus
         )
         {
             var constructor = typeof(TActualResult).GetConstructor
             (
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                 null,
-                new[] { typeof(string), typeof(DiscordError) },
+                new[] { typeof(string), typeof(GatewayCloseStatus) },
                 null
             );
 
             if (constructor is null)
             {
                 var typeName = typeof(TActualResult).Name;
-                throw new MissingMethodException(typeName, $"{typeName}(string, Exception)");
+                throw new MissingMethodException(typeName, $"{typeName}(string, GatewayCloseStatus)");
             }
 
-            var resultInstance = constructor.Invoke(new object?[] { errorReason, discordError });
+            var resultInstance = constructor.Invoke(new object?[] { errorReason, closeStatus });
             return (TActualResult)resultInstance;
         }
 
@@ -132,30 +134,30 @@ namespace Remora.Discord.Rest.Results
         /// Creates a failed result.
         /// </summary>
         /// <param name="errorReason">A more detailed error reason.</param>
-        /// <param name="httpStatusCode">The HTTP error that caused the failure, if any.</param>
+        /// <param name="closeStatus">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
         [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,
-            HttpStatusCode httpStatusCode
+            WebSocketCloseStatus closeStatus
         )
         {
             var constructor = typeof(TActualResult).GetConstructor
             (
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                 null,
-                new[] { typeof(string), typeof(HttpStatusCode) },
+                new[] { typeof(string), typeof(WebSocketCloseStatus) },
                 null
             );
 
             if (constructor is null)
             {
                 var typeName = typeof(TActualResult).Name;
-                throw new MissingMethodException(typeName, $"{typeName}(string, Exception)");
+                throw new MissingMethodException(typeName, $"{typeName}(string, WebSocketCloseStatus)");
             }
 
-            var resultInstance = constructor.Invoke(new object?[] { errorReason, httpStatusCode });
+            var resultInstance = constructor.Invoke(new object?[] { errorReason, closeStatus });
             return (TActualResult)resultInstance;
         }
 
@@ -165,22 +167,22 @@ namespace Remora.Discord.Rest.Results
         /// <param name="otherResult">The other failed result.</param>
         /// <typeparam name="TOtherResult">The other result type.</typeparam>
         /// <returns>A failed result.</returns>
-        public static TActualResult FromError<TOtherResult>(AbstractRestResult<TOtherResult> otherResult)
-            where TOtherResult : AbstractRestResult<TOtherResult>
+        public static TActualResult FromError<TOtherResult>(AbstractGatewayResult<TOtherResult> otherResult)
+            where TOtherResult : AbstractGatewayResult<TOtherResult>
         {
             if (otherResult.IsSuccess)
             {
                 throw new InvalidOperationException();
             }
 
-            if (otherResult.DiscordError.HasValue)
+            if (otherResult.GatewayCloseStatus.HasValue)
             {
-                return FromError(otherResult.ErrorReason, otherResult.DiscordError.Value);
+                return FromError(otherResult.ErrorReason, otherResult.GatewayCloseStatus.Value);
             }
 
-            if (otherResult.HttpError.HasValue)
+            if (otherResult.WebSocketCloseStatus.HasValue)
             {
-                return FromError(otherResult.ErrorReason, otherResult.HttpError.Value);
+                return FromError(otherResult.ErrorReason, otherResult.WebSocketCloseStatus.Value);
             }
 
             return FromError((IResult)otherResult);

@@ -29,6 +29,7 @@ using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Bidirectional;
 using Remora.Discord.API.Abstractions.Commands;
@@ -47,6 +48,8 @@ namespace Remora.Discord.Gateway
     /// </summary>
     public class DiscordGatewayClient
     {
+        private readonly ILogger<DiscordGatewayClient> _log;
+
         private readonly IDiscordRestGatewayAPI _gatewayAPI;
         private readonly JsonSerializerOptions _jsonOptions;
         private readonly ITokenStore _tokenStore;
@@ -95,24 +98,42 @@ namespace Remora.Discord.Gateway
         private string? _sessionID;
 
         /// <summary>
+        /// Holds the cancellation token source for internal operations.
+        /// </summary>
+        private CancellationTokenSource _tokenSource;
+
+        /// <summary>
+        /// Holds the task responsible for sending payloads to the gateway.
+        /// </summary>
+        private Task<GatewaySenderResult> _sendTask;
+
+        /// <summary>
+        /// Holds the task responsible for receiving payloads from the gateway.
+        /// </summary>
+        private Task<GatewayReceiverResult> _receiveTask;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
         /// </summary>
         /// <param name="gatewayAPI">The gateway API.</param>
         /// <param name="jsonOptions">The JSON options.</param>
         /// <param name="tokenStore">The token store.</param>
         /// <param name="random">An entropy source.</param>
+        /// <param name="log">The logging instance.</param>
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
             JsonSerializerOptions jsonOptions,
             ITokenStore tokenStore,
-            Random random
+            Random random,
+            ILogger<DiscordGatewayClient> log
         )
         {
             _gatewayAPI = gatewayAPI;
             _jsonOptions = jsonOptions;
             _tokenStore = tokenStore;
             _random = random;
+            _log = log;
             _clientWebSocket = new ClientWebSocket();
             _responders = new ConcurrentDictionary<IResponder, int>();
             _runningResponders = new ConcurrentQueue<Task<EventResponseResult>>();
@@ -121,6 +142,10 @@ namespace Remora.Discord.Gateway
             _receivedPayloads = new ConcurrentQueue<IPayload>();
 
             _connectionStatus = GatewayConnectionStatus.Offline;
+
+            _tokenSource = new CancellationTokenSource();
+            _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
+            _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
         }
 
         /// <summary>
@@ -162,123 +187,285 @@ namespace Remora.Discord.Gateway
             {
                 if (_connectionStatus != GatewayConnectionStatus.Offline)
                 {
-                    return GatewayConnectionResult.FromError("Already connecting.");
+                    return GatewayConnectionResult.FromError("Already connected.");
                 }
 
-                _connectionStatus = GatewayConnectionStatus.Connecting;
-
-                var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(ct);
-                if (!getGatewayEndpoint.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(getGatewayEndpoint);
-                }
-
-                var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=6&encoding=json";
-                if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
-                {
-                    return GatewayConnectionResult.FromError("Failed to parse the received gateway endpoint.");
-                }
-
-                await _clientWebSocket.ConnectAsync(gatewayUri, ct);
-                if (_clientWebSocket.State != WebSocketState.Open)
-                {
-                    return GatewayConnectionResult.FromError
-                    (
-                        $"Failed to connect to the gateway: {_clientWebSocket.State}"
-                    );
-                }
-
-                var receiveHello = await ReceivePayloadAsync(ct);
-
-                if (!receiveHello.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(receiveHello);
-                }
-
-                if (!(receiveHello.Entity is Payload<IHello> hello))
-                {
-                    return GatewayConnectionResult.FromError
-                    (
-                        "The first payload from the gateway was not a hello. Rude!"
-                    );
-                }
-
-                // Set up the send task
-                var tokenSource = new CancellationTokenSource();
-                var heartbeatInterval = TimeSpan.FromMilliseconds(hello.Data.HeartbeatInterval);
-
-                var sendTask = Task.Factory.StartNew
-                (
-                    () => GatewaySenderAsync(heartbeatInterval, tokenSource.Token),
-                    TaskCreationOptions.LongRunning
-                ).Unwrap();
-
-                // Attempt to connect or resume
-                var connectResult = await AttemptConnectionAsync(ct);
-                if (!connectResult.IsSuccess)
-                {
-                    // We couldn't connect; bail out
-                    tokenSource.Cancel();
-
-                    await sendTask;
-                    return connectResult;
-                }
-
-                // Now, set up the receive task and start receiving events normally
-                var receiveTask = Task.Factory.StartNew
-                (
-                    () => GatewayReceiverAsync(tokenSource.Token),
-                    TaskCreationOptions.LongRunning
-                ).Unwrap();
-
-                _connectionStatus = GatewayConnectionStatus.Connected;
+                // Until cancellation has been requested or we hit a fatal error, reconnections should be attempted.
+                _tokenSource = new CancellationTokenSource();
 
                 while (!ct.IsCancellationRequested)
                 {
-                    // Process received events and dispatch them to the application
-                    if (_receivedPayloads.TryDequeue(out var payload))
+                    var iterationResult = await RunConnectionIterationAsync(ct);
+                    if (iterationResult.IsSuccess)
                     {
-                        UnwrapAndDispatchEvent(payload, tokenSource.Token);
+                        continue;
+                    }
+
+                    // Something has gone wrong. Close the socket, and handle it
+                    if (_clientWebSocket.State == WebSocketState.Open)
+                    {
+                        await _clientWebSocket.CloseAsync
+                        (
+                            WebSocketCloseStatus.NormalClosure,
+                            "Terminating connection by user request.",
+                            ct
+                        );
+                    }
+
+                    // Terminate the send and receive tasks
+                    _tokenSource.Cancel();
+
+                    // The results of the send and receive tasks are discarded here, because the iteration result will
+                    // contain whichever of them failed if any of them did
+                    _ = await _sendTask;
+                    _ = await _receiveTask;
+
+                    // Finish up the responders
+                    foreach (var runningResponder in _runningResponders)
+                    {
+                        await FinalizeResponderAsync(runningResponder);
+                    }
+
+                    switch (iterationResult.GatewayCloseStatus)
+                    {
+                        case GatewayCloseStatus.SessionTimedOut:
+                        case GatewayCloseStatus.RateLimited:
+                        case GatewayCloseStatus.InvalidSequence:
+                        case GatewayCloseStatus.UnknownError:
+                        {
+                            // Reconnection is allowed, using a completely new session
+                            _sessionID = null;
+                            _connectionStatus = GatewayConnectionStatus.Disconnected;
+
+                            continue;
+                        }
+                        case GatewayCloseStatus.DisallowedIntent:
+                        case GatewayCloseStatus.InvalidIntents:
+                        case GatewayCloseStatus.InvalidAPIVersion:
+                        case GatewayCloseStatus.ShardingRequired:
+                        case GatewayCloseStatus.InvalidShard:
+                        case GatewayCloseStatus.AlreadyAuthenticated:
+                        case GatewayCloseStatus.AuthenticationFailed:
+                        case GatewayCloseStatus.NotAuthenticated:
+                        case GatewayCloseStatus.DecodeError:
+                        case GatewayCloseStatus.UnknownOpcode:
+                        {
+                            // Reconnection is not allowed.
+                            return iterationResult;
+                        }
+                        case null:
+                        {
+                            break;
+                        }
+                    }
+
+                    switch (iterationResult.WebSocketCloseStatus)
+                    {
+                        case WebSocketCloseStatus.NormalClosure:
+                        {
+                            // All good, disconnected normally
+                            break;
+                        }
+                        case WebSocketCloseStatus.InternalServerError:
+                        case WebSocketCloseStatus.EndpointUnavailable:
+                        {
+                            // Reconnection is allowed, using a completely new session
+                            _sessionID = null;
+                            _connectionStatus = GatewayConnectionStatus.Disconnected;
+
+                            continue;
+                        }
+                        case WebSocketCloseStatus.MandatoryExtension:
+                        case WebSocketCloseStatus.MessageTooBig:
+                        case WebSocketCloseStatus.PolicyViolation:
+                        case WebSocketCloseStatus.InvalidPayloadData:
+                        case WebSocketCloseStatus.Empty:
+                        case WebSocketCloseStatus.InvalidMessageType:
+                        case WebSocketCloseStatus.ProtocolError:
+                        {
+                            // Reconnection is not allowed
+                            return iterationResult;
+                        }
+                        case null:
+                        {
+                            break;
+                        }
                     }
                 }
-
-                _connectionStatus = GatewayConnectionStatus.Disconnecting;
-
-                // Terminate the send and receive tasks
-                tokenSource.Cancel();
-
-                var sendShutdownResult = await sendTask;
-                if (!sendShutdownResult.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(sendShutdownResult);
-                }
-
-                var receiveShutdownResult = await receiveTask;
-                if (!receiveShutdownResult.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(receiveShutdownResult);
-                }
-
-                // Finish up the responders
-                foreach (var runningResponder in _runningResponders)
-                {
-                    await runningResponder;
-                }
-
-                await _clientWebSocket.CloseAsync
-                (
-                    WebSocketCloseStatus.NormalClosure,
-                    "Terminating connection by user request.",
-                    ct
-                );
-
-                _connectionStatus = GatewayConnectionStatus.Offline;
-
-                return GatewayConnectionResult.FromSuccess();
             }
             catch (Exception e)
             {
                 return GatewayConnectionResult.FromError(e);
+            }
+
+            _connectionStatus = GatewayConnectionStatus.Offline;
+
+            return GatewayConnectionResult.FromSuccess();
+        }
+
+        /// <summary>
+        /// Runs a single iteration of the connection loop.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A connection result, based on the results of the iteration.</returns>
+        private async Task<GatewayConnectionResult> RunConnectionIterationAsync(CancellationToken ct = default)
+        {
+            switch (_connectionStatus)
+            {
+                case GatewayConnectionStatus.Offline:
+                case GatewayConnectionStatus.Disconnected:
+                {
+                    // Start connecting
+                    var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(ct);
+                    if (!getGatewayEndpoint.IsSuccess)
+                    {
+                        return GatewayConnectionResult.FromError(getGatewayEndpoint);
+                    }
+
+                    var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=6&encoding=json";
+                    if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
+                    {
+                        return GatewayConnectionResult.FromError
+                        (
+                            "Failed to parse the received gateway endpoint."
+                        );
+                    }
+
+                    await _clientWebSocket.ConnectAsync(gatewayUri, ct);
+                    switch (_clientWebSocket.State)
+                    {
+                        case WebSocketState.Open:
+                        case WebSocketState.Connecting:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            return GatewayConnectionResult.FromError("Failed to connect to the endpoint.");
+                        }
+                    }
+
+                    var receiveHello = await ReceivePayloadAsync(ct);
+                    if (!receiveHello.IsSuccess)
+                    {
+                        return GatewayConnectionResult.FromError(receiveHello);
+                    }
+
+                    if (!(receiveHello.Entity is Payload<IHello> hello))
+                    {
+                        // Not receiving a hello is a non-recoverable error
+                        return GatewayConnectionResult.FromError
+                        (
+                            "The first payload from the gateway was not a hello. Rude!"
+                        );
+                    }
+
+                    // Set up the send task
+                    var heartbeatInterval = TimeSpan.FromMilliseconds(hello.Data.HeartbeatInterval);
+
+                    _sendTask = Task.Factory.StartNew
+                    (
+                        () => GatewaySenderAsync(heartbeatInterval, _tokenSource.Token),
+                        TaskCreationOptions.LongRunning
+                    ).Unwrap();
+
+                    // Attempt to connect or resume
+                    var connectResult = await AttemptConnectionAsync(ct);
+                    if (!connectResult.IsSuccess)
+                    {
+                        return connectResult;
+                    }
+
+                    // Now, set up the receive task and start receiving events normally
+                    _receiveTask = Task.Factory.StartNew
+                    (
+                        () => GatewayReceiverAsync(_tokenSource.Token),
+                        TaskCreationOptions.LongRunning
+                    ).Unwrap();
+
+                    _connectionStatus = GatewayConnectionStatus.Connected;
+                    break;
+                }
+                case GatewayConnectionStatus.Connected:
+                {
+                    // Process received events and dispatch them to the application
+                    if (_receivedPayloads.TryDequeue(out var payload))
+                    {
+                        UnwrapAndDispatchEvent(payload, _tokenSource.Token);
+                    }
+
+                    // Unpack one of the running responders, if any are pending
+                    if (_runningResponders.TryDequeue(out var runningResponder))
+                    {
+                        if (runningResponder.IsCompleted)
+                        {
+                            await FinalizeResponderAsync(runningResponder);
+                        }
+                        else
+                        {
+                            _runningResponders.Enqueue(runningResponder);
+                        }
+                    }
+
+                    // Check the send and receive tasks for errors
+                    if (_sendTask.IsCompleted)
+                    {
+                        var sendResult = await _sendTask;
+                        if (!sendResult.IsSuccess)
+                        {
+                            return GatewayConnectionResult.FromError(sendResult);
+                        }
+                    }
+
+                    if (_receiveTask.IsCompleted)
+                    {
+                        var receiveResult = await _receiveTask;
+                        if (!receiveResult.IsSuccess)
+                        {
+                            return GatewayConnectionResult.FromError(receiveResult);
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            return GatewayConnectionResult.FromSuccess();
+        }
+
+        /// <summary>
+        /// Finalizes the given running responder, awaiting it and logging its results.
+        /// </summary>
+        /// <param name="runningResponder">The running responder.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        private async Task FinalizeResponderAsync(Task<EventResponseResult> runningResponder)
+        {
+            try
+            {
+                var responderResult = await runningResponder;
+                if (!responderResult.IsSuccess)
+                {
+                    if (responderResult.Exception is null)
+                    {
+                        _log.LogWarning
+                        (
+                            "Error in gateway event responder.",
+                            responderResult.ErrorReason
+                        );
+                    }
+                    else
+                    {
+                        _log.LogWarning
+                        (
+                            "Error in gateway event responder.",
+                            responderResult.Exception
+                        );
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _log.LogWarning("Error in gateway event responder.", e);
             }
         }
 
@@ -652,10 +839,10 @@ namespace Remora.Discord.Gateway
                 {
                     if (lastHeartbeatAck < lastHeartbeat)
                     {
-                        // TODO: Reconnect
                         return GatewaySenderResult.FromError
                         (
-                            "The server did not respond in time with a heartbeat acknowledgement."
+                            "The server did not respond in time with a heartbeat acknowledgement.",
+                            GatewayCloseStatus.SessionTimedOut
                         );
                     }
 
@@ -745,7 +932,10 @@ namespace Remora.Discord.Gateway
 
                 if (memoryStream.Length > 4096)
                 {
-                    return SendPayloadResult.FromError("The payload was too large to be accepted by the gateway.");
+                    return SendPayloadResult.FromError
+                    (
+                        "The payload was too large to be accepted by the gateway."
+                    );
                 }
 
                 buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
@@ -756,7 +946,20 @@ namespace Remora.Discord.Gateway
 
                 if (_clientWebSocket.CloseStatus.HasValue)
                 {
-                    return SendPayloadResult.FromError(_clientWebSocket.CloseStatusDescription);
+                    if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
+                    {
+                        return SendPayloadResult.FromError
+                        (
+                            "The gateway closed the connection.",
+                            (GatewayCloseStatus)_clientWebSocket.CloseStatus
+                        );
+                    }
+
+                    return SendPayloadResult.FromError
+                    (
+                        _clientWebSocket.CloseStatusDescription,
+                        _clientWebSocket.CloseStatus.Value
+                    );
                 }
             }
             catch (Exception e)
@@ -800,7 +1003,20 @@ namespace Remora.Discord.Gateway
 
                     if (result.CloseStatus.HasValue)
                     {
-                        return ReceivePayloadResult<IPayload>.FromError(result.CloseStatusDescription);
+                        if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
+                        {
+                            return ReceivePayloadResult<IPayload>.FromError
+                            (
+                                "The gateway closed the connection.",
+                                (GatewayCloseStatus)result.CloseStatus
+                            );
+                        }
+
+                        return ReceivePayloadResult<IPayload>.FromError
+                        (
+                            result.CloseStatusDescription,
+                            result.CloseStatus.Value
+                        );
                     }
 
                     await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
