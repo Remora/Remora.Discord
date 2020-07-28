@@ -476,209 +476,56 @@ namespace Remora.Discord.Gateway
         /// <param name="ct">The cancellation token for the dispatched event.</param>
         private void UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
         {
-            switch (payload)
+            _ = payload switch
             {
-                case Payload<IHeartbeat> heartbeat:
-                {
-                    DispatchEvent(heartbeat, ct);
-                    break;
-                }
-                case Payload<IHeartbeatAcknowledge> heartbeatAcknowledge:
-                {
-                    DispatchEvent(heartbeatAcknowledge, ct);
-                    break;
-                }
-                case Payload<IChannelCreate> channelCreate:
-                {
-                    DispatchEvent(channelCreate, ct);
-                    break;
-                }
-                case Payload<IChannelDelete> channelDelete:
-                {
-                    DispatchEvent(channelDelete, ct);
-                    break;
-                }
-                case Payload<IChannelPinsUpdate> channelPinsUpdate:
-                {
-                    DispatchEvent(channelPinsUpdate, ct);
-                    break;
-                }
-                case Payload<IHello> hello:
-                {
-                    DispatchEvent(hello, ct);
-                    break;
-                }
-                case Payload<IInvalidSession> invalidSession:
-                {
-                    DispatchEvent(invalidSession, ct);
-                    break;
-                }
-                case Payload<IReady> ready:
-                {
-                    DispatchEvent(ready, ct);
-                    break;
-                }
-                case Payload<IReconnect> reconnect:
-                {
-                    DispatchEvent(reconnect, ct);
-                    break;
-                }
-                case Payload<IResumed> resumed:
-                {
-                    DispatchEvent(resumed, ct);
-                    break;
-                }
-                case Payload<IGuildBanAdd> guildBanAdd:
-                {
-                    DispatchEvent(guildBanAdd, ct);
-                    break;
-                }
-                case Payload<IGuildBanRemove> guildBanRemove:
-                {
-                    DispatchEvent(guildBanRemove, ct);
-                    break;
-                }
-                case Payload<IGuildCreate> guildCreate:
-                {
-                    DispatchEvent(guildCreate, ct);
-                    break;
-                }
-                case Payload<IGuildDelete> guildDelete:
-                {
-                    DispatchEvent(guildDelete, ct);
-                    break;
-                }
-                case Payload<IGuildEmojisUpdate> guildEmojisUpdate:
-                {
-                    DispatchEvent(guildEmojisUpdate, ct);
-                    break;
-                }
-                case Payload<IGuildIntegrationsUpdate> guildIntegrationsUpdate:
-                {
-                    DispatchEvent(guildIntegrationsUpdate, ct);
-                    break;
-                }
-                case Payload<IGuildMemberAdd> guildMemberAdd:
-                {
-                    DispatchEvent(guildMemberAdd, ct);
-                    break;
-                }
-                case Payload<IGuildMemberRemove> guildMemberRemove:
-                {
-                    DispatchEvent(guildMemberRemove, ct);
-                    break;
-                }
-                case Payload<IGuildMembersChunk> guildMembersChunk:
-                {
-                    DispatchEvent(guildMembersChunk, ct);
-                    break;
-                }
-                case Payload<IGuildMemberUpdate> guildMemberUpdate:
-                {
-                    DispatchEvent(guildMemberUpdate, ct);
-                    break;
-                }
-                case Payload<IGuildRoleCreate> guildRoleCreate:
-                {
-                    DispatchEvent(guildRoleCreate, ct);
-                    break;
-                }
-                case Payload<IGuildRoleDelete> guildRoleDelete:
-                {
-                    DispatchEvent(guildRoleDelete, ct);
-                    break;
-                }
-                case Payload<IGuildRoleUpdate> guildRoleUpdate:
-                {
-                    DispatchEvent(guildRoleUpdate, ct);
-                    break;
-                }
-                case Payload<IGuildUpdate> guildUpdate:
-                {
-                    DispatchEvent(guildUpdate, ct);
-                    break;
-                }
-                case Payload<IInviteCreate> inviteCreate:
-                {
-                    DispatchEvent(inviteCreate, ct);
-                    break;
-                }
-                case Payload<IInviteDelete> inviteDelete:
-                {
-                    DispatchEvent(inviteDelete, ct);
-                    break;
-                }
-                case Payload<IMessageCreate> messageCreate:
-                {
-                    DispatchEvent(messageCreate, ct);
-                    break;
-                }
-                case Payload<IMessageDelete> messageDelete:
-                {
-                    DispatchEvent(messageDelete, ct);
-                    break;
-                }
-                case Payload<IMessageDeleteBulk> messageDeleteBulk:
-                {
-                    DispatchEvent(messageDeleteBulk, ct);
-                    break;
-                }
-                case Payload<IMessageReactionAdd> messageReactionAdd:
-                {
-                    DispatchEvent(messageReactionAdd, ct);
-                    break;
-                }
-                case Payload<IMessageReactionRemove> messageReactionRemove:
-                {
-                    DispatchEvent(messageReactionRemove, ct);
-                    break;
-                }
-                case Payload<IMessageReactionRemoveAll> messageReactionRemoveAll:
-                {
-                    DispatchEvent(messageReactionRemoveAll, ct);
-                    break;
-                }
-                case Payload<IMessageReactionRemoveEmoji> messageReactionRemoveEmoji:
-                {
-                    DispatchEvent(messageReactionRemoveEmoji, ct);
-                    break;
-                }
-                case Payload<IMessageUpdate> messageUpdate:
-                {
-                    DispatchEvent(messageUpdate, ct);
-                    break;
-                }
-                case Payload<IPresenceUpdate> presenceUpdate:
-                {
-                    DispatchEvent(presenceUpdate, ct);
-                    break;
-                }
-                case Payload<ITypingStart> typingStart:
-                {
-                    DispatchEvent(typingStart, ct);
-                    break;
-                }
-                case Payload<IUserUpdate> userUpdate:
-                {
-                    DispatchEvent(userUpdate, ct);
-                    break;
-                }
-                case Payload<IVoiceServerUpdate> voiceServerUpdate:
-                {
-                    DispatchEvent(voiceServerUpdate, ct);
-                    break;
-                }
-                case Payload<IVoiceStateUpdate> voiceStateUpdate:
-                {
-                    DispatchEvent(voiceStateUpdate, ct);
-                    break;
-                }
-                case Payload<IWebhooksUpdate> webhooksUpdate:
-                {
-                    DispatchEvent(webhooksUpdate, ct);
-                    break;
-                }
-            }
+                _ when payload is Payload<IHeartbeat> heartbeat => DispatchEvent(heartbeat, ct),
+                _ when payload is Payload<IHeartbeatAcknowledge> heartbeatAcknowledge
+                    => DispatchEvent(heartbeatAcknowledge, ct),
+                _ when payload is Payload<IChannelCreate> channelCreate => DispatchEvent(channelCreate, ct),
+                _ when payload is Payload<IChannelDelete> channelDelete => DispatchEvent(channelDelete, ct),
+                _ when payload is Payload<IChannelPinsUpdate> channelPinsUpdate => DispatchEvent(channelPinsUpdate, ct),
+                _ when payload is Payload<IHello> hello => DispatchEvent(hello, ct),
+                _ when payload is Payload<IInvalidSession> invalidSession => DispatchEvent(invalidSession, ct),
+                _ when payload is Payload<IReady> ready => DispatchEvent(ready, ct),
+                _ when payload is Payload<IReconnect> reconnect => DispatchEvent(reconnect, ct),
+                _ when payload is Payload<IResumed> resumed => DispatchEvent(resumed, ct),
+                _ when payload is Payload<IGuildBanAdd> guildBanAdd => DispatchEvent(guildBanAdd, ct),
+                _ when payload is Payload<IGuildBanRemove> guildBanRemove => DispatchEvent(guildBanRemove, ct),
+                _ when payload is Payload<IGuildCreate> guildCreate => DispatchEvent(guildCreate, ct),
+                _ when payload is Payload<IGuildDelete> guildDelete => DispatchEvent(guildDelete, ct),
+                _ when payload is Payload<IGuildEmojisUpdate> guildEmojisUpdate => DispatchEvent(guildEmojisUpdate, ct),
+                _ when payload is Payload<IGuildIntegrationsUpdate> guildIntegrationsUpdate => DispatchEvent(
+                    guildIntegrationsUpdate, ct),
+                _ when payload is Payload<IGuildMemberAdd> guildMemberAdd => DispatchEvent(guildMemberAdd, ct),
+                _ when payload is Payload<IGuildMemberRemove> guildMemberRemove => DispatchEvent(guildMemberRemove, ct),
+                _ when payload is Payload<IGuildMembersChunk> guildMembersChunk => DispatchEvent(guildMembersChunk, ct),
+                _ when payload is Payload<IGuildMemberUpdate> guildMemberUpdate => DispatchEvent(guildMemberUpdate, ct),
+                _ when payload is Payload<IGuildRoleCreate> guildRoleCreate => DispatchEvent(guildRoleCreate, ct),
+                _ when payload is Payload<IGuildRoleDelete> guildRoleDelete => DispatchEvent(guildRoleDelete, ct),
+                _ when payload is Payload<IGuildRoleUpdate> guildRoleUpdate => DispatchEvent(guildRoleUpdate, ct),
+                _ when payload is Payload<IGuildUpdate> guildUpdate => DispatchEvent(guildUpdate, ct),
+                _ when payload is Payload<IInviteCreate> inviteCreate => DispatchEvent(inviteCreate, ct),
+                _ when payload is Payload<IInviteDelete> inviteDelete => DispatchEvent(inviteDelete, ct),
+                _ when payload is Payload<IMessageCreate> messageCreate => DispatchEvent(messageCreate, ct),
+                _ when payload is Payload<IMessageDelete> messageDelete => DispatchEvent(messageDelete, ct),
+                _ when payload is Payload<IMessageDeleteBulk> messageDeleteBulk => DispatchEvent(messageDeleteBulk, ct),
+                _ when payload is Payload<IMessageReactionAdd> messageReactionAdd
+                    => DispatchEvent(messageReactionAdd, ct),
+                _ when payload is Payload<IMessageReactionRemove> messageReactionRemove
+                    => DispatchEvent(messageReactionRemove, ct),
+                _ when payload is Payload<IMessageReactionRemoveAll> messageReactionRemoveAll
+                    => DispatchEvent(messageReactionRemoveAll, ct),
+                _ when payload is Payload<IMessageReactionRemoveEmoji> messageReactionRemoveEmoji
+                    => DispatchEvent(messageReactionRemoveEmoji, ct),
+                _ when payload is Payload<IMessageUpdate> messageUpdate => DispatchEvent(messageUpdate, ct),
+                _ when payload is Payload<IPresenceUpdate> presenceUpdate => DispatchEvent(presenceUpdate, ct),
+                _ when payload is Payload<ITypingStart> typingStart => DispatchEvent(typingStart, ct),
+                _ when payload is Payload<IUserUpdate> userUpdate => DispatchEvent(userUpdate, ct),
+                _ when payload is Payload<IVoiceServerUpdate> voiceServerUpdate => DispatchEvent(voiceServerUpdate, ct),
+                _ when payload is Payload<IVoiceStateUpdate> voiceStateUpdate => DispatchEvent(voiceStateUpdate, ct),
+                _ when payload is Payload<IWebhooksUpdate> webhooksUpdate => DispatchEvent(webhooksUpdate, ct),
+                _ => false
+            };
         }
 
         /// <summary>
@@ -687,7 +534,8 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayEvent">The event to dispatch.</param>
         /// <param name="ct">The cancellation token to use.</param>
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-        private void DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
+        /// <returns>true if the event was dispatched successfully; otherwise, false.</returns>
+        private bool DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
             where TGatewayEvent : IGatewayEvent
         {
             var relevantResponders = _responders.Keys
@@ -698,6 +546,8 @@ namespace Remora.Discord.Gateway
             {
                 _runningResponders.Enqueue(Task.Run(() => relevantResponder.RespondAsync(gatewayEvent.Data, ct), ct));
             }
+
+            return true;
         }
 
         /// <summary>
