@@ -28,10 +28,12 @@ using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.API.Abstractions.Events;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Presence;
+using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.API.API.Commands;
 using Remora.Discord.API.API.Events;
 using Remora.Discord.API.API.Objects.Activities;
 using Remora.Discord.API.API.Objects.Gateway;
+using Remora.Discord.API.API.Objects.Users;
 using Remora.Discord.API.Json;
 
 namespace Remora.Discord.API.Extensions
@@ -64,6 +66,7 @@ namespace Remora.Discord.API.Extensions
                         o.Converters.Add(new SnowflakeConverter());
                         o.Converters.Add(new PayloadConverter());
                         o.Converters.Add(new HeartbeatConverter());
+                        o.Converters.Add(new ImageHashConverter());
 
                         o.Converters.Add
                         (
@@ -133,6 +136,21 @@ namespace Remora.Discord.API.Extensions
                         (
                             new DataObjectConverter<IPresence, Presence>()
                                 .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter())
+                        );
+
+                        o.Converters.Add
+                        (
+                            new DataObjectConverter<IReady, Ready>()
+                                .WithPropertyName(r => r.Version, "v")
+                        );
+
+                        o.Converters.Add
+                        (
+                            new DataObjectConverter<IUser, User>()
+                                .WithPropertyName(u => u.IsBot, "bot")
+                                .WithPropertyName(u => u.IsSystem, "system")
+                                .WithPropertyName(u => u.IsVerified, "verified")
+                                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
                         );
 
                         var snakeCasePolicy = new SnakeCaseNamingPolicy();

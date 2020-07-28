@@ -44,7 +44,9 @@ namespace Remora.Discord.Gateway.Extensions
         )
         {
             serviceCollection
-                .AddDiscordRest(token);
+                .AddDiscordRest(token)
+                .AddSingleton<Random>()
+                .AddSingleton<DiscordGatewayClient>();
 
             return serviceCollection;
         }
