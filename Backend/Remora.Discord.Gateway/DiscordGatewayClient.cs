@@ -30,8 +30,10 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using ComposableAsync;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using RateLimiter;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Bidirectional;
 using Remora.Discord.API.Abstractions.Commands;
@@ -58,6 +60,11 @@ namespace Remora.Discord.Gateway
         private readonly ITokenStore _tokenStore;
         private readonly ClientWebSocket _clientWebSocket;
         private readonly Random _random;
+
+        /// <summary>
+        /// Holds the rate limiter for the payload send rate.
+        /// </summary>
+        private readonly TimeLimiter _payloadSendRateLimiter;
 
         /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -157,6 +164,8 @@ namespace Remora.Discord.Gateway
             _tokenSource = new CancellationTokenSource();
             _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
             _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
+
+            _payloadSendRateLimiter = TimeLimiter.GetFromMaxCountByInterval(120, TimeSpan.FromMinutes(1));
         }
 
         /// <summary>
@@ -827,6 +836,7 @@ namespace Remora.Discord.Gateway
                 await memoryStream.ReadAsync(bufferSegment, ct);
 
                 // Send the whole payload as one chunk
+                await _payloadSendRateLimiter;
                 await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
 
                 if (_clientWebSocket.CloseStatus.HasValue)
