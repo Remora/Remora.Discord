@@ -284,6 +284,10 @@ namespace Remora.Discord.Gateway
                     return iterationResult;
                 }
             }
+            catch (TaskCanceledException)
+            {
+                // Pass, this is fine
+            }
             catch (Exception e)
             {
                 return GatewayConnectionResult.FromError(e);
@@ -490,6 +494,10 @@ namespace Remora.Discord.Gateway
                         );
                     }
                 }
+            }
+            catch (TaskCanceledException)
+            {
+                // Pass, this is fine
             }
             catch (Exception e)
             {
@@ -866,10 +874,6 @@ namespace Remora.Discord.Gateway
                     );
                 }
             }
-            catch (Exception e)
-            {
-                return SendPayloadResult.FromError(e);
-            }
             finally
             {
                 if (!(buffer is null))
@@ -931,10 +935,6 @@ namespace Remora.Discord.Gateway
 
                 var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
                 return ReceivePayloadResult<IPayload>.FromSuccess(payload);
-            }
-            catch (Exception ex)
-            {
-                return ReceivePayloadResult<IPayload>.FromError("Failed to receive a payload.", ex);
             }
             finally
             {
