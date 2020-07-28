@@ -1,5 +1,5 @@
 //
-//  DiscordGatewayClientTests.cs
+//  LiveGatewayClientTestBase.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,33 +21,33 @@
 //
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Remora.Discord.Gateway.Tests.TestBases;
-using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.Gateway.Extensions;
 
-namespace Remora.Discord.Gateway.Tests
+namespace Remora.Discord.Gateway.Tests.TestBases
 {
     /// <summary>
-    /// Contains tests for the Discord gateway.
+    /// Acts as a base class for testing the live gateway client.
     /// </summary>
-    public class DiscordGatewayClientTests : GatewayClientTestBase
+    public class LiveGatewayClientTestBase
     {
         /// <summary>
-        /// Tests whether the client can maintain a connection for a number of seconds.
+        /// Gets the gateway client.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanMaintainConnection()
-        {
-            var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var connectionResult = await this.GatewayClient.RunAsync(tokenSource.Token);
+        protected DiscordGatewayClient GatewayClient { get; }
 
-            Assert.True
-            (
-                connectionResult.IsSuccess,
-                connectionResult.IsSuccess ? string.Empty : connectionResult.ErrorReason
-            );
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LiveGatewayClientTestBase"/> class.
+        /// </summary>
+        protected LiveGatewayClientTestBase()
+        {
+            var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN") ?? string.Empty;
+
+            var services = new ServiceCollection()
+                .AddDiscordGateway(() => token)
+                .BuildServiceProvider();
+
+            this.GatewayClient = services.GetRequiredService<DiscordGatewayClient>();
         }
     }
 }
