@@ -180,9 +180,9 @@ namespace Remora.Discord.Rest.API
                     multipartContent.Add(jsonBody, "payload_json");
                 }
 
-                foreach (var content in _additionalContent)
+                foreach (var (name, value) in _additionalContent)
                 {
-                    multipartContent.Add(content.Value, content.Key);
+                    multipartContent.Add(value, name);
                 }
 
                 request.Content = multipartContent;
