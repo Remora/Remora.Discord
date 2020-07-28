@@ -114,6 +114,11 @@ namespace Remora.Discord.Gateway
         private Task<GatewayReceiverResult> _receiveTask;
 
         /// <summary>
+        /// Holds a value indicating that the client should reconnect and resume at its earliest convenience.
+        /// </summary>
+        private bool _shouldReconnectAndResume;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
         /// </summary>
         /// <param name="gatewayAPI">The gateway API.</param>
@@ -203,6 +208,14 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Something has gone wrong. Close the socket, and handle it
+                    // Terminate the send and receive tasks
+                    _tokenSource.Cancel();
+
+                    // The results of the send and receive tasks are discarded here, because the iteration result will
+                    // contain whichever of them failed if any of them did
+                    _ = await _sendTask;
+                    _ = await _receiveTask;
+
                     if (_clientWebSocket.State == WebSocketState.Open)
                     {
                         await _clientWebSocket.CloseAsync
@@ -212,14 +225,6 @@ namespace Remora.Discord.Gateway
                             ct
                         );
                     }
-
-                    // Terminate the send and receive tasks
-                    _tokenSource.Cancel();
-
-                    // The results of the send and receive tasks are discarded here, because the iteration result will
-                    // contain whichever of them failed if any of them did
-                    _ = await _sendTask;
-                    _ = await _receiveTask;
 
                     // Finish up the responders
                     foreach (var runningResponder in _runningResponders)
@@ -395,6 +400,35 @@ namespace Remora.Discord.Gateway
                     break;
                 }
             }
+
+            if (!_shouldReconnectAndResume)
+            {
+                return GatewayConnectionResult.FromSuccess();
+            }
+
+            // Terminate the send and receive tasks
+            _tokenSource.Cancel();
+
+            // The results of the send and receive tasks are discarded here, because we know that it's going to be a
+            // cancellation
+            _ = await _sendTask;
+            _ = await _receiveTask;
+
+            if (_clientWebSocket.State == WebSocketState.Open)
+            {
+                await _clientWebSocket.CloseAsync
+                (
+                    WebSocketCloseStatus.NormalClosure,
+                    "Terminating connection by user request.",
+                    ct
+                );
+            }
+
+            // Set up the state for the new connection
+            _tokenSource = new CancellationTokenSource();
+            _connectionStatus = GatewayConnectionStatus.Disconnected;
+
+            _shouldReconnectAndResume = false;
 
             return GatewayConnectionResult.FromSuccess();
         }
@@ -684,6 +718,12 @@ namespace Remora.Discord.Gateway
                 if (receivedPayload.Entity is Payload<IHeartbeatAcknowledge>)
                 {
                     Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
+                }
+
+                // Signal the governor task that a reconnection is requested, if necessary.
+                if (receivedPayload.Entity is Payload<IReconnect>)
+                {
+                    _shouldReconnectAndResume = true;
                 }
 
                 _receivedPayloads.Enqueue(receivedPayload.Entity);
