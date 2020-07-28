@@ -272,10 +272,6 @@ namespace Remora.Discord.Gateway
                             // Reconnection is not allowed
                             return iterationResult;
                         }
-                        case null:
-                        {
-                            break;
-                        }
                     }
                 }
             }
