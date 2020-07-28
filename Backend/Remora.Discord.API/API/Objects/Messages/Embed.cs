@@ -88,19 +88,19 @@ namespace Remora.Discord.API.Objects.Messages
         /// <param name="fields">The fields in the embed.</param>
         public Embed
         (
-            Optional<string> title,
-            Optional<EmbedType> type,
-            Optional<string> description,
-            Optional<string> url,
-            Optional<DateTime> timestamp,
-            Optional<Color> colour,
-            Optional<IEmbedFooter> footer,
-            Optional<IEmbedImage> image,
-            Optional<IEmbedThumbnail> thumbnail,
-            Optional<IEmbedVideo> video,
-            Optional<IEmbedProvider> provider,
-            Optional<IEmbedAuthor> author,
-            Optional<IReadOnlyList<IEmbedField>> fields
+            Optional<string> title = default,
+            Optional<EmbedType> type = default,
+            Optional<string> description = default,
+            Optional<string> url = default,
+            Optional<DateTime> timestamp = default,
+            Optional<Color> colour = default,
+            Optional<IEmbedFooter> footer = default,
+            Optional<IEmbedImage> image = default,
+            Optional<IEmbedThumbnail> thumbnail = default,
+            Optional<IEmbedVideo> video = default,
+            Optional<IEmbedProvider> provider = default,
+            Optional<IEmbedAuthor> author = default,
+            Optional<IReadOnlyList<IEmbedField>> fields = default
         )
         {
             this.Title = title;
