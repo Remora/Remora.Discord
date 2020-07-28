@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Json;
