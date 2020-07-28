@@ -67,6 +67,11 @@ namespace Remora.Discord.Gateway
         private readonly TimeLimiter _payloadSendRateLimiter;
 
         /// <summary>
+        /// Holds the rate limiter for new connections.
+        /// </summary>
+        private readonly TimeLimiter _connectionRateLimiter;
+
+        /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
         /// </summary>
         private readonly ConcurrentQueue<IPayload> _payloadsToSend;
@@ -166,6 +171,7 @@ namespace Remora.Discord.Gateway
             _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
 
             _payloadSendRateLimiter = TimeLimiter.GetFromMaxCountByInterval(120, TimeSpan.FromMinutes(1));
+            _connectionRateLimiter = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(5));
         }
 
         /// <summary>
@@ -319,6 +325,8 @@ namespace Remora.Discord.Gateway
                     }
 
                     _log.LogInformation("Connecting to the gateway...");
+
+                    await _connectionRateLimiter;
                     await _clientWebSocket.ConnectAsync(gatewayUri, ct);
                     switch (_clientWebSocket.State)
                     {
