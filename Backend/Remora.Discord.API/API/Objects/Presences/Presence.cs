@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Objects.Presences
 {
     /// <inheritdoc />
     public class Presence : IPresence
