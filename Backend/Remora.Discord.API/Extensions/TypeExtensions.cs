@@ -92,6 +92,29 @@ namespace Remora.Discord.API.Extensions
         }
 
         /// <summary>
+        /// Retrieves the innermost type from a type wrapped by
+        /// <see cref="Nullable{T}"/> or <see cref="Optional{TValue}"/>.
+        /// </summary>
+        /// <param name="type">The type to unwrap.</param>
+        /// <returns>The unwrapped type.</returns>
+        public static Type Unwrap(this Type type)
+        {
+            var currentType = type;
+            while (currentType.IsGenericType)
+            {
+                if (currentType.IsOptional() || currentType.IsNullable())
+                {
+                    currentType = currentType.GetGenericArguments()[0];
+                    continue;
+                }
+
+                break;
+            }
+
+            return currentType;
+        }
+
+        /// <summary>
         /// Gets all publicly visible properties of the given type.
         /// </summary>
         /// <param name="type">The type.</param>
