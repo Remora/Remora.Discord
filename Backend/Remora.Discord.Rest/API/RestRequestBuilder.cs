@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Holds the additional content.
         /// </summary>
-        private readonly List<HttpContent> _additionalContent;
+        private readonly Dictionary<string, HttpContent> _additionalContent;
 
         /// <summary>
         /// Holds the configured Http request method.
@@ -76,7 +76,7 @@ namespace Remora.Discord.Rest.API
             _queryParameters = new Dictionary<string, string>();
             _jsonConfigurators = new List<Action<Utf8JsonWriter>>();
             _additionalHeaders = new Dictionary<string, string>();
-            _additionalContent = new List<HttpContent>();
+            _additionalContent = new Dictionary<string, HttpContent>();
         }
 
         /// <summary>
@@ -84,10 +84,11 @@ namespace Remora.Discord.Rest.API
         /// multipart/form-data.
         /// </summary>
         /// <param name="content">The content to add.</param>
+        /// <param name="name">The name of the content.</param>
         /// <returns>The request builder, with the content.</returns>
-        public RestRequestBuilder AddContent(HttpContent content)
+        public RestRequestBuilder AddContent(HttpContent content, string name)
         {
-            _additionalContent.Add(content);
+            _additionalContent.Add(name, content);
             return this;
         }
 
@@ -156,29 +157,32 @@ namespace Remora.Discord.Rest.API
                 request.Headers.Add(headerName, headerValue);
             }
 
-            StreamContent? jsonBody = null;
+            StringContent? jsonBody = null;
             if (_jsonConfigurators.Count > 0)
             {
-                var jsonStream = new MemoryStream();
+                using var jsonStream = new MemoryStream();
                 var jsonWriter = new Utf8JsonWriter(jsonStream);
                 foreach (var jsonConfigurator in _jsonConfigurators)
                 {
                     jsonConfigurator(jsonWriter);
                 }
 
-                jsonBody = new StreamContent(jsonStream);
+                jsonStream.Seek(0, SeekOrigin.Begin);
+                jsonBody = new StringContent(new StreamReader(jsonStream).ReadToEnd());
             }
 
             if (_additionalContent.Count > 0)
             {
-                var multipartContent = new MultipartContent("form-data")
+                var multipartContent = new MultipartFormDataContent();
+
+                if (!(jsonBody is null))
                 {
-                    jsonBody
-                };
+                    multipartContent.Add(jsonBody, "payload_json");
+                }
 
                 foreach (var content in _additionalContent)
                 {
-                    multipartContent.Add(content);
+                    multipartContent.Add(content.Value, content.Key);
                 }
 
                 request.Content = multipartContent;

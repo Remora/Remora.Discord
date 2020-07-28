@@ -113,7 +113,8 @@ namespace Remora.Discord.Rest.Extensions
                 .AddSingleton<ITokenStore>(s => new TokenStore(token()));
 
             serviceCollection
-                .AddScoped<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>();
+                .AddScoped<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>()
+                .AddScoped<IDiscordRestChannelAPI, DiscordRestChannelAPI>();
 
             return serviceCollection;
         }
