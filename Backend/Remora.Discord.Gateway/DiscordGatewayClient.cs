@@ -240,15 +240,6 @@ namespace Remora.Discord.Gateway
 
                             continue;
                         }
-                        default:
-                        {
-                            // Reconnection is not allowed.
-                            return iterationResult;
-                        }
-                        case null:
-                        {
-                            break;
-                        }
                     }
 
                     switch (iterationResult.WebSocketCloseStatus)
@@ -267,12 +258,10 @@ namespace Remora.Discord.Gateway
 
                             continue;
                         }
-                        default:
-                        {
-                            // Reconnection is not allowed
-                            return iterationResult;
-                        }
                     }
+
+                    // Reconnection is not allowed.
+                    return iterationResult;
                 }
             }
             catch (Exception e)
