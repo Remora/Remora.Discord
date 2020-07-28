@@ -132,6 +132,15 @@ namespace Remora.Discord.API.Json
 
                 var dataName = _snakeCase.ConvertName(dataType.Name.Substring(1)).ToUpperInvariant();
                 writer.WriteString("t", dataName);
+
+                if (value is IEventPayload eventPayload)
+                {
+                    writer.WriteNumber("s", eventPayload.SequenceNumber);
+                }
+                else
+                {
+                    writer.WriteNull("s");
+                }
             }
 
             writer.WritePropertyName("d");
