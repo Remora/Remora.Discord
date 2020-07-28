@@ -23,7 +23,7 @@
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.API.Objects.Gateway
+namespace Remora.Discord.API.Objects.Gateway
 {
     /// <summary>
     /// Represents a gateway endpoint.

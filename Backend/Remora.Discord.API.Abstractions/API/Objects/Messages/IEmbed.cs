@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Messages
@@ -41,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Messages
         /// considered deprecated and might be removed in a future API version.
         /// </summary>
         [Obsolete]
-        Optional<string> Type { get; }
+        Optional<EmbedType> Type { get; }
 
         /// <summary>
         /// Gets the description of the embed.
@@ -61,7 +62,7 @@ namespace Remora.Discord.API.Abstractions.Messages
         /// <summary>
         /// Gets the colour code of the embed.
         /// </summary>
-        Optional<int> Colour { get; }
+        Optional<Color> Colour { get; }
 
         /// <summary>
         /// Gets the footer information.

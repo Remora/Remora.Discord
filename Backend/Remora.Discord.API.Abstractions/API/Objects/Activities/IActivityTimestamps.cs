@@ -33,11 +33,11 @@ namespace Remora.Discord.API.Abstractions.Activities
         /// <summary>
         /// Gets the start timestamp.
         /// </summary>
-        Optional<DateTimeOffset> Start { get; }
+        Optional<DateTime> Start { get; }
 
         /// <summary>
         /// Gets the end timestamp.
         /// </summary>
-        Optional<DateTimeOffset> End { get; }
+        Optional<DateTime> End { get; }
     }
 }

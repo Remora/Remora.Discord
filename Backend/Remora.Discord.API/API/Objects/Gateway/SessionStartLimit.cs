@@ -23,7 +23,7 @@
 using System;
 using Remora.Discord.API.Abstractions.Gateway;
 
-namespace Remora.Discord.API.API.Objects.Gateway
+namespace Remora.Discord.API.Objects.Gateway
 {
     /// <summary>
     /// Represents a session start limit.

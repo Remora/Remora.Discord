@@ -60,7 +60,7 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets a value indicating whether the user is deafened in voice channels.
         /// </summary>
-        bool IsDeaf { get; }
+        bool IsDeafened { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is muted in voice channels.

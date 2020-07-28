@@ -230,5 +230,46 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// Gets the description of the guild, if the guild is discoverable.
         /// </summary>
         string? Description { get; }
+
+        /// <summary>
+        /// Gets the hash of the guild banner.
+        /// </summary>
+        IImageHash? Banner { get; }
+
+        /// <summary>
+        /// Gets the boost level of the guild.
+        /// </summary>
+        PremiumTier PremiumTier { get; }
+
+        /// <summary>
+        /// Gets the number of boosts the guild currently has.
+        /// </summary>
+        Optional<int> PremiumSubscriptionCount { get; }
+
+        /// <summary>
+        /// Gets the preferred locale of a guild with the "PUBLIC" feature.
+        /// </summary>
+        string PreferredLocale { get; }
+
+        /// <summary>
+        /// Gets the ID of the channel where admins and moderators of guilds with the public feature receive notices
+        /// from Discord.
+        /// </summary>
+        Snowflake? PublicUpdatesChannelID { get; }
+
+        /// <summary>
+        /// Gets the maximum number of users in a video channel.
+        /// </summary>
+        Optional<int> MaxVideoChannelUsers { get; }
+
+        /// <summary>
+        /// Gets the approximate number of members in the guild.
+        /// </summary>
+        Optional<int> ApproximateMemberCount { get; }
+
+        /// <summary>
+        /// Gets the approximate number of non-offline members in the guild.
+        /// </summary>
+        Optional<int> ApproximatePresenceCount { get; }
     }
 }

@@ -24,7 +24,7 @@ using Remora.Discord.API.Abstractions.Images;
 using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.API.Objects.Users
+namespace Remora.Discord.API.Objects.Users
 {
     /// <inheritdoc cref="IUser"/>
     public class User : IUser

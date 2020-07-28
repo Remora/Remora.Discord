@@ -24,7 +24,7 @@ using System;
 using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.API.Objects.Activities
+namespace Remora.Discord.API.Objects.Activities
 {
     /// <summary>
     /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
@@ -32,17 +32,17 @@ namespace Remora.Discord.API.API.Objects.Activities
     public class ActivityTimestamps : IActivityTimestamps
     {
         /// <inheritdoc />
-        public Optional<DateTimeOffset> Start { get; }
+        public Optional<DateTime> Start { get; }
 
         /// <inheritdoc />
-        public Optional<DateTimeOffset> End { get; }
+        public Optional<DateTime> End { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActivityTimestamps"/> class.
         /// </summary>
         /// <param name="start">The start timestamp.</param>
         /// <param name="end">The end timestamp.</param>
-        public ActivityTimestamps(Optional<DateTimeOffset> start = default, Optional<DateTimeOffset> end = default)
+        public ActivityTimestamps(Optional<DateTime> start = default, Optional<DateTime> end = default)
         {
             this.Start = start;
             this.End = end;

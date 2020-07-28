@@ -23,13 +23,13 @@
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Events;
 
-namespace Remora.Discord.API.API
+namespace Remora.Discord.API
 {
     /// <summary>
     /// Represents a Discord event payload.
     /// </summary>
     /// <typeparam name="TEventData">The event data.</typeparam>
-    internal class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
+    public class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
         where TEventData : IGatewayEvent
     {
         /// <inheritdoc />

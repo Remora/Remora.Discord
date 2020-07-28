@@ -24,7 +24,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Images;
-using Remora.Discord.API.API.Objects.Images;
+using Remora.Discord.API.Objects.Images;
 
 namespace Remora.Discord.API.Json
 {

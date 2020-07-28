@@ -22,7 +22,7 @@
 
 using Remora.Discord.API.Abstractions.Images;
 
-namespace Remora.Discord.API.API.Objects.Images
+namespace Remora.Discord.API.Objects.Images
 {
     /// <inheritdoc />
     public class ImageHash : IImageHash

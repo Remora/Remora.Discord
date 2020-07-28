@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Remora.Discord.Core;
 
@@ -87,6 +89,39 @@ namespace Remora.Discord.API.Extensions
             }
 
             return !type.IsValueType;
+        }
+
+        /// <summary>
+        /// Gets all publicly visible properties of the given type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>The public properties.</returns>
+        public static IEnumerable<PropertyInfo> GetPublicProperties(this Type type)
+        {
+            if (!type.IsInterface)
+            {
+                foreach (var property in type.GetProperties())
+                {
+                    yield return property;
+                }
+
+                yield break;
+            }
+
+            var returnedNames = new HashSet<string>();
+            foreach (var implementedInterface in type.GetInterfaces().Concat(new[] { type }))
+            {
+                foreach (var property in implementedInterface.GetProperties())
+                {
+                    if (returnedNames.Contains(property.Name))
+                    {
+                        continue;
+                    }
+
+                    returnedNames.Add(property.Name);
+                    yield return property;
+                }
+            }
         }
     }
 }

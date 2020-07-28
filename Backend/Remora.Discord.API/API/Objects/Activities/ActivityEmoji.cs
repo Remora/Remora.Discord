@@ -23,7 +23,7 @@
 using Remora.Discord.API.Abstractions.Activities;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.API.Objects.Activities
+namespace Remora.Discord.API.Objects.Activities
 {
     /// <summary>
     /// Represents an emoji displayed in an activity.

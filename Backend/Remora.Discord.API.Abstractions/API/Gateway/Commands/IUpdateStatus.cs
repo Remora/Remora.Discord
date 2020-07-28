@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Commands
         /// <summary>
         /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.
         /// </summary>
-        DateTimeOffset? Since { get; }
+        DateTime? Since { get; }
 
         /// <summary>
         /// Gets the user's new activity.

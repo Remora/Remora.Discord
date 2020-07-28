@@ -42,6 +42,16 @@
       <Compile Update="API\EventPayload.cs">
         <DependentUpon>Payload.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Gateway\Commands\ConnectionProperties.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Gateway\Commands\ShardIdentification.cs">
+        <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="API\Gateway" />
     </ItemGroup>
 
 </Project>

@@ -44,7 +44,7 @@ namespace Remora.Discord.API.Json
         private readonly IReadOnlyList<PropertyInfo> _dtoProperties;
 
         private readonly Dictionary<PropertyInfo, string> _nameOverrides;
-        private readonly Dictionary<PropertyInfo, JsonConverterDelegates> _converterOverrides;
+        private readonly Dictionary<PropertyInfo, JsonConverter> _converterOverrides;
         private readonly Dictionary<PropertyInfo, JsonConverterFactory> _converterFactoryOverrides;
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace Remora.Discord.API.Json
         public DataObjectConverter()
         {
             _nameOverrides = new Dictionary<PropertyInfo, string>();
-            _converterOverrides = new Dictionary<PropertyInfo, JsonConverterDelegates>();
+            _converterOverrides = new Dictionary<PropertyInfo, JsonConverter>();
             _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
             var visibleType = typeof(TInterface);
-            var visibleProperties = visibleType.GetProperties();
+            var visibleProperties = visibleType.GetPublicProperties().ToArray();
 
             _dtoConstructor = FindBestMatchingConstructor(visibleProperties);
             _dtoProperties = ReorderProperties(visibleProperties, _dtoConstructor);
@@ -269,7 +269,96 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
-            _converterOverrides.Add(property, JsonConverterDelegates.Create<TProperty>(converter));
+            _converterOverrides.Add(property, converter);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
+        (
+            Expression<Func<TInterface, Optional<TProperty>>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _converterOverrides.Add(property, converter);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
+        (
+            Expression<Func<TInterface, TProperty?>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+            where TProperty : struct
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _converterOverrides.Add(property, converter);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
+        (
+            Expression<Func<TInterface, Optional<TProperty?>>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+            where TProperty : struct
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _converterOverrides.Add(property, converter);
 
             return this;
         }
@@ -358,9 +447,21 @@ namespace Remora.Discord.API.Json
                 var propertyType = dtoProperty.PropertyType;
 
                 var converter = GetConverter(dtoProperty, options);
-                var propertyValue = !(converter is null)
-                    ? converter.Read(ref reader, propertyType, options)
-                    : JsonSerializer.Deserialize(ref reader, propertyType, options);
+
+                object? propertyValue;
+                if (converter is null)
+                {
+                    propertyValue = JsonSerializer.Deserialize(ref reader, propertyType, options);
+                }
+                else
+                {
+                    // This converter should only be in effect for the duration of this property; we'll need to clone
+                    // the options.
+                    var clonedOptions = options.Clone();
+                    clonedOptions.Converters.Add(converter);
+
+                    propertyValue = JsonSerializer.Deserialize(ref reader, propertyType, clonedOptions);
+                }
 
                 // Verify nullability
                 if (!propertyType.AllowsNull() && propertyValue is null)
@@ -438,13 +539,18 @@ namespace Remora.Discord.API.Json
 
                 var propertyType = dtoProperty.PropertyType;
                 var converter = GetConverter(dtoProperty, options);
-                if (!(converter is null) && converter.Converter.CanConvert(propertyType))
+                if (converter is null)
                 {
-                    converter.Write(writer, propertyValue, options);
+                    JsonSerializer.Serialize(writer, propertyValue, propertyType, options);
                 }
                 else
                 {
-                    JsonSerializer.Serialize(writer, propertyValue, propertyType, options);
+                    // This converter should only be in effect for the duration of this property; we'll need to clone
+                    // the options.
+                    var clonedOptions = options.Clone();
+                    clonedOptions.Converters.Add(converter);
+
+                    JsonSerializer.Serialize(writer, propertyValue, propertyType, clonedOptions);
                 }
             }
 
@@ -461,7 +567,7 @@ namespace Remora.Discord.API.Json
             return options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name;
         }
 
-        private JsonConverterDelegates? GetConverter(PropertyInfo dtoProperty, JsonSerializerOptions options)
+        private JsonConverter? GetConverter(PropertyInfo dtoProperty, JsonSerializerOptions options)
         {
             if (_converterOverrides.TryGetValue(dtoProperty, out var converter))
             {
@@ -473,30 +579,8 @@ namespace Remora.Discord.API.Json
                 return null;
             }
 
-            var genericCreateMethod = typeof(JsonConverterDelegates).GetMethod
-            (
-                nameof(JsonConverterDelegates.Create)
-            );
-
-            if (genericCreateMethod is null)
-            {
-                throw new MissingMethodException
-                (
-                    nameof(JsonConverterDelegates),
-                    nameof(JsonConverterDelegates.Create)
-                );
-            }
-
-            var createMethod = genericCreateMethod.MakeGenericMethod(dtoProperty.PropertyType);
-
             var createdConverter = converterFactory.CreateConverter(dtoProperty.PropertyType, options);
-            var createdDelegates = createMethod.Invoke(null, new object?[] { createdConverter });
-            if (createdDelegates is null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            return (JsonConverterDelegates)createdDelegates;
+            return createdConverter;
         }
     }
 }

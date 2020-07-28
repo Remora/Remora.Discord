@@ -22,7 +22,7 @@
 
 using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.API.API
+namespace Remora.Discord.API
 {
     /// <summary>
     /// Represents a payload from the Discord gateway.
