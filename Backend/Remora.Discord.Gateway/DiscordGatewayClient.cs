@@ -129,14 +129,14 @@ namespace Remora.Discord.Gateway
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
-            JsonSerializerOptions jsonOptions,
+            IOptions<JsonSerializerOptions> jsonOptions,
             ITokenStore tokenStore,
             Random random,
             ILogger<DiscordGatewayClient> log
         )
         {
             _gatewayAPI = gatewayAPI;
-            _jsonOptions = jsonOptions;
+            _jsonOptions = jsonOptions.Value;
             _tokenStore = tokenStore;
             _random = random;
             _log = log;
