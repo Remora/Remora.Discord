@@ -23,6 +23,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Tests.TestBases;
 using Remora.Discord.Tests;
 using Xunit;
@@ -45,6 +50,57 @@ namespace Remora.Discord.Gateway.Tests
             var connectionResult = await this.GatewayClient.RunAsync(tokenSource.Token);
 
             ResultAssert.Successful(connectionResult);
+        }
+
+        /// <summary>
+        /// Tests whether the client can respond to a ping-pong request.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanRespond()
+        {
+            var responder = ActivatorUtilities.CreateInstance<PingPongResponder>(this.Services);
+
+            this.GatewayClient.SubscribeResponder(responder);
+
+            var connectionResult = await this.GatewayClient.RunAsync(responder.TokenSource.Token);
+
+            ResultAssert.Successful(connectionResult);
+            Assert.True(responder.DidRespond);
+        }
+
+        private class PingPongResponder : IResponder<IMessageCreate>
+        {
+            private readonly IDiscordRestChannelAPI _channelAPI;
+
+            public CancellationTokenSource TokenSource { get; set; }
+                = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+            public bool DidRespond { get; set; }
+
+            public PingPongResponder(IDiscordRestChannelAPI channelAPI)
+            {
+                _channelAPI = channelAPI;
+            }
+
+            public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+            {
+                if (gatewayEvent.Content != "!ping")
+                {
+                    return EventResponseResult.FromSuccess();
+                }
+
+                var respondResult = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, "Pong!", ct: ct);
+                if (!respondResult.IsSuccess)
+                {
+                    return EventResponseResult.FromError(respondResult);
+                }
+
+                this.DidRespond = true;
+                this.TokenSource.Cancel();
+
+                return EventResponseResult.FromSuccess();
+            }
         }
     }
 }

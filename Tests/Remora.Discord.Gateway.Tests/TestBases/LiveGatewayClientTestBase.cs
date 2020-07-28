@@ -37,17 +37,22 @@ namespace Remora.Discord.Gateway.Tests.TestBases
         protected DiscordGatewayClient GatewayClient { get; }
 
         /// <summary>
+        /// Gets the services.
+        /// </summary>
+        protected IServiceProvider Services { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LiveGatewayClientTestBase"/> class.
         /// </summary>
         protected LiveGatewayClientTestBase()
         {
             var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN") ?? string.Empty;
 
-            var services = new ServiceCollection()
+            this.Services = new ServiceCollection()
                 .AddDiscordGateway(() => token)
                 .BuildServiceProvider();
 
-            this.GatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+            this.GatewayClient = this.Services.GetRequiredService<DiscordGatewayClient>();
         }
     }
 }

@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.API.Commands;
+using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.Gateway.Tests.TestBases;
 
 namespace Remora.Discord.Gateway.Tests.API.Commands
