@@ -194,11 +194,6 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.IsPinned, "pinned");
 
                         options.AddDataObjectConverter<IEmbed, Embed>()
-                            .WithPropertyConverter
-                            (
-                                e => e.Type,
-                                new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
-                            )
                             .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeConverter())
                             .WithPropertyConverter(e => e.Colour, new ColorConverter())
                             .WithPropertyName(e => e.Colour, "color");

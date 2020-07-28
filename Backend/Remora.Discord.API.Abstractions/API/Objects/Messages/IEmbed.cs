@@ -38,13 +38,6 @@ namespace Remora.Discord.API.Abstractions.Messages
         Optional<string> Title { get; }
 
         /// <summary>
-        /// Gets the type of the embed. Embed types are not generally used by the Discord clients, and should be
-        /// considered deprecated and might be removed in a future API version.
-        /// </summary>
-        [Obsolete]
-        Optional<EmbedType> Type { get; }
-
-        /// <summary>
         /// Gets the description of the embed.
         /// </summary>
         Optional<string> Description { get; }
