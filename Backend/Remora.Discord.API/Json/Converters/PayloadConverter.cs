@@ -176,18 +176,18 @@ namespace Remora.Discord.API.Json
             return objectType switch
             {
                 // Commands
-                _ when objectType == typeof(Payload<IHeartbeat>) => OperationCode.Heartbeat,
-                _ when objectType == typeof(Payload<IIdentify>) => OperationCode.Identify,
-                _ when objectType == typeof(Payload<IRequestGuildMembers>) => OperationCode.RequestGuildMembers,
-                _ when objectType == typeof(Payload<IResume>) => OperationCode.Resume,
-                _ when objectType == typeof(Payload<IUpdateStatus>) => OperationCode.PresenceUpdate,
-                _ when objectType == typeof(Payload<IUpdateVoiceState>) => OperationCode.VoiceStateUpdate,
+                _ when typeof(Payload<IHeartbeat>).IsAssignableFrom(objectType) => OperationCode.Heartbeat,
+                _ when typeof(Payload<IIdentify>).IsAssignableFrom(objectType) => OperationCode.Identify,
+                _ when typeof(Payload<IRequestGuildMembers>).IsAssignableFrom(objectType) => OperationCode.RequestGuildMembers,
+                _ when typeof(Payload<IResume>).IsAssignableFrom(objectType) => OperationCode.Resume,
+                _ when typeof(Payload<IUpdateStatus>).IsAssignableFrom(objectType) => OperationCode.PresenceUpdate,
+                _ when typeof(Payload<IUpdateVoiceState>).IsAssignableFrom(objectType) => OperationCode.VoiceStateUpdate,
 
                 // Events
-                _ when objectType == typeof(Payload<IHello>) => OperationCode.Hello,
-                _ when objectType == typeof(Payload<IHeartbeatAcknowledge>) => OperationCode.HeartbeatAcknowledge,
-                _ when objectType == typeof(Payload<IInvalidSession>) => OperationCode.InvalidSession,
-                _ when objectType == typeof(Payload<IReconnect>) => OperationCode.Reconnect,
+                _ when typeof(Payload<IHello>).IsAssignableFrom(objectType) => OperationCode.Hello,
+                _ when typeof(Payload<IHeartbeatAcknowledge>).IsAssignableFrom(objectType) => OperationCode.HeartbeatAcknowledge,
+                _ when typeof(Payload<IInvalidSession>).IsAssignableFrom(objectType) => OperationCode.InvalidSession,
+                _ when typeof(Payload<IReconnect>).IsAssignableFrom(objectType) => OperationCode.Reconnect,
                 _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
                 => OperationCode.Dispatch,
 
