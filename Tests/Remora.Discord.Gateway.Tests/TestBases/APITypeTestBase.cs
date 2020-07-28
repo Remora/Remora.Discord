@@ -55,7 +55,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
         /// <summary>
         /// Initializes a new instance of the <see cref="APITypeTestBase"/> class.
         /// </summary>
-        public APITypeTestBase()
+        protected APITypeTestBase()
         {
             var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN") ?? string.Empty;
 
