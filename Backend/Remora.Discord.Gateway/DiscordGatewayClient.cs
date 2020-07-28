@@ -552,21 +552,31 @@ namespace Remora.Discord.Gateway
 
             _payloadsToSend.Enqueue(identifyPayload);
 
-            var receiveReady = await ReceivePayloadAsync(ct);
-            if (!receiveReady.IsSuccess)
+            while (true)
             {
-                return GatewayConnectionResult.FromError(receiveReady);
+                var receiveReady = await ReceivePayloadAsync(ct);
+                if (!receiveReady.IsSuccess)
+                {
+                    return GatewayConnectionResult.FromError(receiveReady);
+                }
+
+                if (receiveReady.Entity is Payload<IHeartbeatAcknowledge>)
+                {
+                    continue;
+                }
+
+                if (!(receiveReady.Entity is Payload<IReady> ready))
+                {
+                    return GatewayConnectionResult.FromError
+                    (
+                        "The payload after identification was not a Ready payload."
+                    );
+                }
+
+                _sessionID = ready.Data.SessionID;
+                break;
             }
 
-            if (!(receiveReady.Entity is Payload<IReady> ready))
-            {
-                return GatewayConnectionResult.FromError
-                (
-                    "The payload after identification was not a Ready payload."
-                );
-            }
-
-            _sessionID = ready.Data.SessionID;
             return GatewayConnectionResult.FromSuccess();
         }
 
@@ -594,16 +604,27 @@ namespace Remora.Discord.Gateway
 
             _payloadsToSend.Enqueue(resumePayload);
 
-            var receiveFirstEvent = await ReceivePayloadAsync(ct);
-            if (!receiveFirstEvent.IsSuccess)
+            while (true)
             {
-                return GatewayConnectionResult.FromError(receiveFirstEvent);
-            }
+                var receiveFirstEvent = await ReceivePayloadAsync(ct);
+                if (!receiveFirstEvent.IsSuccess)
+                {
+                    return GatewayConnectionResult.FromError(receiveFirstEvent);
+                }
 
-            if (receiveFirstEvent.Entity is Payload<IInvalidSession>)
-            {
-                await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
-                return await CreateNewSessionAsync(ct);
+                if (receiveFirstEvent.Entity is Payload<IHeartbeatAcknowledge>)
+                {
+                    continue;
+                }
+
+                if (receiveFirstEvent.Entity is Payload<IInvalidSession>)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                    return await CreateNewSessionAsync(ct);
+                }
+
+                _receivedPayloads.Enqueue(receiveFirstEvent.Entity);
+                break;
             }
 
             // Push resumed events onto the queue
