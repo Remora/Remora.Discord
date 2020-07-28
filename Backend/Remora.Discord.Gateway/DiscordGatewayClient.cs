@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -476,56 +477,25 @@ namespace Remora.Discord.Gateway
         /// <param name="ct">The cancellation token for the dispatched event.</param>
         private void UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
         {
-            _ = payload switch
+            var dispatchMethod = GetType().GetMethod
+            (
+                nameof(DispatchEvent),
+                BindingFlags.NonPublic | BindingFlags.Instance
+            );
+
+            if (dispatchMethod is null)
             {
-                _ when payload is Payload<IHeartbeat> heartbeat => DispatchEvent(heartbeat, ct),
-                _ when payload is Payload<IHeartbeatAcknowledge> heartbeatAcknowledge
-                    => DispatchEvent(heartbeatAcknowledge, ct),
-                _ when payload is Payload<IChannelCreate> channelCreate => DispatchEvent(channelCreate, ct),
-                _ when payload is Payload<IChannelDelete> channelDelete => DispatchEvent(channelDelete, ct),
-                _ when payload is Payload<IChannelPinsUpdate> channelPinsUpdate => DispatchEvent(channelPinsUpdate, ct),
-                _ when payload is Payload<IHello> hello => DispatchEvent(hello, ct),
-                _ when payload is Payload<IInvalidSession> invalidSession => DispatchEvent(invalidSession, ct),
-                _ when payload is Payload<IReady> ready => DispatchEvent(ready, ct),
-                _ when payload is Payload<IReconnect> reconnect => DispatchEvent(reconnect, ct),
-                _ when payload is Payload<IResumed> resumed => DispatchEvent(resumed, ct),
-                _ when payload is Payload<IGuildBanAdd> guildBanAdd => DispatchEvent(guildBanAdd, ct),
-                _ when payload is Payload<IGuildBanRemove> guildBanRemove => DispatchEvent(guildBanRemove, ct),
-                _ when payload is Payload<IGuildCreate> guildCreate => DispatchEvent(guildCreate, ct),
-                _ when payload is Payload<IGuildDelete> guildDelete => DispatchEvent(guildDelete, ct),
-                _ when payload is Payload<IGuildEmojisUpdate> guildEmojisUpdate => DispatchEvent(guildEmojisUpdate, ct),
-                _ when payload is Payload<IGuildIntegrationsUpdate> guildIntegrationsUpdate => DispatchEvent(
-                    guildIntegrationsUpdate, ct),
-                _ when payload is Payload<IGuildMemberAdd> guildMemberAdd => DispatchEvent(guildMemberAdd, ct),
-                _ when payload is Payload<IGuildMemberRemove> guildMemberRemove => DispatchEvent(guildMemberRemove, ct),
-                _ when payload is Payload<IGuildMembersChunk> guildMembersChunk => DispatchEvent(guildMembersChunk, ct),
-                _ when payload is Payload<IGuildMemberUpdate> guildMemberUpdate => DispatchEvent(guildMemberUpdate, ct),
-                _ when payload is Payload<IGuildRoleCreate> guildRoleCreate => DispatchEvent(guildRoleCreate, ct),
-                _ when payload is Payload<IGuildRoleDelete> guildRoleDelete => DispatchEvent(guildRoleDelete, ct),
-                _ when payload is Payload<IGuildRoleUpdate> guildRoleUpdate => DispatchEvent(guildRoleUpdate, ct),
-                _ when payload is Payload<IGuildUpdate> guildUpdate => DispatchEvent(guildUpdate, ct),
-                _ when payload is Payload<IInviteCreate> inviteCreate => DispatchEvent(inviteCreate, ct),
-                _ when payload is Payload<IInviteDelete> inviteDelete => DispatchEvent(inviteDelete, ct),
-                _ when payload is Payload<IMessageCreate> messageCreate => DispatchEvent(messageCreate, ct),
-                _ when payload is Payload<IMessageDelete> messageDelete => DispatchEvent(messageDelete, ct),
-                _ when payload is Payload<IMessageDeleteBulk> messageDeleteBulk => DispatchEvent(messageDeleteBulk, ct),
-                _ when payload is Payload<IMessageReactionAdd> messageReactionAdd
-                    => DispatchEvent(messageReactionAdd, ct),
-                _ when payload is Payload<IMessageReactionRemove> messageReactionRemove
-                    => DispatchEvent(messageReactionRemove, ct),
-                _ when payload is Payload<IMessageReactionRemoveAll> messageReactionRemoveAll
-                    => DispatchEvent(messageReactionRemoveAll, ct),
-                _ when payload is Payload<IMessageReactionRemoveEmoji> messageReactionRemoveEmoji
-                    => DispatchEvent(messageReactionRemoveEmoji, ct),
-                _ when payload is Payload<IMessageUpdate> messageUpdate => DispatchEvent(messageUpdate, ct),
-                _ when payload is Payload<IPresenceUpdate> presenceUpdate => DispatchEvent(presenceUpdate, ct),
-                _ when payload is Payload<ITypingStart> typingStart => DispatchEvent(typingStart, ct),
-                _ when payload is Payload<IUserUpdate> userUpdate => DispatchEvent(userUpdate, ct),
-                _ when payload is Payload<IVoiceServerUpdate> voiceServerUpdate => DispatchEvent(voiceServerUpdate, ct),
-                _ when payload is Payload<IVoiceStateUpdate> voiceStateUpdate => DispatchEvent(voiceStateUpdate, ct),
-                _ when payload is Payload<IWebhooksUpdate> webhooksUpdate => DispatchEvent(webhooksUpdate, ct),
-                _ => false
-            };
+                throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEvent));
+            }
+
+            var payloadType = payload.GetType();
+            if (!payloadType.IsGenericType || payloadType.GetGenericTypeDefinition() != typeof(Payload<>))
+            {
+                throw new ArgumentException("The given payload was not compatible with the event dispatcher.");
+            }
+
+            var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadType.GetGenericArguments());
+            boundDispatchMethod.Invoke(this, new object?[] { payload, ct });
         }
 
         /// <summary>
@@ -534,8 +504,7 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayEvent">The event to dispatch.</param>
         /// <param name="ct">The cancellation token to use.</param>
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-        /// <returns>true if the event was dispatched successfully; otherwise, false.</returns>
-        private bool DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
+        private void DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
             where TGatewayEvent : IGatewayEvent
         {
             var relevantResponders = _responders.Keys
@@ -546,8 +515,6 @@ namespace Remora.Discord.Gateway
             {
                 _runningResponders.Enqueue(Task.Run(() => relevantResponder.RespondAsync(gatewayEvent.Data, ct), ct));
             }
-
-            return true;
         }
 
         /// <summary>
