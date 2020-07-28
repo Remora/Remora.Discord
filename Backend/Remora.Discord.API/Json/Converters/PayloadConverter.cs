@@ -223,12 +223,14 @@ namespace Remora.Discord.API.Json
             var sequenceNumber = sequenceNumberProperty.GetInt32();
 
             var eventName = eventNameProperty.GetString();
-            var eventNamespace = typeof(Hello).Namespace;
-            var eventTypes = typeof(Hello).Assembly.ExportedTypes.Where(t => t.Namespace == eventNamespace);
+            var eventNamespace = typeof(IHello).Namespace;
+            var eventTypes = typeof(IHello).Assembly.ExportedTypes
+                .Where(t => t.Namespace == eventNamespace)
+                .Where(t => t.IsInterface);
 
             var eventType = eventTypes.FirstOrDefault
             (
-                t => _snakeCase.ConvertName(t.Name).ToUpperInvariant() == eventName
+                t => _snakeCase.ConvertName(t.Name.Substring(1)).ToUpperInvariant() == eventName
             );
 
             if (eventType is null)
