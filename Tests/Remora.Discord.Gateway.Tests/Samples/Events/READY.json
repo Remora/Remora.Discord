@@ -1,0 +1,21 @@
+{
+    "op": 0,
+    "d": {
+        "v": 6,
+        "user": {
+            "verified": true,
+            "username": "Remora",
+            "mfa_enabled": true,
+            "id": "714902836760019017",
+            "flags": 0,
+            "email": null,
+            "discriminator": "9821",
+            "bot": true,
+            "avatar": null
+        },
+        "session_id": "3b6ede00b556bd7a5310f524fe695b2d",
+        "guilds": []
+    },
+    "s": 1,
+    "t": "READY"
+}
