@@ -23,6 +23,7 @@
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.Rest.Tests.TestBases;
+using Remora.Discord.Tests;
 using Xunit;
 
 namespace Remora.Discord.Rest.Tests.API.Live
@@ -40,7 +41,7 @@ namespace Remora.Discord.Rest.Tests.API.Live
         public async Task CanFetchGateway()
         {
             var result = await this.API.GetGatewayAsync();
-            Assert.True(result.IsSuccess, result.IsSuccess ? string.Empty : result.ErrorReason);
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Remora.Discord.Rest.Tests.API.Live
         public async Task CanFetchBotGateway()
         {
             var result = await this.API.GetGatewayBotAsync();
-            Assert.True(result.IsSuccess, result.IsSuccess ? string.Empty : result.ErrorReason);
+            ResultAssert.Successful(result);
         }
     }
 }
