@@ -663,7 +663,16 @@ namespace Remora.Discord.Gateway
                     }
 
                     // 32-bit reads are atomic, so this is fine
-                    var heartbeatPayload = new Payload<IHeartbeat>(new Heartbeat(_lastSequenceNumber));
+                    var lastSequenceNumber = _lastSequenceNumber;
+
+                    var heartbeatPayload = new Payload<IHeartbeat>
+                    (
+                        new Heartbeat
+                        (
+                            lastSequenceNumber == 0 ? (long?)null : lastSequenceNumber
+                        )
+                    );
+
                     var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
 
                     if (!sendHeartbeat.IsSuccess)
