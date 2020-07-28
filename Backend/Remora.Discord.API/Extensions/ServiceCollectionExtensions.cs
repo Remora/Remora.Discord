@@ -200,7 +200,8 @@ namespace Remora.Discord.API.Extensions
                                 new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
                             )
                             .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeConverter())
-                            .WithPropertyConverter(e => e.Colour, new ColorConverter());
+                            .WithPropertyConverter(e => e.Colour, new ColorConverter())
+                            .WithPropertyName(e => e.Colour, "color");
 
                         options.AddDataObjectConverter<IEmbedFooter, EmbedFooter>();
                         options.AddDataObjectConverter<IEmbedImage, EmbedImage>();
