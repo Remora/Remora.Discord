@@ -40,14 +40,17 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            var value = reader.GetInt32();
-            return Color.FromArgb(value);
+            var value = reader.GetUInt32();
+            var clrValue = value ^ 0xFF000000;
+
+            return Color.FromArgb((int)clrValue);
         }
 
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            writer.WriteNumberValue(value.ToArgb());
+            var val = value.ToArgb() & 0x00FFFFFF;
+            writer.WriteNumberValue((uint)val);
         }
     }
 }
