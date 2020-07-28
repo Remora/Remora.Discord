@@ -243,7 +243,10 @@ namespace Remora.Discord.API.Json
                 dataElement.GetRawText(), eventType, options
             );
 
-            var payloadConstructor = typeof(EventPayload<>).GetConstructor(new[] { eventType, typeof(int) });
+            var payloadConstructor = typeof(EventPayload<>)
+                .MakeGenericType(eventType)
+                .GetConstructor(new[] { eventType, typeof(int) });
+
             if (payloadConstructor is null)
             {
                 throw new JsonException();
