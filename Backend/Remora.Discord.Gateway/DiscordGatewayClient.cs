@@ -647,13 +647,16 @@ namespace Remora.Discord.Gateway
             DateTime? lastHeartbeat = null;
             while (!ct.IsCancellationRequested)
             {
-                var lastHeartbeatAck = DateTime.FromBinary(Interlocked.Read(ref _lastReceivedHeartbeatAck));
+                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
+                var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
+                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
+                    : (DateTime?)null;
 
                 // Heartbeat, if required
                 var now = DateTime.UtcNow;
                 if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - TimeSpan.FromMilliseconds(100))
                 {
-                    if (lastHeartbeatAck < lastHeartbeat)
+                    if (lastHeartbeatAck.HasValue && lastHeartbeatAck < lastHeartbeat)
                     {
                         return GatewaySenderResult.FromError
                         (
