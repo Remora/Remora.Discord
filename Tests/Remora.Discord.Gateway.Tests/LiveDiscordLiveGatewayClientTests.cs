@@ -24,6 +24,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.Tests;
 using Xunit;
 
 namespace Remora.Discord.Gateway.Tests
@@ -43,11 +44,7 @@ namespace Remora.Discord.Gateway.Tests
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             var connectionResult = await this.GatewayClient.RunAsync(tokenSource.Token);
 
-            Assert.True
-            (
-                connectionResult.IsSuccess,
-                connectionResult.IsSuccess ? string.Empty : connectionResult.ErrorReason
-            );
+            ResultAssert.Successful(connectionResult);
         }
     }
 }
