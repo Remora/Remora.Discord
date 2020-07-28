@@ -768,8 +768,12 @@ namespace Remora.Discord.Gateway
                 buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
+                // Copy the data
+                var bufferSegment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
+                await memoryStream.ReadAsync(bufferSegment, ct);
+
                 // Send the whole payload as one chunk
-                await _clientWebSocket.SendAsync(buffer, WebSocketMessageType.Text, true, ct);
+                await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
 
                 if (_clientWebSocket.CloseStatus.HasValue)
                 {
