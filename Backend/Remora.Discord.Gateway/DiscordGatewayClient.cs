@@ -287,6 +287,8 @@ namespace Remora.Discord.Gateway
                 case GatewayConnectionStatus.Offline:
                 case GatewayConnectionStatus.Disconnected:
                 {
+                    _log.LogInformation("Retrieving gateway endpoint...");
+
                     // Start connecting
                     var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(ct);
                     if (!getGatewayEndpoint.IsSuccess)
@@ -303,6 +305,7 @@ namespace Remora.Discord.Gateway
                         );
                     }
 
+                    _log.LogInformation("Connecting to the gateway...");
                     await _clientWebSocket.ConnectAsync(gatewayUri, ct);
                     switch (_clientWebSocket.State)
                     {
@@ -406,6 +409,8 @@ namespace Remora.Discord.Gateway
             {
                 return GatewayConnectionResult.FromSuccess();
             }
+
+            _log.LogInformation("Reconnection requested by the gateway; terminating session...");
 
             // Terminate the send and receive tasks
             _tokenSource.Cancel();
@@ -540,7 +545,9 @@ namespace Remora.Discord.Gateway
         /// <returns>A connection result which may or may not have succeeded.</returns>
         private async Task<GatewayConnectionResult> CreateNewSessionAsync(CancellationToken ct = default)
         {
-            var identifyPayload = new Payload<Identify>
+            _log.LogInformation("Creating a new session...");
+
+            var identifyPayload = new Payload<IIdentify>
             (
                 new Identify
                 (
@@ -593,7 +600,9 @@ namespace Remora.Discord.Gateway
                 return GatewayConnectionResult.FromError("There's no previous session to resume.");
             }
 
-            var resumePayload = new Payload<Resume>
+            _log.LogInformation("Resuming existing session...");
+
+            var resumePayload = new Payload<IResume>
             (
                 new Resume
                 (
