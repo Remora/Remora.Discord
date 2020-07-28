@@ -244,11 +244,6 @@ namespace Remora.Discord.Gateway
 
                     switch (iterationResult.WebSocketCloseStatus)
                     {
-                        case WebSocketCloseStatus.NormalClosure:
-                        {
-                            // All good, disconnected normally
-                            break;
-                        }
                         case WebSocketCloseStatus.InternalServerError:
                         case WebSocketCloseStatus.EndpointUnavailable:
                         {
