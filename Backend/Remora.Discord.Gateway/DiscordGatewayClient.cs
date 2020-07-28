@@ -54,6 +54,7 @@ namespace Remora.Discord.Gateway
 
         private readonly IDiscordRestGatewayAPI _gatewayAPI;
         private readonly JsonSerializerOptions _jsonOptions;
+        private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
         private readonly ClientWebSocket _clientWebSocket;
         private readonly Random _random;
@@ -124,6 +125,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="gatewayAPI">The gateway API.</param>
         /// <param name="jsonOptions">The JSON options.</param>
+        /// <param name="gatewayOptions">The gateway options.</param>
         /// <param name="tokenStore">The token store.</param>
         /// <param name="random">An entropy source.</param>
         /// <param name="log">The logging instance.</param>
@@ -131,6 +133,7 @@ namespace Remora.Discord.Gateway
         (
             IDiscordRestGatewayAPI gatewayAPI,
             IOptions<JsonSerializerOptions> jsonOptions,
+            IOptions<DiscordGatewayClientOptions> gatewayOptions,
             ITokenStore tokenStore,
             Random random,
             ILogger<DiscordGatewayClient> log
@@ -138,6 +141,7 @@ namespace Remora.Discord.Gateway
         {
             _gatewayAPI = gatewayAPI;
             _jsonOptions = jsonOptions.Value;
+            _gatewayOptions = gatewayOptions.Value;
             _tokenStore = tokenStore;
             _random = random;
             _log = log;
@@ -547,14 +551,19 @@ namespace Remora.Discord.Gateway
         {
             _log.LogInformation("Creating a new session...");
 
+            var shardInformation = _gatewayOptions.ShardIdentification is null
+                ? default
+                : new Optional<IShardIdentification>(_gatewayOptions.ShardIdentification);
+
             var identifyPayload = new Payload<IIdentify>
             (
                 new Identify
                 (
                     _tokenStore.Token,
-                    new ConnectionProperties("Remora.Discord"),
-                    intents: GatewayIntents.DirectMessages,
-                    compress: false
+                    _gatewayOptions.ConnectionProperties,
+                    intents: _gatewayOptions.Intents,
+                    compress: false,
+                    shard: shardInformation
                 )
             );
 
@@ -685,7 +694,9 @@ namespace Remora.Discord.Gateway
 
                 // Heartbeat, if required
                 var now = DateTime.UtcNow;
-                if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - TimeSpan.FromMilliseconds(100))
+                var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
+
+                if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
                 {
                     if (lastHeartbeatAck.HasValue && lastHeartbeatAck < lastHeartbeat)
                     {
@@ -721,7 +732,7 @@ namespace Remora.Discord.Gateway
                 if (!_payloadsToSend.TryDequeue(out var payload))
                 {
                     // Let's sleep for a little while
-                    var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval) - now;
+                    var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval - safetyMargin) - now;
                     var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
 
                     await Task.Delay(sleepTime, ct);
