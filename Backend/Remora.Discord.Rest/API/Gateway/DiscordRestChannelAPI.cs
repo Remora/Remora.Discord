@@ -147,16 +147,15 @@ namespace Remora.Discord.Rest.API.Gateway
                         b.AddContent(new StreamContent(file.Value), "file");
                     }
 
-                    if (content.HasValue)
-                    {
-                        b.AddContent(new StringContent(content.Value), "content");
-                    }
-
                     b.AddJsonConfigurator
                     (
                         writer =>
                         {
-                            writer.WriteStartObject();
+                            if (content.HasValue)
+                            {
+                                writer.WriteString("content", content.Value);
+                            }
+
                             if (nonce.HasValue)
                             {
                                 writer.WriteString("nonce", nonce.Value);
@@ -178,8 +177,6 @@ namespace Remora.Discord.Rest.API.Gateway
                                 writer.WritePropertyName("allowed_mentions");
                                 JsonSerializer.Serialize(writer, allowedMentions.Value, _jsonOptions);
                             }
-
-                            writer.WriteEndObject();
                         }
                     );
                 },
