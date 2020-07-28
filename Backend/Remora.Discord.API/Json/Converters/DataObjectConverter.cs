@@ -579,7 +579,9 @@ namespace Remora.Discord.API.Json
                 return null;
             }
 
-            var createdConverter = converterFactory.CreateConverter(dtoProperty.PropertyType, options);
+            var innerType = dtoProperty.PropertyType.Unwrap();
+
+            var createdConverter = converterFactory.CreateConverter(innerType, options);
             return createdConverter;
         }
     }
