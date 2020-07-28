@@ -130,7 +130,7 @@ namespace Remora.Discord.API.Json
 
                 var dataType = genericArguments[0];
 
-                var dataName = _snakeCase.ConvertName(dataType.Name).ToUpperInvariant();
+                var dataName = _snakeCase.ConvertName(dataType.Name.Substring(1)).ToUpperInvariant();
                 writer.WriteString("t", dataName);
             }
 
