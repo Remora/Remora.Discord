@@ -240,16 +240,7 @@ namespace Remora.Discord.Gateway
 
                             continue;
                         }
-                        case GatewayCloseStatus.DisallowedIntent:
-                        case GatewayCloseStatus.InvalidIntents:
-                        case GatewayCloseStatus.InvalidAPIVersion:
-                        case GatewayCloseStatus.ShardingRequired:
-                        case GatewayCloseStatus.InvalidShard:
-                        case GatewayCloseStatus.AlreadyAuthenticated:
-                        case GatewayCloseStatus.AuthenticationFailed:
-                        case GatewayCloseStatus.NotAuthenticated:
-                        case GatewayCloseStatus.DecodeError:
-                        case GatewayCloseStatus.UnknownOpcode:
+                        default:
                         {
                             // Reconnection is not allowed.
                             return iterationResult;
@@ -276,13 +267,7 @@ namespace Remora.Discord.Gateway
 
                             continue;
                         }
-                        case WebSocketCloseStatus.MandatoryExtension:
-                        case WebSocketCloseStatus.MessageTooBig:
-                        case WebSocketCloseStatus.PolicyViolation:
-                        case WebSocketCloseStatus.InvalidPayloadData:
-                        case WebSocketCloseStatus.Empty:
-                        case WebSocketCloseStatus.InvalidMessageType:
-                        case WebSocketCloseStatus.ProtocolError:
+                        default:
                         {
                             // Reconnection is not allowed
                             return iterationResult;
