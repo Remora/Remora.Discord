@@ -237,10 +237,18 @@ namespace Remora.Discord.API.Json
                 return new EventPayload<IUnknownEvent>(new UnknownEvent(dataElement.GetRawText()), sequenceNumber);
             }
 
-            var eventData = JsonSerializer.Deserialize
-            (
-                dataElement.GetRawText(), eventType, options
-            );
+            object? eventData;
+            try
+            {
+                eventData = JsonSerializer.Deserialize
+                (
+                    dataElement.GetRawText(), eventType, options
+                );
+            }
+            catch (NotSupportedException)
+            {
+                return new EventPayload<IUnknownEvent>(new UnknownEvent(dataElement.GetRawText()), sequenceNumber);
+            }
 
             var payloadConstructor = typeof(EventPayload<>)
                 .MakeGenericType(eventType)
