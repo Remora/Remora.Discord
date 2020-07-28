@@ -677,6 +677,11 @@ namespace Remora.Discord.Gateway
                 // Check if there are any user-submitted payloads to send
                 if (!_payloadsToSend.TryDequeue(out var payload))
                 {
+                    // Let's sleep for a little while
+                    var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval) - now;
+                    var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
+
+                    await Task.Delay(sleepTime, ct);
                     continue;
                 }
 
