@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Web;
 using Polly;
@@ -162,13 +163,24 @@ namespace Remora.Discord.Rest.API
             {
                 using var jsonStream = new MemoryStream();
                 var jsonWriter = new Utf8JsonWriter(jsonStream);
+
+                jsonWriter.WriteStartObject();
+
                 foreach (var jsonConfigurator in _jsonConfigurators)
                 {
                     jsonConfigurator(jsonWriter);
                 }
 
+                jsonWriter.WriteEndObject();
+                jsonWriter.Flush();
+
                 jsonStream.Seek(0, SeekOrigin.Begin);
-                jsonBody = new StringContent(new StreamReader(jsonStream).ReadToEnd());
+                jsonBody = new StringContent
+                (
+                    new StreamReader(jsonStream).ReadToEnd(),
+                    Encoding.UTF8,
+                    "application/json"
+                );
             }
 
             if (_additionalContent.Count > 0)
