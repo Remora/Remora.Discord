@@ -21,11 +21,13 @@
 //
 
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.API.Objects.Messages;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Tests.TestBases;
@@ -90,7 +92,12 @@ namespace Remora.Discord.Gateway.Tests
                     return EventResponseResult.FromSuccess();
                 }
 
-                var respondResult = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, "Pong!", ct: ct);
+                var respondResult = await _channelAPI.CreateMessageAsync
+                (
+                    gatewayEvent.ChannelID,
+                    embed: new Embed(description: "Pong!", colour: Color.Purple),
+                    ct: ct
+                );
                 if (!respondResult.IsSuccess)
                 {
                     return EventResponseResult.FromError(respondResult);
