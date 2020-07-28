@@ -34,9 +34,14 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Gets or sets the safety margin for the heartbeat interval. The client will aim to send a heartbeat within
         /// this time before the actual interval. The actual safety margin will never exceed 10% of the total interval,
-        /// and will never be less than 20 milliseconds.
+        /// and will never be less than <see cref="MinimumSafetyMargin"/>.
         /// </summary>
         public TimeSpan HeartbeatSafetyMargin { get; set; } = TimeSpan.FromMilliseconds(100);
+
+        /// <summary>
+        /// Gets or sets the minimum safety margin.
+        /// </summary>
+        public TimeSpan MinimumSafetyMargin { get; set; } = TimeSpan.FromMilliseconds(20);
 
         /// <summary>
         /// Gets or sets the shard identification information. This is used to connect the client as a sharded
@@ -69,7 +74,7 @@ namespace Remora.Discord.Gateway
                 Math.Clamp
                 (
                     this.HeartbeatSafetyMargin.TotalMilliseconds,
-                    20,
+                    this.MinimumSafetyMargin.TotalMilliseconds,
                     heartbeatInterval.TotalMilliseconds / 10
                 )
             );
