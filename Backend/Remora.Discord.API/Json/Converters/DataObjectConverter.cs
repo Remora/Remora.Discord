@@ -343,6 +343,7 @@ namespace Remora.Discord.API.Json
                     }
 
                     // No matching property - we'll skip it
+                    reader.Skip();
                     if (!reader.Read())
                     {
                         throw new JsonException
