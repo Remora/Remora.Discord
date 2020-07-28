@@ -245,7 +245,7 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            return (IPayload)eventData;
+            return (IPayload)eventObject;
         }
     }
 }
