@@ -11,9 +11,12 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="Remora.Results" Version="1.1.0" />
         <PackageReference Include="xunit" Version="2.4.0" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
         <PackageReference Include="Xunit.SkippableFact" Version="1.4.8" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="$(IsRunnableTarget)">
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     </ItemGroup>
     
     <ItemGroup>
