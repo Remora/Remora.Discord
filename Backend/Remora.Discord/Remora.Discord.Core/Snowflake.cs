@@ -77,7 +77,7 @@ namespace Remora.Discord.Core
             this.Value = value;
             this.Timestamp = DateTimeOffset.FromUnixTimeMilliseconds((long)((value >> 22) + DiscordEpoch)).UtcDateTime;
             this.InternalWorkerID = (byte)((value & 0x3E0000) >> 17);
-            this.InternalProcessID = (byte)((value & 0x1F0000) >> 12);
+            this.InternalProcessID = (byte)((value & 0x1F000) >> 12);
             this.Increment = (ushort)(value & 0xFFF);
         }
 
