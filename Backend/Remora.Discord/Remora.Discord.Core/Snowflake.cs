@@ -111,14 +111,7 @@ namespace Remora.Discord.Core
                 return false;
             }
 
-            var snowflake = new Snowflake(binary);
-            if (snowflake.Timestamp < DateTimeOffset.FromUnixTimeMilliseconds((long)DiscordEpoch))
-            {
-                // Bad ID, discord didn't exist before then
-                return false;
-            }
-
-            result = snowflake;
+            result = new Snowflake(binary);
 
             return true;
         }
