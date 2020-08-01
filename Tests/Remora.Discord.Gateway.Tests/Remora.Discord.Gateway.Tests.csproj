@@ -14,20 +14,14 @@
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
         <PackageReference Include="Xunit.SkippableFact" Version="1.4.8" />
     </ItemGroup>
-    
+
     <ItemGroup Condition="$(IsRunnableTarget)">
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <Content Include="Samples\**\*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Update="Samples\Commands\READY.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Update="Samples\Events\READY.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 
