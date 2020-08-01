@@ -67,7 +67,7 @@ namespace Remora.Discord.Core
         [PublicAPI]
         public bool HasValue { get; }
 
-        [DebuggerHidden]
+        [DebuggerHidden, ExcludeFromCodeCoverage]
         private string DebuggerDisplay
         {
             get
