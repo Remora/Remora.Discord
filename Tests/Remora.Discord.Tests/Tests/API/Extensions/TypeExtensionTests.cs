@@ -78,5 +78,38 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
                 Assert.True(typeof(int?).IsNullable());
             }
         }
+
+        public class Unwrap
+        {
+            [Fact]
+            public void UnwrapsOptional()
+            {
+                Assert.Equal(typeof(int), typeof(Optional<int>).Unwrap());
+            }
+
+            [Fact]
+            public void UnwrapsOptionalNullable()
+            {
+                Assert.Equal(typeof(int), typeof(Optional<int?>).Unwrap());
+            }
+
+            [Fact]
+            public void UnwrapsNullableOptional()
+            {
+                Assert.Equal(typeof(int), typeof(Optional<int>?).Unwrap());
+            }
+
+            [Fact]
+            public void DoesNotChangeOtherGenericTypes()
+            {
+                Assert.Equal(typeof(List<int>), typeof(Optional<List<int>>).Unwrap());
+            }
+
+            [Fact]
+            public void DoesNotChangeNonOptionalOrNonNullableType()
+            {
+                Assert.Equal(typeof(int), typeof(int).Unwrap());
+            }
+        }
     }
 }
