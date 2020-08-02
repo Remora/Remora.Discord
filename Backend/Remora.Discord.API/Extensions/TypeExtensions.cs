@@ -64,34 +64,6 @@ namespace Remora.Discord.API.Extensions
         }
 
         /// <summary>
-        /// Determines whether the given type allows null as a value.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns>true if the type allows null; otherwise, false.</returns>
-        public static bool AllowsNull(this Type type)
-        {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                return true;
-            }
-
-            var nullableAttributeType = Type.GetType("System.Runtime.CompilerServices.NullableAttribute");
-            if (nullableAttributeType is null)
-            {
-                // If we don't have access to nullability attributes, assume that we're not in a nullable context.
-                return !type.IsValueType;
-            }
-
-            if (!(type.GetCustomAttribute(nullableAttributeType) is null))
-            {
-                // If there's a nullable attribute, this type is for sure nullable
-                return true;
-            }
-
-            return !type.IsValueType;
-        }
-
-        /// <summary>
         /// Retrieves the innermost type from a type wrapped by
         /// <see cref="Nullable{T}"/> or <see cref="Optional{TValue}"/>.
         /// </summary>
