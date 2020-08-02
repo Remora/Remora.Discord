@@ -464,7 +464,7 @@ namespace Remora.Discord.API.Json
                 }
 
                 // Verify nullability
-                if (!propertyType.AllowsNull() && propertyValue is null)
+                if (!dtoProperty.AllowsNull() && propertyValue is null)
                 {
                     throw new JsonException();
                 }
