@@ -40,7 +40,7 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
             /// <summary>
             /// Gets nothing. This field is used to get an annotated value type.
             /// </summary>
-            private int ValueType { get; }
+            private int ValueType { get; } = 0;
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated nullable value type.
