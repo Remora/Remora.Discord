@@ -153,7 +153,14 @@ namespace Remora.Discord.Tests.Tests.Core
                 var now = DateTimeOffset.UtcNow;
                 var snowflake = Snowflake.CreateTimestampSnowflake();
 
-                Assert.Equal(now.ToUnixTimeMilliseconds(), snowflake.Timestamp.ToUnixTimeMilliseconds());
+                // Some allowance is made here because of clock inaccuracies and the potential for scheduler differences
+                // between the two above time measurements.
+                var isWithinFiveMilliseconds = Math.Abs
+                (
+                    now.ToUnixTimeMilliseconds() - snowflake.Timestamp.ToUnixTimeMilliseconds()
+                ) <= 5;
+
+                Assert.True(isWithinFiveMilliseconds);
             }
 
             [Fact]
