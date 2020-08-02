@@ -61,8 +61,8 @@ namespace Remora.Discord.API.Json
             _converterOverrides = new Dictionary<PropertyInfo, JsonConverter>();
             _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
-            var visibleType = typeof(TInterface);
-            var visibleProperties = visibleType.GetPublicProperties().ToArray();
+            var implementingType = typeof(TImplementation);
+            var visibleProperties = implementingType.GetPublicProperties().ToArray();
 
             _dtoConstructor = FindBestMatchingConstructor(visibleProperties);
             _dtoProperties = ReorderProperties(visibleProperties, _dtoConstructor);
@@ -226,7 +226,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyName<TProperty>
         (
-            Expression<Func<TInterface, TProperty>> propertyExpression,
+            Expression<Func<TImplementation, TProperty>> propertyExpression,
             string name
         )
         {
@@ -254,7 +254,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
         (
-            Expression<Func<TInterface, TProperty>> propertyExpression,
+            Expression<Func<TImplementation, TProperty>> propertyExpression,
             JsonConverter<TProperty> converter
         )
         {
@@ -283,7 +283,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
         (
-            Expression<Func<TInterface, Optional<TProperty>>> propertyExpression,
+            Expression<Func<TImplementation, Optional<TProperty>>> propertyExpression,
             JsonConverter<TProperty> converter
         )
         {
@@ -312,7 +312,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
         (
-            Expression<Func<TInterface, TProperty?>> propertyExpression,
+            Expression<Func<TImplementation, TProperty?>> propertyExpression,
             JsonConverter<TProperty> converter
         )
             where TProperty : struct
@@ -342,7 +342,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
         (
-            Expression<Func<TInterface, Optional<TProperty?>>> propertyExpression,
+            Expression<Func<TImplementation, Optional<TProperty?>>> propertyExpression,
             JsonConverter<TProperty> converter
         )
             where TProperty : struct
@@ -372,7 +372,7 @@ namespace Remora.Discord.API.Json
         /// <returns>The converter, with the property name.</returns>
         public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty>
         (
-            Expression<Func<TInterface, TProperty>> propertyExpression,
+            Expression<Func<TImplementation, TProperty>> propertyExpression,
             JsonConverterFactory converterFactory
         )
         {
