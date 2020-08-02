@@ -103,17 +103,10 @@ namespace Remora.Discord.API.Extensions
                 yield break;
             }
 
-            var returnedNames = new HashSet<string>();
             foreach (var implementedInterface in type.GetInterfaces().Concat(new[] { type }))
             {
                 foreach (var property in implementedInterface.GetProperties())
                 {
-                    if (returnedNames.Contains(property.Name))
-                    {
-                        continue;
-                    }
-
-                    returnedNames.Add(property.Name);
                     yield return property;
                 }
             }
