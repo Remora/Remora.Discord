@@ -389,6 +389,7 @@ namespace Remora.Discord.Gateway
                         TaskCreationOptions.LongRunning
                     ).Unwrap();
 
+                    _log.LogInformation("Connected.");
                     _connectionStatus = GatewayConnectionStatus.Connected;
                     break;
                 }
