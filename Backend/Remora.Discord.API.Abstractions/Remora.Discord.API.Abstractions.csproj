@@ -4,6 +4,10 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <Version>1.0.0-alpha1</Version>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord\Remora.Discord.Core\Remora.Discord.Core.csproj" />
     </ItemGroup>
