@@ -268,7 +268,7 @@ namespace Remora.Discord.API.Json
                     dataElement.GetRawText(), eventType, options
                 );
             }
-            catch (NotSupportedException)
+            catch (Exception)
             {
                 return new EventPayload<IUnknownEvent>
                 (
