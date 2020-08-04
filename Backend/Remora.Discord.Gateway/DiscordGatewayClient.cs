@@ -548,9 +548,28 @@ namespace Remora.Discord.Gateway
             }
 
             var payloadType = payload.GetType();
-            if (!payloadType.IsGenericType || payloadType.GetGenericTypeDefinition() != typeof(EventPayload<>))
+            if (!payloadType.IsGenericType)
             {
-                throw new ArgumentException("The given payload was not compatible with the event dispatcher.");
+                _log.LogWarning
+                (
+                    $"The given payload of type {payloadType} was not compatible with the event dispatcher."
+                );
+
+                return;
+            }
+
+            var isValidPayloadType =
+                payloadType.GetGenericTypeDefinition() == typeof(Payload<>) ||
+                payloadType.GetGenericTypeDefinition() == typeof(EventPayload<>);
+
+            if (!isValidPayloadType)
+            {
+                _log.LogWarning
+                (
+                    $"The given payload of type {payloadType} was not compatible with the event dispatcher."
+                );
+
+                return;
             }
 
             var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadType.GetGenericArguments());
