@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 //using ComposableAsync;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -52,6 +53,7 @@ namespace Remora.Discord.Gateway
     /// </summary>
     public class DiscordGatewayClient
     {
+        private readonly IServiceProvider _services;
         private readonly ILogger<DiscordGatewayClient> _log;
 
         private readonly IDiscordRestGatewayAPI _gatewayAPI;
@@ -82,14 +84,14 @@ namespace Remora.Discord.Gateway
         private readonly ConcurrentQueue<IPayload> _receivedPayloads;
 
         /// <summary>
-        /// Holds the various responders currently subscribed to the gateway.
+        /// Holds the various responder types currently subscribed to the gateway.
         /// </summary>
-        private readonly ConcurrentDictionary<IResponder, int> _responders;
+        private readonly ConcurrentDictionary<Type, int> _responders;
 
         /// <summary>
         /// Holds the currently running responders.
         /// </summary>
-        private readonly ConcurrentQueue<Task<EventResponseResult>> _runningResponders;
+        private readonly ConcurrentQueue<Task<EventResponseResult[]>> _runningResponderDispatches;
 
         /// <summary>
         /// Holds the connection status.
@@ -141,6 +143,7 @@ namespace Remora.Discord.Gateway
         /// <param name="tokenStore">The token store.</param>
         /// <param name="random">An entropy source.</param>
         /// <param name="log">The logging instance.</param>
+        /// <param name="services">The available services.</param>
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
@@ -148,7 +151,8 @@ namespace Remora.Discord.Gateway
             IOptions<DiscordGatewayClientOptions> gatewayOptions,
             ITokenStore tokenStore,
             Random random,
-            ILogger<DiscordGatewayClient> log
+            ILogger<DiscordGatewayClient> log,
+            IServiceProvider services
         )
         {
             _gatewayAPI = gatewayAPI;
@@ -157,9 +161,11 @@ namespace Remora.Discord.Gateway
             _tokenStore = tokenStore;
             _random = random;
             _log = log;
+            _services = services;
+
             _clientWebSocket = new ClientWebSocket();
-            _responders = new ConcurrentDictionary<IResponder, int>();
-            _runningResponders = new ConcurrentQueue<Task<EventResponseResult>>();
+            _responders = new ConcurrentDictionary<Type, int>();
+            _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
 
             _payloadsToSend = new ConcurrentQueue<IPayload>();
             _receivedPayloads = new ConcurrentQueue<IPayload>();
@@ -177,24 +183,24 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Subscribes the given responder to events from the gateway.
         /// </summary>
-        /// <param name="responder">The responder to subscribe.</param>
-        public void SubscribeResponder(IResponder responder)
+        /// <typeparam name="TResponder">The responder to subscribe.</typeparam>
+        public void SubscribeResponder<TResponder>() where TResponder : IResponder
         {
-            if (_responders.ContainsKey(responder))
+            if (_responders.ContainsKey(typeof(TResponder)))
             {
                 return;
             }
 
-            _responders.AddOrUpdate(responder, r => 0, (r, i) => 0);
+            _responders.AddOrUpdate(typeof(TResponder), r => 0, (r, i) => 0);
         }
 
         /// <summary>
         /// Unsubscribes the given responder from events from the gateway.
         /// </summary>
-        /// <param name="responder">The responder to unsubscribe.</param>
-        public void UnsubscribeResponder(IResponder responder)
+        /// <typeparam name="TResponder">The responder to unsubscribe.</typeparam>
+        public void UnsubscribeResponder<TResponder>() where TResponder : IResponder
         {
-            _responders.TryRemove(responder, out _);
+            _responders.TryRemove(typeof(TResponder), out _);
         }
 
         /// <summary>
@@ -247,9 +253,9 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Finish up the responders
-                    foreach (var runningResponder in _runningResponders)
+                    foreach (var runningResponder in _runningResponderDispatches)
                     {
-                        await FinalizeResponderAsync(runningResponder);
+                        await FinalizeResponderDispatchAsync(runningResponder);
                     }
 
                     switch (iterationResult.GatewayCloseStatus)
@@ -395,15 +401,15 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Unpack one of the running responders, if any are pending
-                    if (_runningResponders.TryDequeue(out var runningResponder))
+                    if (_runningResponderDispatches.TryDequeue(out var runningResponder))
                     {
                         if (runningResponder.IsCompleted)
                         {
-                            await FinalizeResponderAsync(runningResponder);
+                            await FinalizeResponderDispatchAsync(runningResponder);
                         }
                         else
                         {
-                            _runningResponders.Enqueue(runningResponder);
+                            _runningResponderDispatches.Enqueue(runningResponder);
                         }
                     }
 
@@ -468,15 +474,20 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Finalizes the given running responder, awaiting it and logging its results.
         /// </summary>
-        /// <param name="runningResponder">The running responder.</param>
+        /// <param name="runningResponderDispatch">The running responder dispatch.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        private async Task FinalizeResponderAsync(Task<EventResponseResult> runningResponder)
+        private async Task FinalizeResponderDispatchAsync(Task<EventResponseResult[]> runningResponderDispatch)
         {
             try
             {
-                var responderResult = await runningResponder;
-                if (!responderResult.IsSuccess)
+                var responderResults = await runningResponderDispatch;
+                foreach (var responderResult in responderResults)
                 {
+                    if (responderResult.IsSuccess)
+                    {
+                        continue;
+                    }
+
                     if (responderResult.Exception is null)
                     {
                         _log.LogWarning
@@ -499,6 +510,18 @@ namespace Remora.Discord.Gateway
             {
                 // Pass, this is fine
             }
+            catch (AggregateException aex)
+            {
+                foreach (var e in aex.InnerExceptions)
+                {
+                    if (e is TaskCanceledException)
+                    {
+                        continue;
+                    }
+
+                    _log.LogWarning("Error in gateway event responder.", e);
+                }
+            }
             catch (Exception e)
             {
                 _log.LogWarning("Error in gateway event responder.", e);
@@ -514,13 +537,13 @@ namespace Remora.Discord.Gateway
         {
             var dispatchMethod = GetType().GetMethod
             (
-                nameof(DispatchEvent),
+                nameof(DispatchEventAsync),
                 BindingFlags.NonPublic | BindingFlags.Instance
             );
 
             if (dispatchMethod is null)
             {
-                throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEvent));
+                throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
             }
 
             var payloadType = payload.GetType();
@@ -530,7 +553,13 @@ namespace Remora.Discord.Gateway
             }
 
             var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadType.GetGenericArguments());
-            boundDispatchMethod.Invoke(this, new object?[] { payload, ct });
+            var dispatchTask = boundDispatchMethod.Invoke(this, new object?[] { payload, ct });
+            if (dispatchTask is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _runningResponderDispatches.Enqueue((Task<EventResponseResult[]>)dispatchTask);
         }
 
         /// <summary>
@@ -539,17 +568,27 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayEvent">The event to dispatch.</param>
         /// <param name="ct">The cancellation token to use.</param>
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-        private void DispatchEvent<TGatewayEvent>(Payload<TGatewayEvent> gatewayEvent, CancellationToken ct = default)
+        private async Task<EventResponseResult[]> DispatchEventAsync<TGatewayEvent>
+        (
+            Payload<TGatewayEvent> gatewayEvent,
+            CancellationToken ct = default
+        )
             where TGatewayEvent : IGatewayEvent
         {
-            var relevantResponders = _responders.Keys
-                .Where(r => r is IResponder<TGatewayEvent>)
-                .Cast<IResponder<TGatewayEvent>>();
+            var relevantResponderTypes = _responders.Keys
+                .Where(r => typeof(IResponder<TGatewayEvent>).IsAssignableFrom(r));
 
-            foreach (var relevantResponder in relevantResponders)
-            {
-                _runningResponders.Enqueue(Task.Run(() => relevantResponder.RespondAsync(gatewayEvent.Data, ct), ct));
-            }
+            using var serviceScope = _services.CreateScope();
+
+            var responders = relevantResponderTypes
+                .Select(t => ActivatorUtilities.CreateInstance(serviceScope.ServiceProvider, t))
+                .Cast<IResponder<TGatewayEvent>>()
+                .ToList();
+
+            return await Task.WhenAll
+            (
+                responders.Select(r => r.RespondAsync(gatewayEvent.Data, ct))
+            ).ConfigureAwait(false);
         }
 
         /// <summary>
