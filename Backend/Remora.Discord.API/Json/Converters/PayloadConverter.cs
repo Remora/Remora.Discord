@@ -175,18 +175,37 @@ namespace Remora.Discord.API.Json
             return objectType switch
             {
                 // Commands
-                _ when typeof(Payload<IHeartbeat>).IsAssignableFrom(objectType) => OperationCode.Heartbeat,
-                _ when typeof(Payload<IIdentify>).IsAssignableFrom(objectType) => OperationCode.Identify,
-                _ when typeof(Payload<IRequestGuildMembers>).IsAssignableFrom(objectType) => OperationCode.RequestGuildMembers,
-                _ when typeof(Payload<IResume>).IsAssignableFrom(objectType) => OperationCode.Resume,
-                _ when typeof(Payload<IUpdateStatus>).IsAssignableFrom(objectType) => OperationCode.PresenceUpdate,
-                _ when typeof(Payload<IUpdateVoiceState>).IsAssignableFrom(objectType) => OperationCode.VoiceStateUpdate,
+                _ when typeof(Payload<IHeartbeat>).IsAssignableFrom(objectType)
+                => OperationCode.Heartbeat,
+
+                _ when typeof(Payload<IIdentify>).IsAssignableFrom(objectType)
+                => OperationCode.Identify,
+
+                _ when typeof(Payload<IRequestGuildMembers>).IsAssignableFrom(objectType)
+                => OperationCode.RequestGuildMembers,
+
+                _ when typeof(Payload<IResume>).IsAssignableFrom(objectType)
+                => OperationCode.Resume,
+
+                _ when typeof(Payload<IUpdateStatus>).IsAssignableFrom(objectType)
+                => OperationCode.PresenceUpdate,
+
+                _ when typeof(Payload<IUpdateVoiceState>).IsAssignableFrom(objectType)
+                => OperationCode.VoiceStateUpdate,
 
                 // Events
-                _ when typeof(Payload<IHello>).IsAssignableFrom(objectType) => OperationCode.Hello,
-                _ when typeof(Payload<IHeartbeatAcknowledge>).IsAssignableFrom(objectType) => OperationCode.HeartbeatAcknowledge,
-                _ when typeof(Payload<IInvalidSession>).IsAssignableFrom(objectType) => OperationCode.InvalidSession,
-                _ when typeof(Payload<IReconnect>).IsAssignableFrom(objectType) => OperationCode.Reconnect,
+                _ when typeof(Payload<IHello>).IsAssignableFrom(objectType)
+                => OperationCode.Hello,
+
+                _ when typeof(Payload<IHeartbeatAcknowledge>).IsAssignableFrom(objectType)
+                => OperationCode.HeartbeatAcknowledge,
+
+                _ when typeof(Payload<IInvalidSession>).IsAssignableFrom(objectType)
+                => OperationCode.InvalidSession,
+
+                _ when typeof(Payload<IReconnect>).IsAssignableFrom(objectType)
+                => OperationCode.Reconnect,
+
                 _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
                 => OperationCode.Dispatch,
 
@@ -234,7 +253,11 @@ namespace Remora.Discord.API.Json
 
             if (eventType is null)
             {
-                return new EventPayload<IUnknownEvent>(new UnknownEvent(dataElement.GetRawText()), sequenceNumber);
+                return new EventPayload<IUnknownEvent>
+                (
+                    new UnknownEvent(document.RootElement.GetRawText()),
+                    sequenceNumber
+                );
             }
 
             object? eventData;
@@ -247,7 +270,11 @@ namespace Remora.Discord.API.Json
             }
             catch (NotSupportedException)
             {
-                return new EventPayload<IUnknownEvent>(new UnknownEvent(dataElement.GetRawText()), sequenceNumber);
+                return new EventPayload<IUnknownEvent>
+                (
+                    new UnknownEvent(document.RootElement.GetRawText()),
+                    sequenceNumber
+                );
             }
 
             var payloadConstructor = typeof(EventPayload<>)
