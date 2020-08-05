@@ -73,6 +73,7 @@ namespace Remora.Discord.API.Extensions
                     options =>
                     {
                         options
+                            .AddConverter<DiscordPermissionSetConverter>()
                             .AddConverter<OptionalConverterFactory>()
                             .AddConverter<NullableConverterFactory>()
                             .AddConverter<PartySizeConverter>()

@@ -1,5 +1,5 @@
 //
-//  IRole.cs
+//  IDiscordPermissionSet.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,54 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Drawing;
-using Remora.Discord.Core;
+using System.Numerics;
 
 namespace Remora.Discord.API.Abstractions.Permissions
 {
     /// <summary>
-    /// Represents a Discord role.
+    /// Represents a Discord permission set.
     /// </summary>
-    public interface IRole
+    public interface IDiscordPermissionSet
     {
         /// <summary>
-        /// Gets the ID of the role.
+        /// Gets the raw value of the permission set.
         /// </summary>
-        Snowflake ID { get; }
+        BigInteger Value { get; }
 
         /// <summary>
-        /// Gets the name of the role.
+        /// Determines whether the set allows the given permission.
         /// </summary>
-        string Name { get; }
+        /// <param name="permission">The permission.</param>
+        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+        bool HasPermission(DiscordPermission permission);
 
         /// <summary>
-        /// Gets the colour of the role.
+        /// Determines whether the set allows the given permission.
         /// </summary>
-        Color Colour { get; }
+        /// <param name="permission">The permission.</param>
+        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+        bool HasPermission(DiscordTextPermission permission);
 
         /// <summary>
-        /// Gets a value indicating whether the role is displayed separately in the sidebar.
+        /// Determines whether the set allows the given permission.
         /// </summary>
-        bool IsHoisted { get; }
-
-        /// <summary>
-        /// Gets the position of the role.
-        /// </summary>
-        int Position { get; }
-
-        /// <summary>
-        /// Gets the permission set for this role.
-        /// </summary>
-        IDiscordPermissionSet Permissions { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether this role is managed by an integration.
-        /// </summary>
-        bool IsManaged { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether this role is mentionable.
-        /// </summary>
-        bool IsMentionable { get; }
+        /// <param name="permission">The permission.</param>
+        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+        bool HasPermission(DiscordVoicePermission permission);
     }
 }

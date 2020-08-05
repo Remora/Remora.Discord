@@ -42,11 +42,11 @@ namespace Remora.Discord.API.Abstractions.Permissions
         /// <summary>
         /// Gets the set of permissions that are explicitly allowed.
         /// </summary>
-        DiscordPermission Allow { get; }
+        IDiscordPermissionSet Allow { get; }
 
         /// <summary>
         /// Gets the set of permissions that are explicitly denied.
         /// </summary>
-        DiscordPermission Deny { get; }
+        IDiscordPermissionSet Deny { get; }
     }
 }

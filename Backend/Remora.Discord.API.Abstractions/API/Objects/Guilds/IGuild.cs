@@ -75,7 +75,7 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets the permissions for the current user in the guild.
         /// </summary>
-        Optional<DiscordPermission> Permissions { get; }
+        Optional<IDiscordPermissionSet> Permissions { get; }
 
         /// <summary>
         /// Gets the unique ID of the voice region.
