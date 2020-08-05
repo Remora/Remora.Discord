@@ -53,10 +53,10 @@ namespace Remora.Discord.API.Objects.Messages
         public string Content { get; }
 
         /// <inheritdoc />
-        public DateTime Timestamp { get; }
+        public DateTimeOffset Timestamp { get; }
 
         /// <inheritdoc />
-        public DateTime? EditedTimestamp { get; }
+        public DateTimeOffset? EditedTimestamp { get; }
 
         /// <inheritdoc />
         public bool IsTTS { get; }
@@ -141,8 +141,8 @@ namespace Remora.Discord.API.Objects.Messages
             IUser author,
             Optional<IGuildMember> member,
             string content,
-            DateTime timestamp,
-            DateTime? editedTimestamp,
+            DateTimeOffset timestamp,
+            DateTimeOffset? editedTimestamp,
             bool isTTS,
             bool mentionsEveryone,
             IReadOnlyList<(IUser User, Optional<IGuildMember> Member)> mentions,
