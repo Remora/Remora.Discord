@@ -73,6 +73,7 @@ namespace Remora.Discord.API.Extensions
                     options =>
                     {
                         options
+                            .AddConverter<ISO8601DateTimeOffsetConverter>()
                             .AddConverter<DiscordPermissionSetConverter>()
                             .AddConverter<OptionalConverterFactory>()
                             .AddConverter<NullableConverterFactory>()
@@ -158,16 +159,14 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
                             .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions")
-                            .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
                         options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                             .WithPropertyName(g => g.IsOwner, "owner")
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
                             .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions")
-                            .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
                         options.AddDataObjectConverter<IRole, Role>()
                             .WithPropertyName(r => r.Colour, "color")
@@ -188,17 +187,13 @@ namespace Remora.Discord.API.Extensions
                         options.AddDataObjectConverter<IGuildMember, GuildMember>()
                             .WithPropertyName(m => m.Nickname, "nick")
                             .WithPropertyName(m => m.IsDeafened, "deaf")
-                            .WithPropertyName(m => m.IsMuted, "mute")
-                            .WithPropertyConverter(c => c.JoinedAt, new ISO8601DateTimeOffsetConverter())
-                            .WithPropertyConverter(c => c.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                            .WithPropertyName(m => m.IsMuted, "mute");
 
                         options.AddDataObjectConverter<IChannel, Channel>()
-                            .WithPropertyName(c => c.IsNsfw, "nsfw")
-                            .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                            .WithPropertyName(c => c.IsNsfw, "nsfw");
 
                         options.AddDataObjectConverter<IPresence, Presence>()
-                            .WithPropertyName(p => p.Nickname, "nick")
-                            .WithPropertyConverter(p => p.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                            .WithPropertyName(p => p.Nickname, "nick");
 
                         options.AddDataObjectConverter<IMessage, Message>()
                             .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
@@ -208,7 +203,6 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.IsPinned, "pinned");
 
                         options.AddDataObjectConverter<IEmbed, Embed>()
-                            .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
                             .WithPropertyConverter(e => e.Colour, new ColorConverter())
                             .WithPropertyName(e => e.Colour, "color");
 
