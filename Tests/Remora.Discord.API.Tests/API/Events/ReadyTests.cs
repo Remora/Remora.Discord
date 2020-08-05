@@ -1,5 +1,5 @@
 //
-//  HeartbeatTests.cs
+//  ReadyTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Bidirectional;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Gateway.Events.ConnectingResuming;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.Tests.API.Events
 {
     /// <summary>
-    /// Tests the <see cref="Heartbeat"/> command.
+    /// Tests the Ready event.
     /// </summary>
-    public class HeartbeatTests : CommandAPITypeTestBase<Heartbeat>
+    public class ReadyTests : EventAPITypeTestBase<Ready>
     {
     }
 }

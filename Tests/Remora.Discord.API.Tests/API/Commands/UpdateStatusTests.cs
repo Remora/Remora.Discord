@@ -1,5 +1,5 @@
 //
-//  MessageCreateTests.cs
+//  UpdateStatusTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events.Messages;
-using Remora.Discord.Gateway.Tests.TestBases;
-using Remora.Discord.Tests;
+using Remora.Discord.API.Gateway.Commands;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.API.Events
+namespace Remora.Discord.API.Tests.API.Commands
 {
     /// <summary>
-    /// Tests the <see cref="MessageCreate"/> event.
+    /// Tests the <see cref="UpdateStatus"/> command.
     /// </summary>
-    public class MessageCreateTests : EventAPITypeTestBase<MessageCreate>
+    public class UpdateStatusTests : CommandAPITypeTestBase<UpdateStatus>
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "hoisted_role", // internal discord value
-            }
-        );
     }
 }

@@ -27,14 +27,14 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Tests.Services;
 using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Gateway.Tests.Services;
 using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Remora.Discord.Gateway.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
     /// Acts as a base class for testing API types in the Discord API. This class contains common baseline tests for all

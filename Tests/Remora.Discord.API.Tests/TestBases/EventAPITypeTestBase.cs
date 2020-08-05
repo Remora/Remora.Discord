@@ -1,5 +1,5 @@
 //
-//  UpdateVoiceStateTests.cs
+//  EventAPITypeTestBase.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using System.IO;
+using Remora.Results;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
-    /// Tests the <see cref="UpdateVoiceState"/> command.
+    /// Acts as a base class for Event API types.
     /// </summary>
-    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
+    /// <typeparam name="TType">The type under test.</typeparam>
+    public abstract class EventAPITypeTestBase<TType> : APITypeTestBase
     {
+        /// <inheritdoc />
+        protected sealed override RetrieveEntityResult<Stream> GetSampleData() =>
+            this.SampleData.GetSampleEventData<TType>();
     }
 }

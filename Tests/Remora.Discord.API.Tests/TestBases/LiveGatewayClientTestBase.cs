@@ -22,9 +22,10 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
 
-namespace Remora.Discord.Gateway.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
     /// Acts as a base class for testing the live gateway client.

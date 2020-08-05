@@ -1,5 +1,5 @@
 //
-//  CommandAPITypeTestBase.cs
+//  HeartbeatTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using Remora.Results;
+using Remora.Discord.API.Gateway.Bidirectional;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.TestBases
+namespace Remora.Discord.API.Tests.API.Commands
 {
     /// <summary>
-    /// Acts as a base class for command API types.
+    /// Tests the <see cref="Heartbeat"/> command.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class CommandAPITypeTestBase<TType> : APITypeTestBase
+    public class HeartbeatTests : CommandAPITypeTestBase<Heartbeat>
     {
-        /// <inheritdoc />
-        protected sealed override RetrieveEntityResult<Stream> GetSampleData() =>
-            this.SampleData.GetSampleCommandData<TType>();
     }
 }

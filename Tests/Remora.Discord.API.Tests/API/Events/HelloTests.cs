@@ -21,9 +21,9 @@
 //
 
 using Remora.Discord.API.Gateway.Events.ConnectingResuming;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.API.Events
+namespace Remora.Discord.API.Tests.API.Events
 {
     /// <summary>
     /// Tests the Hello event.

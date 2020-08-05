@@ -1,5 +1,5 @@
 //
-//  UpdateStatusTests.cs
+//  RequestGuildMembersTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,14 +21,14 @@
 //
 
 using Remora.Discord.API.Gateway.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.Tests.API.Commands
 {
     /// <summary>
-    /// Tests the <see cref="UpdateStatus"/> command.
+    /// Tests the <see cref="RequestGuildMembers"/> command.
     /// </summary>
-    public class UpdateStatusTests : CommandAPITypeTestBase<UpdateStatus>
+    public class RequestGuildMembersTests : CommandAPITypeTestBase<RequestGuildMembers>
     {
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IdentifyTests.cs
+//  MessageCreateTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Commands;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Gateway.Events.Messages;
+using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
-namespace Remora.Discord.Gateway.Tests.API.Commands
+namespace Remora.Discord.API.Tests.API.Events
 {
     /// <summary>
-    /// Tests the <see cref="Identify"/> command.
+    /// Tests the <see cref="MessageCreate"/> event.
     /// </summary>
-    public class IdentifyTests : CommandAPITypeTestBase<Identify>
+    public class MessageCreateTests : EventAPITypeTestBase<MessageCreate>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        (
+            new[]
+            {
+                "hoisted_role", // internal discord value
+            }
+        );
     }
 }

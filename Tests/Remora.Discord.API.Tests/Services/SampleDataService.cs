@@ -26,7 +26,7 @@ using System.Reflection;
 using Humanizer;
 using Remora.Results;
 
-namespace Remora.Discord.Gateway.Tests.Services
+namespace Remora.Discord.API.Tests.Services
 {
     /// <summary>
     /// Handles interaction with local sample data.

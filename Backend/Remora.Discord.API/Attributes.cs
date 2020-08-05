@@ -1,5 +1,5 @@
 //
-//  EventAPITypeTestBase.cs
+//  Attributes.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.IO;
-using Remora.Results;
+using System.Runtime.CompilerServices;
 
-namespace Remora.Discord.Gateway.Tests.TestBases
-{
-    /// <summary>
-    /// Acts as a base class for Event API types.
-    /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class EventAPITypeTestBase<TType> : APITypeTestBase
-    {
-        /// <inheritdoc />
-        protected sealed override RetrieveEntityResult<Stream> GetSampleData() =>
-            this.SampleData.GetSampleEventData<TType>();
-    }
-}
+[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]

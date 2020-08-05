@@ -1,5 +1,5 @@
 //
-//  ReadyTests.cs
+//  UpdateVoiceStateTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events.ConnectingResuming;
-using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.API.Gateway.Commands;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Gateway.Tests.API.Events
+namespace Remora.Discord.API.Tests.API.Commands
 {
     /// <summary>
-    /// Tests the Ready event.
+    /// Tests the <see cref="UpdateVoiceState"/> command.
     /// </summary>
-    public class ReadyTests : EventAPITypeTestBase<Ready>
+    public class UpdateVoiceStateTests : CommandAPITypeTestBase<UpdateVoiceState>
     {
     }
 }

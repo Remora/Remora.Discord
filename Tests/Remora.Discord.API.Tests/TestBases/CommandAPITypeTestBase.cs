@@ -1,5 +1,5 @@
 //
-//  GuildCreateTests.cs
+//  CommandAPITypeTestBase.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events.Guilds;
-using Remora.Discord.Gateway.Tests.TestBases;
-using Remora.Discord.Tests;
+using System.IO;
+using Remora.Results;
 
-namespace Remora.Discord.Gateway.Tests.API.Events
+namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
-    /// Tests the Hello event.
+    /// Acts as a base class for command API types.
     /// </summary>
-    public class GuildCreateTests : EventAPITypeTestBase<GuildCreate>
+    /// <typeparam name="TType">The type under test.</typeparam>
+    public abstract class CommandAPITypeTestBase<TType> : APITypeTestBase
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "permissions_new", // aliased and collapsed to just "permissions"
-                "deny_new", // aliased and collapsed to just "deny"
-                "allow_new", // aliased and collapsed to just "allow"
-                "hoisted_role", // internal discord value
-                "guild_hashes", // internal discord value
-                "lazy" // undocumented value
-            }
-        );
+        protected sealed override RetrieveEntityResult<Stream> GetSampleData() =>
+            this.SampleData.GetSampleCommandData<TType>();
     }
 }
