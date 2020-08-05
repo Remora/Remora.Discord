@@ -97,6 +97,13 @@ namespace Remora.Discord.API.Extensions
             {
                 foreach (var property in type.GetProperties())
                 {
+                    if (property.DeclaringType != type && !(property.DeclaringType is null))
+                    {
+                        // this is an inherited property, so we'll return the declaring class type's version of it
+                        yield return property.DeclaringType.GetProperty(property.Name) ?? throw new MissingMemberException();
+                        continue;
+                    }
+
                     yield return property;
                 }
 
