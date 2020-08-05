@@ -59,11 +59,16 @@ namespace Remora.Discord.Tests
                     var actualElements = actual.EnumerateObject().ToList();
                     var expectedElements = expected.EnumerateObject().ToList();
 
-                    Assert.Equal(expectedElements.Count, actualElements.Count);
-
                     foreach (var expectedElement in expectedElements)
                     {
+                        Assert.True
+                        (
+                            actualElements.Any(ae => ae.NameEquals(expectedElement.Name)),
+                            $"JSON property \"{expectedElement.Name}\" is missing."
+                        );
+
                         var matchingElement = actualElements.First(ae => ae.NameEquals(expectedElement.Name));
+
                         Equivalent(expectedElement.Value, matchingElement.Value);
                     }
 
@@ -71,10 +76,8 @@ namespace Remora.Discord.Tests
                 }
                 case JsonValueKind.Array:
                 {
-                    var actualElements = expected.EnumerateArray().ToList();
-                    var expectedElements = actual.EnumerateArray().ToList();
-
-                    Assert.Equal(expectedElements.Count, actualElements.Count);
+                    var actualElements = actual.EnumerateArray().ToList();
+                    var expectedElements = expected.EnumerateArray().ToList();
 
                     for (var i = 0; i < expectedElements.Count; ++i)
                     {
