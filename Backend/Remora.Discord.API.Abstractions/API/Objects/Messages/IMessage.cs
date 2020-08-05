@@ -72,12 +72,12 @@ namespace Remora.Discord.API.Abstractions.Messages
         /// <summary>
         /// Gets the time when the messages was sent.
         /// </summary>
-        DateTime Timestamp { get; }
+        DateTimeOffset Timestamp { get; }
 
         /// <summary>
         /// Gets the time when the message was last edited.
         /// </summary>
-        DateTime? EditedTimestamp { get; }
+        DateTimeOffset? EditedTimestamp { get; }
 
         /// <summary>
         /// Gets a value indicating whether this was a TTS message.
