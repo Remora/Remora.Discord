@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Xunit;
@@ -38,8 +39,14 @@ namespace Remora.Discord.Tests
         /// </summary>
         /// <param name="expected">The expected object.</param>
         /// <param name="actual">The actual object.</param>
-        public static void Equivalent(JsonDocument expected, JsonDocument actual)
-            => Equivalent(expected.RootElement, actual.RootElement);
+        /// <param name="assertOptions">The assertion options.</param>
+        public static void Equivalent
+        (
+            JsonDocument expected,
+            JsonDocument actual,
+            JsonAssertOptions? assertOptions = default
+        )
+            => Equivalent(expected.RootElement, actual.RootElement, assertOptions);
 
         /// <summary>
         /// Asserts that the given <see cref="JsonDocument"/> values are equivalent, that is, ordering of properties
@@ -48,8 +55,16 @@ namespace Remora.Discord.Tests
         /// </summary>
         /// <param name="expected">The expected object.</param>
         /// <param name="actual">The actual object.</param>
-        public static void Equivalent(JsonElement expected, JsonElement actual)
+        /// <param name="assertOptions">The assertion options.</param>
+        public static void Equivalent
+        (
+            JsonElement expected,
+            JsonElement actual,
+            JsonAssertOptions? assertOptions = default
+        )
         {
+            assertOptions ??= JsonAssertOptions.Default;
+
             Assert.Equal(expected.ValueKind, actual.ValueKind);
 
             switch (expected.ValueKind)
@@ -61,15 +76,29 @@ namespace Remora.Discord.Tests
 
                     foreach (var expectedElement in expectedElements)
                     {
+                        var isElementPresent = actualElements.Any(ae => ae.NameEquals(expectedElement.Name));
+                        if (!isElementPresent)
+                        {
+                            if (assertOptions.AllowMissing.Contains(expectedElement.Name))
+                            {
+                                continue;
+                            }
+
+                            if (assertOptions.AllowMissingBy(expectedElement))
+                            {
+                                continue;
+                            }
+                        }
+
                         Assert.True
                         (
-                            actualElements.Any(ae => ae.NameEquals(expectedElement.Name)),
+                            isElementPresent,
                             $"JSON property \"{expectedElement.Name}\" is missing."
                         );
 
                         var matchingElement = actualElements.First(ae => ae.NameEquals(expectedElement.Name));
 
-                        Equivalent(expectedElement.Value, matchingElement.Value);
+                        Equivalent(expectedElement.Value, matchingElement.Value, assertOptions);
                     }
 
                     break;
@@ -81,7 +110,7 @@ namespace Remora.Discord.Tests
 
                     for (var i = 0; i < expectedElements.Count; ++i)
                     {
-                        Equivalent(expectedElements[i], actualElements[i]);
+                        Equivalent(expectedElements[i], actualElements[i], assertOptions);
                     }
 
                     break;
