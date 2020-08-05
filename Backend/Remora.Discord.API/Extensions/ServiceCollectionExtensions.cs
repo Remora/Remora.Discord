@@ -150,13 +150,15 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(g => g.IsOwner, "owner")
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
-                            .WithPropertyName(g => g.IsUnavailable, "unavailable");
+                            .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                            .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                             .WithPropertyName(g => g.IsOwner, "owner")
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
-                            .WithPropertyName(g => g.IsUnavailable, "unavailable");
+                            .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                            .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IRole, Role>()
                             .WithPropertyName(r => r.Colour, "color")
@@ -180,11 +182,11 @@ namespace Remora.Discord.API.Extensions
 
                         options.AddDataObjectConverter<IChannel, Channel>()
                             .WithPropertyName(c => c.IsNsfw, "nsfw")
-                            .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeConverter());
+                            .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IPresence, Presence>()
                             .WithPropertyName(p => p.Nickname, "nick")
-                            .WithPropertyConverter(p => p.PremiumSince, new ISO8601DateTimeConverter());
+                            .WithPropertyConverter(p => p.PremiumSince, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IMessage, Message>()
                             .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
@@ -194,7 +196,7 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.IsPinned, "pinned");
 
                         options.AddDataObjectConverter<IEmbed, Embed>()
-                            .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeConverter())
+                            .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
                             .WithPropertyConverter(e => e.Colour, new ColorConverter())
                             .WithPropertyName(e => e.Colour, "color");
 

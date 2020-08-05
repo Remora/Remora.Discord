@@ -71,7 +71,7 @@ namespace Remora.Discord.API.Abstractions.Presence
         /// <summary>
         /// Gets the time when the user started boosting the guild.
         /// </summary>
-        Optional<DateTime?> PremiumSince { get; }
+        Optional<DateTimeOffset?> PremiumSince { get; }
 
         /// <summary>
         /// Gets the user's nickname, if one is set.

@@ -50,7 +50,7 @@ namespace Remora.Discord.API.Abstractions.Messages
         /// <summary>
         /// Gets the timestamp of the embed content.
         /// </summary>
-        Optional<DateTime> Timestamp { get; }
+        Optional<DateTimeOffset> Timestamp { get; }
 
         /// <summary>
         /// Gets the colour code of the embed.

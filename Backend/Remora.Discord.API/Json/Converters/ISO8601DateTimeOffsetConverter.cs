@@ -1,5 +1,5 @@
 //
-//  ISO8601DateTimeConverter.cs
+//  ISO8601DateTimeOffsetConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,21 +30,21 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts instances of the <see cref="DateTime"/> struct to and from an ISO8601 representation in JSON.
     /// </summary>
-    public class ISO8601DateTimeConverter : JsonConverter<DateTime>
+    public class ISO8601DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
     {
         /// <inheritdoc />
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
                 case JsonTokenType.String:
                 {
-                    if (DateTime.TryParse(reader.GetString(), out var time))
+                    if (!DateTimeOffset.TryParse(reader.GetString(), out var time))
                     {
-                        return time;
+                        throw new JsonException();
                     }
 
-                    throw new JsonException();
+                    return time;
                 }
                 default:
                 {
@@ -53,9 +54,10 @@ namespace Remora.Discord.API.Json
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToString("O"));
+            var offset = value.Offset;
+            writer.WriteStringValue(value.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'FFFFFFF'+'{offset.Hours:D2}':'{offset.Minutes:D2}"));
         }
     }
 }

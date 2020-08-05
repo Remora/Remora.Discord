@@ -173,7 +173,7 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets the time when the current user joined the guild.
         /// </summary>
-        Optional<DateTime> JoinedAt { get; }
+        Optional<DateTimeOffset> JoinedAt { get; }
 
         /// <summary>
         /// Gets a value indicating whether this is considered a large guild.
