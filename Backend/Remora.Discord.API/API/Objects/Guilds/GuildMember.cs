@@ -41,10 +41,10 @@ namespace Remora.Discord.API.Objects.Guilds
         public IReadOnlyList<Snowflake> Roles { get; }
 
         /// <inheritdoc />
-        public DateTime JoinedAt { get; }
+        public DateTimeOffset JoinedAt { get; }
 
         /// <inheritdoc />
-        public Optional<DateTime?> PremiumSince { get; }
+        public Optional<DateTimeOffset?> PremiumSince { get; }
 
         /// <inheritdoc />
         public bool IsDeafened { get; }
@@ -67,8 +67,8 @@ namespace Remora.Discord.API.Objects.Guilds
             Optional<IUser> user,
             string? nickname,
             IReadOnlyList<Snowflake> roles,
-            DateTime joinedAt,
-            Optional<DateTime?> premiumSince,
+            DateTimeOffset joinedAt,
+            Optional<DateTimeOffset?> premiumSince,
             bool isDeafened,
             bool isMuted
         )

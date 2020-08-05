@@ -50,12 +50,12 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets when the user joined the guild.
         /// </summary>
-        DateTime JoinedAt { get; }
+        DateTimeOffset JoinedAt { get; }
 
         /// <summary>
         /// Gets when the user started boosting the guild.
         /// </summary>
-        Optional<DateTime?> PremiumSince { get; }
+        Optional<DateTimeOffset?> PremiumSince { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is deafened in voice channels.
