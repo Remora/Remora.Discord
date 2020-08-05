@@ -34,73 +34,73 @@ namespace Remora.Discord.API.Abstractions.Permissions
         /// <summary>
         /// Allows creation of instant invites.
         /// </summary>
-        CreateInstantInvite = 1 << 0,
+        CreateInstantInvite = 0,
 
         /// <summary>
         /// Allows management and editing of channels.
         /// </summary>
-        ManageChannels = 1 << 4,
+        ManageChannels = 4,
 
         /// <summary>
         /// Allows for the addition of reactions to messages.
         /// </summary>
-        AddReactions = 1 << 6,
+        AddReactions = 6,
 
         /// <summary>
         /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
         /// referred to as "Read Messages" in the Discord client.
         /// </summary>
-        ViewChannel = 1 << 10,
+        ViewChannel = 10,
 
         /// <summary>
         /// Allows for sending messages in a channel.
         /// </summary>
-        SendMessages = 1 << 11,
+        SendMessages = 11,
 
         /// <summary>
         /// Allows for sending of /tts messages.
         /// </summary>
-        SendTTSMessages = 1 << 12,
+        SendTTSMessages = 12,
 
         /// <summary>
         /// Allows for deletion of other user's messages.
         /// </summary>
-        ManageMessages = 1 << 13,
+        ManageMessages = 13,
 
         /// <summary>
         /// Links sent by users with this permission will be auto-embedded.
         /// </summary>
-        EmbedLinks = 1 << 14,
+        EmbedLinks = 14,
 
         /// <summary>
         /// Allows for uploading images and files.
         /// </summary>
-        AttachFiles = 1 << 15,
+        AttachFiles = 15,
 
         /// <summary>
         /// Allows for reading of message history.
         /// </summary>
-        ReadMessageHistory = 1 << 16,
+        ReadMessageHistory = 16,
 
         /// <summary>
         /// Allows for using the <code>@everyone</code> tag to notify all users in a guild, and the <code>@here</code>
         /// tag to notify all online users in a channel.
         /// </summary>
-        MentionEveryone = 1 << 17,
+        MentionEveryone = 17,
 
         /// <summary>
         /// Allows the usage of custom emojis from other servers.
         /// </summary>
-        UseExternalEmojis = 1 << 18,
+        UseExternalEmojis = 18,
 
         /// <summary>
         /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
         /// </summary>
-        ManageRoles = 1 << 28,
+        ManageRoles = 28,
 
         /// <summary>
         /// Allows management and editing of webhooks.
         /// </summary>
-        ManageWebhooks = 1 << 29,
+        ManageWebhooks = 29,
     }
 }

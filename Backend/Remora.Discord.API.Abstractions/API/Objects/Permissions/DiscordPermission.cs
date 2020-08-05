@@ -34,158 +34,158 @@ namespace Remora.Discord.API.Abstractions.Permissions
         /// <summary>
         /// Allows creation of instant invites.
         /// </summary>
-        CreateInstantInvite = 1 << 0,
+        CreateInstantInvite = 0,
 
         /// <summary>
         /// Allows kicking members.
         /// </summary>
-        KickMembers = 1 << 1,
+        KickMembers = 1,
 
         /// <summary>
         /// Allows banning members.
         /// </summary>
-        BanMembers = 1 << 2,
+        BanMembers = 2,
 
         /// <summary>
         /// Allows all permissions and bypasses channel permission overwrites.
         /// </summary>
-        Administrator = 1 << 3,
+        Administrator = 3,
 
         /// <summary>
         /// Allows management and editing of channels.
         /// </summary>
-        ManageChannels = 1 << 4,
+        ManageChannels = 4,
 
         /// <summary>
         /// Allows management and editing of the guild.
         /// </summary>
-        ManageGuild = 1 << 5,
+        ManageGuild = 5,
 
         /// <summary>
         /// Allows for the addition of reactions to messages.
         /// </summary>
-        AddReactions = 1 << 6,
+        AddReactions = 6,
 
         /// <summary>
         /// Allows for viewing of audit logs.
         /// </summary>
-        ViewAuditLog = 1 << 7,
+        ViewAuditLog = 7,
 
         /// <summary>
         /// Allows for using priority speaker in a voice channel.
         /// </summary>
-        PrioritySpeaker = 1 << 8,
+        PrioritySpeaker = 8,
 
         /// <summary>
         /// Allows the user to go live.
         /// </summary>
-        Stream = 1 << 9,
+        Stream = 9,
 
         /// <summary>
         /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
         /// referred to as "Read Messages" in the Discord client.
         /// </summary>
-        ViewChannel = 1 << 10,
+        ViewChannel = 10,
 
         /// <summary>
         /// Allows for sending messages in a channel.
         /// </summary>
-        SendMessages = 1 << 11,
+        SendMessages = 11,
 
         /// <summary>
         /// Allows for sending of /tts messages.
         /// </summary>
-        SendTTSMessages = 1 << 12,
+        SendTTSMessages = 12,
 
         /// <summary>
         /// Allows for deletion of other user's messages.
         /// </summary>
-        ManageMessages = 1 << 13,
+        ManageMessages = 13,
 
         /// <summary>
         /// Links sent by users with this permission will be auto-embedded.
         /// </summary>
-        EmbedLinks = 1 << 14,
+        EmbedLinks = 14,
 
         /// <summary>
         /// Allows for uploading images and files.
         /// </summary>
-        AttachFiles = 1 << 15,
+        AttachFiles = 15,
 
         /// <summary>
         /// Allows for reading of message history.
         /// </summary>
-        ReadMessageHistory = 1 << 16,
+        ReadMessageHistory = 16,
 
         /// <summary>
         /// Allows for using the <code>@everyone</code> tag to notify all users in a guild, and the <code>@here</code>
         /// tag to notify all online users in a channel.
         /// </summary>
-        MentionEveryone = 1 << 17,
+        MentionEveryone = 17,
 
         /// <summary>
         /// Allows the usage of custom emojis from other servers.
         /// </summary>
-        UseExternalEmojis = 1 << 18,
+        UseExternalEmojis = 18,
 
         /// <summary>
         /// Allows for viewing guild insights.
         /// </summary>
-        ViewGuildInsights = 1 << 19,
+        ViewGuildInsights = 19,
 
         /// <summary>
         /// Allows for joining of a voice channel.
         /// </summary>
-        Connect = 1 << 20,
+        Connect = 20,
 
         /// <summary>
         /// Allows for speaking in a voice channel.
         /// </summary>
-        Speak = 1 << 21,
+        Speak = 21,
 
         /// <summary>
         /// Allows for muting members in a voice channel.
         /// </summary>
-        MuteMembers = 1 << 22,
+        MuteMembers = 22,
 
         /// <summary>
         /// Allows for deafening of members in a voice channel.
         /// </summary>
-        DeafenMembers = 1 << 23,
+        DeafenMembers = 23,
 
         /// <summary>
         /// Allows for moving of members between voice channels.
         /// </summary>
-        MoveMembers = 1 << 24,
+        MoveMembers = 24,
 
         /// <summary>
         /// Allows for using voice activity detection in a voice channel.
         /// </summary>
-        UseVoiceActivity = 1 << 25,
+        UseVoiceActivity = 25,
 
         /// <summary>
         /// Allows for modification of own nickname.
         /// </summary>
-        ChangeNickname = 1 << 26,
+        ChangeNickname = 26,
 
         /// <summary>
         /// Allows for modification of other user's nicknames.
         /// </summary>
-        ManageNicknames = 1 << 27,
+        ManageNicknames = 27,
 
         /// <summary>
         /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
         /// </summary>
-        ManageRoles = 1 << 28,
+        ManageRoles = 28,
 
         /// <summary>
         /// Allows management and editing of webhooks.
         /// </summary>
-        ManageWebhooks = 1 << 29,
+        ManageWebhooks = 29,
 
         /// <summary>
         /// Allows management and editing of emojis.
         /// </summary>
-        ManageEmojis = 1 << 30
+        ManageEmojis = 30
     }
 }

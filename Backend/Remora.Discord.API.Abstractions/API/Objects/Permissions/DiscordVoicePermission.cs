@@ -34,57 +34,57 @@ namespace Remora.Discord.API.Abstractions.Permissions
         /// <summary>
         /// Allows creation of instant invites.
         /// </summary>
-        CreateInstantInvite = 1 << 0,
+        CreateInstantInvite = 0,
 
         /// <summary>
         /// Allows management and editing of channels.
         /// </summary>
-        ManageChannels = 1 << 4,
+        ManageChannels = 4,
 
         /// <summary>
         /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
         /// referred to as "Read Messages" in the Discord client.
         /// </summary>
-        ViewChannel = 1 << 10,
+        ViewChannel = 10,
 
         /// <summary>
         /// Allows for joining of a voice channel.
         /// </summary>
-        Connect = 1 << 20,
+        Connect = 20,
 
         /// <summary>
         /// Allows for speaking in a voice channel.
         /// </summary>
-        Speak = 1 << 21,
+        Speak = 21,
 
         /// <summary>
         /// Allows for muting members in a voice channel.
         /// </summary>
-        MuteMembers = 1 << 22,
+        MuteMembers = 22,
 
         /// <summary>
         /// Allows for deafening of members in a voice channel.
         /// </summary>
-        DeafenMembers = 1 << 23,
+        DeafenMembers = 23,
 
         /// <summary>
         /// Allows for moving of members between voice channels.
         /// </summary>
-        MoveMembers = 1 << 24,
+        MoveMembers = 24,
 
         /// <summary>
         /// Allows for using voice activity detection in a voice channel.
         /// </summary>
-        UseVoiceActivity = 1 << 25,
+        UseVoiceActivity = 25,
 
         /// <summary>
         /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
         /// </summary>
-        ManageRoles = 1 << 28,
+        ManageRoles = 28,
 
         /// <summary>
         /// Allows management and editing of webhooks.
         /// </summary>
-        ManageWebhooks = 1 << 29,
+        ManageWebhooks = 29,
     }
 }
