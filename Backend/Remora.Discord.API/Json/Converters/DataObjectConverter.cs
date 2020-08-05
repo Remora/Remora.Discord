@@ -43,7 +43,9 @@ namespace Remora.Discord.API.Json
         private readonly ConstructorInfo _dtoConstructor;
         private readonly IReadOnlyList<PropertyInfo> _dtoProperties;
 
-        private readonly Dictionary<PropertyInfo, string> _nameOverrides;
+        private readonly Dictionary<PropertyInfo, string[]> _readNameOverrides;
+        private readonly Dictionary<PropertyInfo, string> _writeNameOverrides;
+
         private readonly Dictionary<PropertyInfo, JsonConverter> _converterOverrides;
         private readonly Dictionary<PropertyInfo, JsonConverterFactory> _converterFactoryOverrides;
 
@@ -57,7 +59,9 @@ namespace Remora.Discord.API.Json
         /// </summary>
         public DataObjectConverter()
         {
-            _nameOverrides = new Dictionary<PropertyInfo, string>();
+            _readNameOverrides = new Dictionary<PropertyInfo, string[]>();
+            _writeNameOverrides = new Dictionary<PropertyInfo, string>();
+
             _converterOverrides = new Dictionary<PropertyInfo, JsonConverter>();
             _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
@@ -218,7 +222,7 @@ namespace Remora.Discord.API.Json
         }
 
         /// <summary>
-        /// Overrides the name of the given property.
+        /// Overrides the name of the given property when serializing and deserializing JSON.
         /// </summary>
         /// <param name="propertyExpression">The property expression.</param>
         /// <param name="name">The new name.</param>
@@ -241,7 +245,74 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
-            _nameOverrides.Add(property, name);
+            _writeNameOverrides.Add(property, name );
+            _readNameOverrides.Add(property, new[] { name });
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the name of the given property when serializing JSON.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="name">The new name.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithWritePropertyName<TProperty>
+        (
+            Expression<Func<TImplementation, TProperty>> propertyExpression,
+            string name
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _writeNameOverrides.Add(property, name );
+            return this;
+        }
+
+        /// <summary>
+        /// Overrides the name of the given property when deserializing JSON.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="name">The new name.</param>
+        /// <param name="fallbacks">The fallback names to use if the primary name isn't present.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithReadPropertyName<TProperty>
+        (
+            Expression<Func<TImplementation, TProperty>> propertyExpression,
+            string name,
+            params string[] fallbacks
+        )
+        {
+            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (fallbacks.Length == 0)
+            {
+                _readNameOverrides.Add(property, new[] { name });
+            }
+            else
+            {
+                _readNameOverrides.Add(property, new[] { name }.Concat(fallbacks).ToArray());
+            }
+
             return this;
         }
 
@@ -419,10 +490,27 @@ namespace Remora.Discord.API.Json
                     throw new JsonException();
                 }
 
+                var isPrimaryChoice = true;
+
+                // Search for a property that has this JSON property's name as its primary option
                 var dtoProperty = _dtoProperties.FirstOrDefault
                 (
-                    p => GetJsonPropertyName(p, options) == propertyName
+                    p => GetReadJsonPropertyName(p, options)[0] == propertyName
                 );
+
+                if (dtoProperty is null)
+                {
+                    // Allow the fallbacks to be searched as well, but mark it as just an alternative
+                    dtoProperty = _dtoProperties.FirstOrDefault
+                    (
+                        p => GetReadJsonPropertyName(p, options).Contains(propertyName)
+                    );
+
+                    if (!(dtoProperty is null))
+                    {
+                        isPrimaryChoice = false;
+                    }
+                }
 
                 if (dtoProperty is null)
                 {
@@ -469,7 +557,14 @@ namespace Remora.Discord.API.Json
                     throw new JsonException();
                 }
 
-                readProperties.Add(dtoProperty, propertyValue);
+                if (!readProperties.ContainsKey(dtoProperty))
+                {
+                    readProperties.Add(dtoProperty, propertyValue);
+                }
+                else if (isPrimaryChoice)
+                {
+                    readProperties[dtoProperty] = propertyValue;
+                }
 
                 if (!reader.Read())
                 {
@@ -534,7 +629,7 @@ namespace Remora.Discord.API.Json
                     continue;
                 }
 
-                var jsonName = GetJsonPropertyName(dtoProperty, options);
+                var jsonName = GetWriteJsonPropertyName(dtoProperty, options);
                 writer.WritePropertyName(jsonName);
 
                 var propertyType = dtoProperty.PropertyType;
@@ -557,9 +652,19 @@ namespace Remora.Discord.API.Json
             writer.WriteEndObject();
         }
 
-        private string GetJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)
+        private string[] GetReadJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)
         {
-            if (_nameOverrides.TryGetValue(dtoProperty, out var overriddenName))
+            if (_readNameOverrides.TryGetValue(dtoProperty, out var overriddenName))
+            {
+                return overriddenName;
+            }
+
+            return new[] { options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name };
+        }
+
+        private string GetWriteJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)
+        {
+            if (_writeNameOverrides.TryGetValue(dtoProperty, out var overriddenName))
             {
                 return overriddenName;
             }
