@@ -357,7 +357,7 @@ namespace Remora.Discord.Gateway
                         return GatewayConnectionResult.FromError(receiveHello);
                     }
 
-                    if (!(receiveHello.Entity is Payload<IHello> hello))
+                    if (!(receiveHello.Entity is IPayload<IHello> hello))
                     {
                         // Not receiving a hello is a non-recoverable error
                         return GatewayConnectionResult.FromError
@@ -558,11 +558,12 @@ namespace Remora.Discord.Gateway
                 return;
             }
 
-            var isValidPayloadType =
-                payloadType.GetGenericTypeDefinition() == typeof(Payload<>) ||
-                payloadType.GetGenericTypeDefinition() == typeof(EventPayload<>);
+            var payloadInterfaceType = payloadType.GetInterfaces().FirstOrDefault
+            (
+                i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPayload<>)
+            );
 
-            if (!isValidPayloadType)
+            if (payloadInterfaceType is null)
             {
                 _log.LogWarning
                 (
@@ -572,7 +573,7 @@ namespace Remora.Discord.Gateway
                 return;
             }
 
-            var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadType.GetGenericArguments());
+            var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadInterfaceType.GetGenericArguments());
             var dispatchTask = boundDispatchMethod.Invoke(this, new object?[] { payload, ct });
             if (dispatchTask is null)
             {
@@ -590,7 +591,7 @@ namespace Remora.Discord.Gateway
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
         private async Task<EventResponseResult[]> DispatchEventAsync<TGatewayEvent>
         (
-            Payload<TGatewayEvent> gatewayEvent,
+            IPayload<TGatewayEvent> gatewayEvent,
             CancellationToken ct = default
         )
             where TGatewayEvent : IGatewayEvent
@@ -662,12 +663,12 @@ namespace Remora.Discord.Gateway
                     return GatewayConnectionResult.FromError(receiveReady);
                 }
 
-                if (receiveReady.Entity is Payload<IHeartbeatAcknowledge>)
+                if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
                     continue;
                 }
 
-                if (!(receiveReady.Entity is Payload<IReady> ready))
+                if (!(receiveReady.Entity is IPayload<IReady> ready))
                 {
                     return GatewayConnectionResult.FromError
                     (
@@ -716,12 +717,12 @@ namespace Remora.Discord.Gateway
                     return GatewayConnectionResult.FromError(receiveFirstEvent);
                 }
 
-                if (receiveFirstEvent.Entity is Payload<IHeartbeatAcknowledge>)
+                if (receiveFirstEvent.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
                     continue;
                 }
 
-                if (receiveFirstEvent.Entity is Payload<IInvalidSession>)
+                if (receiveFirstEvent.Entity is IPayload<IInvalidSession>)
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
                     return await CreateNewSessionAsync(ct);
@@ -745,7 +746,7 @@ namespace Remora.Discord.Gateway
                     return GatewayConnectionResult.FromError(receiveEvent);
                 }
 
-                if (receiveEvent.Entity is Payload<IResumed>)
+                if (receiveEvent.Entity is IPayload<IResumed>)
                 {
                     return GatewayConnectionResult.FromSuccess();
                 }
@@ -859,13 +860,13 @@ namespace Remora.Discord.Gateway
                 }
 
                 // Update the ack timestamp
-                if (receivedPayload.Entity is Payload<IHeartbeatAcknowledge>)
+                if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                 {
                     Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
                 }
 
                 // Signal the governor task that a reconnection is requested, if necessary.
-                if (receivedPayload.Entity is Payload<IReconnect>)
+                if (receivedPayload.Entity is IPayload<IReconnect>)
                 {
                     _shouldReconnectAndResume = true;
                 }

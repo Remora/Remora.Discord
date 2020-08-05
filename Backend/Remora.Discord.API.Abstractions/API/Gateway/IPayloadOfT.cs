@@ -1,5 +1,5 @@
 //
-//  Payload.cs
+//  IPayloadOfT.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions;
+#pragma warning disable SA1649
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
-    /// Represents a payload from the Discord gateway.
+    /// Marker interface for payload classes.
     /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    public class Payload<TData> : IPayload<TData> where TData : IGatewayPayloadData
+    /// <typeparam name="TData">The data contained in the payload.</typeparam>
+    public interface IPayload<out TData> : IPayload
     {
-        /// <inheritdoc/>
-        public TData Data { get; }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
+        /// Gets the data contained in the payload.
         /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
-        {
-            this.Data = data;
-        }
+        TData Data { get; }
     }
 }
