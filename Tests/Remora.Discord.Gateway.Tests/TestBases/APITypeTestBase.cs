@@ -53,6 +53,11 @@ namespace Remora.Discord.Gateway.Tests.TestBases
         protected JsonSerializerOptions Options { get; }
 
         /// <summary>
+        /// Gets the assertion options.
+        /// </summary>
+        protected virtual JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="APITypeTestBase"/> class.
         /// </summary>
         protected APITypeTestBase()
@@ -142,7 +147,7 @@ namespace Remora.Discord.Gateway.Tests.TestBases
             var serialized = await JsonDocument.ParseAsync(stream);
             var original = await JsonDocument.ParseAsync(sampleData);
 
-            JsonAssert.Equivalent(original, serialized);
+            JsonAssert.Equivalent(original, serialized, this.AssertOptions);
         }
     }
 }

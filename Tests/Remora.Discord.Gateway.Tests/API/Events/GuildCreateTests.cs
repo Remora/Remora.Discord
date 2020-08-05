@@ -22,6 +22,7 @@
 
 using Remora.Discord.API.Gateway.Events.Guilds;
 using Remora.Discord.Gateway.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.Gateway.Tests.API.Events
 {
@@ -30,5 +31,18 @@ namespace Remora.Discord.Gateway.Tests.API.Events
     /// </summary>
     public class GuildCreateTests : EventAPITypeTestBase<GuildCreate>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        (
+            new[]
+            {
+                "permissions_new", // aliased and collapsed to just "permissions"
+                "deny_new", // aliased and collapsed to just "deny"
+                "allow_new", // aliased and collapsed to just "allow"
+                "hoisted_role", // internal discord value
+                "guild_hashes", // internal discord value
+                "lazy" // undocumented value
+            }
+        );
     }
 }
