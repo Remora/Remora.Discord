@@ -89,16 +89,22 @@ namespace Remora.Discord.API.Extensions
                         options.AddDataObjectConverter<IHello, Hello>();
                         options.AddDataObjectConverter<IGatewayEndpoint, GatewayEndpoint>();
                         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>();
-                        options.AddDataObjectConverter<IEmoji, Emoji>();
                         options.AddDataObjectConverter<IChannelMention, ChannelMention>();
                         options.AddDataObjectConverter<IAttachment, Attachment>();
+
+                        options.AddDataObjectConverter<IEmoji, Emoji>()
+                            .WithPropertyName(e => e.IsManaged, "managed")
+                            .WithPropertyName(e => e.IsAnimated, "animated")
+                            .WithPropertyName(e => e.IsAvailable, "available");
 
                         options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>()
                             .WithPropertyConverter
                             (
                                 p => p.Type,
                                 new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
-                            );
+                            )
+                            .WithReadPropertyName(g => g.Allow, "allow_new", "allow")
+                            .WithReadPropertyName(g => g.Deny, "deny_new", "deny");
 
                         options.AddDataObjectConverter<IActivityTimestamps, ActivityTimestamps>()
                             .WithPropertyConverter(t => t.Start, new UnixDateTimeConverter())
@@ -152,6 +158,7 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
                             .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions")
                             .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
@@ -159,13 +166,15 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(g => g.GuildFeatures, "features")
                             .WithPropertyName(g => g.IsLarge, "large")
                             .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions")
                             .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IRole, Role>()
                             .WithPropertyName(r => r.Colour, "color")
                             .WithPropertyName(r => r.IsHoisted, "hoist")
                             .WithPropertyName(r => r.IsManaged, "managed")
-                            .WithPropertyName(r => r.IsMentionable, "mentionable");
+                            .WithPropertyName(r => r.IsMentionable, "mentionable")
+                            .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
                         options.AddDataObjectConverter<IVoiceState, VoiceState>()
                             .WithPropertyName(v => v.IsDeafened, "deaf")
@@ -179,7 +188,9 @@ namespace Remora.Discord.API.Extensions
                         options.AddDataObjectConverter<IGuildMember, GuildMember>()
                             .WithPropertyName(m => m.Nickname, "nick")
                             .WithPropertyName(m => m.IsDeafened, "deaf")
-                            .WithPropertyName(m => m.IsMuted, "mute");
+                            .WithPropertyName(m => m.IsMuted, "mute")
+                            .WithPropertyConverter(c => c.JoinedAt, new ISO8601DateTimeOffsetConverter())
+                            .WithPropertyConverter(c => c.PremiumSince, new ISO8601DateTimeOffsetConverter());
 
                         options.AddDataObjectConverter<IChannel, Channel>()
                             .WithPropertyName(c => c.IsNsfw, "nsfw")
