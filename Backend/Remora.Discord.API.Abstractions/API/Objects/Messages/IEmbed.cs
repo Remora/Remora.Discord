@@ -38,6 +38,11 @@ namespace Remora.Discord.API.Abstractions.Messages
         Optional<string> Title { get; }
 
         /// <summary>
+        /// Gets the type of the embed.
+        /// </summary>
+        Optional<EmbedType> Type { get; }
+
+        /// <summary>
         /// Gets the description of the embed.
         /// </summary>
         Optional<string> Description { get; }

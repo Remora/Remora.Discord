@@ -31,6 +31,9 @@
         <Content Update="Samples\Events\GUILD_ROLE_CREATE.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Update="Samples\Events\MESSAGE_UPDATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

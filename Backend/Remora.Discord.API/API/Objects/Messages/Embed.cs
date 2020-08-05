@@ -35,6 +35,9 @@ namespace Remora.Discord.API.Objects.Messages
         public Optional<string> Title { get; }
 
         /// <inheritdoc />
+        public Optional<EmbedType> Type { get; }
+
+        /// <inheritdoc />
         public Optional<string> Description { get; }
 
         /// <inheritdoc />
@@ -71,6 +74,7 @@ namespace Remora.Discord.API.Objects.Messages
         /// Initializes a new instance of the <see cref="Embed"/> class.
         /// </summary>
         /// <param name="title">The title of the embed.</param>
+        /// <param name="type">The type of embed.</param>
         /// <param name="description">The embed description.</param>
         /// <param name="url">The embed URL.</param>
         /// <param name="timestamp">The embed timestamp.</param>
@@ -85,6 +89,7 @@ namespace Remora.Discord.API.Objects.Messages
         public Embed
         (
             Optional<string> title = default,
+            Optional<EmbedType> type = default,
             Optional<string> description = default,
             Optional<string> url = default,
             Optional<DateTimeOffset> timestamp = default,
@@ -99,6 +104,7 @@ namespace Remora.Discord.API.Objects.Messages
         )
         {
             this.Title = title;
+            this.Type = type;
             this.Description = description;
             this.Url = url;
             this.Timestamp = timestamp;

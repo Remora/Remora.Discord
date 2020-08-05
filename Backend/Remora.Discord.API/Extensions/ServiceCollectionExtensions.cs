@@ -72,6 +72,9 @@ namespace Remora.Discord.API.Extensions
                 (
                     options =>
                     {
+                        var snakeCasePolicy = new SnakeCaseNamingPolicy();
+                        var stringEnumConverter = new JsonStringEnumConverter(snakeCasePolicy);
+
                         options
                             .AddConverter<ISO8601DateTimeOffsetConverter>()
                             .AddConverter<DiscordPermissionSetConverter>()
@@ -105,7 +108,7 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyConverter
                             (
                                 p => p.Type,
-                                new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
+                                stringEnumConverter
                             )
                             .WithReadPropertyName(g => g.Allow, "allow_new", "allow")
                             .WithReadPropertyName(g => g.Deny, "deny_new", "deny");
@@ -128,7 +131,7 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyConverter
                             (
                                 u => u.Status,
-                                new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
+                                stringEnumConverter
                             )
                             .WithPropertyConverter(u => u.Since, new UnixDateTimeConverter());
 
@@ -203,9 +206,19 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                             .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                             .WithPropertyName(m => m.IsTTS, "tts")
-                            .WithPropertyName(m => m.IsPinned, "pinned");
+                            .WithPropertyName(m => m.IsPinned, "pinned")
+                            .WithPropertyConverter(m => m.Type, stringEnumConverter);
+
+                        options.AddDataObjectConverter<IMessageUpdate, MessageUpdate>()
+                            .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
+                            .WithPropertyName(m => m.MentionedRoles, "mention_roles")
+                            .WithPropertyName(m => m.MentionedChannels, "mention_channels")
+                            .WithPropertyName(m => m.IsTTS, "tts")
+                            .WithPropertyName(m => m.IsPinned, "pinned")
+                            .WithPropertyConverter(m => m.Type, stringEnumConverter);
 
                         options.AddDataObjectConverter<IEmbed, Embed>()
+                            .WithPropertyConverter(e => e.Type, stringEnumConverter)
                             .WithPropertyConverter(e => e.Colour, new ColorConverter())
                             .WithPropertyName(e => e.Colour, "color");
 
@@ -228,7 +241,6 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.IsTTS, "tts")
                             .WithPropertyName(m => m.IsPinned, "pinned");
 
-                        var snakeCasePolicy = new SnakeCaseNamingPolicy();
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;
                     }

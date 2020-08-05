@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Tests;
@@ -62,10 +63,8 @@ namespace Remora.Discord.API.Tests.TestBases
         /// </summary>
         protected APITypeTestBase()
         {
-            var token = Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN") ?? string.Empty;
-
             var services = new ServiceCollection()
-                .AddDiscordGateway(() => token)
+                .AddDiscordApi()
                 .AddSingleton<SampleDataService>()
                 .BuildServiceProvider();
 
