@@ -1,0 +1,31 @@
+{
+  "t": "GUILD_ROLE_UPDATE",
+  "s": 5,
+  "op": 0,
+  "d": {
+    "role": {
+      "position": 1,
+      "permissions_new": "372624976",
+      "permissions": 372624976,
+      "name": "Thing",
+      "mentionable": false,
+      "managed": false,
+      "id": "740279364301750515",
+      "hoist": true,
+      "color": 1146986
+    },
+    "guild_id": "452526315288133644",
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "hash": "3aTL2ZFTSxE"
+      },
+      "metadata": {
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "hash": "icJytnZ2VDI"
+      }
+    }
+  }
+}

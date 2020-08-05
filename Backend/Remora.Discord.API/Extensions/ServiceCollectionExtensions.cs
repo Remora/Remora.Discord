@@ -92,6 +92,9 @@ namespace Remora.Discord.API.Extensions
                         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>();
                         options.AddDataObjectConverter<IChannelMention, ChannelMention>();
                         options.AddDataObjectConverter<IAttachment, Attachment>();
+                        options.AddDataObjectConverter<IGuildRoleCreate, GuildRoleCreate>();
+                        options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
+                        options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
 
                         options.AddDataObjectConverter<IEmoji, Emoji>()
                             .WithPropertyName(e => e.IsManaged, "managed")

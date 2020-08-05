@@ -1,0 +1,31 @@
+{
+  "t": "GUILD_ROLE_CREATE",
+  "s": 7,
+  "op": 0,
+  "d": {
+    "role": {
+      "position": 1,
+      "permissions_new": "372624976",
+      "permissions": 372624976,
+      "name": "new role",
+      "mentionable": false,
+      "managed": false,
+      "id": "740279364301750515",
+      "hoist": false,
+      "color": 0
+    },
+    "guild_id": "452526315288133644",
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "hash": "Dg5ZElpe27k"
+      },
+      "metadata": {
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "hash": "icJytnZ2VDI"
+      }
+    }
+  }
+}
