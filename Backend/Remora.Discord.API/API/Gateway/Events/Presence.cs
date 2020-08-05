@@ -56,7 +56,7 @@ namespace Remora.Discord.API.Gateway.Events
         public IClientStatuses ClientStatus { get; }
 
         /// <inheritdoc />
-        public Optional<DateTime?> PremiumSince { get; }
+        public Optional<DateTimeOffset?> PremiumSince { get; }
 
         /// <inheritdoc />
         public Optional<string?> Nickname { get; }
@@ -82,7 +82,7 @@ namespace Remora.Discord.API.Gateway.Events
             ClientStatus status,
             IReadOnlyList<IActivity> activities,
             IClientStatuses clientStatus,
-            Optional<DateTime?> premiumSince,
+            Optional<DateTimeOffset?> premiumSince,
             Optional<string?> nickname
         )
         {

@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Objects.Permissions
         public int Position { get; }
 
         /// <inheritdoc />
-        public DiscordPermission Permissions { get; }
+        public IDiscordPermissionSet Permissions { get; }
 
         /// <inheritdoc />
         public bool IsManaged { get; }
@@ -71,7 +71,7 @@ namespace Remora.Discord.API.Objects.Permissions
             Color colour,
             bool isHoisted,
             int position,
-            DiscordPermission permissions,
+            IDiscordPermissionSet permissions,
             bool isManaged,
             bool isMentionable
         )

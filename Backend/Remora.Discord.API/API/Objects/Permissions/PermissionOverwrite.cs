@@ -35,10 +35,10 @@ namespace Remora.Discord.API.Objects.Permissions
         public PermissionOverwriteType Type { get; }
 
         /// <inheritdoc />
-        public DiscordPermission Allow { get; }
+        public IDiscordPermissionSet Allow { get; }
 
         /// <inheritdoc />
-        public DiscordPermission Deny { get; }
+        public IDiscordPermissionSet Deny { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PermissionOverwrite"/> class.
@@ -51,8 +51,8 @@ namespace Remora.Discord.API.Objects.Permissions
         (
             Snowflake id,
             PermissionOverwriteType type,
-            DiscordPermission allow,
-            DiscordPermission deny
+            IDiscordPermissionSet allow,
+            IDiscordPermissionSet deny
         )
         {
             this.ID = id;

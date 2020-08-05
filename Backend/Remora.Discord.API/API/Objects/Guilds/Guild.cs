@@ -58,7 +58,7 @@ namespace Remora.Discord.API.Objects.Guilds
         public Snowflake OwnerID { get; }
 
         /// <inheritdoc />
-        public Optional<DiscordPermission> Permissions { get; }
+        public Optional<IDiscordPermissionSet> Permissions { get; }
 
         /// <inheritdoc />
         public string Region { get; }
@@ -115,7 +115,7 @@ namespace Remora.Discord.API.Objects.Guilds
         public Snowflake? RulesChannelID { get; }
 
         /// <inheritdoc />
-        public Optional<DateTime> JoinedAt { get; }
+        public Optional<DateTimeOffset> JoinedAt { get; }
 
         /// <inheritdoc />
         public Optional<bool> IsLarge { get; }
@@ -232,7 +232,7 @@ namespace Remora.Discord.API.Objects.Guilds
             IImageHash? discoverySplash,
             Optional<bool> isOwner,
             Snowflake ownerID,
-            Optional<DiscordPermission> permissions,
+            Optional<IDiscordPermissionSet> permissions,
             string region,
             Snowflake? afkChannelID,
             int afkTimeout,
@@ -251,7 +251,7 @@ namespace Remora.Discord.API.Objects.Guilds
             Snowflake? systemChannelID,
             SystemChannelFlags systemChannelFlags,
             Snowflake? rulesChannelID,
-            Optional<DateTime> joinedAt,
+            Optional<DateTimeOffset> joinedAt,
             Optional<bool> isLarge,
             Optional<bool> isUnavailable,
             Optional<int> memberCount,

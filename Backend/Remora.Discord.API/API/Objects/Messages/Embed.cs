@@ -41,7 +41,7 @@ namespace Remora.Discord.API.Objects.Messages
         public Optional<string> Url { get; }
 
         /// <inheritdoc />
-        public Optional<DateTime> Timestamp { get; }
+        public Optional<DateTimeOffset> Timestamp { get; }
 
         /// <inheritdoc />
         public Optional<Color> Colour { get; }
@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Objects.Messages
             Optional<string> title = default,
             Optional<string> description = default,
             Optional<string> url = default,
-            Optional<DateTime> timestamp = default,
+            Optional<DateTimeOffset> timestamp = default,
             Optional<Color> colour = default,
             Optional<IEmbedFooter> footer = default,
             Optional<IEmbedImage> image = default,

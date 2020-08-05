@@ -85,7 +85,7 @@ namespace Remora.Discord.API.Objects.Channels
         public Optional<Snowflake?> ParentID { get; }
 
         /// <inheritdoc />
-        public Optional<DateTime> LastPinTimestamp { get; }
+        public Optional<DateTimeOffset> LastPinTimestamp { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Channel"/> class.
@@ -127,7 +127,7 @@ namespace Remora.Discord.API.Objects.Channels
             Optional<Snowflake> ownerID,
             Optional<Snowflake> applicationID,
             Optional<Snowflake?> parentID,
-            Optional<DateTime> lastPinTimestamp
+            Optional<DateTimeOffset> lastPinTimestamp
         )
         {
             this.ID = id;
