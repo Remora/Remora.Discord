@@ -770,69 +770,77 @@ namespace Remora.Discord.Gateway
             CancellationToken ct = default
         )
         {
-            DateTime? lastHeartbeat = null;
-            while (!ct.IsCancellationRequested)
+            try
             {
-                var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
-                var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
-                    ? DateTime.FromBinary(lastReceivedHeartbeatAck)
-                    : (DateTime?)null;
-
-                // Heartbeat, if required
-                var now = DateTime.UtcNow;
-                var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
-
-                if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
+                DateTime? lastHeartbeat = null;
+                while (!ct.IsCancellationRequested)
                 {
-                    if (lastHeartbeatAck.HasValue && lastHeartbeatAck < lastHeartbeat)
+                    var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
+                    var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
+                        ? DateTime.FromBinary(lastReceivedHeartbeatAck)
+                        : (DateTime?)null;
+
+                    // Heartbeat, if required
+                    var now = DateTime.UtcNow;
+                    var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
+
+                    if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
                     {
-                        return GatewaySenderResult.FromError
+                        if (lastHeartbeatAck.HasValue && lastHeartbeatAck < lastHeartbeat)
+                        {
+                            return GatewaySenderResult.FromError
+                            (
+                                "The server did not respond in time with a heartbeat acknowledgement.",
+                                GatewayCloseStatus.SessionTimedOut
+                            );
+                        }
+
+                        // 32-bit reads are atomic, so this is fine
+                        var lastSequenceNumber = _lastSequenceNumber;
+
+                        var heartbeatPayload = new Payload<IHeartbeat>
                         (
-                            "The server did not respond in time with a heartbeat acknowledgement.",
-                            GatewayCloseStatus.SessionTimedOut
+                            new Heartbeat
+                            (
+                                lastSequenceNumber == 0 ? (long?)null : lastSequenceNumber
+                            )
                         );
+
+                        var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
+
+                        if (!sendHeartbeat.IsSuccess)
+                        {
+                            return GatewaySenderResult.FromError(sendHeartbeat);
+                        }
+
+                        lastHeartbeat = DateTime.UtcNow;
                     }
 
-                    // 32-bit reads are atomic, so this is fine
-                    var lastSequenceNumber = _lastSequenceNumber;
-
-                    var heartbeatPayload = new Payload<IHeartbeat>
-                    (
-                        new Heartbeat
-                        (
-                            lastSequenceNumber == 0 ? (long?)null : lastSequenceNumber
-                        )
-                    );
-
-                    var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
-
-                    if (!sendHeartbeat.IsSuccess)
+                    // Check if there are any user-submitted payloads to send
+                    if (!_payloadsToSend.TryDequeue(out var payload))
                     {
-                        return GatewaySenderResult.FromError(sendHeartbeat);
+                        // Let's sleep for a little while
+                        var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval - safetyMargin) - now;
+                        var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
+
+                        await Task.Delay(sleepTime, ct);
+                        continue;
                     }
 
-                    lastHeartbeat = DateTime.UtcNow;
+                    var sendResult = await SendPayloadAsync(payload, ct);
+                    if (!sendResult.IsSuccess)
+                    {
+                        return GatewaySenderResult.FromError(sendResult);
+                    }
                 }
 
-                // Check if there are any user-submitted payloads to send
-                if (!_payloadsToSend.TryDequeue(out var payload))
-                {
-                    // Let's sleep for a little while
-                    var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval - safetyMargin) - now;
-                    var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
-
-                    await Task.Delay(sleepTime, ct);
-                    continue;
-                }
-
-                var sendResult = await SendPayloadAsync(payload, ct);
-                if (!sendResult.IsSuccess)
-                {
-                    return GatewaySenderResult.FromError(sendResult);
-                }
+                return GatewaySenderResult.FromSuccess();
             }
-
-            return GatewaySenderResult.FromSuccess();
+            catch (TaskCanceledException)
+            {
+                // Cancellation is a success
+                return GatewaySenderResult.FromSuccess();
+            }
         }
 
         /// <summary>
@@ -845,36 +853,44 @@ namespace Remora.Discord.Gateway
         /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
         private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken ct = default)
         {
-            while (!ct.IsCancellationRequested)
+            try
             {
-                var receivedPayload = await ReceivePayloadAsync(ct);
-                if (!receivedPayload.IsSuccess)
+                while (!ct.IsCancellationRequested)
                 {
-                    return GatewayReceiverResult.FromError(receivedPayload);
+                    var receivedPayload = await ReceivePayloadAsync(ct);
+                    if (!receivedPayload.IsSuccess)
+                    {
+                        return GatewayReceiverResult.FromError(receivedPayload);
+                    }
+
+                    // Update the sequence number
+                    if (receivedPayload.Entity is IEventPayload eventPayload)
+                    {
+                        Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
+                    }
+
+                    // Update the ack timestamp
+                    if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
+                    {
+                        Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
+                    }
+
+                    // Signal the governor task that a reconnection is requested, if necessary.
+                    if (receivedPayload.Entity is IPayload<IReconnect>)
+                    {
+                        _shouldReconnectAndResume = true;
+                    }
+
+                    _receivedPayloads.Enqueue(receivedPayload.Entity);
                 }
 
-                // Update the sequence number
-                if (receivedPayload.Entity is IEventPayload eventPayload)
-                {
-                    Interlocked.Exchange(ref _lastSequenceNumber, eventPayload.SequenceNumber);
-                }
-
-                // Update the ack timestamp
-                if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
-                {
-                    Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
-                }
-
-                // Signal the governor task that a reconnection is requested, if necessary.
-                if (receivedPayload.Entity is IPayload<IReconnect>)
-                {
-                    _shouldReconnectAndResume = true;
-                }
-
-                _receivedPayloads.Enqueue(receivedPayload.Entity);
+                return GatewayReceiverResult.FromSuccess();
             }
-
-            return GatewayReceiverResult.FromSuccess();
+            catch (TaskCanceledException)
+            {
+                // Cancellation is a success
+                return GatewayReceiverResult.FromSuccess();
+            }
         }
 
         /// <summary>
