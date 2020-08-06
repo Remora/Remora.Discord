@@ -50,7 +50,7 @@
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
 
-        <PackagePreReleaseVersion>-alpha11</PackagePreReleaseVersion>
+        <PackagePreReleaseVersion>-alpha12</PackagePreReleaseVersion>
     </PropertyGroup>
 
     <!-- Code inspection properties -->
