@@ -124,6 +124,6 @@ namespace Remora.Discord.API.Abstractions.Channels
         /// <summary>
         /// Gets the time when the last pinned message was pinned.
         /// </summary>
-        Optional<DateTimeOffset> LastPinTimestamp { get; }
+        Optional<DateTimeOffset?> LastPinTimestamp { get; }
     }
 }
