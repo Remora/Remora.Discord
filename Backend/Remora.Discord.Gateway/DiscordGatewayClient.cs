@@ -286,7 +286,7 @@ namespace Remora.Discord.Gateway
                     return iterationResult;
                 }
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 // Pass, this is fine
             }
@@ -495,7 +495,7 @@ namespace Remora.Discord.Gateway
                     }
                 }
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 // Pass, this is fine
             }
@@ -503,7 +503,7 @@ namespace Remora.Discord.Gateway
             {
                 foreach (var e in aex.InnerExceptions)
                 {
-                    if (e is TaskCanceledException)
+                    if (e is OperationCanceledException)
                     {
                         continue;
                     }
