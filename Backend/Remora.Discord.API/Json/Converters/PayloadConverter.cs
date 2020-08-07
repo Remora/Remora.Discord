@@ -38,6 +38,20 @@ namespace Remora.Discord.API.Json
     {
         private readonly SnakeCaseNamingPolicy _snakeCase = new SnakeCaseNamingPolicy();
 
+        /// <summary>
+        /// Gets a value indicating whether unknown events are allowed to be deserialized.
+        /// </summary>
+        private readonly bool _allowUnknownEvents;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PayloadConverter"/> class.
+        /// </summary>
+        /// <param name="allowUnknownEvents">Whether unknown events are allowed to be deserialized.</param>
+        public PayloadConverter(bool allowUnknownEvents = true)
+        {
+            _allowUnknownEvents = allowUnknownEvents;
+        }
+
         /// <inheritdoc />
         public override bool CanConvert(Type objectType)
         {
@@ -253,6 +267,11 @@ namespace Remora.Discord.API.Json
 
             if (eventType is null)
             {
+                if (!_allowUnknownEvents)
+                {
+                    throw new InvalidOperationException("No matching implementation interface could be found.");
+                }
+
                 return new EventPayload<IUnknownEvent>
                 (
                     new UnknownEvent(document.RootElement.GetRawText()),
@@ -270,6 +289,11 @@ namespace Remora.Discord.API.Json
             }
             catch
             {
+                if (!_allowUnknownEvents)
+                {
+                    throw;
+                }
+
                 return new EventPayload<IUnknownEvent>
                 (
                     new UnknownEvent(document.RootElement.GetRawText()),

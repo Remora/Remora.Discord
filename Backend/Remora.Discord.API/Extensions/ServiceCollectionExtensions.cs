@@ -64,8 +64,13 @@ namespace Remora.Discord.API.Extensions
         /// Adds supporting services for the Discord API.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="allowUnknownEvents">Whether the API will deserialize unknown events.</param>
         /// <returns>The service collection, with the services.</returns>
-        public static IServiceCollection AddDiscordApi(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddDiscordApi
+        (
+            this IServiceCollection serviceCollection,
+            bool allowUnknownEvents = true
+        )
         {
             serviceCollection
                 .Configure<JsonSerializerOptions>
@@ -74,6 +79,8 @@ namespace Remora.Discord.API.Extensions
                     {
                         var snakeCasePolicy = new SnakeCaseNamingPolicy();
                         var stringEnumConverter = new JsonStringEnumConverter(snakeCasePolicy);
+
+                        options.Converters.Add(new PayloadConverter(allowUnknownEvents));
 
                         options
                             .AddConverter<ISO8601DateTimeOffsetConverter>()
@@ -84,7 +91,6 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<HeartbeatConverter>()
                             .AddConverter<ShardIdentificationConverter>()
                             .AddConverter<SnowflakeConverter>()
-                            .AddConverter<PayloadConverter>()
                             .AddConverter<HeartbeatConverter>()
                             .AddConverter<ImageHashConverter>()
                             .AddConverter<ColorConverter>();
