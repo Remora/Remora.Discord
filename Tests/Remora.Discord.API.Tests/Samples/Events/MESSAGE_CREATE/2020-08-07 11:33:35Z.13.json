@@ -1,0 +1,40 @@
+{
+  "t": "MESSAGE_CREATE",
+  "s": 13,
+  "op": 0,
+  "d": {
+    "type": 0,
+    "tts": false,
+    "timestamp": "2020-08-07T11:33:35.586000\u002B00:00",
+    "pinned": false,
+    "nonce": "747428514512240640",
+    "mentions": [],
+    "mention_roles": [],
+    "mention_everyone": false,
+    "member": {
+      "roles": [
+        "728362120059682948",
+        "731882893961592992"
+      ],
+      "mute": false,
+      "joined_at": "2020-07-03T20:19:22.352000\u002B00:00",
+      "hoisted_role": null,
+      "deaf": false
+    },
+    "id": "741257733570822195",
+    "flags": 0,
+    "embeds": [],
+    "edited_timestamp": null,
+    "content": "Also something with the quote module was broken on the production version? What happened?",
+    "channel_id": "452526315288133646",
+    "author": {
+      "username": "Azazial",
+      "public_flags": 0,
+      "id": "54351326674432000",
+      "discriminator": "4061",
+      "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
+    },
+    "attachments": [],
+    "guild_id": "452526315288133644"
+  }
+}

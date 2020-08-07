@@ -1,0 +1,57 @@
+{
+  "t": "MESSAGE_CREATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "type": 0,
+    "tts": false,
+    "timestamp": "2020-08-07T11:14:27.258000\u002B00:00",
+    "pinned": false,
+    "nonce": "747423698125848576",
+    "mentions": [
+      {
+        "username": "Jax",
+        "public_flags": 0,
+        "member": {
+          "roles": [],
+          "premium_since": null,
+          "nick": "Amby",
+          "mute": false,
+          "joined_at": "2018-06-02T17:38:01.163000\u002B00:00",
+          "hoisted_role": null,
+          "deaf": false
+        },
+        "id": "135347310845624320",
+        "discriminator": "7487",
+        "avatar": "71f3dbf32f19b8831abcd6a6052674d1"
+      }
+    ],
+    "mention_roles": [],
+    "mention_everyone": false,
+    "member": {
+      "roles": [
+        "728362120059682948",
+        "731882893961592992"
+      ],
+      "mute": false,
+      "joined_at": "2020-07-03T20:19:22.352000\u002B00:00",
+      "hoisted_role": null,
+      "deaf": false
+    },
+    "id": "741252917134229575",
+    "flags": 0,
+    "embeds": [],
+    "edited_timestamp": null,
+    "content": "Is there some way to keep the dev bot up 24/7 with out inconveniencing you, \u003C@135347310845624320\u003E?",
+    "channel_id": "452526315288133646",
+    "author": {
+      "username": "Azazial",
+      "public_flags": 0,
+      "id": "54351326674432000",
+      "discriminator": "4061",
+      "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
+    },
+    "attachments": [],
+    "guild_id": "452526315288133644"
+  }
+}

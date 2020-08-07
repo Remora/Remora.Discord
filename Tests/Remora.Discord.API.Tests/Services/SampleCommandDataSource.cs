@@ -1,5 +1,5 @@
 //
-//  CommandAPITypeTestBase.cs
+//  SampleCommandDataSource.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
 using Remora.Discord.API.Abstractions.Commands;
-using Remora.Discord.API.Tests.Services;
+using Xunit;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.Services
 {
     /// <summary>
-    /// Acts as a base class for command API types.
+    /// Represents a source of sample data for an xUnit test.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class CommandAPITypeTestBase<TType> : APITypeTestBase<SampleCommandDataSource<TType>>
-        where TType : IGatewayCommand
+    /// <typeparam name="TData">The data type.</typeparam>
+    public class SampleCommandDataSource<TData> : TheoryData<string> where TData : IGatewayCommand
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleCommandDataSource{TData}"/> class.
+        /// </summary>
+        public SampleCommandDataSource()
+        {
+            var sampleData = new SampleDataService();
+
+            var getSamples = sampleData.GetSampleCommandDataSet<TData>();
+            if (!getSamples.IsSuccess)
+            {
+                throw new SkipException();
+            }
+
+            foreach (var sample in getSamples.Entity)
+            {
+                Add(sample);
+            }
+        }
     }
 }

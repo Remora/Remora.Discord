@@ -3,18 +3,6 @@
   "s": 2,
   "op": 0,
   "d": {
-    "member_count": 8,
-    "rules_channel_id": null,
-    "mfa_level": 0,
-    "voice_states": [],
-    "default_message_notifications": 0,
-    "vanity_url_code": null,
-    "system_channel_id": "452526315288133646",
-    "region": "eu-central",
-    "system_channel_flags": 0,
-    "presences": [],
-    "preferred_locale": "en-US",
-    "afk_timeout": 300,
     "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
     "roles": [
       {
@@ -117,49 +105,24 @@
         "color": 2067276
       }
     ],
-    "owner_id": "135347310845624320",
-    "features": [],
-    "name": "Bot Dev",
-    "premium_tier": 0,
-    "unavailable": false,
-    "premium_subscription_count": 0,
-    "afk_channel_id": null,
-    "members": [
+    "vanity_url_code": null,
+    "verification_level": 0,
+    "banner": null,
+    "large": false,
+    "splash": null,
+    "icon": null,
+    "emojis": [
       {
-        "user": {
-          "username": "Remora",
-          "id": "714902836760019017",
-          "discriminator": "9821",
-          "bot": true,
-          "avatar": null
-        },
         "roles": [],
-        "premium_since": null,
-        "nick": null,
-        "mute": false,
-        "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
-        "hoisted_role": null,
-        "deaf": false
+        "require_colons": true,
+        "name": "adb",
+        "managed": false,
+        "id": "548554203027734528",
+        "available": true,
+        "animated": false
       }
     ],
-    "banner": null,
-    "guild_hashes": {
-      "version": 1,
-      "roles": {
-        "omitted": false,
-        "hash": "GLnpcR2C2RA"
-      },
-      "metadata": {
-        "omitted": false,
-        "hash": "38doHWQin94"
-      },
-      "channels": {
-        "omitted": false,
-        "hash": "icJytnZ2VDI"
-      }
-    },
-    "large": false,
-    "verification_level": 0,
+    "max_video_channel_users": 25,
     "channels": [
       {
         "type": 0,
@@ -169,7 +132,8 @@
         "permission_overwrites": [],
         "parent_id": "728303464207220816",
         "name": "general",
-        "last_message_id": "740283353789497399",
+        "last_pin_timestamp": null,
+        "last_message_id": "741205061090279484",
         "id": "452526315288133646"
       },
       {
@@ -206,7 +170,7 @@
         "permission_overwrites": [],
         "parent_id": "728303416350343208",
         "name": "roleplay-plugin",
-        "last_message_id": "729449961082716200",
+        "last_message_id": "740971319121674341",
         "id": "728308533665464502"
       },
       {
@@ -217,7 +181,7 @@
         "permission_overwrites": [],
         "parent_id": "728303464207220816",
         "name": "github",
-        "last_message_id": "732317740739592283",
+        "last_message_id": "741205178119880784",
         "id": "728322710375235594"
       },
       {
@@ -352,86 +316,6 @@
       },
       {
         "type": 0,
-        "topic": "Dedicated roleplay channel for anothertest. No summary set.",
-        "rate_limit_per_user": 0,
-        "position": 12,
-        "permission_overwrites": [
-          {
-            "type": "member",
-            "id": "108253912766631936",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
-          },
-          {
-            "type": "member",
-            "id": "452506031143125003",
-            "deny_new": "0",
-            "deny": 0,
-            "allow_new": "805829713",
-            "allow": 805829713
-          },
-          {
-            "type": "role",
-            "id": "452526315288133644",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
-          },
-          {
-            "type": "member",
-            "id": "609734783093833738",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
-          }
-        ],
-        "parent_id": "728621448943632416",
-        "name": "anothertest-rp",
-        "last_message_id": "729430796271747172",
-        "id": "729430604281675877"
-      },
-      {
-        "type": 0,
-        "topic": "Dedicated roleplay channel for test. No summary set.",
-        "rate_limit_per_user": 0,
-        "position": 13,
-        "permission_overwrites": [
-          {
-            "type": "member",
-            "id": "135347310845624320",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
-          },
-          {
-            "type": "member",
-            "id": "452506031143125003",
-            "deny_new": "0",
-            "deny": 0,
-            "allow_new": "805829713",
-            "allow": 805829713
-          },
-          {
-            "type": "role",
-            "id": "452526315288133644",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
-          }
-        ],
-        "parent_id": "728621448943632416",
-        "name": "test-rp",
-        "last_message_id": "729449664453279855",
-        "id": "729448577041956986"
-      },
-      {
-        "type": 0,
         "topic": null,
         "rate_limit_per_user": 0,
         "position": 7,
@@ -453,26 +337,63 @@
         "id": "729616555100602428"
       }
     ],
-    "splash": null,
-    "discovery_splash": null,
-    "emojis": [
+    "members": [
       {
+        "user": {
+          "username": "Remora",
+          "id": "714902836760019017",
+          "discriminator": "9821",
+          "bot": true,
+          "avatar": null
+        },
         "roles": [],
-        "require_colons": true,
-        "name": "adb",
-        "managed": false,
-        "id": "548554203027734528",
-        "available": true,
-        "animated": false
+        "premium_since": null,
+        "nick": null,
+        "mute": false,
+        "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
+        "hoisted_role": null,
+        "deaf": false
       }
     ],
-    "lazy": true,
-    "explicit_content_filter": 0,
-    "max_video_channel_users": 25,
-    "icon": null,
-    "description": null,
     "application_id": null,
+    "system_channel_flags": 0,
+    "discovery_splash": null,
+    "unavailable": false,
+    "explicit_content_filter": 0,
+    "voice_states": [],
+    "afk_timeout": 300,
+    "name": "Bot Dev",
+    "lazy": true,
+    "member_count": 8,
+    "features": [],
+    "presences": [],
+    "owner_id": "135347310845624320",
+    "afk_channel_id": null,
+    "default_message_notifications": 0,
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "omitted": false,
+        "hash": "GLnpcR2C2RA"
+      },
+      "metadata": {
+        "omitted": false,
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "omitted": false,
+        "hash": "5rZZdKiPRGI"
+      }
+    },
+    "region": "eu-central",
+    "mfa_level": 0,
+    "premium_subscription_count": 0,
+    "system_channel_id": "452526315288133646",
+    "premium_tier": 0,
+    "preferred_locale": "en-US",
+    "description": null,
     "public_updates_channel_id": null,
+    "rules_channel_id": null,
     "id": "452526315288133644"
   }
 }

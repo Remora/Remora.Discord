@@ -22,6 +22,7 @@
 
 using Remora.Discord.API.Gateway.Events.Messages;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.API.Events
 {
@@ -30,5 +31,13 @@ namespace Remora.Discord.API.Tests.API.Events
     /// </summary>
     public class MessageUpdateTests : EventAPITypeTestBase<MessageUpdate>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        (
+            new[]
+            {
+                "hoisted_role", // internal discord value
+            }
+        );
     }
 }

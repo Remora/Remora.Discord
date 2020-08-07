@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -29,7 +29,6 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
-using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
@@ -41,8 +40,14 @@ namespace Remora.Discord.API.Tests.TestBases
     /// Acts as a base class for testing API types in the Discord API. This class contains common baseline tests for all
     /// types.
     /// </summary>
-    public abstract class APITypeTestBase
+    /// <typeparam name="TSampleSource">The theory data source.</typeparam>
+    public abstract class APITypeTestBase<TSampleSource> where TSampleSource : TheoryData, new()
     {
+        /// <summary>
+        /// Gets the data sample source.
+        /// </summary>
+        public static TheoryData SampleSource => new TSampleSource();
+
         /// <summary>
         /// Gets the sample data service.
         /// </summary>
@@ -59,12 +64,12 @@ namespace Remora.Discord.API.Tests.TestBases
         protected virtual JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="APITypeTestBase"/> class.
+        /// Initializes a new instance of the <see cref="APITypeTestBase{TSampleSource}"/> class.
         /// </summary>
         protected APITypeTestBase()
         {
             var services = new ServiceCollection()
-                .AddDiscordApi()
+                .AddDiscordApi(allowUnknownEvents: false)
                 .AddSingleton<SampleDataService>()
                 .BuildServiceProvider();
 
@@ -73,25 +78,15 @@ namespace Remora.Discord.API.Tests.TestBases
         }
 
         /// <summary>
-        /// Gets some sample data for the given type.
-        /// </summary>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        protected abstract RetrieveEntityResult<Stream> GetSampleData();
-
-        /// <summary>
         /// Tests whether the type can be deserialized from a JSON object.
         /// </summary>
+        /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableFact]
-        public async Task CanDeserialize()
+        [SkippableTheory]
+        [MemberData(nameof(SampleSource))]
+        public async Task CanDeserialize(string sampleDataPath)
         {
-            var getSampleData = GetSampleData();
-            if (!getSampleData.IsSuccess)
-            {
-                throw new SkipException(getSampleData.ErrorReason);
-            }
-
-            await using var sampleData = getSampleData.Entity;
+            await using var sampleData = File.OpenRead(sampleDataPath);
             var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
             Assert.NotNull(payload);
         }
@@ -99,17 +94,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <summary>
         /// Tests whether the type can be serialized to a JSON object.
         /// </summary>
+        /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableFact]
-        public async Task CanSerialize()
+        [SkippableTheory]
+        [MemberData(nameof(SampleSource))]
+        public async Task CanSerialize(string sampleDataPath)
         {
-            var getSampleData = GetSampleData();
-            if (!getSampleData.IsSuccess)
-            {
-                throw new SkipException(getSampleData.ErrorReason);
-            }
-
-            await using var sampleData = getSampleData.Entity;
+            await using var sampleData = File.OpenRead(sampleDataPath);
             var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
 
             await using var stream = new MemoryStream();
@@ -122,17 +113,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// Tests whether data survives being round-tripped by the type - that is, it can be deserialized and then
         /// serialized again without data loss.
         /// </summary>
+        /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableFact]
-        public async Task SurvivesRoundTrip()
+        [SkippableTheory]
+        [MemberData(nameof(SampleSource))]
+        public async Task SurvivesRoundTrip(string sampleDataPath)
         {
-            var getSampleData = GetSampleData();
-            if (!getSampleData.IsSuccess)
-            {
-                throw new SkipException(getSampleData.ErrorReason);
-            }
-
-            await using var sampleData = getSampleData.Entity;
+            await using var sampleData = File.OpenRead(sampleDataPath);
             var deserialized = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
 
             await using var stream = new MemoryStream();

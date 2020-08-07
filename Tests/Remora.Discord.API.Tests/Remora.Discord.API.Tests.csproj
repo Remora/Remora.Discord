@@ -34,6 +34,87 @@
         <Content Update="Samples\Events\MESSAGE_UPDATE.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\GUILD_CREATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_ROLE_CREATE\GUILD_ROLE_CREATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_ROLE_DELETE\GUILD_ROLE_DELETE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_ROLE_UPDATE\GUILD_ROLE_UPDATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\HELLO\HELLO.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\INVALID_SESSION\INVALID_SESSION.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\MESSAGE_CREATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_UPDATE\MESSAGE_UPDATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\READY\READY.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\HEARTBEAT\HEARTBEAT.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\IDENTIFY\IDENTIFY.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\REQUEST_GUILD_MEMBERS\REQUEST_GUILD_MEMBERS.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\RESUME\RESUME.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\UPDATE_STATUS\UPDATE_STATUS.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Commands\UPDATE_VOICE_STATE\UPDATE_VOICE_STATE.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\2020-08-07 12:17:27Z.2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\2020-08-07 12:13:02Z.2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\2020-08-07 10:28:38Z.2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\2020-08-06 19:47:14Z.2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\GUILD_CREATE\2020-08-07 08:07:17Z.2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:21:57Z.7.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:43:06Z.17.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:44:19Z.19.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:26:06Z.10.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:33:35Z.13.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_CREATE\2020-08-07 11:14:27Z.3.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Events\MESSAGE_UPDATE\2020-08-07 11:22:49Z.8.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

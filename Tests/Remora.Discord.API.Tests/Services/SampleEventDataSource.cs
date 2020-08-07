@@ -1,5 +1,5 @@
 //
-//  EventAPITypeTestBase.cs
+//  SampleEventDataSource.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Tests.Services;
+using Xunit;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.Services
 {
     /// <summary>
-    /// Acts as a base class for Event API types.
+    /// Represents a source of sample data for an xUnit test.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class EventAPITypeTestBase<TType> : APITypeTestBase<SampleEventDataSource<TType>>
-        where TType : IGatewayEvent
+    /// <typeparam name="TData">The data type.</typeparam>
+    public class SampleEventDataSource<TData> : TheoryData<string> where TData : IGatewayEvent
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleEventDataSource{TData}"/> class.
+        /// </summary>
+        public SampleEventDataSource()
+        {
+            var sampleData = new SampleDataService();
+
+            var getSamples = sampleData.GetSampleEventDataSet<TData>();
+            if (!getSamples.IsSuccess)
+            {
+                throw new SkipException();
+            }
+
+            foreach (var sample in getSamples.Entity)
+            {
+                Add(sample);
+            }
+        }
     }
 }
