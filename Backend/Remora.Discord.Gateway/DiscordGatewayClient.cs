@@ -242,14 +242,21 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    if (_clientWebSocket.State != WebSocketState.Closed)
+                    switch (_clientWebSocket.State)
                     {
-                        await _clientWebSocket.CloseAsync
-                        (
-                            WebSocketCloseStatus.NormalClosure,
-                            "Terminating connection by user request.",
-                            ct
-                        );
+                        case WebSocketState.Open:
+                        case WebSocketState.CloseReceived:
+                        case WebSocketState.CloseSent:
+                        {
+                            await _clientWebSocket.CloseAsync
+                            (
+                                WebSocketCloseStatus.NormalClosure,
+                                "Terminating connection by user request.",
+                                ct
+                            );
+
+                            break;
+                        }
                     }
 
                     // Finish up the responders
@@ -453,14 +460,21 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            if (_clientWebSocket.State != WebSocketState.Closed)
+            switch (_clientWebSocket.State)
             {
-                await _clientWebSocket.CloseAsync
-                (
-                    WebSocketCloseStatus.NormalClosure,
-                    "Terminating connection by user request.",
-                    ct
-                );
+                case WebSocketState.Open:
+                case WebSocketState.CloseReceived:
+                case WebSocketState.CloseSent:
+                {
+                    await _clientWebSocket.CloseAsync
+                    (
+                        WebSocketCloseStatus.NormalClosure,
+                        "Terminating connection by user request.",
+                        ct
+                    );
+
+                    break;
+                }
             }
 
             // Set up the state for the new connection
