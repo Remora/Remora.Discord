@@ -51,7 +51,7 @@ namespace Remora.Discord.Gateway
     /// <summary>
     /// Represents a Discord Gateway client.
     /// </summary>
-    public class DiscordGatewayClient
+    public class DiscordGatewayClient : IDisposable
     {
         private readonly IServiceProvider _services;
         private readonly ILogger<DiscordGatewayClient> _log;
@@ -60,7 +60,6 @@ namespace Remora.Discord.Gateway
         private readonly JsonSerializerOptions _jsonOptions;
         private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
-        private readonly ClientWebSocket _clientWebSocket;
         private readonly Random _random;
 
         /// <summary>
@@ -92,6 +91,11 @@ namespace Remora.Discord.Gateway
         /// Holds the currently running responders.
         /// </summary>
         private readonly ConcurrentQueue<Task<EventResponseResult[]>> _runningResponderDispatches;
+
+        /// <summary>
+        /// Holds the websocket.
+        /// </summary>
+        private ClientWebSocket _clientWebSocket;
 
         /// <summary>
         /// Holds the connection status.
@@ -242,22 +246,7 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    switch (_clientWebSocket.State)
-                    {
-                        case WebSocketState.Open:
-                        case WebSocketState.CloseReceived:
-                        case WebSocketState.CloseSent:
-                        {
-                            await _clientWebSocket.CloseAsync
-                            (
-                                WebSocketCloseStatus.NormalClosure,
-                                "Terminating connection by user request.",
-                                ct
-                            );
-
-                            break;
-                        }
-                    }
+                    await ResetClientWebSocketAsync(ct);
 
                     // Finish up the responders
                     foreach (var runningResponder in _runningResponderDispatches)
@@ -460,22 +449,7 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            switch (_clientWebSocket.State)
-            {
-                case WebSocketState.Open:
-                case WebSocketState.CloseReceived:
-                case WebSocketState.CloseSent:
-                {
-                    await _clientWebSocket.CloseAsync
-                    (
-                        WebSocketCloseStatus.NormalClosure,
-                        "Terminating connection by user request.",
-                        ct
-                    );
-
-                    break;
-                }
-            }
+            await ResetClientWebSocketAsync(ct);
 
             // Set up the state for the new connection
             _tokenSource = new CancellationTokenSource();
@@ -1030,6 +1004,46 @@ namespace Remora.Discord.Gateway
             {
                 ArrayPool<byte>.Shared.Return(buffer);
             }
+        }
+
+        /// <summary>
+        /// Resets the client websocket, either closing it (if possible), or replacing it if it's been aborted.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        private async Task ResetClientWebSocketAsync(CancellationToken ct)
+        {
+            switch (_clientWebSocket.State)
+            {
+                case WebSocketState.Open:
+                case WebSocketState.CloseReceived:
+                case WebSocketState.CloseSent:
+                {
+                    await _clientWebSocket.CloseAsync
+                    (
+                        WebSocketCloseStatus.NormalClosure,
+                        "Terminating connection by user request.",
+                        ct
+                    );
+
+                    break;
+                }
+                case WebSocketState.Aborted:
+                {
+                    // Aborted sockets can't be reused
+                    _clientWebSocket.Dispose();
+                    _clientWebSocket = new ClientWebSocket();
+
+                    break;
+                }
+            }
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            _clientWebSocket.Dispose();
+            _tokenSource.Dispose();
         }
     }
 }
