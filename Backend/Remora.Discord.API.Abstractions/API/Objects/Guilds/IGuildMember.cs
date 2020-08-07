@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Abstractions.Guilds
         /// <summary>
         /// Gets the user's guild nickname.
         /// </summary>
-        string? Nickname { get; }
+        Optional<string?> Nickname { get; }
 
         /// <summary>
         /// Gets the roles the user has.
