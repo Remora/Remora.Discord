@@ -836,7 +836,7 @@ namespace Remora.Discord.Gateway
 
                 return GatewaySenderResult.FromSuccess();
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 // Cancellation is a success
                 return GatewaySenderResult.FromSuccess();
@@ -886,7 +886,7 @@ namespace Remora.Discord.Gateway
 
                 return GatewayReceiverResult.FromSuccess();
             }
-            catch (TaskCanceledException)
+            catch (OperationCanceledException)
             {
                 // Cancellation is a success
                 return GatewayReceiverResult.FromSuccess();
