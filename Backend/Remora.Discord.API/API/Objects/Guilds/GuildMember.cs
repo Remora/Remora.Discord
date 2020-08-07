@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Objects.Guilds
         public Optional<IUser> User { get; }
 
         /// <inheritdoc />
-        public string? Nickname { get; }
+        public Optional<string?> Nickname { get; }
 
         /// <inheritdoc />
         public IReadOnlyList<Snowflake> Roles { get; }
@@ -65,7 +65,7 @@ namespace Remora.Discord.API.Objects.Guilds
         public GuildMember
         (
             Optional<IUser> user,
-            string? nickname,
+            Optional<string?> nickname,
             IReadOnlyList<Snowflake> roles,
             DateTimeOffset joinedAt,
             Optional<DateTimeOffset?> premiumSince,
