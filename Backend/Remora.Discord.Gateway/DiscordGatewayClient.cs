@@ -242,7 +242,7 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    if (_clientWebSocket.State == WebSocketState.Open)
+                    if (_clientWebSocket.State != WebSocketState.Closed)
                     {
                         await _clientWebSocket.CloseAsync
                         (
@@ -453,7 +453,7 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            if (_clientWebSocket.State == WebSocketState.Open)
+            if (_clientWebSocket.State != WebSocketState.Closed)
             {
                 await _clientWebSocket.CloseAsync
                 (
