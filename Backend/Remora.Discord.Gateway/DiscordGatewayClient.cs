@@ -229,6 +229,9 @@ namespace Remora.Discord.Gateway
                 // Until cancellation has been requested or we hit a fatal error, reconnections should be attempted.
                 _tokenSource = new CancellationTokenSource();
 
+                // Reset the socket before beginning
+                await ResetClientWebSocketAsync(ct);
+
                 while (!ct.IsCancellationRequested)
                 {
                     var iterationResult = await RunConnectionIterationAsync(ct);
