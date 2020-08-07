@@ -93,7 +93,7 @@ namespace Remora.Discord.API.Abstractions.Events
         /// <summary>
         /// Gets a list of users mentioned in the message.
         /// </summary>
-        Optional<IReadOnlyList<(IUser User, Optional<IGuildMember> Member)>> Mentions { get; }
+        Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 
         /// <summary>
         /// Gets a list of mentioned roles.

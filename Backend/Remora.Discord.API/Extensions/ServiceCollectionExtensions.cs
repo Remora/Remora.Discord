@@ -94,6 +94,7 @@ namespace Remora.Discord.API.Extensions
                         options.AddDataObjectConverter<IGatewayEndpoint, GatewayEndpoint>();
                         options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>();
                         options.AddDataObjectConverter<IChannelMention, ChannelMention>();
+                        options.AddDataObjectConverter<IUserMention, UserMention>();
                         options.AddDataObjectConverter<IAttachment, Attachment>();
                         options.AddDataObjectConverter<IGuildRoleCreate, GuildRoleCreate>();
                         options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();

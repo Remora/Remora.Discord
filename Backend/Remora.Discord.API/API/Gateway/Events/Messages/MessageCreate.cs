@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Gateway.Events.Messages
             DateTimeOffset? editedTimestamp,
             bool isTTS,
             bool mentionsEveryone,
-            IReadOnlyList<(IUser User, Optional<IGuildMember> Member)> mentions,
+            IReadOnlyList<IUserMention> mentions,
             IReadOnlyList<Snowflake> mentionedRoles,
             Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
             IReadOnlyList<IAttachment> attachments,

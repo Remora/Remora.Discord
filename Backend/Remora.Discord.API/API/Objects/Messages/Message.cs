@@ -65,7 +65,7 @@ namespace Remora.Discord.API.Objects.Messages
         public bool MentionsEveryone { get; }
 
         /// <inheritdoc />
-        public IReadOnlyList<(IUser User, Optional<IGuildMember> Member)> Mentions { get; }
+        public IReadOnlyList<IUserMention> Mentions { get; }
 
         /// <inheritdoc />
         public IReadOnlyList<Snowflake> MentionedRoles { get; }
@@ -145,7 +145,7 @@ namespace Remora.Discord.API.Objects.Messages
             DateTimeOffset? editedTimestamp,
             bool isTTS,
             bool mentionsEveryone,
-            IReadOnlyList<(IUser User, Optional<IGuildMember> Member)> mentions,
+            IReadOnlyList<IUserMention> mentions,
             IReadOnlyList<Snowflake> mentionedRoles,
             Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
             IReadOnlyList<IAttachment> attachments,
