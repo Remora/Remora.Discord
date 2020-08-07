@@ -213,16 +213,14 @@ namespace Remora.Discord.API.Extensions
                             .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                             .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                             .WithPropertyName(m => m.IsTTS, "tts")
-                            .WithPropertyName(m => m.IsPinned, "pinned")
-                            .WithPropertyConverter(m => m.Type, stringEnumConverter);
+                            .WithPropertyName(m => m.IsPinned, "pinned");
 
                         options.AddDataObjectConverter<IMessageUpdate, MessageUpdate>()
                             .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
                             .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                             .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                             .WithPropertyName(m => m.IsTTS, "tts")
-                            .WithPropertyName(m => m.IsPinned, "pinned")
-                            .WithPropertyConverter(m => m.Type, stringEnumConverter);
+                            .WithPropertyName(m => m.IsPinned, "pinned");
 
                         options.AddDataObjectConverter<IEmbed, Embed>()
                             .WithPropertyConverter(e => e.Type, stringEnumConverter)
