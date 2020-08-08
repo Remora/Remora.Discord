@@ -1,5 +1,5 @@
 //
-//  Presence.cs
+//  PresenceUpdate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,46 +23,21 @@
 using System;
 using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions.Events;
 using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Objects.Presences;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
+namespace Remora.Discord.API.Gateway.Events.Presences
 {
     /// <summary>
     /// Represents a presence update.
     /// </summary>
-    public class Presence : IPresence
+    public class PresenceUpdate : Presence, IPresenceUpdate
     {
-        /// <inheritdoc />
-        public IUser User { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<Snowflake> Roles { get; }
-
-        /// <inheritdoc />
-        public IActivity? Game { get; }
-
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public ClientStatus Status { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IActivity> Activities { get; }
-
-        /// <inheritdoc />
-        public IClientStatuses ClientStatus { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset?> PremiumSince { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Nickname { get; }
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="Presence"/> class.
+        /// Initializes a new instance of the <see cref="PresenceUpdate"/> class.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="roles">The roles the user has.</param>
@@ -73,7 +48,7 @@ namespace Remora.Discord.API.Gateway.Events
         /// <param name="clientStatus">The user's platform-dependent status.</param>
         /// <param name="premiumSince">When the user started boosting the guild.</param>
         /// <param name="nickname">The user's nickname.</param>
-        public Presence
+        public PresenceUpdate
         (
             IUser user,
             IReadOnlyList<Snowflake> roles,
@@ -85,16 +60,8 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<DateTimeOffset?> premiumSince,
             Optional<string?> nickname
         )
+            : base(user, roles, game, guildID, status, activities, clientStatus, premiumSince, nickname)
         {
-            this.User = user;
-            this.Roles = roles;
-            this.Game = game;
-            this.GuildID = guildID;
-            this.Status = status;
-            this.Activities = activities;
-            this.ClientStatus = clientStatus;
-            this.PremiumSince = premiumSince;
-            this.Nickname = nickname;
         }
     }
 }
