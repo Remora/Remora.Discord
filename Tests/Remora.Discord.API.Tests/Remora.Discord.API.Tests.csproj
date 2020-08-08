@@ -125,7 +125,7 @@
     <ItemGroup>
       <Folder Include="API\Gateway" />
       <Folder Include="API\Gateway\Events\Presences" />
-      <Folder Include="Samples\Bidirectional" />
+      <Folder Include="Samples\Gateway" />
     </ItemGroup>
 
 </Project>

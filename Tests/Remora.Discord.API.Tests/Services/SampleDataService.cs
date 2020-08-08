@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Tests.Services
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         public RetrieveEntityResult<IReadOnlyList<string>> GetSampleEventDataSet<TType>()
             where TType : IGatewayEvent
-            => GetSampleDataSet<TType>("Events");
+            => GetSampleDataSet<TType>(Path.Combine("Gateway", "Events"));
 
         /// <summary>
         /// Gets a sample file for the given API command type.
@@ -52,7 +52,7 @@ namespace Remora.Discord.API.Tests.Services
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         public RetrieveEntityResult<IReadOnlyList<string>> GetSampleCommandDataSet<TType>()
             where TType : IGatewayCommand
-            => GetSampleDataSet<TType>("Commands");
+            => GetSampleDataSet<TType>(Path.Combine("Gateway", "Commands"));
 
         /// <summary>
         /// Gets a sample file for the given API bidirectional type.
@@ -61,7 +61,7 @@ namespace Remora.Discord.API.Tests.Services
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         public RetrieveEntityResult<IReadOnlyList<string>> GetSampleBidirectionalDataSet<TType>()
             where TType : IGatewayEvent, IGatewayCommand
-            => GetSampleDataSet<TType>("Bidirectional");
+            => GetSampleDataSet<TType>(Path.Combine("Gateway", "Bidirectional"));
 
         private RetrieveEntityResult<string> GetBaseSampleDataPath()
         {
