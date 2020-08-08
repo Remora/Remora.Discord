@@ -21,7 +21,6 @@
 //
 
 using System;
-using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects

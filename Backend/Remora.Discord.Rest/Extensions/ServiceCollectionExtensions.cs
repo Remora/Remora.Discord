@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
-using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;

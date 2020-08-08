@@ -24,7 +24,6 @@ using System;
 using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
