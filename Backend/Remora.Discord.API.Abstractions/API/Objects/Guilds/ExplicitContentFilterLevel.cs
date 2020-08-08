@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Guilds
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates various content filter levels.

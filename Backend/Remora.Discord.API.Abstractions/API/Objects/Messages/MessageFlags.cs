@@ -23,7 +23,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Messages
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates various message flags.

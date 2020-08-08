@@ -21,7 +21,6 @@
 //
 
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Emojis;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Events

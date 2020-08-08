@@ -20,9 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Images;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.API.Objects.Images
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class ImageHash : IImageHash

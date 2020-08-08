@@ -23,7 +23,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Users
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates various user account flags.

@@ -21,9 +21,8 @@
 //
 
 using System;
-using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Commands;
-using Remora.Discord.API.Abstractions.Presence;
 
 namespace Remora.Discord.API.Gateway.Commands
 {

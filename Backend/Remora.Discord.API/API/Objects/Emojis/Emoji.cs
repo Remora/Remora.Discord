@@ -21,11 +21,10 @@
 //
 
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Emojis;
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Emojis
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Emoji : IEmoji

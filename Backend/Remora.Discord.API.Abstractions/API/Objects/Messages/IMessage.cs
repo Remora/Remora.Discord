@@ -22,13 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Reactions;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Messages
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a message.

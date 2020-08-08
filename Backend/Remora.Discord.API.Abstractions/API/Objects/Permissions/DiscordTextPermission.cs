@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Permissions
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions

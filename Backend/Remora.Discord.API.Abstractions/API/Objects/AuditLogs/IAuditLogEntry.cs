@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.AuditLogs
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents an entry in the audit log.

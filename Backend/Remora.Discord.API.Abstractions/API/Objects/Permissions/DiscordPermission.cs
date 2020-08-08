@@ -23,7 +23,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Permissions
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates the various permissions in Discord.

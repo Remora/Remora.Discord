@@ -21,13 +21,12 @@
 //
 
 using System.Collections.Generic;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Commands;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.ConnectingResuming
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <summary>
     /// Represents the Ready event.

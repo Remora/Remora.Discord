@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Events

@@ -20,9 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Emojis;
-
-namespace Remora.Discord.API.Abstractions.Reactions
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a reaction to a message.

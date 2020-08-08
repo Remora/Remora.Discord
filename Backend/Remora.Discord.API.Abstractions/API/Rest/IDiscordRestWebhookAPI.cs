@@ -25,10 +25,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Messages;
 using Remora.Discord.API.Abstractions.Results;
-using Remora.Discord.API.Abstractions.Webhooks;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions

@@ -20,10 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Channels;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Channels
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class ChannelMention : IChannelMention

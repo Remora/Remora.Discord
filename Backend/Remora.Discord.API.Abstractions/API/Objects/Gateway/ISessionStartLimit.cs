@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Remora.Discord.API.Abstractions.Gateway
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents information about session start limits.

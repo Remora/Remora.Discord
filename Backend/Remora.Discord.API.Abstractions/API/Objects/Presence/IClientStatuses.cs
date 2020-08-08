@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Presence
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a collection of platform statues.

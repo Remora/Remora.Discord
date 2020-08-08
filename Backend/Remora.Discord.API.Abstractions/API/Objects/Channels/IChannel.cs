@@ -22,12 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Images;
-using Remora.Discord.API.Abstractions.Permissions;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Channels
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a channel.

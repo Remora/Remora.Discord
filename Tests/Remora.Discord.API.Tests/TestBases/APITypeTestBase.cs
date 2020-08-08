@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -30,7 +29,6 @@ using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
 using Remora.Discord.Tests;
-using Remora.Results;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 

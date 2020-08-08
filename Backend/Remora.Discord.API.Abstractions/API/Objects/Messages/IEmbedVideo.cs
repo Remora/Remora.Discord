@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Messages
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents information about a video in an embed.

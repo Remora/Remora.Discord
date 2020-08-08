@@ -22,11 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Activities;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Presence
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a user's presence.

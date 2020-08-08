@@ -20,10 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Guilds;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Voice
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a user's voice connection status.

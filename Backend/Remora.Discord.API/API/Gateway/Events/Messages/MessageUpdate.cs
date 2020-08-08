@@ -22,15 +22,11 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Channels;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Messages;
-using Remora.Discord.API.Abstractions.Reactions;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Messages
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageUpdate"/>
     public class MessageUpdate : IMessageUpdate

@@ -29,13 +29,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Invites;
-using Remora.Discord.API.Abstractions.Messages;
-using Remora.Discord.API.Abstractions.Permissions;
-using Remora.Discord.API.Abstractions.Reactions;
 using Remora.Discord.API.Abstractions.Results;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Rest.API.Gateway

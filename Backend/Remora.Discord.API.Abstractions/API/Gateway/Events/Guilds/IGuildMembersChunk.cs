@@ -21,8 +21,6 @@
 //
 
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Presence;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Events

@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Channels
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates various mention types.

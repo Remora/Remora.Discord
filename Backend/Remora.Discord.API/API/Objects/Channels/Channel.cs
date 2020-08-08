@@ -22,13 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Images;
-using Remora.Discord.API.Abstractions.Permissions;
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Channels
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Channel : IChannel

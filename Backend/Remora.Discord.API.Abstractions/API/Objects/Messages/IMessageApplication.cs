@@ -20,10 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Images;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Messages
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents an application linked to a message.

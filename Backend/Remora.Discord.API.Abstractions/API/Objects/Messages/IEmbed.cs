@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Messages
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents an embed.

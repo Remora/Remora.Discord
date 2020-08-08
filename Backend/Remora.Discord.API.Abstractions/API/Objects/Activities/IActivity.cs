@@ -23,7 +23,7 @@
 using System;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Activities
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents information about an activity Discord is aware of.

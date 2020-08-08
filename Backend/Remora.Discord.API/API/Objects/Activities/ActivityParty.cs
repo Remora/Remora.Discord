@@ -20,10 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Activities
+namespace Remora.Discord.API.Objects
 {
     /// <summary>
     /// Represents a party of people in an activity.

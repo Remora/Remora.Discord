@@ -23,10 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Remora.Discord.API.Abstractions.Messages;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Messages
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Embed : IEmbed

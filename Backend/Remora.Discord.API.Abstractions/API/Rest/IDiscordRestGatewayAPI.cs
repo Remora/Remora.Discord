@@ -22,7 +22,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Results;
 
 namespace Remora.Discord.API.Abstractions

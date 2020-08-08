@@ -22,9 +22,9 @@
 
 using System;
 using System.Numerics;
-using Remora.Discord.API.Abstractions.Permissions;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.API.Objects.Permissions
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class DiscordPermissionSet : IDiscordPermissionSet

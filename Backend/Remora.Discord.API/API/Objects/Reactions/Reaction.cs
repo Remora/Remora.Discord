@@ -20,10 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Emojis;
-using Remora.Discord.API.Abstractions.Reactions;
+using Remora.Discord.API.Abstractions;
 
-namespace Remora.Discord.API.Objects.Reactions
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Reaction : IReaction

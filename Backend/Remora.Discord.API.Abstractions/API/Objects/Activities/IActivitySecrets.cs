@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Activities
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a set of secrets used for interacting with the activity.

@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Images
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a Discord image hash.

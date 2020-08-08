@@ -20,9 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Users;
-
-namespace Remora.Discord.API.Abstractions.Guilds
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a ban in a guild.

@@ -23,7 +23,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Invites;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 

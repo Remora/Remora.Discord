@@ -22,15 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Emojis;
-using Remora.Discord.API.Abstractions.Images;
-using Remora.Discord.API.Abstractions.Permissions;
-using Remora.Discord.API.Abstractions.Presence;
-using Remora.Discord.API.Abstractions.Voice;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Guilds
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a Discord Guild.

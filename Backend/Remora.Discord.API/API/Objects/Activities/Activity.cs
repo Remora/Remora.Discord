@@ -21,10 +21,10 @@
 //
 
 using System;
-using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Activities
+namespace Remora.Discord.API.Objects
 {
     /// <summary>
     /// Represents information about an activity Discord is aware of.

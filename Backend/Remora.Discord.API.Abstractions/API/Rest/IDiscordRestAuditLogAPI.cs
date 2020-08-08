@@ -22,7 +22,6 @@
 
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.AuditLogs;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 

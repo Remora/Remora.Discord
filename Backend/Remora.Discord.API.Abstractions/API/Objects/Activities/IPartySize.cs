@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Activities
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a party size object.

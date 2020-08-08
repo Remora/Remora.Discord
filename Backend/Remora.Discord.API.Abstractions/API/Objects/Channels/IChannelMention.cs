@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Channels
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a mentioned channel.

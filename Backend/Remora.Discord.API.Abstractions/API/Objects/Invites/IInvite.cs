@@ -20,12 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Channels;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Users;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Invites
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents an invite.

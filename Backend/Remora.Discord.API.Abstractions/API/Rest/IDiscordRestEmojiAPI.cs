@@ -25,7 +25,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Emojis;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 

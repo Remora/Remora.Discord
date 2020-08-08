@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Guilds
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents an unavailable guild.

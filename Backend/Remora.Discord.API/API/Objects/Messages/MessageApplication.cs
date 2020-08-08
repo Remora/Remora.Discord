@@ -20,11 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Images;
-using Remora.Discord.API.Abstractions.Messages;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Messages
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class MessageApplication : IMessageApplication

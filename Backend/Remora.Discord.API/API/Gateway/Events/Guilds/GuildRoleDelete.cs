@@ -23,7 +23,7 @@
 using Remora.Discord.API.Abstractions.Events;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Guilds
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc />
     public class GuildRoleDelete : IGuildRoleDelete

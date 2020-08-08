@@ -21,10 +21,10 @@
 //
 
 using System.Drawing;
-using Remora.Discord.API.Abstractions.Permissions;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Permissions
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Role : IRole

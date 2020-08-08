@@ -22,7 +22,7 @@
 
 using Remora.Discord.API.Abstractions.Events;
 
-namespace Remora.Discord.API.Gateway.Events.ConnectingResuming
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <summary>
     /// Represents the greeting event sent by the gateway after connection.

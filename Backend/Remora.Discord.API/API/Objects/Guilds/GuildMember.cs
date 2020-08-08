@@ -22,11 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Guilds;
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Guilds
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class GuildMember : IGuildMember

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Remora.Discord.API.Abstractions.Activities
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Enumerates the flags an activity can have.

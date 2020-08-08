@@ -21,10 +21,9 @@
 //
 
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Integrations;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Users
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a connection between a user account and an external service.

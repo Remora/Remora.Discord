@@ -20,11 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Abstractions.Permissions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Guilds
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc />
     public class GuildRoleCreate : IGuildRoleCreate

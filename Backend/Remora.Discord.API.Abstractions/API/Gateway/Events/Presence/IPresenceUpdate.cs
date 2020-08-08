@@ -20,8 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Presence;
-
 namespace Remora.Discord.API.Abstractions.Events
 {
     /// <summary>

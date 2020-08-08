@@ -22,12 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Activities;
-using Remora.Discord.API.Abstractions.Presence;
-using Remora.Discord.API.Abstractions.Users;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Presences
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Presence : IPresence

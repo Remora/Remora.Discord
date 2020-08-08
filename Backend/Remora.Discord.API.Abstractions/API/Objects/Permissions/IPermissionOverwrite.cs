@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Permissions
+namespace Remora.Discord.API.Abstractions
 {
     /// <summary>
     /// Represents a channel- or category-specific permission overwrite.

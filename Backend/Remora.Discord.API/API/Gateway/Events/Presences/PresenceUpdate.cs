@@ -22,14 +22,12 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Activities;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Events;
-using Remora.Discord.API.Abstractions.Presence;
-using Remora.Discord.API.Abstractions.Users;
-using Remora.Discord.API.Objects.Presences;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Presences
+namespace Remora.Discord.API.Gateway.Events
 {
     /// <summary>
     /// Represents a presence update.
