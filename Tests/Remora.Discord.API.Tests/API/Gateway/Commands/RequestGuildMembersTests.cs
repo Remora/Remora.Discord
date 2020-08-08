@@ -1,5 +1,5 @@
 //
-//  IdentifyTests.cs
+//  RequestGuildMembersTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,12 +23,12 @@
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.API.Commands
+namespace Remora.Discord.API.Tests.Gateway.Commands
 {
     /// <summary>
-    /// Tests the <see cref="Identify"/> command.
+    /// Tests the <see cref="RequestGuildMembers"/> command.
     /// </summary>
-    public class IdentifyTests : CommandAPITypeTestBase<Identify>
+    public class RequestGuildMembersTests : GatewayCommandTestBase<RequestGuildMembers>
     {
     }
 }

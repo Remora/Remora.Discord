@@ -54,6 +54,15 @@ namespace Remora.Discord.API.Tests.Services
             where TType : IGatewayCommand
             => GetSampleDataSet<TType>("Commands");
 
+        /// <summary>
+        /// Gets a sample file for the given API bidirectional type.
+        /// </summary>
+        /// <typeparam name="TType">The API type.</typeparam>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        public RetrieveEntityResult<IReadOnlyList<string>> GetSampleBidirectionalDataSet<TType>()
+            where TType : IGatewayEvent, IGatewayCommand
+            => GetSampleDataSet<TType>("Bidirectional");
+
         private RetrieveEntityResult<string> GetBaseSampleDataPath()
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

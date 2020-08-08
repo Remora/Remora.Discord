@@ -1,5 +1,5 @@
 //
-//  GuildRoleCreateTests.cs
+//  UpdateStatusTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Tests.API.Events
+namespace Remora.Discord.API.Tests.Gateway.Commands
 {
     /// <summary>
-    /// Tests the Hello event.
+    /// Tests the <see cref="UpdateStatus"/> command.
     /// </summary>
-    public class GuildRoleCreateTests : EventAPITypeTestBase<GuildRoleCreate>
+    public class UpdateStatusTests : GatewayCommandTestBase<UpdateStatus>
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "permissions_new", // aliased and collapsed to just "permissions"
-                "guild_hashes", // internal discord value
-            }
-        );
     }
 }

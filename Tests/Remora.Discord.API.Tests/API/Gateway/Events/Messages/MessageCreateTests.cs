@@ -1,5 +1,5 @@
 //
-//  ReadyTests.cs
+//  MessageCreateTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,13 +22,22 @@
 
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Tests.API.Events
+namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <summary>
-    /// Tests the Ready event.
+    /// Tests the <see cref="MessageCreate"/> event.
     /// </summary>
-    public class ReadyTests : EventAPITypeTestBase<Ready>
+    public class MessageCreateTests : GatewayEventTestBase<MessageCreate>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        (
+            new[]
+            {
+                "hoisted_role", // internal discord value
+            }
+        );
     }
 }

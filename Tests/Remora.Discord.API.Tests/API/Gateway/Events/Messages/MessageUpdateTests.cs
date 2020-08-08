@@ -24,12 +24,12 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Tests.API.Events
+namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <summary>
     /// Tests the <see cref="MessageUpdate"/> event.
     /// </summary>
-    public class MessageUpdateTests : EventAPITypeTestBase<MessageUpdate>
+    public class MessageUpdateTests : GatewayEventTestBase<MessageUpdate>
     {
         /// <inheritdoc />
         protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions

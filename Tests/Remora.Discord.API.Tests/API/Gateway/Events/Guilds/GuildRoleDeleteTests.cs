@@ -1,5 +1,5 @@
 //
-//  MessageCreateTests.cs
+//  GuildRoleDeleteTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,19 +24,19 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Tests.API.Events
+namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <summary>
-    /// Tests the <see cref="MessageCreate"/> event.
+    /// Tests the Hello event.
     /// </summary>
-    public class MessageCreateTests : EventAPITypeTestBase<MessageCreate>
+    public class GuildRoleDeleteTests : GatewayEventTestBase<GuildRoleDelete>
     {
         /// <inheritdoc />
         protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
         (
             new[]
             {
-                "hoisted_role", // internal discord value
+                "guild_hashes", // internal discord value
             }
         );
     }

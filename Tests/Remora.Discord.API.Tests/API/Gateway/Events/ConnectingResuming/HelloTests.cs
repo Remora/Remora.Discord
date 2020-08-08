@@ -1,5 +1,5 @@
 //
-//  EventAPITypeTestBase.cs
+//  HelloTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Tests.Services;
+using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <summary>
-    /// Acts as a base class for Event API types.
+    /// Tests the Hello event.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class EventAPITypeTestBase<TType> : APITypeTestBase<SampleEventDataSource<TType>>
-        where TType : IGatewayEvent
+    public class HelloTests : GatewayEventTestBase<Hello>
     {
     }
 }

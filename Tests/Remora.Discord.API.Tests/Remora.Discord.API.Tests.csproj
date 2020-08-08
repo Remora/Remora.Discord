@@ -122,4 +122,10 @@
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="API\Gateway" />
+      <Folder Include="API\Gateway\Events\Presences" />
+      <Folder Include="Samples\Bidirectional" />
+    </ItemGroup>
+
 </Project>

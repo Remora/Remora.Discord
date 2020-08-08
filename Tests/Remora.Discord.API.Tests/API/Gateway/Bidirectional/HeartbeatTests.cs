@@ -1,5 +1,5 @@
 //
-//  UpdateStatusTests.cs
+//  HeartbeatTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Commands;
+using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.API.Commands
+namespace Remora.Discord.API.Tests.Gateway.Bidirectional
 {
     /// <summary>
-    /// Tests the <see cref="UpdateStatus"/> command.
+    /// Tests the <see cref="Heartbeat"/> command.
     /// </summary>
-    public class UpdateStatusTests : CommandAPITypeTestBase<UpdateStatus>
+    public class HeartbeatTests : GatewayBidirectionalTestBase<Heartbeat>
     {
     }
 }

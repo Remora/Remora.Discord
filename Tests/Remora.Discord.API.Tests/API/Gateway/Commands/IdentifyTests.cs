@@ -1,5 +1,5 @@
 //
-//  GuildCreateTests.cs
+//  IdentifyTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Tests.API.Events
+namespace Remora.Discord.API.Tests.Gateway.Commands
 {
     /// <summary>
-    /// Tests the Hello event.
+    /// Tests the <see cref="Identify"/> command.
     /// </summary>
-    public class GuildCreateTests : EventAPITypeTestBase<GuildCreate>
+    public class IdentifyTests : GatewayCommandTestBase<Identify>
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "permissions_new", // aliased and collapsed to just "permissions"
-                "deny_new", // aliased and collapsed to just "deny"
-                "allow_new", // aliased and collapsed to just "allow"
-                "hoisted_role", // internal discord value
-                "guild_hashes", // internal discord value
-                "lazy" // undocumented value
-            }
-        );
     }
 }

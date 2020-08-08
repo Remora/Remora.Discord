@@ -1,5 +1,5 @@
 //
-//  APITypeTestBase.cs
+//  JsonBackedTypeTestBase.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -35,11 +35,12 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
-    /// Acts as a base class for testing API types in the Discord API. This class contains common baseline tests for all
-    /// types.
+    /// Acts as a base class for testing JSON-backed types in the Discord API. This class contains common baseline
+    /// tests for all types.
     /// </summary>
+    /// <typeparam name="TType">The type under test.</typeparam>
     /// <typeparam name="TSampleSource">The theory data source.</typeparam>
-    public abstract class APITypeTestBase<TSampleSource> where TSampleSource : TheoryData, new()
+    public abstract class JsonBackedTypeTestBase<TType, TSampleSource> where TSampleSource : TheoryData, new()
     {
         /// <summary>
         /// Gets the data sample source.
@@ -62,9 +63,9 @@ namespace Remora.Discord.API.Tests.TestBases
         protected virtual JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="APITypeTestBase{TSampleSource}"/> class.
+        /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
         /// </summary>
-        protected APITypeTestBase()
+        protected JsonBackedTypeTestBase()
         {
             var services = new ServiceCollection()
                 .AddDiscordApi(allowUnknownEvents: false)
@@ -85,7 +86,7 @@ namespace Remora.Discord.API.Tests.TestBases
         public async Task CanDeserialize(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
+            var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
             Assert.NotNull(payload);
         }
 
@@ -99,7 +100,7 @@ namespace Remora.Discord.API.Tests.TestBases
         public async Task CanSerialize(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
+            var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
             await using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, payload, this.Options);
@@ -118,7 +119,7 @@ namespace Remora.Discord.API.Tests.TestBases
         public async Task SurvivesRoundTrip(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);
-            var deserialized = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
+            var deserialized = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
             await using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, deserialized, this.Options);
