@@ -113,6 +113,7 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
 
         public class GetPublicProperties
         {
+            // ReSharper disable UnassignedGetOnlyAutoProperty
             private interface IEmptyInterface
             {
             }
@@ -178,6 +179,7 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
                 public int ThirdProperty { get; }
             }
 
+            // ReSharper restore UnassignedGetOnlyAutoProperty
             [Fact]
             public void ReturnsEmptyCollectionForEmptyInterface()
             {

@@ -31,11 +31,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-//using ComposableAsync;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API;
-//using RateLimiter;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
@@ -62,16 +60,6 @@ namespace Remora.Discord.Gateway
         private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
         private readonly Random _random;
-
-        /// <summary>
-        /// Holds the rate limiter for the payload send rate.
-        /// </summary>
-        //private readonly TimeLimiter _payloadSendRateLimiter;
-
-        /// <summary>
-        /// Holds the rate limiter for new connections.
-        /// </summary>
-        //private readonly TimeLimiter _connectionRateLimiter;
 
         /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -180,9 +168,6 @@ namespace Remora.Discord.Gateway
             _tokenSource = new CancellationTokenSource();
             _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
             _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
-
-            //_payloadSendRateLimiter = TimeLimiter.GetFromMaxCountByInterval(120, TimeSpan.FromMinutes(1));
-            //_connectionRateLimiter = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(5));
         }
 
         /// <summary>
@@ -336,7 +321,6 @@ namespace Remora.Discord.Gateway
 
                     _log.LogInformation("Connecting to the gateway...");
 
-                    //await _connectionRateLimiter;
                     await _clientWebSocket.ConnectAsync(gatewayUri, ct);
                     switch (_clientWebSocket.State)
                     {
@@ -921,7 +905,6 @@ namespace Remora.Discord.Gateway
                 await memoryStream.ReadAsync(bufferSegment, ct);
 
                 // Send the whole payload as one chunk
-                //await _payloadSendRateLimiter;
                 await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
 
                 if (_clientWebSocket.CloseStatus.HasValue)

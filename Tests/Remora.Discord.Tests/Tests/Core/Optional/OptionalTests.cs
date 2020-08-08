@@ -207,7 +207,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.operator"/> implicit operator.
+        /// Tests the implicit operator.
         /// </summary>
         public class ImplicitOperator
         {

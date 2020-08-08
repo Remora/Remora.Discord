@@ -198,6 +198,7 @@ namespace Remora.Discord.Tests.Tests.Core
                 var notSnowflake = "henlo";
                 var snowflake = new Snowflake(143867839282020352u);
 
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 Assert.False(snowflake.Equals(notSnowflake));
             }
 
@@ -244,7 +245,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.CompareTo"/> method.
+        /// Tests the CompareTo method.
         /// </summary>
         public class CompareTo
         {
@@ -262,7 +263,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.op_LessThan"/> operator.
+        /// Tests the &lt; operator.
         /// </summary>
         public class LessThan
         {
@@ -280,7 +281,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.op_GreaterThan"/> operator.
+        /// Tests the &gt; operator.
         /// </summary>
         public class GreaterThan
         {
@@ -298,7 +299,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.op_LessThanOrEqual"/> operator.
+        /// Tests the &lt;= operator.
         /// </summary>
         public class LessThanOrEqual
         {
@@ -316,7 +317,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.op_GreaterThanOrEqual"/> operator.
+        /// Tests the &lt;= operator.
         /// </summary>
         public class GreaterThanOrEqual
         {

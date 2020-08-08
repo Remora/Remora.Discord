@@ -167,11 +167,13 @@ namespace Remora.Discord.Rest.API.Gateway
                                 JsonSerializer.Serialize(writer, embed.Value, _jsonOptions);
                             }
 
-                            if (allowedMentions.HasValue)
+                            if (!allowedMentions.HasValue)
                             {
-                                writer.WritePropertyName("allowed_mentions");
-                                JsonSerializer.Serialize(writer, allowedMentions.Value, _jsonOptions);
+                                return;
                             }
+
+                            writer.WritePropertyName("allowed_mentions");
+                            JsonSerializer.Serialize(writer, allowedMentions.Value, _jsonOptions);
                         }
                     );
                 },
