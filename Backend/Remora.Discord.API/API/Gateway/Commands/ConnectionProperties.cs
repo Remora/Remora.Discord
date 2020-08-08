@@ -21,7 +21,7 @@
 //
 
 using System.Runtime.InteropServices;
-using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 namespace Remora.Discord.API.Gateway.Commands
 {

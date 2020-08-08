@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Events
+using Remora.Discord.API.Abstractions.Objects;
+
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents the creation of a guild. This event is sent in one of three scenarios:

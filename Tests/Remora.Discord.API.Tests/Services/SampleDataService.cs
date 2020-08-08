@@ -25,8 +25,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Humanizer;
-using Remora.Discord.API.Abstractions.Commands;
-using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Results;
 
 namespace Remora.Discord.API.Tests.Services

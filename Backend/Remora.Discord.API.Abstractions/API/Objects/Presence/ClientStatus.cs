@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Enumerates various presence states for a user.

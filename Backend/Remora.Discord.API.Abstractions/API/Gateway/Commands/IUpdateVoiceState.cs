@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Represents a command to update the voice state of the client.

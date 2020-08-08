@@ -24,6 +24,7 @@ using System;
 using System.Net.WebSockets;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Gateway;
 
 namespace Remora.Discord.Gateway.Results
 {

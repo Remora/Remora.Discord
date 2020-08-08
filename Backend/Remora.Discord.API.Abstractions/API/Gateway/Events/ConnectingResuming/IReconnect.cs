@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents a reconnection request. This interface defines no data.

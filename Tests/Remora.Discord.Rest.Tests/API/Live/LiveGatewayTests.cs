@@ -22,6 +22,7 @@
 
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
 using Xunit;

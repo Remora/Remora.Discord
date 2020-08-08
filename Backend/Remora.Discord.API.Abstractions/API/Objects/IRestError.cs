@@ -22,7 +22,7 @@
 
 using Remora.Discord.API.Abstractions.Results;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents an error reported by the REST API.

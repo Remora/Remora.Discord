@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.

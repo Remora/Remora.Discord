@@ -22,10 +22,11 @@
 
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Rest
 {
     /// <summary>
     /// Represents the Discord Audit Log API.

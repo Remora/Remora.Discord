@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
 using Remora.Discord.Tests;

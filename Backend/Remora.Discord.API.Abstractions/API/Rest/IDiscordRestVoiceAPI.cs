@@ -23,9 +23,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Rest
 {
     /// <summary>
     /// Represents the Discord Voice API.

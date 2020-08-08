@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents a bulk deletion of a set of messages.

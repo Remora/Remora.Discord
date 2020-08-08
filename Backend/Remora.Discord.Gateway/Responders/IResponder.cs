@@ -22,7 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Results;
 
 // ReSharper disable SA1402 - we allow two types in this file, because one is a marker interface of the other

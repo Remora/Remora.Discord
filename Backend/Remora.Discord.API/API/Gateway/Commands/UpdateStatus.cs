@@ -22,7 +22,8 @@
 
 using System;
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.API.Abstractions.Commands;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
+using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Gateway.Commands
 {

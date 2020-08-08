@@ -25,9 +25,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.API.Abstractions.Bidirectional;
-using Remora.Discord.API.Abstractions.Commands;
-using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.API.Abstractions.Gateway;
+using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Results;
 

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Remora.Discord.API.Abstractions.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Enumerates the gateway intents that can be specified.

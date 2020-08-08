@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents the removal of all reaction from a message.

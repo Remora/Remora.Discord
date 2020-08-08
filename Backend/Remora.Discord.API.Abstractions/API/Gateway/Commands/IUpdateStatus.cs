@@ -21,8 +21,9 @@
 //
 
 using System;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Represents a command to update the status of a user.

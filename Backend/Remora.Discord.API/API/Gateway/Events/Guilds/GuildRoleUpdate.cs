@@ -21,7 +21,8 @@
 //
 
 using Remora.Discord.API.Abstractions;
-using Remora.Discord.API.Abstractions.Events;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Gateway.Events

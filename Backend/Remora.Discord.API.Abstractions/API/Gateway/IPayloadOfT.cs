@@ -22,7 +22,7 @@
 
 #pragma warning disable SA1649
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Gateway
 {
     /// <summary>
     /// Marker interface for payload classes.

@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a channel.

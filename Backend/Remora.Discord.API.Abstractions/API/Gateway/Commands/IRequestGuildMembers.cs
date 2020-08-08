@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Represents a command used to request guild members.

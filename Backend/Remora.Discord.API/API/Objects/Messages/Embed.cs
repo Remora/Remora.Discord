@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects

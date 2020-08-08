@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Rest
 {
     /// <summary>
     /// Represents the full Discord REST API.

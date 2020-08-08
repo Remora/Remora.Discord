@@ -23,7 +23,7 @@
 using System;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.

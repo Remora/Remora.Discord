@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents an audit log page.

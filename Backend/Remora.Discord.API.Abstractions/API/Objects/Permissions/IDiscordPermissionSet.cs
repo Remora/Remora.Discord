@@ -22,7 +22,7 @@
 
 using System.Numerics;
 
-namespace Remora.Discord.API.Abstractions
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a Discord permission set.

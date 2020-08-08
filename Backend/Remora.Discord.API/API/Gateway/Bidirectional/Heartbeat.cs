@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Bidirectional;
+using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 
 namespace Remora.Discord.API.Gateway.Bidirectional
 {

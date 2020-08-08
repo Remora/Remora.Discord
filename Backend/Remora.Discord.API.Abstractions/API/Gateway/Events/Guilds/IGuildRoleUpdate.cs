@@ -20,9 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents an update to a role.
