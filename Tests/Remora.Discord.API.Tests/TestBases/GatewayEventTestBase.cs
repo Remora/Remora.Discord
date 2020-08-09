@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.Services;
 
@@ -30,8 +29,8 @@ namespace Remora.Discord.API.Tests.TestBases
     /// Acts as a base class for Event API types.
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class GatewayEventTestBase<TType>
-        : JsonBackedTypeTestBase<IPayload, SampleEventDataSource<TType>> where TType : IGatewayEvent
+    public abstract class GatewayEventTestBase<TType> : GatewayTestBase<TType, SampleEventDataSource<TType>>
+        where TType : IGatewayEvent
     {
     }
 }

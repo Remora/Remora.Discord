@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
 namespace Remora.Discord.API.Tests.Gateway.Events
@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     /// <summary>
     /// Tests the Hello event.
     /// </summary>
-    public class HelloTests : GatewayEventTestBase<Hello>
+    public class HelloTests : GatewayEventTestBase<IHello>
     {
     }
 }

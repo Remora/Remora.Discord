@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Tests.Services;
 
@@ -30,8 +29,8 @@ namespace Remora.Discord.API.Tests.TestBases
     /// Acts as a base class for command API types.
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class GatewayCommandTestBase<TType>
-        : JsonBackedTypeTestBase<IPayload, SampleCommandDataSource<TType>> where TType : IGatewayCommand
+    public abstract class GatewayCommandTestBase<TType> : GatewayTestBase<TType, SampleCommandDataSource<TType>>
+        where TType : IGatewayCommand
     {
     }
 }

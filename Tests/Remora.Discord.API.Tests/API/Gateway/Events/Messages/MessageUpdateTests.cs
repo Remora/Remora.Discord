@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Tests;
@@ -29,7 +30,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     /// <summary>
     /// Tests the <see cref="MessageUpdate"/> event.
     /// </summary>
-    public class MessageUpdateTests : GatewayEventTestBase<MessageUpdate>
+    public class MessageUpdateTests : GatewayEventTestBase<IMessageUpdate>
     {
         /// <inheritdoc />
         protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions

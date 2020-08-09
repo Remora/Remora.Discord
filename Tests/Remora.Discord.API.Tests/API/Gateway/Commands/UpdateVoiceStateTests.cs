@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 
@@ -28,7 +29,7 @@ namespace Remora.Discord.API.Tests.Gateway.Commands
     /// <summary>
     /// Tests the <see cref="UpdateVoiceState"/> command.
     /// </summary>
-    public class UpdateVoiceStateTests : GatewayCommandTestBase<UpdateVoiceState>
+    public class UpdateVoiceStateTests : GatewayCommandTestBase<IUpdateVoiceState>
     {
     }
 }

@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.Services;
@@ -32,7 +31,7 @@ namespace Remora.Discord.API.Tests.TestBases
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
     public abstract class GatewayBidirectionalTestBase<TType>
-        : JsonBackedTypeTestBase<IPayload, SampleBidirectionalDataSource<TType>>
+        : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
             where TType : IGatewayEvent, IGatewayCommand
     {
     }

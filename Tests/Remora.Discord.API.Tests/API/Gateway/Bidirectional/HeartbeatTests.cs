@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Tests.TestBases;
 
@@ -28,7 +29,7 @@ namespace Remora.Discord.API.Tests.Gateway.Bidirectional
     /// <summary>
     /// Tests the <see cref="Heartbeat"/> command.
     /// </summary>
-    public class HeartbeatTests : GatewayBidirectionalTestBase<Heartbeat>
+    public class HeartbeatTests : GatewayBidirectionalTestBase<IHeartbeat>
     {
     }
 }
