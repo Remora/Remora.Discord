@@ -169,6 +169,9 @@
         <Content Update="Samples\Objects\ACTIVITY_SECRETS\no-match.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Update="Samples\Gateway\Events\RESUMED\RESUMED.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

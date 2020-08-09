@@ -152,11 +152,14 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddGatewayEventConverters(this JsonSerializerOptions options)
         {
             // Connecting and resuming
-            options.AddDataObjectConverter<IHello, Hello>();
             options.AddConverter<InvalidSessionConverter>();
+
+            options.AddDataObjectConverter<IHello, Hello>();
             options.AddDataObjectConverter<IReady, Ready>()
                 .WithPropertyName(r => r.Version, "v");
+
             options.AddDataObjectConverter<IReconnect, Reconnect>();
+            options.AddDataObjectConverter<IResumed, Resumed>();
 
             // Guilds
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()

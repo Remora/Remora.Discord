@@ -685,29 +685,6 @@ namespace Remora.Discord.Gateway
 
             _payloadsToSend.Enqueue(resumePayload);
 
-            while (true)
-            {
-                var receiveFirstEvent = await ReceivePayloadAsync(ct);
-                if (!receiveFirstEvent.IsSuccess)
-                {
-                    return GatewayConnectionResult.FromError(receiveFirstEvent);
-                }
-
-                if (receiveFirstEvent.Entity is IPayload<IHeartbeatAcknowledge>)
-                {
-                    continue;
-                }
-
-                if (receiveFirstEvent.Entity is IPayload<IInvalidSession>)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
-                    return await CreateNewSessionAsync(ct);
-                }
-
-                _receivedPayloads.Enqueue(receiveFirstEvent.Entity);
-                break;
-            }
-
             // Push resumed events onto the queue
             while (true)
             {
@@ -720,6 +697,17 @@ namespace Remora.Discord.Gateway
                 if (!receiveEvent.IsSuccess)
                 {
                     return GatewayConnectionResult.FromError(receiveEvent);
+                }
+
+                if (receiveEvent.Entity is IPayload<IHeartbeatAcknowledge>)
+                {
+                    continue;
+                }
+
+                if (receiveEvent.Entity is IPayload<IInvalidSession>)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                    return await CreateNewSessionAsync(ct);
                 }
 
                 if (receiveEvent.Entity is IPayload<IResumed>)
