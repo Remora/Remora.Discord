@@ -1,0 +1,12 @@
+{
+    "op": 3,
+    "d": {
+        "since": 91879201,
+        "game": {
+            "name": "Save the Oxford Comma",
+            "type": 0
+        },
+        "status": "online",
+        "afk": false
+    }
+}

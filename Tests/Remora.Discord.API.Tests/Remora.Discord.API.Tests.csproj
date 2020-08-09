@@ -172,6 +172,9 @@
         <Content Update="Samples\Gateway\Events\RESUMED\RESUMED.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Update="Samples\Gateway\Events\PRESENCE_UPDATE\PRESENCE_UPDATE">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -181,7 +184,6 @@
 
     <ItemGroup>
       <Folder Include="API\Gateway" />
-      <Folder Include="API\Gateway\Events\Presences" />
       <Folder Include="Samples\Gateway" />
     </ItemGroup>
 
