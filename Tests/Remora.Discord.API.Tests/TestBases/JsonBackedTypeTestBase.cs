@@ -82,7 +82,7 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
-        [MemberData(nameof(SampleSource))]
+        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
         public async Task CanDeserialize(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);
@@ -96,7 +96,7 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
-        [MemberData(nameof(SampleSource))]
+        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
         public async Task CanSerialize(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);
@@ -115,7 +115,7 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <param name="sampleDataPath">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
-        [MemberData(nameof(SampleSource))]
+        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
         public async Task SurvivesRoundTrip(string sampleDataPath)
         {
             await using var sampleData = File.OpenRead(sampleDataPath);

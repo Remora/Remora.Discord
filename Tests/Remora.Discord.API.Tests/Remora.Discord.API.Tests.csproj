@@ -115,6 +115,60 @@
         <Content Update="Samples\Events\MESSAGE_UPDATE\2020-08-07 11:22:49Z.8.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Update="Samples\Objects\CONNECTION_PROPERTIES\CONNECTION_PROPERTIES.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\SHARD_IDENTIFICATION\SHARD_IDENTIFICATION.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY\ACTIVITY.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_TIMESTAMPS\ACTIVITY_TIMESTAMPS.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_TIMESTAMPS\ACTIVITY_TIMESTAMPS - Copy.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_EMOJI\ACTIVITY_EMOJI.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_EMOJI\native.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_EMOJI\not-animated.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_ASSETS\ACTIVITY_ASSETS.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_ASSETS\missing-small-image.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_ASSETS\missing-large-image.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_PARTY\ACTIVITY_PARTY.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_PARTY\no-size.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_PARTY\no-id.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_SECRETS\ACTIVITY_SECRETS.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_SECRETS\no-join.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_SECRETS\no-spectate.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Samples\Objects\ACTIVITY_SECRETS\no-match.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

@@ -63,6 +63,14 @@ namespace Remora.Discord.API.Tests.Services
             where TType : IGatewayEvent, IGatewayCommand
             => GetSampleDataSet<TType>(Path.Combine("Gateway", "Bidirectional"));
 
+        /// <summary>
+        /// Gets a sample file for the given API object type.
+        /// </summary>
+        /// <typeparam name="TType">The API type.</typeparam>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        public RetrieveEntityResult<IReadOnlyList<string>> GetSampleObjectDataSet<TType>()
+            => GetSampleDataSet<TType>("Objects");
+
         private RetrieveEntityResult<string> GetBaseSampleDataPath()
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -84,6 +92,11 @@ namespace Remora.Discord.API.Tests.Services
 
             var basePath = Path.Combine(getBasePath.Entity, subfolder);
             var samplesDirectoryName = typeof(TType).Name.Underscore().Transform(To.UpperCase);
+
+            if (typeof(TType).IsInterface && samplesDirectoryName.StartsWith('I'))
+            {
+                samplesDirectoryName = samplesDirectoryName.Substring(2);
+            }
 
             var samplesPath = Path.Combine(basePath, samplesDirectoryName);
             if (!Directory.Exists(samplesPath))
