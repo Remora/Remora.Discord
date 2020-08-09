@@ -153,7 +153,7 @@ namespace Remora.Discord.API.Extensions
         {
             // Connecting and resuming
             options.AddDataObjectConverter<IHello, Hello>();
-            options.AddDataObjectConverter<IInvalidSession, InvalidSession>();
+            options.AddConverter<InvalidSessionConverter>();
             options.AddDataObjectConverter<IReady, Ready>()
                 .WithPropertyName(r => r.Version, "v");
             options.AddDataObjectConverter<IReconnect, Reconnect>();
