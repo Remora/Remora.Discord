@@ -706,6 +706,8 @@ namespace Remora.Discord.Gateway
 
                 if (receiveEvent.Entity is IPayload<IInvalidSession>)
                 {
+                    _log.LogInformation($"Resume rejected by the gateway.");
+
                     await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
                     return await CreateNewSessionAsync(ct);
                 }
@@ -792,10 +794,15 @@ namespace Remora.Discord.Gateway
                     }
 
                     var sendResult = await SendPayloadAsync(payload, ct);
-                    if (!sendResult.IsSuccess)
+                    if (sendResult.IsSuccess)
                     {
-                        return GatewaySenderResult.FromError(sendResult);
+                        continue;
                     }
+
+                    // Normal closures are okay
+                    return sendResult.WebSocketCloseStatus == WebSocketCloseStatus.NormalClosure
+                        ? GatewaySenderResult.FromSuccess()
+                        : GatewaySenderResult.FromError(sendResult);
                 }
 
                 return GatewaySenderResult.FromSuccess();
@@ -804,6 +811,10 @@ namespace Remora.Discord.Gateway
             {
                 // Cancellation is a success
                 return GatewaySenderResult.FromSuccess();
+            }
+            catch (Exception ex)
+            {
+                return GatewaySenderResult.FromError(ex);
             }
         }
 
@@ -824,7 +835,10 @@ namespace Remora.Discord.Gateway
                     var receivedPayload = await ReceivePayloadAsync(ct);
                     if (!receivedPayload.IsSuccess)
                     {
-                        return GatewayReceiverResult.FromError(receivedPayload);
+                        // Normal closures are okay
+                        return receivedPayload.WebSocketCloseStatus == WebSocketCloseStatus.NormalClosure
+                            ? GatewayReceiverResult.FromSuccess()
+                            : GatewayReceiverResult.FromError(receivedPayload);
                     }
 
                     // Update the sequence number
@@ -854,6 +868,10 @@ namespace Remora.Discord.Gateway
             {
                 // Cancellation is a success
                 return GatewayReceiverResult.FromSuccess();
+            }
+            catch (Exception ex)
+            {
+                return GatewayReceiverResult.FromError(ex);
             }
         }
 
@@ -1003,15 +1021,10 @@ namespace Remora.Discord.Gateway
 
                     break;
                 }
-                case WebSocketState.Aborted:
-                {
-                    // Aborted sockets can't be reused
-                    _clientWebSocket.Dispose();
-                    _clientWebSocket = new ClientWebSocket();
-
-                    break;
-                }
             }
+
+            _clientWebSocket.Dispose();
+            _clientWebSocket = new ClientWebSocket();
         }
 
         /// <inheritdoc />
