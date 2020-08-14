@@ -714,11 +714,13 @@ namespace Remora.Discord.Gateway
 
                 if (receiveEvent.Entity is IPayload<IResumed>)
                 {
-                    return GatewayConnectionResult.FromSuccess();
+                    break;
                 }
 
                 _receivedPayloads.Enqueue(receiveEvent.Entity);
             }
+
+            return GatewayConnectionResult.FromSuccess();
         }
 
         /// <summary>
