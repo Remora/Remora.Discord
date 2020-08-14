@@ -125,7 +125,12 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds a value indicating that the client should reconnect and resume at its earliest convenience.
         /// </summary>
-        private bool _shouldReconnectAndResume;
+        private bool _shouldReconnect;
+
+        /// <summary>
+        /// Holds a value indicating whether the client's current session is resumable.
+        /// </summary>
+        private bool _isSessionResumable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
@@ -422,7 +427,7 @@ namespace Remora.Discord.Gateway
                 }
             }
 
-            if (!_shouldReconnectAndResume)
+            if (!_shouldReconnect)
             {
                 return GatewayConnectionResult.FromSuccess();
             }
@@ -443,7 +448,8 @@ namespace Remora.Discord.Gateway
             _tokenSource = new CancellationTokenSource();
             _connectionStatus = GatewayConnectionStatus.Disconnected;
 
-            _shouldReconnectAndResume = false;
+            _shouldReconnect = false;
+            _isSessionResumable = false;
 
             return GatewayConnectionResult.FromSuccess();
         }
@@ -595,9 +601,9 @@ namespace Remora.Discord.Gateway
         /// <returns>A connection result which may or may not have succeeded.</returns>
         private Task<GatewayConnectionResult> AttemptConnectionAsync(CancellationToken ct = default)
         {
-            if (_sessionID is null)
+            if (_sessionID is null || !_isSessionResumable)
             {
-                // We've never connected before
+                // We've never connected before, or the current session isn't resumable
                 return CreateNewSessionAsync(ct);
             }
 
@@ -855,13 +861,40 @@ namespace Remora.Discord.Gateway
                         Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
                     }
 
+                    // Enqueue the payload for dispatch
+                    _receivedPayloads.Enqueue(receivedPayload.Entity);
+
                     // Signal the governor task that a reconnection is requested, if necessary.
-                    if (receivedPayload.Entity is IPayload<IReconnect>)
+                    switch (receivedPayload.Entity)
                     {
-                        _shouldReconnectAndResume = true;
+                        case IPayload<IReconnect> _:
+                        {
+                            _shouldReconnect = true;
+                            _isSessionResumable = true;
+
+                            break;
+                        }
+                        case IPayload<IInvalidSession> invalidSession:
+                        {
+                            _shouldReconnect = true;
+                            _isSessionResumable = invalidSession.Data.IsResumable;
+
+                            break;
+                        }
+                        case IPayload<IHeartbeat> _:
+                        {
+                            var heartbeatAck = new Payload<IHeartbeatAcknowledge>(new HeartbeatAcknowledge());
+                            _payloadsToSend.Enqueue(heartbeatAck);
+
+                            continue;
+                        }
+                        default:
+                        {
+                            continue;
+                        }
                     }
 
-                    _receivedPayloads.Enqueue(receivedPayload.Entity);
+                    break;
                 }
 
                 return GatewayReceiverResult.FromSuccess();
