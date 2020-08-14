@@ -379,7 +379,11 @@ namespace Remora.Discord.Gateway
                     ).Unwrap();
 
                     _log.LogInformation("Connected.");
+
+                    _shouldReconnect = false;
+                    _isSessionResumable = false;
                     _connectionStatus = GatewayConnectionStatus.Connected;
+
                     break;
                 }
                 case GatewayConnectionStatus.Connected:
