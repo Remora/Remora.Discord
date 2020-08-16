@@ -1108,12 +1108,19 @@ namespace Remora.Discord.Gateway
                 case WebSocketState.CloseReceived:
                 case WebSocketState.CloseSent:
                 {
-                    await _clientWebSocket.CloseAsync
-                    (
-                        WebSocketCloseStatus.NormalClosure,
-                        "Terminating connection by user request.",
-                        ct
-                    );
+                    try
+                    {
+                        await _clientWebSocket.CloseAsync
+                        (
+                            WebSocketCloseStatus.NormalClosure,
+                            "Terminating connection by user request.",
+                            ct
+                        );
+                    }
+                    catch (WebSocketException)
+                    {
+                        // Most likely due to some kind of premature or forced disconnection; we'll live with it
+                    }
 
                     break;
                 }
