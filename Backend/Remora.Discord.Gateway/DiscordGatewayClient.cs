@@ -437,6 +437,8 @@ namespace Remora.Discord.Gateway
 
                     _shouldReconnect = false;
                     _isSessionResumable = false;
+                    _lastReceivedHeartbeatAck = 0;
+
                     _connectionStatus = GatewayConnectionStatus.Connected;
 
                     break;
@@ -506,9 +508,6 @@ namespace Remora.Discord.Gateway
             // Set up the state for the new connection
             _tokenSource = new CancellationTokenSource();
             _connectionStatus = GatewayConnectionStatus.Disconnected;
-
-            _shouldReconnect = false;
-            _isSessionResumable = false;
 
             return GatewayConnectionResult.FromSuccess();
         }
