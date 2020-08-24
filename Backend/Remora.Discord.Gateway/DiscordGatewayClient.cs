@@ -650,7 +650,18 @@ namespace Remora.Discord.Gateway
 
             return await Task.WhenAll
             (
-                responders.Select(r => r.RespondAsync(gatewayEvent.Data, ct))
+                responders.Select(async r =>
+                {
+                    try
+                    {
+                        return await r.RespondAsync(gatewayEvent.Data, ct);
+                    }
+                    catch (Exception e)
+                    {
+                        return EventResponseResult.FromError(e);
+                    }
+                }
+            )
             ).ConfigureAwait(false);
         }
 
