@@ -242,6 +242,14 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(p => p.Nickname, "nick")
                 .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter());
 
+            // Users
+            options.AddDataObjectConverter<ITypingStart, TypingStart>();
+            options.AddDataObjectConverter<IUserUpdate, UserUpdate>()
+                .WithPropertyName(u => u.IsBot, "bot")
+                .WithPropertyName(u => u.IsSystem, "system")
+                .WithPropertyName(u => u.IsVerified, "verified")
+                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
