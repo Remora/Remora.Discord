@@ -260,6 +260,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(v => v.IsVideoEnabled, "self_video")
                 .WithPropertyName(v => v.IsSuppressed, "suppress");
 
+            options.AddDataObjectConverter<IVoiceServerUpdate, VoiceServerUpdate>();
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
