@@ -250,6 +250,16 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsVerified, "verified")
                 .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
 
+            // Voice
+            options.AddDataObjectConverter<IVoiceStateUpdate, VoiceStateUpdate>()
+                .WithPropertyName(v => v.IsDeafened, "deaf")
+                .WithPropertyName(v => v.IsMuted, "mute")
+                .WithPropertyName(v => v.IsSelfDeafened, "self_deaf")
+                .WithPropertyName(v => v.IsSelfMuted, "self_mute")
+                .WithPropertyName(v => v.IsStreaming, "self_stream")
+                .WithPropertyName(v => v.IsVideoEnabled, "self_video")
+                .WithPropertyName(v => v.IsSuppressed, "suppress");
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
