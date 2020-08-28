@@ -230,6 +230,13 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.IsTTS, "tts")
                 .WithPropertyName(m => m.IsPinned, "pinned");
 
+            options.AddDataObjectConverter<IMessageDelete, MessageDelete>();
+            options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>();
+            options.AddDataObjectConverter<IMessageReactionAdd, MessageReactionAdd>();
+            options.AddDataObjectConverter<IMessageReactionRemove, MessageReactionRemove>();
+            options.AddDataObjectConverter<IMessageReactionRemoveAll, MessageReactionRemoveAll>();
+            options.AddDataObjectConverter<IMessageReactionRemoveEmoji, MessageReactionRemoveEmoji>();
+
             // Presences
             options.AddDataObjectConverter<IPresenceUpdate, PresenceUpdate>()
                 .WithPropertyName(p => p.Nickname, "nick")
