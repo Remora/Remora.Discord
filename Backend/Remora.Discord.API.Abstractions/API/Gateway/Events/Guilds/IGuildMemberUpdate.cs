@@ -53,8 +53,13 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         Optional<string?> Nickname { get; }
 
         /// <summary>
+        /// Gets the date when the user joined the guild.
+        /// </summary>
+        DateTimeOffset JoinedAt { get; }
+
+        /// <summary>
         /// Gets the date when the user started boosting the guild.
         /// </summary>
-        Optional<DateTime?> PremiumSince { get; }
+        Optional<DateTimeOffset?> PremiumSince { get; }
     }
 }

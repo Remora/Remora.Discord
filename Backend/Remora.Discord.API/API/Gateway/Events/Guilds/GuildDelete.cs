@@ -1,5 +1,5 @@
 //
-//  IGuildMemberAdd.cs
+//  GuildDelete.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a new user joining the guild.
-    /// </summary>
-    public interface IGuildMemberAdd : IGuildMember, IGatewayEvent
+    /// <inheritdoc cref="IGuildDelete"/>
+    public class GuildDelete : UnavailableGuild, IGuildDelete
     {
-        /// <summary>
-        /// Gets the ID of the guild the member is in.
-        /// </summary>
-        Snowflake GuildID { get; }
+        /// <inheritdoc cref="UnavailableGuild" />
+        public GuildDelete(Snowflake guildID, Optional<bool> isUnavailable)
+            : base(guildID, isUnavailable)
+        {
+        }
     }
 }

@@ -182,6 +182,27 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
+            options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
+                .WithPropertyName(g => g.IsOwner, "owner")
+                .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyName(g => g.IsLarge, "large")
+                .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+
+            options.AddDataObjectConverter<IGuildDelete, GuildDelete>();
+
+            options.AddDataObjectConverter<IGuildBanAdd, GuildBanAdd>();
+            options.AddDataObjectConverter<IGuildBanRemove, GuildBanRemove>();
+
+            options.AddDataObjectConverter<IGuildEmojisUpdate, GuildEmojisUpdate>();
+            options.AddDataObjectConverter<IGuildIntegrationsUpdate, GuildIntegrationsUpdate>();
+
+            options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>();
+            options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
+            options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>();
+
+            options.AddDataObjectConverter<IGuildMembersChunk, GuildMembersChunk>();
+
             options.AddDataObjectConverter<IGuildRoleCreate, GuildRoleCreate>();
             options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
             options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();

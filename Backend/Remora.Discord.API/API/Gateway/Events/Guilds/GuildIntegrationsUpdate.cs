@@ -1,5 +1,5 @@
 //
-//  IGuildMemberAdd.cs
+//  GuildIntegrationsUpdate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a new user joining the guild.
-    /// </summary>
-    public interface IGuildMemberAdd : IGuildMember, IGatewayEvent
+    /// <inheritdoc />
+    public class GuildIntegrationsUpdate : IGuildIntegrationsUpdate
     {
+        /// <inheritdoc />
+        public Snowflake GuildID { get; }
+
         /// <summary>
-        /// Gets the ID of the guild the member is in.
+        /// Initializes a new instance of the <see cref="GuildIntegrationsUpdate"/> class.
         /// </summary>
-        Snowflake GuildID { get; }
+        /// <param name="guildID">The ID of the guild whose integrations were updated.</param>
+        public GuildIntegrationsUpdate(Snowflake guildID)
+        {
+            this.GuildID = guildID;
+        }
     }
 }

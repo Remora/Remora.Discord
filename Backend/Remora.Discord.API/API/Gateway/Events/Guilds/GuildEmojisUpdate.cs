@@ -1,5 +1,5 @@
 //
-//  IGuildMemberAdd.cs
+//  GuildEmojisUpdate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a new user joining the guild.
-    /// </summary>
-    public interface IGuildMemberAdd : IGuildMember, IGatewayEvent
+    /// <inheritdoc />
+    public class GuildEmojisUpdate : IGuildEmojisUpdate
     {
+        /// <inheritdoc />
+        public Snowflake GuildID { get; }
+
+        /// <inheritdoc/>
+        public IReadOnlyList<IEmoji> Emojis { get; }
+
         /// <summary>
-        /// Gets the ID of the guild the member is in.
+        /// Initializes a new instance of the <see cref="GuildEmojisUpdate"/> class.
         /// </summary>
-        Snowflake GuildID { get; }
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="emojis">The new emojis.</param>
+        public GuildEmojisUpdate(Snowflake guildID, IReadOnlyList<IEmoji> emojis)
+        {
+            this.GuildID = guildID;
+            this.Emojis = emojis;
+        }
     }
 }
