@@ -211,6 +211,10 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
             options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
 
+            // Invites
+            options.AddDataObjectConverter<IInviteCreate, InviteCreate>();
+            options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
+
             // Messages
             options.AddDataObjectConverter<IMessageCreate, MessageCreate>()
                 .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
