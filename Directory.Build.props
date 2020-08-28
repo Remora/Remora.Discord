@@ -48,7 +48,7 @@
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
 
-        <PackagePreReleaseVersion>-alpha12</PackagePreReleaseVersion>
+        <PackagePreReleaseVersion>-alpha29</PackagePreReleaseVersion>
     </PropertyGroup>
 
     <!-- Code inspection properties -->

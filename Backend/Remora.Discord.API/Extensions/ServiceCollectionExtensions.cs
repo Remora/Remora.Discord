@@ -262,6 +262,9 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IVoiceServerUpdate, VoiceServerUpdate>();
 
+            // Webhooks
+            options.AddDataObjectConverter<IWebhooksUpdate, WebhooksUpdate>();
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
