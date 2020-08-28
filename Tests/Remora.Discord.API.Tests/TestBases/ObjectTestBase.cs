@@ -25,7 +25,7 @@ using Remora.Discord.API.Tests.Services;
 namespace Remora.Discord.API.Tests.TestBases
 {
     /// <summary>
-    /// Tests the <see cref="TType"/> type.
+    /// Tests the <typeparamref name="TType"/> type.
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
     public abstract class ObjectTestBase<TType>

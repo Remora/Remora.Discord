@@ -30,6 +30,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 
@@ -160,6 +161,18 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IReconnect, Reconnect>();
             options.AddDataObjectConverter<IResumed, Resumed>();
+
+            // Channels
+            options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
+            options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
+            options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
+            options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
             // Guilds
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
