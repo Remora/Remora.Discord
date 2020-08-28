@@ -180,6 +180,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.GuildFeatures, "features")
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyName(g => g.IsEmbedEnabled, "embed_enabled")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
@@ -187,6 +189,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.GuildFeatures, "features")
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyName(g => g.IsEmbedEnabled, "embed_enabled")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
             options.AddDataObjectConverter<IGuildDelete, GuildDelete>();
@@ -309,6 +313,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.GuildFeatures, "features")
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyName(g => g.IsEmbedEnabled, "embed_enabled")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
