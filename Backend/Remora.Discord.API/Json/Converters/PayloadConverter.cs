@@ -59,7 +59,7 @@ namespace Remora.Discord.API.Json
         }
 
         /// <inheritdoc />
-        public override IPayload? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IPayload Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (!JsonDocument.TryParseValue(ref reader, out var document))
             {

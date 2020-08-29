@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Json
     public class InvalidSessionConverter : JsonConverter<IInvalidSession?>
     {
         /// <inheritdoc />
-        public override IInvalidSession? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IInvalidSession Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {

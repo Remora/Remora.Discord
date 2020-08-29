@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Json
     public class PartySizeConverter : JsonConverter<IPartySize?>
     {
         /// <inheritdoc/>
-        public override IPartySize? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IPartySize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartArray)
             {

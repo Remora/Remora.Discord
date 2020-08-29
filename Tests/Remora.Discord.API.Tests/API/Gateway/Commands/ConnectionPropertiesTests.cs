@@ -38,7 +38,7 @@ namespace Remora.Discord.API.Tests.Gateway.Commands
         [Fact]
         public void CanCreateFromLibraryName()
         {
-            var connectionProperties = new ConnectionProperties("Remora.Discord");
+            _ = new ConnectionProperties("Remora.Discord");
         }
     }
 }
