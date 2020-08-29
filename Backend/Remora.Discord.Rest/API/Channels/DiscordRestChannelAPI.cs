@@ -33,7 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.API.Gateway
+namespace Remora.Discord.Rest.API
 {
     /// <summary>
     /// Implements the Discord REST channel API.

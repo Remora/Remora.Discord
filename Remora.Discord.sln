@@ -40,6 +40,8 @@ ProjectSection(SolutionItems) = preProject
 	.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Rest.Tests", "Tests\Remora.Discord.Rest.Tests\Remora.Discord.Rest.Tests.csproj", "{ED3F243E-F8C4-4C23-A12A-627280A08502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{ED960998-F9BD-4250-A40F-9B968DD499C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED960998-F9BD-4250-A40F-9B968DD499C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED960998-F9BD-4250-A40F-9B968DD499C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3F243E-F8C4-4C23-A12A-627280A08502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3F243E-F8C4-4C23-A12A-627280A08502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3F243E-F8C4-4C23-A12A-627280A08502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3F243E-F8C4-4C23-A12A-627280A08502}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC82899D-871E-4DC9-B61C-7619111800DE} = {26E93608-29BA-45C7-993A-AA24A49D6013}
@@ -93,5 +99,6 @@ Global
 		{2BFF39E1-7B69-4601-BE2B-1F61A1B3598D} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 		{ED960998-F9BD-4250-A40F-9B968DD499C0} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
 		{A603F82C-7B4C-4583-A101-77E126B04874} = {F1A57014-71CE-4032-A652-01B7E35E14DB}
+		{ED3F243E-F8C4-4C23-A12A-627280A08502} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 	EndGlobalSection
 EndGlobal

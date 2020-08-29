@@ -32,7 +32,7 @@ using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
-using Remora.Discord.Rest.API.Gateway;
+using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Polly;
 
 namespace Remora.Discord.Rest.Extensions
@@ -47,14 +47,20 @@ namespace Remora.Discord.Rest.Extensions
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
         /// <param name="token">A function that creates or retrieves the authorization token.</param>
+        /// <param name="buildClient">Extra client building operations.</param>
         /// <returns>The service collection, with the services added.</returns>
-        public static IServiceCollection AddDiscordRest(this IServiceCollection serviceCollection, Func<string> token)
+        public static IServiceCollection AddDiscordRest
+        (
+            this IServiceCollection serviceCollection,
+            Func<string> token,
+            Action<IHttpClientBuilder>? buildClient = null
+        )
         {
             serviceCollection
                 .AddDiscordApi();
 
             var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
-            serviceCollection
+            var clientBuilder = serviceCollection
                 .AddHttpClient<DiscordHttpClient>
                 (
                     "Discord",
@@ -108,6 +114,9 @@ namespace Remora.Discord.Rest.Extensions
                             (x, y, z, w) => Task.CompletedTask
                         )
                 );
+
+            // Run extra user-provided client building operations.
+            buildClient?.Invoke(clientBuilder);
 
             serviceCollection
                 .AddSingleton<ITokenStore>(s => new TokenStore(token()));
