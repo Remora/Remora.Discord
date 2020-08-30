@@ -22,6 +22,7 @@
 
 using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;

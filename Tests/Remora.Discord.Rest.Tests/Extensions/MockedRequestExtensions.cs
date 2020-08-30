@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using Remora.Discord.Rest.Tests.Json;
 using RichardSzalay.MockHttp;
 
 namespace Remora.Discord.Rest.Tests.Extensions
@@ -40,7 +42,7 @@ namespace Remora.Discord.Rest.Tests.Extensions
         }
 
         /// <summary>
-        /// Adds a requirement that the request has no authorization header.
+        /// Adds a requirement that the request has an authorization header.
         /// </summary>
         /// <param name="request">The mocked request.</param>
         /// <returns>The request; with the new requirement.</returns>
@@ -52,6 +54,23 @@ namespace Remora.Discord.Rest.Tests.Extensions
                     .Headers.Authorization.Scheme == "Bot" &&
                      !string.IsNullOrWhiteSpace(m.Headers.Authorization.Parameter)
             );
+        }
+
+        /// <summary>
+        /// Adds a requirement that the request has a Json body.
+        /// </summary>
+        /// <param name="request">The mocked request.</param>
+        /// <param name="elementMatcherBuilder">The additional requirements on the Json body.</param>
+        /// <returns>The request; with the new requirements.</returns>
+        public static MockedRequest WithJson
+        (
+            this MockedRequest request, Action<JsonElementMatcherBuilder>? elementMatcherBuilder = null
+        )
+        {
+            var elementMatcher = new JsonElementMatcherBuilder();
+            elementMatcherBuilder?.Invoke(elementMatcher);
+
+            return request.With(new JsonRequestMatcher(elementMatcher.Build()));
         }
     }
 }
