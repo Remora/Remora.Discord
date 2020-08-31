@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace Remora.Discord.Rest.Tests.Json
@@ -33,6 +34,92 @@ namespace Remora.Discord.Rest.Tests.Json
     {
         private readonly List<Func<JsonElement.ArrayEnumerator, bool>> _matchers
             = new List<Func<JsonElement.ArrayEnumerator, bool>>();
+
+        /// <summary>
+        /// Adds a requirement that the array is of an exact length.
+        /// </summary>
+        /// <param name="countPredicate">The function of the required length.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithCount(Func<long, bool> countPredicate)
+        {
+            _matchers.Add(j => countPredicate(j.LongCount()));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a requirement that the array is of an exact length.
+        /// </summary>
+        /// <param name="count">The required length.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithCount(long count) => WithCount(c => c == count);
+
+        /// <summary>
+        /// Adds a requirement that the array is of an exact length.
+        /// </summary>
+        /// <param name="count">The required length.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithAtLeastCount(long count) => WithCount(c => c >= count);
+
+        /// <summary>
+        /// Adds a requirement that the array is of an exact length.
+        /// </summary>
+        /// <param name="count">The required length.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithNoMoreThanCount(long count) => WithCount(c => c <= count);
+
+        /// <summary>
+        /// Adds a requirement that any element matches the given element builder.
+        /// </summary>
+        /// <param name="elementMatcherBuilder">The element matcher.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithAnyElement(Action<JsonElementMatcherBuilder>? elementMatcherBuilder = null)
+        {
+            var elementMatcher = new JsonElementMatcherBuilder();
+            elementMatcherBuilder?.Invoke(elementMatcher);
+
+            var matcher = elementMatcher.Build();
+            _matchers.Add(j => j.Any(matcher.Matches));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a requirement that a single element matches the given element builder.
+        /// </summary>
+        /// <param name="elementMatcherBuilder">The element matcher.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithSingleElement(Action<JsonElementMatcherBuilder>? elementMatcherBuilder = null)
+        {
+            var elementMatcher = new JsonElementMatcherBuilder();
+            elementMatcherBuilder?.Invoke(elementMatcher);
+
+            var matcher = elementMatcher.Build();
+            _matchers.Add(j => j.Count(matcher.Matches) == 1);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a requirement that an element at the given index matches the given element builder.
+        /// </summary>
+        /// <param name="index">The index of the element.</param>
+        /// <param name="elementMatcherBuilder">The element matcher.</param>
+        /// <returns>The builder, with the added requirement.</returns>
+        public JsonArrayMatcherBuilder WithElement
+        (
+            int index,
+            Action<JsonElementMatcherBuilder>? elementMatcherBuilder = null
+        )
+        {
+            var elementMatcher = new JsonElementMatcherBuilder();
+            elementMatcherBuilder?.Invoke(elementMatcher);
+
+            var matcher = elementMatcher.Build();
+            _matchers.Add(j => j.Count() > index && matcher.Matches(j.ElementAt(index)));
+
+            return this;
+        }
 
         /// <summary>
         /// Builds the array matcher.
