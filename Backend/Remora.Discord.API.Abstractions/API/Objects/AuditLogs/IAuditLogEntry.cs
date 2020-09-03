@@ -60,7 +60,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets additional info for certain action types.
         /// </summary>
-        Optional<IOptionalAuditLogInfo> Options { get; }
+        Optional<IOptionalAuditEntryInfo> Options { get; }
 
         /// <summary>
         /// Gets the reason for the change (0-512 characters).

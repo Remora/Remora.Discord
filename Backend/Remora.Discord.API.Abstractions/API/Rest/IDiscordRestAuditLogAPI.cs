@@ -37,6 +37,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Gets an audit log page for the given guild.
         /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user to filter on.</param>
         /// <param name="actionType">The action type to filter on.</param>
         /// <param name="before">The ID of the audit log entry to limit searches before.</param>
@@ -44,10 +45,11 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
         (
-            Snowflake userID,
-            AuditLogEvent actionType,
-            Snowflake before,
-            byte limit
+            Snowflake guildID,
+            Optional<Snowflake> userID = default,
+            Optional<AuditLogEvent> actionType = default,
+            Optional<Snowflake> before = default,
+            Optional<byte> limit = default
         );
     }
 }

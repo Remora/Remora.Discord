@@ -67,6 +67,7 @@ namespace Remora.Discord.API.Extensions
                             .AddGatewayCommandConverters()
                             .AddGatewayEventConverters()
                             .AddActivityObjectConverters()
+                            .AddAuditLogObjectConverters()
                             .AddChannelObjectConverters()
                             .AddEmojiObjectConverters()
                             .AddGatewayObjectConverters()
@@ -287,6 +288,21 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IActivityTimestamps, ActivityTimestamps>()
                 .WithPropertyConverter(t => t.Start, new UnixDateTimeConverter())
                 .WithPropertyConverter(t => t.End, new UnixDateTimeConverter());
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle audit log objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddAuditLogObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IAuditLog, AuditLog>();
+            options.AddDataObjectConverter<IAuditLogChange, AuditLogChange>();
+            options.AddDataObjectConverter<IAuditLogEntry, AuditLogEntry>();
+            options.AddDataObjectConverter<IOptionalAuditEntryInfo, OptionalAuditEntryInfo>();
 
             return options;
         }

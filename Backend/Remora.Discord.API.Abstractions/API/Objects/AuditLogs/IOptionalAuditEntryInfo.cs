@@ -1,5 +1,5 @@
 //
-//  IOptionalAuditLogInfo.cs
+//  IOptionalAuditEntryInfo.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents optional audit log information.
     /// </summary>
     [PublicAPI]
-    public interface IOptionalAuditLogInfo
+    public interface IOptionalAuditEntryInfo
     {
         /// <summary>
         /// Gets the number of days after which inactive members were kicked.
