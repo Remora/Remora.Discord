@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -61,16 +62,15 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                 b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
                     .WithAuthentication()
-                    .WithJson
+                    .WithQueryString
                     (
-                        json => json.IsObject
-                        (
-                            obj => obj
-                                .WithProperty("user_id", p => p.Is(_userID.ToString()))
-                                .WithProperty("action_type", p => p.Is((int)_actionType))
-                                .WithProperty("before", p => p.Is(_before.ToString()))
-                                .WithProperty("limit", p => p.Is(_limit))
-                        )
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("user_id", _userID.ToString()),
+                            new KeyValuePair<string, string>("action_type", ((int)_actionType).ToString()),
+                            new KeyValuePair<string, string>("before", _before.ToString()),
+                            new KeyValuePair<string, string>("limit", _limit.ToString()),
+                        }
                     )
                     .Respond("application/json", Response);
             };

@@ -64,31 +64,28 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.GetAsync<IAuditLog>
             (
                 $"guilds/{guildID}/audit-logs",
-                b => b.AddJsonConfigurator
-                (
-                    w =>
+                b =>
+                {
+                    if (userID.HasValue)
                     {
-                        if (userID.HasValue)
-                        {
-                            w.WriteString("user_id", userID.Value.ToString());
-                        }
-
-                        if (actionType.HasValue)
-                        {
-                            w.WriteNumber("action_type", (int)actionType.Value);
-                        }
-
-                        if (before.HasValue)
-                        {
-                            w.WriteString("before", before.Value.ToString());
-                        }
-
-                        if (limit.HasValue)
-                        {
-                            w.WriteNumber("limit", limit.Value);
-                        }
+                        b.AddQueryParameter("user_id", userID.Value.ToString());
                     }
-                )
+
+                    if (actionType.HasValue)
+                    {
+                        b.AddQueryParameter("action_type", ((int)actionType.Value).ToString());
+                    }
+
+                    if (before.HasValue)
+                    {
+                        b.AddQueryParameter("before", before.Value.ToString());
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                }
             );
         }
     }
