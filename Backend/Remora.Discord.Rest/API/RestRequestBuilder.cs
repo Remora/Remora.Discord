@@ -151,7 +151,7 @@ namespace Remora.Discord.Rest.API
                 queryParameters.Add(queryName, queryValue);
             }
 
-            var request = new HttpRequestMessage(_method, _endpoint + queryParameters);
+            var request = new HttpRequestMessage(_method, _endpoint + "?" + queryParameters);
 
             foreach (var (headerName, headerValue) in _additionalHeaders)
             {
