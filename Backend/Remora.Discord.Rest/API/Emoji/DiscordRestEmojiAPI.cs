@@ -102,6 +102,25 @@ namespace Remora.Discord.Rest.API
                 return CreateRestEntityResult<IEmoji>.FromError("Image too large.");
             }
 
+            string? mediaType = null;
+            if (imageData.IsPNG())
+            {
+                mediaType = "png";
+            }
+            else if (imageData.IsJPG())
+            {
+                mediaType = "jpeg";
+            }
+            else if (imageData.IsGIF())
+            {
+                mediaType = "gif";
+            }
+
+            if (mediaType is null)
+            {
+                return CreateRestEntityResult<IEmoji>.FromError("Unknown or unsupported image format.");
+            }
+
             return await _discordHttpClient.PostAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis",
@@ -111,25 +130,8 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
 
-                        string? mediaType = null;
-                        if (imageData.IsPNG())
-                        {
-                            mediaType = "png";
-                        }
-                        else if (imageData.IsJPG())
-                        {
-                            mediaType = "jpeg";
-                        }
-                        else if (imageData.IsGIF())
-                        {
-                            mediaType = "gif";
-                        }
-
-                        if (!(mediaType is null))
-                        {
-                            var dataString = $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
-                            json.WriteString("image", dataString);
-                        }
+                        var dataString = $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
+                        json.WriteString("image", dataString);
 
                         json.WritePropertyName("roles");
                         JsonSerializer.Serialize(json, roles, _jsonOptions);
