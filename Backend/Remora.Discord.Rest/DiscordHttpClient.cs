@@ -139,6 +139,48 @@ namespace Remora.Discord.Rest
         }
 
         /// <summary>
+        /// Performs a POST request to the Discord REST API at the given endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A post result which may or may not have succeeded.</returns>
+        public async Task<IRestResult> PostAsync
+        (
+            string endpoint,
+            Action<RestRequestBuilder>? configureRequestBuilder = null,
+            CancellationToken ct = default
+        )
+        {
+            configureRequestBuilder ??= q => { };
+
+            var requestBuilder = new RestRequestBuilder(endpoint);
+            configureRequestBuilder(requestBuilder);
+
+            requestBuilder.WithMethod(HttpMethod.Post);
+
+            try
+            {
+                using var request = requestBuilder.Build();
+                using var response = await _httpClient.SendAsync
+                (
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    ct
+                );
+
+                var entityResult = await UnpackResponseAsync(response, ct);
+                return !entityResult.IsSuccess
+                    ? DeleteRestEntityResult.FromError(entityResult)
+                    : DeleteRestEntityResult.FromSuccess();
+            }
+            catch (Exception e)
+            {
+                return DeleteRestEntityResult.FromError(e);
+            }
+        }
+
+        /// <summary>
         /// Performs a PATCH request to the Discord REST API at the given endpoint.
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>

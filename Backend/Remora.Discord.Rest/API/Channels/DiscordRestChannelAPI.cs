@@ -27,11 +27,13 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -61,11 +63,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.GetAsync<IChannel>
+            (
+                $"channels/{channelID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
+        public async Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -81,7 +87,138 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            if (name.HasValue && (name.Value!.Length > 100 || name.Value!.Length < 2))
+            {
+                return ModifyRestEntityResult<IChannel>.FromError("The name must be between 2 and 100 characters.");
+            }
+
+            if (topic.HasValue && !(topic.Value is null) && (topic.Value.Length > 1024 || topic.Value.Length < 0))
+            {
+                return ModifyRestEntityResult<IChannel>.FromError("The topic must be between 0 and 1024 characters.");
+            }
+
+            if (userLimit.HasValue && !(userLimit.Value is null) && (name.Value!.Length > 99 || name.Value!.Length < 0))
+            {
+                return ModifyRestEntityResult<IChannel>.FromError("The user limit must be between 0 and 99.");
+            }
+
+            return await _discordHttpClient.PatchAsync<IChannel>
+            (
+                $"channels/{channelID}",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        if (name.HasValue)
+                        {
+                            json.WriteString("name", name.Value);
+                        }
+
+                        if (type.HasValue)
+                        {
+                            json.WriteNumber("type", (int)type.Value);
+                        }
+
+                        if (position.HasValue)
+                        {
+                            if (position.Value is null)
+                            {
+                                json.WriteNull("position");
+                            }
+                            else
+                            {
+                                json.WriteNumber("position", position.Value.Value);
+                            }
+                        }
+
+                        if (topic.HasValue)
+                        {
+                            if (topic.Value is null)
+                            {
+                                json.WriteNull("topic");
+                            }
+                            else
+                            {
+                                json.WriteString("topic", topic.Value);
+                            }
+                        }
+
+                        if (isNsfw.HasValue)
+                        {
+                            if (isNsfw.Value is null)
+                            {
+                                json.WriteNull("nsfw");
+                            }
+                            else
+                            {
+                                json.WriteBoolean("nsfw", isNsfw.Value.Value);
+                            }
+                        }
+
+                        if (rateLimitPerUser.HasValue)
+                        {
+                            if (rateLimitPerUser.Value is null)
+                            {
+                                json.WriteNull("rate_limit_per_user");
+                            }
+                            else
+                            {
+                                json.WriteNumber("rate_limit_per_user", rateLimitPerUser.Value.Value);
+                            }
+                        }
+
+                        if (bitrate.HasValue)
+                        {
+                            if (bitrate.Value is null)
+                            {
+                                json.WriteNull("bitrate");
+                            }
+                            else
+                            {
+                                json.WriteNumber("bitrate", bitrate.Value.Value);
+                            }
+                        }
+
+                        if (userLimit.HasValue)
+                        {
+                            if (userLimit.Value is null)
+                            {
+                                json.WriteNull("user_limit");
+                            }
+                            else
+                            {
+                                json.WriteNumber("user_limit", userLimit.Value.Value);
+                            }
+                        }
+
+                        if (permissionOverwrites.HasValue)
+                        {
+                            if (permissionOverwrites.Value is null)
+                            {
+                                json.WriteNull("permission_overwrites");
+                            }
+                            else
+                            {
+                                json.WritePropertyName("permission_overwrites");
+                                JsonSerializer.Serialize(json, permissionOverwrites.Value, _jsonOptions);
+                            }
+                        }
+
+                        if (parentId.HasValue)
+                        {
+                            if (parentId.Value is null)
+                            {
+                                json.WriteNull("parent_id");
+                            }
+                            else
+                            {
+                                json.WriteString("parent_id", parentId.Value.Value.ToString());
+                            }
+                        }
+                    }
+                ),
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -91,11 +228,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
         (
             Snowflake channelID,
             Optional<Snowflake> around = default,
@@ -105,7 +246,41 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
+            {
+                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromError
+                (
+                    "The message limit must be between 1 and 100."
+                );
+            }
+
+            return await _discordHttpClient.GetAsync<IReadOnlyList<IMessage>>
+            (
+                $"channels/{channelID}/messages",
+                b =>
+                {
+                    if (around.HasValue)
+                    {
+                        b.AddQueryParameter("around", around.Value.ToString());
+                    }
+
+                    if (before.HasValue)
+                    {
+                        b.AddQueryParameter("before", before.Value.ToString());
+                    }
+
+                    if (after.HasValue)
+                    {
+                        b.AddQueryParameter("after", after.Value.ToString());
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -116,7 +291,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.GetAsync<IMessage>
+            (
+                $"channels/{channelID}/messages/{messageID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -182,7 +361,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IReaction>> CreateReactionAsync
+        public Task<IRestResult> CreateReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -190,7 +369,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PutAsync
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -202,7 +385,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -215,19 +402,52 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
+        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
             string emoji,
+            Optional<Snowflake> before = default,
+            Optional<Snowflake> after = default,
+            Optional<int> limit = default,
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
+            {
+                return RetrieveRestEntityResult<IReadOnlyList<IUser>>.FromError("The limit must be between 1 and 100.");
+            }
+
+            return await _discordHttpClient.GetAsync<IReadOnlyList<IUser>>
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
+                b =>
+                {
+                    if (before.HasValue)
+                    {
+                        b.AddQueryParameter("before", before.Value.ToString());
+                    }
+
+                    if (after.HasValue)
+                    {
+                        b.AddQueryParameter("after", after.Value.ToString());
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -238,7 +458,27 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<IDeleteRestEntityResult> DeleteAllReactionsForEmojiAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            string emoji,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -252,7 +492,53 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PatchAsync<IMessage>
+            (
+                $"channels/{channelID}/messages/{messageID}",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        if (content.HasValue)
+                        {
+                            if (content.Value is null)
+                            {
+                                json.WriteNull("content");
+                            }
+                            else
+                            {
+                                json.WriteString("content", content.Value);
+                            }
+                        }
+
+                        if (embed.HasValue)
+                        {
+                            if (embed.Value is null)
+                            {
+                                json.WriteNull("embed");
+                            }
+                            else
+                            {
+                                json.WritePropertyName("embed");
+                                JsonSerializer.Serialize(json, embed.Value, _jsonOptions);
+                            }
+                        }
+
+                        if (flags.HasValue)
+                        {
+                            if (flags.Value is null)
+                            {
+                                json.WriteNull("flags");
+                            }
+                            else
+                            {
+                                json.WriteNumber("flags", (int)flags.Value);
+                            }
+                        }
+                    }
+                ),
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -263,32 +549,79 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/{messageID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
+        public async Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            if (messageIDs.Count > 100 || messageIDs.Count < 2)
+            {
+                return DeleteRestEntityResult.FromError("The number of messages to delete must be between 2 and 100.");
+            }
+
+            return await _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/messages/bulk-delete",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        json.WritePropertyName("messages");
+                        JsonSerializer.Serialize(json, messageIDs, _jsonOptions);
+                    }
+                ),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IPermissionOverwrite>> EditChannelPermissionsAsync
+        public Task<IRestResult> EditChannelPermissionsAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
-            Optional<DiscordPermission> allow = default,
-            Optional<DiscordPermission> deny = default,
+            Optional<IDiscordPermissionSet> allow = default,
+            Optional<IDiscordPermissionSet> deny = default,
             Optional<PermissionOverwriteType> type = default,
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PutAsync
+            (
+                $"channels/{channelID}/permissions/{overwriteID}",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        if (allow.HasValue)
+                        {
+                            json.WritePropertyName("allow");
+                            JsonSerializer.Serialize(json, allow.Value, _jsonOptions);
+                        }
+
+                        if (deny.HasValue)
+                        {
+                            json.WritePropertyName("deny");
+                            JsonSerializer.Serialize(json, deny.Value, _jsonOptions);
+                        }
+
+                        if (type.HasValue)
+                        {
+                            json.WriteString("type", type.Value.ToString().ToLowerInvariant());
+                        }
+                    }
+                ),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -298,14 +631,18 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.GetAsync<IReadOnlyList<IInvite>>
+            (
+                $"channels/{channelID}/invites",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
         public Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
-            Optional<DateTime> maxAge = default,
+            Optional<TimeSpan> maxAge = default,
             Optional<int> maxUses = default,
             Optional<bool> isTemporary = default,
             Optional<bool> isUnique = default,
@@ -314,7 +651,46 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PostAsync<IInvite>
+            (
+                $"channels/{channelID}/invites",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        if (maxAge.HasValue)
+                        {
+                            json.WriteNumber("max_age", maxAge.Value.TotalSeconds);
+                        }
+
+                        if (maxUses.HasValue)
+                        {
+                            json.WriteNumber("max_uses", maxUses.Value);
+                        }
+
+                        if (isTemporary.HasValue)
+                        {
+                            json.WriteBoolean("temporary", isTemporary.Value);
+                        }
+
+                        if (isUnique.HasValue)
+                        {
+                            json.WriteBoolean("unique", isUnique.Value);
+                        }
+
+                        if (targetUser.HasValue)
+                        {
+                            json.WriteString("target_user", targetUser.Value.ToString());
+                        }
+
+                        if (targetUserType.HasValue)
+                        {
+                            json.WriteNumber("target_user_type", (int)targetUserType.Value);
+                        }
+                    }
+                ),
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -325,7 +701,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/permissions/{overwriteID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -335,7 +715,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PostAsync
+            (
+                $"channels/{channelID}/typing",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -345,7 +729,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.GetAsync<IReadOnlyList<IMessage>>
+            (
+                $"channels/{channelID}/pins",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -356,7 +744,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PutAsync
+            (
+                $"channels/{channelID}/pins/{messageID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -367,7 +759,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/pins/{messageID}",
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -380,7 +776,23 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.PutAsync
+            (
+                $"channels/{channelID}/recipients/{userID}",
+                b => b.AddJsonConfigurator
+                (
+                    json =>
+                    {
+                        json.WriteString("access_token", accessToken);
+
+                        if (nickname.HasValue)
+                        {
+                            json.WriteString("nick", nickname.Value);
+                        }
+                    }
+                ),
+                ct
+            );
         }
 
         /// <inheritdoc />
@@ -391,7 +803,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            throw new NotImplementedException();
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/recipients/{userID}",
+                ct: ct
+            );
         }
     }
 }
