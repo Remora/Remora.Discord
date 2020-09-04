@@ -70,13 +70,15 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the new emoji.</param>
         /// <param name="image">The image data.</param>
         /// <param name="roles">The roles that the emoji will be restricted to.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
         (
             Snowflake guildID,
             string name,
             Stream image,
-            IReadOnlyList<Snowflake> roles
+            IReadOnlyList<Snowflake> roles,
+            CancellationToken ct = default
         );
 
         /// <summary>
