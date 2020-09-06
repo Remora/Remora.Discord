@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Rest.API.Invites
+namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
     public class DiscordRestInviteAPI : IDiscordRestInviteAPI
