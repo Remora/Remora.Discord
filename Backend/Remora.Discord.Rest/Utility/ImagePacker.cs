@@ -24,9 +24,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.Utility

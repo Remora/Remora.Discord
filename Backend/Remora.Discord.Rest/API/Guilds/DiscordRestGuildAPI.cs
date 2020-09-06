@@ -31,7 +31,6 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;

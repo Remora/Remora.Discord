@@ -21,12 +21,10 @@
 //
 
 using System;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
-using Remora.Results;
 
 namespace Remora.Discord.Rest.Extensions
 {
