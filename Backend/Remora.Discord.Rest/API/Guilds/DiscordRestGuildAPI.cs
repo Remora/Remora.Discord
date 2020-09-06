@@ -35,6 +35,7 @@ using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -79,7 +80,7 @@ namespace Remora.Discord.Rest.API
 
             await using var memoryStream = new MemoryStream();
 
-            string? iconDataString = null;
+            Optional<string?> iconData = default;
             if (icon.HasValue)
             {
                 var packImage = await ImagePacker.PackImageAsync(icon.Value!, ct);
@@ -88,7 +89,7 @@ namespace Remora.Discord.Rest.API
                     return CreateRestEntityResult<IGuild>.FromError(packImage);
                 }
 
-                iconDataString = packImage.Entity;
+                iconData = packImage.Entity;
             }
 
             return await _discordHttpClient.PostAsync<IGuild>
@@ -100,7 +101,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
                         json.Write("region", region, _jsonOptions);
-                        json.WriteString("icon", iconDataString);
+                        json.Write("icon", iconData, _jsonOptions);
                         json.Write("verification_level", verificationLevel, _jsonOptions);
                         json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
                         json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
@@ -175,40 +176,61 @@ namespace Remora.Discord.Rest.API
         {
             await using var memoryStream = new MemoryStream();
 
-            string? iconDataString = null;
+            Optional<string?> iconData = default;
             if (icon.HasValue)
             {
-                var packImage = await ImagePacker.PackImageAsync(icon.Value!, ct);
-                if (!packImage.IsSuccess)
+                if (icon.Value is null)
                 {
-                    return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    iconData = new Optional<string?>(null);
                 }
+                else
+                {
+                    var packImage = await ImagePacker.PackImageAsync(icon.Value, ct);
+                    if (!packImage.IsSuccess)
+                    {
+                        return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    }
 
-                iconDataString = packImage.Entity;
+                    iconData = packImage.Entity;
+                }
             }
 
-            string? splashDataString = null;
+            Optional<string?> splashData = default;
             if (splash.HasValue)
             {
-                var packImage = await ImagePacker.PackImageAsync(splash.Value!, ct);
-                if (!packImage.IsSuccess)
+                if (splash.Value is null)
                 {
-                    return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    splashData = new Optional<string?>(null);
                 }
+                else
+                {
+                    var packImage = await ImagePacker.PackImageAsync(splash.Value, ct);
+                    if (!packImage.IsSuccess)
+                    {
+                        return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    }
 
-                splashDataString = packImage.Entity;
+                    splashData = packImage.Entity;
+                }
             }
 
-            string? bannerDataString = null;
+            Optional<string?> bannerData = default;
             if (banner.HasValue)
             {
-                var packImage = await ImagePacker.PackImageAsync(banner.Value!, ct);
-                if (!packImage.IsSuccess)
+                if (banner.Value is null)
                 {
-                    return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    bannerData = new Optional<string?>(null);
                 }
+                else
+                {
+                    var packImage = await ImagePacker.PackImageAsync(banner.Value, ct);
+                    if (!packImage.IsSuccess)
+                    {
+                        return ModifyRestEntityResult<IGuild>.FromError(packImage);
+                    }
 
-                bannerDataString = packImage.Entity;
+                    bannerData = packImage.Entity;
+                }
             }
 
             return await _discordHttpClient.PatchAsync<IGuild>
@@ -232,10 +254,10 @@ namespace Remora.Discord.Rest.API
                         json.Write("afk_channel_id", afkChannelID, _jsonOptions);
                         json.Write("afk_timeout", afkTimeout, _jsonOptions);
 
-                        json.WriteString("icon", iconDataString);
+                        json.Write("icon", iconData, _jsonOptions);
                         json.Write("owner_id", ownerID, _jsonOptions);
-                        json.WriteString("splash", splashDataString);
-                        json.WriteString("banner", bannerDataString);
+                        json.Write("splash", splashData, _jsonOptions);
+                        json.Write("banner", bannerData, _jsonOptions);
                         json.Write("system_channel_id", systemChannelID, _jsonOptions);
                         json.Write("rules_channel_id", rulesChannelID, _jsonOptions);
                         json.Write("public_updates_channel_id", publicUpdatesChannelID, _jsonOptions);
