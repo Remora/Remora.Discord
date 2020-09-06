@@ -33,8 +33,6 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
-using Remora.Discord.API.Objects.Integrations;
-using Remora.Discord.API.Objects.Invites;
 
 namespace Remora.Discord.API.Extensions
 {

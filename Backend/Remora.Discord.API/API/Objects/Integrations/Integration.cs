@@ -24,7 +24,7 @@ using System;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects.Integrations
+namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
     public class Integration : IIntegration

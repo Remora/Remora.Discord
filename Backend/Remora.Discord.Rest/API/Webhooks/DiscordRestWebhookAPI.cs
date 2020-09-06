@@ -35,9 +35,8 @@ using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
-using Remora.Results;
 
-namespace Remora.Discord.Rest.API.Webhooks
+namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
     public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI
