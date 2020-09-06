@@ -187,7 +187,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> ExecuteWebhookAsync
+        Task<ICreateRestEntityResult<IMessage>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,
