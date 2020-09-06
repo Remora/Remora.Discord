@@ -376,6 +376,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.GuildID, "id")
                 .WithPropertyName(u => u.IsUnavailable, "unavailable");
 
+            options.AddDataObjectConverter<IPruneCount, PruneCount>();
+
             return options;
         }
 

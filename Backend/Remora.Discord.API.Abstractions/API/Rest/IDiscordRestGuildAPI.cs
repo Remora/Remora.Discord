@@ -433,7 +433,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake guildID,
             Optional<string> name = default,
-            Optional<DiscordPermission> permissions = default,
+            Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
             Optional<bool> isMentionable = default,
@@ -471,7 +471,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake guildID,
             Snowflake roleID,
             Optional<string?> name = default,
-            Optional<DiscordPermission?> permissions = default,
+            Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> color = default,
             Optional<bool?> isHoisted = default,
             Optional<bool?> isMentionable = default,
@@ -500,7 +500,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<int>> GetGuildPruneCountAsync
+        Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -517,7 +517,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<int?>> BeginGuildPruneAsync
+        Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
         (
             Snowflake guildID,
             Optional<int> days = default,

@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -92,6 +93,52 @@ namespace Remora.Discord.Rest
             catch (Exception e)
             {
                 return RetrieveRestEntityResult<TEntity>.FromError(e);
+            }
+        }
+
+        /// <summary>
+        /// Performs a GET request to the Discord REST API at the given endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        public async Task<IRetrieveRestEntityResult<Stream>> GetContentAsync
+        (
+            string endpoint,
+            Action<RestRequestBuilder>? configureRequestBuilder = null,
+            CancellationToken ct = default
+        )
+        {
+            configureRequestBuilder ??= q => { };
+
+            var requestBuilder = new RestRequestBuilder(endpoint);
+            configureRequestBuilder(requestBuilder);
+
+            requestBuilder.WithMethod(HttpMethod.Get);
+
+            try
+            {
+                using var request = requestBuilder.Build();
+                using var response = await _httpClient.SendAsync
+                (
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    ct
+                );
+
+                var unpackedResponse = await UnpackResponseAsync(response, ct);
+                if (!unpackedResponse.IsSuccess)
+                {
+                    return RetrieveRestEntityResult<Stream>.FromError(unpackedResponse);
+                }
+
+                var responseContent = await response.Content.ReadAsStreamAsync();
+                return RetrieveRestEntityResult<Stream>.FromSuccess(responseContent);
+            }
+            catch (Exception e)
+            {
+                return RetrieveRestEntityResult<Stream>.FromError(e);
             }
         }
 
@@ -171,12 +218,12 @@ namespace Remora.Discord.Rest
 
                 var entityResult = await UnpackResponseAsync(response, ct);
                 return !entityResult.IsSuccess
-                    ? DeleteRestEntityResult.FromError(entityResult)
-                    : DeleteRestEntityResult.FromSuccess();
+                    ? RestRequestResult.FromError(entityResult)
+                    : RestRequestResult.FromSuccess();
             }
             catch (Exception e)
             {
-                return DeleteRestEntityResult.FromError(e);
+                return RestRequestResult.FromError(e);
             }
         }
 
@@ -224,6 +271,48 @@ namespace Remora.Discord.Rest
         }
 
         /// <summary>
+        /// Performs a PATCH request to the Discord REST API at the given endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        public async Task<IRestResult> PatchAsync
+        (
+            string endpoint,
+            Action<RestRequestBuilder>? configureRequestBuilder = null,
+            CancellationToken ct = default
+        )
+        {
+            configureRequestBuilder ??= q => { };
+
+            var requestBuilder = new RestRequestBuilder(endpoint);
+            configureRequestBuilder(requestBuilder);
+
+            requestBuilder.WithMethod(HttpMethod.Patch);
+
+            try
+            {
+                using var request = requestBuilder.Build();
+                using var response = await _httpClient.SendAsync
+                (
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    ct
+                );
+
+                var entityResult = await UnpackResponseAsync(response, ct);
+                return !entityResult.IsSuccess
+                    ? RestRequestResult.FromError(entityResult)
+                    : RestRequestResult.FromSuccess();
+            }
+            catch (Exception e)
+            {
+                return RestRequestResult.FromError(e);
+            }
+        }
+
+        /// <summary>
         /// Performs a DELETE request to the Discord REST API at the given endpoint.
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
@@ -262,6 +351,49 @@ namespace Remora.Discord.Rest
             catch (Exception e)
             {
                 return DeleteRestEntityResult.FromError(e);
+            }
+        }
+
+        /// <summary>
+        /// Performs a PUT request to the Discord REST API at the given endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <typeparam name="TEntity">The type of entity to create.</typeparam>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public async Task<ICreateRestEntityResult<TEntity>> PutAsync<TEntity>
+        (
+            string endpoint,
+            Action<RestRequestBuilder>? configureRequestBuilder = null,
+            CancellationToken ct = default
+        )
+        {
+            configureRequestBuilder ??= q => { };
+
+            var requestBuilder = new RestRequestBuilder(endpoint);
+            configureRequestBuilder(requestBuilder);
+
+            requestBuilder.WithMethod(HttpMethod.Put);
+
+            try
+            {
+                using var request = requestBuilder.Build();
+                using var response = await _httpClient.SendAsync
+                (
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    ct
+                );
+
+                var entityResult = await UnpackResponseAsync<TEntity>(response, ct);
+                return !entityResult.IsSuccess
+                    ? CreateRestEntityResult<TEntity>.FromError(entityResult)
+                    : CreateRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+            }
+            catch (Exception e)
+            {
+                return CreateRestEntityResult<TEntity>.FromError(e);
             }
         }
 
