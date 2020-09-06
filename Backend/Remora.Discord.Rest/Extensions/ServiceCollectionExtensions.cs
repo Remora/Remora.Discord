@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.API.Webhooks;
 using Remora.Discord.Rest.Polly;
 
 namespace Remora.Discord.Rest.Extensions
@@ -123,8 +124,14 @@ namespace Remora.Discord.Rest.Extensions
 
             serviceCollection
                 .AddScoped<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
+                .AddScoped<IDiscordRestChannelAPI, DiscordRestChannelAPI>()
+                .AddScoped<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>()
                 .AddScoped<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>()
-                .AddScoped<IDiscordRestChannelAPI, DiscordRestChannelAPI>();
+                .AddScoped<IDiscordRestGuildAPI, DiscordRestGuildAPI>()
+                .AddScoped<IDiscordRestInviteAPI, IDiscordRestInviteAPI>()
+                .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
+                .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
+                .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>();
 
             return serviceCollection;
         }
