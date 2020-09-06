@@ -1,5 +1,5 @@
 //
-//  IDiscordRestVoiceAPI.cs
+//  DiscordRestVoiceAPI.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,26 +23,37 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.Rest.API
 {
-    /// <summary>
-    /// Represents the Discord Voice API.
-    /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestVoiceAPI
+    /// <inheritdoc />
+    public class DiscordRestVoiceAPI : IDiscordRestVoiceAPI
     {
+        private readonly DiscordHttpClient _discordHttpClient;
+
         /// <summary>
-        /// Gets the available voice regions.
+        /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
         /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient)
+        {
+            _discordHttpClient = discordHttpClient;
+        }
+
+        /// <inheritdoc />
+        public Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
         (
             CancellationToken ct = default
-        );
+        )
+        {
+            return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            (
+                "voice/regions",
+                ct: ct
+            );
+        }
     }
 }
