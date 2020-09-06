@@ -124,7 +124,7 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.PostAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -154,7 +154,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {

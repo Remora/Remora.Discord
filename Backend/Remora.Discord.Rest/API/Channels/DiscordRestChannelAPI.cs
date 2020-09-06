@@ -105,7 +105,7 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.PatchAsync<IChannel>
             (
                 $"channels/{channelID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -321,7 +321,7 @@ namespace Remora.Discord.Rest.API
                         b.AddContent(new StreamContent(file.Value), "file");
                     }
 
-                    b.AddJsonConfigurator
+                    b.WithJson
                     (
                         writer =>
                         {
@@ -495,7 +495,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync<IMessage>
             (
                 $"channels/{channelID}/messages/{messageID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -572,7 +572,7 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/bulk-delete",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -598,7 +598,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PutAsync
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -654,7 +654,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PostAsync<IInvite>
             (
                 $"channels/{channelID}/invites",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -779,7 +779,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PutAsync
             (
                 $"channels/{channelID}/recipients/{userID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {

@@ -95,7 +95,7 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.PostAsync<IGuild>
             (
                 "guilds",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -215,7 +215,7 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.PatchAsync<IGuild>
             (
                 $"guilds/{guildID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -291,7 +291,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PostAsync<IChannel>
             (
                 $"guilds/{guildID}/channels",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -319,16 +319,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            // TODO: this probably won't work
             return _discordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/channels",
-                b => b.AddJsonConfigurator
+                b => b.WithJsonArray
                 (
                     json =>
                     {
-                        json.WriteStartArray();
-
                         foreach (var (channelID, position) in positionModifications)
                         {
                             json.WriteStartObject();
@@ -345,8 +342,6 @@ namespace Remora.Discord.Rest.API
                             }
                             json.WriteEndObject();
                         }
-
-                        json.WriteEndArray();
                     }
                 ),
                 ct
@@ -412,7 +407,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PutAsync<IGuildMember?>
             (
                 $"guilds/{guildID}/members/{userID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -443,7 +438,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/members/{userID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -469,7 +464,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync<string>
             (
                 $"guilds/{guildID}/members/@me/nick",
-                b => b.AddJsonConfigurator(json => json.Write("nick", nickname, _jsonOptions)),
+                b => b.WithJson(json => json.Write("nick", nickname, _jsonOptions)),
                 ct
             );
         }
@@ -563,7 +558,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -619,7 +614,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -642,16 +637,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            // TODO: same problem as above re: json arrays as payloads
             return _discordHttpClient.PatchAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
-                b => b.AddJsonConfigurator
+                b => b.WithJsonArray
                 (
                     json =>
                     {
-                        json.WriteStartArray();
-
                         foreach (var (roleID, position) in modifiedPositions)
                         {
                             json.WriteStartObject();
@@ -661,8 +653,6 @@ namespace Remora.Discord.Rest.API
                             }
                             json.WriteEndObject();
                         }
-
-                        json.WriteEndArray();
                     }
                 ),
                 ct
@@ -685,7 +675,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -760,7 +750,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PostAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -827,7 +817,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PostAsync
             (
                 $"guilds/{guildID}/integrations",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -853,7 +843,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/integrations/{integrationID}",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {
@@ -922,7 +912,7 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.PatchAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
-                b => b.AddJsonConfigurator
+                b => b.WithJson
                 (
                     json =>
                     {

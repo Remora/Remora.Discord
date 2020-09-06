@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -49,7 +50,12 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Holds the JSON body configurators.
         /// </summary>
-        private readonly List<Action<Utf8JsonWriter>> _jsonConfigurators;
+        private readonly List<Action<Utf8JsonWriter>> _jsonObjectConfigurators;
+
+        /// <summary>
+        /// Holds the JSON array element configurators.
+        /// </summary>
+        private readonly List<Action<Utf8JsonWriter>> _jsonArrayConfigurators;
 
         /// <summary>
         /// Holds the configured additional headers.
@@ -75,7 +81,8 @@ namespace Remora.Discord.Rest.API
             _endpoint = endpoint;
 
             _queryParameters = new Dictionary<string, string>();
-            _jsonConfigurators = new List<Action<Utf8JsonWriter>>();
+            _jsonObjectConfigurators = new List<Action<Utf8JsonWriter>>();
+            _jsonArrayConfigurators = new List<Action<Utf8JsonWriter>>();
             _additionalHeaders = new Dictionary<string, string>();
             _additionalContent = new Dictionary<string, HttpContent>();
         }
@@ -117,13 +124,40 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <summary>
-        /// Adds a JSON property to the request body.
+        /// Adds an arbitrary section inside the request body. This implicitly sets the request body to be a JSON
+        /// object.
+        ///
+        /// This method is mutually exclusive with <see cref="WithJsonArray"/>.
         /// </summary>
-        /// <param name="jsonConfigurator">The JSON configurator.</param>
+        /// <param name="propertyWriter">The JSON configurator.</param>
         /// <returns>The builder, with the property added.</returns>
-        public RestRequestBuilder AddJsonConfigurator(Action<Utf8JsonWriter> jsonConfigurator)
+        public RestRequestBuilder WithJson(Action<Utf8JsonWriter> propertyWriter)
         {
-            _jsonConfigurators.Add(jsonConfigurator);
+            if (_jsonArrayConfigurators.Count > 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _jsonObjectConfigurators.Add(propertyWriter);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a set of arbitrary elements to the request body. This implicitly sets the request body to be a JSON
+        /// array.
+        ///
+        /// This method is mutually exclusive with <see cref="WithJson"/>.
+        /// </summary>
+        /// <param name="arrayElementWriter">The JSON configurator.</param>
+        /// <returns>The builder, with the property added.</returns>
+        public RestRequestBuilder WithJsonArray(Action<Utf8JsonWriter> arrayElementWriter)
+        {
+            if (_jsonObjectConfigurators.Count > 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            _jsonArrayConfigurators.Add(arrayElementWriter);
             return this;
         }
 
@@ -159,19 +193,42 @@ namespace Remora.Discord.Rest.API
             }
 
             StringContent? jsonBody = null;
-            if (_jsonConfigurators.Count > 0)
+            if (_jsonObjectConfigurators.Count > 0)
             {
                 using var jsonStream = new MemoryStream();
                 var jsonWriter = new Utf8JsonWriter(jsonStream);
 
                 jsonWriter.WriteStartObject();
 
-                foreach (var jsonConfigurator in _jsonConfigurators)
+                foreach (var jsonConfigurator in _jsonObjectConfigurators)
                 {
                     jsonConfigurator(jsonWriter);
                 }
 
                 jsonWriter.WriteEndObject();
+                jsonWriter.Flush();
+
+                jsonStream.Seek(0, SeekOrigin.Begin);
+                jsonBody = new StringContent
+                (
+                    new StreamReader(jsonStream).ReadToEnd(),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+            }
+            else if (_jsonArrayConfigurators.Count > 0)
+            {
+                using var jsonStream = new MemoryStream();
+                var jsonWriter = new Utf8JsonWriter(jsonStream);
+
+                jsonWriter.WriteStartArray();
+
+                foreach (var elementConfigurator in _jsonArrayConfigurators)
+                {
+                    elementConfigurator(jsonWriter);
+                }
+
+                jsonWriter.WriteEndArray();
                 jsonWriter.Flush();
 
                 jsonStream.Seek(0, SeekOrigin.Begin);
