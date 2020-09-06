@@ -16,4 +16,25 @@
       <PackageReference Include="Remora.Results.Abstractions" Version="1.0.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="API\Objects\Activities\IActivityAssets.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\IActivityEmoji.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\IActivityParty.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\IActivitySecrets.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\IActivityTimestamps.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Activities\IPartySize.cs">
+        <DependentUpon>IActivityParty.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
