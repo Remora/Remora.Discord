@@ -43,6 +43,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         bool IsVIP { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this server is the one closest to the current user's client.
+        /// </summary>
+        bool IsOptimal { get; }
+
+        /// <summary>
         /// Gets a value indicating whether this is a deprecated region. Avoid switching to these.
         /// </summary>
         bool IsDeprecated { get; }

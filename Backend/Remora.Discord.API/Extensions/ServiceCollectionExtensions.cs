@@ -33,6 +33,8 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.Objects.Integrations;
+using Remora.Discord.API.Objects.Invites;
 
 namespace Remora.Discord.API.Extensions
 {
@@ -73,12 +75,15 @@ namespace Remora.Discord.API.Extensions
                             .AddGatewayObjectConverters()
                             .AddGuildObjectConverters()
                             .AddImageObjectConverters()
+                            .AddIntegrationObjectConverters()
+                            .AddInviteObjectConverters()
                             .AddMessageObjectConverters()
                             .AddPermissionObjectConverters()
                             .AddPresenceObjectConverters()
                             .AddReactionObjectConverters()
                             .AddUserObjectConverters()
-                            .AddVoiceObjectConverters();
+                            .AddVoiceObjectConverters()
+                            .AddWebhookObjectConverters();
 
                         options
                             .AddConverter<ISO8601DateTimeOffsetConverter>()
@@ -318,6 +323,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(c => c.IsNsfw, "nsfw");
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
+            options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>();
 
             return options;
         }
@@ -377,6 +383,10 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsUnavailable, "unavailable");
 
             options.AddDataObjectConverter<IPruneCount, PruneCount>();
+            options.AddDataObjectConverter<IBan, Ban>();
+            options.AddDataObjectConverter<IGuildPreview, GuildPreview>();
+            options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
+                .WithPropertyName(w => w.IsEnabled, "enabled");
 
             return options;
         }
@@ -389,6 +399,34 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddImageObjectConverters(this JsonSerializerOptions options)
         {
             options.AddConverter<ImageHashConverter>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle integration objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddIntegrationObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IAccount, Account>();
+
+            options.AddDataObjectConverter<IIntegration, Integration>()
+                .WithPropertyName(i => i.IsEnabled, "enabled")
+                .WithPropertyName(i => i.IsSyncing, "syncing");
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle invite objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IInvite, Invite>();
 
             return options;
         }
@@ -500,6 +538,12 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IUserMention, UserMention>();
 
+            options.AddDataObjectConverter<IConnection, Connection>()
+                .WithPropertyName(c => c.IsRevoked, "revoked")
+                .WithPropertyName(c => c.IsVerified, "verified")
+                .WithPropertyName(c => c.IsFriendSyncEnabled, "friend_sync")
+                .WithPropertyName(c => c.ShouldShowActivity, "show_activity");
+
             return options;
         }
 
@@ -518,6 +562,24 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(v => v.IsStreaming, "self_stream")
                 .WithPropertyName(v => v.IsVideoEnabled, "self_video")
                 .WithPropertyName(v => v.IsSuppressed, "suppress");
+
+            options.AddDataObjectConverter<IVoiceRegion, VoiceRegion>()
+                .WithPropertyName(r => r.IsVIP, "vip")
+                .WithPropertyName(r => r.IsDeprecated, "deprecated")
+                .WithPropertyName(r => r.IsOptimal, "optimal")
+                .WithPropertyName(r => r.IsCustom, "custom");
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle webhook objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddWebhookObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IWebhook, Webhook>();
 
             return options;
         }
