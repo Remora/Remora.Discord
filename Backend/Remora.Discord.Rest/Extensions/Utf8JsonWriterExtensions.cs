@@ -84,7 +84,7 @@ namespace Remora.Discord.Rest.Extensions
             bool asInteger = true,
             JsonSerializerOptions? jsonOptions = default
         )
-            where T : struct, System.Enum
+            where T : struct, Enum
         {
             if (!value.HasValue)
             {
