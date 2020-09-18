@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
@@ -44,36 +45,8 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
         /// <summary>
         /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
         /// </summary>
-        public class GetAuditLogBotAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
+        public class GetAuditLogBotAsync : RestAPITestBase
         {
-            private const string Response =
-                "{\n    \"webhooks\": [],\n    \"users\": [],\n    \"audit_log_entries\": [],\n    \"integrations\": []\n}";
-
-            private readonly Snowflake _guildID = new Snowflake(0);
-            private readonly Snowflake _userID = new Snowflake(1);
-            private readonly AuditLogEvent _actionType = AuditLogEvent.BotAdd;
-            private readonly Snowflake _before = new Snowflake(2);
-            private readonly byte _limit = 45;
-
-            /// <inheritdoc />
-            protected override Action<MockHttpMessageHandler> BuildMock => b =>
-            {
-                b
-                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
-                    .WithAuthentication()
-                    .WithQueryString
-                    (
-                        new[]
-                        {
-                            new KeyValuePair<string, string>("user_id", _userID.ToString()),
-                            new KeyValuePair<string, string>("action_type", ((int)_actionType).ToString()),
-                            new KeyValuePair<string, string>("before", _before.ToString()),
-                            new KeyValuePair<string, string>("limit", _limit.ToString()),
-                        }
-                    )
-                    .Respond("application/json", Response);
-            };
-
             /// <summary>
             /// Tests whether the API method performs its request correctly.
             /// </summary>
@@ -81,13 +54,40 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var result = await this.API.GetAuditLogAsync
+                var response = "{\"webhooks\": [], \"users\": [], \"audit_log_entries\": [], \"integrations\": []}";
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var actionType = AuditLogEvent.BotAdd;
+                var before = new Snowflake(2);
+                byte limit = 45;
+
+                var services = CreateConfiguredAPIServices
                 (
-                    _guildID,
-                    _userID,
-                    _actionType,
-                    _before,
-                    _limit
+                    b =>
+                        b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
+                            .WithAuthentication()
+                            .WithQueryString
+                            (
+                                new[]
+                                {
+                                    new KeyValuePair<string, string>("user_id", userID.ToString()),
+                                    new KeyValuePair<string, string>("action_type", ((int)actionType).ToString()),
+                                    new KeyValuePair<string, string>("before", before.ToString()),
+                                    new KeyValuePair<string, string>("limit", limit.ToString()),
+                                }
+                            )
+                            .Respond("application/json", response)
+                );
+
+                var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
+
+                var result = await api.GetAuditLogAsync
+                (
+                    guildID,
+                    userID,
+                    actionType,
+                    before,
+                    limit
                 );
 
                 ResultAssert.Successful(result);

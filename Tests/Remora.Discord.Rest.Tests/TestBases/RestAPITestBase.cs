@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.ComponentModel.Design;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Rest.Extensions;
 using RichardSzalay.MockHttp;
@@ -30,47 +31,33 @@ namespace Remora.Discord.Rest.Tests.TestBases
     /// <summary>
     /// Serves as a base class for REST API tests.
     /// </summary>
-    /// <typeparam name="TAPI">The API type under test.</typeparam>
-    public abstract class RestAPITestBase<TAPI>
+    public abstract class RestAPITestBase
     {
         /// <summary>
-        /// Gets the services available to the test.
+        /// Creates a configured service provider with the given HTTP mock settings.
         /// </summary>
-        protected IServiceProvider Services { get; }
-
-        /// <summary>
-        /// Gets the API instance under test.
-        /// </summary>
-        protected TAPI API { get; }
-
-        /// <summary>
-        /// Gets a function that configures the mocked response handler.
-        /// </summary>
-        protected abstract Action<MockHttpMessageHandler> BuildMock { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestAPITestBase{TAPI}"/> class.
-        /// </summary>
-        protected RestAPITestBase()
+        /// <param name="builder">The HTTP mock builder.</param>
+        /// <returns>The configured services.</returns>
+        protected IServiceProvider CreateConfiguredAPIServices(Action<MockHttpMessageHandler> builder)
         {
-            this.Services = new ServiceCollection()
-                .AddDiscordRest
+            var serviceContainer = new ServiceCollection()
+            .AddDiscordRest
+            (
+                () => "TEST_TOKEN",
+                b => b.ConfigurePrimaryHttpMessageHandler
                 (
-                    () => "TEST_TOKEN",
-                    b => b.ConfigurePrimaryHttpMessageHandler
-                    (
-                        services =>
-                        {
-                            var mockHandler = new MockHttpMessageHandler();
-                            this.BuildMock(mockHandler);
+                    services =>
+                    {
+                        var mockHandler = new MockHttpMessageHandler();
+                        builder(mockHandler);
 
-                            return mockHandler;
-                        }
-                    )
+                        return mockHandler;
+                    }
                 )
-                .BuildServiceProvider();
+            )
+            .BuildServiceProvider();
 
-            this.API = this.Services.GetRequiredService<TAPI>();
+            return serviceContainer;
         }
     }
 }
