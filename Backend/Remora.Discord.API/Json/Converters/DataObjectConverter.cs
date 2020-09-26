@@ -686,6 +686,20 @@ namespace Remora.Discord.API.Json
 
             var innerType = dtoProperty.PropertyType.Unwrap();
 
+            // Special case: enums
+            if (converterFactory is JsonStringEnumConverter)
+            {
+                while (!innerType.IsEnum)
+                {
+                    if (!innerType.IsGenericType)
+                    {
+                        throw new InvalidOperationException("The innermost type of the property isn't an enum.");
+                    }
+
+                    innerType = innerType.GetGenericArguments()[0];
+                }
+            }
+
             var createdConverter = converterFactory.CreateConverter(innerType, options);
             return createdConverter;
         }
