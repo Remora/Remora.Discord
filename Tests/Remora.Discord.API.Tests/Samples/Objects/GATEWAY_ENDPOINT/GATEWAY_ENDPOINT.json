@@ -1,0 +1,10 @@
+{
+    "url": "wss://gateway.discord.gg/",
+    "shards": 9,
+    "session_start_limit": {
+        "total": 1000,
+        "remaining": 999,
+        "reset_after": 14400000,
+        "max_concurrency": 4
+    }
+}

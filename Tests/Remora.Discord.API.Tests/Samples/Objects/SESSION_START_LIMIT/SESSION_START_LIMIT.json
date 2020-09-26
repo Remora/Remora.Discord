@@ -1,0 +1,6 @@
+{
+    "total": 1000,
+    "remaining": 999,
+    "reset_after": 14400000,
+    "max_concurrency": 4
+}
