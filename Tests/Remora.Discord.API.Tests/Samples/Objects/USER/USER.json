@@ -1,0 +1,15 @@
+{
+    "id": "54351326674432000",
+    "username": "Azazial",
+    "discriminator": "4061",
+    "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
+    "bot": false,
+    "system": false,
+    "mfa_enabled": false,
+    "locale": "en-US",
+    "verified": true,
+    "email": "example@test.org",
+    "flags": 0,
+    "premium_type": 0,
+    "public_flags": 0
+}
