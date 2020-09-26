@@ -26,7 +26,7 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
-    public class ChannelMentionTests : ObjectTestBase<IChannel>
+    public class ChannelMentionTests : ObjectTestBase<IChannelMention>
     {
     }
 }
