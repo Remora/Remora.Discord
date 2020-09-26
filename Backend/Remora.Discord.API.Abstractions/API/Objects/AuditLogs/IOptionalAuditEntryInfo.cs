@@ -35,13 +35,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the number of days after which inactive members were kicked.
         /// <remarks>Relevant for <see cref="AuditLogEvent.MemberPrune"/>.</remarks>
         /// </summary>
-        string DeleteMemberDays { get; }
+        Optional<string> DeleteMemberDays { get; }
 
         /// <summary>
         /// Gets the number of members removed by the prune.
         /// <remarks>Relevant for <see cref="AuditLogEvent.MemberPrune"/>.</remarks>
         /// </summary>
-        string MembersRemoved { get; }
+        Optional<string> MembersRemoved { get; }
 
         /// <summary>
         /// Gets the channel in which the entities were targeted.
@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Relevant for <see cref="AuditLogEvent.MemberMove"/>, <see cref="AuditLogEvent.MessagePin"/>,
         /// <see cref="AuditLogEvent.MessageUnpin"/>, and <see cref="AuditLogEvent.MessageDelete"/>.</remarks>
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<Snowflake> ChannelID { get; }
 
         /// <summary>
         /// Gets the ID of the message that was targeted.
@@ -57,7 +57,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Relevant for <see cref="AuditLogEvent.MessagePin"/> and <see cref="AuditLogEvent.MessageUnpin"/>.
         /// </remarks>
         /// </summary>
-        Snowflake MessageID { get; }
+        Optional<Snowflake> MessageID { get; }
 
         /// <summary>
         /// Gets the number of entities that were targeted.
@@ -66,7 +66,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <see cref="AuditLogEvent.MemberDisconnect"/>, and <see cref="AuditLogEvent.MemberMove"/>.
         /// </remarks>
         /// </summary>
-        string Count { get; }
+        Optional<string> Count { get; }
 
         /// <summary>
         /// Gets the ID of the overwritten entity.
@@ -75,7 +75,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <see cref="AuditLogEvent.ChannelOverwriteUpdate"/>, and <see cref="AuditLogEvent.ChannelOverwriteDelete"/>.
         /// </remarks>
         /// </summary>
-        Snowflake ID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
         /// Gets the type of the overwritten entity. This can be either "member" or "role".
@@ -84,7 +84,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <see cref="AuditLogEvent.ChannelOverwriteUpdate"/>, and <see cref="AuditLogEvent.ChannelOverwriteDelete"/>.
         /// </remarks>
         /// </summary>
-        string Type { get; }
+        Optional<string> Type { get; }
 
         /// <summary>
         /// Gets the name of the overwritten role, if <see cref="Type"/> is "role".
@@ -93,6 +93,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <see cref="AuditLogEvent.ChannelOverwriteUpdate"/>, and <see cref="AuditLogEvent.ChannelOverwriteDelete"/>.
         /// </remarks>
         /// </summary>
-        string RoleName { get; }
+        Optional<string> RoleName { get; }
     }
 }

@@ -29,28 +29,28 @@ namespace Remora.Discord.API.Objects
     public class OptionalAuditEntryInfo : IOptionalAuditEntryInfo
     {
         /// <inheritdoc/>
-        public string DeleteMemberDays { get; }
+        public Optional<string> DeleteMemberDays { get; }
 
         /// <inheritdoc/>
-        public string MembersRemoved { get; }
+        public Optional<string> MembersRemoved { get; }
 
         /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
+        public Optional<Snowflake> ChannelID { get; }
 
         /// <inheritdoc/>
-        public Snowflake MessageID { get; }
+        public Optional<Snowflake> MessageID { get; }
 
         /// <inheritdoc/>
-        public string Count { get; }
+        public Optional<string> Count { get; }
 
         /// <inheritdoc/>
-        public Snowflake ID { get; }
+        public Optional<Snowflake> ID { get; }
 
         /// <inheritdoc/>
-        public string Type { get; }
+        public Optional<string> Type { get; }
 
         /// <inheritdoc/>
-        public string RoleName { get; }
+        public Optional<string> RoleName { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionalAuditEntryInfo"/> class.
@@ -65,14 +65,14 @@ namespace Remora.Discord.API.Objects
         /// <param name="roleName">The name of the role, if the <paramref name="type"/> is "role".</param>
         public OptionalAuditEntryInfo
         (
-            string deleteMemberDays,
-            string membersRemoved,
-            Snowflake channelID,
-            Snowflake messageID,
-            string count,
-            Snowflake id,
-            string type,
-            string roleName
+            Optional<string> deleteMemberDays,
+            Optional<string> membersRemoved,
+            Optional<Snowflake> channelID,
+            Optional<Snowflake> messageID,
+            Optional<string> count,
+            Optional<Snowflake> id,
+            Optional<string> type,
+            Optional<string> roleName
         )
         {
             this.DeleteMemberDays = deleteMemberDays;
