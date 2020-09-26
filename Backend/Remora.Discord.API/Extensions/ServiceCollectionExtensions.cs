@@ -500,11 +500,16 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddPresenceObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IClientStatuses, ClientStatuses>();
+            var snakeCase = new SnakeCaseNamingPolicy();
+
+            options.AddDataObjectConverter<IClientStatuses, ClientStatuses>()
+                .WithPropertyConverter(p => p.Desktop, new JsonStringEnumConverter(snakeCase))
+                .WithPropertyConverter(p => p.Mobile, new JsonStringEnumConverter(snakeCase))
+                .WithPropertyConverter(p => p.Web, new JsonStringEnumConverter(snakeCase));
 
             options.AddDataObjectConverter<IPresence, Presence>()
                 .WithPropertyName(p => p.Nickname, "nick")
-                .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter());
+                .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter(snakeCase));
 
             return options;
         }

@@ -42,6 +42,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the status of the user in the browser.
         /// </summary>
-        Optional<ClientStatus> Browser { get; }
+        Optional<ClientStatus> Web { get; }
     }
 }

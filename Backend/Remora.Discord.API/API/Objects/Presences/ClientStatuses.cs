@@ -35,24 +35,24 @@ namespace Remora.Discord.API.Objects
         public Optional<ClientStatus> Mobile { get; }
 
         /// <inheritdoc />
-        public Optional<ClientStatus> Browser { get; }
+        public Optional<ClientStatus> Web { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientStatuses"/> class.
         /// </summary>
         /// <param name="desktop">The desktop status.</param>
         /// <param name="mobile">The mobile status.</param>
-        /// <param name="browser">The browser status.</param>
+        /// <param name="web">The web status.</param>
         public ClientStatuses
         (
             Optional<ClientStatus> desktop,
             Optional<ClientStatus> mobile,
-            Optional<ClientStatus> browser
+            Optional<ClientStatus> web
         )
         {
             this.Desktop = desktop;
             this.Mobile = mobile;
-            this.Browser = browser;
+            this.Web = web;
         }
     }
 }
