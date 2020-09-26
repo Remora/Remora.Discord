@@ -96,7 +96,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the recipients of the DM.
         /// </summary>
-        Optional<IUser> Recipients { get; }
+        Optional<IReadOnlyList<IUser>> Recipients { get; }
 
         /// <summary>
         /// Gets the icon of the channel.
