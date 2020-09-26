@@ -321,7 +321,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(c => c.IsNsfw, "nsfw");
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
-            options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>();
+            options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
+                .WithPropertyConverter(m => m.Parse, new JsonStringEnumConverter(new SnakeCaseNamingPolicy()));
 
             return options;
         }
