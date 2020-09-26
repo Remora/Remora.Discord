@@ -1,0 +1,54 @@
+{
+    "title": "aa",
+    "type": "rich",
+    "description": "bb",
+    "url": "https://foo.bar",
+    "timestamp": "2020-08-28T18:17:25.377506\u002B00:00",
+    "color": 12,
+    "footer":
+    {
+        "text": "cc",
+        "icon_url": "https://example.org",
+        "proxy_icon_url": "https://proxy.example.org"
+    },
+    "image":
+    {
+        "url": "https://example.org",
+        "proxy_url": "https://proxy.example.org",
+        "height": 1,
+        "width": 1
+    },
+    "thumbnail":
+    {
+        "url": "https://example.org",
+        "proxy_url": "https://proxy.example.org",
+        "height": 1,
+        "width": 1
+    },
+    "video":
+    {
+        "url": "https://example.org",
+        "height": 1,
+        "width": 1
+    },
+    "provider":
+    {
+        "name": "dd",
+        "url": "https://example.org"
+    },
+    "author":
+    {
+        "name": "cc",
+        "url": "https://example.org",
+        "icon_url": "https://example.org",
+        "proxy_icon_url": "https://proxy.example.org"
+    },
+    "fields":
+    [
+        {
+            "name": "ee",
+            "value": "ff",
+            "inline": false
+        }
+    ]
+}

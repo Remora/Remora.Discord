@@ -444,7 +444,9 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(e => e.Colour, "color");
 
             options.AddDataObjectConverter<IEmbedAuthor, EmbedAuthor>();
-            options.AddDataObjectConverter<IEmbedField, EmbedField>();
+            options.AddDataObjectConverter<IEmbedField, EmbedField>()
+                .WithPropertyName(f => f.IsInline, "inline");
+
             options.AddDataObjectConverter<IEmbedFooter, EmbedFooter>();
             options.AddDataObjectConverter<IEmbedImage, EmbedImage>();
             options.AddDataObjectConverter<IEmbedProvider, EmbedProvider>();

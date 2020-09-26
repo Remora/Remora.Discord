@@ -35,19 +35,30 @@ namespace Remora.Discord.API.Objects
         public Optional<string> Url { get; }
 
         /// <inheritdoc />
-        public Optional<string> ProxyUrl { get; }
+        public Optional<string> IconUrl { get; }
+
+        /// <inheritdoc />
+        public Optional<string> ProxyIconUrl { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmbedAuthor"/> class.
         /// </summary>
         /// <param name="name">The name of the author.</param>
         /// <param name="url">The author's URL.</param>
-        /// <param name="proxyUrl">The author's proxied URL.</param>
-        public EmbedAuthor(Optional<string> name, Optional<string> url, Optional<string> proxyUrl)
+        /// <param name="iconUrl">The author's icon URL.</param>
+        /// <param name="proxyIconUrl">The author's proxied icon URL.</param>
+        public EmbedAuthor
+        (
+            Optional<string> name,
+            Optional<string> url,
+            Optional<string> iconUrl,
+            Optional<string> proxyIconUrl
+        )
         {
             this.Name = name;
             this.Url = url;
-            this.ProxyUrl = proxyUrl;
+            this.IconUrl = iconUrl;
+            this.ProxyIconUrl = proxyIconUrl;
         }
     }
 }

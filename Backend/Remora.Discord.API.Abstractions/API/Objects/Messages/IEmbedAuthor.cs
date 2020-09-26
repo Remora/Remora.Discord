@@ -40,8 +40,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<string> Url { get; }
 
         /// <summary>
-        /// Gets the proxied URL of the thumbnail.
+        /// Gets the icon URL of the author.
         /// </summary>
-        Optional<string> ProxyUrl { get; }
+        Optional<string> IconUrl { get; }
+
+        /// <summary>
+        /// Gets the proxied icon URL of the thumbnail.
+        /// </summary>
+        Optional<string> ProxyIconUrl { get; }
     }
 }
