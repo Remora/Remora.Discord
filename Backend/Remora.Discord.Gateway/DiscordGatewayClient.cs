@@ -533,16 +533,14 @@ namespace Remora.Discord.Gateway
                     {
                         _log.LogWarning
                         (
-                            "Error in gateway event responder.",
-                            responderResult.ErrorReason
+                            $"Error in gateway event responder: {responderResult.ErrorReason}"
                         );
                     }
                     else
                     {
                         _log.LogWarning
                         (
-                            "Error in gateway event responder.",
-                            responderResult.Exception
+                            $"Error in gateway event responder.\n{responderResult.Exception}"
                         );
                     }
                 }
@@ -560,12 +558,12 @@ namespace Remora.Discord.Gateway
                         continue;
                     }
 
-                    _log.LogWarning("Error in gateway event responder.", e);
+                    _log.LogWarning($"Error in gateway event responder.\n{e}");
                 }
             }
             catch (Exception e)
             {
-                _log.LogWarning("Error in gateway event responder.", e);
+                _log.LogWarning($"Error in gateway event responder.\n{e}");
             }
         }
 
@@ -659,6 +657,18 @@ namespace Remora.Discord.Gateway
                     catch (Exception e)
                     {
                         return EventResponseResult.FromError(e);
+                    }
+                    finally
+                    {
+                        if (r is IDisposable disposable)
+                        {
+                            disposable.Dispose();
+                        }
+
+                        if (r is IAsyncDisposable asyncDisposable)
+                        {
+                            await asyncDisposable.DisposeAsync();
+                        }
                     }
                 }
             )
