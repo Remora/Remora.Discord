@@ -37,7 +37,7 @@ namespace Remora.Discord.API.Gateway.Events
         public string Code { get; }
 
         /// <inheritdoc/>
-        public DateTime CreatedAt { get; }
+        public DateTimeOffset CreatedAt { get; }
 
         /// <inheritdoc/>
         public Optional<Snowflake> GuildID { get; }
@@ -81,7 +81,7 @@ namespace Remora.Discord.API.Gateway.Events
         (
             Snowflake channelID,
             string code,
-            DateTime createdAt,
+            DateTimeOffset createdAt,
             Optional<Snowflake> guildID,
             Optional<IUser> inviter,
             int maxAge,
