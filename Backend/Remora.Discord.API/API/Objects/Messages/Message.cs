@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Objects
         public IReadOnlyList<IEmbed> Embeds { get; }
 
         /// <inheritdoc />
-        public Optional<IReaction> Reactions { get; }
+        public Optional<IReadOnlyList<IReaction>> Reactions { get; }
 
         /// <inheritdoc />
         public Optional<string> Nonce { get; }
@@ -146,7 +146,7 @@ namespace Remora.Discord.API.Objects
             Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
             IReadOnlyList<IAttachment> attachments,
             IReadOnlyList<IEmbed> embeds,
-            Optional<IReaction> reactions,
+            Optional<IReadOnlyList<IReaction>> reactions,
             Optional<string> nonce,
             bool isPinned,
             Optional<Snowflake> webhookID,

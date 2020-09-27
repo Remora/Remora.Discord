@@ -529,7 +529,8 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddReactionObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IReaction, Reaction>();
+            options.AddDataObjectConverter<IReaction, Reaction>()
+                .WithPropertyName(r => r.HasCurrentUserReacted, "me");
 
             return options;
         }

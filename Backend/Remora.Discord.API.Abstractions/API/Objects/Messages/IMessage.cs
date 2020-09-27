@@ -119,7 +119,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets an array of reaction objects.
         /// </summary>
-        Optional<IReaction> Reactions { get; }
+        Optional<IReadOnlyList<IReaction>> Reactions { get; }
 
         /// <summary>
         /// Gets a nonce, used for validating a message was sent. Technically, this can be either an integer or a

@@ -50,7 +50,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
             IReadOnlyList<IAttachment> attachments,
             IReadOnlyList<IEmbed> embeds,
-            Optional<IReaction> reactions,
+            Optional<IReadOnlyList<IReaction>> reactions,
             Optional<string> nonce,
             bool isPinned,
             Optional<Snowflake> webhookID,
