@@ -1,0 +1,10 @@
+{
+    "t": "GUILD_EMOJIS_UPDATE",
+    "s": 2,
+    "op": 0,
+    "d":{
+        "guild_id": "452526315288133646",
+        "emojis": [ ]
+    }
+}
+
