@@ -138,7 +138,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter
                 (
                     u => u.Status,
-                    new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
+                    new StringEnumConverter<ClientStatus>(new SnakeCaseNamingPolicy())
                 )
                 .WithPropertyConverter(u => u.Since, new UnixDateTimeConverter());
 
@@ -244,7 +244,7 @@ namespace Remora.Discord.API.Extensions
             // Presences
             options.AddDataObjectConverter<IPresenceUpdate, PresenceUpdate>()
                 .WithPropertyName(p => p.Nickname, "nick")
-                .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter());
+                .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>());
 
             // Users
             options.AddDataObjectConverter<ITypingStart, TypingStart>();
@@ -322,7 +322,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
-                .WithPropertyConverter(m => m.Parse, new JsonStringEnumConverter(new SnakeCaseNamingPolicy()));
+                .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
             return options;
         }
@@ -366,6 +366,11 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuild, Guild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -440,7 +445,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IAttachment, Attachment>();
 
             options.AddDataObjectConverter<IEmbed, Embed>()
-                .WithPropertyConverter(e => e.Type, new JsonStringEnumConverter(new SnakeCaseNamingPolicy()))
+                .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
                 .WithPropertyConverter(e => e.Colour, new ColorConverter())
                 .WithPropertyName(e => e.Colour, "color");
 
@@ -481,7 +486,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter
                 (
                     p => p.Type,
-                    new JsonStringEnumConverter(new SnakeCaseNamingPolicy())
+                    new StringEnumConverter<PermissionOverwriteType>(new SnakeCaseNamingPolicy())
                 )
                 .WithReadPropertyName(g => g.Allow, "allow_new", "allow")
                 .WithReadPropertyName(g => g.Deny, "deny_new", "deny");
@@ -506,13 +511,13 @@ namespace Remora.Discord.API.Extensions
             var snakeCase = new SnakeCaseNamingPolicy();
 
             options.AddDataObjectConverter<IClientStatuses, ClientStatuses>()
-                .WithPropertyConverter(p => p.Desktop, new JsonStringEnumConverter(snakeCase))
-                .WithPropertyConverter(p => p.Mobile, new JsonStringEnumConverter(snakeCase))
-                .WithPropertyConverter(p => p.Web, new JsonStringEnumConverter(snakeCase));
+                .WithPropertyConverter(p => p.Desktop, new StringEnumConverter<ClientStatus>(snakeCase))
+                .WithPropertyConverter(p => p.Mobile, new StringEnumConverter<ClientStatus>(snakeCase))
+                .WithPropertyConverter(p => p.Web, new StringEnumConverter<ClientStatus>(snakeCase));
 
             options.AddDataObjectConverter<IPresence, Presence>()
                 .WithPropertyName(p => p.Nickname, "nick")
-                .WithPropertyConverter(p => p.Status, new JsonStringEnumConverter(snakeCase));
+                .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
 
             return options;
         }
