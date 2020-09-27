@@ -62,12 +62,17 @@ namespace Remora.Discord.API.Tests.TestBases
         protected virtual JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default;
 
         /// <summary>
+        /// Gets a value indicating whether unknown events are allowed.
+        /// </summary>
+        protected virtual bool AllowUnknownEvents { get; } = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
         /// </summary>
         protected JsonBackedTypeTestBase()
         {
             var services = new ServiceCollection()
-                .AddDiscordApi(allowUnknownEvents: false)
+                .AddDiscordApi(this.AllowUnknownEvents)
                 .AddSingleton<SampleDataService>()
                 .BuildServiceProvider();
 
