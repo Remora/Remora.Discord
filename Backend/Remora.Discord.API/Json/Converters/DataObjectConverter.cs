@@ -152,61 +152,6 @@ namespace Remora.Discord.API.Json
             );
         }
 
-        private bool IsMatchingConstructor(ConstructorInfo constructor, IReadOnlyCollection<Type> visiblePropertyTypes)
-        {
-            if (constructor.GetParameters().Length != visiblePropertyTypes.Count)
-            {
-                return false;
-            }
-
-            var parameterTypeCounts = new Dictionary<Type, int>();
-            foreach (var parameterType in constructor.GetParameters().Select(p => p.ParameterType))
-            {
-                if (parameterTypeCounts.ContainsKey(parameterType))
-                {
-                    parameterTypeCounts[parameterType] += 1;
-                }
-                else
-                {
-                    parameterTypeCounts.Add(parameterType, 1);
-                }
-            }
-
-            var propertyTypeCounts = new Dictionary<Type, int>();
-            foreach (var propertyType in visiblePropertyTypes)
-            {
-                if (propertyTypeCounts.ContainsKey(propertyType))
-                {
-                    propertyTypeCounts[propertyType] += 1;
-                }
-                else
-                {
-                    propertyTypeCounts.Add(propertyType, 1);
-                }
-            }
-
-            if (parameterTypeCounts.Count != propertyTypeCounts.Count)
-            {
-                return false;
-            }
-
-            foreach (var (propertyType, propertyTypeCount) in propertyTypeCounts)
-            {
-                if (!parameterTypeCounts.TryGetValue(propertyType, out var parameterTypeCount))
-                {
-                    return false;
-                }
-
-                if (propertyTypeCount != parameterTypeCount)
-                {
-                    return false;
-                }
-            }
-
-            // This constructor matches
-            return true;
-        }
-
         /// <summary>
         /// Sets whether extra JSON properties without a matching DTO property are allowed. Such properties are, if
         /// allowed, ignored. Otherwise, they throw a <see cref="JsonException"/>.
@@ -327,23 +272,7 @@ namespace Remora.Discord.API.Json
         (
             Expression<Func<TImplementation, TProperty>> propertyExpression,
             JsonConverter<TProperty> converter
-        )
-        {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _converterOverrides.Add(property, converter);
-
-            return this;
-        }
+        ) => AddPropertyConverter(propertyExpression, converter);
 
         /// <summary>
         /// Overrides the converter of the given property.
@@ -356,23 +285,7 @@ namespace Remora.Discord.API.Json
         (
             Expression<Func<TImplementation, Optional<TProperty>>> propertyExpression,
             JsonConverter<TProperty> converter
-        )
-        {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _converterOverrides.Add(property, converter);
-
-            return this;
-        }
+        ) => AddPropertyConverter(propertyExpression, converter);
 
         /// <summary>
         /// Overrides the converter of the given property.
@@ -387,22 +300,7 @@ namespace Remora.Discord.API.Json
             JsonConverter<TProperty> converter
         )
             where TProperty : struct
-        {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _converterOverrides.Add(property, converter);
-
-            return this;
-        }
+            => AddPropertyConverter(propertyExpression, converter);
 
         /// <summary>
         /// Overrides the converter of the given property.
@@ -417,22 +315,41 @@ namespace Remora.Discord.API.Json
             JsonConverter<TProperty> converter
         )
             where TProperty : struct
-        {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
-            {
-                throw new InvalidOperationException();
-            }
+            => AddPropertyConverter(propertyExpression, converter);
 
-            var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
-            {
-                throw new InvalidOperationException();
-            }
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <typeparam name="TEnumerable">The enumerable type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty, TEnumerable>
+        (
+            Expression<Func<TImplementation, TEnumerable>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+            where TProperty : struct
+            where TEnumerable : IEnumerable<TProperty>
+            => AddPropertyConverter(propertyExpression, converter);
 
-            _converterOverrides.Add(property, converter);
-
-            return this;
-        }
+        /// <summary>
+        /// Overrides the converter of the given property.
+        /// </summary>
+        /// <param name="propertyExpression">The property expression.</param>
+        /// <param name="converter">The JSON converter.</param>
+        /// <typeparam name="TProperty">The property type.</typeparam>
+        /// <typeparam name="TEnumerable">The enumerable type.</typeparam>
+        /// <returns>The converter, with the property name.</returns>
+        public DataObjectConverter<TInterface, TImplementation> WithPropertyConverter<TProperty, TEnumerable>
+        (
+            Expression<Func<TImplementation, Optional<TEnumerable>>> propertyExpression,
+            JsonConverter<TProperty> converter
+        )
+            where TProperty : struct
+            where TEnumerable : IEnumerable<TProperty>
+            => AddPropertyConverter(propertyExpression, converter);
 
         /// <summary>
         /// Overrides the converter of the given property.
@@ -445,22 +362,7 @@ namespace Remora.Discord.API.Json
         (
             Expression<Func<TImplementation, TProperty>> propertyExpression,
             JsonConverterFactory converterFactory
-        )
-        {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
-            {
-                throw new InvalidOperationException();
-            }
-
-            var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
-            {
-                throw new InvalidOperationException();
-            }
-
-            _converterFactoryOverrides.Add(property, converterFactory);
-            return this;
-        }
+        ) => AddPropertyConverter(propertyExpression, converterFactory);
 
         /// <inheritdoc />
         public override TInterface Read
@@ -702,6 +604,103 @@ namespace Remora.Discord.API.Json
 
             var createdConverter = converterFactory.CreateConverter(innerType, options);
             return createdConverter;
+        }
+
+        private DataObjectConverter<TInterface, TImplementation> AddPropertyConverter<TExpression>
+        (
+            Expression<TExpression> expression,
+            JsonConverter converter
+        )
+        {
+            if (!(expression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _converterOverrides.Add(property, converter);
+            return this;
+        }
+
+        private DataObjectConverter<TInterface, TImplementation> AddPropertyConverter<TExpression>
+        (
+            Expression<TExpression> expression,
+            JsonConverterFactory converterFactory
+        )
+        {
+            if (!(expression.Body is MemberExpression memberExpression))
+            {
+                throw new InvalidOperationException();
+            }
+
+            var member = memberExpression.Member;
+            if (!(member is PropertyInfo property))
+            {
+                throw new InvalidOperationException();
+            }
+
+            _converterFactoryOverrides.Add(property, converterFactory);
+            return this;
+        }
+
+        private bool IsMatchingConstructor(ConstructorInfo constructor, IReadOnlyCollection<Type> visiblePropertyTypes)
+        {
+            if (constructor.GetParameters().Length != visiblePropertyTypes.Count)
+            {
+                return false;
+            }
+
+            var parameterTypeCounts = new Dictionary<Type, int>();
+            foreach (var parameterType in constructor.GetParameters().Select(p => p.ParameterType))
+            {
+                if (parameterTypeCounts.ContainsKey(parameterType))
+                {
+                    parameterTypeCounts[parameterType] += 1;
+                }
+                else
+                {
+                    parameterTypeCounts.Add(parameterType, 1);
+                }
+            }
+
+            var propertyTypeCounts = new Dictionary<Type, int>();
+            foreach (var propertyType in visiblePropertyTypes)
+            {
+                if (propertyTypeCounts.ContainsKey(propertyType))
+                {
+                    propertyTypeCounts[propertyType] += 1;
+                }
+                else
+                {
+                    propertyTypeCounts.Add(propertyType, 1);
+                }
+            }
+
+            if (parameterTypeCounts.Count != propertyTypeCounts.Count)
+            {
+                return false;
+            }
+
+            foreach (var (propertyType, propertyTypeCount) in propertyTypeCounts)
+            {
+                if (!parameterTypeCounts.TryGetValue(propertyType, out var parameterTypeCount))
+                {
+                    return false;
+                }
+
+                if (propertyTypeCount != parameterTypeCount)
+                {
+                    return false;
+                }
+            }
+
+            // This constructor matches
+            return true;
         }
     }
 }
