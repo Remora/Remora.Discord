@@ -388,7 +388,12 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IPruneCount, PruneCount>();
             options.AddDataObjectConverter<IBan, Ban>();
-            options.AddDataObjectConverter<IGuildPreview, GuildPreview>();
+            options.AddDataObjectConverter<IGuildPreview, GuildPreview>()
+                .WithPropertyConverter
+                (
+                    p => p.Features, new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                );
+
             options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
                 .WithPropertyName(w => w.IsEnabled, "enabled");
 
@@ -548,7 +553,11 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsVerified, "verified")
                 .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
 
-            options.AddDataObjectConverter<IUserMention, UserMention>();
+            options.AddDataObjectConverter<IUserMention, UserMention>()
+                .WithPropertyName(m => m.IsBot, "bot")
+                .WithPropertyName(m => m.IsSystem, "system")
+                .WithPropertyName(m => m.IsVerified, "verified")
+                .WithPropertyName(m => m.IsMFAEnabled, "mfa_enabled");
 
             options.AddDataObjectConverter<IConnection, Connection>()
                 .WithPropertyName(c => c.IsRevoked, "revoked")
