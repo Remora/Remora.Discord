@@ -60,8 +60,10 @@ The full REST API surface has abstract interfaces defined, and requires concrete
 for unit tests.  
 
 ## 3. Installation
-Currently, Remora.Discord is not installable from nuget or any other common platform. If you wish to use or develop the 
-library further, you will need to compile it from source.
+Remora.Discord has a prerelease, early alpha version up on [nuget](https://www.nuget.org/packages/Remora.Discord/) - get
+it there!
+
+If you wish to use or develop the library further, you will need to compile it from source.
 
 ```bash
 git clone git@github.com:Nihlus/Remora.Discord.git
