@@ -92,7 +92,15 @@ namespace DiceRoller.Responders
             using var response = await _httpClient.GetAsync(requestUrl);
             if (!response.IsSuccessStatusCode)
             {
-                return EventResponseResult.FromError(response.ReasonPhrase);
+                var failEmbed = new Embed(description: "Dice rolling failed :(", colour: Color.Red);
+
+                var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
+                if (!replyFail.IsSuccess)
+                {
+                    return EventResponseResult.FromError(replyFail);
+                }
+
+                return EventResponseResult.FromSuccess();
             }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync();
