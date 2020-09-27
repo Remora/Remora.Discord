@@ -90,6 +90,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the time when the integration was last synced.
         /// </summary>
-        DateTime SyncedAt { get; }
+        DateTimeOffset SyncedAt { get; }
     }
 }

@@ -63,7 +63,7 @@ namespace Remora.Discord.API.Objects
         public IAccount Account { get; }
 
         /// <inheritdoc />
-        public DateTime SyncedAt { get; }
+        public DateTimeOffset SyncedAt { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Integration"/> class.
@@ -93,7 +93,7 @@ namespace Remora.Discord.API.Objects
             int expireGracePeriod,
             IUser user,
             IAccount account,
-            DateTime syncedAt
+            DateTimeOffset syncedAt
         )
         {
             this.ID = id;
