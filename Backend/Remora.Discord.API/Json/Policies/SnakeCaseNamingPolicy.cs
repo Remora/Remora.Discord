@@ -31,6 +31,17 @@ namespace Remora.Discord.API.Json
     /// </summary>
     public class SnakeCaseNamingPolicy : JsonNamingPolicy
     {
+        private readonly bool _upperCase;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnakeCaseNamingPolicy"/> class.
+        /// </summary>
+        /// <param name="upperCase">Whether the converted names should be in all upper case.</param>
+        public SnakeCaseNamingPolicy(bool upperCase = false)
+        {
+            _upperCase = upperCase;
+        }
+
         /// <inheritdoc />
         public override string ConvertName(string name)
         {
@@ -72,7 +83,9 @@ namespace Remora.Discord.API.Json
                 builder.Append(char.ToLowerInvariant(c));
             }
 
-            return builder.ToString();
+            return _upperCase
+                ? builder.ToString().ToUpperInvariant()
+                : builder.ToString();
         }
     }
 }
