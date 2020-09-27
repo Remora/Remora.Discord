@@ -5,7 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0$(PackagePreReleaseVersion)</Version>
+        <Version>1.0.0-alpha2</Version>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+    </ItemGroup>
 
 </Project>
