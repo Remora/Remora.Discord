@@ -21,7 +21,6 @@
 //
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
@@ -199,7 +198,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsEmbedEnabled, "embed_enabled")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
-            options.AddDataObjectConverter<IGuildDelete, GuildDelete>();
+            options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
+                .WithPropertyName(d => d.IsUnavailable, "unavailable");
 
             options.AddDataObjectConverter<IGuildBanAdd, GuildBanAdd>();
             options.AddDataObjectConverter<IGuildBanRemove, GuildBanRemove>();
@@ -207,9 +207,14 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildEmojisUpdate, GuildEmojisUpdate>();
             options.AddDataObjectConverter<IGuildIntegrationsUpdate, GuildIntegrationsUpdate>();
 
-            options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>();
+            options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>()
+                .WithPropertyName(m => m.Nickname, "nick")
+                .WithPropertyName(m => m.IsDeafened, "deaf")
+                .WithPropertyName(m => m.IsMuted, "mute");
+
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
-            options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>();
+            options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
+                .WithPropertyName(u => u.Nickname, "nick");
 
             options.AddDataObjectConverter<IGuildMembersChunk, GuildMembersChunk>();
 
@@ -218,7 +223,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
 
             // Invites
-            options.AddDataObjectConverter<IInviteCreate, InviteCreate>();
+            options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
+                .WithPropertyName(c => c.IsTemporary, "temporary");
+
             options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
 
             // Messages
@@ -237,7 +244,9 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IMessageDelete, MessageDelete>();
-            options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>();
+            options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>()
+                .WithPropertyName(d => d.MessageIDs, "ids");
+
             options.AddDataObjectConverter<IMessageReactionAdd, MessageReactionAdd>();
             options.AddDataObjectConverter<IMessageReactionRemove, MessageReactionRemove>();
             options.AddDataObjectConverter<IMessageReactionRemoveAll, MessageReactionRemoveAll>();
@@ -246,7 +255,7 @@ namespace Remora.Discord.API.Extensions
             // Presences
             options.AddDataObjectConverter<IPresenceUpdate, PresenceUpdate>()
                 .WithPropertyName(p => p.Nickname, "nick")
-                .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>());
+                .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(new SnakeCaseNamingPolicy()));
 
             // Users
             options.AddDataObjectConverter<ITypingStart, TypingStart>();
