@@ -1,0 +1,11 @@
+{
+    "id": "197038439483310086",
+    "name": "ewe",
+    "type": "twitch",
+    "revoked": true,
+    "integrations": [ ],
+    "verified": true,
+    "friend_sync": false,
+    "show_activity": false,
+    "visibility": 1
+}

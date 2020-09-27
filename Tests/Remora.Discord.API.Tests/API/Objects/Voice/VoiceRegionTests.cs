@@ -1,5 +1,5 @@
 //
-//  PermissionOverwriteTests.cs
+//  VoiceRegionTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,21 +22,11 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
-    public class PermissionOverwriteTests : ObjectTestBase<IPermissionOverwrite>
+    public class VoiceRegionTests : ObjectTestBase<IVoiceRegion>
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "deny_new", // aliased and collapsed to just "deny"
-                "allow_new", // aliased and collapsed to just "allow"
-            }
-        );
     }
 }

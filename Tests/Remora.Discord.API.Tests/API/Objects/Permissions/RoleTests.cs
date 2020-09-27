@@ -22,11 +22,20 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
     public class RoleTests : ObjectTestBase<IRole>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        (
+            new[]
+            {
+                "permissions_new", // aliased and collapsed to just "permissions"
+            }
+        );
     }
 }
