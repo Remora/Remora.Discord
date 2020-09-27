@@ -83,6 +83,8 @@ namespace Remora.Discord.API.Extensions
                             .AddVoiceObjectConverters()
                             .AddWebhookObjectConverters();
 
+                        options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
+
                         options
                             .AddConverter<ISO8601DateTimeOffsetConverter>()
                             .AddConverter<OptionalConverterFactory>()

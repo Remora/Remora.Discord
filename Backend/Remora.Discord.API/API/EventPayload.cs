@@ -33,16 +33,27 @@ namespace Remora.Discord.API
         where TEventData : IGatewayEvent
     {
         /// <inheritdoc />
+        public string EventName { get; }
+
+        /// <inheritdoc />
         public int SequenceNumber { get; }
+
+        /// <inheritdoc />
+        public OperationCode OperationCode { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventPayload{TEventData}"/> class.
         /// </summary>
-        /// <param name="data">The event data.</param>
+        /// <param name="eventName">The name of the event.</param>
         /// <param name="sequenceNumber">The sequence number.</param>
-        public EventPayload(TEventData data, int sequenceNumber)
+        /// <param name="operationCode">The operation code for the event.</param>
+        /// <param name="data">The event data.</param>
+        public EventPayload(string eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
             : base(data)
         {
+            this.EventName = eventName;
+            this.SequenceNumber = sequenceNumber;
+            this.OperationCode = operationCode;
             this.SequenceNumber = sequenceNumber;
         }
     }

@@ -141,17 +141,22 @@ namespace Remora.Discord.API.Json
                     throw new JsonException();
                 }
 
-                var dataType = genericArguments[0];
-
-                var dataName = _snakeCase.ConvertName(dataType.Name.Substring(1)).ToUpperInvariant();
-                writer.WriteString("t", dataName);
-
                 if (value is IEventPayload eventPayload)
                 {
+                    var dataType = genericArguments[0];
+                    var dataName = _snakeCase.ConvertName(dataType.Name.Substring(1)).ToUpperInvariant();
+
+                    var nameToWrite = eventPayload.EventName != dataName
+                        ? eventPayload.EventName
+                        : dataName;
+
+                    writer.WriteString("t", nameToWrite);
+
                     writer.WriteNumber("s", eventPayload.SequenceNumber);
                 }
                 else
                 {
+                    writer.WriteNull("t");
                     writer.WriteNull("s");
                 }
             }
@@ -178,7 +183,17 @@ namespace Remora.Discord.API.Json
             }
             else
             {
-                JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                if (payloadData is UnknownEvent unknownEvent)
+                {
+                    using var eventData = JsonDocument.Parse(unknownEvent.Data);
+                    var innerData = eventData.RootElement.GetProperty("d");
+
+                    innerData.WriteTo(writer);
+                }
+                else
+                {
+                    JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                }
             }
 
             writer.WriteEndObject();
@@ -274,8 +289,10 @@ namespace Remora.Discord.API.Json
 
                 return new EventPayload<IUnknownEvent>
                 (
-                    new UnknownEvent(document.RootElement.GetRawText()),
-                    sequenceNumber
+                    eventName,
+                    sequenceNumber,
+                    OperationCode.Dispatch,
+                    new UnknownEvent(document.RootElement.GetRawText())
                 );
             }
 
@@ -296,21 +313,32 @@ namespace Remora.Discord.API.Json
 
                 return new EventPayload<IUnknownEvent>
                 (
-                    new UnknownEvent(document.RootElement.GetRawText()),
-                    sequenceNumber
+                    eventName,
+                    sequenceNumber,
+                    OperationCode.Dispatch,
+                    new UnknownEvent(document.RootElement.GetRawText())
                 );
             }
 
             var payloadConstructor = typeof(EventPayload<>)
                 .MakeGenericType(eventType)
-                .GetConstructor(new[] { eventType, typeof(int) });
+                .GetConstructor(new[] { typeof(string), typeof(int), typeof(OperationCode), eventType, });
 
             if (payloadConstructor is null)
             {
                 throw new JsonException();
             }
 
-            var eventObject = payloadConstructor.Invoke(new[] { eventData, sequenceNumber });
+            var eventObject = payloadConstructor.Invoke
+            (
+                new[]
+                {
+                    eventName,
+                    sequenceNumber,
+                    OperationCode.Dispatch,
+                    eventData
+                }
+            );
 
             if (!(eventObject is IPayload))
             {

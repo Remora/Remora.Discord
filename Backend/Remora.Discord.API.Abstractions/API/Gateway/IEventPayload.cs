@@ -28,6 +28,16 @@ namespace Remora.Discord.API.Abstractions.Gateway
     public interface IEventPayload : IPayload
     {
         /// <summary>
+        /// Gets the name of the event.
+        /// </summary>
+        string EventName { get; }
+
+        /// <summary>
+        /// Gets the operation code of the event.
+        /// </summary>
+        OperationCode OperationCode { get; }
+
+        /// <summary>
         /// Gets the sequence number of the event.
         /// </summary>
         int SequenceNumber { get; }
