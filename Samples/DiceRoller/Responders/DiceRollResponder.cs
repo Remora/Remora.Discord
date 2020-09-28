@@ -92,12 +92,10 @@ namespace DiceRoller.Responders
             if (!getRolls.IsSuccess)
             {
                 var replyWithFailure = await ReplyWithFailureAsync(channel);
-                if (replyWithFailure.IsSuccess)
-                {
-                    return EventResponseResult.FromError(getRolls);
-                }
 
-                return replyWithFailure;
+                return replyWithFailure.IsSuccess
+                    ? EventResponseResult.FromError(getRolls)
+                    : replyWithFailure;
             }
 
             var rollResponse = getRolls.Entity;
