@@ -32,6 +32,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Tests", "Tests\Remora.Discord.Tests\Remora.Discord.Tests.csproj", "{2BFF39E1-7B69-4601-BE2B-1F61A1B3598D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D1A34922-E02F-492B-AEF5-9B34E81CE293}"
+ProjectSection(SolutionItems) = preProject
+	Samples\Directory.Build.props = Samples\Directory.Build.props
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnknownEventLogger", "Samples\UnknownEventLogger\UnknownEventLogger.csproj", "{ED960998-F9BD-4250-A40F-9B968DD499C0}"
 EndProject
