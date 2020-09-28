@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -35,6 +34,8 @@ using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
 using Xunit;
 
+#pragma warning disable CS1591, SA1600
+
 namespace Remora.Discord.Rest.Tests.API.AuditLog
 {
     /// <summary>
@@ -45,7 +46,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
         /// <summary>
         /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
         /// </summary>
-        public class GetAuditLogBotAsync : RestAPITestBase
+        public class GetAuditLogAsync : RestAPITestBase
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -91,6 +92,40 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                 );
 
                 ResultAssert.Successful(result);
+            }
+
+            [Fact]
+            public async Task ReturnsErrorIfLimitIsOutsideValidRange()
+            {
+                var services = CreateConfiguredAPIServices(b => { });
+                var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
+
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var actionType = AuditLogEvent.BotAdd;
+                var before = new Snowflake(2);
+
+                var result = await api.GetAuditLogAsync
+                (
+                    guildID,
+                    userID,
+                    actionType,
+                    before,
+                    0
+                );
+
+                ResultAssert.Unsuccessful(result);
+
+                result = await api.GetAuditLogAsync
+                (
+                    guildID,
+                    userID,
+                    actionType,
+                    before,
+                    101
+                );
+
+                ResultAssert.Unsuccessful(result);
             }
         }
     }
