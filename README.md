@@ -46,18 +46,11 @@ Remora.Discord is currently in early development. It has not been released in a 
 such as nuget.
 
 ### 2.1 Gateway
-The Discord Gateway API (v6) is mostly implemented. The gateway client can connect, heartbeat, reconnect, resume, 
+The Discord Gateway API (v6) is fully implemented. The gateway client can connect, heartbeat, reconnect, resume, 
 receive events, and send commands.
 
-Currently, full implementations of all commands and events are not fully completed. API interfaces that define the 
-structure of the payloads are implemented, and require concrete implementations as well as sample data for unit tests.
-
 ### 2.2 REST
-The Discord REST API is partially implemented. The REST endpoints required for gateway functionality are implemented, as
-well as the endpoints required for sending messages.
-
-The full REST API surface has abstract interfaces defined, and requires concrete implementations as well as sample data
-for unit tests.  
+The Discord REST API is fully implemented.
 
 ## 3. Installation
 Remora.Discord has a prerelease, early alpha version up on [nuget](https://www.nuget.org/packages/Remora.Discord/) - get
