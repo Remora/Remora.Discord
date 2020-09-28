@@ -35,6 +35,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace DiceRoller.Responders
 {
@@ -87,20 +88,31 @@ namespace DiceRoller.Responders
                 return EventResponseResult.FromSuccess();
             }
 
+            var getRolls = await GetRollsAsync(parsedRollRequests);
+            if (!getRolls.IsSuccess)
+            {
+                var replyWithFailure = await ReplyWithFailureAsync(channel);
+                if (replyWithFailure.IsSuccess)
+                {
+                    return EventResponseResult.FromError(getRolls);
+                }
+
+                return replyWithFailure;
+            }
+
+            var rollResponse = getRolls.Entity;
+
+            return await ReplyWithRollsAsync(channel, rollResponse);
+        }
+
+        private async Task<RetrieveEntityResult<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
+        {
             var requestUrl = $"http://roll.diceapi.com/json/{string.Join('/', parsedRollRequests)}";
 
             using var response = await _httpClient.GetAsync(requestUrl);
             if (!response.IsSuccessStatusCode)
             {
-                var failEmbed = new Embed(description: "Dice rolling failed :(", colour: Color.Red);
-
-                var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
-                if (!replyFail.IsSuccess)
-                {
-                    return EventResponseResult.FromError(replyFail);
-                }
-
-                return EventResponseResult.FromSuccess();
+                return RetrieveEntityResult<RollResponse>.FromError(response.ReasonPhrase);
             }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -108,19 +120,24 @@ namespace DiceRoller.Responders
             var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
             var rollResponse = await JsonSerializer.DeserializeAsync<RollResponse>(responseStream, jsonOptions);
 
-            if (!rollResponse.Success)
-            {
-                var failEmbed = new Embed(description: "Dice rolling failed :(", colour: Color.Red);
+            return !rollResponse.Success
+                ? RetrieveEntityResult<RollResponse>.FromError("Dice rolling failed :(")
+                : rollResponse;
+        }
 
-                var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
-                if (!replyFail.IsSuccess)
-                {
-                    return EventResponseResult.FromError(replyFail);
-                }
+        private async Task<EventResponseResult> ReplyWithFailureAsync(Snowflake channel)
+        {
+            var failEmbed = new Embed(description: "Dice rolling failed :(", colour: Color.OrangeRed);
 
-                return EventResponseResult.FromSuccess();
-            }
+            var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
 
+            return !replyFail.IsSuccess
+                ? EventResponseResult.FromError(replyFail)
+                : EventResponseResult.FromSuccess();
+        }
+
+        private async Task<EventResponseResult> ReplyWithRollsAsync(Snowflake channel, RollResponse rollResponse)
+        {
             var rolls = rollResponse.Dice
                 .GroupBy(d => d.Type)
                 .ToDictionary
@@ -130,16 +147,13 @@ namespace DiceRoller.Responders
                 );
 
             var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
-
             var embed = new Embed("Rolls", fields: fields, colour: Color.LawnGreen);
 
             var replyRolls = await _channelAPI.CreateMessageAsync(channel, embed: embed);
-            if (!replyRolls.IsSuccess)
-            {
-                return EventResponseResult.FromError(replyRolls);
-            }
 
-            return EventResponseResult.FromSuccess();
+            return !replyRolls.IsSuccess
+                ? EventResponseResult.FromError(replyRolls)
+                : EventResponseResult.FromSuccess();
         }
 
         private string[] ParseRollRequests(string value)
