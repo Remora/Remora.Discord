@@ -66,12 +66,12 @@ namespace Remora.Samples.UnknownEventLogger
                         .AddFilter("System.Net.Http.HttpClient.Discord.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
+                .AddResponder<UnknownEventResponder>()
                 .BuildServiceProvider();
 
             var log = services.GetRequiredService<ILogger<Program>>();
 
             var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-            gatewayClient.SubscribeResponder<UnknownEventResponder>();
 
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
