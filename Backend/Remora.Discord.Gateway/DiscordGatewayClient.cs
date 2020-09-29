@@ -254,6 +254,17 @@ namespace Remora.Discord.Gateway
         }
 
         /// <summary>
+        /// Submits a command to the gateway, enqueueing it for sending.
+        /// </summary>
+        /// <param name="commandPayload">The command to send.</param>
+        /// <typeparam name="TCommand">The type of command to send.</typeparam>
+        public void SubmitCommandAsync<TCommand>(TCommand commandPayload) where TCommand : IGatewayCommand
+        {
+            var payload = new Payload<TCommand>(commandPayload);
+            _payloadsToSend.Enqueue(payload);
+        }
+
+        /// <summary>
         /// Starts and connects the gateway client. This task will not complete until cancelled (or faulted),
         /// maintaining the connection for the duration of it.
         ///
@@ -704,7 +715,7 @@ namespace Remora.Discord.Gateway
                 ? default
                 : new Optional<IShardIdentification>(_gatewayOptions.ShardIdentification);
 
-            var identifyPayload = new Payload<IIdentify>
+            SubmitCommandAsync
             (
                 new Identify
                 (
@@ -715,8 +726,6 @@ namespace Remora.Discord.Gateway
                     shard: shardInformation
                 )
             );
-
-            _payloadsToSend.Enqueue(identifyPayload);
 
             while (true)
             {
@@ -760,7 +769,7 @@ namespace Remora.Discord.Gateway
 
             _log.LogInformation("Resuming existing session...");
 
-            var resumePayload = new Payload<IResume>
+            SubmitCommandAsync
             (
                 new Resume
                 (
@@ -769,8 +778,6 @@ namespace Remora.Discord.Gateway
                     _lastSequenceNumber
                 )
             );
-
-            _payloadsToSend.Enqueue(resumePayload);
 
             // Push resumed events onto the queue
             while (true)
@@ -964,9 +971,7 @@ namespace Remora.Discord.Gateway
                         }
                         case IPayload<IHeartbeat> _:
                         {
-                            var heartbeatAck = new Payload<IHeartbeatAcknowledge>(new HeartbeatAcknowledge());
-                            _payloadsToSend.Enqueue(heartbeatAck);
-
+                            SubmitCommandAsync(new HeartbeatAcknowledge());
                             continue;
                         }
                         default:
