@@ -201,42 +201,51 @@ namespace Remora.Discord.API.Json
 
         private RetrieveEntityResult<OperationCode> GetOperationCode(Type objectType)
         {
-            return objectType switch
+            if (!objectType.IsGenericType)
+            {
+                return RetrieveEntityResult<OperationCode>.FromError("Unable to determine operation code.");
+            }
+
+            if (objectType.GetGenericTypeDefinition() == typeof(EventPayload<>))
+            {
+                return OperationCode.Dispatch;
+            }
+
+            var dataType = objectType.GetGenericArguments()[0];
+
+            return dataType switch
             {
                 // Commands
-                _ when typeof(Payload<IHeartbeat>).IsAssignableFrom(objectType)
+                _ when typeof(IHeartbeat).IsAssignableFrom(dataType)
                 => OperationCode.Heartbeat,
 
-                _ when typeof(Payload<IIdentify>).IsAssignableFrom(objectType)
+                _ when typeof(IIdentify).IsAssignableFrom(dataType)
                 => OperationCode.Identify,
 
-                _ when typeof(Payload<IRequestGuildMembers>).IsAssignableFrom(objectType)
+                _ when typeof(IRequestGuildMembers).IsAssignableFrom(dataType)
                 => OperationCode.RequestGuildMembers,
 
-                _ when typeof(Payload<IResume>).IsAssignableFrom(objectType)
+                _ when typeof(IResume).IsAssignableFrom(dataType)
                 => OperationCode.Resume,
 
-                _ when typeof(Payload<IUpdateStatus>).IsAssignableFrom(objectType)
+                _ when typeof(IUpdateStatus).IsAssignableFrom(dataType)
                 => OperationCode.PresenceUpdate,
 
-                _ when typeof(Payload<IUpdateVoiceState>).IsAssignableFrom(objectType)
+                _ when typeof(IUpdateVoiceState).IsAssignableFrom(dataType)
                 => OperationCode.VoiceStateUpdate,
 
                 // Events
-                _ when typeof(Payload<IHello>).IsAssignableFrom(objectType)
+                _ when typeof(IHello).IsAssignableFrom(dataType)
                 => OperationCode.Hello,
 
-                _ when typeof(Payload<IHeartbeatAcknowledge>).IsAssignableFrom(objectType)
+                _ when typeof(IHeartbeatAcknowledge).IsAssignableFrom(dataType)
                 => OperationCode.HeartbeatAcknowledge,
 
-                _ when typeof(Payload<IInvalidSession>).IsAssignableFrom(objectType)
+                _ when typeof(IInvalidSession).IsAssignableFrom(dataType)
                 => OperationCode.InvalidSession,
 
-                _ when typeof(Payload<IReconnect>).IsAssignableFrom(objectType)
+                _ when typeof(IReconnect).IsAssignableFrom(dataType)
                 => OperationCode.Reconnect,
-
-                _ when objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(EventPayload<>)
-                => OperationCode.Dispatch,
 
                 // Other
                 _ => RetrieveEntityResult<OperationCode>.FromError("Unknown operation code.")
