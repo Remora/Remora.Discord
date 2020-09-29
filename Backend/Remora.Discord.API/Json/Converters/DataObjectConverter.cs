@@ -54,6 +54,17 @@ namespace Remora.Discord.API.Json
         /// </summary>
         private bool _allowExtraProperties = true;
 
+        /// <inheritdoc />
+        public override bool CanConvert(Type typeToConvert)
+        {
+            if (typeToConvert == typeof(TImplementation))
+            {
+                return true;
+            }
+
+            return base.CanConvert(typeToConvert);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DataObjectConverter{TInterface, TImplementation}"/> class.
         /// </summary>
