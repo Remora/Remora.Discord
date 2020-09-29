@@ -73,12 +73,6 @@ namespace Remora.Discord.Gateway
         private readonly ConcurrentQueue<IPayload> _receivedPayloads;
 
         /// <summary>
-        /// Holds the various responder types currently subscribed to the gateway. The key of this dictionary is the
-        /// TData type of the <see cref="IPayload{TData}"/> that the responders in the value are compatible with.
-        /// </summary>
-        private readonly Dictionary<Type, IReadOnlyList<Type>> _responders;
-
-        /// <summary>
         /// Holds the currently running responders.
         /// </summary>
         private readonly ConcurrentQueue<Task<EventResponseResult[]>> _runningResponderDispatches;
@@ -164,7 +158,6 @@ namespace Remora.Discord.Gateway
             _services = services;
 
             _clientWebSocket = new ClientWebSocket();
-            _responders = new Dictionary<Type, IReadOnlyList<Type>>();
             _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
 
             _payloadsToSend = new ConcurrentQueue<IPayload>();
@@ -175,82 +168,6 @@ namespace Remora.Discord.Gateway
             _tokenSource = new CancellationTokenSource();
             _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
             _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
-        }
-
-        /// <summary>
-        /// Subscribes the given responder to events from the gateway.
-        /// </summary>
-        /// <remarks>
-        /// This method is not thread-safe, and will throw an exception if the client is currently running.
-        /// </remarks>
-        /// <typeparam name="TResponder">The responder to subscribe.</typeparam>
-        public void SubscribeResponder<TResponder>() where TResponder : IResponder
-        {
-            if (_connectionStatus != GatewayConnectionStatus.Offline)
-            {
-                throw new InvalidOperationException("New responders can't be added while the client is running.");
-            }
-
-            var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
-            var responderInterfaces = responderTypeInterfaces.Where
-            (
-                r => r.IsGenericType && r.GetGenericTypeDefinition() == typeof(IResponder<>)
-            );
-
-            foreach (var responderInterface in responderInterfaces)
-            {
-                var eventTypeKey = responderInterface.GetGenericArguments().Single();
-                if (!_responders.TryGetValue(eventTypeKey, out var list))
-                {
-                    _responders.Add(eventTypeKey, new[] { typeof(TResponder) });
-                }
-                else
-                {
-                    var newResponders = list.Contains(typeof(TResponder))
-                        ? list
-                        : list.Append(typeof(TResponder)).ToList();
-
-                    _responders[eventTypeKey] = newResponders;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Unsubscribes the given responder from events from the gateway.
-        /// </summary>
-        /// <remarks>
-        /// This method is not thread-safe, and will throw an exception if the client is currently running.
-        /// </remarks>
-        /// <typeparam name="TResponder">The responder to unsubscribe.</typeparam>
-        public void UnsubscribeResponder<TResponder>() where TResponder : IResponder
-        {
-            if (_connectionStatus != GatewayConnectionStatus.Offline)
-            {
-                throw new InvalidOperationException("Added responders can't be removed while the client is running.");
-            }
-
-            var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
-            var responderInterfaces = responderTypeInterfaces.Where
-            (
-                r => r.IsGenericType && r.GetGenericTypeDefinition() == typeof(IResponder<>)
-            );
-
-            foreach (var responderInterface in responderInterfaces)
-            {
-                var eventTypeKey = responderInterface.GetGenericArguments().Single();
-
-                if (!_responders.TryGetValue(eventTypeKey, out var list))
-                {
-                    continue;
-                }
-
-                if (!list.Contains(typeof(TResponder)))
-                {
-                    continue;
-                }
-
-                _responders[eventTypeKey] = list.Where(t => t != typeof(TResponder)).ToList();
-            }
         }
 
         /// <summary>
@@ -645,17 +562,12 @@ namespace Remora.Discord.Gateway
         )
             where TGatewayEvent : IGatewayEvent
         {
-            if (!_responders.TryGetValue(typeof(TGatewayEvent), out var relevantResponders))
+            using var serviceScope = _services.CreateScope();
+            var responders = serviceScope.ServiceProvider.GetServices<IResponder<TGatewayEvent>>().ToList();
+            if (responders.Count == 0)
             {
                 return Array.Empty<EventResponseResult>();
             }
-
-            using var serviceScope = _services.CreateScope();
-
-            var responders = relevantResponders
-                .Select(t => ActivatorUtilities.CreateInstance(serviceScope.ServiceProvider, t))
-                .Cast<IResponder<TGatewayEvent>>()
-                .ToList();
 
             return await Task.WhenAll
             (

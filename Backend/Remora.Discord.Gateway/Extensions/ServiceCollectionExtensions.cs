@@ -21,7 +21,9 @@
 //
 
 using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Rest.Extensions;
 
 namespace Remora.Discord.Gateway.Extensions
@@ -47,6 +49,33 @@ namespace Remora.Discord.Gateway.Extensions
                 .AddDiscordRest(token)
                 .AddSingleton<Random>()
                 .AddSingleton<DiscordGatewayClient>();
+
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a responder to the service collection. This method registers the responder as being available for all
+        /// <see cref="IResponder{T}"/> implementations it supports.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TResponder">The concrete responder type.</typeparam>
+        /// <returns>The service collection, with the responder added.</returns>
+        public static IServiceCollection AddResponder<TResponder>
+        (
+            this IServiceCollection serviceCollection
+        )
+            where TResponder : IResponder
+        {
+            var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
+            var responderInterfaces = responderTypeInterfaces.Where
+            (
+                r => r.IsGenericType && r.GetGenericTypeDefinition() == typeof(IResponder<>)
+            );
+
+            foreach (var responderInterface in responderInterfaces)
+            {
+                serviceCollection.AddScoped(responderInterface, typeof(TResponder));
+            }
 
             return serviceCollection;
         }

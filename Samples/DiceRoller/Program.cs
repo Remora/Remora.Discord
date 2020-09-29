@@ -67,7 +67,8 @@ namespace DiceRoller
                         .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
-                .AddDiscordGateway(() => botToken);
+                .AddDiscordGateway(() => botToken)
+                .AddResponder<DiceRollResponder>();
 
             serviceCollection.AddHttpClient();
 
@@ -76,7 +77,6 @@ namespace DiceRoller
             var log = services.GetRequiredService<ILogger<Program>>();
 
             var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-            gatewayClient.SubscribeResponder<DiceRollResponder>();
 
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
