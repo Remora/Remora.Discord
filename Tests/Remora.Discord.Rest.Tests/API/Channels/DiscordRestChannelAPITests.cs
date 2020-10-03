@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -697,6 +700,733 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 );
 
                 ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CreateReaction"/> method.
+        /// </summary>
+        public class CreateReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.CreateReactionAsync(channelId, messageId, "🔥");
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteOwnReaction"/> method.
+        /// </summary>
+        public class DeleteOwnReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteOwnReactionAsync(channelId, messageId, "🔥");
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteUserReaction"/> method.
+        /// </summary>
+        public class DeleteUserReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var userId = new Snowflake(2);
+
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/{userId}"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteUserReactionAsync(channelId, messageId, "🔥", userId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="GetReactions"/> method.
+        /// </summary>
+        public class GetReactions : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var before = new Snowflake(2);
+                var after = new Snowflake(3);
+                var limit = 10;
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                    )
+                    .WithQueryString
+                    (
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("before", before.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString()),
+                            new KeyValuePair<string, string>("limit", limit.ToString())
+                        }
+                    )
+                    .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetReactionsAsync(channelId, messageId, "🔥", before, after, limit);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteAllReactions"/> method.
+        /// </summary>
+        public class DeleteAllReactions : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteAllReactionsAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteAllReactionsForEmoji"/> method.
+        /// </summary>
+        public class DeleteAllReactionsForEmoji : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteAllReactionsForEmojiAsync(channelId, messageId, "🔥");
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="EditMessage"/> method.
+        /// </summary>
+        public class EditMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var content = "drr";
+                var embed = new Embed();
+                var flags = MessageFlags.SuppressEmbeds;
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                    )
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("content", p => p.Is(content))
+                                .WithProperty("embed", p => p.IsObject())
+                                .WithProperty("flags", p => p.Is((int)flags))
+                        )
+                    )
+                    .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                );
+
+                var result = await api.EditMessageAsync(channelId, messageId, content, embed, flags);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteMessage"/> method.
+        /// </summary>
+        public class DeleteMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteMessageAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteAllReactionsForEmoji"/> method.
+        /// </summary>
+        public class BulkDeleteMessages : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageIds = new[] { new Snowflake(1), new Snowflake(2) };
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        )
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty
+                                    (
+                                        "messages",
+                                        p => p.IsArray
+                                        (
+                                            a => a
+                                                .WithCount(messageIds.Length)
+                                        )
+                                    )
+                            )
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.BulkDeleteMessagesAsync(channelId, messageIds);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="EditChannelPermissions"/> method.
+        /// </summary>
+        public class EditChannelPermissions : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var overwriteId = new Snowflake(1);
+
+                var allow = new DiscordPermissionSet(DiscordPermission.Administrator);
+                var deny = new DiscordPermissionSet(DiscordPermission.Administrator);
+                var type = PermissionOverwriteType.Member;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
+                        )
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("allow", p => p.Is((int)allow.Value))
+                                    .WithProperty("deny", p => p.Is((int)deny.Value))
+                                    .WithProperty("type", p => p.Is((int)type))
+                            )
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.EditChannelPermissionsAsync(channelId, overwriteId, allow, deny, type);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="GetChannelInvites"/> method.
+        /// </summary>
+        public class GetChannelInvites : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/invites"
+                        )
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetChannelInvitesAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CreateChannelInvite"/> method.
+        /// </summary>
+        public class CreateChannelInvite : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var maxAge = TimeSpan.FromSeconds(10);
+                var maxUses = 12;
+                var temporary = false;
+                var unique = true;
+                var targetUser = new Snowflake(1);
+                var targetUserType = TargetUserType.Stream;
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}channels/{channelId}/invites"
+                    )
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("max_age", p => p.Is(maxAge.TotalSeconds))
+                                .WithProperty("max_uses", p => p.Is(maxUses))
+                                .WithProperty("temporary", p => p.Is(temporary))
+                                .WithProperty("unique", p => p.Is(unique))
+                                .WithProperty("target_user", p => p.Is(targetUser.ToString()))
+                                .WithProperty("target_user_type", p => p.Is((int)targetUserType))
+                        )
+                    )
+                    .Respond("application/json", "{\n    \"code\": \"0vCdhLbwjZZTWZLD\",\n    \"guild\": {\n        \"id\": \"197038439483310086\",\n        \"name\": \"Discord Testers\",\n        \"icon\": \"f64c482b807da4f539cff778d174971c\",\n        \"description\": \"The official place to report Discord Bugs!\",\n        \"splash\": null,\n        \"discovery_splash\": null,\n        \"features\":\n        [\n            \"ANIMATED_ICON\",\n            \"VERIFIED\",\n            \"NEWS\",\n            \"VANITY_URL\",\n            \"DISCOVERABLE\",\n            \"INVITE_SPLASH\",\n            \"BANNER\",\n            \"PUBLIC\"\n        ],\n        \"emojis\": [],\n        \"banner\": \"9b6439a7de04f1d26af92f84ac9e1e4a\",\n        \"owner_id\": \"73193882359173120\",\n        \"application_id\": null,\n        \"region\": \"us-west\",\n        \"afk_channel_id\": null,\n        \"afk_timeout\": 300,\n        \"system_channel_id\": null,\n        \"widget_enabled\": true,\n        \"widget_channel_id\": null,\n        \"verification_level\": 3,\n        \"roles\": [],\n        \"default_message_notifications\": 1,\n        \"mfa_level\": 1,\n        \"explicit_content_filter\": 2,\n        \"max_presences\": 40000,\n        \"max_members\": 250000,\n        \"vanity_url_code\": \"discord-testers\",\n        \"premium_tier\": 3,\n        \"premium_subscription_count\": 33,\n        \"system_channel_flags\": 0,\n        \"preferred_locale\": \"en-US\",\n        \"rules_channel_id\": \"441688182833020939\",\n        \"public_updates_channel_id\": \"281283303326089216\",\n        \"embed_enabled\": true,\n        \"embed_channel_id\": null\n    },\n    \"channel\": {\n        \"id\": \"165176875973476352\",\n        \"name\": \"illuminati\",\n        \"type\": 0\n    },\n    \"inviter\": {\n        \"id\": \"115590097100865541\",\n        \"username\": \"speed\",\n        \"avatar\": \"deadbeef\",\n        \"discriminator\": \"7653\"\n    },\n    \"target_user\": {\n        \"id\": \"165176875973476352\",\n        \"username\": \"bob\",\n        \"avatar\": \"deadbeef\",\n        \"discriminator\": \"1234\"\n    },\n    \"target_user_type\": 1\n}\n")
+                );
+
+                var result = await api.CreateChannelInviteAsync
+                (
+                    channelId,
+                    maxAge,
+                    maxUses,
+                    temporary,
+                    unique,
+                    targetUser,
+                    targetUserType
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeleteChannelPermission"/> method.
+        /// </summary>
+        public class DeleteChannelPermission : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var overwriteId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteChannelPermissionAsync(channelId, overwriteId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="FollowNewsChannel"/> method.
+        /// </summary>
+        public class FollowNewsChannel : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var webhookChannelId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/followers"
+                        )
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o.WithProperty("webhook_channel_id", p => p.Is(webhookChannelId.ToString()))
+                            )
+                        )
+                        .Respond("application/json", "{\n    \"channel_id\": \"0\", \n    \"webhook_id\": \"1\"\n}")
+                );
+
+                var result = await api.FollowNewsChannelAsync(channelId, webhookChannelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="TriggerTypingIndicator"/> method.
+        /// </summary>
+        public class TriggerTypingIndicator : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/typing"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.TriggerTypingIndicatorAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="GetPinnedMessages"/> method.
+        /// </summary>
+        public class GetPinnedMessages : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/pins"
+                        )
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetPinnedMessagesAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="AddPinnedChannelMessage"/> method.
+        /// </summary>
+        public class AddPinnedChannelMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
+                    )
+                    .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.AddPinnedChannelMessageAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DeletePinnedChannelMessage"/> method.
+        /// </summary>
+        public class DeletePinnedChannelMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeletePinnedChannelMessageAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="GroupDMAddRecipient"/> method.
+        /// </summary>
+        public class GroupDMAddRecipient : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var userId = new Snowflake(1);
+                var accessToken = "fbb";
+                var nick = "bb";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                        )
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("access_token", p => p.Is(accessToken))
+                                    .WithProperty("nick", p => p.Is(nick))
+                            )
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.GroupDMAddRecipientAsync(channelId, userId, accessToken, nick);
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests the <see cref="GroupDMRemoveRecipient"/> method.
+            /// </summary>
+            public class GroupDMRemoveRecipient : RestAPITestBase<IDiscordRestChannelAPI>
+            {
+                /// <summary>
+                /// Tests whether the API method performs its request correctly.
+                /// </summary>
+                /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+                [Fact]
+                public async Task PerformsRequestCorrectly()
+                {
+                    var channelId = new Snowflake(0);
+                    var userId = new Snowflake(1);
+
+                    var api = CreateAPI
+                    (
+                        b => b
+                            .Expect
+                            (
+                                HttpMethod.Delete,
+                                $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                            )
+                            .Respond(HttpStatusCode.NoContent)
+                    );
+
+                    var result = await api.GroupDMRemoveRecipientAsync(channelId, userId);
+                    ResultAssert.Successful(result);
+                }
             }
         }
     }
