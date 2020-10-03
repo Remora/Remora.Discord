@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -39,6 +41,60 @@ namespace Remora.Discord.API.Objects
         public DiscordPermissionSet(BigInteger value)
         {
             this.Value = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscordPermissionSet"/> class.
+        /// </summary>
+        /// <param name="permissions">The permissions in the set.</param>
+        public DiscordPermissionSet(params DiscordPermission[] permissions)
+        {
+            var largestPermission = permissions.Max(p => (ulong)p);
+            var largestByteIndex = (int)Math.Floor(largestPermission / 8.0);
+
+            // Create a sufficiently sized byte list
+            var bytes = new List<byte>(largestByteIndex + 1);
+            bytes.AddRange(Enumerable.Repeat((byte)0, largestByteIndex + 1));
+
+            // Convert the permission set to a byte array
+            foreach (var permission in permissions)
+            {
+                // The value of the permission is defined as the zero-based bit index, that is, a Discord value of
+                // 0x00000001 (the first permission) is represented with the value 0.
+                var bit = (ulong)permission;
+
+                // The byte index is the zero-based index into the Value property where the bit in question is.
+                var byteIndex = (int)Math.Floor(bit / 8.0);
+
+                // The bit index is the index into the byte of the value
+                var bitIndex = (byte)(bit - (ulong)(8 * byteIndex));
+
+                // Update the value in the array
+                var currentValue = bytes[byteIndex];
+                currentValue |= (byte)(1 << bitIndex);
+
+                bytes[byteIndex] = currentValue;
+            }
+
+            this.Value = new BigInteger(bytes.ToArray());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscordPermissionSet"/> class.
+        /// </summary>
+        /// <param name="permissions">The permissions in the set.</param>
+        public DiscordPermissionSet(params DiscordTextPermission[] permissions)
+            : this(permissions.Cast<DiscordPermission>().ToArray())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscordPermissionSet"/> class.
+        /// </summary>
+        /// <param name="permissions">The permissions in the set.</param>
+        public DiscordPermissionSet(params DiscordVoicePermission[] permissions)
+            : this(permissions.Cast<DiscordPermission>().ToArray())
+        {
         }
 
         /// <inheritdoc />
