@@ -42,7 +42,7 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
         /// <summary>
         /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayAsync"/> method.
         /// </summary>
-        public class GetGatewayAsync : RestAPITestBase
+        public class GetGatewayAsync : RestAPITestBase<IDiscordRestGatewayAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -51,15 +51,13 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var services = CreateConfiguredAPIServices
+                var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
                         .WithNoContent()
                         .Respond("application/json", "{ \"url\": \"wss://gateway.discord.gg/\" }")
                 );
-
-                var api = services.GetRequiredService<IDiscordRestGatewayAPI>();
 
                 var result = await api.GetGatewayAsync();
                 ResultAssert.Successful(result);
@@ -69,7 +67,7 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
         /// <summary>
         /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayBotAsync"/> method.
         /// </summary>
-        public class GetGatewayBotAsync : RestAPITestBase
+        public class GetGatewayBotAsync : RestAPITestBase<IDiscordRestGatewayAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -79,7 +77,7 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
             public async Task PerformsRequestCorrectly()
             {
                 var response = "{ \"url\": \"wss://gateway.discord.gg/\", \"shards\": 9, \"session_start_limit\": { \"total\": 1000, \"remaining\": 999, \"reset_after\": 14400000, \"max_concurrency\": 1 }}";
-                var services = CreateConfiguredAPIServices
+                var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
@@ -87,8 +85,6 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
                         .WithAuthentication()
                         .Respond("application/json", response)
                 );
-
-                var api = services.GetRequiredService<IDiscordRestGatewayAPI>();
 
                 var result = await api.GetGatewayBotAsync();
                 ResultAssert.Successful(result);

@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
         /// <summary>
         /// Tests the <see cref="DiscordRestAuditLogAPI.GetAuditLogAsync"/> method.
         /// </summary>
-        public class GetAuditLogAsync : RestAPITestBase
+        public class GetAuditLogAsync : RestAPITestBase<IDiscordRestAuditLogAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -62,7 +62,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                 var before = new Snowflake(2);
                 byte limit = 45;
 
-                var services = CreateConfiguredAPIServices
+                var api = CreateAPI
                 (
                     b =>
                         b.Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/*/audit-logs")
@@ -79,8 +79,6 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                             )
                             .Respond("application/json", response)
                 );
-
-                var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
 
                 var result = await api.GetAuditLogAsync
                 (
