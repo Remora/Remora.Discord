@@ -225,7 +225,7 @@ namespace Remora.Discord.Rest.API
         public Task<IDeleteRestEntityResult> DeleteChannelAsync
         (
             Snowflake channelID,
-            CancellationToken ct
+            CancellationToken ct = default
         )
         {
             return _discordHttpClient.DeleteAsync
