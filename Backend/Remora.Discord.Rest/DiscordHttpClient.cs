@@ -458,6 +458,15 @@ namespace Remora.Discord.Rest
             }
 
             // See if we have a JSON error to get some more details from
+            if (response.Content is null)
+            {
+                return RestRequestResult.FromError
+                (
+                    response.ReasonPhrase,
+                    response.StatusCode
+                );
+            }
+
             if (response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength <= 0)
             {
                 return RestRequestResult.FromError
