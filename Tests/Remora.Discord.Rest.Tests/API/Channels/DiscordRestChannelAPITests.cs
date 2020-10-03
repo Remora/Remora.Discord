@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -549,6 +550,152 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 );
 
                 var result = await api.GetChannelMessageAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CreateMessage"/> method.
+        /// </summary>
+        public class CreateMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNormalRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var content = "brr";
+                var nonce = "aasda";
+                var tts = false;
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("nonce", p => p.Is(nonce))
+                                    .WithProperty("tts", p => p.Is(tts))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                );
+
+                var result = await api.CreateMessageAsync
+                (
+                    channelId,
+                    content,
+                    nonce,
+                    tts,
+                    allowedMentions: allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsEmbedRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var embed = new Embed();
+                var nonce = "aasda";
+                var tts = false;
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("nonce", p => p.Is(nonce))
+                                    .WithProperty("tts", p => p.Is(tts))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                );
+
+                var result = await api.CreateMessageAsync
+                (
+                    channelId,
+                    nonce: nonce,
+                    isTTS: tts,
+                    embed: embed,
+                    allowedMentions: allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                await using var file = new MemoryStream();
+                var nonce = "aasda";
+                var tts = false;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (!(m.Content is MultipartFormDataContent multipart))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.Any(c => c is StreamContent))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.Any(c => c is StringContent))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                );
+
+                var result = await api.CreateMessageAsync
+                (
+                    channelId,
+                    nonce: nonce,
+                    isTTS: tts,
+                    file: file
+                );
+
                 ResultAssert.Successful(result);
             }
         }
