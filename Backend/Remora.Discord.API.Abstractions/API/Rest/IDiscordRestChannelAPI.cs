@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteChannelAsync(Snowflake channelID, CancellationToken ct);
+        Task<IDeleteRestEntityResult> DeleteChannelAsync(Snowflake channelID, CancellationToken ct = default);
 
         /// <summary>
         /// Gets the messages for a channel.
