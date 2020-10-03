@@ -97,7 +97,7 @@ namespace Remora.Discord.Rest.API
                 return ModifyRestEntityResult<IChannel>.FromError("The topic must be between 0 and 1024 characters.");
             }
 
-            if (userLimit.HasValue && !(userLimit.Value is null) && (name.Value!.Length > 99 || name.Value!.Length < 0))
+            if (userLimit.HasValue && !(userLimit.Value is null) && (userLimit.Value > 99 || userLimit.Value < 0))
             {
                 return ModifyRestEntityResult<IChannel>.FromError("The user limit must be between 0 and 99.");
             }
