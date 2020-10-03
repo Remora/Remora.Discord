@@ -335,6 +335,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
                 .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
+            options.AddDataObjectConverter<IFollowedChannel, FollowedChannel>();
+
             return options;
         }
 
