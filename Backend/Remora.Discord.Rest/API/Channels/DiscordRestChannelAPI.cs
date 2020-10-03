@@ -246,6 +246,16 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
+            var hasAny = around.HasValue || before.HasValue || after.HasValue;
+            var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue;
+            if (hasAny && !hasStrictlyOne)
+            {
+                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromError
+                (
+                    $"{nameof(around)}, {nameof(before)}, and {nameof(after)} are mutually exclusive."
+                );
+            }
+
             if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
             {
                 return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromError
