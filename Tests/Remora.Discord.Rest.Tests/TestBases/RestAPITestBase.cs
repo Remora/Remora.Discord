@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.ComponentModel.Design;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Rest.Extensions;
 using RichardSzalay.MockHttp;
@@ -31,8 +30,20 @@ namespace Remora.Discord.Rest.Tests.TestBases
     /// <summary>
     /// Serves as a base class for REST API tests.
     /// </summary>
-    public abstract class RestAPITestBase
+    /// <typeparam name="TAPI">The API type.</typeparam>
+    public abstract class RestAPITestBase<TAPI>
     {
+        /// <summary>
+        /// Creates a configured, mocked API instance.
+        /// </summary>
+        /// <param name="builder">The mock builder.</param>
+        /// <returns>The API instance.</returns>
+        protected TAPI CreateAPI(Action<MockHttpMessageHandler> builder)
+        {
+            var services = CreateConfiguredAPIServices(builder);
+            return services.GetRequiredService<TAPI>();
+        }
+
         /// <summary>
         /// Creates a configured service provider with the given HTTP mock settings.
         /// </summary>
