@@ -626,11 +626,11 @@ namespace Remora.Discord.Rest.API
 
                         if (type.HasValue)
                         {
-                            json.WriteString("type", type.Value.ToString().ToLowerInvariant());
+                            json.WriteNumber("type", (int)type.Value);
                         }
                     }
                 ),
-                ct: ct
+                ct
             );
         }
 
@@ -715,6 +715,28 @@ namespace Remora.Discord.Rest.API
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
                 ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
+        (
+            Snowflake channelID,
+            Snowflake webhookChannelID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PostAsync<IFollowedChannel>
+            (
+                $"channels/{channelID}/followers",
+                b => b.WithJson
+                (
+                    p =>
+                    {
+                        p.WriteString("webhook_channel_id", webhookChannelID.ToString());
+                    }
+                ),
+                ct
             );
         }
 

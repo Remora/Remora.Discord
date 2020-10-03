@@ -384,6 +384,20 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Follows a news channel to send messages to a target channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the news channel.</param>
+        /// <param name="webhookChannelID">The ID of the channel to send news to.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A creation result which may or may not have succeeded.</returns>
+        Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
+        (
+            Snowflake channelID,
+            Snowflake webhookChannelID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Triggers the typing indicator for the current user in the given channel.
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
