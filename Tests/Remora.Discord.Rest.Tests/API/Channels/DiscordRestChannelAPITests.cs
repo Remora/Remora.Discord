@@ -64,7 +64,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelID}")
-                        .Respond("application/json", "{ \"id\": 0, \"type\": 0 }")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
                 var result = await api.GetChannelAsync(channelID);
@@ -114,7 +114,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
                                 )
                         )
-                        .Respond("application/json", "{ \"id\": 0, \"type\": 0 }")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
                 var result = await api.ModifyChannelAsync
@@ -168,7 +168,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
                                 )
                         )
-                        .Respond("application/json", "{ \"id\": 0, \"type\": 0 }")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
                 var result = await api.ModifyChannelAsync
@@ -313,7 +313,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}channels/{channelId.ToString()}")
-                        .Respond("application/json", "{ \"id\": 0, \"type\": 0 }")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
                 var result = await api.DeleteChannelAsync(channelId);
@@ -549,7 +549,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}")
-                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.GetChannelMessageAsync(channelId, messageId);
@@ -590,7 +590,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                             )
                         )
-                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.CreateMessageAsync
@@ -634,7 +634,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                             )
                         )
-                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.CreateMessageAsync
@@ -688,7 +688,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 return true;
                             }
                         )
-                        .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.CreateMessageAsync
@@ -946,7 +946,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
-                    .Respond("application/json", "{\n    \"id\": 1,\n    \"channel_id\": 0,\n    \"author\": {\n        \"id\": 3,\n        \"username\": \"b\",\n        \"discriminator\": \"0000\",\n        \"avatar\": null\n    },\n    \"content\": \"brr\",\n    \"timestamp\": \"2020-08-28T18:17:25.377506\\u002B00:00\",\n    \"edited_timestamp\": null,\n    \"tts\": false,\n    \"mention_everyone\": false,\n    \"mentions\": [],\n    \"mention_roles\": [],\n    \"mention_channels\": [],\n    \"attachments\": [],\n    \"embeds\": [],\n    \"pinned\": false,\n    \"type\": 0\n}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.EditMessageAsync(channelId, messageId, content, embed, flags);
@@ -1148,7 +1148,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .WithProperty("target_user_type", p => p.Is((int)targetUserType))
                         )
                     )
-                    .Respond("application/json", "{\n    \"code\": \"0vCdhLbwjZZTWZLD\",\n    \"guild\": {\n        \"id\": \"197038439483310086\",\n        \"name\": \"Discord Testers\",\n        \"icon\": \"f64c482b807da4f539cff778d174971c\",\n        \"description\": \"The official place to report Discord Bugs!\",\n        \"splash\": null,\n        \"discovery_splash\": null,\n        \"features\":\n        [\n            \"ANIMATED_ICON\",\n            \"VERIFIED\",\n            \"NEWS\",\n            \"VANITY_URL\",\n            \"DISCOVERABLE\",\n            \"INVITE_SPLASH\",\n            \"BANNER\",\n            \"PUBLIC\"\n        ],\n        \"emojis\": [],\n        \"banner\": \"9b6439a7de04f1d26af92f84ac9e1e4a\",\n        \"owner_id\": \"73193882359173120\",\n        \"application_id\": null,\n        \"region\": \"us-west\",\n        \"afk_channel_id\": null,\n        \"afk_timeout\": 300,\n        \"system_channel_id\": null,\n        \"widget_enabled\": true,\n        \"widget_channel_id\": null,\n        \"verification_level\": 3,\n        \"roles\": [],\n        \"default_message_notifications\": 1,\n        \"mfa_level\": 1,\n        \"explicit_content_filter\": 2,\n        \"max_presences\": 40000,\n        \"max_members\": 250000,\n        \"vanity_url_code\": \"discord-testers\",\n        \"premium_tier\": 3,\n        \"premium_subscription_count\": 33,\n        \"system_channel_flags\": 0,\n        \"preferred_locale\": \"en-US\",\n        \"rules_channel_id\": \"441688182833020939\",\n        \"public_updates_channel_id\": \"281283303326089216\",\n        \"embed_enabled\": true,\n        \"embed_channel_id\": null\n    },\n    \"channel\": {\n        \"id\": \"165176875973476352\",\n        \"name\": \"illuminati\",\n        \"type\": 0\n    },\n    \"inviter\": {\n        \"id\": \"115590097100865541\",\n        \"username\": \"speed\",\n        \"avatar\": \"deadbeef\",\n        \"discriminator\": \"7653\"\n    },\n    \"target_user\": {\n        \"id\": \"165176875973476352\",\n        \"username\": \"bob\",\n        \"avatar\": \"deadbeef\",\n        \"discriminator\": \"1234\"\n    },\n    \"target_user_type\": 1\n}\n")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );
 
                 var result = await api.CreateChannelInviteAsync
@@ -1227,7 +1227,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 o => o.WithProperty("webhook_channel_id", p => p.Is(webhookChannelId.ToString()))
                             )
                         )
-                        .Respond("application/json", "{\n    \"channel_id\": \"0\", \n    \"webhook_id\": \"1\"\n}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IFollowedChannel)])
                 );
 
                 var result = await api.FollowNewsChannelAsync(channelId, webhookChannelId);

@@ -24,6 +24,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.Extensions;
@@ -56,7 +57,7 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
                         .WithNoContent()
-                        .Respond("application/json", "{ \"url\": \"wss://gateway.discord.gg/\" }")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
                 );
 
                 var result = await api.GetGatewayAsync();
@@ -76,14 +77,13 @@ namespace Remora.Discord.Rest.Tests.API.Gateway
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var response = "{ \"url\": \"wss://gateway.discord.gg/\", \"shards\": 9, \"session_start_limit\": { \"total\": 1000, \"remaining\": 999, \"reset_after\": 14400000, \"max_concurrency\": 1 }}";
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
                         .WithNoContent()
                         .WithAuthentication()
-                        .Respond("application/json", response)
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
                 );
 
                 var result = await api.GetGatewayBotAsync();

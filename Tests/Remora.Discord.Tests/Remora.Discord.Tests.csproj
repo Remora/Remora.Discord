@@ -17,7 +17,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
+        <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Samples\**\*" />
+        <Content Include="Samples\**\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>
