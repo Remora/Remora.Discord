@@ -43,7 +43,7 @@ namespace Remora.Discord.Rest.Extensions
                 return false;
             }
 
-            var signature = BitConverter.ToUInt64(array[..7]);
+            var signature = BitConverter.ToUInt64(array[..8]);
             return signature == PNGSignature;
         }
 
