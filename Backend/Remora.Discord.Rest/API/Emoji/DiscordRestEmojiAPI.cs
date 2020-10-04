@@ -77,7 +77,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IEmoji>
             (
-                $"guilds/{guildID}/{emojiID}",
+                $"guilds/{guildID}/emojis/{emojiID}",
                 ct: ct
             );
         }
