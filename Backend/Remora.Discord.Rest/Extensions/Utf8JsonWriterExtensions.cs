@@ -144,28 +144,15 @@ namespace Remora.Discord.Rest.Extensions
                 return;
             }
 
-            // ReSharper disable SuspiciousTypeConversion.Global
-            switch (value.Value)
+            var underlyingType = Enum.GetUnderlyingType(typeof(T));
+            if (underlyingType.IsUnsigned())
             {
-                case sbyte _:
-                case short _:
-                case int _:
-                case long _:
-                {
-                    json.WriteNumber(name, Convert.ToInt64(value.Value));
-                    break;
-                }
-                case byte _:
-                case ushort _:
-                case uint _:
-                case ulong _:
-                {
-                    json.WriteNumber(name, Convert.ToUInt64(value.Value));
-                    break;
-                }
+                json.WriteNumber(name, Convert.ToUInt64(value.Value));
             }
-
-            // ReSharper restore SuspiciousTypeConversion.Global
+            else
+            {
+                json.WriteNumber(name, Convert.ToInt64(value.Value));
+            }
         }
     }
 }
