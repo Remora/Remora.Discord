@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<int?> rateLimitPerUser = default,
             Optional<int?> bitrate = default,
             Optional<int?> userLimit = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             CancellationToken ct = default
         );
