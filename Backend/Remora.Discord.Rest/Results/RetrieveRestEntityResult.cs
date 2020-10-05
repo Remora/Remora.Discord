@@ -45,14 +45,15 @@ namespace Remora.Discord.Rest.Results
         /// <inheritdoc />
         public TEntity Entity
         {
+            [return: MaybeNull]
             get
             {
-                if (!this.IsSuccess || _entity is null)
+                if (!this.IsSuccess)
                 {
                     throw new InvalidOperationException("The result does not contain a valid value.");
                 }
 
-                return _entity;
+                return _entity!;
             }
         }
 
