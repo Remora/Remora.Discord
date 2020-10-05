@@ -52,9 +52,8 @@ namespace Remora.Discord.API.Objects
             var largestPermission = permissions.Max(p => (ulong)p);
             var largestByteIndex = (int)Math.Floor(largestPermission / 8.0);
 
-            // Create a sufficiently sized byte list
-            var bytes = new List<byte>(largestByteIndex + 1);
-            bytes.AddRange(Enumerable.Repeat((byte)0, largestByteIndex + 1));
+            // Create a sufficiently sized byte area
+            Span<byte> bytes = stackalloc byte[largestByteIndex + 1];
 
             // Convert the permission set to a byte array
             foreach (var permission in permissions)
@@ -70,10 +69,8 @@ namespace Remora.Discord.API.Objects
                 var bitIndex = (byte)(bit - (ulong)(8 * byteIndex));
 
                 // Update the value in the array
-                var currentValue = bytes[byteIndex];
+                ref var currentValue = ref bytes[byteIndex];
                 currentValue |= (byte)(1 << bitIndex);
-
-                bytes[byteIndex] = currentValue;
             }
 
             this.Value = new BigInteger(bytes.ToArray());
