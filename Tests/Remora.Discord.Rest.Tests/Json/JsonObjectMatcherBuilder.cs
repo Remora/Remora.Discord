@@ -52,7 +52,7 @@ namespace Remora.Discord.Rest.Tests.Json
                 {
                     if (!obj.TryGetProperty(name, out var property))
                     {
-                        return false;
+                        throw new Xunit.Sdk.ContainsException(name, obj);
                     }
 
                     if (elementMatcherBuilder is null)
@@ -63,7 +63,13 @@ namespace Remora.Discord.Rest.Tests.Json
                     var matcherBuilder = new JsonElementMatcherBuilder();
                     elementMatcherBuilder(matcherBuilder);
 
-                    return matcherBuilder.Build().Matches(property);
+                    var valueMatches = matcherBuilder.Build().Matches(property);
+                    if (!valueMatches)
+                    {
+                        throw new Xunit.Sdk.TrueException($"The value of \"{name}\" did not match.", valueMatches);
+                    }
+
+                    return valueMatches;
                 }
             );
 
