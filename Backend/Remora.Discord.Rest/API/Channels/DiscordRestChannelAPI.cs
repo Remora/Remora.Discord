@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
 
 namespace Remora.Discord.Rest.API
@@ -109,112 +110,16 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        if (name.HasValue)
-                        {
-                            json.WriteString("name", name.Value);
-                        }
-
-                        if (type.HasValue)
-                        {
-                            json.WriteNumber("type", (int)type.Value);
-                        }
-
-                        if (position.HasValue)
-                        {
-                            if (position.Value is null)
-                            {
-                                json.WriteNull("position");
-                            }
-                            else
-                            {
-                                json.WriteNumber("position", position.Value.Value);
-                            }
-                        }
-
-                        if (topic.HasValue)
-                        {
-                            if (topic.Value is null)
-                            {
-                                json.WriteNull("topic");
-                            }
-                            else
-                            {
-                                json.WriteString("topic", topic.Value);
-                            }
-                        }
-
-                        if (isNsfw.HasValue)
-                        {
-                            if (isNsfw.Value is null)
-                            {
-                                json.WriteNull("nsfw");
-                            }
-                            else
-                            {
-                                json.WriteBoolean("nsfw", isNsfw.Value.Value);
-                            }
-                        }
-
-                        if (rateLimitPerUser.HasValue)
-                        {
-                            if (rateLimitPerUser.Value is null)
-                            {
-                                json.WriteNull("rate_limit_per_user");
-                            }
-                            else
-                            {
-                                json.WriteNumber("rate_limit_per_user", rateLimitPerUser.Value.Value);
-                            }
-                        }
-
-                        if (bitrate.HasValue)
-                        {
-                            if (bitrate.Value is null)
-                            {
-                                json.WriteNull("bitrate");
-                            }
-                            else
-                            {
-                                json.WriteNumber("bitrate", bitrate.Value.Value);
-                            }
-                        }
-
-                        if (userLimit.HasValue)
-                        {
-                            if (userLimit.Value is null)
-                            {
-                                json.WriteNull("user_limit");
-                            }
-                            else
-                            {
-                                json.WriteNumber("user_limit", userLimit.Value.Value);
-                            }
-                        }
-
-                        if (permissionOverwrites.HasValue)
-                        {
-                            if (permissionOverwrites.Value is null)
-                            {
-                                json.WriteNull("permission_overwrites");
-                            }
-                            else
-                            {
-                                json.WritePropertyName("permission_overwrites");
-                                JsonSerializer.Serialize(json, permissionOverwrites.Value, _jsonOptions);
-                            }
-                        }
-
-                        if (parentId.HasValue)
-                        {
-                            if (parentId.Value is null)
-                            {
-                                json.WriteNull("parent_id");
-                            }
-                            else
-                            {
-                                json.WriteString("parent_id", parentId.Value.Value.ToString());
-                            }
-                        }
+                        json.Write("name", name, _jsonOptions);
+                        json.WriteEnum("type", type, jsonOptions: _jsonOptions);
+                        json.Write("position", position, _jsonOptions);
+                        json.Write("topic", topic, _jsonOptions);
+                        json.Write("nsfw", isNsfw, _jsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, _jsonOptions);
+                        json.Write("bitrate", bitrate, _jsonOptions);
+                        json.Write("user_limit", userLimit, _jsonOptions);
+                        json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
+                        json.Write("parent_id", parentId, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -333,36 +238,13 @@ namespace Remora.Discord.Rest.API
 
                     b.WithJson
                     (
-                        writer =>
+                        json =>
                         {
-                            if (content.HasValue)
-                            {
-                                writer.WriteString("content", content.Value);
-                            }
-
-                            if (nonce.HasValue)
-                            {
-                                writer.WriteString("nonce", nonce.Value);
-                            }
-
-                            if (isTTS.HasValue)
-                            {
-                                writer.WriteBoolean("tts", isTTS.Value);
-                            }
-
-                            if (embed.HasValue)
-                            {
-                                writer.WritePropertyName("embed");
-                                JsonSerializer.Serialize(writer, embed.Value, _jsonOptions);
-                            }
-
-                            if (!allowedMentions.HasValue)
-                            {
-                                return;
-                            }
-
-                            writer.WritePropertyName("allowed_mentions");
-                            JsonSerializer.Serialize(writer, allowedMentions.Value, _jsonOptions);
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("nonce", nonce, _jsonOptions);
+                            json.Write("tts", isTTS, _jsonOptions);
+                            json.Write("embed", embed, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                         }
                     );
                 },
@@ -509,42 +391,9 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        if (content.HasValue)
-                        {
-                            if (content.Value is null)
-                            {
-                                json.WriteNull("content");
-                            }
-                            else
-                            {
-                                json.WriteString("content", content.Value);
-                            }
-                        }
-
-                        if (embed.HasValue)
-                        {
-                            if (embed.Value is null)
-                            {
-                                json.WriteNull("embed");
-                            }
-                            else
-                            {
-                                json.WritePropertyName("embed");
-                                JsonSerializer.Serialize(json, embed.Value, _jsonOptions);
-                            }
-                        }
-
-                        if (flags.HasValue)
-                        {
-                            if (flags.Value is null)
-                            {
-                                json.WriteNull("flags");
-                            }
-                            else
-                            {
-                                json.WriteNumber("flags", (int)flags.Value);
-                            }
-                        }
+                        json.Write("content", content, _jsonOptions);
+                        json.Write("embed", embed, _jsonOptions);
+                        json.WriteEnum("flags", flags, jsonOptions: _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -612,22 +461,9 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        if (allow.HasValue)
-                        {
-                            json.WritePropertyName("allow");
-                            JsonSerializer.Serialize(json, allow.Value, _jsonOptions);
-                        }
-
-                        if (deny.HasValue)
-                        {
-                            json.WritePropertyName("deny");
-                            JsonSerializer.Serialize(json, deny.Value, _jsonOptions);
-                        }
-
-                        if (type.HasValue)
-                        {
-                            json.WriteNumber("type", (int)type.Value);
-                        }
+                        json.Write("allow", allow, _jsonOptions);
+                        json.Write("deny", deny, _jsonOptions);
+                        json.WriteEnum("type", type, jsonOptions: _jsonOptions);
                     }
                 ),
                 ct
@@ -673,30 +509,11 @@ namespace Remora.Discord.Rest.API
                             json.WriteNumber("max_age", (ulong)maxAge.Value.TotalSeconds);
                         }
 
-                        if (maxUses.HasValue)
-                        {
-                            json.WriteNumber("max_uses", maxUses.Value);
-                        }
-
-                        if (isTemporary.HasValue)
-                        {
-                            json.WriteBoolean("temporary", isTemporary.Value);
-                        }
-
-                        if (isUnique.HasValue)
-                        {
-                            json.WriteBoolean("unique", isUnique.Value);
-                        }
-
-                        if (targetUser.HasValue)
-                        {
-                            json.WriteString("target_user", targetUser.Value.ToString());
-                        }
-
-                        if (targetUserType.HasValue)
-                        {
-                            json.WriteNumber("target_user_type", (int)targetUserType.Value);
-                        }
+                        json.Write("max_uses", maxUses, _jsonOptions);
+                        json.Write("temporary", isTemporary, _jsonOptions);
+                        json.Write("unique", isUnique, _jsonOptions);
+                        json.Write("target_user", targetUser, _jsonOptions);
+                        json.WriteEnum("target_user_type", targetUserType, jsonOptions: _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -816,11 +633,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("access_token", accessToken);
-
-                        if (nickname.HasValue)
-                        {
-                            json.WriteString("nick", nickname.Value);
-                        }
+                        json.Write("nick", nickname, _jsonOptions);
                     }
                 ),
                 ct
