@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
+using Remora.Discord.Rest.Utility;
 
 namespace Remora.Discord.Rest.API
 {
@@ -92,34 +93,18 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            await using var memoryStream = new MemoryStream();
-            await image.CopyToAsync(memoryStream, ct);
-
-            var imageData = memoryStream.ToArray();
-
-            if (imageData.Length > 256000)
+            if (image.Length > 256000)
             {
                 return CreateRestEntityResult<IEmoji>.FromError("Image too large.");
             }
 
-            string? mediaType = null;
-            if (imageData.IsPNG())
+            var packImage = await ImagePacker.PackImageAsync(image, ct);
+            if (!packImage.IsSuccess)
             {
-                mediaType = "png";
-            }
-            else if (imageData.IsJPG())
-            {
-                mediaType = "jpeg";
-            }
-            else if (imageData.IsGIF())
-            {
-                mediaType = "gif";
+                return CreateRestEntityResult<IEmoji>.FromError(packImage);
             }
 
-            if (mediaType is null)
-            {
-                return CreateRestEntityResult<IEmoji>.FromError("Unknown or unsupported image format.");
-            }
+            var emojiData = packImage.Entity;
 
             return await _discordHttpClient.PostAsync<IEmoji>
             (
@@ -129,9 +114,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-
-                        var dataString = $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
-                        json.WriteString("image", dataString);
+                        json.WriteString("image", emojiData);
 
                         json.WritePropertyName("roles");
                         JsonSerializer.Serialize(json, roles, _jsonOptions);
