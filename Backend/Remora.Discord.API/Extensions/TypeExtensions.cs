@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using Remora.Discord.Core;
 
@@ -33,6 +34,38 @@ namespace Remora.Discord.API.Extensions
     /// </summary>
     public static class TypeExtensions
     {
+        /// <summary>
+        /// Determines whether the given type is unsigned.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is unsigned; otherwise, false.</returns>
+        public static bool IsUnsigned(this Type type)
+        {
+            switch (type)
+            {
+                case var _ when type == typeof(sbyte):
+                case var _ when type == typeof(short):
+                case var _ when type == typeof(int):
+                case var _ when type == typeof(long):
+                case var _ when type == typeof(float):
+                case var _ when type == typeof(double):
+                case var _ when type == typeof(decimal):
+                case var _ when type == typeof(BigInteger):
+                {
+                    return false;
+                }
+                case var _ when type == typeof(byte):
+                case var _ when type == typeof(ushort):
+                case var _ when type == typeof(uint):
+                case var _ when type == typeof(ulong):
+                {
+                    return true;
+                }
+            }
+
+            throw new InvalidOperationException($"{nameof(type)} was not a numeric type.");
+        }
+
         /// <summary>
         /// Determines whether the given type is a closed <see cref="Optional{TValue}"/>.
         /// </summary>
