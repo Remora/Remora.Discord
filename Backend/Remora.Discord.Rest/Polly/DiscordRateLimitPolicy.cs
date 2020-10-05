@@ -21,11 +21,10 @@
 //
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Polly;
@@ -38,9 +37,7 @@ namespace Remora.Discord.Rest.Polly
     /// </summary>
     public class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
     {
-        private readonly SemaphoreSlim _semaphore;
-
-        private readonly Dictionary<string, RateLimitBucket> _rateLimitBuckets;
+        private readonly ConcurrentDictionary<string, RateLimitBucket> _rateLimitBuckets;
         private RateLimitBucket _globalRateLimitBucket;
 
         /// <summary>
@@ -48,8 +45,6 @@ namespace Remora.Discord.Rest.Polly
         /// </summary>
         protected DiscordRateLimitPolicy()
         {
-            _semaphore = new SemaphoreSlim(1, 1);
-
             _globalRateLimitBucket = new RateLimitBucket
             (
                 10000,
@@ -59,7 +54,7 @@ namespace Remora.Discord.Rest.Polly
                 true
             );
 
-            _rateLimitBuckets = new Dictionary<string, RateLimitBucket>();
+            _rateLimitBuckets = new ConcurrentDictionary<string, RateLimitBucket>();
         }
 
         /// <inheritdoc />
@@ -76,41 +71,26 @@ namespace Remora.Discord.Rest.Polly
                 throw new InvalidOperationException("No endpoint set.");
             }
 
-            ConfiguredTaskAwaitable<HttpResponseMessage> requestAction;
-            try
+            if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
             {
-                await _semaphore.WaitAsync(cancellationToken);
-
-                if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
-                {
-                    rateLimitBucket = _globalRateLimitBucket;
-                }
-
-                var now = DateTime.UtcNow;
-                var canProceed = rateLimitBucket.Remaining > 0 || rateLimitBucket.ResetsAt > now;
-
-                if (!canProceed)
-                {
-                    var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
-
-                    var delay = rateLimitBucket.ResetsAt - now;
-                    rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
-
-                    return rateLimitedResponse;
-                }
-
-                // The request can proceed without hitting rate limits, so we'll take a token.
-                if (rateLimitBucket.Remaining > 0)
-                {
-                    rateLimitBucket.Take();
-                }
-
-                requestAction = action(context, cancellationToken).ConfigureAwait(continueOnCapturedContext);
+                rateLimitBucket = _globalRateLimitBucket;
             }
-            finally
+
+            var now = DateTime.UtcNow;
+            var canProceed = rateLimitBucket.Remaining > 0 || rateLimitBucket.ResetsAt > now;
+
+            if (!canProceed || !await rateLimitBucket.TryTakeAsync())
             {
-                _semaphore.Release();
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+
+                var delay = rateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
             }
+
+            // The request can proceed without hitting rate limits, and we've taken a token
+            var requestAction = action(context, cancellationToken).ConfigureAwait(continueOnCapturedContext);
 
             var response = await requestAction;
             if (!RateLimitBucket.TryParse(response.Headers, out var newLimits))
@@ -118,37 +98,24 @@ namespace Remora.Discord.Rest.Polly
                 return response;
             }
 
-            try
+            if (newLimits.IsGlobal)
             {
-                await _semaphore.WaitAsync(cancellationToken);
-
-                if (newLimits.IsGlobal)
+                if (_globalRateLimitBucket.ResetsAt < newLimits.ResetsAt)
                 {
-                    if (_globalRateLimitBucket.ResetsAt < newLimits.ResetsAt)
-                    {
-                        _globalRateLimitBucket = newLimits;
-                    }
-
-                    return response;
-                }
-
-                if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
-                {
-                    _rateLimitBuckets.Add(endpoint, newLimits);
-                    return response;
-                }
-
-                if (rateLimitBucket.ResetsAt < newLimits.ResetsAt)
-                {
-                    _rateLimitBuckets[endpoint] = newLimits;
+                    _globalRateLimitBucket = newLimits;
                 }
 
                 return response;
             }
-            finally
-            {
-                _semaphore.Release();
-            }
+
+            _rateLimitBuckets.AddOrUpdate
+            (
+                endpoint,
+                newLimits,
+                (s, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
+            );
+
+            return response;
         }
 
         /// <summary>
