@@ -92,6 +92,120 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfNameIsTooShort()
+            {
+                var channelId = new Snowflake(0);
+                var name = string.Empty;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.CreateWebhookAsync
+                (
+                    channelId,
+                    name,
+                    null
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfNameIsTooLong()
+            {
+                var channelId = new Snowflake(0);
+                var name = new string('a', 81);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.CreateWebhookAsync
+                (
+                    channelId,
+                    name,
+                    null
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfNameIsClyde()
+            {
+                var channelId = new Snowflake(0);
+                var name = "clyde";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.CreateWebhookAsync
+                (
+                    channelId,
+                    name,
+                    null
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
+            {
+                var channelId = new Snowflake(0);
+                var name = "aaa";
+
+                // Create a dummy PNG image
+                await using var avatar = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(avatar);
+                binaryWriter.Write(0x00000000);
+                avatar.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/webhooks")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.CreateWebhookAsync
+                (
+                    channelId,
+                    name,
+                    avatar
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -263,6 +377,78 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var webhookId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("avatar", p => p.IsNull())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.ModifyWebhookAsync
+                (
+                    webhookId,
+                    avatar: null
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
+            {
+                // Create a dummy PNG image
+                await using var avatar = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(avatar);
+                binaryWriter.Write(0x000000);
+                avatar.Position = 0;
+
+                var webhookId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("avatar", p => p.IsNull())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.ModifyWebhookAsync
+                (
+                    webhookId,
+                    avatar: avatar
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -291,15 +477,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("avatar", p => p.IsString())
-                            )
-                        )
                         .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
                 );
 
@@ -312,6 +489,74 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 );
 
                 ResultAssert.Successful(result);
+            }
+
+             /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var webhookId = new Snowflake(0);
+                var token = "aa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("avatar", p => p.IsNull())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.ModifyWebhookWithTokenAsync
+                (
+                    webhookId,
+                    token,
+                    avatar: null
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
+            {
+                // Create a dummy PNG image
+                await using var avatar = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(avatar);
+                binaryWriter.Write(0x000000);
+                avatar.Position = 0;
+
+                var webhookId = new Snowflake(0);
+                var token = "aa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
+                );
+
+                var result = await api.ModifyWebhookWithTokenAsync
+                (
+                    webhookId,
+                    token,
+                    avatar: avatar
+                );
+
+                ResultAssert.Unsuccessful(result);
             }
         }
 

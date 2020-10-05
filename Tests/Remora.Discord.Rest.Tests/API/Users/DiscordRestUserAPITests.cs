@@ -133,6 +133,61 @@ namespace Remora.Discord.Rest.Tests.API.Users
                 var result = await api.ModifyCurrentUserAsync(username, avatar);
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var username = "aa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("username", p => p.Is(username))
+                                    .WithProperty("avatar", p => p.IsNull())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                );
+
+                var result = await api.ModifyCurrentUserAsync(username, null);
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
+            {
+                var username = "aa";
+
+                // Create a dummy PNG image
+                await using var avatar = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(avatar);
+                binaryWriter.Write(0x000000);
+                avatar.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+                );
+
+                var result = await api.ModifyCurrentUserAsync(username, avatar);
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -169,6 +224,46 @@ namespace Remora.Discord.Rest.Tests.API.Users
 
                 var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
                 ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfLimitIsTooLow()
+            {
+                var limit = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetCurrentUserGuildsAsync(limit: limit);
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfLimitIsTooHigh()
+            {
+                var limit = 101;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetCurrentUserGuildsAsync(limit: limit);
+                ResultAssert.Unsuccessful(result);
             }
         }
 

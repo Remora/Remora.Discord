@@ -190,6 +190,63 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             }
 
             /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var name = "brr";
+                var type = ChannelType.GuildNews;
+                var rateLimitPerUser = 10;
+                var permissionOverwrites = new List<PermissionOverwrite>();
+                var parentId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithJson
+                        (
+                            j => j
+                                .IsObject
+                                (
+                                    o => o
+                                        .WithProperty("name", p => p.Is(name))
+                                        .WithProperty("type", p => p.Is((int)type))
+                                        .WithProperty("position", p => p.IsNull())
+                                        .WithProperty("topic", p => p.IsNull())
+                                        .WithProperty("nsfw", p => p.IsNull())
+                                        .WithProperty("rate_limit_per_user", p => p.IsNull())
+                                        .WithProperty("bitrate", p => p.IsNull())
+                                        .WithProperty("user_limit", p => p.IsNull())
+                                        .WithProperty("permission_overwrites", p => p.IsNull())
+                                        .WithProperty("parent_id", p => p.IsNull())
+                                )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                );
+
+                var result = await api.ModifyChannelAsync
+                (
+                    channelId,
+                    name,
+                    type,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
             /// Tests whether the API checks parameter lengths correctly.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -843,6 +900,60 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var result = await api.GetReactionsAsync(channelId, messageId, "🔥", before, after, limit);
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfLimitIsTooLow()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var limit = 0;
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        )
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetReactionsAsync(channelId, messageId, "🔥", limit: limit);
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfLimitIsTooHigh()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var limit = 101;
+                var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        )
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetReactionsAsync(channelId, messageId, "🔥", limit: limit);
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -952,6 +1063,41 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var result = await api.EditMessageAsync(channelId, messageId, content, embed, flags);
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
+                        )
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.IsNull())
+                                    .WithProperty("embed", p => p.IsNull())
+                                    .WithProperty("flags", p => p.IsNull())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditMessageAsync(channelId, messageId, null, null, null);
+                ResultAssert.Successful(result);
+            }
         }
 
         /// <summary>
@@ -1029,6 +1175,56 @@ namespace Remora.Discord.Rest.Tests.API.Channels
 
                 var result = await api.BulkDeleteMessagesAsync(channelId, messageIds);
                 ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfMessageCountIsTooSmall()
+            {
+                var channelId = new Snowflake(0);
+                var messageIds = new[] { new Snowflake(1) };
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.BulkDeleteMessagesAsync(channelId, messageIds);
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfMessageCountIsTooLarge()
+            {
+                var channelId = new Snowflake(0);
+                var messageIds = new Snowflake[101];
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.BulkDeleteMessagesAsync(channelId, messageIds);
+                ResultAssert.Unsuccessful(result);
             }
         }
 
