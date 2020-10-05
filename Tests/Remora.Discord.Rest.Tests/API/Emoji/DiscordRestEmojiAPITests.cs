@@ -43,7 +43,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
     public class DiscordRestEmojiAPITests
     {
         /// <summary>
-        /// Tests the <see cref="ListGuildEmojis"/> method.
+        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
         /// </summary>
         public class ListGuildEmojisAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
@@ -70,7 +70,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         }
 
         /// <summary>
-        /// Tests the <see cref="ListGuildEmojis"/> method.
+        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
         /// </summary>
         public class GetGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
@@ -98,7 +98,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         }
 
         /// <summary>
-        /// Tests the <see cref="ListGuildEmojis"/> method.
+        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
         /// </summary>
         public class CreateGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
@@ -221,7 +221,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         }
 
         /// <summary>
-        /// Tests the <see cref="ListGuildEmojis"/> method.
+        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
         /// </summary>
         public class ModifyGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
@@ -290,7 +290,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         }
 
         /// <summary>
-        /// Tests the <see cref="ListGuildEmojis"/> method.
+        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
         /// </summary>
         public class DeleteGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
