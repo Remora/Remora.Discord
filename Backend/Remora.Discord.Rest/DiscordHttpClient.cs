@@ -28,7 +28,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
-using Remora.Discord.API.Extensions;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
 
