@@ -111,7 +111,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("system_channel_id", systemChannelID, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -133,7 +133,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("with_counts", withCounts.Value.ToString());
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -263,7 +263,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("preferred_locale", preferredLocale, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -327,7 +327,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("nsfw", isNsfw, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -407,7 +407,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("after", after.Value.ToString());
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -438,6 +438,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("deaf", isDeafened, _jsonOptions);
                     }
                 ),
+                true,
                 ct
             );
         }
@@ -485,7 +486,7 @@ namespace Remora.Discord.Rest.API
             (
                 $"guilds/{guildID}/members/@me/nick",
                 b => b.WithJson(json => json.Write("nick", nickname, _jsonOptions)),
-                ct
+                ct: ct
             );
         }
 
@@ -645,7 +646,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("mentionable", isMentionable, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -675,7 +676,7 @@ namespace Remora.Discord.Rest.API
                         }
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -706,7 +707,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("mentionable", isMentionable, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -753,7 +754,7 @@ namespace Remora.Discord.Rest.API
                         );
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -779,7 +780,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("include_roles", includeRoles, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -792,7 +793,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
-                $"guilds&{guildID}/regions",
+                $"guilds/{guildID}/regions",
                 ct: ct
             );
         }
@@ -940,7 +941,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("channel_id", channelID, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 

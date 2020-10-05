@@ -217,7 +217,7 @@ namespace Remora.Discord.Rest.API
                         }
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -289,7 +289,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -366,7 +366,7 @@ namespace Remora.Discord.Rest.API
                         }
                     );
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -456,7 +456,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
@@ -547,7 +547,7 @@ namespace Remora.Discord.Rest.API
                         }
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -670,7 +670,7 @@ namespace Remora.Discord.Rest.API
                     {
                         if (maxAge.HasValue)
                         {
-                            json.WriteNumber("max_age", maxAge.Value.TotalSeconds);
+                            json.WriteNumber("max_age", (ulong)maxAge.Value.TotalSeconds);
                         }
 
                         if (maxUses.HasValue)
@@ -699,7 +699,7 @@ namespace Remora.Discord.Rest.API
                         }
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -736,7 +736,7 @@ namespace Remora.Discord.Rest.API
                         p.WriteString("webhook_channel_id", webhookChannelID.ToString());
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 

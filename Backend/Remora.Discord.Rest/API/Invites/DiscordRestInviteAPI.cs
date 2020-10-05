@@ -61,7 +61,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("with_counts", withCounts.Value.ToString());
                     }
                 },
-                ct
+                ct: ct
             );
         }
 
