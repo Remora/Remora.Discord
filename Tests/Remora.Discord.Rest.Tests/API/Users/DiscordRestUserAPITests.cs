@@ -189,9 +189,9 @@ namespace Remora.Discord.Rest.Tests.API.Users
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuilds"/> method.
+        /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildsAsync"/> method.
         /// </summary>
-        public class GetCurrentUserGuilds : RestAPITestBase<IDiscordRestUserAPI>
+        public class GetCurrentUserGuildsAsync : RestAPITestBase<IDiscordRestUserAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.

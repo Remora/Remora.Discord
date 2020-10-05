@@ -47,9 +47,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
     public class DiscordRestChannelAPITests
     {
         /// <summary>
-        /// Tests the <see cref="GetChannel"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetChannelAsync"/> method.
         /// </summary>
-        public class GetChannel : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -73,9 +73,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyChannel"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.ModifyChannelAsync"/> method.
         /// </summary>
-        public class ModifyChannel : RestAPITestBase<IDiscordRestChannelAPI>
+        public class ModifyChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -197,12 +197,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             public async Task PerformsNullableRequestCorrectly()
             {
                 var channelId = new Snowflake(0);
-                var name = "brr";
-                var type = ChannelType.GuildNews;
-                var rateLimitPerUser = 10;
-                var permissionOverwrites = new List<PermissionOverwrite>();
-                var parentId = new Snowflake(1);
-
                 var api = CreateAPI
                 (
                     b => b
@@ -213,8 +207,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .IsObject
                                 (
                                     o => o
-                                        .WithProperty("name", p => p.Is(name))
-                                        .WithProperty("type", p => p.Is((int)type))
                                         .WithProperty("position", p => p.IsNull())
                                         .WithProperty("topic", p => p.IsNull())
                                         .WithProperty("nsfw", p => p.IsNull())
@@ -231,8 +223,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var result = await api.ModifyChannelAsync
                 (
                     channelId,
-                    name,
-                    type,
+                    default,
+                    default,
                     null,
                     null,
                     null,
@@ -353,9 +345,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteChannel"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteChannelAsync"/> method.
         /// </summary>
-        public class DeleteChannel : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -379,9 +371,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GetChannelMessages"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetChannelMessagesAsync"/> method.
         /// </summary>
-        public class GetChannelMessages : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetChannelMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -588,9 +580,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GetChannelMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetChannelMessageAsync"/> method.
         /// </summary>
-        public class GetChannelMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -615,9 +607,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.CreateMessageAsync"/> method.
         /// </summary>
-        public class CreateMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class CreateMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -761,9 +753,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateReaction"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.CreateReactionAsync"/> method.
         /// </summary>
-        public class CreateReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        public class CreateReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -793,9 +785,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteOwnReaction"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteOwnReactionAsync"/> method.
         /// </summary>
-        public class DeleteOwnReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteOwnReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -825,9 +817,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteUserReaction"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteUserReactionAsync"/> method.
         /// </summary>
-        public class DeleteUserReaction : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteUserReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -859,9 +851,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GetReactions"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetReactionsAsync"/> method.
         /// </summary>
-        public class GetReactions : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetReactionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -957,9 +949,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteAllReactions"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteAllReactionsAsync"/> method.
         /// </summary>
-        public class DeleteAllReactions : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteAllReactionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -988,9 +980,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteAllReactionsForEmoji"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteAllReactionsForEmojiAsync"/> method.
         /// </summary>
-        public class DeleteAllReactionsForEmoji : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteAllReactionsForEmojiAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1021,9 +1013,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="EditMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.EditMessageAsync"/> method.
         /// </summary>
-        public class EditMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class EditMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1101,9 +1093,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteMessageAsync"/> method.
         /// </summary>
-        public class DeleteMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1132,9 +1124,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteAllReactionsForEmoji"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteAllReactionsForEmojiAsync"/> method.
         /// </summary>
-        public class BulkDeleteMessages : RestAPITestBase<IDiscordRestChannelAPI>
+        public class BulkDeleteMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1229,9 +1221,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="EditChannelPermissions"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.EditChannelPermissionsAsync"/> method.
         /// </summary>
-        public class EditChannelPermissions : RestAPITestBase<IDiscordRestChannelAPI>
+        public class EditChannelPermissionsAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1274,9 +1266,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GetChannelInvites"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetChannelInvitesAsync"/> method.
         /// </summary>
-        public class GetChannelInvites : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetChannelInvitesAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1304,9 +1296,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateChannelInvite"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.CreateChannelInviteAsync"/> method.
         /// </summary>
-        public class CreateChannelInvite : RestAPITestBase<IDiscordRestChannelAPI>
+        public class CreateChannelInviteAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1363,9 +1355,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteChannelPermission"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeleteChannelPermissionAsync"/> method.
         /// </summary>
-        public class DeleteChannelPermission : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeleteChannelPermissionAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1394,9 +1386,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="FollowNewsChannel"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.FollowNewsChannelAsync"/> method.
         /// </summary>
-        public class FollowNewsChannel : RestAPITestBase<IDiscordRestChannelAPI>
+        public class FollowNewsChannelAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1432,9 +1424,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="TriggerTypingIndicator"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.TriggerTypingIndicatorAsync"/> method.
         /// </summary>
-        public class TriggerTypingIndicator : RestAPITestBase<IDiscordRestChannelAPI>
+        public class TriggerTypingIndicatorAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1462,9 +1454,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GetPinnedMessages"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GetPinnedMessagesAsync"/> method.
         /// </summary>
-        public class GetPinnedMessages : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GetPinnedMessagesAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1492,9 +1484,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="AddPinnedChannelMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.AddPinnedChannelMessageAsync"/> method.
         /// </summary>
-        public class AddPinnedChannelMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class AddPinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1523,9 +1515,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DeletePinnedChannelMessage"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.DeletePinnedChannelMessageAsync"/> method.
         /// </summary>
-        public class DeletePinnedChannelMessage : RestAPITestBase<IDiscordRestChannelAPI>
+        public class DeletePinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1556,7 +1548,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         /// <summary>
         /// Tests the <see cref="GroupDMAddRecipient"/> method.
         /// </summary>
-        public class GroupDMAddRecipient : RestAPITestBase<IDiscordRestChannelAPI>
+        public class GroupDMAddRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1597,7 +1589,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             /// <summary>
             /// Tests the <see cref="GroupDMRemoveRecipient"/> method.
             /// </summary>
-            public class GroupDMRemoveRecipient : RestAPITestBase<IDiscordRestChannelAPI>
+            public class GroupDMRemoveRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
             {
                 /// <summary>
                 /// Tests whether the API method performs its request correctly.
