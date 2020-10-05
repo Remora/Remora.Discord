@@ -1332,7 +1332,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .WithProperty("max_uses", p => p.Is(maxUses))
                                 .WithProperty("temporary", p => p.Is(temporary))
                                 .WithProperty("unique", p => p.Is(unique))
-                                .WithProperty("target_user", p => p.Is(targetUser.ToString()))
+                                .WithProperty("target_user", p => p.Is(targetUser.Value.ToString()))
                                 .WithProperty("target_user_type", p => p.Is((int)targetUserType))
                         )
                     )

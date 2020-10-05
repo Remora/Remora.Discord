@@ -58,12 +58,11 @@ namespace Remora.Discord.Rest.Extensions
             if (value.Value is null)
             {
                 json.WriteNull(name);
+                return;
             }
-            else
-            {
-                json.WritePropertyName(name);
-                JsonSerializer.Serialize(json, value.Value, jsonOptions);
-            }
+
+            json.WritePropertyName(name);
+            JsonSerializer.Serialize(json, value.Value, jsonOptions);
         }
 
         /// <summary>
@@ -94,6 +93,7 @@ namespace Remora.Discord.Rest.Extensions
             if (value.Value is null)
             {
                 json.WriteNull(name);
+                return;
             }
 
             json.WriteEnum(name, new Optional<T>(value.Value!.Value), asInteger, jsonOptions);

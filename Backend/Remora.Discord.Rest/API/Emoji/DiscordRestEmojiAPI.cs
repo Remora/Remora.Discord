@@ -141,23 +141,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        if (name.HasValue)
-                        {
-                            json.WriteString("name", name.Value);
-                        }
-
-                        if (roles.HasValue)
-                        {
-                            if (roles.Value is null)
-                            {
-                                json.WriteNull("roles");
-                            }
-                            else
-                            {
-                                json.WritePropertyName("roles");
-                                JsonSerializer.Serialize(json, roles.Value, _jsonOptions);
-                            }
-                        }
+                        json.Write("name", name, _jsonOptions);
+                        json.Write("roles", roles, _jsonOptions);
                     }
                 ),
                 ct: ct
