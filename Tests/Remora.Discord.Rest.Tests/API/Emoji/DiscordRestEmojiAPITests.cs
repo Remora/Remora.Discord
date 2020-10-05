@@ -107,7 +107,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
-            public async Task PerformsPNGRequestCorrectly()
+            public async Task PerformsRequestCorrectly()
             {
                 var guildId = new Snowflake(0);
                 var name = "ff";
@@ -116,84 +116,6 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 await using var image = new MemoryStream();
                 await using var binaryWriter = new BinaryWriter(image);
                 binaryWriter.Write(9894494448401390090);
-                image.Position = 0;
-
-                var roles = new List<Snowflake>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("image", p => p.IsString())
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
-
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsJPEGRequestCorrectly()
-            {
-                var guildId = new Snowflake(0);
-                var name = "ff";
-
-                // Create a dummy JPG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00FFD8FF);
-                image.Position = 0;
-
-                var roles = new List<Snowflake>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("image", p => p.IsString())
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
-
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsGIFRequestCorrectly()
-            {
-                var guildId = new Snowflake(0);
-                var name = "ff";
-
-                // Create a dummy GIF image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00464947);
                 image.Position = 0;
 
                 var roles = new List<Snowflake>();
