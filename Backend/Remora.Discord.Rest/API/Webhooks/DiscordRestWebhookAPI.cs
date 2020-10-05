@@ -88,7 +88,7 @@ namespace Remora.Discord.Rest.API
 
             return await _discordHttpClient.PostAsync<IWebhook>
             (
-                $"channels/{channelID}/webhook",
+                $"channels/{channelID}/webhooks",
                 b => b.WithJson
                 (
                     json =>
@@ -110,7 +110,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
-                $"channels/{channelID}",
+                $"channels/{channelID}/webhooks",
                 ct: ct
             );
         }
@@ -124,7 +124,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
-                $"guilds/{guildID}",
+                $"guilds/{guildID}/webhooks",
                 ct: ct
             );
         }
