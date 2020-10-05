@@ -394,7 +394,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> GetGuildMembersAsync
+        public Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
         (
             Snowflake guildID,
             Optional<int> limit = default,
@@ -918,7 +918,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetAsync
+        public Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetSettingsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
