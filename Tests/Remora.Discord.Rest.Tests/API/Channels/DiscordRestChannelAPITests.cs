@@ -1546,7 +1546,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="GroupDMAddRecipient"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.GroupDMAddRecipientAsync"/> method.
         /// </summary>
         public class GroupDMAddRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
@@ -1587,7 +1587,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             }
 
             /// <summary>
-            /// Tests the <see cref="GroupDMRemoveRecipient"/> method.
+            /// Tests the <see cref="DiscordRestChannelAPI.GroupDMRemoveRecipientAsync"/> method.
             /// </summary>
             public class GroupDMRemoveRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
             {
