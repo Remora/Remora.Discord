@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -67,7 +68,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IRole>> roles = default,
             Optional<IReadOnlyList<IChannel>> channels = default,
             Optional<Snowflake> afkChannelID = default,
-            Optional<int> afkTimeout = default,
+            Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
             CancellationToken ct = default
         )
@@ -107,7 +108,12 @@ namespace Remora.Discord.Rest.API
                         json.Write("roles", roles, _jsonOptions);
                         json.Write("channels", channels, _jsonOptions);
                         json.Write("afk_channel_id", afkChannelID, _jsonOptions);
-                        json.Write("afk_timeout", afkTimeout, _jsonOptions);
+
+                        if (afkTimeout.HasValue)
+                        {
+                            json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
+                        }
+
                         json.Write("system_channel_id", systemChannelID, _jsonOptions);
                     }
                 ),
@@ -161,7 +167,7 @@ namespace Remora.Discord.Rest.API
             Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
             Optional<Snowflake?> afkChannelID = default,
-            Optional<int> afkTimeout = default,
+            Optional<TimeSpan> afkTimeout = default,
             Optional<Stream?> icon = default,
             Optional<Snowflake> ownerID = default,
             Optional<Stream?> splash = default,
@@ -251,7 +257,11 @@ namespace Remora.Discord.Rest.API
 
                         json.WriteEnum("explicit_content_filter", explicitContentFilter, jsonOptions: _jsonOptions);
                         json.Write("afk_channel_id", afkChannelID, _jsonOptions);
-                        json.Write("afk_timeout", afkTimeout, _jsonOptions);
+
+                        if (afkTimeout.HasValue)
+                        {
+                            json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
+                        }
 
                         json.Write("icon", iconData, _jsonOptions);
                         json.Write("owner_id", ownerID, _jsonOptions);

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -65,7 +66,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IRole>> roles = default,
             Optional<IReadOnlyList<IChannel>> channels = default,
             Optional<Snowflake> afkChannelID = default,
-            Optional<int> afkTimeout = default,
+            Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
             CancellationToken ct = default
         );
@@ -129,7 +130,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
             Optional<Snowflake?> afkChannelID = default,
-            Optional<int> afkTimeout = default,
+            Optional<TimeSpan> afkTimeout = default,
             Optional<Stream?> icon = default,
             Optional<Snowflake> ownerID = default,
             Optional<Stream?> splash = default,
