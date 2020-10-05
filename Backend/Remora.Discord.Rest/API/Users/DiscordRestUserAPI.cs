@@ -135,15 +135,23 @@ namespace Remora.Discord.Rest.API
             return await _discordHttpClient.GetAsync<IReadOnlyList<IGuild>>
             (
                 "users/@me/guilds",
-                b => b.WithJson
-                (
-                    json =>
+                b =>
+                {
+                    if (before.HasValue)
                     {
-                        json.Write("before", before, _jsonOptions);
-                        json.Write("after", after, _jsonOptions);
-                        json.Write("limit", limit, _jsonOptions);
+                        b.AddQueryParameter("before", before.Value.ToString());
                     }
-                ),
+
+                    if (after.HasValue)
+                    {
+                        b.AddQueryParameter("after", after.Value.ToString());
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
                 ct: ct
             );
         }
