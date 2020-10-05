@@ -24,6 +24,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Remora.Discord.Rest.API
 {
@@ -32,6 +34,8 @@ namespace Remora.Discord.Rest.API
     /// </summary>
     public class RateLimitBucket
     {
+        private readonly SemaphoreSlim _semaphore;
+
         /// <summary>
         /// Gets the total limit of the bucket.
         /// </summary>
@@ -72,6 +76,8 @@ namespace Remora.Discord.Rest.API
             this.ResetsAt = resetsAt;
             this.ID = id;
             this.IsGlobal = isGlobal;
+
+            _semaphore = new SemaphoreSlim(1);
         }
 
         /// <summary>
@@ -133,16 +139,33 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <summary>
-        /// Takes a token from the bucket.
+        /// Attempts to take a token from the bucket.
         /// </summary>
-        public void Take()
+        /// <returns>true if a token was successfully taken from the bucket; otherwise, false.</returns>
+        public async Task<bool> TryTakeAsync()
         {
-            if (this.Remaining == 0)
+            try
             {
-                throw new InvalidOperationException();
-            }
+                await _semaphore.WaitAsync();
 
-            this.Remaining -= 1;
+                if (this.Remaining == 0)
+                {
+                    if (this.ResetsAt < DateTimeOffset.UtcNow)
+                    {
+                        // Optimistic allowance; the bucket should have reset by now
+                        return true;
+                    }
+
+                    return false;
+                }
+
+                this.Remaining -= 1;
+                return true;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
     }
 }
