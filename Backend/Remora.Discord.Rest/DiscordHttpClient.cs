@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.API.Extensions;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
 
@@ -61,6 +62,7 @@ namespace Remora.Discord.Rest
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to retrieve.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
@@ -68,6 +70,7 @@ namespace Remora.Discord.Rest
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
+            bool allowNullReturn = false,
             CancellationToken ct = default
         )
         {
@@ -88,7 +91,7 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                return await UnpackResponseAsync<TEntity>(response, ct);
+                return await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
             }
             catch (Exception e)
             {
@@ -147,6 +150,7 @@ namespace Remora.Discord.Rest
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to create.</typeparam>
         /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -154,6 +158,7 @@ namespace Remora.Discord.Rest
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
+            bool allowNullReturn = false,
             CancellationToken ct = default
         )
         {
@@ -174,7 +179,7 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, ct);
+                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
                 return !entityResult.IsSuccess
                     ? CreateRestEntityResult<TEntity>.FromError(entityResult)
                     : CreateRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
@@ -232,6 +237,7 @@ namespace Remora.Discord.Rest
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to modify.</typeparam>
         /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -239,6 +245,7 @@ namespace Remora.Discord.Rest
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
+            bool allowNullReturn = false,
             CancellationToken ct = default
         )
         {
@@ -259,7 +266,7 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, ct);
+                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
                 return !entityResult.IsSuccess
                     ? ModifyRestEntityResult<TEntity>.FromError(entityResult)
                     : ModifyRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
@@ -359,6 +366,7 @@ namespace Remora.Discord.Rest
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The type of entity to create.</typeparam>
         /// <returns>A result which may or may not have succeeded.</returns>
@@ -366,6 +374,7 @@ namespace Remora.Discord.Rest
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
+            bool allowNullReturn = false,
             CancellationToken ct = default
         )
         {
@@ -386,7 +395,7 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, ct);
+                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
                 return !entityResult.IsSuccess
                     ? CreateRestEntityResult<TEntity>.FromError(entityResult)
                     : CreateRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
@@ -506,17 +515,30 @@ namespace Remora.Discord.Rest
         /// error.
         /// </summary>
         /// <param name="response">The response to unpack.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to unpack.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         private async Task<IRetrieveRestEntityResult<TEntity>> UnpackResponseAsync<TEntity>
         (
             HttpResponseMessage response,
+            bool allowNullReturn = false,
             CancellationToken ct = default
         )
         {
             if (response.IsSuccessStatusCode)
             {
+                if (response.Content is null)
+                {
+                    if (!allowNullReturn)
+                    {
+                        throw new InvalidOperationException("Response content null, but null returns not allowed.");
+                    }
+
+                    // Null is okay as a default here, since TEntity might be TEntity?
+                    return RetrieveRestEntityResult<TEntity>.FromSuccess(default!);
+                }
+
                 var entity = await JsonSerializer.DeserializeAsync<TEntity>
                 (
                     await response.Content.ReadAsStreamAsync(),

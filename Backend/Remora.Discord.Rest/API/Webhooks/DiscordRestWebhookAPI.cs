@@ -97,7 +97,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("avatar", avatarDataString);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -199,7 +199,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("channel_id", channelID, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -243,7 +243,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("avatar", avatarData, _jsonOptions);
                     }
                 ),
-                ct
+                ct: ct
             );
         }
 
@@ -316,7 +316,7 @@ namespace Remora.Discord.Rest.API
                         }
                     );
                 },
-                ct
+                ct: ct
             );
         }
     }
