@@ -45,7 +45,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         /// <summary>
         /// Tests the <see cref="ListGuildEmojis"/> method.
         /// </summary>
-        public class ListGuildEmojis : RestAPITestBase<IDiscordRestEmojiAPI>
+        public class ListGuildEmojisAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -72,7 +72,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         /// <summary>
         /// Tests the <see cref="ListGuildEmojis"/> method.
         /// </summary>
-        public class GetGuildEmoji : RestAPITestBase<IDiscordRestEmojiAPI>
+        public class GetGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -100,7 +100,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         /// <summary>
         /// Tests the <see cref="ListGuildEmojis"/> method.
         /// </summary>
-        public class CreateGuildEmoji : RestAPITestBase<IDiscordRestEmojiAPI>
+        public class CreateGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -301,7 +301,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         /// <summary>
         /// Tests the <see cref="ListGuildEmojis"/> method.
         /// </summary>
-        public class ModifyGuildEmoji : RestAPITestBase<IDiscordRestEmojiAPI>
+        public class ModifyGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -370,7 +370,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
         /// <summary>
         /// Tests the <see cref="ListGuildEmojis"/> method.
         /// </summary>
-        public class DeleteGuildEmoji : RestAPITestBase<IDiscordRestEmojiAPI>
+        public class DeleteGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.

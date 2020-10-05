@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
     public class DiscordRestGuildAPITests
     {
         /// <summary>
-        /// Tests the <see cref="CreateGuildAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.CreateGuildAsync"/> method.
         /// </summary>
         public class CreateGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -203,7 +203,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildAsync"/> method.
         /// </summary>
         public class GetGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -232,7 +232,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildPreviewAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildPreviewAsync"/> method.
         /// </summary>
         public class GetGuildPreviewAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -259,7 +259,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildAsync"/> method.
         /// </summary>
         public class ModifyGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -495,7 +495,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteGuildAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.DeleteGuildAsync"/> method.
         /// </summary>
         public class DeleteGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -522,7 +522,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildChannelsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildChannelsAsync"/> method.
         /// </summary>
         public class GetGuildChannelsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -549,7 +549,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateGuildChannelAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.CreateGuildChannelAsync"/> method.
         /// </summary>
         public class CreateGuildChannelAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -652,7 +652,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildChannelPositionsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildChannelPositionsAsync"/> method.
         /// </summary>
         public class ModifyGuildChannelPositionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -810,7 +810,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildMemberAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildMemberAsync"/> method.
         /// </summary>
         public class GetGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -838,7 +838,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ListGuildMembersAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ListGuildMembersAsync"/> method.
         /// </summary>
         public class ListGuildMembersAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -875,7 +875,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="AddGuildMemberAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.AddGuildMemberAsync"/> method.
         /// </summary>
         public class AddGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -979,7 +979,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildMemberAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildMemberAsync"/> method.
         /// </summary>
         public class ModifyGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1034,7 +1034,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyCurrentUserNickAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentUserNickAsync"/> method.
         /// </summary>
         public class ModifyCurrentUserNickAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1073,7 +1073,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="AddGuildMemberRoleAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.AddGuildMemberRoleAsync"/> method.
         /// </summary>
         public class AddGuildMemberRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1107,7 +1107,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="RemoveGuildMemberRoleAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.RemoveGuildMemberRoleAsync"/> method.
         /// </summary>
         public class RemoveGuildMemberRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1141,7 +1141,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="RemoveGuildMemberAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.RemoveGuildMemberAsync"/> method.
         /// </summary>
         public class RemoveGuildMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1173,7 +1173,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildBansAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildBansAsync"/> method.
         /// </summary>
         public class GetGuildBansAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1203,7 +1203,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildBanAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildBanAsync"/> method.
         /// </summary>
         public class GetGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1235,7 +1235,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateGuildBanAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.CreateGuildBanAsync"/> method.
         /// </summary>
         public class CreateGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1280,7 +1280,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="RemoveGuildBanAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.RemoveGuildBanAsync"/> method.
         /// </summary>
         public class RemoveGuildBanAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1312,7 +1312,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildRolesAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildRolesAsync"/> method.
         /// </summary>
         public class GetGuildRolesAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1342,7 +1342,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateGuildRoleAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.CreateGuildRoleAsync"/> method.
         /// </summary>
         public class CreateGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1394,7 +1394,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildRolePositionsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildRolePositionsAsync"/> method.
         /// </summary>
         public class ModifyGuildRolePositionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1480,7 +1480,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildRoleAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildRoleAsync"/> method.
         /// </summary>
         public class ModifyGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1534,7 +1534,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="DeleteGuildRoleAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.DeleteGuildRoleAsync"/> method.
         /// </summary>
         public class DeleteGuildRoleAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1566,7 +1566,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildPruneCountAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildPruneCountAsync"/> method.
         /// </summary>
         public class GetGuildPruneCountAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1613,7 +1613,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="BeginGuildPruneAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.BeginGuildPruneAsync"/> method.
         /// </summary>
         public class BeginGuildPruneAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1659,7 +1659,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildVoiceRegionsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildVoiceRegionsAsync"/> method.
         /// </summary>
         public class GetGuildVoiceRegionsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1689,7 +1689,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildInvitesAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildInvitesAsync"/> method.
         /// </summary>
         public class GetGuildInvitesAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1719,7 +1719,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildIntegrationsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildIntegrationsAsync"/> method.
         /// </summary>
         public class GetGuildIntegrationsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1749,7 +1749,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="CreateGuildIntegrationAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.CreateGuildIntegrationAsync"/> method.
         /// </summary>
         public class CreateGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1792,7 +1792,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildIntegrationAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildIntegrationAsync"/> method.
         /// </summary>
         public class ModifyGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1840,7 +1840,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildRolesAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildRolesAsync"/> method.
         /// </summary>
         public class DeleteGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1872,7 +1872,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="SyncGuildIntegrationAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.SyncGuildIntegrationAsync"/> method.
         /// </summary>
         public class SyncGuildIntegrationAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1908,7 +1908,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildWidgetSettingsAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildWidgetSettingsAsync"/> method.
         /// </summary>
         public class GetGuildWidgetSettingsAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1938,7 +1938,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="ModifyGuildWidgetAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildWidgetAsync"/> method.
         /// </summary>
         public class ModifyGuildWidgetAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -1981,7 +1981,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildVanityUrlAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildVanityUrlAsync"/> method.
         /// </summary>
         public class GetGuildVanityUrlAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -2011,7 +2011,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="GetGuildWidgetImageAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildWidgetImageAsync"/> method.
         /// </summary>
         public class GetGuildWidgetImageAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
