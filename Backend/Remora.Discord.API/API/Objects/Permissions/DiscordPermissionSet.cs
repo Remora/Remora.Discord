@@ -73,7 +73,7 @@ namespace Remora.Discord.API.Objects
                 currentValue |= (byte)(1 << bitIndex);
             }
 
-            this.Value = new BigInteger(bytes.ToArray());
+            this.Value = new BigInteger(bytes);
         }
 
         /// <summary>
