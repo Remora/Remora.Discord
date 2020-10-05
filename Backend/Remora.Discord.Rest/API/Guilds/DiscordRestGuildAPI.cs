@@ -817,7 +817,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IInvite>>
             (
-                $"guilds&{guildID}/invites",
+                $"guilds/{guildID}/invites",
                 ct: ct
             );
         }
@@ -831,7 +831,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
             (
-                $"guilds&{guildID}/integrations",
+                $"guilds/{guildID}/integrations",
                 ct: ct
             );
         }
@@ -979,7 +979,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetContentAsync
             (
-                $"guilds/{guildID}/widget",
+                $"guilds/{guildID}/widget.png",
                 b =>
                 {
                     if (style.HasValue)
