@@ -122,6 +122,85 @@ namespace Remora.Discord.Rest.Tests.API.Guild
 
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfNameIsTooShort()
+            {
+                var name = new string('b', 1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.CreateGuildAsync
+                (
+                    name
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfNameIsTooLong()
+            {
+                var name = new string('b', 101);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.CreateGuildAsync
+                (
+                    name
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfImageIsUnknownType()
+            {
+                var name = "aaa";
+
+                // Create a dummy PNG image
+                await using var icon = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(icon);
+                binaryWriter.Write(0x00000000);
+                icon.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.CreateGuildAsync
+                (
+                    name,
+                    icon: icon
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
         }
 
         /// <summary>
@@ -278,6 +357,141 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 );
 
                 ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var name = "brr";
+
+                var api = CreateAPI
+                (
+                    b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                            .WithProperty("icon", p => p.IsNull())
+                            .WithProperty("splash", p => p.IsNull())
+                            .WithProperty("banner", p => p.IsNull())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.ModifyGuildAsync
+                (
+                    guildId,
+                    name,
+                    icon: null,
+                    banner: null,
+                    splash: null
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfIconIsUnknownFormat()
+            {
+                var guildId = new Snowflake(0);
+                var name = "brr";
+
+                await using var icon = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(icon);
+                binaryWriter.Write(0x00000000);
+                icon.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.ModifyGuildAsync
+                (
+                    guildId,
+                    name,
+                    icon: icon
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfBannerIsUnknownFormat()
+            {
+                var guildId = new Snowflake(0);
+                var name = "brr";
+
+                await using var banner = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(banner);
+                binaryWriter.Write(0x00000000);
+                banner.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.ModifyGuildAsync
+                (
+                    guildId,
+                    name,
+                    banner: banner
+                );
+
+                ResultAssert.Unsuccessful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task ReturnsErrorIfSplashIsUnknownFormat()
+            {
+                var guildId = new Snowflake(0);
+                var name = "brr";
+
+                await using var splash = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(splash);
+                binaryWriter.Write(0x00000000);
+                splash.Position = 0;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
+                );
+
+                var result = await api.ModifyGuildAsync
+                (
+                    guildId,
+                    name,
+                    splash: splash
+                );
+
+                ResultAssert.Unsuccessful(result);
             }
         }
 
@@ -507,6 +721,82 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(4.ToString()))
                                                 .WithProperty("position", p => p.Is(4))
+                                        )
+                                    )
+                            )
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps);
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullableRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var swaps = new List<(Snowflake Channel, int? Position)>
+                {
+                    (new Snowflake(1), null),
+                    (new Snowflake(2), null),
+                    (new Snowflake(3), null),
+                    (new Snowflake(4), null),
+                };
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                        .WithJson
+                        (
+                            j => j.IsArray
+                            (
+                                a => a
+                                    .WithCount(swaps.Count)
+                                    .WithElement
+                                    (
+                                        0,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                            .WithProperty("id", p => p.Is(1.ToString()))
+                                            .WithProperty("position", p => p.IsNull())
+                                        )
+                                    )
+                                    .WithElement
+                                    (
+                                        1,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("id", p => p.Is(2.ToString()))
+                                                .WithProperty("position", p => p.IsNull())
+                                        )
+                                    )
+                                    .WithElement
+                                    (
+                                        2,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("id", p => p.Is(3.ToString()))
+                                                .WithProperty("position", p => p.IsNull())
+                                        )
+                                    )
+                                    .WithElement
+                                    (
+                                        3,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("id", p => p.Is(4.ToString()))
+                                                .WithProperty("position", p => p.IsNull())
                                         )
                                     )
                             )
