@@ -59,6 +59,7 @@ namespace Remora.Discord.Rest.Extensions
             serviceCollection
                 .AddDiscordApi();
 
+            var rateLimitPolicy = DiscordRateLimitPolicy.Create();
             var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
             var clientBuilder = serviceCollection
                 .AddHttpClient<DiscordHttpClient>
@@ -89,7 +90,7 @@ namespace Remora.Discord.Rest.Extensions
                 (
                     b => b
                         .WaitAndRetryAsync(retryDelay)
-                        .WrapAsync(DiscordRateLimitPolicy.Create())
+                        .WrapAsync(rateLimitPolicy)
                 )
                 .AddPolicyHandler
                 (
