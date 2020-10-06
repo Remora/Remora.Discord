@@ -25,10 +25,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
@@ -132,6 +134,15 @@ namespace Remora.Discord.Rest.Extensions
                 .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
                 .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
                 .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>();
+
+            serviceCollection
+                .Configure<JsonSerializerOptions>
+                (
+                    options =>
+                    {
+                        options.AddDataObjectConverter<IRestError, RestError>();
+                    }
+                );
 
             return serviceCollection;
         }
