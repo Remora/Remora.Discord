@@ -148,7 +148,7 @@ namespace Remora.Discord.Rest.API
             {
                 await _semaphore.WaitAsync();
 
-                if (this.Remaining == 0)
+                if (this.Remaining <= 0)
                 {
                     // Optimistic allowance; the bucket should have reset by now
                     return this.ResetsAt < DateTimeOffset.UtcNow;
