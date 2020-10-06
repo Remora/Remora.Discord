@@ -87,18 +87,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         int AFKTimeout { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the server widget is enabled.
-        /// </summary>
-        [Obsolete]
-        Optional<bool> IsEmbedEnabled { get; }
-
-        /// <summary>
-        /// Gets the ID of the channel the widget will generate an invite to. Null of no invites will be generated.
-        /// </summary>
-        [Obsolete]
-        Optional<Snowflake?> EmbedChannelID { get; }
-
-        /// <summary>
         /// Gets the verification level required for the guild.
         /// </summary>
         VerificationLevel VerificationLevel { get; }

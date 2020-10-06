@@ -64,12 +64,6 @@ namespace Remora.Discord.API.Objects
         public int AFKTimeout { get; }
 
         /// <inheritdoc />
-        public Optional<bool> IsEmbedEnabled { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake?> EmbedChannelID { get; }
-
-        /// <inheritdoc />
         public VerificationLevel VerificationLevel { get; }
 
         /// <inheritdoc />
@@ -182,8 +176,6 @@ namespace Remora.Discord.API.Objects
         /// <param name="region">The guild's region.</param>
         /// <param name="afkChannelID">The ID of the AFK channel.</param>
         /// <param name="afkTimeout">The AFK timeout.</param>
-        /// <param name="isEmbedEnabled">Whether the guild embed is enabled.</param>
-        /// <param name="embedChannelID">The ID of the channel the guild embed generates invites to.</param>
         /// <param name="verificationLevel">The verification level of the guild.</param>
         /// <param name="defaultMessageNotifications">The default message notification level of the guild.</param>
         /// <param name="explicitContentFilter">The content filter level.</param>
@@ -230,8 +222,6 @@ namespace Remora.Discord.API.Objects
             string region,
             Snowflake? afkChannelID,
             int afkTimeout,
-            Optional<bool> isEmbedEnabled,
-            Optional<Snowflake?> embedChannelID,
             VerificationLevel verificationLevel,
             MessageNotificationLevel defaultMessageNotifications,
             ExplicitContentFilterLevel explicitContentFilter,
@@ -278,8 +268,6 @@ namespace Remora.Discord.API.Objects
             this.Region = region;
             this.AFKChannelID = afkChannelID;
             this.AFKTimeout = afkTimeout;
-            this.IsEmbedEnabled = isEmbedEnabled;
-            this.EmbedChannelID = embedChannelID;
             this.VerificationLevel = verificationLevel;
             this.DefaultMessageNotifications = defaultMessageNotifications;
             this.ExplicitContentFilter = explicitContentFilter;
