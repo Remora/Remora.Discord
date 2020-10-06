@@ -500,12 +500,7 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddConverter<DiscordPermissionSetConverter>();
 
-            options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>()
-                .WithPropertyConverter
-                (
-                    p => p.Type,
-                    new StringEnumConverter<PermissionOverwriteType>(new SnakeCaseNamingPolicy())
-                );
+            options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>();
 
             options.AddDataObjectConverter<IRole, Role>()
                 .WithPropertyName(r => r.Colour, "color")

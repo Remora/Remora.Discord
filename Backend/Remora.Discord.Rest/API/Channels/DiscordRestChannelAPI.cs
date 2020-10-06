@@ -463,7 +463,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.Write("allow", allow, _jsonOptions);
                         json.Write("deny", deny, _jsonOptions);
-                        json.WriteEnum("type", type, jsonOptions: _jsonOptions);
+                        json.Write("type", type, _jsonOptions);
                     }
                 ),
                 ct

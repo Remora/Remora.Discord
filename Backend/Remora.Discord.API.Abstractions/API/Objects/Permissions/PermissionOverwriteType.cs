@@ -28,13 +28,13 @@ namespace Remora.Discord.API.Abstractions.Objects
     public enum PermissionOverwriteType
     {
         /// <summary>
-        /// This overwrite is for a specific member.
-        /// </summary>
-        Member = 0,
-
-        /// <summary>
         /// This overwrite is for a specific role.
         /// </summary>
-        Role = 1
+        Role = 0,
+
+        /// <summary>
+        /// This overwrite is for a specific member.
+        /// </summary>
+        Member = 1
     }
 }

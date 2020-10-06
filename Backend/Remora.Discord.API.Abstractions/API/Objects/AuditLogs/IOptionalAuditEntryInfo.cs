@@ -78,7 +78,8 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<Snowflake> ID { get; }
 
         /// <summary>
-        /// Gets the type of the overwritten entity. This can be either "member" or "role".
+        /// Gets the type of the overwritten entity. This can be either "0" for roles, or "1" for members.
+        /// TODO: Deserialize this into <see cref="PermissionOverwriteType"/>.
         /// <remarks>
         /// Relevant for <see cref="AuditLogEvent.ChannelOverwriteCreate"/>,
         /// <see cref="AuditLogEvent.ChannelOverwriteUpdate"/>, and <see cref="AuditLogEvent.ChannelOverwriteDelete"/>.
