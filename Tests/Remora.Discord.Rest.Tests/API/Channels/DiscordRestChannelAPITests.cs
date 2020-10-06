@@ -1252,8 +1252,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             j => j.IsObject
                             (
                                 o => o
-                                    .WithProperty("allow", p => p.Is((int)allow.Value))
-                                    .WithProperty("deny", p => p.Is((int)deny.Value))
+                                    .WithProperty("allow", p => p.Is(allow.Value.ToString()))
+                                    .WithProperty("deny", p => p.Is(deny.Value.ToString()))
                                     .WithProperty("type", p => p.Is((int)type))
                             )
                         )

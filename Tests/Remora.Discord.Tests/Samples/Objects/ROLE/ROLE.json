@@ -4,8 +4,7 @@
     "color": 3447003,
     "hoist": true,
     "position": 1,
-    "permissions": 66321471,
-    "permissions_new": "66321471",
+    "permissions": "66321471",
     "managed": false,
     "mentionable": false
 }

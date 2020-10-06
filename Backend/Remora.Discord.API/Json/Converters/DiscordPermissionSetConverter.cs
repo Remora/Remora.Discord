@@ -39,10 +39,6 @@ namespace Remora.Discord.API.Json
         {
             switch (reader.TokenType)
             {
-                case JsonTokenType.Number:
-                {
-                    return new DiscordPermissionSet(new BigInteger(reader.GetUInt64()));
-                }
                 case JsonTokenType.String:
                 {
                     if (!BigInteger.TryParse(reader.GetString(), out var value))
@@ -62,12 +58,6 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, IDiscordPermissionSet value, JsonSerializerOptions options)
         {
-            if (value.Value <= ulong.MaxValue)
-            {
-                writer.WriteNumberValue((ulong)value.Value);
-                return;
-            }
-
             writer.WriteStringValue(value.Value.ToString());
         }
     }
