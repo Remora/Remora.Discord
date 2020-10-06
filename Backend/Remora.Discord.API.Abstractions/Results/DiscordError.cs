@@ -166,6 +166,11 @@ namespace Remora.Discord.API.Abstractions.Results
         BotsOnly = 20002,
 
         /// <summary>
+        /// This message cannot be edited due to announcement rate limits.
+        /// </summary>
+        EditingNotAllowedDueToAnnouncementRateLimits = 20022,
+
+        /// <summary>
         /// Maximum number of guilds reached (100).
         /// </summary>
         MaxGuildsReached = 30001,
