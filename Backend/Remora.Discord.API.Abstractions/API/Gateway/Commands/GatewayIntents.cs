@@ -123,7 +123,6 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
 
         /// <summary>
         /// Subscribes to the following events:
-        ///     - CHANNEL_CREATE
         ///     - MESSAGE_CREATE
         ///     - MESSAGE_UPDATE
         ///     - MESSAGE_DELETE

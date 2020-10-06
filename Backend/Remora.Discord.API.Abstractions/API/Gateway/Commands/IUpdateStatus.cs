@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
@@ -36,9 +37,9 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         DateTime? Since { get; }
 
         /// <summary>
-        /// Gets the user's new activity.
+        /// Gets the user's new activities.
         /// </summary>
-        IActivity? Game { get; }
+        IReadOnlyList<IActivity>? Activities { get; }
 
         /// <summary>
         /// Gets the user's status.

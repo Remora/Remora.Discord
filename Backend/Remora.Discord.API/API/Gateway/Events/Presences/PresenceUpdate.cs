@@ -38,27 +38,19 @@ namespace Remora.Discord.API.Gateway.Events
         /// Initializes a new instance of the <see cref="PresenceUpdate"/> class.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <param name="roles">The roles the user has.</param>
-        /// <param name="game">The user's current activity.</param>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="status">The user's status.</param>
         /// <param name="activities">The user's current activities.</param>
         /// <param name="clientStatus">The user's platform-dependent status.</param>
-        /// <param name="premiumSince">When the user started boosting the guild.</param>
-        /// <param name="nickname">The user's nickname.</param>
         public PresenceUpdate
         (
             IUser user,
-            IReadOnlyList<Snowflake> roles,
-            IActivity? game,
             Snowflake guildID,
             ClientStatus status,
-            IReadOnlyList<IActivity> activities,
-            IClientStatuses clientStatus,
-            Optional<DateTimeOffset?> premiumSince,
-            Optional<string?> nickname
+            IReadOnlyList<IActivity>? activities,
+            IClientStatuses clientStatus
         )
-            : base(user, roles, game, guildID, status, activities, clientStatus, premiumSince, nickname)
+            : base(user, guildID, status, activities, clientStatus)
         {
         }
     }

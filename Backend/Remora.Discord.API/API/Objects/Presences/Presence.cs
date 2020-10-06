@@ -34,63 +34,39 @@ namespace Remora.Discord.API.Objects
         public IUser User { get; }
 
         /// <inheritdoc />
-        public IReadOnlyList<Snowflake> Roles { get; }
-
-        /// <inheritdoc />
-        public IActivity? Game { get; }
-
-        /// <inheritdoc />
         public Snowflake GuildID { get; }
 
         /// <inheritdoc />
         public ClientStatus Status { get; }
 
         /// <inheritdoc />
-        public IReadOnlyList<IActivity> Activities { get; }
+        public IReadOnlyList<IActivity>? Activities { get; }
 
         /// <inheritdoc />
         public IClientStatuses ClientStatus { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset?> PremiumSince { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Nickname { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Presence"/> class.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <param name="roles">The roles the user has.</param>
-        /// <param name="game">The user's current activity.</param>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="status">The user's current status.</param>
         /// <param name="activities">The user's current activities.</param>
         /// <param name="clientStatus">The user's platform-dependent status.</param>
-        /// <param name="premiumSince">The time when the user started boosting the guild.</param>
-        /// <param name="nickname">The user's nickname.</param>
         public Presence
         (
             IUser user,
-            IReadOnlyList<Snowflake> roles,
-            IActivity? game,
             Snowflake guildID,
             ClientStatus status,
-            IReadOnlyList<IActivity> activities,
-            IClientStatuses clientStatus,
-            Optional<DateTimeOffset?> premiumSince,
-            Optional<string?> nickname
+            IReadOnlyList<IActivity>? activities,
+            IClientStatuses clientStatus
         )
         {
             this.User = user;
-            this.Roles = roles;
-            this.Game = game;
             this.GuildID = guildID;
             this.Status = status;
             this.Activities = activities;
             this.ClientStatus = clientStatus;
-            this.PremiumSince = premiumSince;
-            this.Nickname = nickname;
         }
     }
 }

@@ -2,8 +2,7 @@
     "t": "PRESENCE_UPDATE",
     "s": 2,
     "op": 0,
-    "d":
-    {
+    "d": {
         "user": {
             "id": "54351326674432000",
             "username": "Azazial",
@@ -19,21 +18,19 @@
             "premium_type": 0,
             "public_flags": 0
         },
-        "roles": [ ],
-        "game": {
-            "name": "Cards Against Humanity",
-            "type": 0
-        },
         "guild_id": "54351326674432000",
         "status": "idle",
-        "activities": [ ],
+        "activities": [
+            {
+                "name": "Cards Against Humanity",
+                "type": 0
+            }
+        ],
         "client_status": {
             "desktop": "idle",
             "mobile": "dnd",
             "web": "idle"
-        },
-        "premium_since": "2020-08-28T18:17:25.377506\u002B00:00",
-        "nick": "aaa"
+        }
     }
 }
 

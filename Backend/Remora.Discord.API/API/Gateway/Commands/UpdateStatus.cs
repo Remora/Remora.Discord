@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -35,7 +36,7 @@ namespace Remora.Discord.API.Gateway.Commands
         public DateTime? Since { get; }
 
         /// <inheritdoc />
-        public IActivity? Game { get; }
+        public IReadOnlyList<IActivity>? Activities { get; }
 
         /// <inheritdoc />
         public ClientStatus Status { get; }
@@ -49,19 +50,19 @@ namespace Remora.Discord.API.Gateway.Commands
         /// <param name="status">The user's status.</param>
         /// <param name="isAFK">Whether the user is AFK.</param>
         /// <param name="since">The time that the client went idle.</param>
-        /// <param name="game">The activity that the user is performing.</param>
+        /// <param name="activities">The activities that the user is performing.</param>
         public UpdateStatus
         (
             ClientStatus status,
             bool isAFK,
             DateTime? since = null,
-            IActivity? game = null
+            IReadOnlyList<IActivity>? activities = null
         )
         {
             this.Since = since;
-            this.Game = game;
             this.Status = status;
             this.IsAFK = isAFK;
+            this.Activities = activities;
         }
     }
 }

@@ -297,7 +297,7 @@ namespace Remora.Discord.Gateway
                         return GatewayConnectionResult.FromError(getGatewayEndpoint);
                     }
 
-                    var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=6&encoding=json";
+                    var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=8&encoding=json";
                     if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                     {
                         return GatewayConnectionResult.FromError
