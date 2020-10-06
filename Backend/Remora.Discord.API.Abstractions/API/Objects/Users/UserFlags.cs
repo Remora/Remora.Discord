@@ -42,9 +42,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         DiscordEmployee = 1 << 0,
 
         /// <summary>
-        /// The user is a Discord partner.
+        /// The user owns a a Discord-partnered server.
         /// </summary>
-        DiscordPartner = 1 << 1,
+        PartneredServerOwner = 1 << 1,
 
         /// <summary>
         /// The user is part of HypeSquad events.
