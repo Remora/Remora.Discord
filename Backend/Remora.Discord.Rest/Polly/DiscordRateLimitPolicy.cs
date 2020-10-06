@@ -77,9 +77,8 @@ namespace Remora.Discord.Rest.Polly
             }
 
             var now = DateTime.UtcNow;
-            var canProceed = rateLimitBucket.Remaining > 0 || rateLimitBucket.ResetsAt > now;
 
-            if (!canProceed || !await rateLimitBucket.TryTakeAsync())
+            if (!await rateLimitBucket.TryTakeAsync())
             {
                 var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
