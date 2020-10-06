@@ -337,9 +337,19 @@ namespace Remora.Discord.API.Abstractions.Results
         CannotExecuteActionOnSystemMessage = 50021,
 
         /// <summary>
+        /// Cannot execute action on this channel type.
+        /// </summary>
+        CannotExecuteActionOnChannelType = 50024,
+
+        /// <summary>
         /// Invalid OAuth2 access token provided.
         /// </summary>
         InvalidOAuth2Token = 50025,
+
+        /// <summary>
+        /// One or more recipients were invalid.
+        /// </summary>
+        InvalidRecipients = 50033,
 
         /// <summary>
         /// A message provided was too old to bulk delete.
