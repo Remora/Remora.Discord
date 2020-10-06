@@ -101,6 +101,30 @@ namespace Remora.Discord.Rest.Results
         /// <summary>
         /// Creates a failed result.
         /// </summary>
+        /// <param name="restResult">The failed REST result.</param>
+        /// <returns>A failed result.</returns>
+        [PublicAPI, Pure]
+        public static TActualResult FromError
+        (
+            IRestResult restResult
+        )
+        {
+            if (!(restResult.DiscordError is null))
+            {
+                return FromError(restResult.ErrorReason, restResult.DiscordError);
+            }
+
+            if (restResult.HttpError.HasValue)
+            {
+                return FromError(restResult.ErrorReason, restResult.HttpError.Value);
+            }
+
+            return FromError((IResult)restResult);
+        }
+
+        /// <summary>
+        /// Creates a failed result.
+        /// </summary>
         /// <param name="errorReason">A more detailed error reason.</param>
         /// <param name="discordError">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
