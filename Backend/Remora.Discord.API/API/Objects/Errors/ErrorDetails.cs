@@ -1,5 +1,5 @@
 //
-//  IRestResult.cs
+//  ErrorDetails.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Net;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a generic REST API result.
-    /// </summary>
-    [PublicAPI]
-    public interface IRestResult : IResult
+    /// <inheritdoc />
+    public class ErrorDetails : IErrorDetails
     {
-        /// <summary>
-        /// Gets the HTTP error code, if any.
-        /// </summary>
-        HttpStatusCode? HttpError { get; }
+        /// <inheritdoc />
+        public string Code { get; }
+
+        /// <inheritdoc />
+        public string Message { get; }
 
         /// <summary>
-        /// Gets the Discord error, if any.
+        /// Initializes a new instance of the <see cref="ErrorDetails"/> class.
         /// </summary>
-        IRestError? DiscordError { get; }
+        /// <param name="code">The detailed error code.</param>
+        /// <param name="message">The detailed error message.</param>
+        public ErrorDetails(string code, string message)
+        {
+            this.Code = code;
+            this.Message = message;
+        }
     }
 }

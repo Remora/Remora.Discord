@@ -33,6 +33,7 @@ using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Polly;
@@ -134,15 +135,6 @@ namespace Remora.Discord.Rest.Extensions
                 .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
                 .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
                 .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>();
-
-            serviceCollection
-                .Configure<JsonSerializerOptions>
-                (
-                    options =>
-                    {
-                        options.AddDataObjectConverter<IRestError, RestError>();
-                    }
-                );
 
             return serviceCollection;
         }

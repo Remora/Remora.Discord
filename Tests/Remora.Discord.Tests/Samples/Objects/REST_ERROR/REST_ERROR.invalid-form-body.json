@@ -1,0 +1,18 @@
+{
+    "code": 50035,
+    "errors": {
+        "embed": {
+            "image": {
+                "url": {
+                    "_errors": [
+                        {
+                            "code": "URL_TYPE_INVALID_URL",
+                            "message": "Not a well formed URL."
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "message": "Invalid Form Body"
+}

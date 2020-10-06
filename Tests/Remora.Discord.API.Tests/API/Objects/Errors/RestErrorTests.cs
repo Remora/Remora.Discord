@@ -1,5 +1,5 @@
 //
-//  IRestResult.cs
+//  RestErrorTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Net;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <summary>
-    /// Represents a generic REST API result.
-    /// </summary>
-    [PublicAPI]
-    public interface IRestResult : IResult
+    /// <inheritdoc />
+    public class RestErrorTests : ObjectTestBase<IRestError>
     {
-        /// <summary>
-        /// Gets the HTTP error code, if any.
-        /// </summary>
-        HttpStatusCode? HttpError { get; }
-
-        /// <summary>
-        /// Gets the Discord error, if any.
-        /// </summary>
-        IRestError? DiscordError { get; }
     }
 }

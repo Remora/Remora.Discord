@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Results;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -35,8 +36,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         DiscordError Code { get; }
 
         /// <summary>
+        /// Gets the per-property error details.
+        /// </summary>
+        IReadOnlyDictionary<string, IPropertyErrorDetails> Errors { get; }
+
+        /// <summary>
         /// Gets a descriptive error message.
         /// </summary>
-        string Reason { get; }
+        string Message { get; }
     }
 }

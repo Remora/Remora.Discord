@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
 
@@ -495,8 +496,8 @@ namespace Remora.Discord.Rest
 
                 return RestRequestResult.FromError
                 (
-                    jsonError.Reason,
-                    jsonError.Code
+                    jsonError.Message,
+                    jsonError
                 );
             }
             catch
@@ -578,8 +579,8 @@ namespace Remora.Discord.Rest
 
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (
-                    jsonError.Reason,
-                    jsonError.Code
+                    jsonError.Message,
+                    jsonError
                 );
             }
             catch

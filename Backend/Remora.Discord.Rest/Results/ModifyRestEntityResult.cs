@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 
 namespace Remora.Discord.Rest.Results
@@ -81,7 +82,7 @@ namespace Remora.Discord.Rest.Results
         private ModifyRestEntityResult
         (
             string? errorReason,
-            DiscordError? discordError = null
+            IRestError? discordError = null
         )
             : base(errorReason, discordError)
         {

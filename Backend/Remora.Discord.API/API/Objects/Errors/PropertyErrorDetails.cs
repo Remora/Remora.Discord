@@ -1,5 +1,5 @@
 //
-//  RestError.cs
+//  PropertyErrorDetails.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents an error from the REST API.
-    /// </summary>
-    public class RestError : IRestError
+    /// <inheritdoc />
+    public class PropertyErrorDetails : IPropertyErrorDetails
     {
         /// <inheritdoc />
-        public DiscordError Code { get; }
+        public IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors { get; }
 
-        /// <inheritdoc/>
-        public string Reason { get; }
+        /// <inheritdoc />
+        public IReadOnlyList<IErrorDetails>? Errors { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RestError"/> class.
+        /// Initializes a new instance of the <see cref="PropertyErrorDetails"/> class.
         /// </summary>
-        /// <param name="code">The error code.</param>
-        /// <param name="reason">A descriptive error message.</param>
-        public RestError(DiscordError code, string reason)
+        /// <param name="memberErrors">Errors of inner members, if any.</param>
+        /// <param name="errors">Errors related to this property, if any.</param>
+        public PropertyErrorDetails
+        (
+            IReadOnlyDictionary<string, IPropertyErrorDetails>? memberErrors = null,
+            IReadOnlyList<IErrorDetails>? errors = null
+        )
         {
-            this.Code = code;
-            this.Reason = reason;
+            this.MemberErrors = memberErrors;
+            this.Errors = errors;
         }
     }
 }
