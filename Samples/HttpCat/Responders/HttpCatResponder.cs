@@ -29,13 +29,14 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using System;
 
 namespace HttpCat.Responders
 {
     /// <summary>
     /// Responds to a httpcat command.
     /// </summary>
-    public class HttpCatResponder : IResponder<IMessageCreate>
+    public class HttpCatResponder : IResponder<IMessageCreate>, IDisposable
     {
         private readonly HttpClient _httpClient;
         private readonly IDiscordRestChannelAPI _channelAPI;
@@ -73,6 +74,12 @@ namespace HttpCat.Responders
             return !reply.IsSuccess
                 ? EventResponseResult.FromError(reply)
                 : EventResponseResult.FromSuccess();
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            _httpClient.Dispose();
         }
     }
 }
