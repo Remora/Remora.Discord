@@ -1,5 +1,5 @@
 //
-//  IRestResult.cs
+//  IPropertyErrorDetails.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Net;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
+using System.Collections.Generic;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a generic REST API result.
+    /// Represents detailed information about errors in a property from Discord.
     /// </summary>
-    [PublicAPI]
-    public interface IRestResult : IResult
+    public interface IPropertyErrorDetails
     {
         /// <summary>
-        /// Gets the HTTP error code, if any.
+        /// Gets a set of error details regarding inner properties, if any. If the property is an array, the key
+        /// corresponds to the index in the array.
         /// </summary>
-        HttpStatusCode? HttpError { get; }
+        IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors { get; }
 
         /// <summary>
-        /// Gets the Discord error, if any.
+        /// Gets a list of error details regarding this property, if any.
         /// </summary>
-        IRestError? DiscordError { get; }
+        IReadOnlyList<IErrorDetails>? Errors { get; }
     }
 }

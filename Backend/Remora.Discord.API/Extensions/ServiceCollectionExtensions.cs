@@ -80,7 +80,8 @@ namespace Remora.Discord.API.Extensions
                             .AddReactionObjectConverters()
                             .AddUserObjectConverters()
                             .AddVoiceObjectConverters()
-                            .AddWebhookObjectConverters();
+                            .AddWebhookObjectConverters()
+                            .AddErrorObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -89,7 +90,8 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<OptionalConverterFactory>()
                             .AddConverter<NullableConverterFactory>()
                             .AddConverter<SnowflakeConverter>()
-                            .AddConverter<ColorConverter>();
+                            .AddConverter<ColorConverter>()
+                            .AddConverter<PropertyErrorDetailsConverter>();
 
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;
@@ -602,6 +604,19 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddWebhookObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IWebhook, Webhook>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle error objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddErrorObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IRestError, RestError>();
+            options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
 
             return options;
         }

@@ -24,6 +24,7 @@ using System;
 using System.Net;
 using System.Reflection;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Results;
 
@@ -40,7 +41,7 @@ namespace Remora.Discord.Rest.Results
         public HttpStatusCode? HttpError { get; }
 
         /// <inheritdoc />
-        public DiscordError? DiscordError { get; }
+        public IRestError? DiscordError { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
@@ -74,7 +75,7 @@ namespace Remora.Discord.Rest.Results
         protected AbstractRestResult
         (
             string? errorReason,
-            DiscordError? discordError = null
+            IRestError? discordError = null
         )
             : base(errorReason)
         {
@@ -107,14 +108,14 @@ namespace Remora.Discord.Rest.Results
         public static TActualResult FromError
         (
             string errorReason,
-            DiscordError discordError
+            IRestError discordError
         )
         {
             var constructor = typeof(TActualResult).GetConstructor
             (
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
                 null,
-                new[] { typeof(string), typeof(DiscordError) },
+                new[] { typeof(string), typeof(IRestError) },
                 null
             );
 
@@ -173,9 +174,9 @@ namespace Remora.Discord.Rest.Results
                 throw new InvalidOperationException();
             }
 
-            if (otherResult.DiscordError.HasValue)
+            if (!(otherResult.DiscordError is null))
             {
-                return FromError(otherResult.ErrorReason, otherResult.DiscordError.Value);
+                return FromError(otherResult.ErrorReason, otherResult.DiscordError);
             }
 
             if (otherResult.HttpError.HasValue)
