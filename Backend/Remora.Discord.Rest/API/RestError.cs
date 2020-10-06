@@ -31,7 +31,7 @@ namespace Remora.Discord.Rest.API
     public class RestError : IRestError
     {
         /// <inheritdoc />
-        public DiscordError Error { get; }
+        public DiscordError Code { get; }
 
         /// <inheritdoc/>
         public string Reason { get; }
@@ -39,11 +39,11 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="RestError"/> class.
         /// </summary>
-        /// <param name="error">The error code.</param>
+        /// <param name="code">The error code.</param>
         /// <param name="reason">A descriptive error message.</param>
-        public RestError(DiscordError error, string reason)
+        public RestError(DiscordError code, string reason)
         {
-            this.Error = error;
+            this.Code = code;
             this.Reason = reason;
         }
     }

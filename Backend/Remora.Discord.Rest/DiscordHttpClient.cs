@@ -496,7 +496,7 @@ namespace Remora.Discord.Rest
                 return RestRequestResult.FromError
                 (
                     jsonError.Reason,
-                    jsonError.Error
+                    jsonError.Code
                 );
             }
             catch
@@ -579,7 +579,7 @@ namespace Remora.Discord.Rest
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (
                     jsonError.Reason,
-                    jsonError.Error
+                    jsonError.Code
                 );
             }
             catch
