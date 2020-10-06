@@ -53,7 +53,7 @@ namespace Remora.Discord.Rest.API
         {
             return _discordHttpClient.GetAsync<IInvite>
             (
-                $"invites/{inviteCode}",
+                $"invite/{inviteCode}",
                 b =>
                 {
                     if (withCounts.HasValue)
@@ -71,7 +71,7 @@ namespace Remora.Discord.Rest.API
             // TODO: This actually returns an IInvite, according to the Discord docs. Verify.
             return _discordHttpClient.DeleteAsync
             (
-                $"invites/{inviteCode}",
+                $"invite/{inviteCode}",
                 ct: ct
             );
         }
