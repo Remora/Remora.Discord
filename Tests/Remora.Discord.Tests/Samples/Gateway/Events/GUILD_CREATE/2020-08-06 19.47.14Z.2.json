@@ -261,7 +261,7 @@
         "position": 2,
         "permission_overwrites": [
           {
-            "type": "member",
+            "type": 1,
             "id": "452506031143125003",
             "deny": "0",
             "allow": "268435456"
@@ -332,19 +332,19 @@
         "position": 11,
         "permission_overwrites": [
           {
-            "type": "member",
+            "type": 1,
             "id": "108253912766631936",
             "deny": "68672",
             "allow": "0"
           },
           {
-            "type": "member",
+            "type": 1,
             "id": "452506031143125003",
             "deny": "0",
             "allow": "805829713"
           },
           {
-            "type": "role",
+            "type": 0,
             "id": "452526315288133644",
             "deny": "68672",
             "allow": "0"
