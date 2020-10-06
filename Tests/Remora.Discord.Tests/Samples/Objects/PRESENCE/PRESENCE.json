@@ -7,8 +7,6 @@
         "discriminator": "4061",
         "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
     },
-    "roles": [],
-    "game": null,
     "guild_id": "54351326674432000",
     "status": "idle",
     "activities": [],
@@ -17,7 +15,5 @@
         "desktop": "idle",
         "mobile": "dnd",
         "web": "idle"
-    },
-    "premium_since": "2020-08-28T18:17:25.377506\u002B00:00",
-    "nick": "aaa"
+    }
 }

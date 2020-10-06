@@ -252,7 +252,6 @@ namespace Remora.Discord.API.Extensions
 
             // Presences
             options.AddDataObjectConverter<IPresenceUpdate, PresenceUpdate>()
-                .WithPropertyName(p => p.Nickname, "nick")
                 .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(new SnakeCaseNamingPolicy()));
 
             // Users
@@ -524,7 +523,6 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(p => p.Web, new StringEnumConverter<ClientStatus>(snakeCase));
 
             options.AddDataObjectConverter<IPresence, Presence>()
-                .WithPropertyName(p => p.Nickname, "nick")
                 .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
 
             return options;

@@ -37,16 +37,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         IUser User { get; }
 
         /// <summary>
-        /// Gets the roles the user is in.
-        /// </summary>
-        IReadOnlyList<Snowflake> Roles { get; }
-
-        /// <summary>
-        /// Gets the user's current activity.
-        /// </summary>
-        IActivity? Game { get; }
-
-        /// <summary>
         /// Gets the ID of the guild.
         /// </summary>
         Snowflake GuildID { get; }
@@ -59,21 +49,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the user's current activities.
         /// </summary>
-        IReadOnlyList<IActivity> Activities { get; }
+        IReadOnlyList<IActivity>? Activities { get; }
 
         /// <summary>
         /// Gets the user's platform-dependent status.
         /// </summary>
         IClientStatuses ClientStatus { get; }
-
-        /// <summary>
-        /// Gets the time when the user started boosting the guild.
-        /// </summary>
-        Optional<DateTimeOffset?> PremiumSince { get; }
-
-        /// <summary>
-        /// Gets the user's nickname, if one is set.
-        /// </summary>
-        Optional<string?> Nickname { get; }
     }
 }

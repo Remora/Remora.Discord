@@ -15,10 +15,12 @@
         ],
         "presence": {
             "since": 91879201,
-            "game": {
-                "name": "Cards Against Humanity",
-                "type": 0
-            },
+            "activities": [
+                {
+                    "name": "Cards Against Humanity",
+                    "type": 0
+                }
+            ],
             "status": "dnd",
             "afk": false
         },
