@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the error code.
         /// </summary>
-        DiscordError Error { get; }
+        DiscordError Code { get; }
 
         /// <summary>
         /// Gets a descriptive error message.
