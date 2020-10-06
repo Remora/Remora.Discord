@@ -66,7 +66,7 @@ namespace HttpCat.Responders
                 return EventResponseResult.FromError("Could not parse an integer.");
             }
 
-            var embedImage = new EmbedImage(string.Join(string.Empty, "https://http.cat/", code.ToString()));
+            var embedImage = new EmbedImage($"https://http.cat/{code}");
             var embed = new Embed(image: embedImage);
 
             var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embed: embed, ct: ct);
