@@ -8,8 +8,4 @@
         <Version>1.0.0-beta2</Version>
     </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Remora.Results" Version="1.1.0" />
-    </ItemGroup>
-
 </Project>

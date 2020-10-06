@@ -2,30 +2,17 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <IsPackable>false</IsPackable>
     </PropertyGroup>
-
+    
     <ItemGroup>
-        <PackageReference Include="Humanizer.Core" Version="2.8.11" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-        <PackageReference Include="Remora.Results" Version="1.1.0" />
-        <PackageReference Include="xunit" Version="2.4.0" />
-        <PackageReference Include="coverlet.collector" Version="1.2.0" />
-        <PackageReference Include="Xunit.SkippableFact" Version="1.4.8" />
-    </ItemGroup>
-
-    <ItemGroup Condition="$(IsRunnableTarget)">
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+        <PackageReference Include="Humanizer.Core" Version="2.8.26" />
+        <PackageReference Include="Xunit.SkippableFact" Version="1.4.13" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
       <ProjectReference Include="..\Remora.Discord.Rest.Tests\Remora.Discord.Rest.Tests.csproj" />
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="API\Gateway" />
     </ItemGroup>
 
 </Project>

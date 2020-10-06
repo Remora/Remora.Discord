@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Gateway", "Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj", "{DBCF23B4-9375-4ECF-AFCF-6E5AFCEF0748}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6E2D59EB-648D-4968-8A63-8D8E3813EC86}"
+ProjectSection(SolutionItems) = preProject
+	Tests\Directory.Build.props = Tests\Directory.Build.props
+EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.API.Tests", "Tests\Remora.Discord.API.Tests\Remora.Discord.API.Tests.csproj", "{6BE67D97-794D-4E32-B58A-18755F5C4E38}"
 EndProject
