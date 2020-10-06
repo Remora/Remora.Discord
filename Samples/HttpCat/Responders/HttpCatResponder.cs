@@ -59,7 +59,7 @@ namespace HttpCat.Responders
                 return EventResponseResult.FromSuccess();
             }
 
-            var statusCode = gatewayEvent.Content[1..]!;
+            var statusCode = gatewayEvent.Content[1..];
 
             if (!int.TryParse(statusCode, out var code))
             {
