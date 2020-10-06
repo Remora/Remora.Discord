@@ -5,8 +5,7 @@
   "d": {
     "role": {
       "position": 1,
-      "permissions_new": "372624976",
-      "permissions": 372624976,
+      "permissions": "372624976",
       "name": "new role",
       "mentionable": false,
       "managed": false,

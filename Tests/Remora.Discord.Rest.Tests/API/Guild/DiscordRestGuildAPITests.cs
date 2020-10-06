@@ -1370,7 +1370,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("permissions", p => p.Is((ulong)permissions.Value))
+                                    .WithProperty("permissions", p => p.Is(permissions.Value.ToString()))
                                     .WithProperty("color", p => p.Is((uint)(color.ToArgb() & 0x00FFFFFF)))
                                     .WithProperty("hoist", p => p.Is(hoist))
                                     .WithProperty("mentionable", p => p.Is(mentionable))
@@ -1509,7 +1509,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("permissions", p => p.Is((ulong)permissions.Value))
+                                    .WithProperty("permissions", p => p.Is(permissions.Value.ToString()))
                                     .WithProperty("color", p => p.Is(color.ToArgb() & 0x00FFFFFF))
                                     .WithProperty("hoist", p => p.Is(hoist))
                                     .WithProperty("mentionable", p => p.Is(mentionable))

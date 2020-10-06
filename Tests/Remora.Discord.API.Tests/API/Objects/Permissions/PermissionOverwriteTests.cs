@@ -29,14 +29,5 @@ namespace Remora.Discord.API.Tests.Objects
     /// <inheritdoc />
     public class PermissionOverwriteTests : ObjectTestBase<IPermissionOverwrite>
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
-        (
-            new[]
-            {
-                "deny_new", // aliased and collapsed to just "deny"
-                "allow_new", // aliased and collapsed to just "allow"
-            }
-        );
     }
 }

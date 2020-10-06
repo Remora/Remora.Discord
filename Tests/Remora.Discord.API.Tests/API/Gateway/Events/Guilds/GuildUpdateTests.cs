@@ -36,9 +36,6 @@ namespace Remora.Discord.API.Tests.Gateway.Events
         (
             new[]
             {
-                "permissions_new", // aliased and collapsed to just "permissions"
-                "deny_new", // aliased and collapsed to just "deny"
-                "allow_new", // aliased and collapsed to just "allow"
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
                 "lazy", // undocumented value

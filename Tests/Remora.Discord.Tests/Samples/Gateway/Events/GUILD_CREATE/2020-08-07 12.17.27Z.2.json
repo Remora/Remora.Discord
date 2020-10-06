@@ -94,10 +94,8 @@
           {
             "type": "member",
             "id": "452506031143125003",
-            "deny_new": "0",
-            "deny": 0,
-            "allow_new": "268435456",
-            "allow": 268435456
+            "deny": "0",
+            "allow": "268435456"
           }
         ],
         "name": "Roleplay test",
@@ -167,26 +165,20 @@
           {
             "type": "member",
             "id": "108253912766631936",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
+            "deny": "68672",
+            "allow": "0"
           },
           {
             "type": "member",
             "id": "452506031143125003",
-            "deny_new": "0",
-            "deny": 0,
-            "allow_new": "805829713",
-            "allow": 805829713
+            "deny": "0",
+            "allow": "805829713"
           },
           {
             "type": "role",
             "id": "452526315288133644",
-            "deny_new": "68672",
-            "deny": 68672,
-            "allow_new": "0",
-            "allow": 0
+            "deny": "68672",
+            "allow": "0"
           }
         ],
         "parent_id": "728621448943632416",
@@ -297,8 +289,7 @@
     "roles": [
       {
         "position": 0,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "@everyone",
         "mentionable": false,
         "managed": false,
@@ -308,8 +299,7 @@
       },
       {
         "position": 9,
-        "permissions_new": "506985685",
-        "permissions": 506985685,
+        "permissions": "506985685",
         "name": "Bot",
         "mentionable": false,
         "managed": false,
@@ -319,8 +309,7 @@
       },
       {
         "position": 8,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "Bot Permission Manager",
         "mentionable": false,
         "managed": false,
@@ -330,8 +319,7 @@
       },
       {
         "position": 7,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "Bass-test-role",
         "mentionable": true,
         "managed": false,
@@ -341,8 +329,7 @@
       },
       {
         "position": 6,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "Cat",
         "mentionable": true,
         "managed": false,
@@ -352,8 +339,7 @@
       },
       {
         "position": 5,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "NotCat",
         "mentionable": true,
         "managed": false,
@@ -363,8 +349,7 @@
       },
       {
         "position": 2,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "AT-red",
         "mentionable": false,
         "managed": false,
@@ -374,8 +359,7 @@
       },
       {
         "position": 3,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "AT-blue",
         "mentionable": false,
         "managed": false,
@@ -385,8 +369,7 @@
       },
       {
         "position": 4,
-        "permissions_new": "372624976",
-        "permissions": 372624976,
+        "permissions": "372624976",
         "name": "AT-green",
         "mentionable": false,
         "managed": false,

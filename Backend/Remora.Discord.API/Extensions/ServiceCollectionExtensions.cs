@@ -505,9 +505,7 @@ namespace Remora.Discord.API.Extensions
                 (
                     p => p.Type,
                     new StringEnumConverter<PermissionOverwriteType>(new SnakeCaseNamingPolicy())
-                )
-                .WithReadPropertyName(g => g.Allow, "allow_new", "allow")
-                .WithReadPropertyName(g => g.Deny, "deny_new", "deny");
+                );
 
             options.AddDataObjectConverter<IRole, Role>()
                 .WithPropertyName(r => r.Colour, "color")
