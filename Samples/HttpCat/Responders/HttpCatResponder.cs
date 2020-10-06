@@ -20,16 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
-using System;
 
 namespace HttpCat.Responders
 {
