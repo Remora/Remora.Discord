@@ -47,8 +47,6 @@
         <PackageOutputPath>$(SolutionDir)/nuget</PackageOutputPath>
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
-
-        <PackagePreReleaseVersion>-alpha1</PackagePreReleaseVersion>
     </PropertyGroup>
 
     <!-- Code inspection properties -->
