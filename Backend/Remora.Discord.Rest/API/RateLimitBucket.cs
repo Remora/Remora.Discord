@@ -151,7 +151,7 @@ namespace Remora.Discord.Rest.API
                 if (this.Remaining <= 0)
                 {
                     // Optimistic allowance; the bucket should have reset by now
-                    return this.ResetsAt < DateTimeOffset.UtcNow;
+                    return this.ResetsAt < DateTime.UtcNow;
                 }
 
                 this.Remaining -= 1;
