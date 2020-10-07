@@ -81,6 +81,6 @@ Please refer to the [Samples](Samples) for community-created example bots.
 ## 5. Contributing
 See [Contributing][2].
 
-[1]: https://github.com/Nihlus/Remora.Discord
+[1]: https://nihlus.github.io/Remora.Discord/
 [2]: .github/CONTRIBUTING.md
 [3]: https://www.nuget.org/packages/Remora.Discord/
