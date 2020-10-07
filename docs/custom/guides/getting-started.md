@@ -20,7 +20,7 @@ bot - you can do this in many different ways, but we'll stick to the terminal in
 this guide. Feel free to use your favourite IDE instead, such as
 [JetBrains Rider][2] or [VS Code][3].
 
-```shell script
+```bash
 dotnet new console -n "PingPong"
 cd PingPong
 dotnet add package Remora.Discord -v "1.0.0-beta2"
