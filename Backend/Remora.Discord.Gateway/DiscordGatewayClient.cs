@@ -181,13 +181,15 @@ namespace Remora.Discord.Gateway
         }
 
         /// <summary>
-        /// Starts and connects the gateway client. This task will not complete until cancelled (or faulted),
-        /// maintaining the connection for the duration of it.
+        /// Starts and connects the gateway client.
+        /// </summary>
+        /// <remarks>
+        /// This task will not complete until cancelled (or faulted), maintaining the connection for the duration of it.
         ///
         /// If the gateway client encounters a fatal problem during the execution of this task, it will return with a
         /// failed result. If a shutdown is requested, it will gracefully terminate the connection and return a
         /// successful result.
-        /// </summary>
+        /// </remarks>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A gateway connection result which may or may not have succeeded.</returns>
         public async Task<GatewayConnectionResult> RunAsync(CancellationToken ct)

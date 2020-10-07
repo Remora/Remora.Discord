@@ -250,3 +250,10 @@ database-dev.credentials
 
 # Crash dumps
 mono_crash.*
+
+# wyam
+docs/output/
+docs/wwwroot/
+docs/config.wyam.*
+docs/site/
+
