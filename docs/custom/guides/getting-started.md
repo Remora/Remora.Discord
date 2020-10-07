@@ -291,7 +291,7 @@ final thing to do before we can run our bot and see it in action - we need to
 make it available to the gateway client via - say it with me - dependency
 injection!
 
-Back in our `Main ` method, where we configure our services, we'll make a small
+Back in our `Main` method, where we configure our services, we'll make a small
 addition.
 
 ```csharp
@@ -327,3 +327,4 @@ Good luck!
 [3]: https://code.visualstudio.com/
 [4]: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1
 [5]: images/ping-pong.png
+[6]: https://www.github.com/Nihlus/Remora.Discord/Samples
