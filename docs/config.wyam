@@ -1,5 +1,7 @@
 #recipe Docs
 
+#n Wyam.Markdown
+
 // Customize your settings and add new ones here
 Settings[Keys.CleanOutputPath] = true;
 
@@ -14,7 +16,10 @@ Settings[DocsKeys.Title] = "Remora.Discord Documentation";
 Settings[DocsKeys.IgnoreFolders] = new [] { "docs", "Tests", "Samples" };
 Settings[DocsKeys.SourceFiles] = "**/{!bin,!obj,!packages,!*.Tests,!Samples,}/**/*.cs";
 
-FileSystem.InputPaths.Add("..");
+FileSystem.InputPaths.Add("../Backend");
+FileSystem.InputPaths.Add("../Remora.Discord");
+FileSystem.InputPaths.Add("custom");
+
 FileSystem.OutputPath = "output";
 
 // Add any pipeline customizations here
