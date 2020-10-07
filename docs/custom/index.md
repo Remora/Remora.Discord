@@ -16,7 +16,6 @@ own.
 
 ## Quick Reference
   * [API Documentation][4]
-  * [Installation][6]
   * [Getting Started][1] 
   * [Project README][5]
 
