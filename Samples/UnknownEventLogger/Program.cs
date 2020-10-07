@@ -28,7 +28,7 @@ using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
 
-namespace Remora.Samples.UnknownEventLogger
+namespace Remora.Discord.Samples.UnknownEventLogger
 {
     /// <summary>
     /// Represents the main class of the program.

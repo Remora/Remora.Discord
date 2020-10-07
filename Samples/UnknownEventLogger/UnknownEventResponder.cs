@@ -30,7 +30,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
-namespace Remora.Samples.UnknownEventLogger
+namespace Remora.Discord.Samples.UnknownEventLogger
 {
     /// <summary>
     /// Responds to unknown events, logging them to disk.
