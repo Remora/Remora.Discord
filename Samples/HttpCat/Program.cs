@@ -23,13 +23,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using HttpCat.Responders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Samples.HttpCat.Responders;
 
-namespace HttpCat
+namespace Remora.Discord.Samples.HttpCat
 {
     /// <summary>
     /// Represents the main class of the program.

@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace DiceRoller.API
+namespace Remora.Discord.Samples.DiceRoller.API
 {
     /// <summary>
     /// Represents a single roll of a dice.

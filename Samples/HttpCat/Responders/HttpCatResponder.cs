@@ -30,7 +30,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
-namespace HttpCat.Responders
+namespace Remora.Discord.Samples.HttpCat.Responders
 {
     /// <summary>
     /// Responds to a httpcat command.

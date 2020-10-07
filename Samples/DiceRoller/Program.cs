@@ -23,13 +23,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DiceRoller.Responders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Samples.DiceRoller.Responders;
 
-namespace DiceRoller
+namespace Remora.Discord.Samples.DiceRoller
 {
     /// <summary>
     /// Represents the main class of the program.

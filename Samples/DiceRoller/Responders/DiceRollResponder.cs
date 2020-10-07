@@ -27,7 +27,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using DiceRoller.API;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Json;
@@ -35,9 +34,10 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Samples.DiceRoller.API;
 using Remora.Results;
 
-namespace DiceRoller.Responders
+namespace Remora.Discord.Samples.DiceRoller.Responders
 {
     /// <summary>
     /// Responds to requests for dice rolls.

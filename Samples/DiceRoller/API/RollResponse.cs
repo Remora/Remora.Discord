@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 
-namespace DiceRoller.API
+namespace Remora.Discord.Samples.DiceRoller.API
 {
     /// <summary>
     /// Represents a roll response.
