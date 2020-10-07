@@ -12,7 +12,7 @@ library.
 If you're interested in contributing to the library, great! The best place to 
 start is by reading through the [contribution guidelines][2]. After that, check
 out available and open issues on [GitHub][3], or come up with an idea of your 
-own. 
+own.
 
 ## Quick Reference
   * [API Documentation][4]
