@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
+        <title>Remora.Discord Documentation - API - DiscordError.NoBotsAllowed Field</title>
+        <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/Remora.Discord/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Remora.Discord/assets/css/override.css" rel="stylesheet">
+        <script src="/Remora.Discord/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/Remora.Discord/assets/js/bootstrap.min.js"></script>        
+        <script src="/Remora.Discord/assets/js/app.min.js"></script>         
+        <script src="/Remora.Discord/assets/js/highlight.pack.js"></script>   
+        <script src="/Remora.Discord/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/Remora.Discord/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/Remora.Discord/assets/js/mermaid.min.js"></script>
+        <script src="/Remora.Discord/assets/js/svg-pan-zoom.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/Remora.Discord/assets/js/html5shiv.min.js"></script>
+        <script src="/Remora.Discord/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/Remora.Discord/" class="logo">
+                            <span>Remora.Discord Documentation</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li><a href="/Remora.Discord/guides">Guides</a></li>
+        <li><a href="/Remora.Discord/info">Info</a></li>
+        <li class="active"><a href="/Remora.Discord/api">API</a></li>
+ 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Value">Constant Value</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">    
+                                     
+                    	
+	    <script src="/Remora.Discord/assets/js/lunr.min.js"></script>
+    <script src="/Remora.Discord/assets/js/searchIndex.js"></script>
+    <div class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
+            <span class="input-group-btn">
+                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+    <div id="search-results">
+    </div>
+    <script>
+        function runSearch(query){
+            $("#search-results").empty();			
+            if( query.length < 2 ){
+                return;
+            }			
+            var results = searchModule.search("*" + query + "*");
+            var listHtml = "<ul class='sidebar-menu'>";	
+            listHtml += "<li class='header'>Type Results</li>";	
+            if(results.length == 0 ){
+                listHtml += "<li>No results found</li>";
+            } else {					
+                for(var i = 0; i < results.length; ++i){
+                    var res = results[i];
+                    listHtml += "<li><a href='" + res.url + "'>" + htmlEscape(res.title) + "</a></li>";
+                }				
+            }
+            listHtml += "</ul>";				
+            $("#search-results").append(listHtml);
+        }
+
+        $(document).ready(function(){
+            $("#search").on('input propertychange paste', function() {
+                runSearch($("#search").val());
+            });
+        });
+
+        function htmlEscape(html) {
+            return document.createElement('div')
+                .appendChild(document.createTextNode(html))
+                .parentNode
+                .innerHTML;
+        }
+    </script>
+	
+    <hr>
+
+                    <ul class="sidebar-menu">
+                        
+			<li class="header">Namespace</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Results</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Field Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/50FCA1AF">BotsOnly</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1F7049FE">Cannot<wbr>Edit<wbr>Message<wbr>By<wbr>Another<wbr>User</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/DDD446CD">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>Channel<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E5881875">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>D<wbr>M<wbr>Channel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/280D69AE">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>System<wbr>Message</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2AFCB810">Cannot<wbr>Send<wbr>Empty<wbr>Message</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FCE3E234">Cannot<wbr>Send<wbr>Message<wbr>To<wbr>User</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/133255EA">Cannot<wbr>Send<wbr>Message<wbr>To<wbr>Voice<wbr>Channel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/D47FC44D">Channel<wbr>Verification<wbr>Level<wbr>Too<wbr>High<wbr>For<wbr>Access</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9E250394">Editing<wbr>Not<wbr>Allowed<wbr>Due<wbr>To<wbr>Announcement<wbr>Rate<wbr>Limits</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F971BD84">Feature<wbr>Temporarily<wbr>Disabled</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/06BCC474">GeneralError</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/A96598D1">GuildWidgetDisabled</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4BA33713">InvalidAPIVersion</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/EEEE1F6F">InvalidAccountType</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E680FA8A">Invalid<wbr>Authentication<wbr>Token</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B298DD5D">InvalidFormBody</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/272DA1AC">InvalidOAuth2Token</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/34C51AD1">InvalidOAuthState</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/16DD33BE">Invalid<wbr>Or<wbr>Used<wbr>Invite<wbr>Code</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/263BB373">InvalidRecipients</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1279A601">Invite<wbr>Accepted<wbr>But<wbr>Bot<wbr>Is<wbr>Not<wbr>In<wbr>Guild</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E5F65663">Max<wbr>Attachments<wbr>In<wbr>Message<wbr>Reached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/322F0865">MaxFriendsReached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/69467E08">Max<wbr>Guild<wbr>Channels<wbr>Reached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/53D8AF4B">Max<wbr>Guild<wbr>Invites<wbr>Reached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C9302FF3">MaxGuildRolesReached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3AE717E0">MaxGuildsReached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4F0DB126">Max<wbr>Pins<wbr>In<wbr>Channel<wbr>Reached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/56BDAF27">MaxReactionsReached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A761286">MaxWebhooksReached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/6AFDDA0A">Message<wbr>Can<wbr>Only<wbr>Be<wbr>Pinned<wbr>In<wbr>Same<wbr>Channel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B320C439">Message<wbr>Too<wbr>Old<wbr>To<wbr>Bulk<wbr>Delete</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F51F144D">MissingAccess</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/253E634D">MissingPermission</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/94D7942E">NoBotsAllowed</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B437187F">NoteTooLong</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/65CA4197">O<wbr>Auth<wbr>Application<wbr>Does<wbr>Not<wbr>Have<wbr>Bot</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4B602F0C">O<wbr>Auth<wbr>Application<wbr>Limit<wbr>Reached</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8B332399">ReactionBlocked</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C66B2EAA">Request<wbr>Entity<wbr>Too<wbr>Large</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E2F02C69">ResourceOverloaded</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5C5C6C79">Too<wbr>Few<wbr>Or<wbr>Too<wbr>Many<wbr>Messages<wbr>To<wbr>Delete</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4CD75FAB">Unauthorized</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/D61C28C0">Unknown</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/64117089">UnknownAccount</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/047630BB">UnknownApplication</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E02A7500">UnknownBan</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/098A7429">UnknownBranch</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/177FBF9D">UnknownBuild</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/87C9BF56">UnknownChannel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FE7B5496">UnknownEmoji</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E42B2FE5">UnknownEntitlement</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/67F05F55">UnknownGuild</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5EC682E2">UnknownIntegration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C1811055">UnknownInvite</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3BD8FBEC">UnknownLobby</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/6E6B16E2">UnknownMember</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/BF77FB42">UnknownMessage</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/7EA3A185">Unknown<wbr>Permission<wbr>Overwrite</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/6BF75409">UnknownProvider</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/D584276B">Unknown<wbr>Redistributable</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1FF56127">UnknownRole</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/ABC6F1C3">UnknownSKU</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C95D8872">UnknownStoreListing</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F72C287F">UnknownToken</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3CA99BFD">UnknownUser</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9650327E">UnknownWebhook</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8EFA2A06">UnverifiedAccount</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1A8C7209">UserBanned</a></li>
+
+
+                    </ul>
+                            
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+<section class="content-header">
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a>.</h3>
+	<h1>NoBotsAllowed <small>Field</small></h1>
+</section>
+<section class="content">
+	
+	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Bots cannot use this endpoint.
+    </div>
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<dl class="dl-horizontal">				
+
+						<dt>Namespace</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Results</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a></dd>		
+				</dl>
+			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>NoBotsAllowed</code></pre>
+
+
+
+
+
+	<h1 id="Value">Constant Value</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Value</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+					<td>20001</td>
+					<td>Int32</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+
+	
+</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                Generated by <a href="https://wyam.io">Wyam</a>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).ready(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        useMaxWidth: false
+                    },
+					startOnLoad: false,
+					cloneCssStyles: false
+                });     
+                mermaid.init(undefined, ".mermaid");
+
+                // Remove the max-width setting that Mermaid sets
+                var mermaidSvg = $('.mermaid svg');
+                mermaidSvg.addClass('img-responsive');
+                mermaidSvg.css('max-width', '');
+
+                // Make it scrollable
+				var target = document.querySelector(".mermaid svg");
+				if(target !== null)
+				{
+					var panZoom = window.panZoom = svgPanZoom(target, {
+						zoomEnabled: true,
+						controlIconsEnabled: true,
+						fit: true,
+						center: true,
+                        maxZoom: 20,
+                        zoomScaleSensitivity: 0.6
+					});			                          
+
+                    // Do the reset once right away to fit the diagram
+                    panZoom.resize();
+                    panZoom.fit();
+                    panZoom.center();
+                    
+                    $(window).resize(function(){
+                        panZoom.resize();
+                        panZoom.fit();
+                        panZoom.center();
+                    });
+				}
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>
