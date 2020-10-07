@@ -5,6 +5,5 @@ if [[ ! -d output ]]; then
 fi
 
 mkdir -p site
-cp -r output/{api,assets,.github} site/
+cp -r output/{api,assets,github-info,guides,info} site/
 cp output/*.{atom,html,rss} site/
-
