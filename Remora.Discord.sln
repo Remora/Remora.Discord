@@ -57,6 +57,8 @@ ProjectSection(SolutionItems) = preProject
 	docs\config.wyam = docs\config.wyam
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Gateway.Tests", "Tests\Remora.Discord.Gateway.Tests\Remora.Discord.Gateway.Tests.csproj", "{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{EAC9250C-545D-4A31-81AC-F0236F849770}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAC9250C-545D-4A31-81AC-F0236F849770}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAC9250C-545D-4A31-81AC-F0236F849770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC82899D-871E-4DC9-B61C-7619111800DE} = {26E93608-29BA-45C7-993A-AA24A49D6013}
@@ -125,5 +131,6 @@ Global
 		{ED3F243E-F8C4-4C23-A12A-627280A08502} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 		{CDF3AA38-F34F-4C71-A872-AC75FFA71A79} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
 		{EAC9250C-545D-4A31-81AC-F0236F849770} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
+		{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 	EndGlobalSection
 EndGlobal
