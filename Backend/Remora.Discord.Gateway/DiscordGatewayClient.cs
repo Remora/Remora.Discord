@@ -21,13 +21,10 @@
 //
 
 using System;
-using System.Buffers;
 using System.Collections.Concurrent;
-using System.IO;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +41,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Gateway.Transport;
 
 namespace Remora.Discord.Gateway
 {
@@ -56,7 +54,6 @@ namespace Remora.Discord.Gateway
         private readonly ILogger<DiscordGatewayClient> _log;
 
         private readonly IDiscordRestGatewayAPI _gatewayAPI;
-        private readonly JsonSerializerOptions _jsonOptions;
         private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
         private readonly Random _random;
@@ -79,7 +76,7 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds the websocket.
         /// </summary>
-        private ClientWebSocket _clientWebSocket;
+        private readonly IPayloadTransportService _transportService;
 
         /// <summary>
         /// Holds the connection status.
@@ -131,7 +128,7 @@ namespace Remora.Discord.Gateway
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
         /// </summary>
         /// <param name="gatewayAPI">The gateway API.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
+        /// <param name="transportService">The payload transport service.</param>
         /// <param name="gatewayOptions">The gateway options.</param>
         /// <param name="tokenStore">The token store.</param>
         /// <param name="random">An entropy source.</param>
@@ -140,7 +137,7 @@ namespace Remora.Discord.Gateway
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IPayloadTransportService transportService,
             IOptions<DiscordGatewayClientOptions> gatewayOptions,
             ITokenStore tokenStore,
             Random random,
@@ -149,14 +146,13 @@ namespace Remora.Discord.Gateway
         )
         {
             _gatewayAPI = gatewayAPI;
-            _jsonOptions = jsonOptions.Value;
+            _transportService = transportService;
             _gatewayOptions = gatewayOptions.Value;
             _tokenStore = tokenStore;
             _random = random;
             _log = log;
             _services = services;
 
-            _clientWebSocket = new ClientWebSocket();
             _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
 
             _payloadsToSend = new ConcurrentQueue<IPayload>();
@@ -204,9 +200,6 @@ namespace Remora.Discord.Gateway
                 // Until cancellation has been requested or we hit a fatal error, reconnections should be attempted.
                 _tokenSource = new CancellationTokenSource();
 
-                // Reset the socket before beginning
-                await ResetClientWebSocketAsync(ct);
-
                 while (!ct.IsCancellationRequested)
                 {
                     var iterationResult = await RunConnectionIterationAsync(ct);
@@ -224,7 +217,12 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    await ResetClientWebSocketAsync(ct);
+                    var disconnectResult = await _transportService.DisconnectAsync(ct);
+                    if (!disconnectResult.IsSuccess)
+                    {
+                        // Couldn't disconnect cleanly :(
+                        return disconnectResult;
+                    }
 
                     // Finish up the responders
                     foreach (var runningResponder in _runningResponderDispatches)
@@ -310,21 +308,13 @@ namespace Remora.Discord.Gateway
 
                     _log.LogInformation("Connecting to the gateway...");
 
-                    await _clientWebSocket.ConnectAsync(gatewayUri, ct);
-                    switch (_clientWebSocket.State)
+                    var transportConnectResult = await _transportService.ConnectAsync(gatewayUri, ct);
+                    if (!transportConnectResult.IsSuccess)
                     {
-                        case WebSocketState.Open:
-                        case WebSocketState.Connecting:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            return GatewayConnectionResult.FromError("Failed to connect to the endpoint.");
-                        }
+                        return transportConnectResult;
                     }
 
-                    var receiveHello = await ReceivePayloadAsync(ct);
+                    var receiveHello = await _transportService.ReceivePayloadAsync(ct);
                     if (!receiveHello.IsSuccess)
                     {
                         return GatewayConnectionResult.FromError(receiveHello);
@@ -432,7 +422,11 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            await ResetClientWebSocketAsync(ct);
+            var disconnectResult = await _transportService.DisconnectAsync(ct);
+            if (!disconnectResult.IsSuccess)
+            {
+                return disconnectResult;
+            }
 
             // Set up the state for the new connection
             _tokenSource = new CancellationTokenSource();
@@ -642,7 +636,7 @@ namespace Remora.Discord.Gateway
 
             while (true)
             {
-                var receiveReady = await ReceivePayloadAsync(ct);
+                var receiveReady = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveReady.IsSuccess)
                 {
                     return GatewayConnectionResult.FromError(receiveReady);
@@ -700,7 +694,7 @@ namespace Remora.Discord.Gateway
                     return GatewayConnectionResult.FromError("Operation was cancelled.");
                 }
 
-                var receiveEvent = await ReceivePayloadAsync(ct);
+                var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveEvent.IsSuccess)
                 {
                     return GatewayConnectionResult.FromError(receiveEvent);
@@ -781,7 +775,7 @@ namespace Remora.Discord.Gateway
                             )
                         );
 
-                        var sendHeartbeat = await SendPayloadAsync(heartbeatPayload, ct);
+                        var sendHeartbeat = await _transportService.SendPayloadAsync(heartbeatPayload, ct);
 
                         if (!sendHeartbeat.IsSuccess)
                         {
@@ -802,7 +796,7 @@ namespace Remora.Discord.Gateway
                         continue;
                     }
 
-                    var sendResult = await SendPayloadAsync(payload, ct);
+                    var sendResult = await _transportService.SendPayloadAsync(payload, ct);
                     if (sendResult.IsSuccess)
                     {
                         continue;
@@ -841,7 +835,7 @@ namespace Remora.Discord.Gateway
             {
                 while (!ct.IsCancellationRequested)
                 {
-                    var receivedPayload = await ReceivePayloadAsync(ct);
+                    var receivedPayload = await _transportService.ReceivePayloadAsync(ct);
                     if (!receivedPayload.IsSuccess)
                     {
                         // Normal closures are okay
@@ -909,169 +903,9 @@ namespace Remora.Discord.Gateway
             }
         }
 
-        /// <summary>
-        /// Asynchronously sends a payload to the websocket.
-        /// </summary>
-        /// <param name="payload">The payload.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A send result which may or may not have succeeded.</returns>
-        private async Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
-        {
-            if (_clientWebSocket.State != WebSocketState.Open)
-            {
-                return SendPayloadResult.FromError("The socket was not open.");
-            }
-
-            await using var memoryStream = new MemoryStream();
-
-            byte[]? buffer = null;
-            try
-            {
-                await JsonSerializer.SerializeAsync(memoryStream, payload, _jsonOptions, ct);
-
-                if (memoryStream.Length > 4096)
-                {
-                    return SendPayloadResult.FromError
-                    (
-                        "The payload was too large to be accepted by the gateway."
-                    );
-                }
-
-                buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-
-                // Copy the data
-                var bufferSegment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-                await memoryStream.ReadAsync(bufferSegment, ct);
-
-                // Send the whole payload as one chunk
-                await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
-
-                if (_clientWebSocket.CloseStatus.HasValue)
-                {
-                    if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
-                    {
-                        return SendPayloadResult.FromError
-                        (
-                            "The gateway closed the connection.",
-                            (GatewayCloseStatus)_clientWebSocket.CloseStatus
-                        );
-                    }
-
-                    return SendPayloadResult.FromError
-                    (
-                        _clientWebSocket.CloseStatusDescription,
-                        _clientWebSocket.CloseStatus.Value
-                    );
-                }
-            }
-            finally
-            {
-                if (!(buffer is null))
-                {
-                    ArrayPool<byte>.Shared.Return(buffer);
-                }
-            }
-
-            return SendPayloadResult.FromSuccess();
-        }
-
-        /// <summary>
-        /// Asynchronously receives a payload from the websocket.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A receive result which may or may not have succeeded.</returns>
-        private async Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
-        {
-            if (_clientWebSocket.State != WebSocketState.Open)
-            {
-                return ReceivePayloadResult<IPayload>.FromError("The socket was not open.");
-            }
-
-            await using var memoryStream = new MemoryStream();
-
-            var buffer = ArrayPool<byte>.Shared.Rent(4096);
-
-            try
-            {
-                WebSocketReceiveResult result;
-
-                do
-                {
-                    result = await _clientWebSocket.ReceiveAsync(buffer, ct);
-
-                    if (result.CloseStatus.HasValue)
-                    {
-                        if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
-                        {
-                            return ReceivePayloadResult<IPayload>.FromError
-                            (
-                                "The gateway closed the connection.",
-                                (GatewayCloseStatus)result.CloseStatus
-                            );
-                        }
-
-                        return ReceivePayloadResult<IPayload>.FromError
-                        (
-                            result.CloseStatusDescription,
-                            result.CloseStatus.Value
-                        );
-                    }
-
-                    await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
-                }
-                while (!result.EndOfMessage);
-
-                memoryStream.Seek(0, SeekOrigin.Begin);
-
-                var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
-                return ReceivePayloadResult<IPayload>.FromSuccess(payload);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
-        }
-
-        /// <summary>
-        /// Resets the client websocket, either closing it (if possible), or replacing it if it's been aborted.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        private async Task ResetClientWebSocketAsync(CancellationToken ct)
-        {
-            switch (_clientWebSocket.State)
-            {
-                case WebSocketState.Open:
-                case WebSocketState.CloseReceived:
-                case WebSocketState.CloseSent:
-                {
-                    try
-                    {
-                        await _clientWebSocket.CloseAsync
-                        (
-                            WebSocketCloseStatus.NormalClosure,
-                            "Terminating connection by user request.",
-                            ct
-                        );
-                    }
-                    catch (WebSocketException)
-                    {
-                        // Most likely due to some kind of premature or forced disconnection; we'll live with it
-                    }
-
-                    break;
-                }
-            }
-
-            _clientWebSocket.Dispose();
-            _clientWebSocket = new ClientWebSocket();
-        }
-
         /// <inheritdoc />
         public void Dispose()
         {
-            _clientWebSocket.Dispose();
             _tokenSource.Dispose();
         }
     }

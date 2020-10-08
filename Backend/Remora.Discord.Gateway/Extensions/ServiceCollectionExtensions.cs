@@ -22,8 +22,10 @@
 
 using System;
 using System.Linq;
+using System.Net.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Extensions;
 
 namespace Remora.Discord.Gateway.Extensions
@@ -48,6 +50,8 @@ namespace Remora.Discord.Gateway.Extensions
             serviceCollection
                 .AddDiscordRest(token)
                 .AddSingleton<Random>()
+                .AddTransient<ClientWebSocket>()
+                .AddSingleton<IPayloadTransportService, WebSocketPayloadTransportService>()
                 .AddSingleton<DiscordGatewayClient>();
 
             return serviceCollection;
