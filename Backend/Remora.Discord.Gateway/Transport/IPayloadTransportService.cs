@@ -53,6 +53,9 @@ namespace Remora.Discord.Gateway.Transport
         /// <summary>
         /// Asynchronously sends a payload.
         /// </summary>
+        /// <remarks>
+        /// This method should be thread-safe in conjunction with <see cref="ReceivePayloadAsync"/>.
+        /// </remarks>
         /// <param name="payload">The payload.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A send result which may or may not have succeeded.</returns>
@@ -61,6 +64,9 @@ namespace Remora.Discord.Gateway.Transport
         /// <summary>
         /// Asynchronously receives a payload.
         /// </summary>
+        /// <remarks>
+        /// This method should be thread-safe in conjunction with <see cref="SendPayloadAsync"/>.
+        /// </remarks>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A receive result which may or may not have succeeded.</returns>
         Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default);
