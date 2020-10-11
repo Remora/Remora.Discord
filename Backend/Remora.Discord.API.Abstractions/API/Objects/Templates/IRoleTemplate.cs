@@ -21,7 +21,6 @@
 //
 
 using System.Drawing;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {

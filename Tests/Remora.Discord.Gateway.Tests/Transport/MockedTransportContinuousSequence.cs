@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 
 namespace Remora.Discord.Gateway.Tests.Transport
 {
