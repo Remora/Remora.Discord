@@ -362,6 +362,51 @@ namespace Remora.Discord.Rest
         }
 
         /// <summary>
+        /// Performs a DELETE request to the Discord REST API at the given endpoint.
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="configureRequestBuilder">The request builder for the request.</param>
+        /// <param name="allowNullReturn">Whether to allow null return values inside the creation result.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <typeparam name="TEntity">The type of entity to create.</typeparam>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public async Task<IRetrieveRestEntityResult<TEntity>> DeleteAsync<TEntity>
+        (
+            string endpoint,
+            Action<RestRequestBuilder>? configureRequestBuilder = null,
+            bool allowNullReturn = false,
+            CancellationToken ct = default
+        )
+        {
+            configureRequestBuilder ??= q => { };
+
+            var requestBuilder = new RestRequestBuilder(endpoint);
+            configureRequestBuilder(requestBuilder);
+
+            requestBuilder.WithMethod(HttpMethod.Delete);
+
+            try
+            {
+                using var request = requestBuilder.Build();
+                using var response = await _httpClient.SendAsync
+                (
+                    request,
+                    HttpCompletionOption.ResponseHeadersRead,
+                    ct
+                );
+
+                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
+                return !entityResult.IsSuccess
+                    ? RetrieveRestEntityResult<TEntity>.FromError(entityResult)
+                    : RetrieveRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+            }
+            catch (Exception e)
+            {
+                return RetrieveRestEntityResult<TEntity>.FromError(e);
+            }
+        }
+
+        /// <summary>
         /// Performs a PUT request to the Discord REST API at the given endpoint.
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
