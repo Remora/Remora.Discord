@@ -1,23 +1,25 @@
 {
-    "code": "hgM48av5Q69A",
-    "name": "Friends & Family",
-    "description": "",
-    "usage_count": 49605,
-    "creator_id": "132837293881950208",
+    "code": "FMNCteJE9JyK",
+    "name": "test",
+    "description": null,
+    "usage_count": 0,
+    "creator_id": "714902836760019017",
     "creator": {
-        "id": "132837293881950208",
-        "username": "hoges",
-        "avatar": "79b0d9f8c340f2d43e1f78b09f175b62",
-        "discriminator": "0001",
-        "public_flags": 129
+        "id": "714902836760019017",
+        "username": "Remora",
+        "avatar": null,
+        "discriminator": "9821",
+        "public_flags": 0,
+        "bot": true
     },
-    "created_at": "2020-04-02T21:10:38+00:00",
-    "updated_at": "2020-05-01T17:57:38+00:00",
-    "source_guild_id": "678070694164299796",
+    "created_at": "2020-10-11T17:31:25.000000+00:00",
+    "updated_at": "2020-10-11T17:31:25.000000+00:00",
+    "source_guild_id": "452526315288133644",
     "serialized_source_guild": {
-        "name": "Friends & Family",
+        "name": "Bot Dev",
         "description": null,
-        "region": "us-west",
+        "region": "eu-central",
+        "icon_hash": null,
         "verification_level": 0,
         "default_message_notifications": 0,
         "explicit_content_filter": 0,
@@ -27,28 +29,107 @@
             {
                 "id": 0,
                 "name": "@everyone",
-                "permissions": 104324689,
                 "color": 0,
                 "hoist": false,
-                "mentionable": false
+                "mentionable": false,
+                "permissions": "372624976"
+            },
+            {
+                "id": 2,
+                "name": "AT-red",
+                "color": 16713222,
+                "hoist": false,
+                "mentionable": false,
+                "permissions": "372624976"
+            },
+            {
+                "id": 3,
+                "name": "AT-blue",
+                "color": 2123412,
+                "hoist": false,
+                "mentionable": false,
+                "permissions": "372624976"
+            },
+            {
+                "id": 4,
+                "name": "AT-green",
+                "color": 2067276,
+                "hoist": false,
+                "mentionable": false,
+                "permissions": "372624976"
+            },
+            {
+                "id": 5,
+                "name": "NotCat",
+                "color": 0,
+                "hoist": false,
+                "mentionable": true,
+                "permissions": "372624976"
+            },
+            {
+                "id": 6,
+                "name": "Cat",
+                "color": 0,
+                "hoist": false,
+                "mentionable": true,
+                "permissions": "372624976"
+            },
+            {
+                "id": 7,
+                "name": "Bass-test-role",
+                "color": 15844367,
+                "hoist": false,
+                "mentionable": true,
+                "permissions": "372624976"
+            },
+            {
+                "id": 8,
+                "name": "Bot Permission Manager",
+                "color": 0,
+                "hoist": false,
+                "mentionable": false,
+                "permissions": "372624976"
+            },
+            {
+                "id": 9,
+                "name": "Bot",
+                "color": 0,
+                "hoist": false,
+                "mentionable": false,
+                "permissions": "2146959351"
             }
         ],
         "channels": [
             {
-                "name": "Text Channels",
-                "position": 1,
+                "id": 1,
+                "type": 4,
+                "name": "Persistent",
+                "position": 0,
                 "topic": null,
                 "bitrate": 64000,
                 "user_limit": 0,
                 "nsfw": false,
                 "rate_limit_per_user": 0,
                 "parent_id": null,
-                "permission_overwrites": [],
-                "id": 1,
-                "type": 4
+                "permission_overwrites": []
             },
             {
+                "id": 2,
+                "type": 0,
                 "name": "general",
+                "position": 0,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 1,
+                "permission_overwrites": []
+            },
+            {
+                "id": 3,
+                "type": 0,
+                "name": "qa",
                 "position": 1,
                 "topic": null,
                 "bitrate": 64000,
@@ -56,15 +137,201 @@
                 "nsfw": false,
                 "rate_limit_per_user": 0,
                 "parent_id": 1,
-                "permission_overwrites": [],
-                "id": 2,
-                "type": 0
+                "permission_overwrites": []
+            },
+            {
+                "id": 4,
+                "type": 0,
+                "name": "github",
+                "position": 2,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 1,
+                "permission_overwrites": []
+            },
+            {
+                "id": 5,
+                "type": 4,
+                "name": "Testing",
+                "position": 1,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": null,
+                "permission_overwrites": []
+            },
+            {
+                "id": 6,
+                "type": 0,
+                "name": "roleplay-plugin",
+                "position": 3,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 7,
+                "type": 0,
+                "name": "character-stuff",
+                "position": 4,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 8,
+                "type": 0,
+                "name": "mod-and-autorole",
+                "position": 5,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": true,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 9,
+                "type": 0,
+                "name": "reaction-room-for-autoroles",
+                "position": 6,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 10,
+                "type": 0,
+                "name": "autorole-log",
+                "position": 7,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 11,
+                "type": 0,
+                "name": "mod-log-test",
+                "position": 9,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 12,
+                "type": 0,
+                "name": "quotes",
+                "position": 10,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 13,
+                "type": 0,
+                "name": "core-plugin",
+                "position": 11,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 14,
+                "type": 0,
+                "name": "kinks-plugin",
+                "position": 12,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 15,
+                "type": 0,
+                "name": "jumbo-emotes",
+                "position": 13,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 5,
+                "permission_overwrites": []
+            },
+            {
+                "id": 16,
+                "type": 4,
+                "name": "Roleplay test",
+                "position": 2,
+                "topic": null,
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": null,
+                "permission_overwrites": []
+            },
+            {
+                "id": 17,
+                "type": 0,
+                "name": "nya-rp",
+                "position": 11,
+                "topic": "Dedicated roleplay channel for nya. No summary set.",
+                "bitrate": 64000,
+                "user_limit": 0,
+                "nsfw": false,
+                "rate_limit_per_user": 0,
+                "parent_id": 16,
+                "permission_overwrites": [
+                    {
+                        "id": 0,
+                        "type": 0,
+                        "allow": "0",
+                        "deny": "68672"
+                    }
+                ]
             }
         ],
         "afk_channel_id": null,
         "system_channel_id": 2,
-        "system_channel_flags": 0,
-        "icon_hash": null
+        "system_channel_flags": 0
     },
-    "is_dirty": null
+    "is_dirty": false
 }

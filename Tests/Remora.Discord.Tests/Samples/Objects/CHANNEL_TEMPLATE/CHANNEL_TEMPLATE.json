@@ -1,0 +1,13 @@
+{
+    "id": 1,
+    "type": 4,
+    "name": "Persistent",
+    "position": 0,
+    "topic": null,
+    "bitrate": 64000,
+    "user_limit": 0,
+    "nsfw": false,
+    "rate_limit_per_user": 0,
+    "parent_id": null,
+    "permission_overwrites": []
+}
