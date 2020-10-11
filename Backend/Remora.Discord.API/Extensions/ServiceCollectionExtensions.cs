@@ -81,7 +81,8 @@ namespace Remora.Discord.API.Extensions
                             .AddUserObjectConverters()
                             .AddVoiceObjectConverters()
                             .AddWebhookObjectConverters()
-                            .AddErrorObjectConverters();
+                            .AddErrorObjectConverters()
+                            .AddTemplateObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -617,6 +618,18 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IRestError, RestError>();
             options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle template objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddTemplateObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ITemplate, Template>();
 
             return options;
         }
