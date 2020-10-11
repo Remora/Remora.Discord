@@ -33,7 +33,7 @@ using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Templates
+namespace Remora.Discord.Rest.Tests.API
 {
     /// <summary>
     /// Tests the <see cref="DiscordRestTemplateAPI"/> class.
