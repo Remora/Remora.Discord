@@ -1,5 +1,5 @@
 //
-//  MockedTransportServiceOptions.cs
+//  IEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Represents a marker interface for events.
     /// </summary>
-    public class MockedTransportServiceOptions
+    public interface IEvent
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
-        /// </summary>
-        public bool IgnoreUnexpected { get; set; }
-
-        /// <summary>
-        /// Gets or sets the global advancement timeout.
-        /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
     }
 }

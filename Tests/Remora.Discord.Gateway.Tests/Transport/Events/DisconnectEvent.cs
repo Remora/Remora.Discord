@@ -1,5 +1,5 @@
 //
-//  MockedTransportServiceOptions.cs
+//  DisconnectEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Represents an expected disconnection event.
     /// </summary>
-    public class MockedTransportServiceOptions
+    public class DisconnectEvent : IEvent
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
+        /// Determines whether this event matches the given arguments.
         /// </summary>
-        public bool IgnoreUnexpected { get; set; }
-
-        /// <summary>
-        /// Gets or sets the global advancement timeout.
-        /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
+        /// <remarks>
+        /// Disconnection events always match.
+        /// </remarks>
+        /// <returns>The match status.</returns>
+        public EventMatch Matches() => EventMatch.Pass;
     }
 }

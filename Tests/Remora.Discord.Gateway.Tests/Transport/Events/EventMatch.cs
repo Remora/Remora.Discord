@@ -1,5 +1,5 @@
 //
-//  MockedTransportServiceOptions.cs
+//  EventMatch.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,23 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Represents the results of an event matching.
     /// </summary>
-    public class MockedTransportServiceOptions
+    public enum EventMatch
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
+        /// The event passed the test, and the sequence should advance.
         /// </summary>
-        public bool IgnoreUnexpected { get; set; }
+        Pass,
 
         /// <summary>
-        /// Gets or sets the global advancement timeout.
+        /// The event failed the test, and the sequence should abort.
         /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
+        Fail,
+
+        /// <summary>
+        /// The event was ignored, and the sequence should not advanced.
+        /// </summary>
+        Ignore
     }
 }

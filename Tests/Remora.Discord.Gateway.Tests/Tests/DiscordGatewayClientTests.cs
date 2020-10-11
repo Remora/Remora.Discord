@@ -26,14 +26,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Tests.Transport;
 using Remora.Discord.Gateway.Transport;
+using Remora.Discord.Rest.Results;
+using Remora.Discord.Tests;
 using Xunit;
 
 namespace Remora.Discord.Gateway.Tests.Tests
@@ -52,12 +57,20 @@ namespace Remora.Discord.Gateway.Tests.Tests
         {
             var tokenSource = new CancellationTokenSource();
             var transportMock = new MockedTransportServiceBuilder()
+                .IgnoreUnexpected()
                 .Sequence
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(1000))
-                        .Expect<Identify>(i => i.Token == Constants.MockToken)
+                        .Send(new Hello(200))
+                        .Expect<Identify>
+                        (
+                            i =>
+                            {
+                                Assert.Equal(Constants.MockToken, i.Token);
+                                return true;
+                            }
+                        )
                         .Send
                         (
                             new Ready
@@ -69,15 +82,14 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 default
                             )
                         )
-                        .Finish(tokenSource)
                 )
                 .Continuously
                 (
                     c => c
                         .Expect<IHeartbeat>()
-                        .Send(new HeartbeatAcknowledge()),
-                    TimeSpan.FromSeconds(1)
+                        .Send<HeartbeatAcknowledge>()
                 )
+                .Finish(tokenSource)
                 .Build();
 
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
@@ -85,12 +97,13 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var services = new ServiceCollection()
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
+                .Replace(CreateMockedGatewayAPI())
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
 
-            Assert.True(runResult.IsSuccess);
+            ResultAssert.Successful(runResult);
         }
 
         /// <summary>
@@ -102,12 +115,20 @@ namespace Remora.Discord.Gateway.Tests.Tests
         {
             var tokenSource = new CancellationTokenSource();
             var transportMock = new MockedTransportServiceBuilder()
+                .IgnoreUnexpected()
                 .Sequence
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(1000))
-                        .Expect<Identify>(i => i.Token == Constants.MockToken)
+                        .Send(new Hello(200))
+                        .Expect<Identify>
+                        (
+                            i =>
+                            {
+                                Assert.Equal(Constants.MockToken, i.Token);
+                                return true;
+                            }
+                        )
                         .Send
                         (
                             new Ready
@@ -119,21 +140,27 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 default
                             )
                         )
-                        .Send(new Reconnect())
+                        .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(1000))
-                        .Expect<Resume>(r => r.SessionID == Constants.MockSessionID)
-                        .Send(new Resumed())
-                        .Finish(tokenSource)
+                        .Send(new Hello(200))
+                        .Expect<Resume>
+                        (
+                            r =>
+                            {
+                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                return true;
+                            }
+                        )
+                        .Send<Resumed>()
                 )
                 .Continuously
                 (
                     c => c
                         .Expect<IHeartbeat>()
-                        .Send(new HeartbeatAcknowledge()),
-                    TimeSpan.FromSeconds(1)
+                        .Send<HeartbeatAcknowledge>()
                 )
+                .Finish(tokenSource)
                 .Build();
 
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
@@ -141,12 +168,13 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var services = new ServiceCollection()
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
+                .Replace(CreateMockedGatewayAPI())
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
 
-            Assert.True(runResult.IsSuccess);
+            ResultAssert.Successful(runResult);
         }
 
         /// <summary>
@@ -158,12 +186,20 @@ namespace Remora.Discord.Gateway.Tests.Tests
         {
             var tokenSource = new CancellationTokenSource();
             var transportMock = new MockedTransportServiceBuilder()
+                .IgnoreUnexpected()
                 .Sequence
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(1000))
-                        .Expect<Identify>(i => i.Token == Constants.MockToken)
+                        .Send(new Hello(200))
+                        .Expect<Identify>
+                        (
+                            i =>
+                            {
+                                Assert.Equal(Constants.MockToken, i.Token);
+                                return true;
+                            }
+                        )
                         .Send
                         (
                             new Ready
@@ -175,13 +211,27 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 default
                             )
                         )
-                        .Send(new Reconnect())
+                        .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(1000))
-                        .Expect<Resume>(r => r.SessionID == Constants.MockSessionID)
+                        .Send(new Hello(200))
+                        .Expect<Resume>
+                        (
+                            r =>
+                            {
+                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                return true;
+                            }
+                        )
                         .Send(new InvalidSession(false))
-                        .Expect<Identify>(i => i.Token == Constants.MockToken)
+                        .Expect<Identify>
+                        (
+                            i =>
+                            {
+                                Assert.Equal(Constants.MockToken, i.Token);
+                                return true;
+                            }
+                        )
                         .Send
                         (
                             new Ready
@@ -193,15 +243,14 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 default
                             )
                         )
-                        .Finish(tokenSource)
                 )
                 .Continuously
                 (
                     c => c
                         .Expect<IHeartbeat>()
-                        .Send(new HeartbeatAcknowledge()),
-                    TimeSpan.FromSeconds(1)
+                        .Send<HeartbeatAcknowledge>()
                 )
+                .Finish(tokenSource)
                 .Build();
 
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
@@ -209,12 +258,37 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var services = new ServiceCollection()
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
+                .Replace(CreateMockedGatewayAPI())
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
 
-            Assert.True(runResult.IsSuccess);
+            ResultAssert.Successful(runResult);
+        }
+
+        private static ServiceDescriptor CreateMockedGatewayAPI()
+        {
+            var gatewayAPIMock = new Mock<IDiscordRestGatewayAPI>();
+            gatewayAPIMock.Setup
+            (
+                a => a.GetGatewayBotAsync(It.IsAny<CancellationToken>())
+            ).ReturnsAsync
+            (
+                RetrieveRestEntityResult<IGatewayEndpoint>.FromSuccess
+                (
+                    new GatewayEndpoint
+                    (
+                        "wss://gateway.discord.gg/",
+                        default,
+                        default
+                    )
+                )
+            );
+
+            var gatewayApi = gatewayAPIMock.Object;
+            var gatewayAPIMockDescriptor = ServiceDescriptor.Singleton(typeof(IDiscordRestGatewayAPI), gatewayApi);
+            return gatewayAPIMockDescriptor;
         }
     }
 }

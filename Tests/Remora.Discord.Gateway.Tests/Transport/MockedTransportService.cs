@@ -21,13 +21,16 @@
 //
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Gateway.Tests.Transport.Events;
 using Remora.Discord.Gateway.Transport;
+using Xunit.Sdk;
 
 namespace Remora.Discord.Gateway.Tests.Transport
 {
@@ -37,11 +40,15 @@ namespace Remora.Discord.Gateway.Tests.Transport
     public class MockedTransportService : IPayloadTransportService
     {
         private readonly IReadOnlyList<MockedTransportSequence> _sequences;
-        private readonly IReadOnlyList<MockedTransportContinuousSequence> _continuousSequences;
+        private readonly IReadOnlyList<MockedTransportSequence> _continuousSequences;
         private readonly MockedTransportServiceOptions _serviceOptions;
+        private readonly CancellationTokenSource _finisher;
 
-        private readonly ConcurrentQueue<IPayload> _receivedPayloads = new ConcurrentQueue<IPayload>();
-        private readonly ConcurrentQueue<IPayload> _payloadsToSend = new ConcurrentQueue<IPayload>();
+        private readonly List<MockedTransportSequence> _finishedSequences = new List<MockedTransportSequence>();
+
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+
+        private DateTimeOffset _lastAdvance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
@@ -49,61 +56,374 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// <param name="sequences">The sequences in use.</param>
         /// <param name="continuousSequences">The continuous sequences in use.</param>
         /// <param name="serviceOptions">The service options.</param>
+        /// <param name="finisher">The token source to cancel when all sequences are finished.</param>
         public MockedTransportService
         (
             IReadOnlyList<MockedTransportSequence> sequences,
-            IReadOnlyList<MockedTransportContinuousSequence> continuousSequences,
-            MockedTransportServiceOptions serviceOptions
+            IReadOnlyList<MockedTransportSequence> continuousSequences,
+            MockedTransportServiceOptions serviceOptions,
+            CancellationTokenSource finisher
         )
         {
             _sequences = sequences;
             _continuousSequences = continuousSequences;
             _serviceOptions = serviceOptions;
+            _finisher = finisher;
+
+            _lastAdvance = DateTimeOffset.UtcNow;
         }
 
         /// <inheritdoc />
-        public Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
+        public async Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
-        {
-            if (ct.IsCancellationRequested)
+            try
             {
-                return Task.FromCanceled<SendPayloadResult>(ct);
-            }
+                await _semaphore.WaitAsync(ct);
 
-            _receivedPayloads.Enqueue(payload);
-            return Task.FromResult(SendPayloadResult.FromSuccess());
+                foreach (var sequence in _sequences.Except(_finishedSequences))
+                {
+                    if (!(sequence.Current is ConnectEvent c))
+                    {
+                        continue;
+                    }
+
+                    switch (c.Matches(endpoint))
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                foreach (var continuousSequence in _continuousSequences)
+                {
+                    if (!(continuousSequence.Current is ConnectEvent c))
+                    {
+                        continue;
+                    }
+
+                    switch (c.Matches(endpoint))
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+                if (remainingSequences.Count == 0)
+                {
+                    _finisher.Cancel();
+                }
+
+                CheckTimeout();
+
+                return GatewayConnectionResult.FromSuccess();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
+        public async Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+        {
+            try
+            {
+                await _semaphore.WaitAsync(ct);
+
+                foreach (var sequence in _sequences.Except(_finishedSequences))
+                {
+                    if (!(sequence.Current is ReceiveEvent r))
+                    {
+                        continue;
+                    }
+
+                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                foreach (var continuousSequence in _continuousSequences)
+                {
+                    if (!(continuousSequence.Current is ReceiveEvent r))
+                    {
+                        continue;
+                    }
+
+                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+                if (remainingSequences.Count == 0)
+                {
+                    _finisher.Cancel();
+                }
+
+                CheckTimeout();
+
+                return SendPayloadResult.FromSuccess();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         /// <inheritdoc />
         public async Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
         {
-            if (ct.IsCancellationRequested)
-            {
-                return await Task.FromCanceled<ReceivePayloadResult<IPayload>>(ct);
-            }
-
             while (!ct.IsCancellationRequested)
             {
-                if (_payloadsToSend.TryDequeue(out var payload))
+                try
                 {
-                    return ReceivePayloadResult<IPayload>.FromSuccess(payload);
-                }
+                    await _semaphore.WaitAsync(ct);
 
-                await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
+                    foreach (var sequence in _sequences.Except(_finishedSequences))
+                    {
+                        if (!(sequence.Current is SendEvent s))
+                        {
+                            continue;
+                        }
+
+                        var payload = s.CreatePayload();
+                        if (!sequence.MoveNext())
+                        {
+                            _finishedSequences.Add(sequence);
+                        }
+
+                        _lastAdvance = DateTimeOffset.UtcNow;
+
+                        return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                    }
+
+                    foreach (var continuousSequence in _continuousSequences)
+                    {
+                        if (!(continuousSequence.Current is SendEvent s))
+                        {
+                            continue;
+                        }
+
+                        var payload = s.CreatePayload();
+                        if (!continuousSequence.MoveNext())
+                        {
+                            continuousSequence.Reset();
+                        }
+
+                        return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                    }
+
+                    var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+                    if (remainingSequences.Count == 0)
+                    {
+                        _finisher.Cancel();
+                    }
+
+                    CheckTimeout();
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
+                }
+                finally
+                {
+                    _semaphore.Release();
+                }
             }
 
             return await Task.FromCanceled<ReceivePayloadResult<IPayload>>(ct);
         }
 
         /// <inheritdoc />
-        public Task<GatewayConnectionResult> DisconnectAsync(CancellationToken ct = default)
+        public async Task<GatewayConnectionResult> DisconnectAsync(CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _semaphore.WaitAsync(ct);
+
+                foreach (var sequence in _sequences.Except(_finishedSequences))
+                {
+                    if (!(sequence.Current is DisconnectEvent d))
+                    {
+                        continue;
+                    }
+
+                    switch (d.Matches())
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            _lastAdvance = DateTimeOffset.UtcNow;
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                foreach (var continuousSequence in _continuousSequences)
+                {
+                    if (!(continuousSequence.Current is DisconnectEvent d))
+                    {
+                        continue;
+                    }
+
+                    switch (d.Matches())
+                    {
+                        case EventMatch.Pass:
+                        {
+                            if (!continuousSequence.MoveNext())
+                            {
+                                continuousSequence.Reset();
+                            }
+
+                            break;
+                        }
+                        case EventMatch.Fail:
+                        {
+                            throw new TrueException("An event in a continuous sequence failed.", null);
+                        }
+                        case EventMatch.Ignore:
+                        {
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                }
+
+                var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+                if (remainingSequences.Count == 0)
+                {
+                    _finisher.Cancel();
+                }
+
+                CheckTimeout();
+
+                return GatewayConnectionResult.FromSuccess();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <summary>
+        /// Checks that the service has advanced in time.
+        /// </summary>
+        private void CheckTimeout()
+        {
+            var timeout = _serviceOptions.Timeout;
+            if (Debugger.IsAttached)
+            {
+                // Extend the timeout
+                timeout += TimeSpan.FromMinutes(10);
+            }
+
+            if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
+            {
+                throw new TestTimeoutException((int)_serviceOptions.Timeout.TotalMilliseconds);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MockedTransportServiceOptions.cs
+//  SendEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,22 +21,30 @@
 //
 
 using System;
+using Remora.Discord.API.Abstractions.Gateway;
 
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Represents a payload sending event.
     /// </summary>
-    public class MockedTransportServiceOptions
+    public class SendEvent : IEvent
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
-        /// </summary>
-        public bool IgnoreUnexpected { get; set; }
+        private readonly Func<IPayload> _payloadFactory;
 
         /// <summary>
-        /// Gets or sets the global advancement timeout.
+        /// Initializes a new instance of the <see cref="SendEvent"/> class.
         /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
+        /// <param name="payloadFactory">The payload factory function.</param>
+        public SendEvent(Func<IPayload> payloadFactory)
+        {
+            _payloadFactory = payloadFactory;
+        }
+
+        /// <summary>
+        /// Creates the payload that should be sent.
+        /// </summary>
+        /// <returns>The payload.</returns>
+        public IPayload CreatePayload() => _payloadFactory();
     }
 }

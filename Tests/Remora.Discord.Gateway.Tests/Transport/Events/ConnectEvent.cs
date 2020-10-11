@@ -1,5 +1,5 @@
 //
-//  MockedTransportServiceOptions.cs
+// ConnectEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,21 +22,29 @@
 
 using System;
 
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Represents an expected connection event.
     /// </summary>
-    public class MockedTransportServiceOptions
+    public class ConnectEvent : IEvent
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
-        /// </summary>
-        public bool IgnoreUnexpected { get; set; }
+        private readonly Func<Uri, EventMatch> _matcher;
 
         /// <summary>
-        /// Gets or sets the global advancement timeout.
+        /// Initializes a new instance of the <see cref="ConnectEvent"/> class.
         /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
+        /// <param name="matcher">The matching function.</param>
+        public ConnectEvent(Func<Uri, EventMatch> matcher)
+        {
+            _matcher = matcher;
+        }
+
+        /// <summary>
+        /// Determines whether this event matches the given arguments.
+        /// </summary>
+        /// <param name="uri">The URI to test against.</param>
+        /// <returns>The match status.</returns>
+        public EventMatch Matches(Uri uri) => _matcher(uri);
     }
 }

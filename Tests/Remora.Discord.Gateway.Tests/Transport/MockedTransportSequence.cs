@@ -20,21 +20,51 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Collections;
 using System.Collections.Generic;
+using Remora.Discord.Gateway.Tests.Transport.Events;
 
 namespace Remora.Discord.Gateway.Tests.Transport
 {
     /// <summary>
     /// Represents a sequence of events.
     /// </summary>
-    public class MockedTransportSequence
+    public class MockedTransportSequence : IEnumerator<IEvent>
     {
+        private readonly IEnumerator<IEvent> _currentState;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedTransportSequence"/> class.
         /// </summary>
-        public MockedTransportSequence()
+        /// <param name="sequence">The event sequence.</param>
+        public MockedTransportSequence(IEnumerable<IEvent> sequence)
         {
+            _currentState = sequence.GetEnumerator();
+            _currentState.MoveNext();
+        }
+
+        /// <inheritdoc />
+        public bool MoveNext()
+        {
+            return _currentState.MoveNext();
+        }
+
+        /// <inheritdoc />
+        public void Reset()
+        {
+            _currentState.Reset();
+        }
+
+        /// <inheritdoc />
+        public IEvent Current => _currentState.Current;
+
+        /// <inheritdoc/>
+        object? IEnumerator.Current => ((IEnumerator)_currentState).Current;
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            _currentState.Dispose();
         }
     }
 }

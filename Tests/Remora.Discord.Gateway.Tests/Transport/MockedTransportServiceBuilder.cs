@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using Remora.Discord.Gateway.Transport;
 
 namespace Remora.Discord.Gateway.Tests.Transport
@@ -34,8 +36,21 @@ namespace Remora.Discord.Gateway.Tests.Transport
         private readonly MockedTransportServiceOptions _serviceOptions = new MockedTransportServiceOptions();
         private readonly List<MockedTransportSequence> _sequences = new List<MockedTransportSequence>();
 
-        private readonly List<MockedTransportContinuousSequence> _continuousSequences =
-            new List<MockedTransportContinuousSequence>();
+        private readonly List<MockedTransportSequence> _continuousSequences = new List<MockedTransportSequence>();
+
+        private CancellationTokenSource _finisher = new CancellationTokenSource();
+
+        /// <summary>
+        /// Sets a timeout for the service. If no sequences have advanced within this timeout, the service will
+        /// terminate and throw.
+        /// </summary>
+        /// <param name="timeout">The timeout.</param>
+        /// <returns>The builder, with the timeout.</returns>
+        public MockedTransportServiceBuilder WithTimeout(TimeSpan timeout)
+        {
+            _serviceOptions.Timeout = timeout;
+            return this;
+        }
 
         /// <summary>
         /// Sets whether the service should ignore unexpected receivals.
@@ -44,6 +59,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// <returns>The builder, with the option configured.</returns>
         public MockedTransportServiceBuilder IgnoreUnexpected(bool ignoreUnexpected = true)
         {
+            _serviceOptions.IgnoreUnexpected = ignoreUnexpected;
             return this;
         }
 
@@ -51,14 +67,16 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// Adds a continuous expected action to the builder.
         /// </summary>
         /// <param name="continuousBuilder">The builder.</param>
-        /// <param name="timeout">The timeout before the continuous action fails, if it has not advanced.</param>
         /// <returns>The builder, with the action.</returns>
         public MockedTransportServiceBuilder Continuously
         (
-            Action<MockedTransportSequenceBuilder> continuousBuilder,
-            TimeSpan? timeout = null
+            Action<MockedTransportSequenceBuilder> continuousBuilder
         )
         {
+            var sequenceBuilderInstance = new MockedTransportSequenceBuilder();
+            continuousBuilder(sequenceBuilderInstance);
+
+            _continuousSequences.Add(sequenceBuilderInstance.Build());
             return this;
         }
 
@@ -72,6 +90,21 @@ namespace Remora.Discord.Gateway.Tests.Transport
             Action<MockedTransportSequenceBuilder> sequenceBuilder
         )
         {
+            var sequenceBuilderInstance = new MockedTransportSequenceBuilder();
+            sequenceBuilder(sequenceBuilderInstance);
+
+            _sequences.Add(sequenceBuilderInstance.Build());
+            return this;
+        }
+
+        /// <summary>
+        /// Finishes the service, signalling the cancellation token source that it should stop.
+        /// </summary>
+        /// <param name="tokenSource">The token source.</param>
+        /// <returns>The sequence builder, with the finalizer.</returns>
+        public MockedTransportServiceBuilder Finish(CancellationTokenSource tokenSource)
+        {
+            _finisher = tokenSource;
             return this;
         }
 
@@ -83,7 +116,8 @@ namespace Remora.Discord.Gateway.Tests.Transport
         (
             _sequences,
             _continuousSequences,
-            _serviceOptions
+            _serviceOptions,
+            _finisher
         );
     }
 }

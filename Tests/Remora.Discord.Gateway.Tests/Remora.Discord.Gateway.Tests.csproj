@@ -6,6 +6,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Moq" Version="4.14.6" />
+      <PackageReference Include="OneOf" Version="2.1.155" />
     </ItemGroup>
     
 </Project>
