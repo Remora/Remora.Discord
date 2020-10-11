@@ -57,7 +57,7 @@ namespace Remora.Discord.API.Objects
         public Snowflake SourceGuildID { get; }
 
         /// <inheritdoc />
-        public IGuild SerializedSourceGuild { get; }
+        public IGuildTemplate SerializedSourceGuild { get; }
 
         /// <inheritdoc />
         public bool? IsDirty { get; }
@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Objects
             DateTimeOffset createdAt,
             DateTimeOffset updatedAt,
             Snowflake sourceGuildID,
-            IGuild serializedSourceGuild,
+            IGuildTemplate serializedSourceGuild,
             bool? isDirty
         )
         {

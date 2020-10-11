@@ -1,5 +1,5 @@
 //
-//  ITemplate.cs
+//  IChannelTemplate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,68 +21,71 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a guild template.
+    /// Represents a channel.
     /// </summary>
-    public interface ITemplate
+    public interface IChannelTemplate
     {
         /// <summary>
-        /// Gets the template code (a unique ID).
+        /// Gets the relative ID of the channel.
         /// </summary>
-        string Code { get; }
+        int ID { get; }
 
         /// <summary>
-        /// Gets the name of the template.
+        /// Gets the type of the channel.
+        /// </summary>
+        ChannelType Type { get; }
+
+        /// <summary>
+        /// Gets the name of the channel.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Gets the description for the template.
+        /// Gets the sorting position of the channel.
         /// </summary>
-        string? Description { get; }
+        int Position { get; }
 
         /// <summary>
-        /// Gets the number of times this template has been used.
+        /// Gets the topic of the channel.
         /// </summary>
-        int UsageCount { get; }
+        string? Topic { get; }
 
         /// <summary>
-        /// Gets the ID of the user who created the template.
+        /// Gets the bitrate (in bits) of the channel.
         /// </summary>
-        Snowflake CreatorID { get; }
+        int Bitrate { get; }
 
         /// <summary>
-        /// Gets the user who created the template.
+        /// Gets the user limit of the voice channel.
         /// </summary>
-        IUser Creator { get; }
+        int UserLimit { get; }
 
         /// <summary>
-        /// Gets the time when the template was created.
+        /// Gets a value indicating whether the channel is NSFW.
         /// </summary>
-        DateTimeOffset CreatedAt { get; }
+        bool IsNsfw { get; }
 
         /// <summary>
-        /// Gets the last time the template was updated.
+        /// Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as
+        /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
+        /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
         /// </summary>
-        DateTimeOffset UpdatedAt { get; }
+        int RateLimitPerUser { get; }
 
         /// <summary>
-        /// Gets the ID of the guild the template is based on.
+        /// Gets the relative ID of the parent category for a channel. Each category can contain up to 50 channels.
         /// </summary>
-        Snowflake SourceGuildID { get; }
+        int? ParentID { get; }
 
         /// <summary>
-        /// Gets the guild snapshot this template contains.
+        /// Gets a list of explicit permission overwrites for members and roles.
         /// </summary>
-        IGuildTemplate SerializedSourceGuild { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the template has unsynchronized changes.
-        /// </summary>
-        bool? IsDirty { get; }
+        IReadOnlyList<IPermissionOverwriteTemplate> PermissionOverwrites { get; }
     }
 }

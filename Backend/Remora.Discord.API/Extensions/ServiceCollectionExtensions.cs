@@ -630,6 +630,16 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddTemplateObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<ITemplate, Template>();
+            options.AddDataObjectConverter<IGuildTemplate, GuildTemplate>();
+            options.AddDataObjectConverter<IRoleTemplate, RoleTemplate>()
+                .WithPropertyName(r => r.Colour, "color")
+                .WithPropertyName(r => r.IsHoisted, "hoist")
+                .WithPropertyName(r => r.IsMentionable, "mentionable");
+
+            options.AddDataObjectConverter<IChannelTemplate, ChannelTemplate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
+            options.AddDataObjectConverter<IPermissionOverwriteTemplate, PermissionOverwriteTemplate>();
 
             return options;
         }
