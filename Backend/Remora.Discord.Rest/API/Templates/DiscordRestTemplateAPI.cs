@@ -34,7 +34,7 @@ using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
 
-namespace Remora.Discord.Rest.API.Templates
+namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
     public class DiscordRestTemplateAPI : IDiscordRestTemplateAPI
