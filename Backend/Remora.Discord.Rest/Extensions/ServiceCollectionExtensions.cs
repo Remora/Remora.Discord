@@ -33,7 +33,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.API.Templates;
 using Remora.Discord.Rest.Polly;
 
 namespace Remora.Discord.Rest.Extensions
