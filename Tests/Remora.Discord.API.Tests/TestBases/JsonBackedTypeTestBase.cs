@@ -27,8 +27,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
-using Remora.Discord.Experimental.Extensions;
 using Remora.Discord.Tests;
+using Remora.Discord.Unstable.Extensions;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 

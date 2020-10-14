@@ -22,8 +22,8 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.Experimental.Extensions;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Unstable.Extensions;
 using RichardSzalay.MockHttp;
 
 namespace Remora.Discord.Rest.Tests.TestBases
