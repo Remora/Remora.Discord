@@ -69,7 +69,7 @@ namespace Remora.Discord.Tests
                 .Where(t => t.Namespace!.Contains(".API."))
                 .ToList();
 
-            var experimentalTypes = typeof(Experimental.Extensions.ServiceCollectionExtensions).Assembly
+            var experimentalTypes = typeof(Unstable.Extensions.ServiceCollectionExtensions).Assembly
                 .GetTypes()
                 .Where(t => !(t.Namespace is null))
                 .Where
