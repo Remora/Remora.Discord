@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Tests.Services;
+using Remora.Discord.Experimental.Extensions;
 using Remora.Discord.Tests;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -74,6 +75,7 @@ namespace Remora.Discord.API.Tests.TestBases
             var services = new ServiceCollection()
                 .AddDiscordApi(this.AllowUnknownEvents)
                 .AddSingleton<SampleDataService>()
+                .AddExperimentalDiscordApi()
                 .BuildServiceProvider();
 
             this.SampleData = services.GetRequiredService<SampleDataService>();

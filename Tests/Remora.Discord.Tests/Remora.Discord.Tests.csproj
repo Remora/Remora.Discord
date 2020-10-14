@@ -6,6 +6,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Backend\Remora.Discord.API\Remora.Discord.API.csproj" />
+        <ProjectReference Include="..\..\Backend\Remora.Discord.Experimental\Remora.Discord.Experimental.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Backend\Remora.Discord.Experimental\Remora.Discord.Experimental.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
     </ItemGroup>

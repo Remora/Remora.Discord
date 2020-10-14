@@ -48,6 +48,13 @@ namespace Remora.Discord.Tests
             var samples = new Dictionary<Type, string>();
 
             var assembly = Assembly.GetExecutingAssembly();
+            LoadTypeSamples(assembly, samples);
+
+            Samples = samples;
+        }
+
+        private static void LoadTypeSamples(Assembly assembly, Dictionary<Type, string> samples)
+        {
             var resourceNames = assembly.GetManifestResourceNames().Where(n => n.Contains(".Samples."));
 
             var interfaceTypes = typeof(IGuild).Assembly
@@ -60,6 +67,17 @@ namespace Remora.Discord.Tests
                 .GetTypes()
                 .Where(t => !(t.Namespace is null))
                 .Where(t => t.Namespace!.Contains(".API."))
+                .ToList();
+
+            var experimentalTypes = typeof(Experimental.Extensions.ServiceCollectionExtensions).Assembly
+                .GetTypes()
+                .Where(t => !(t.Namespace is null))
+                .Where
+                (
+                    t =>
+                        t.Namespace!.Contains(".API.Abstractions.Objects") ||
+                        t.Namespace!.Contains(".API.Objects")
+                )
                 .ToList();
 
             foreach (var resourceName in resourceNames)
@@ -83,12 +101,12 @@ namespace Remora.Discord.Tests
                     resourceFileName.LastIndexOf(".", StringComparison.Ordinal) + 1
                 );
 
-                var interfaceType = interfaceTypes.FirstOrDefault
+                var interfaceType = interfaceTypes.Concat(experimentalTypes).FirstOrDefault
                 (
                     i => i.Name.Equals("I" + resourceFileName, StringComparison.OrdinalIgnoreCase)
                 );
 
-                var concreteType = concreteTypes.FirstOrDefault
+                var concreteType = concreteTypes.Concat(experimentalTypes).FirstOrDefault
                 (
                     t => t.Name.Equals(resourceFileName, StringComparison.OrdinalIgnoreCase)
                 );
@@ -101,8 +119,6 @@ namespace Remora.Discord.Tests
                 samples.TryAdd(interfaceType, sampleData);
                 samples.TryAdd(concreteType, sampleData);
             }
-
-            Samples = samples;
         }
     }
 }
