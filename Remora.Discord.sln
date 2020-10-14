@@ -59,7 +59,7 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Gateway.Tests", "Tests\Remora.Discord.Gateway.Tests\Remora.Discord.Gateway.Tests.csproj", "{C7FD32A5-C7A7-4F7E-9C96-C161780D08D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Experimental", "Backend\Remora.Discord.Experimental\Remora.Discord.Experimental.csproj", "{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Unstable", "Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj", "{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

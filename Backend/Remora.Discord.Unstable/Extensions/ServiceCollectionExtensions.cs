@@ -29,7 +29,7 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 
 // ReSharper disable once CheckNamespace
-namespace Remora.Discord.Experimental.Extensions
+namespace Remora.Discord.Unstable.Extensions
 {
     /// <summary>
     /// Defines various extension methods to the <see cref="IServiceCollection"/> class.

@@ -8,7 +8,7 @@
     <PropertyGroup>
         <Version>1.0.0-beta1</Version>
         <Description>
-            Experimental features from the Discord API. This package should never be considered stable, and breaking
+            Unstable features from the Discord API. This package should never be considered stable, and breaking
             changes may be introduced in any release.
         </Description>
         <PackageReleaseNotes>Implement template API.</PackageReleaseNotes>
