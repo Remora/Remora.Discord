@@ -74,8 +74,9 @@ namespace Remora.Discord.Gateway.Transport
         /// <summary>
         /// Disconnects from the transport endpoint.
         /// </summary>
+        /// <param name="reconnectionIntended">Whether reconnection is intended.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        Task<GatewayConnectionResult> DisconnectAsync(CancellationToken ct = default);
+        Task<GatewayConnectionResult> DisconnectAsync(bool reconnectionIntended, CancellationToken ct = default);
     }
 }

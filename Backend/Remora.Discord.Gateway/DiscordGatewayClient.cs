@@ -217,7 +217,7 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    var disconnectResult = await _transportService.DisconnectAsync(ct);
+                    var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
                     if (!disconnectResult.IsSuccess)
                     {
                         // Couldn't disconnect cleanly :(
@@ -228,6 +228,15 @@ namespace Remora.Discord.Gateway
                     foreach (var runningResponder in _runningResponderDispatches)
                     {
                         await FinalizeResponderDispatchAsync(runningResponder);
+                    }
+
+                    if (ct.IsCancellationRequested)
+                    {
+                        // The user requested a termination, and we don't intend to reconnect.
+                        _sessionID = null;
+                        _connectionStatus = GatewayConnectionStatus.Offline;
+
+                        return GatewayConnectionResult.FromSuccess();
                     }
 
                     switch (iterationResult.GatewayCloseStatus)
@@ -260,6 +269,13 @@ namespace Remora.Discord.Gateway
 
                     // Reconnection is not allowed.
                     return iterationResult;
+                }
+
+                var userRequestedDisconnect = await _transportService.DisconnectAsync(false, ct);
+                if (!userRequestedDisconnect.IsSuccess)
+                {
+                    // Couldn't disconnect cleanly :(
+                    return userRequestedDisconnect;
                 }
             }
             catch (OperationCanceledException)
@@ -422,7 +438,7 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            var disconnectResult = await _transportService.DisconnectAsync(ct);
+            var disconnectResult = await _transportService.DisconnectAsync(true, ct);
             if (!disconnectResult.IsSuccess)
             {
                 return disconnectResult;

@@ -318,7 +318,11 @@ namespace Remora.Discord.Gateway.Tests.Transport
         }
 
         /// <inheritdoc />
-        public async Task<GatewayConnectionResult> DisconnectAsync(CancellationToken ct = default)
+        public async Task<GatewayConnectionResult> DisconnectAsync
+        (
+            bool reconnectionIntended,
+            CancellationToken ct = default
+        )
         {
             try
             {

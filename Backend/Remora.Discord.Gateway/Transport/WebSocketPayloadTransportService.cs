@@ -225,7 +225,11 @@ namespace Remora.Discord.Gateway.Transport
         }
 
         /// <inheritdoc/>
-        public async Task<GatewayConnectionResult> DisconnectAsync(CancellationToken ct = default)
+        public async Task<GatewayConnectionResult> DisconnectAsync
+        (
+            bool reconnectionIntended,
+            CancellationToken ct = default
+        )
         {
             if (_clientWebSocket is null)
             {
@@ -240,11 +244,16 @@ namespace Remora.Discord.Gateway.Transport
                 {
                     try
                     {
-                        // Empty is used here instead of normal closure, because close codes 1000 and 1001 don't
-                        // allow for reconnection.
+                        // 1012 is used here instead of normal closure, because close codes 1000 and 1001 don't
+                        // allow for reconnection. 1012 is referenced in the websocket protocol as "Service restart",
+                        // which makes sense for our use case.
+                        var closeCode = reconnectionIntended
+                            ? (WebSocketCloseStatus)1012
+                            : WebSocketCloseStatus.NormalClosure;
+
                         await _clientWebSocket.CloseAsync
                         (
-                            WebSocketCloseStatus.Empty,
+                            closeCode,
                             "Terminating connection by user request.",
                             ct
                         );
@@ -272,7 +281,7 @@ namespace Remora.Discord.Gateway.Transport
                 return;
             }
 
-            await DisconnectAsync();
+            await DisconnectAsync(false);
         }
     }
 }
