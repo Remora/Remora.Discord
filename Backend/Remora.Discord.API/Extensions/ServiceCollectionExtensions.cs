@@ -330,6 +330,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IChannel, Channel>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw");
 
+            options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
                 .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
@@ -347,6 +350,11 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddEmojiObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IEmoji, Emoji>()
+                .WithPropertyName(e => e.IsManaged, "managed")
+                .WithPropertyName(e => e.IsAnimated, "animated")
+                .WithPropertyName(e => e.IsAvailable, "available");
+
+            options.AddDataObjectConverter<IPartialEmoji, PartialEmoji>()
                 .WithPropertyName(e => e.IsManaged, "managed")
                 .WithPropertyName(e => e.IsAnimated, "animated")
                 .WithPropertyName(e => e.IsAvailable, "available");
@@ -388,7 +396,25 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
+            options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
+                .WithPropertyName(g => g.IsOwner, "owner")
+                .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
+                .WithPropertyName(g => g.IsLarge, "large")
+                .WithPropertyName(g => g.IsUnavailable, "unavailable")
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
+                .WithPropertyName(m => m.Nickname, "nick")
+                .WithPropertyName(m => m.IsDeafened, "deaf")
+                .WithPropertyName(m => m.IsMuted, "mute");
+
+            options.AddDataObjectConverter<IPartialGuildMember, PartialGuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
                 .WithPropertyName(m => m.IsMuted, "mute");
@@ -436,6 +462,10 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing");
 
+            options.AddDataObjectConverter<IPartialIntegration, PartialIntegration>()
+                .WithPropertyName(i => i.IsEnabled, "enabled")
+                .WithPropertyName(i => i.IsSyncing, "syncing");
+
             return options;
         }
 
@@ -447,6 +477,7 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IInvite, Invite>();
+            options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
 
             return options;
         }
@@ -507,6 +538,13 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(r => r.IsMentionable, "mentionable")
                 .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
 
+            options.AddDataObjectConverter<IPartialRole, PartialRole>()
+                .WithPropertyName(r => r.Colour, "color")
+                .WithPropertyName(r => r.IsHoisted, "hoist")
+                .WithPropertyName(r => r.IsManaged, "managed")
+                .WithPropertyName(r => r.IsMentionable, "mentionable")
+                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+
             return options;
         }
 
@@ -525,6 +563,9 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(p => p.Web, new StringEnumConverter<ClientStatus>(snakeCase));
 
             options.AddDataObjectConverter<IPresence, Presence>()
+                .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
+
+            options.AddDataObjectConverter<IPartialPresence, PartialPresence>()
                 .WithPropertyConverter(p => p.Status, new StringEnumConverter<ClientStatus>(snakeCase));
 
             return options;
@@ -579,6 +620,15 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddVoiceObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IVoiceState, VoiceState>()
+                .WithPropertyName(v => v.IsDeafened, "deaf")
+                .WithPropertyName(v => v.IsMuted, "mute")
+                .WithPropertyName(v => v.IsSelfDeafened, "self_deaf")
+                .WithPropertyName(v => v.IsSelfMuted, "self_mute")
+                .WithPropertyName(v => v.IsStreaming, "self_stream")
+                .WithPropertyName(v => v.IsVideoEnabled, "self_video")
+                .WithPropertyName(v => v.IsSuppressed, "suppress");
+
+            options.AddDataObjectConverter<IPartialVoiceState, PartialVoiceState>()
                 .WithPropertyName(v => v.IsDeafened, "deaf")
                 .WithPropertyName(v => v.IsMuted, "mute")
                 .WithPropertyName(v => v.IsSelfDeafened, "self_deaf")
