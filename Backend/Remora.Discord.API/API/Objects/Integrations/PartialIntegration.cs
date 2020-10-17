@@ -65,6 +65,15 @@ namespace Remora.Discord.API.Objects
         /// <inheritdoc />
         public Optional<DateTimeOffset> SyncedAt { get; }
 
+        /// <inheritdoc />
+        public Optional<int> SubscriberCount { get; }
+
+        /// <inheritdoc />
+        public Optional<bool> IsRevoked { get; }
+
+        /// <inheritdoc />
+        public Optional<IIntegrationApplication> Application { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PartialIntegration"/> class.
         /// </summary>
@@ -80,6 +89,9 @@ namespace Remora.Discord.API.Objects
         /// <param name="user">The user for this integration.</param>
         /// <param name="account">The integration account information.</param>
         /// <param name="syncedAt">The last time when the integration was synced.</param>
+        /// <param name="subscriberCount">The subscriber count.</param>
+        /// <param name="isRevoked">Whether the integration has been revoked.</param>
+        /// <param name="application">The integration application, if any.</param>
         public PartialIntegration
         (
             Optional<Snowflake> id,
@@ -93,7 +105,10 @@ namespace Remora.Discord.API.Objects
             Optional<int> expireGracePeriod,
             Optional<IUser> user,
             Optional<IAccount> account,
-            Optional<DateTimeOffset> syncedAt
+            Optional<DateTimeOffset> syncedAt,
+            Optional<int> subscriberCount,
+            Optional<bool> isRevoked,
+            Optional<IIntegrationApplication> application
         )
         {
             this.ID = id;
@@ -108,6 +123,9 @@ namespace Remora.Discord.API.Objects
             this.User = user;
             this.Account = account;
             this.SyncedAt = syncedAt;
+            this.SubscriberCount = subscriberCount;
+            this.IsRevoked = isRevoked;
+            this.Application = application;
         }
     }
 }

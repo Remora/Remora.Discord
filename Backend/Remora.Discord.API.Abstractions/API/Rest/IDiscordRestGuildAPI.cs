@@ -555,11 +555,13 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// Gets the integrations for the guild.
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="includeApplications">Whether bot and OAuth2 webhook integrations should be included.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
         (
             Snowflake guildID,
+            Optional<bool> includeApplications = default,
             CancellationToken ct = default
         );
 
@@ -604,6 +606,9 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Detaches the given integration object.
         /// </summary>
+        /// <remarks>
+        ///  Deletes any associated webhooks, and kicks the associated bot (if there is one).
+        /// </remarks>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="integrationID">The ID of the integration.</param>
         /// <param name="ct">The cancellation token for this operation.</param>

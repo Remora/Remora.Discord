@@ -464,11 +464,15 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IIntegration, Integration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
-                .WithPropertyName(i => i.IsSyncing, "syncing");
+                .WithPropertyName(i => i.IsSyncing, "syncing")
+                .WithPropertyName(i => i.IsRevoked, "revoked");
 
             options.AddDataObjectConverter<IPartialIntegration, PartialIntegration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
-                .WithPropertyName(i => i.IsSyncing, "syncing");
+                .WithPropertyName(i => i.IsSyncing, "syncing")
+                .WithPropertyName(i => i.IsRevoked, "revoked");
+
+            options.AddDataObjectConverter<IIntegrationApplication, IntegrationApplication>();
 
             return options;
         }

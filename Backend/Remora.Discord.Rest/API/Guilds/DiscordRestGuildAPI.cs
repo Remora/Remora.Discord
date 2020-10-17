@@ -826,12 +826,24 @@ namespace Remora.Discord.Rest.API
         public Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
         (
             Snowflake guildID,
+            Optional<bool> includeApplications = default,
             CancellationToken ct = default
         )
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
             (
                 $"guilds/{guildID}/integrations",
+                b =>
+                {
+                    if (includeApplications.HasValue)
+                    {
+                        b.AddQueryParameter
+                        (
+                            "include_applications",
+                            includeApplications.Value.ToString().ToLowerInvariant()
+                        );
+                    }
+                },
                 ct: ct
             );
         }

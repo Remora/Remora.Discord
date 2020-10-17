@@ -52,6 +52,9 @@ namespace Remora.Discord.API.Objects
         /// <inheritdoc />
         public Optional<string> Token { get; }
 
+        /// <inheritdoc />
+        public Optional<Snowflake> ApplicationID { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Webhook"/> class.
         /// </summary>
@@ -63,6 +66,7 @@ namespace Remora.Discord.API.Objects
         /// <param name="name">The default name of the webhook.</param>
         /// <param name="avatar">The default avatar of the webhook.</param>
         /// <param name="token">The secure token of the webhook.</param>
+        /// <param name="applicationID">The application ID, if any.</param>
         public Webhook
         (
             Snowflake id,
@@ -72,7 +76,8 @@ namespace Remora.Discord.API.Objects
             Optional<IUser> user,
             string? name,
             string? avatar,
-            Optional<string> token
+            Optional<string> token,
+            Optional<Snowflake> applicationID
         )
         {
             this.ID = id;
@@ -83,6 +88,7 @@ namespace Remora.Discord.API.Objects
             this.Name = name;
             this.Avatar = avatar;
             this.Token = token;
+            this.ApplicationID = applicationID;
         }
     }
 }

@@ -1736,12 +1736,14 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/integrations")
+                        .WithQueryString("include_applications", "true")
                         .Respond("application/json", "[ ]")
                 );
 
                 var result = await api.GetGuildIntegrationsAsync
                 (
-                    guildId
+                    guildId,
+                    true
                 );
 
                 ResultAssert.Successful(result);

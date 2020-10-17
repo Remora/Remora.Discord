@@ -57,13 +57,22 @@ namespace Remora.Discord.API.Objects
         public int ExpireGracePeriod { get; }
 
         /// <inheritdoc />
-        public IUser User { get; }
+        public Optional<IUser> User { get; }
 
         /// <inheritdoc />
         public IAccount Account { get; }
 
         /// <inheritdoc />
         public DateTimeOffset SyncedAt { get; }
+
+        /// <inheritdoc />
+        public int SubscriberCount { get; }
+
+        /// <inheritdoc />
+        public bool IsRevoked { get; }
+
+        /// <inheritdoc />
+        public Optional<IIntegrationApplication> Application { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Integration"/> class.
@@ -80,6 +89,9 @@ namespace Remora.Discord.API.Objects
         /// <param name="user">The user for this integration.</param>
         /// <param name="account">The integration account information.</param>
         /// <param name="syncedAt">The last time when the integration was synced.</param>
+        /// <param name="subscriberCount">The subscriber count.</param>
+        /// <param name="isRevoked">Whether the integration has been revoked.</param>
+        /// <param name="application">The integration application, if any.</param>
         public Integration
         (
             Snowflake id,
@@ -91,9 +103,12 @@ namespace Remora.Discord.API.Objects
             Optional<bool> enableEmoticons,
             IntegrationExpireBehaviour expireBehaviour,
             int expireGracePeriod,
-            IUser user,
+            Optional<IUser> user,
             IAccount account,
-            DateTimeOffset syncedAt
+            DateTimeOffset syncedAt,
+            int subscriberCount,
+            bool isRevoked,
+            Optional<IIntegrationApplication> application
         )
         {
             this.ID = id;
@@ -108,6 +123,9 @@ namespace Remora.Discord.API.Objects
             this.User = user;
             this.Account = account;
             this.SyncedAt = syncedAt;
+            this.SubscriberCount = subscriberCount;
+            this.IsRevoked = isRevoked;
+            this.Application = application;
         }
     }
 }

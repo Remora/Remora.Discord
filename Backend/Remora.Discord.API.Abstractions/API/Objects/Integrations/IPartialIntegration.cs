@@ -91,5 +91,20 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the time when the integration was last synced.
         /// </summary>
         Optional<DateTimeOffset> SyncedAt { get; }
+
+        /// <summary>
+        /// Gets the number of subscribers this integration has.
+        /// </summary>
+        Optional<int> SubscriberCount { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this integration has been revoked.
+        /// </summary>
+        Optional<bool> IsRevoked { get; }
+
+        /// <summary>
+        /// Gets the bot/OAuth2 application for Discord integrations.
+        /// </summary>
+        Optional<IIntegrationApplication> Application { get; }
     }
 }

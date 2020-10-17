@@ -1,5 +1,5 @@
 //
-//  IWebhook.cs
+//  IIntegrationApplication.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,60 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a webhook object.
+    /// Represents application information for a Discord integration.
     /// </summary>
-    [PublicAPI]
-    public interface IWebhook
+    public interface IIntegrationApplication
     {
         /// <summary>
-        /// Gets the ID of the webhook.
+        /// Gets the ID of the application.
         /// </summary>
         Snowflake ID { get; }
 
         /// <summary>
-        /// Gets the type of the webhook.
+        /// Gets the name of the application.
         /// </summary>
-        WebhookType Type { get; }
+        string Name { get; }
 
         /// <summary>
-        /// Gets the ID of the guild that the webhook belongs to.
+        /// Gets the application's icon.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        IImageHash? Icon { get; }
 
         /// <summary>
-        /// Gets the ID of the channel that the webhook belongs to.
+        /// Gets the description of the application.
         /// </summary>
-        Snowflake ChannelID { get; }
+        string Description { get; }
 
         /// <summary>
-        /// Gets the user this webhook was created by. This is not returned when getting a webhook by its token.
+        /// Gets the summary of the application.
         /// </summary>
-        Optional<IUser> User { get; }
+        string Summary { get; }
 
         /// <summary>
-        /// Gets the default name of the webhook.
+        /// Gets the bot associated with this application.
         /// </summary>
-        string? Name { get; }
-
-        /// <summary>
-        /// Gets the default avatar of the webhook.
-        /// </summary>
-        string? Avatar { get; }
-
-        /// <summary>
-        /// Gets the secure token of the webhook. Returned for webhooks with type <see cref="WebhookType.Incoming"/>.
-        /// </summary>
-        Optional<string> Token { get; }
-
-        /// <summary>
-        /// Gets the bot or OAuth2 application that created this webhook.
-        /// </summary>
-        Optional<Snowflake> ApplicationID { get; }
+        Optional<IUser> Bot { get; }
     }
 }
