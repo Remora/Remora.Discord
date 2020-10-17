@@ -525,6 +525,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IMessageApplication, MessageApplication>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
 
+            options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
+                .WithPropertyConverter(s => s.Tags, new DelimitedListConverter<string>(";"));
+
             return options;
         }
 

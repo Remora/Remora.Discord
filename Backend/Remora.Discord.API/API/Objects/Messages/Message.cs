@@ -102,6 +102,9 @@ namespace Remora.Discord.API.Objects
         /// <inheritdoc />
         public Optional<MessageFlags> Flags { get; }
 
+        /// <inheritdoc />
+        public Optional<IReadOnlyList<IMessageSticker>> Stickers { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Message"/> class.
         /// </summary>
@@ -129,6 +132,7 @@ namespace Remora.Discord.API.Objects
         /// <param name="application">The application that the message is associated with.</param>
         /// <param name="messageReference">The message that this message refers to.</param>
         /// <param name="flags">The message flags.</param>
+        /// <param name="stickers">The stickers sent with the message.</param>
         public Message
         (
             Snowflake id,
@@ -154,7 +158,8 @@ namespace Remora.Discord.API.Objects
             Optional<IMessageActivity> activity,
             Optional<IMessageApplication> application,
             Optional<IMessageReference> messageReference,
-            Optional<MessageFlags> flags
+            Optional<MessageFlags> flags,
+            Optional<IReadOnlyList<IMessageSticker>> stickers
         )
         {
             this.ID = id;
@@ -181,6 +186,7 @@ namespace Remora.Discord.API.Objects
             this.Application = application;
             this.MessageReference = messageReference;
             this.Flags = flags;
+            this.Stickers = stickers;
         }
     }
 }
