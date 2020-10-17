@@ -79,13 +79,12 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <summary>
         /// Gets the type of the overwritten entity. This can be either "0" for roles, or "1" for members.
-        /// TODO: Deserialize this into <see cref="PermissionOverwriteType"/>.
         /// <remarks>
         /// Relevant for <see cref="AuditLogEvent.ChannelOverwriteCreate"/>,
         /// <see cref="AuditLogEvent.ChannelOverwriteUpdate"/>, and <see cref="AuditLogEvent.ChannelOverwriteDelete"/>.
         /// </remarks>
         /// </summary>
-        Optional<string> Type { get; }
+        Optional<PermissionOverwriteType> Type { get; }
 
         /// <summary>
         /// Gets the name of the overwritten role, if <see cref="Type"/> is "role".

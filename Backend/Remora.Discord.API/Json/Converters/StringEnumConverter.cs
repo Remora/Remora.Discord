@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Remora.Discord.API.Extensions;
 
 namespace Remora.Discord.API.Json
 {
@@ -39,18 +40,26 @@ namespace Remora.Discord.API.Json
         private readonly Dictionary<string, TEnum> _namesToEnums;
 
         private readonly bool _caseSensitive;
+        private readonly bool _asInteger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringEnumConverter{TEnum}"/> class.
         /// </summary>
         /// <param name="namingPolicy">The naming policy to use.</param>
         /// <param name="caseSensitive">Whether parsing should be case sensitive.</param>
-        public StringEnumConverter(JsonNamingPolicy? namingPolicy = null, bool caseSensitive = false)
+        /// <param name="asInteger">Whether to convert the value as a string-serialized integer.</param>
+        public StringEnumConverter
+        (
+            JsonNamingPolicy? namingPolicy = null,
+            bool caseSensitive = false,
+            bool asInteger = false
+        )
         {
             _enumsToNames = new Dictionary<TEnum, string>();
             _namesToEnums = new Dictionary<string, TEnum>();
 
             _caseSensitive = caseSensitive;
+            _asInteger = asInteger;
 
             foreach (var value in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
             {
@@ -71,6 +80,12 @@ namespace Remora.Discord.API.Json
                 case JsonTokenType.String:
                 {
                     var value = reader.GetString();
+
+                    if (Enum.TryParse(value, out result))
+                    {
+                        break;
+                    }
+
                     if (!_namesToEnums.TryGetValue(value, out result))
                     {
                         if (_caseSensitive)
@@ -110,6 +125,15 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
         {
+            if (_asInteger)
+            {
+                writer.WriteStringValue(Enum.GetUnderlyingType(typeof(TEnum)).IsUnsigned()
+                    ? Convert.ToUInt64(value).ToString()
+                    : Convert.ToInt64(value).ToString());
+
+                return;
+            }
+
             writer.WriteStringValue(_enumsToNames[value]);
         }
     }

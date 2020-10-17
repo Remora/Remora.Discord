@@ -7,7 +7,8 @@
     "options":
     {
         "delete_member_days": "10",
-        "members_removed": "10"
+        "members_removed": "10",
+        "type": "0"
     },
     "reason": "aa"
 }

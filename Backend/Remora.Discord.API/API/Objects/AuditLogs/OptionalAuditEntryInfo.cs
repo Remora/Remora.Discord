@@ -47,7 +47,7 @@ namespace Remora.Discord.API.Objects
         public Optional<Snowflake> ID { get; }
 
         /// <inheritdoc/>
-        public Optional<string> Type { get; }
+        public Optional<PermissionOverwriteType> Type { get; }
 
         /// <inheritdoc/>
         public Optional<string> RoleName { get; }
@@ -71,7 +71,7 @@ namespace Remora.Discord.API.Objects
             Optional<Snowflake> messageID,
             Optional<string> count,
             Optional<Snowflake> id,
-            Optional<string> type,
+            Optional<PermissionOverwriteType> type,
             Optional<string> roleName
         )
         {

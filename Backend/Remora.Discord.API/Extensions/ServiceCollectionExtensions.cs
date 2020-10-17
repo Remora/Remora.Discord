@@ -314,7 +314,12 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IAuditLog, AuditLog>();
             options.AddDataObjectConverter<IAuditLogEntry, AuditLogEntry>();
-            options.AddDataObjectConverter<IOptionalAuditEntryInfo, OptionalAuditEntryInfo>();
+            options.AddDataObjectConverter<IOptionalAuditEntryInfo, OptionalAuditEntryInfo>()
+                .WithPropertyConverter
+                (
+                    ae => ae.Type,
+                    new StringEnumConverter<PermissionOverwriteType>(asInteger: true)
+                );
 
             options.AddConverter<AuditLogChangeConverter>();
 
