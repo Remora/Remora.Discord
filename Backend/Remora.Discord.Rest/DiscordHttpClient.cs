@@ -370,7 +370,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The type of entity to create.</typeparam>
         /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<IRetrieveRestEntityResult<TEntity>> DeleteAsync<TEntity>
+        public async Task<IDeleteRestEntityResult<TEntity>> DeleteAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -397,12 +397,12 @@ namespace Remora.Discord.Rest
 
                 var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
                 return !entityResult.IsSuccess
-                    ? RetrieveRestEntityResult<TEntity>.FromError(entityResult)
-                    : RetrieveRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+                    ? DeleteRestEntityResult<TEntity>.FromError(entityResult)
+                    : DeleteRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
             }
             catch (Exception e)
             {
-                return RetrieveRestEntityResult<TEntity>.FromError(e);
+                return DeleteRestEntityResult<TEntity>.FromError(e);
             }
         }
 

@@ -190,7 +190,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
+        public Task<IDeleteRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,

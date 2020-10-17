@@ -130,7 +130,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="templateCode">The template code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded. This contains the deleted template.</returns>
-        Task<IRetrieveRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
+        Task<IDeleteRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,

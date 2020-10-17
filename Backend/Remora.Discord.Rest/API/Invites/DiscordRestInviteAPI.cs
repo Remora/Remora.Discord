@@ -66,10 +66,9 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteInviteAsync(string inviteCode, CancellationToken ct = default)
+        public Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync(string inviteCode, CancellationToken ct = default)
         {
-            // TODO: This actually returns an IInvite, according to the Discord docs. Verify.
-            return _discordHttpClient.DeleteAsync
+            return _discordHttpClient.DeleteAsync<IInvite>
             (
                 $"invite/{inviteCode}",
                 ct: ct

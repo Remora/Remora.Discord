@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="inviteCode">The invite code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteInviteAsync
+        Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
             CancellationToken ct = default
