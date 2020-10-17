@@ -27,7 +27,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Rest;
-using Remora.Discord.Rest.API;
 
 // ReSharper disable once CheckNamespace
 namespace Remora.Discord.Unstable.Extensions
