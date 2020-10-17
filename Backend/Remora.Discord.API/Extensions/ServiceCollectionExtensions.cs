@@ -313,9 +313,10 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddAuditLogObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IAuditLog, AuditLog>();
-            options.AddDataObjectConverter<IAuditLogChange, AuditLogChange>();
             options.AddDataObjectConverter<IAuditLogEntry, AuditLogEntry>();
             options.AddDataObjectConverter<IOptionalAuditEntryInfo, OptionalAuditEntryInfo>();
+
+            options.AddConverter<AuditLogChangeConverter>();
 
             return options;
         }
