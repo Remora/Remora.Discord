@@ -30,11 +30,12 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Discord.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.API.Rest
 {
     /// <inheritdoc />
     public class DiscordRestTemplateAPI : IDiscordRestTemplateAPI
