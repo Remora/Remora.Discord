@@ -38,7 +38,7 @@ namespace Remora.Discord.API.Objects
         public IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
 
         /// <inheritdoc />
-        public IReadOnlyList<IIntegration> Integrations { get; }
+        public IReadOnlyList<IPartialIntegration> Integrations { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuditLog"/> class.
@@ -52,7 +52,7 @@ namespace Remora.Discord.API.Objects
             IReadOnlyList<IWebhook> webhooks,
             IReadOnlyList<IUser> users,
             IReadOnlyList<IAuditLogEntry> auditLogEntries,
-            IReadOnlyList<IIntegration> integrations
+            IReadOnlyList<IPartialIntegration> integrations
         )
         {
             this.Webhooks = webhooks;

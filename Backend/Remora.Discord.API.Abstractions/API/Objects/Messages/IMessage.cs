@@ -58,7 +58,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// MESSAGE_UPDATE events from text-based guild channels. This allows bots to obtain real-time member data
         /// without requiring bots to keep member state in memory.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        Optional<IPartialGuildMember> Member { get; }
 
         /// <summary>
         /// Gets the contents of the message.

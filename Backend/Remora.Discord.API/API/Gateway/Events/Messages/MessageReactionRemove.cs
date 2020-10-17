@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Gateway.Events
         public Optional<Snowflake> GuildID { get; }
 
         /// <inheritdoc/>
-        public IEmoji Emoji { get; }
+        public IPartialEmoji Emoji { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageReactionRemove"/> class.
@@ -58,7 +58,7 @@ namespace Remora.Discord.API.Gateway.Events
             Snowflake channelID,
             Snowflake messageID,
             Optional<Snowflake> guildID,
-            IEmoji emoji
+            IPartialEmoji emoji
         )
         {
             this.UserID = userID;

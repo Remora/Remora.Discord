@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Objects
         public IUser Author { get; }
 
         /// <inheritdoc />
-        public Optional<IGuildMember> Member { get; }
+        public Optional<IPartialGuildMember> Member { get; }
 
         /// <inheritdoc />
         public string Content { get; }
@@ -135,7 +135,7 @@ namespace Remora.Discord.API.Objects
             Snowflake channelID,
             Optional<Snowflake> guildID,
             IUser author,
-            Optional<IGuildMember> member,
+            Optional<IPartialGuildMember> member,
             string content,
             DateTimeOffset timestamp,
             DateTimeOffset? editedTimestamp,

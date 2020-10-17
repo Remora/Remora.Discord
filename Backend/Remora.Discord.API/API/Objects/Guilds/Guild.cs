@@ -115,7 +115,7 @@ namespace Remora.Discord.API.Objects
         public Optional<int> MemberCount { get; }
 
         /// <inheritdoc />
-        public Optional<IReadOnlyList<IVoiceState>> VoiceStates { get; }
+        public Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates { get; }
 
         /// <inheritdoc />
         public Optional<IReadOnlyList<IGuildMember>> Members { get; }
@@ -124,7 +124,7 @@ namespace Remora.Discord.API.Objects
         public Optional<IReadOnlyList<IChannel>> Channels { get; }
 
         /// <inheritdoc />
-        public Optional<IReadOnlyList<IPresence>> Presences { get; }
+        public Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
 
         /// <inheritdoc />
         public Optional<int?> MaxPresences { get; }
@@ -239,10 +239,10 @@ namespace Remora.Discord.API.Objects
             Optional<bool> isLarge,
             Optional<bool> isUnavailable,
             Optional<int> memberCount,
-            Optional<IReadOnlyList<IVoiceState>> voiceStates,
+            Optional<IReadOnlyList<IPartialVoiceState>> voiceStates,
             Optional<IReadOnlyList<IGuildMember>> members,
             Optional<IReadOnlyList<IChannel>> channels,
-            Optional<IReadOnlyList<IPresence>> presences,
+            Optional<IReadOnlyList<IPartialPresence>> presences,
             Optional<int?> maxPresences,
             Optional<int> maxMembers,
             string? vanityUrlCode,

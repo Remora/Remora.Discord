@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Gateway.Events
             Snowflake channelID,
             Optional<Snowflake> guildID,
             IUser author,
-            Optional<IGuildMember> member,
+            Optional<IPartialGuildMember> member,
             string content,
             DateTimeOffset timestamp,
             DateTimeOffset? editedTimestamp,

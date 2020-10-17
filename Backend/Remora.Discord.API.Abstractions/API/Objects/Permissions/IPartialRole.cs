@@ -1,5 +1,5 @@
 //
-//  IMessageReactionAdd.cs
+//  IPartialRole.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,44 +20,54 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using System.Drawing;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents the addition of a reaction to a message.
+    /// Represents a partial Discord role.
     /// </summary>
-    public interface IMessageReactionAdd : IGatewayEvent
+    public interface IPartialRole
     {
         /// <summary>
-        /// Gets the ID of the user.
+        /// Gets the ID of the role.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
-        /// Gets the ID of the channel.
+        /// Gets the name of the role.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<string> Name { get; }
 
         /// <summary>
-        /// Gets the ID of the message.
+        /// Gets the colour of the role.
         /// </summary>
-        Snowflake MessageID { get; }
+        Optional<Color> Colour { get; }
 
         /// <summary>
-        /// Gets the ID of the guild.
+        /// Gets a value indicating whether the role is displayed separately in the sidebar.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        Optional<bool> IsHoisted { get; }
 
         /// <summary>
-        /// Gets the guild member information.
+        /// Gets the position of the role.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        Optional<int> Position { get; }
 
         /// <summary>
-        /// Gets the emoji.
+        /// Gets the permission set for this role.
         /// </summary>
-        IPartialEmoji Emoji { get; }
+        Optional<IDiscordPermissionSet> Permissions { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this role is managed by an integration.
+        /// </summary>
+        Optional<bool> IsManaged { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this role is mentionable.
+        /// </summary>
+        Optional<bool> IsMentionable { get; }
     }
 }

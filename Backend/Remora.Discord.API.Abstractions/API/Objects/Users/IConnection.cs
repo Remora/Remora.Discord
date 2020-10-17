@@ -53,7 +53,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets a list of server integrations.
         /// </summary>
-        Optional<IReadOnlyList<IIntegration>> Integrations { get; }
+        Optional<IReadOnlyList<IPartialIntegration>> Integrations { get; }
 
         /// <summary>
         /// Gets a value indicating whether the connection is verified.

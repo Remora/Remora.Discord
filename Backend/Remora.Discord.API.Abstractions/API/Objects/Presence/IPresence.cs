@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the user the presence is being updated for.
         /// </summary>
-        IUser User { get; }
+        IPartialUser User { get; }
 
         /// <summary>
         /// Gets the ID of the guild.

@@ -64,7 +64,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<MessageNotificationLevel> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel> explicitContentFilter = default,
             Optional<IReadOnlyList<IRole>> roles = default,
-            Optional<IReadOnlyList<IChannel>> channels = default,
+            Optional<IReadOnlyList<IPartialChannel>> channels = default,
             Optional<Snowflake> afkChannelID = default,
             Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
@@ -663,7 +663,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IInvite>> GetGuildVanityUrlAsync
+        Task<IRetrieveRestEntityResult<IPartialInvite>> GetGuildVanityUrlAsync
         (
             Snowflake guildID,
             CancellationToken ct = default

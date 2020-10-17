@@ -52,7 +52,7 @@ namespace Remora.Discord.API.Gateway.Events
         public int MaxUses { get; }
 
         /// <inheritdoc/>
-        public Optional<IUser> TargetUser { get; }
+        public Optional<IPartialUser> TargetUser { get; }
 
         /// <inheritdoc/>
         public Optional<TargetUserType> TargetUserType { get; }
@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IUser> inviter,
             int maxAge,
             int maxUses,
-            Optional<IUser> targetUser,
+            Optional<IPartialUser> targetUser,
             Optional<TargetUserType> targetUserType,
             bool isTemporary,
             int uses

@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Objects
         public Optional<bool> IsRevoked { get; }
 
         /// <inheritdoc/>
-        public Optional<IReadOnlyList<IIntegration>> Integrations { get; }
+        public Optional<IReadOnlyList<IPartialIntegration>> Integrations { get; }
 
         /// <inheritdoc/>
         public bool IsVerified { get; }
@@ -74,7 +74,7 @@ namespace Remora.Discord.API.Objects
             string name,
             string type,
             Optional<bool> isRevoked,
-            Optional<IReadOnlyList<IIntegration>> integrations,
+            Optional<IReadOnlyList<IPartialIntegration>> integrations,
             bool isVerified,
             bool isFriendSyncEnabled,
             bool shouldShowActivity,

@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Objects
     public class Presence : IPresence
     {
         /// <inheritdoc />
-        public IUser User { get; }
+        public IPartialUser User { get; }
 
         /// <inheritdoc />
         public Snowflake GuildID { get; }
@@ -54,7 +54,7 @@ namespace Remora.Discord.API.Objects
         /// <param name="clientStatus">The user's platform-dependent status.</param>
         public Presence
         (
-            IUser user,
+            IPartialUser user,
             Snowflake guildID,
             ClientStatus status,
             IReadOnlyList<IActivity>? activities,

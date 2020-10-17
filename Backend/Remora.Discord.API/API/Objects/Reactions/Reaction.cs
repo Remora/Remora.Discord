@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Objects
         public bool HasCurrentUserReacted { get; }
 
         /// <inheritdoc />
-        public IEmoji Emoji { get; }
+        public IPartialEmoji Emoji { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Reaction"/> class.
@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Objects
         /// <param name="count">The number of times users have reacted with this emoji.</param>
         /// <param name="hasCurrentUserReacted">Whether the current user has reacted.</param>
         /// <param name="emoji">The emoji.</param>
-        public Reaction(int count, bool hasCurrentUserReacted, IEmoji emoji)
+        public Reaction(int count, bool hasCurrentUserReacted, IPartialEmoji emoji)
         {
             this.Count = count;
             this.HasCurrentUserReacted = hasCurrentUserReacted;

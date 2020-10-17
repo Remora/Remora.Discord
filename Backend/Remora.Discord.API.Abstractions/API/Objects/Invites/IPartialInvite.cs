@@ -1,5 +1,5 @@
 //
-//  IMessageReactionAdd.cs
+//  IPartialInvite.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,44 +20,53 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents the addition of a reaction to a message.
+    /// Represents a partial invite.
     /// </summary>
-    public interface IMessageReactionAdd : IGatewayEvent
+    public interface IPartialInvite
     {
         /// <summary>
-        /// Gets the ID of the user.
+        /// Gets the unique invite code.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<string> Code { get; }
 
         /// <summary>
-        /// Gets the ID of the channel.
+        /// Gets the guild this invite is for.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<IPartialGuild> Guild { get; }
 
         /// <summary>
-        /// Gets the ID of the message.
+        /// Gets the channel this invite is for.
         /// </summary>
-        Snowflake MessageID { get; }
+        Optional<IPartialChannel> Channel { get; }
 
         /// <summary>
-        /// Gets the ID of the guild.
+        /// Gets the user who created the invite.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        Optional<IUser> Inviter { get; }
 
         /// <summary>
-        /// Gets the guild member information.
+        /// Gets the target user for this invite.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
-        /// Gets the emoji.
+        /// Gets the type of user target for this invite.
         /// </summary>
-        IPartialEmoji Emoji { get; }
+        Optional<TargetUserType> TargetUserType { get; }
+
+        /// <summary>
+        /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
+        /// </summary>
+        Optional<int> ApproximatePresenceCount { get; }
+
+        /// <summary>
+        /// Gets the approximate count of total members.
+        /// </summary>
+        Optional<int> ApproximateMemberCount { get; }
     }
 }

@@ -74,7 +74,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="limit">The maximum number of guilds to get.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IGuild>>> GetCurrentUserGuildsAsync
+        Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
         (
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,

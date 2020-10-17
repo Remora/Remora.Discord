@@ -1,5 +1,5 @@
 //
-//  IMessageReactionAdd.cs
+//  IPartialEmoji.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,44 +20,54 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents the addition of a reaction to a message.
+    /// Represents a partial emoji.
     /// </summary>
-    public interface IMessageReactionAdd : IGatewayEvent
+    public interface IPartialEmoji
     {
         /// <summary>
-        /// Gets the ID of the user.
+        /// Gets the ID of the emoji.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<Snowflake?> ID { get; }
 
         /// <summary>
-        /// Gets the ID of the channel.
+        /// Gets the name of the emoji.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<string?> Name { get; }
 
         /// <summary>
-        /// Gets the ID of the message.
+        /// Gets a list of roles this emoji is whitelisted to.
         /// </summary>
-        Snowflake MessageID { get; }
+        Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
         /// <summary>
-        /// Gets the ID of the guild.
+        /// Gets the user that created this emoji.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        Optional<IUser> User { get; }
 
         /// <summary>
-        /// Gets the guild member information.
+        /// Gets a value indicating whether this emoji must be wrapped in colons.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        Optional<bool> RequireColons { get; }
 
         /// <summary>
-        /// Gets the emoji.
+        /// Gets a value indicating whether this emoji is managed.
         /// </summary>
-        IPartialEmoji Emoji { get; }
+        Optional<bool> IsManaged { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this emoji is animated.
+        /// </summary>
+        Optional<bool> IsAnimated { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
+        /// </summary>
+        Optional<bool> IsAvailable { get; }
     }
 }

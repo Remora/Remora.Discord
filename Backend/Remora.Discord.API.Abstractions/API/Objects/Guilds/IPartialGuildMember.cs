@@ -1,5 +1,5 @@
 //
-//  IMessageReactionRemove.cs
+//  IPartialGuildMember.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,50 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using System;
+using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents the removal of a reaction from a message.
+    /// Represents partial information about a guild member.
     /// </summary>
-    public interface IMessageReactionRemove : IGatewayEvent
+    public interface IPartialGuildMember
     {
         /// <summary>
-        /// Gets the ID of the user.
+        /// Gets the user this guild member represents.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<IUser> User { get; }
 
         /// <summary>
-        /// Gets the ID of the channel.
+        /// Gets the user's guild nickname.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<string?> Nickname { get; }
 
         /// <summary>
-        /// Gets the ID of the message.
+        /// Gets the roles the user has.
         /// </summary>
-        Snowflake MessageID { get; }
+        Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
         /// <summary>
-        /// Gets the ID of the guild.
+        /// Gets when the user joined the guild.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        Optional<DateTimeOffset> JoinedAt { get; }
 
         /// <summary>
-        /// Gets the emoji.
+        /// Gets when the user started boosting the guild.
         /// </summary>
-        IPartialEmoji Emoji { get; }
+        Optional<DateTimeOffset?> PremiumSince { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is deafened in voice channels.
+        /// </summary>
+        Optional<bool> IsDeafened { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is muted in voice channels.
+        /// </summary>
+        Optional<bool> IsMuted { get; }
     }
 }

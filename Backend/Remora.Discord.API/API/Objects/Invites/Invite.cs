@@ -32,16 +32,16 @@ namespace Remora.Discord.API.Objects
         public string Code { get; }
 
         /// <inheritdoc />
-        public Optional<IGuild> Guild { get; }
+        public Optional<IPartialGuild> Guild { get; }
 
         /// <inheritdoc />
-        public IChannel Channel { get; }
+        public IPartialChannel Channel { get; }
 
         /// <inheritdoc />
         public Optional<IUser> Inviter { get; }
 
         /// <inheritdoc />
-        public Optional<IUser> TargetUser { get; }
+        public Optional<IPartialUser> TargetUser { get; }
 
         /// <inheritdoc />
         public Optional<TargetUserType> TargetUserType { get; }
@@ -66,10 +66,10 @@ namespace Remora.Discord.API.Objects
         public Invite
         (
             string code,
-            Optional<IGuild> guild,
-            IChannel channel,
+            Optional<IPartialGuild> guild,
+            IPartialChannel channel,
             Optional<IUser> inviter,
-            Optional<IUser> targetUser,
+            Optional<IPartialUser> targetUser,
             Optional<TargetUserType> targetUserType,
             Optional<int> approximatePresenceCount,
             Optional<int> approximateMemberCount

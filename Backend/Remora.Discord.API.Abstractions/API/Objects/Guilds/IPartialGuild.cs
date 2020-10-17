@@ -1,5 +1,5 @@
 //
-//  IGuild.cs
+//  IPartialGuild.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,34 +27,34 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a Discord Guild.
+    /// Represents a partial Discord Guild.
     /// </summary>
-    public interface IGuild
+    public interface IPartialGuild
     {
         /// <summary>
         /// Gets the ID of the guild.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
         /// Gets the name of the guild.
         /// </summary>
-        string Name { get; }
+        Optional<string> Name { get; }
 
         /// <summary>
         /// Gets the guild's icon.
         /// </summary>
-        IImageHash? Icon { get; }
+        Optional<IImageHash?> Icon { get; }
 
         /// <summary>
         /// Gets the guild's splash banner.
         /// </summary>
-        IImageHash? Splash { get; }
+        Optional<IImageHash?> Splash { get; }
 
         /// <summary>
         /// Gets the guild's Discovery splash banner.
         /// </summary>
-        IImageHash? DiscoverySplash { get; }
+        Optional<IImageHash?> DiscoverySplash { get; }
 
         /// <summary>
         /// Gets a value indicating whether the current user is the guild's owner.
@@ -64,7 +64,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the owner.
         /// </summary>
-        Snowflake OwnerID { get; }
+        Optional<Snowflake> OwnerID { get; }
 
         /// <summary>
         /// Gets the permissions for the current user in the guild.
@@ -74,57 +74,57 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the unique ID of the voice region.
         /// </summary>
-        string Region { get; }
+        Optional<string> Region { get; }
 
         /// <summary>
         /// Gets the ID of the AFK channel.
         /// </summary>
-        Snowflake? AFKChannelID { get; }
+        Optional<Snowflake?> AFKChannelID { get; }
 
         /// <summary>
         /// Gets the AFK timeout (in seconds).
         /// </summary>
-        int AFKTimeout { get; }
+        Optional<int> AFKTimeout { get; }
 
         /// <summary>
         /// Gets the verification level required for the guild.
         /// </summary>
-        VerificationLevel VerificationLevel { get; }
+        Optional<VerificationLevel> VerificationLevel { get; }
 
         /// <summary>
         /// Gets the default notification level for the guild.
         /// </summary>
-        MessageNotificationLevel DefaultMessageNotifications { get; }
+        Optional<MessageNotificationLevel> DefaultMessageNotifications { get; }
 
         /// <summary>
         /// Gets the explicit content level.
         /// </summary>
-        ExplicitContentFilterLevel ExplicitContentFilter { get; }
+        Optional<ExplicitContentFilterLevel> ExplicitContentFilter { get; }
 
         /// <summary>
         /// Gets a list of the roles in the server.
         /// </summary>
-        IReadOnlyList<IRole> Roles { get; }
+        Optional<IReadOnlyList<IRole>> Roles { get; }
 
         /// <summary>
         /// Gets a list of emojis in the server.
         /// </summary>
-        IReadOnlyList<IEmoji> Emojis { get; }
+        Optional<IReadOnlyList<IEmoji>> Emojis { get; }
 
         /// <summary>
         /// Gets a list of guild features.
         /// </summary>
-        IReadOnlyList<GuildFeature> GuildFeatures { get; }
+        Optional<IReadOnlyList<GuildFeature>> GuildFeatures { get; }
 
         /// <summary>
         /// Gets the required MFA level for the guild.
         /// </summary>
-        MultiFactorAuthenticationLevel MFALevel { get; }
+        Optional<MultiFactorAuthenticationLevel> MFALevel { get; }
 
         /// <summary>
         /// Gets the application ID of the guild creator if it is bot-created.
         /// </summary>
-        Snowflake? ApplicationID { get; }
+        Optional<Snowflake?> ApplicationID { get; }
 
         /// <summary>
         /// Gets a value indicating whether the server widget is enabled.
@@ -139,18 +139,18 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the channel that system messages are sent to.
         /// </summary>
-        Snowflake? SystemChannelID { get; }
+        Optional<Snowflake?> SystemChannelID { get; }
 
         /// <summary>
         /// Gets the flags on the system channel.
         /// </summary>
-        SystemChannelFlags SystemChannelFlags { get; }
+        Optional<SystemChannelFlags> SystemChannelFlags { get; }
 
         /// <summary>
         /// Gets the ID of the rules channel, if any. This is the channel where guilds with
         /// <see cref="GuildFeature.Public"/> can display rules and/or guidelines.
         /// </summary>
-        Snowflake? RulesChannelID { get; }
+        Optional<Snowflake?> RulesChannelID { get; }
 
         /// <summary>
         /// Gets the time when the current user joined the guild.
@@ -206,22 +206,22 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the vanity url code for the guild.
         /// </summary>
-        string? VanityUrlCode { get; }
+        Optional<string?> VanityUrlCode { get; }
 
         /// <summary>
         /// Gets the description of the guild, if the guild is discoverable.
         /// </summary>
-        string? Description { get; }
+        Optional<string?> Description { get; }
 
         /// <summary>
         /// Gets the hash of the guild banner.
         /// </summary>
-        IImageHash? Banner { get; }
+        Optional<IImageHash?> Banner { get; }
 
         /// <summary>
         /// Gets the boost level of the guild.
         /// </summary>
-        PremiumTier PremiumTier { get; }
+        Optional<PremiumTier> PremiumTier { get; }
 
         /// <summary>
         /// Gets the number of boosts the guild currently has.
@@ -231,13 +231,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the preferred locale of a guild with the "PUBLIC" feature.
         /// </summary>
-        string PreferredLocale { get; }
+        Optional<string> PreferredLocale { get; }
 
         /// <summary>
         /// Gets the ID of the channel where admins and moderators of guilds with the public feature receive notices
         /// from Discord.
         /// </summary>
-        Snowflake? PublicUpdatesChannelID { get; }
+        Optional<Snowflake?> PublicUpdatesChannelID { get; }
 
         /// <summary>
         /// Gets the maximum number of users in a video channel.

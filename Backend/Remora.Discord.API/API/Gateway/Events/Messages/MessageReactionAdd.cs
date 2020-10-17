@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Gateway.Events
         public Optional<IGuildMember> Member { get; }
 
         /// <inheritdoc/>
-        public IEmoji Emoji { get; }
+        public IPartialEmoji Emoji { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageReactionAdd"/> class.
@@ -63,7 +63,7 @@ namespace Remora.Discord.API.Gateway.Events
             Snowflake messageID,
             Optional<Snowflake> guildID,
             Optional<IGuildMember> member,
-            IEmoji emoji
+            IPartialEmoji emoji
         )
         {
             this.UserID = userID;

@@ -49,6 +49,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets a list of partial integration objects.
         /// </summary>
-        IReadOnlyList<IIntegration> Integrations { get; }
+        IReadOnlyList<IPartialIntegration> Integrations { get; }
     }
 }

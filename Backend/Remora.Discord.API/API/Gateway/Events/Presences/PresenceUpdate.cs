@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Gateway.Events
         /// <param name="clientStatus">The user's platform-dependent status.</param>
         public PresenceUpdate
         (
-            IUser user,
+            IPartialUser user,
             Snowflake guildID,
             ClientStatus status,
             IReadOnlyList<IActivity>? activities,

@@ -1,5 +1,5 @@
 //
-//  IMessageReactionRemove.cs
+//  IPartialPresence.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,30 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
+using System.Collections.Generic;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents the removal of a reaction from a message.
+    /// Represents a user's presence.
     /// </summary>
-    public interface IMessageReactionRemove : IGatewayEvent
+    public interface IPartialPresence
     {
         /// <summary>
-        /// Gets the ID of the user.
+        /// Gets the user the presence is being updated for.
         /// </summary>
-        Snowflake UserID { get; }
-
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
-
-        /// <summary>
-        /// Gets the ID of the message.
-        /// </summary>
-        Snowflake MessageID { get; }
+        Optional<IPartialUser> User { get; }
 
         /// <summary>
         /// Gets the ID of the guild.
@@ -51,8 +41,18 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         Optional<Snowflake> GuildID { get; }
 
         /// <summary>
-        /// Gets the emoji.
+        /// Gets the current status of the user.
         /// </summary>
-        IPartialEmoji Emoji { get; }
+        Optional<ClientStatus> Status { get; }
+
+        /// <summary>
+        /// Gets the user's current activities.
+        /// </summary>
+        Optional<IReadOnlyList<IActivity>?> Activities { get; }
+
+        /// <summary>
+        /// Gets the user's platform-dependent status.
+        /// </summary>
+        Optional<IClientStatuses> ClientStatus { get; }
     }
 }

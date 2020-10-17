@@ -66,7 +66,7 @@ namespace Remora.Discord.Rest.API
             Optional<MessageNotificationLevel> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel> explicitContentFilter = default,
             Optional<IReadOnlyList<IRole>> roles = default,
-            Optional<IReadOnlyList<IChannel>> channels = default,
+            Optional<IReadOnlyList<IPartialChannel>> channels = default,
             Optional<Snowflake> afkChannelID = default,
             Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
@@ -956,13 +956,13 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IInvite>> GetGuildVanityUrlAsync
+        public Task<IRetrieveRestEntityResult<IPartialInvite>> GetGuildVanityUrlAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IInvite>
+            return _discordHttpClient.GetAsync<IPartialInvite>
             (
                 $"guilds/{guildID}/vanity-url",
                 ct: ct

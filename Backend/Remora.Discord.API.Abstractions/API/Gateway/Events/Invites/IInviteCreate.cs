@@ -69,7 +69,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the target user for this invite.
         /// </summary>
-        Optional<IUser> TargetUser { get; }
+        Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
         /// Gets the type of user target for this invite.

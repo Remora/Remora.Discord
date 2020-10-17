@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Objects
     public class UserMention : User, IUserMention
     {
         /// <inheritdoc />
-        public Optional<IGuildMember> Member { get; }
+        public Optional<IPartialGuildMember> Member { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserMention"/> class.
@@ -63,7 +63,7 @@ namespace Remora.Discord.API.Objects
             Optional<UserFlags> flags,
             Optional<PremiumType> premiumType,
             Optional<UserFlags> publicFlags,
-            Optional<IGuildMember> member
+            Optional<IPartialGuildMember> member
         )
             : base
             (

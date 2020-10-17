@@ -40,6 +40,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the partial emoji information.
         /// </summary>
-        IEmoji Emoji { get; }
+        IPartialEmoji Emoji { get; }
     }
 }

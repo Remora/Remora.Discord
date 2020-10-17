@@ -37,12 +37,12 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the guild this invite is for.
         /// </summary>
-        Optional<IGuild> Guild { get; }
+        Optional<IPartialGuild> Guild { get; }
 
         /// <summary>
         /// Gets the channel this invite is for.
         /// </summary>
-        IChannel Channel { get; }
+        IPartialChannel Channel { get; }
 
         /// <summary>
         /// Gets the user who created the invite.
@@ -52,7 +52,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the target user for this invite.
         /// </summary>
-        Optional<IUser> TargetUser { get; }
+        Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
         /// Gets the type of user target for this invite.

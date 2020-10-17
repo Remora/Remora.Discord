@@ -70,7 +70,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var defaultMessageNotifications = MessageNotificationLevel.AllMessages;
                 var explicitContentFilter = ExplicitContentFilterLevel.Disabled;
                 var roles = new List<IRole>();
-                var channels = new List<IChannel>();
+                var channels = new List<IPartialChannel>();
                 var afkChannelID = new Snowflake(0);
                 var afkTimeout = TimeSpan.FromSeconds(10);
                 var systemChannelID = new Snowflake(1);

@@ -116,7 +116,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IGuild>>> GetCurrentUserGuildsAsync
+        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
         (
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
@@ -126,13 +126,13 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && (limit.Value < 1 || limit.Value > 100))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IGuild>>.FromError
+                return RetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>.FromError
                 (
                     "The limit must be between 1 and 100."
                 );
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuild>>
+            return await _discordHttpClient.GetAsync<IReadOnlyList<IPartialGuild>>
             (
                 "users/@me/guilds",
                 b =>

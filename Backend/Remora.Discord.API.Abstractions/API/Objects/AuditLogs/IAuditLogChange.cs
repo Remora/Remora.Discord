@@ -27,6 +27,7 @@ namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a change to an audit log value.
+    /// TODO: Implement a proper json converter for this specific type.
     /// </summary>
     [PublicAPI]
     public interface IAuditLogChange

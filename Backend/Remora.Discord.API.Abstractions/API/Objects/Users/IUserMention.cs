@@ -32,6 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the guild member information about the user.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        Optional<IPartialGuildMember> Member { get; }
     }
 }
