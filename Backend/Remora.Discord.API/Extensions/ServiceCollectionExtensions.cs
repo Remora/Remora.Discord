@@ -593,6 +593,12 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsVerified, "verified")
                 .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
 
+            options.AddDataObjectConverter<IPartialUser, PartialUser>()
+                .WithPropertyName(u => u.IsBot, "bot")
+                .WithPropertyName(u => u.IsSystem, "system")
+                .WithPropertyName(u => u.IsVerified, "verified")
+                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
+
             options.AddDataObjectConverter<IUserMention, UserMention>()
                 .WithPropertyName(m => m.IsBot, "bot")
                 .WithPropertyName(m => m.IsSystem, "system")
