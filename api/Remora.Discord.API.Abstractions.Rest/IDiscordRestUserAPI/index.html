@@ -145,6 +145,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGatewayAPI">I<wbr>Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI">IDiscordRestGuildAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI">I<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI">I<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI">IDiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI">IDiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI">I<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
@@ -187,8 +188,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI">IDiscordRestAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -198,10 +199,10 @@
 							graph BT
 	Type["IDiscordRestUserAPI"]
 class Type type-node
-	Implementing0["DiscordRestUserAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI"
-	Implementing1["IDiscordRestAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing0["IDiscordRestAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing1["DiscordRestUserAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI"
 
 						</div>
 					</div>
@@ -271,7 +272,7 @@ public interface IDiscordRestUserAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI/83224B2F">Get<wbr>Current<wbr>User<wbr>Guilds<wbr>Async<wbr>(Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the guilds the user is in.

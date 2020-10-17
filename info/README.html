@@ -103,8 +103,9 @@
 		</section>
 	<section class="content">
 		<h1 id="remora.discord">Remora.Discord</h1>
-<p>Remora.Discord is a C# library for interfacing with the Discord API. It is built to fulfill a need for robust,
-feature-complete, highly available and concurrent bots.</p>
+<p>Remora.Discord is a C# library for interfacing with the Discord API. It is built
+to fulfill a need for robust, feature-complete, highly available and concurrent
+bots.</p>
 <p>The library is currently in early development.</p>
 <h1 id="table-of-contents">Table of Contents</h1>
 <ol>
@@ -126,43 +127,50 @@ feature-complete, highly available and concurrent bots.</p>
 <li><a href=".github/CONTRIBUTING.md">Contributing</a></li>
 </ol>
 <h2 id="goals">1. Goals</h2>
-<p>Remora.Discord originates from the original author's frustration with many inconsistencies in various APIs in the
-C#/Discord ecosystem, both in relation to the Discord API itself and the language usage within existing solutions.</p>
-<p>Therefore, Remora.Discord defines the following three goals that guides its development. These are shorter summaries -
-to read the full goal definitions and see examples, please refer to the
-<a href=".github/CONTRIBUTING.md">Contributing Guidelines</a>.</p>
+<p>Remora.Discord originates from the original author's frustration with many
+inconsistencies in various APIs in the C#/Discord ecosystem, both in relation to
+the Discord API itself and the language usage within existing solutions.</p>
+<p>Therefore, Remora.Discord defines the following three goals that guides its
+development. These are shorter summaries - to read the full goal definitions and
+see examples, please refer to the <a href=".github/CONTRIBUTING.md">Contributing Guidelines</a>.</p>
 <h3 id="correctness">1.1 Correctness</h3>
-<p>Correctness, in the context of Remora.Discord, means that the API available to the end user should as faithfully and
-accurately represent the actual reality of data presented to or from an API; that is, no data or structure of data
-should meaningfully change between the library receiving it and the user accessing it.</p>
+<p>Correctness, in the context of Remora.Discord, means that the API available to
+the end user should as faithfully and accurately represent the actual reality of
+data presented to or from an API; that is, no data or structure of data should
+meaningfully change between the library receiving it and the user accessing it.</p>
 <h3 id="robustness">1.2 Robustness</h3>
-<p>Robustness refers to a focus on never allowing problems originating from user data or real-life runtime conditions to
-bring down or otherwise corrupt the end user's application. The end user should be confident that, should an error
-arise, they will be aware of the fault potential before even compiling the application.</p>
+<p>Robustness refers to a focus on never allowing problems originating from user
+data or real-life runtime conditions to bring down or otherwise corrupt the end
+user's application. The end user should be confident that, should an error
+arise, they will be aware of the fault potential before even compiling the
+application.</p>
 <h3 id="true-asynchronicity-and-concurrency">1.3 True Asynchronicity and Concurrency</h3>
-<p>Remora.Discord aims to be truly asynchronous from the ground up, respecting and utilizing established best practices for
-C# and the TPL. Furthermore, it aims to be concurrent, allowing end users to react to and perform actions upon many
+<p>Remora.Discord aims to be truly asynchronous from the ground up, respecting and
+utilizing established best practices for C# and the TPL. Furthermore, it aims to
+be concurrent, allowing end users to react to and perform actions upon many
 incoming events at once.</p>
 <h2 id="status">2. Status</h2>
-<p>Remora.Discord is currently in early development. It has not been released in a stable state onto any common platforms,
-such as nuget.</p>
+<p>Remora.Discord is currently in early development. It has not been released in a
+stable state onto any common platforms, such as nuget.</p>
 <h3 id="gateway">2.1 Gateway</h3>
-<p>The Discord Gateway API (v8) is fully implemented. The gateway client can connect, heartbeat, reconnect, resume,
-receive events, and send commands.</p>
+<p>The Discord Gateway API (v8) is fully implemented. The gateway client can
+connect, heartbeat, reconnect, resume, receive events, and send commands.</p>
 <h3 id="rest">2.2 REST</h3>
 <p>The Discord REST API (v8) is fully implemented.</p>
 <h2 id="installation">3. Installation</h2>
-<p>Remora.Discord has a prerelease, early alpha version up on <a href="https://www.nuget.org/packages/Remora.Discord/">nuget</a> - get
-it there!</p>
-<p>If you wish to use or develop the library further, you will need to compile it from source.</p>
+<p>Remora.Discord has a prerelease, early alpha version up on
+<a href="https://www.nuget.org/packages/Remora.Discord/">nuget</a> - get it there!</p>
+<p>If you wish to use or develop the library further, you will need to compile it
+from source.</p>
 <pre><code class="language-bash">git clone git@github.com:Nihlus/Remora.Discord.git
 cd Remora.Discord
 dotnet build
 dotnet pack -c Release
 </code></pre>
 <h2 id="usage">4. Usage</h2>
-<p>Basic usage of the library is currently a fluid topic. Please refer to the <a href="Samples">Samples</a> for up-to-date usage -
-proper documentation and quickstarts will be written for the 1.0 release.</p>
+<p>Up-to-date documentation for the API, as well as a quickstart guide, is
+available online at <a href="https://nihlus.github.io/Remora.Discord/">the repository pages</a>.</p>
+<p>Please refer to the <a href="Samples">Samples</a> for community-created example bots.</p>
 <h2 id="contributing">5. Contributing</h2>
 <p>See <a href=".github/CONTRIBUTING.md">Contributing</a>.</p>
 

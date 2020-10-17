@@ -145,6 +145,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGatewayAPI">I<wbr>Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI">IDiscordRestGuildAPI</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI">I<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI">I<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI">IDiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI">IDiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI">I<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
@@ -187,8 +188,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI">IDiscordRestAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -198,10 +199,10 @@
 							graph BT
 	Type["IDiscordRestInviteAPI"]
 class Type type-node
-	Implementing0["DiscordRestInviteAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI"
-	Implementing1["IDiscordRestAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing0["IDiscordRestAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing1["DiscordRestInviteAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI"
 
 						</div>
 					</div>
@@ -253,7 +254,7 @@ public interface IDiscordRestInviteAPI</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI/C948741C">DeleteInviteAsync<wbr>(string, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
+								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult_1">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Deletes the given invite code.

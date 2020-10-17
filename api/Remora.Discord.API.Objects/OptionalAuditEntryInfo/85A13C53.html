@@ -139,7 +139,7 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/OptionalAuditEntryInfo">Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/OptionalAuditEntryInfo/CB3B7B2F">Optional<wbr>Audit<wbr>Entry<wbr>Info<wbr>(Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/OptionalAuditEntryInfo/D0465CE0">Optional<wbr>Audit<wbr>Entry<wbr>Info<wbr>(Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Permission<wbr>Overwrite<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
 			<li class="header">Property Members</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/OptionalAuditEntryInfo/D450F71E">ChannelID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/OptionalAuditEntryInfo/5749665A">Count</a></li>
@@ -172,7 +172,6 @@
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
     Gets the type of the overwritten entity. This can be either "0" for roles, or "1" for members.
-    TODO: Deserialize this into <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType">PermissionOverwriteType</a></code>.
     <remarks>
     Relevant for <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteCreate">,
     <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteUpdate">, and <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteDelete">.
@@ -194,7 +193,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Optional&lt;string&gt; Type { get; }</code></pre>
+	<pre><code>public Optional&lt;PermissionOverwriteType&gt; Type { get; }</code></pre>
 
 
 
@@ -211,7 +210,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType">Permission<wbr>Overwrite<wbr>Type</a>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>

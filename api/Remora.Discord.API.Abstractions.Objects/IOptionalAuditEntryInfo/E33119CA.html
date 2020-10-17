@@ -170,7 +170,6 @@
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
     Gets the type of the overwritten entity. This can be either "0" for roles, or "1" for members.
-    TODO: Deserialize this into <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType">PermissionOverwriteType</a></code>.
     <remarks>
     Relevant for <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteCreate">,
     <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteUpdate">, and <see cref="F:Remora.Discord.API.Abstractions.Objects.AuditLogEvent.ChannelOverwriteDelete">.
@@ -192,7 +191,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;string&gt; Type { get; }</code></pre>
+	<pre><code>Optional&lt;PermissionOverwriteType&gt; Type { get; }</code></pre>
 
 
 
@@ -209,7 +208,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType">Permission<wbr>Overwrite<wbr>Type</a>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>

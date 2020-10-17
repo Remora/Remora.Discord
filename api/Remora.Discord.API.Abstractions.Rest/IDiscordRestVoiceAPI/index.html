@@ -145,6 +145,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGatewayAPI">I<wbr>Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI">IDiscordRestGuildAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI">I<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI">I<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI">IDiscordRestUserAPI</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI">IDiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI">I<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
@@ -187,8 +188,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI">IDiscordRestAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -198,10 +199,10 @@
 							graph BT
 	Type["IDiscordRestVoiceAPI"]
 class Type type-node
-	Implementing0["DiscordRestVoiceAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI"
-	Implementing1["IDiscordRestAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing0["IDiscordRestAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI"
+	Implementing1["DiscordRestVoiceAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI"
 
 						</div>
 					</div>
