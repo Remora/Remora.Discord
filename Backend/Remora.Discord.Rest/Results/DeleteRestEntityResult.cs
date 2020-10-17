@@ -21,10 +21,14 @@
 //
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
+
+// ReSharper disable SA1402
+#pragma warning disable SA1402
 
 namespace Remora.Discord.Rest.Results
 {
@@ -83,6 +87,99 @@ namespace Remora.Discord.Rest.Results
         public static DeleteRestEntityResult FromSuccess()
         {
             return new DeleteRestEntityResult();
+        }
+    }
+
+    /// <summary>
+    /// Represents an attempt to delete an entity via the REST API.
+    /// </summary>
+    /// <typeparam name="TEntity">The entity type to Delete.</typeparam>
+    public class DeleteRestEntityResult<TEntity> :
+        AbstractRestResult<DeleteRestEntityResult<TEntity>>,
+        IDeleteRestEntityResult<TEntity>
+    {
+        /// <summary>
+        /// Holds the actual entity value.
+        /// </summary>
+        [MaybeNull, AllowNull]
+        private readonly TEntity _entity = default!;
+
+        /// <inheritdoc />
+        public TEntity Entity
+        {
+            get
+            {
+                if (!this.IsSuccess || _entity is null)
+                {
+                    throw new InvalidOperationException("The result does not contain a valid value.");
+                }
+
+                return _entity;
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteRestEntityResult{TEntity}"/> class.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        private DeleteRestEntityResult(TEntity entity)
+        {
+            _entity = entity;
+        }
+
+        /// <inheritdoc cref="DeleteRestEntityResult{TResultType}"/>
+        [UsedImplicitly]
+        private DeleteRestEntityResult
+        (
+            string? errorReason,
+            Exception? exception = null
+        )
+            : base(errorReason, exception)
+        {
+        }
+
+        /// <inheritdoc cref="DeleteRestEntityResult{TResultType}"/>
+        [UsedImplicitly]
+        private DeleteRestEntityResult
+        (
+            string? errorReason,
+            IRestError? discordError = null
+        )
+            : base(errorReason, discordError)
+        {
+        }
+
+        /// <inheritdoc cref="DeleteRestEntityResult{TResultType}"/>
+        [UsedImplicitly]
+        private DeleteRestEntityResult
+        (
+            string? errorReason,
+            HttpStatusCode? statusCode = null
+        )
+            : base(errorReason, statusCode)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new successful result.
+        /// </summary>
+        /// <param name="entity">The modified entity.</param>
+        /// <returns>A successful result.</returns>
+        [PublicAPI, Pure]
+        public static DeleteRestEntityResult<TEntity> FromSuccess(TEntity entity)
+        {
+            return new DeleteRestEntityResult<TEntity>(entity);
+        }
+
+        /// <summary>
+        /// Implicitly converts a compatible value to a successful result.
+        /// </summary>
+        /// <param name="entity">The modified entity.</param>
+        /// <returns>The successful result.</returns>
+        [PublicAPI, Pure]
+        public static implicit operator DeleteRestEntityResult<TEntity>(TEntity entity)
+        {
+            return FromSuccess(entity);
         }
     }
 }

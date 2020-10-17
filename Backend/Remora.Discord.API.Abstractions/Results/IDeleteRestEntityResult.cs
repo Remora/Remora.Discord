@@ -22,6 +22,9 @@
 
 using JetBrains.Annotations;
 
+// ReSharper disable SA1402
+#pragma warning disable SA1402
+
 namespace Remora.Discord.API.Abstractions.Results
 {
     /// <summary>
@@ -30,5 +33,18 @@ namespace Remora.Discord.API.Abstractions.Results
     [PublicAPI]
     public interface IDeleteRestEntityResult : IRestResult
     {
+    }
+
+    /// <summary>
+    /// Represents a REST API result that deletes an entity.
+    /// </summary>
+    /// <typeparam name="TEntity">The modified entity type.</typeparam>
+    [PublicAPI]
+    public interface IDeleteRestEntityResult<out TEntity> : IRestResult
+    {
+        /// <summary>
+        /// Gets the modified entity.
+        /// </summary>
+        public TEntity Entity { get; }
     }
 }
