@@ -5,7 +5,17 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta2</Version>
+        <Version>1.0.0-beta3</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package contains a complete set of type and API abstractions for the Discord API. It provides no
+            concrete implementations; rather, it acts as a general, library-agnostic standard definition of Discord's
+            API.
+        </Description>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

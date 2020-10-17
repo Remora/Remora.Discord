@@ -5,7 +5,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta2</Version>
+        <Version>1.0.0-beta3</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package is a metapackage for Remora.Discord, providing references to everything you need to get
+            started.
+        </Description>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

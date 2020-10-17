@@ -5,7 +5,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta2</Version>
+        <Version>1.0.0-beta3</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package provides a fully-featured implementation of a Discord gateway client, complete with resume
+            capabilities and user-facing events.
+        </Description>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

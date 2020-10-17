@@ -47,6 +47,10 @@
         <PackageOutputPath>$(SolutionDir)/nuget</PackageOutputPath>
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
+
+        <BaseDescription>
+            Remora.Discord is a .NET library for the Discord API, built for performance, reliability, and concurrency.
+        </BaseDescription>
     </PropertyGroup>
 
     <!-- Code inspection properties -->

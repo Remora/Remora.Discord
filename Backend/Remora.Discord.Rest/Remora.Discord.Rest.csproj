@@ -5,7 +5,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta2</Version>
+        <Version>1.0.0-beta3</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package contains the default implementations of Discord's REST API, complete with client-side sanity
+            checks and rate limiting support.
+        </Description>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

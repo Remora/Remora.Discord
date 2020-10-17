@@ -6,12 +6,20 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta1</Version>
+        <Version>1.0.0-beta2</Version>
         <Description>
-            Unstable features from the Discord API. This package should never be considered stable, and breaking
-            changes may be introduced in any release.
+            $(BaseDescription)
+
+            This package contains unstable features from the Discord API - that is, features that aren't in the official
+            documentation yet, but may be documented in a pull request or through community efforts.
+
+            The API in this package should never be considered stable, and breaking changes may be introduced in any
+            release. Once unstable features move into the official documentation, they will be transferred from this
+            component to the appropriate stable component of Remora.Discord.
         </Description>
-        <PackageReleaseNotes>Implement template API.</PackageReleaseNotes>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
