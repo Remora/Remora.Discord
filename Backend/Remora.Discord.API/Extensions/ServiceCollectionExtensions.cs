@@ -393,8 +393,7 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
 
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -406,8 +405,7 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
@@ -535,15 +533,13 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(r => r.Colour, "color")
                 .WithPropertyName(r => r.IsHoisted, "hoist")
                 .WithPropertyName(r => r.IsManaged, "managed")
-                .WithPropertyName(r => r.IsMentionable, "mentionable")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyName(r => r.IsMentionable, "mentionable");
 
             options.AddDataObjectConverter<IPartialRole, PartialRole>()
                 .WithPropertyName(r => r.Colour, "color")
                 .WithPropertyName(r => r.IsHoisted, "hoist")
                 .WithPropertyName(r => r.IsManaged, "managed")
-                .WithPropertyName(r => r.IsMentionable, "mentionable")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyName(r => r.IsMentionable, "mentionable");
 
             return options;
         }
