@@ -240,9 +240,11 @@ namespace Remora.Discord.Gateway.Transport
                 {
                     try
                     {
+                        // Empty is used here instead of normal closure, because close codes 1000 and 1001 don't
+                        // allow for reconnection.
                         await _clientWebSocket.CloseAsync
                         (
-                            WebSocketCloseStatus.NormalClosure,
+                            WebSocketCloseStatus.Empty,
                             "Terminating connection by user request.",
                             ct
                         );
