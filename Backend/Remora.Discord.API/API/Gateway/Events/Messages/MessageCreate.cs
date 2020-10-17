@@ -58,7 +58,8 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IMessageActivity> activity,
             Optional<IMessageApplication> application,
             Optional<IMessageReference> messageReference,
-            Optional<MessageFlags> flags
+            Optional<MessageFlags> flags,
+            Optional<IMessage?> referencedMessage
         )
             : base
             (
@@ -85,8 +86,9 @@ namespace Remora.Discord.API.Gateway.Events
                 activity,
                 application,
                 messageReference,
-                flags
-                )
+                flags,
+                referencedMessage
+            )
         {
         }
     }

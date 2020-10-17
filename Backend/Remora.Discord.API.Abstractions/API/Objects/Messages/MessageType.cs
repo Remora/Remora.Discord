@@ -100,6 +100,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The server has qualified for inclusion into guild discovery.
         /// </summary>
-        GuildDiscoveryQualified = 15
+        GuildDiscoveryQualified = 15,
+
+        /// <summary>
+        /// A reply to another message.
+        /// </summary>
+        InlineReply = 19
     }
 }

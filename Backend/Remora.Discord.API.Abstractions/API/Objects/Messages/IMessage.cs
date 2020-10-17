@@ -161,5 +161,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a set of bitwise flags describing extra features of the message.
         /// </summary>
         Optional<MessageFlags> Flags { get; }
+
+        /// <summary>
+        /// Gets the referenced message, if any. A null value in this context refers to a deleted message.
+        /// </summary>
+        Optional<IMessage?> ReferencedMessage { get; }
     }
 }

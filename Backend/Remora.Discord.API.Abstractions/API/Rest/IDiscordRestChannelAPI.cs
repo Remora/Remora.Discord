@@ -145,6 +145,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="file">The contents of the file to upload.</param>
         /// <param name="embed">The rich embed in the message.</param>
         /// <param name="allowedMentions">An object describing the allowed mention types.</param>
+        /// <param name="messageReference">A reference to another message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
@@ -156,6 +157,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Stream> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<IMessageReference> messageReference = default,
             CancellationToken ct = default
         );
 
