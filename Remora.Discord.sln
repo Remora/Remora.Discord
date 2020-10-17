@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A603F82C-7B4C-4583-A101-77E126B04874}"
 ProjectSection(SolutionItems) = preProject
 	.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
+	.github\workflows\wyam.yml = .github\workflows\wyam.yml
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Rest.Tests", "Tests\Remora.Discord.Rest.Tests\Remora.Discord.Rest.Tests.csproj", "{ED3F243E-F8C4-4C23-A12A-627280A08502}"
