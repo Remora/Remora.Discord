@@ -52,7 +52,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         HypeSquadEvents = 1 << 2,
 
         /// <summary>
-        /// The user is a bug hunter (level 1).
+        /// The user is a hunter (level 1).
         /// </summary>
         BugHunterLevel1 = 1 << 3,
 
@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         System = 1 << 12,
 
         /// <summary>
-        /// The user is a bug hunter (level 2).
+        /// The user is a hunter (level 2).
         /// </summary>
         BugHunterLevel2 = 1 << 14,
 
