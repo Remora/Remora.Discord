@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
@@ -246,10 +247,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class Hello : IHello, IGatewayEvent, IGatewayPayloadData</code></pre>
+	<pre><code>[PublicAPI]
+public class Hello : IHello, IGatewayEvent, IGatewayPayloadData</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -265,7 +284,7 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/Hello/317F7C84">Hello<wbr>(ulong)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/Hello/4075B0D2">Hello<wbr>(TimeSpan)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/Hello">Hello</a></code> class.
     </td>
@@ -290,10 +309,10 @@ class Type type-node
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/Hello/4E6025AE">HeartbeatInterval</a></td>
-								<td>ulong</td>
+								<td>TimeSpan</td>
 								<td>
 									<div>
-    Gets the heartbeat interval in milliseconds.
+    Gets the heartbeat interval.
     </div>
 								</td>
 							</tr>

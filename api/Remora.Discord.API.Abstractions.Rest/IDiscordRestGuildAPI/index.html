@@ -307,15 +307,6 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/5B472690">Create<wbr>Guild<wbr>Integration<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a>&gt;<wbr></td>
-								<td>
-									<div>
-    Attaches an integration object from the current user to the guild.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/35D8E031">CreateGuildRoleAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>Optional<wbr>&lt;Color&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
@@ -330,15 +321,6 @@ public interface IDiscordRestGuildAPI</code></pre>
 								<td>
 									<div>
     Deletes the guild with the given ID.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/3120F944">Delete<wbr>Guild<wbr>Integration<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
-								<td>
-									<div>
-    Detaches the given integration object.
     </div>
 								</td>
 							</tr>
@@ -388,7 +370,7 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/EBA885D6">Get<wbr>Guild<wbr>Integrations<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/085E534B">Get<wbr>Guild<wbr>Integrations<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -517,15 +499,6 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/E79AB4B8">Modify<wbr>Guild<wbr>Integration<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;<wbr>Integration<wbr>Expire<wbr>Behaviour?&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a>&gt;<wbr></td>
-								<td>
-									<div>
-    Modifies the behaviour and settings of an integration object for the guild.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/BB702C5F">Modify<wbr>Guild<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a>&gt;<wbr></td>
 								<td>
@@ -585,15 +558,6 @@ public interface IDiscordRestGuildAPI</code></pre>
 								<td>
 									<div>
     Removes a role from a guild member.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/768D914B">Sync<wbr>Guild<wbr>Integration<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a>&gt;<wbr></td>
-								<td>
-									<div>
-    Synchronizes the given integration object.
     </div>
 								</td>
 							</tr>

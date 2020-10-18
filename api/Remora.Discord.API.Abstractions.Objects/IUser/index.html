@@ -176,6 +176,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
@@ -278,11 +279,11 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/UserUpdate">UserUpdate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/User">User</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/UserMention">UserMention</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/UserUpdate">UserUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/User">User</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -292,16 +293,16 @@
 							graph BT
 	Type["IUser"]
 class Type type-node
-	Implementing0["IUserUpdate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
+	Implementing0["UserMention"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Objects/UserMention"
 	Implementing1["UserUpdate"]-.-&gt;Type
 	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/UserUpdate"
-	Implementing2["User"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Objects/User"
-	Implementing3["UserMention"]-.-&gt;Type
-	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Objects/UserMention"
-	Implementing4["IUserMention"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing2["IUserUpdate"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
+	Implementing3["IUserMention"]-.-&gt;Type
+	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing4["User"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Objects/User"
 
 						</div>
 					</div>

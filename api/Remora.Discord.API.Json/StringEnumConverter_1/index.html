@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#TypeParameters">Type Parameters</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Methods">Methods</a></p>
@@ -139,27 +140,13 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Class Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/AuditLogChangeConverter">Audit<wbr>Log<wbr>Change<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/ColorConverter">ColorConverter</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DataObjectConverter_2">DataObjectConverter<wbr>&lt;TInterface, <wbr>TImplementation&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscordPermissionSetConverter">Discord<wbr>Permission<wbr>Set<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/HeartbeatConverter">HeartbeatConverter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/ISO8601DateTimeOffsetConverter">I<wbr>S<wbr>O8601<wbr>Date<wbr>Time<wbr>Offset<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/ImageHashConverter">ImageHashConverter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/InvalidSessionConverter">Invalid<wbr>Session<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/MillisecondTimeSpanConverter">Millisecond<wbr>Time<wbr>Span<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverter_1">NullableConverter<wbr>&lt;TValue&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverterFactory">Nullable<wbr>Converter<wbr>Factory</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/OptionalConverter_1">OptionalConverter<wbr>&lt;TValue&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/OptionalConverterFactory">Optional<wbr>Converter<wbr>Factory</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/PartySizeConverter">PartySizeConverter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/PayloadConverter">PayloadConverter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/PropertyErrorDetailsConverter">Property<wbr>Error<wbr>Details<wbr>Converter</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/ShardIdentificationConverter">Shard<wbr>Identification<wbr>Converter</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/SnakeCaseNamingPolicy">Snake<wbr>Case<wbr>Naming<wbr>Policy</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/SnowflakeConverter">SnowflakeConverter</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumConverter_1">StringEnumConverter<wbr>&lt;TEnum&gt;<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/UnitTimeSpanConverter">Unit<wbr>Time<wbr>Span<wbr>Converter</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/UnixDateTimeConverter">Unix<wbr>Date<wbr>Time<wbr>Converter</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/TimeUnit">TimeUnit</a></li>
 
 
                     </ul>
@@ -218,10 +205,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class StringEnumConverter&lt;TEnum&gt; : JsonConverter&lt;TEnum&gt; where TEnum : struct, Enum</code></pre>
+	<pre><code>[PublicAPI]
+public class StringEnumConverter&lt;TEnum&gt; : JsonConverter&lt;TEnum&gt; where TEnum : struct, Enum</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 	<h1 id="TypeParameters">Type Parameters</h1>
 	<div class="box">

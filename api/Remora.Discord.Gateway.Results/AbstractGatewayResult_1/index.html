@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#TypeParameters">Type Parameters</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
@@ -192,10 +193,10 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewaySenderResult">GatewaySenderResult</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1">ReceivePayloadResult</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayConnectionResult">Gateway<wbr>Connection<wbr>Result</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/SendPayloadResult">SendPayloadResult</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayReceiverResult">Gateway<wbr>Receiver<wbr>Result</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayConnectionResult">Gateway<wbr>Connection<wbr>Result</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1">ReceivePayloadResult</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
 									</ul>
 								</dd>			
 							
@@ -209,14 +210,14 @@
 class Type type-node
 	Derived0["GatewaySenderResult"]--&gt;Type
 	click Derived0 "/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewaySenderResult"
-	Derived1["ReceivePayloadResult&lt;TEntity&gt;"]--&gt;Type
-	click Derived1 "/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1"
+	Derived1["GatewayConnectionResult"]--&gt;Type
+	click Derived1 "/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayConnectionResult"
 	Derived2["SendPayloadResult"]--&gt;Type
 	click Derived2 "/Remora.Discord/api/Remora.Discord.Gateway.Results/SendPayloadResult"
 	Derived3["GatewayReceiverResult"]--&gt;Type
 	click Derived3 "/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayReceiverResult"
-	Derived4["GatewayConnectionResult"]--&gt;Type
-	click Derived4 "/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayConnectionResult"
+	Derived4["ReceivePayloadResult&lt;TEntity&gt;"]--&gt;Type
+	click Derived4 "/Remora.Discord/api/Remora.Discord.Gateway.Results/ReceivePayloadResult_1"
 
 						</div>
 					</div>
@@ -225,11 +226,29 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public abstract class AbstractGatewayResult&lt;TActualResult&gt; : ResultBase&lt;TActualResult&gt; 
+	<pre><code>[PublicAPI]
+public abstract class AbstractGatewayResult&lt;TActualResult&gt; : ResultBase&lt;TActualResult&gt; 
     where TActualResult : AbstractGatewayResult&lt;TActualResult&gt;</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 	<h1 id="TypeParameters">Type Parameters</h1>
 	<div class="box">

@@ -332,13 +332,17 @@ make it available to the gateway client via - say it with me - dependency
 injection!</p>
 <p>Back in our <code>Main</code> method, where we configure our services, we'll make a small
 addition.</p>
-<pre><code class="language-csharp">var services = new ServiceCollection()
+<pre><code class="language-csharp">var responderService = new ResponderService();
+var services = new ServiceCollection()
     .AddDiscordGateway(() =&gt; botToken)
-    .AddResponder&lt;PingPongResponder&gt;()
+    .AddResponder&lt;PingPongResponder&gt;(responderService)
+    .AddSingleton&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository">IResponderTypeRepository</a>&gt;(responderService)
     .BuildServiceProvider();
 </code></pre>
 <p>And that's it! The <code>AddResponder&lt;T&gt;</code> method registers the responder as a scoped
-service for all of the <code>IResponder&lt;T&gt;</code> interfaces it implements.</p>
+service for all of the <code>IResponder&lt;T&gt;</code> interfaces it implements. The responder
+service is a supporting type for event dispatching, and keeps track of which
+responders are registered for which events.</p>
 <p>Now, running your bot, going into Discord, and running your command should net
 you the following.</p>
 <p><img src="images/ping-pong.png" class="img-fluid" alt="Ping, Pong!"></p>

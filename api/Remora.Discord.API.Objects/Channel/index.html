@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
@@ -176,6 +177,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/GuildWidget">GuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/ImageHash">ImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration">Integration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/IntegrationApplication">Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Invite">Invite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Message">Message</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/MessageActivity">MessageActivity</a></li>
@@ -261,8 +263,8 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelCreate">ChannelCreate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelUpdate">ChannelUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelDelete">ChannelDelete</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelUpdate">ChannelUpdate</a></li>								
 									</ul>
 								</dd>			
 							
@@ -278,10 +280,10 @@
 class Type type-node
 	Derived0["ChannelCreate"]--&gt;Type
 	click Derived0 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelCreate"
-	Derived1["ChannelUpdate"]--&gt;Type
-	click Derived1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelUpdate"
-	Derived2["ChannelDelete"]--&gt;Type
-	click Derived2 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelDelete"
+	Derived1["ChannelDelete"]--&gt;Type
+	click Derived1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelDelete"
+	Derived2["ChannelUpdate"]--&gt;Type
+	click Derived2 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels/ChannelUpdate"
 
 						</div>
 					</div>
@@ -290,10 +292,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class Channel : IChannel</code></pre>
+	<pre><code>[PublicAPI]
+public class Channel : IChannel</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -309,7 +329,7 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Channel/DE50D51C">Channel<wbr>(Snowflake, <wbr>ChannelType, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Permission<wbr>Overwrite&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IUser&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IImageHash?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Channel/0E1765AE">Channel<wbr>(Snowflake, <wbr>ChannelType, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Permission<wbr>Overwrite&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IUser&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IImageHash?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Channel">Channel</a></code> class.
     </td>
@@ -451,7 +471,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Channel/E5F4E031">RateLimitPerUser</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;TimeSpan&gt;<wbr></td>
 								<td>
 									<div>
     Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as

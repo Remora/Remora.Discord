@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
@@ -176,6 +177,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/GuildWidget">GuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/ImageHash">ImageHash</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration">Integration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/IntegrationApplication">Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Invite">Invite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Message">Message</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/MessageActivity">MessageActivity</a></li>
@@ -276,10 +278,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class Integration : IIntegration</code></pre>
+	<pre><code>[PublicAPI]
+public class Integration : IIntegration</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -295,7 +315,7 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/7DDB3F2E">Integration<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>bool, <wbr>bool, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Integration<wbr>Expire<wbr>Behaviour, <wbr>int, <wbr>IUser, <wbr>IAccount, <wbr>DateTimeOffset)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/7907E858">Integration<wbr>(Snowflake, <wbr>string, <wbr>string, <wbr>bool, <wbr>bool, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Integration<wbr>Expire<wbr>Behaviour, <wbr>TimeSpan, <wbr>Optional<wbr>&lt;IUser&gt;<wbr>, <wbr>IAccount, <wbr>DateTimeOffset, <wbr>int, <wbr>bool, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Integration<wbr>Application&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration">Integration</a></code> class.
     </td>
@@ -328,6 +348,15 @@ class Type type-node
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/058018CE">Application</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the bot/OAuth2 application for Discord integrations.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/096FB68E">EnableEmoticons</a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
 								<td>
@@ -347,7 +376,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/E942AF98">ExpireGracePeriod</a></td>
-								<td>int</td>
+								<td>TimeSpan</td>
 								<td>
 									<div>
     Gets the grace period (in days) before expiring subscribers.
@@ -369,6 +398,15 @@ class Type type-node
 								<td>
 									<div>
     Gets a value indicating whether the integration is enabled.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/1F66221F">IsRevoked</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Gets a value indicating whether this integration has been revoked.
     </div>
 								</td>
 							</tr>
@@ -400,6 +438,15 @@ class Type type-node
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/6F64E73C">SubscriberCount</a></td>
+								<td>int</td>
+								<td>
+									<div>
+    Gets the number of subscribers this integration has.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/00BA5E09">SyncedAt</a></td>
 								<td>DateTimeOffset</td>
 								<td>
@@ -419,7 +466,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration/94CA7FD0">User</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user for this integration.

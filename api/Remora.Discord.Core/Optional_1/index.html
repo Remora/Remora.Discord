@@ -221,7 +221,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+	<pre><code>[PublicAPI, DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
 public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre>
 
 
@@ -237,6 +237,10 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 					</tr>
 				</thead>
 					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+					<tr>
 						<td>Debugger<wbr>Display<wbr>Attribute</td>
 						<td></td>
 					</tr>

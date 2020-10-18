@@ -73,6 +73,7 @@
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#ClassTypes">Class Types</a></p>
+<p><a href="#EnumTypes">Enum Types</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -172,6 +173,7 @@
 						<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events.Channels">Remora<wbr>.Discord<wbr>.API<wbr>.Gateway<wbr>.Events<wbr>.Channels</a></li>
 </ul></li></ul></li>			<li class=" selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Objects</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.API.Rest">Remora<wbr>.Discord<wbr>.API<wbr>.Rest</a></li>
 </ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
 
 				<li class="treeview">
@@ -180,6 +182,7 @@
 						<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Responders</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Results</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Transport">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Transport</a></li>
 </ul></li>
 				<li class="treeview">
@@ -187,7 +190,6 @@
 				<ul class="treeview-menu">
 						<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Polly">Remora<wbr>.Discord<wbr>.Rest<wbr>.Polly</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results">Remora<wbr>.Discord<wbr>.Rest<wbr>.Results</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Utility">Remora<wbr>.Discord<wbr>.Rest<wbr>.Utility</a></li>
 </ul></li>
@@ -229,99 +231,9 @@
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/AuditLogChangeConverter">Audit<wbr>Log<wbr>Change<wbr>Converter</a></td>
-									<td>
-    Converts <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogChange">IAuditLogChange</a></code> objects to and from JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/ColorConverter">ColorConverter</a></td>
-									<td>
-    Converts instances of the <code class="cs">Color</code> struct to and from JSON.
-    </td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/DataObjectConverter_2">DataObjectConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/DataObjectConverter_2#typeparam-TInterface">TInterface</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Json/DataObjectConverter_2#typeparam-TImplementation">TImplementation</a>&gt;<wbr></td>
 									<td>
     Converts to and from a gateway endpoint instance.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscordPermissionSetConverter">Discord<wbr>Permission<wbr>Set<wbr>Converter</a></td>
-									<td>
-    Converts to and from the JSON representation of a <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">IDiscordPermissionSet</a></code>.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/HeartbeatConverter">HeartbeatConverter</a></td>
-									<td></td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/ISO8601DateTimeOffsetConverter">I<wbr>S<wbr>O8601<wbr>Date<wbr>Time<wbr>Offset<wbr>Converter</a></td>
-									<td>
-    Converts instances of the <code class="cs"><a href="/Remora.Discord">DateTime</a></code> struct to and from an ISO8601 representation in JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/ImageHashConverter">ImageHashConverter</a></td>
-									<td>
-    Converts an image hash to and from JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/InvalidSessionConverter">Invalid<wbr>Session<wbr>Converter</a></td>
-									<td></td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/MillisecondTimeSpanConverter">Millisecond<wbr>Time<wbr>Span<wbr>Converter</a></td>
-									<td>
-    Converts a <code class="cs"><a href="/Remora.Discord">TimeSpan</a></code> to and from milliseconds in JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverter_1">NullableConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverter_1#typeparam-TValue">TValue</a>&gt;<wbr></td>
-									<td>
-    Converts from to and from <code class="cs">System.Nullable`1</code>.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverterFactory">Nullable<wbr>Converter<wbr>Factory</a></td>
-									<td>
-    Creates instances of <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Json/NullableConverter_1">NullableConverter&lt;TValue&gt;</a></code>.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/OptionalConverter_1">OptionalConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/OptionalConverter_1#typeparam-TValue">TValue</a>&gt;<wbr></td>
-									<td>
-    Converts optional fields to their JSON representation.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/OptionalConverterFactory">Optional<wbr>Converter<wbr>Factory</a></td>
-									<td>
-    Creates converters for <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional&lt;TValue&gt;</a></code>.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/PartySizeConverter">PartySizeConverter</a></td>
-									<td>
-    Converts <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Objects/PartySize">PartySize</a></code> values to and from JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/PayloadConverter">PayloadConverter</a></td>
-									<td></td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/PropertyErrorDetailsConverter">Property<wbr>Error<wbr>Details<wbr>Converter</a></td>
-									<td>
-    Converts <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRestError">IRestError</a></code> instances to and from JSON.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/ShardIdentificationConverter">Shard<wbr>Identification<wbr>Converter</a></td>
-									<td>
-    Converts <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification">IShardIdentification</a></code> values to and from JSON.
     </td>
 							</tr>
 							<tr>
@@ -331,19 +243,42 @@
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/SnowflakeConverter">SnowflakeConverter</a></td>
-									<td></td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumConverter_1">StringEnumConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumConverter_1#typeparam-TEnum">TEnum</a>&gt;<wbr></td>
 									<td>
     Converts enum values to or from JSON.
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/UnitTimeSpanConverter">Unit<wbr>Time<wbr>Span<wbr>Converter</a></td>
+									<td>
+    Converts a <code class="cs"><a href="/Remora.Discord">TimeSpan</a></code> to and from a specified time unit in JSON.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/UnixDateTimeConverter">Unix<wbr>Date<wbr>Time<wbr>Converter</a></td>
 									<td>
     Converts a <code class="cs"><a href="/Remora.Discord">DateTime</a></code> to and from unix time.
+    </td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
+			<h1 id="EnumTypes">Enum Types</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover two-cols">
+						<thead>
+							<tr>
+								<th>Enum</th>
+									<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/TimeUnit">TimeUnit</a></td>
+									<td>
+    Enumerates various units of time.
     </td>
 							</tr>
 					</tbody></table>

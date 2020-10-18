@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#TypeParameters">Type Parameters</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
@@ -198,12 +199,12 @@
 								<dt>Derived Types</dt>
 								<dd>
 									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1">Delete<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1">Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/RestRequestResult">RestRequestResult</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/RetrieveRestEntityResult_1">Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/RetrieveRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult">Delete<wbr>Rest<wbr>Entity<wbr>Result</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1">Delete<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/ModifyRestEntityResult_1">Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/ModifyRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1">Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1#typeparam-TEntity">TEntity</a>&gt;<wbr></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult">Delete<wbr>Rest<wbr>Entity<wbr>Result</a></li>								
 									</ul>
 								</dd>			
 							
@@ -218,18 +219,18 @@
 	Type-.-&gt;Interface1["IResult"]
 	Type["AbstractRestResult&lt;TActualResult&gt;"]
 class Type type-node
-	Derived0["RestRequestResult"]--&gt;Type
-	click Derived0 "/Remora.Discord/api/Remora.Discord.Rest.Results/RestRequestResult"
-	Derived1["RetrieveRestEntityResult&lt;TEntity&gt;"]--&gt;Type
-	click Derived1 "/Remora.Discord/api/Remora.Discord.Rest.Results/RetrieveRestEntityResult_1"
-	Derived2["DeleteRestEntityResult"]--&gt;Type
-	click Derived2 "/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult"
-	Derived3["DeleteRestEntityResult&lt;TEntity&gt;"]--&gt;Type
-	click Derived3 "/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1"
+	Derived0["DeleteRestEntityResult&lt;TEntity&gt;"]--&gt;Type
+	click Derived0 "/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult_1"
+	Derived1["CreateRestEntityResult&lt;TEntity&gt;"]--&gt;Type
+	click Derived1 "/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1"
+	Derived2["RestRequestResult"]--&gt;Type
+	click Derived2 "/Remora.Discord/api/Remora.Discord.Rest.Results/RestRequestResult"
+	Derived3["RetrieveRestEntityResult&lt;TEntity&gt;"]--&gt;Type
+	click Derived3 "/Remora.Discord/api/Remora.Discord.Rest.Results/RetrieveRestEntityResult_1"
 	Derived4["ModifyRestEntityResult&lt;TEntity&gt;"]--&gt;Type
 	click Derived4 "/Remora.Discord/api/Remora.Discord.Rest.Results/ModifyRestEntityResult_1"
-	Derived5["CreateRestEntityResult&lt;TEntity&gt;"]--&gt;Type
-	click Derived5 "/Remora.Discord/api/Remora.Discord.Rest.Results/CreateRestEntityResult_1"
+	Derived5["DeleteRestEntityResult"]--&gt;Type
+	click Derived5 "/Remora.Discord/api/Remora.Discord.Rest.Results/DeleteRestEntityResult"
 
 						</div>
 					</div>
@@ -238,12 +239,30 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public abstract class AbstractRestResult&lt;TActualResult&gt; : ResultBase&lt;TActualResult&gt;, IRestResult, 
+	<pre><code>[PublicAPI]
+public abstract class AbstractRestResult&lt;TActualResult&gt; : ResultBase&lt;TActualResult&gt;, IRestResult, 
     IResult
     where TActualResult : ResultBase&lt;TActualResult&gt;</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 	<h1 id="TypeParameters">Type Parameters</h1>
 	<div class="box">

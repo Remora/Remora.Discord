@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -175,6 +176,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
@@ -277,11 +279,11 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate">GuildCreate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild">Guild</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate">IGuildCreate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildUpdate">GuildUpdate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild">Guild</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate">IGuildUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate">GuildCreate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -291,16 +293,16 @@
 							graph BT
 	Type["IGuild"]
 class Type type-node
-	Implementing0["GuildCreate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate"
+	Implementing0["Guild"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Objects/Guild"
 	Implementing1["IGuildCreate"]-.-&gt;Type
 	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate"
 	Implementing2["GuildUpdate"]-.-&gt;Type
 	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildUpdate"
-	Implementing3["Guild"]-.-&gt;Type
-	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Objects/Guild"
-	Implementing4["IGuildUpdate"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate"
+	Implementing3["IGuildUpdate"]-.-&gt;Type
+	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate"
+	Implementing4["GuildCreate"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate"
 
 						</div>
 					</div>
@@ -309,10 +311,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public interface IGuild</code></pre>
+	<pre><code>[PublicAPI]
+public interface IGuild</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -342,7 +362,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/36B0707F">AFKTimeout</a></td>
-								<td>int</td>
+								<td>TimeSpan</td>
 								<td>
 									<div>
     Gets the AFK timeout (in seconds).

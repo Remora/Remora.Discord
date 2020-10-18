@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -175,6 +176,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
@@ -277,8 +279,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildDelete">GuildDelete</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildDelete">IGuildDelete</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildDelete">GuildDelete</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/UnavailableGuild">UnavailableGuild</a></li>								
 									</ul>
 								</dd>				
@@ -289,10 +291,10 @@
 							graph BT
 	Type["IUnavailableGuild"]
 class Type type-node
-	Implementing0["GuildDelete"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildDelete"
-	Implementing1["IGuildDelete"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildDelete"
+	Implementing0["IGuildDelete"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildDelete"
+	Implementing1["GuildDelete"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildDelete"
 	Implementing2["UnavailableGuild"]-.-&gt;Type
 	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Objects/UnavailableGuild"
 
@@ -303,10 +305,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public interface IUnavailableGuild</code></pre>
+	<pre><code>[PublicAPI]
+public interface IUnavailableGuild</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 

@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
@@ -176,6 +177,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/GuildWidget">GuildWidget</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/ImageHash">ImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Integration">Integration</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/IntegrationApplication">Integration<wbr>Application</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Invite">Invite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Message">Message</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects/MessageActivity">MessageActivity</a></li>
@@ -260,8 +262,8 @@
 								<dt>Derived Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate">GuildCreate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildUpdate">GuildUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate">GuildCreate</a></li>								
 									</ul>
 								</dd>			
 							
@@ -275,10 +277,10 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild"
 	Type["Guild"]
 class Type type-node
-	Derived0["GuildCreate"]--&gt;Type
-	click Derived0 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate"
-	Derived1["GuildUpdate"]--&gt;Type
-	click Derived1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildUpdate"
+	Derived0["GuildUpdate"]--&gt;Type
+	click Derived0 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildUpdate"
+	Derived1["GuildCreate"]--&gt;Type
+	click Derived1 "/Remora.Discord/api/Remora.Discord.API.Gateway.Events/GuildCreate"
 
 						</div>
 					</div>
@@ -287,10 +289,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class Guild : IGuild</code></pre>
+	<pre><code>[PublicAPI]
+public class Guild : IGuild</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -306,7 +326,7 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild/3F231A30">Guild<wbr>(Snowflake, <wbr>string, <wbr>IImageHash?, <wbr>IImageHash?, <wbr>IImageHash?, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Snowflake, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>string, <wbr>Snowflake?, <wbr>int, <wbr>VerificationLevel, <wbr>Message<wbr>Notification<wbr>Level, <wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level, <wbr>IReadOnlyList<wbr>&lt;IRole&gt;<wbr>, <wbr>IReadOnlyList<wbr>&lt;IEmoji&gt;<wbr>, <wbr>IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>, <wbr>Multi<wbr>Factor<wbr>Authentication<wbr>Level, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Snowflake?, <wbr>SystemChannelFlags, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Voice<wbr>State&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IGuildMember&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IChannel&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Presence&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>string?, <wbr>string?, <wbr>IImageHash?, <wbr>PremiumTier, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>string, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild/97A1E882">Guild<wbr>(Snowflake, <wbr>string, <wbr>IImageHash?, <wbr>IImageHash?, <wbr>IImageHash?, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Snowflake, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Discord<wbr>Permission<wbr>Set&gt;<wbr>, <wbr>string, <wbr>Snowflake?, <wbr>TimeSpan, <wbr>VerificationLevel, <wbr>Message<wbr>Notification<wbr>Level, <wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level, <wbr>IReadOnlyList<wbr>&lt;IRole&gt;<wbr>, <wbr>IReadOnlyList<wbr>&lt;IEmoji&gt;<wbr>, <wbr>IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>, <wbr>Multi<wbr>Factor<wbr>Authentication<wbr>Level, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Snowflake?, <wbr>SystemChannelFlags, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Voice<wbr>State&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IGuildMember&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IChannel&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Presence&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>string?, <wbr>string?, <wbr>IImageHash?, <wbr>PremiumTier, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>string, <wbr>Snowflake?, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild">Guild</a></code> class.
     </td>
@@ -340,7 +360,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Objects/Guild/B5A6C123">AFKTimeout</a></td>
-								<td>int</td>
+								<td>TimeSpan</td>
 								<td>
 									<div>
     Gets the AFK timeout (in seconds).
