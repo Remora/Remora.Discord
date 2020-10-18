@@ -51,10 +51,7 @@ namespace Remora.Discord.API.Gateway.Commands
         public Optional<IUpdateStatus> Presence { get; }
 
         /// <inheritdoc />
-        public Optional<bool> DispatchGuildSubscriptions { get; }
-
-        /// <inheritdoc />
-        public Optional<GatewayIntents> Intents { get; }
+        public GatewayIntents Intents { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Identify"/> class.
@@ -65,7 +62,6 @@ namespace Remora.Discord.API.Gateway.Commands
         /// <param name="largeThreshold">The large guild threshold.</param>
         /// <param name="shard">The sharding ID.</param>
         /// <param name="presence">The initial presence.</param>
-        /// <param name="dispatchGuildSubscriptions">Whether to receive subscription events.</param>
         /// <param name="intents">The gateway intents.</param>
         public Identify
         (
@@ -75,8 +71,7 @@ namespace Remora.Discord.API.Gateway.Commands
             Optional<byte> largeThreshold = default,
             Optional<IShardIdentification> shard = default,
             Optional<IUpdateStatus> presence = default,
-            Optional<bool> dispatchGuildSubscriptions = default,
-            Optional<GatewayIntents> intents = default
+            GatewayIntents intents = default
         )
         {
             this.Token = token;
@@ -85,7 +80,6 @@ namespace Remora.Discord.API.Gateway.Commands
             this.LargeThreshold = largeThreshold;
             this.Shard = shard;
             this.Presence = presence;
-            this.DispatchGuildSubscriptions = dispatchGuildSubscriptions;
             this.Intents = intents;
         }
     }

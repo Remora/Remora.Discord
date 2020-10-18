@@ -124,8 +124,7 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddGatewayCommandConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IIdentify, Identify>()
-                .WithPropertyName(i => i.DispatchGuildSubscriptions, "guild_subscriptions");
+            options.AddDataObjectConverter<IIdentify, Identify>();
 
             options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
                 .WithPropertyName(p => p.OperatingSystem, "$os")

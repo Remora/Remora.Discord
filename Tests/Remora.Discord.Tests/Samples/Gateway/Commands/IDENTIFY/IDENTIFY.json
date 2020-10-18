@@ -24,7 +24,6 @@
             "status": "dnd",
             "afk": false
         },
-        "guild_subscriptions": false,
         "intents": 7
     },
     "s": null,
