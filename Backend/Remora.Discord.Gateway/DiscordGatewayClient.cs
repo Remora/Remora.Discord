@@ -594,11 +594,16 @@ namespace Remora.Discord.Gateway
                     }
                     finally
                     {
+                        // Suspicious type conversions are disabled here, since the user-defined responders may
+                        // implement IDisposable or IAsyncDisposable.
+
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         if (r is IDisposable disposable)
                         {
                             disposable.Dispose();
                         }
 
+                        // ReSharper disable once SuspiciousTypeConversion.Global
                         if (r is IAsyncDisposable asyncDisposable)
                         {
                             await asyncDisposable.DisposeAsync();
