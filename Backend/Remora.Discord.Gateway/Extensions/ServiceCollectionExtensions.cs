@@ -26,6 +26,7 @@ using System.Net.WebSockets;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Extensions;
 
@@ -64,11 +65,13 @@ namespace Remora.Discord.Gateway.Extensions
         /// <see cref="IResponder{T}"/> implementations it supports.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="responderService">The responder service.</param>
         /// <typeparam name="TResponder">The concrete responder type.</typeparam>
         /// <returns>The service collection, with the responder added.</returns>
         public static IServiceCollection AddResponder<TResponder>
         (
-            this IServiceCollection serviceCollection
+            this IServiceCollection serviceCollection,
+            ResponderService responderService
         )
             where TResponder : IResponder
         {
@@ -82,6 +85,10 @@ namespace Remora.Discord.Gateway.Extensions
             {
                 serviceCollection.AddScoped(responderInterface, typeof(TResponder));
             }
+
+            serviceCollection.AddScoped(typeof(TResponder));
+
+            responderService.RegisterResponderType<TResponder>();
 
             return serviceCollection;
         }

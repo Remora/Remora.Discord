@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Samples.HttpCat.Responders;
 
 namespace Remora.Discord.Samples.HttpCat
@@ -58,6 +59,7 @@ namespace Remora.Discord.Samples.HttpCat
                     "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a valid token."
                 );
 
+            var responderService = new ResponderService();
             var serviceCollection = new ServiceCollection()
                 .AddLogging
                 (
@@ -67,7 +69,8 @@ namespace Remora.Discord.Samples.HttpCat
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
-                .AddResponder<HttpCatResponder>();
+                .AddResponder<HttpCatResponder>(responderService)
+                .AddSingleton<IResponderTypeRepository>(responderService);
 
             serviceCollection.AddHttpClient();
 

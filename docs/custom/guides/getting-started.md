@@ -295,14 +295,18 @@ Back in our `Main` method, where we configure our services, we'll make a small
 addition.
 
 ```csharp
+var responderService = new ResponderService();
 var services = new ServiceCollection()
     .AddDiscordGateway(() => botToken)
-    .AddResponder<PingPongResponder>()
+    .AddResponder<PingPongResponder>(responderService)
+    .AddSingleton<IResponderTypeRepository>(responderService)
     .BuildServiceProvider();
 ```
 
 And that's it! The `AddResponder<T>` method registers the responder as a scoped
-service for all of the `IResponder<T>` interfaces it implements.
+service for all of the `IResponder<T>` interfaces it implements. The responder 
+service is a supporting type for event dispatching, and keeps track of which 
+responders are registered for which events.
 
 Now, running your bot, going into Discord, and running your command should net
 you the following.

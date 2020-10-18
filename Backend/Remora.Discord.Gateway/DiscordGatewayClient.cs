@@ -42,6 +42,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 
 namespace Remora.Discord.Gateway
@@ -59,6 +60,7 @@ namespace Remora.Discord.Gateway
         private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
         private readonly Random _random;
+        private readonly IResponderTypeRepository _responderTypeRepository;
 
         /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -136,6 +138,7 @@ namespace Remora.Discord.Gateway
         /// <param name="random">An entropy source.</param>
         /// <param name="log">The logging instance.</param>
         /// <param name="services">The available services.</param>
+        /// <param name="responderTypeRepository">The responder type repository.</param>
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
@@ -144,7 +147,8 @@ namespace Remora.Discord.Gateway
             ITokenStore tokenStore,
             Random random,
             ILogger<DiscordGatewayClient> log,
-            IServiceProvider services
+            IServiceProvider services,
+            IResponderTypeRepository responderTypeRepository
         )
         {
             _gatewayAPI = gatewayAPI;
@@ -154,6 +158,7 @@ namespace Remora.Discord.Gateway
             _random = random;
             _log = log;
             _services = services;
+            _responderTypeRepository = responderTypeRepository;
 
             _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
 
@@ -575,20 +580,22 @@ namespace Remora.Discord.Gateway
         )
             where TGatewayEvent : IGatewayEvent
         {
-            using var serviceScope = _services.CreateScope();
-            var responders = serviceScope.ServiceProvider.GetServices<IResponder<TGatewayEvent>>().ToList();
-            if (responders.Count == 0)
+            var responderTypes = _responderTypeRepository.GetResponderTypes<TGatewayEvent>();
+            if (responderTypes.Count == 0)
             {
                 return Array.Empty<EventResponseResult>();
             }
 
             return await Task.WhenAll
             (
-                responders.Select(async r =>
+                responderTypes.Select(async rt =>
                 {
+                    using var serviceScope = _services.CreateScope();
+                    var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider.GetService(rt);
+
                     try
                     {
-                        return await r.RespondAsync(gatewayEvent.Data, ct);
+                        return await responder.RespondAsync(gatewayEvent.Data, ct);
                     }
                     catch (Exception e)
                     {
@@ -600,13 +607,13 @@ namespace Remora.Discord.Gateway
                         // implement IDisposable or IAsyncDisposable.
 
                         // ReSharper disable once SuspiciousTypeConversion.Global
-                        if (r is IDisposable disposable)
+                        if (responder is IDisposable disposable)
                         {
                             disposable.Dispose();
                         }
 
                         // ReSharper disable once SuspiciousTypeConversion.Global
-                        if (r is IAsyncDisposable asyncDisposable)
+                        if (responder is IAsyncDisposable asyncDisposable)
                         {
                             await asyncDisposable.DisposeAsync();
                         }
