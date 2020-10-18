@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts to and from the JSON representation of a <see cref="IDiscordPermissionSet"/>.
     /// </summary>
-    public class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionSet>
+    internal class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionSet>
     {
         /// <inheritdoc />
         public override IDiscordPermissionSet Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

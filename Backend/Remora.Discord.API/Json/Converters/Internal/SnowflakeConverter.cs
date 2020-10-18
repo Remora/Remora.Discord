@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Json
 {
     /// <inheritdoc />
-    public class SnowflakeConverter : JsonConverter<Snowflake>
+    internal class SnowflakeConverter : JsonConverter<Snowflake>
     {
         /// <inheritdoc />
         public override Snowflake Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

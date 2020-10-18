@@ -24,12 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Extensions
 {
     /// <summary>
     /// Defines extension methods for the <see cref="PropertyInfo"/> class.
     /// </summary>
+    [PublicAPI]
     public static class PropertyInfoExtensions
     {
         /// <summary>

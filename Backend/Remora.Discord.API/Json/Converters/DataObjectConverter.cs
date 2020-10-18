@@ -27,6 +27,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
 
@@ -37,6 +38,7 @@ namespace Remora.Discord.API.Json
     /// </summary>
     /// <typeparam name="TInterface">The interface that is seen in the objects.</typeparam>
     /// <typeparam name="TImplementation">The concrete implementation.</typeparam>
+    [PublicAPI]
     public class DataObjectConverter<TInterface, TImplementation> : JsonConverter<TInterface>
         where TImplementation : TInterface
     {

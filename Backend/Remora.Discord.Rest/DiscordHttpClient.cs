@@ -26,6 +26,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.API.Objects;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Rest
     /// <summary>
     /// Represents a specialized HTTP client for the Discord API.
     /// </summary>
+    [PublicAPI]
     public class DiscordHttpClient
     {
         private readonly HttpClient _httpClient;

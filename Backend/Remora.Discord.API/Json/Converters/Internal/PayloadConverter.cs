@@ -34,7 +34,7 @@ using Remora.Results;
 namespace Remora.Discord.API.Json
 {
     /// <inheritdoc />
-    public class PayloadConverter : JsonConverter<IPayload?>
+    internal class PayloadConverter : JsonConverter<IPayload?>
     {
         private readonly SnakeCaseNamingPolicy _snakeCase = new SnakeCaseNamingPolicy();
 

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Extensions
@@ -32,6 +33,7 @@ namespace Remora.Discord.API.Extensions
     /// <summary>
     /// Defines extension methods to the <see cref="Type"/> class.
     /// </summary>
+    [PublicAPI]
     public static class TypeExtensions
     {
         /// <summary>

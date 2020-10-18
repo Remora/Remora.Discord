@@ -1,5 +1,5 @@
 //
-//  NullableConverterFactory.cs
+//  ColorConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,37 +21,36 @@
 //
 
 using System;
+using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Extensions;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Creates instances of <see cref="NullableConverter{TValue}"/>.
+    /// Converts instances of the <see cref="Color"/> struct to and from JSON.
     /// </summary>
-    public class NullableConverterFactory : JsonConverterFactory
+    internal class ColorConverter : JsonConverter<Color>
     {
         /// <inheritdoc />
-        public override bool CanConvert(Type typeToConvert)
+        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return typeToConvert.IsNullable();
+            if (reader.TokenType != JsonTokenType.Number)
+            {
+                throw new JsonException();
+            }
+
+            var value = reader.GetUInt32();
+            var clrValue = value ^ 0xFF000000;
+
+            return Color.FromArgb((int)clrValue);
         }
 
         /// <inheritdoc />
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            var converter = (JsonConverter?)Activator.CreateInstance
-            (
-                typeof(NullableConverter<>).MakeGenericType(typeToConvert.GetGenericArguments())
-            );
-
-            if (converter is null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            return converter;
+            var val = value.ToArgb() & 0x00FFFFFF;
+            writer.WriteNumberValue((uint)val);
         }
     }
 }

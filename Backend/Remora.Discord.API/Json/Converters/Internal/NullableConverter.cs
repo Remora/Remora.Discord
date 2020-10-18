@@ -1,5 +1,5 @@
 //
-//  OptionalConverter.cs
+//  NullableConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,26 +23,36 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts optional fields to their JSON representation.
+    /// Converts from to and from <see cref="Nullable{T}"/>.
     /// </summary>
-    /// <typeparam name="TValue">The underlying type.</typeparam>
-    public class OptionalConverter<TValue> : JsonConverter<Optional<TValue>>
+    /// <typeparam name="TValue">The inner nullable value.</typeparam>
+    internal class NullableConverter<TValue> : JsonConverter<TValue?>
+        where TValue : struct
     {
         /// <inheritdoc />
-        public override Optional<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override TValue? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return new Optional<TValue>(JsonSerializer.Deserialize<TValue>(ref reader, options));
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.Null:
+                {
+                    return null;
+                }
+                default:
+                {
+                    return JsonSerializer.Deserialize<TValue>(ref reader, options);
+                }
+            }
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TValue? value, JsonSerializerOptions options)
         {
-            if (value.Value is null)
+            if (!value.HasValue)
             {
                 writer.WriteNullValue();
                 return;

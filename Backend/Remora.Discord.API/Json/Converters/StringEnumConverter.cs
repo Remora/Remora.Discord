@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 using Remora.Discord.API.Extensions;
 
 namespace Remora.Discord.API.Json
@@ -33,6 +34,7 @@ namespace Remora.Discord.API.Json
     /// Converts enum values to or from JSON.
     /// </summary>
     /// <typeparam name="TEnum">The enum to read.</typeparam>
+    [PublicAPI]
     public class StringEnumConverter<TEnum> : JsonConverter<TEnum>
         where TEnum : struct, Enum
     {

@@ -1,5 +1,5 @@
 //
-//  UnixDateTimeConverter.cs
+//  NullableConverterFactory.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,38 +23,35 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using JetBrains.Annotations;
+using Remora.Discord.API.Extensions;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts a <see cref="DateTime"/> to and from unix time.
+    /// Creates instances of <see cref="NullableConverter{TValue}"/>.
     /// </summary>
-    [PublicAPI]
-    public class UnixDateTimeConverter : JsonConverter<DateTime>
+    internal class NullableConverterFactory : JsonConverterFactory
     {
         /// <inheritdoc />
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override bool CanConvert(Type typeToConvert)
         {
-            switch (reader.TokenType)
-            {
-                case JsonTokenType.Number:
-                {
-                    var milliseconds = reader.GetDouble();
-                    return DateTime.UnixEpoch + TimeSpan.FromMilliseconds(milliseconds);
-                }
-                default:
-                {
-                    throw new JsonException();
-                }
-            }
+            return typeToConvert.IsNullable();
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            var milliseconds = (value.ToUniversalTime() - DateTime.UnixEpoch).TotalMilliseconds;
-            writer.WriteNumberValue(milliseconds);
+            var converter = (JsonConverter?)Activator.CreateInstance
+            (
+                typeof(NullableConverter<>).MakeGenericType(typeToConvert.GetGenericArguments())
+            );
+
+            if (converter is null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return converter;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts <see cref="IRestError"/> instances to and from JSON.
     /// </summary>
-    public class PropertyErrorDetailsConverter : JsonConverter<IPropertyErrorDetails>
+    internal class PropertyErrorDetailsConverter : JsonConverter<IPropertyErrorDetails>
     {
         /// <inheritdoc />
         public override IPropertyErrorDetails Read

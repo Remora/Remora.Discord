@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest
 {
     /// <summary>
     /// Holds various constants.
     /// </summary>
+    [PublicAPI]
     public static class Constants
     {
         /// <summary>

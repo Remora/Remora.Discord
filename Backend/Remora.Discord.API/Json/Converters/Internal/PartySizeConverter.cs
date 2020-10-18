@@ -1,5 +1,5 @@
 //
-//  ShardIdentificationConverter.cs
+//  PartySizeConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,24 +23,19 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Gateway.Commands;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts <see cref="IShardIdentification"/> values to and from JSON.
+    /// Converts <see cref="PartySize"/> values to and from JSON.
     /// </summary>
-    public class ShardIdentificationConverter : JsonConverter<IShardIdentification?>
+    internal class PartySizeConverter : JsonConverter<IPartySize?>
     {
         /// <inheritdoc/>
-        public override IShardIdentification? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IPartySize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-
             if (reader.TokenType != JsonTokenType.StartArray)
             {
                 throw new JsonException();
@@ -51,13 +46,13 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            var shardID = reader.GetInt32();
+            var currentSize = reader.GetInt32();
             if (!reader.Read())
             {
                 throw new JsonException();
             }
 
-            var shardCount = reader.GetInt32();
+            var maxSize = reader.GetInt32();
             if (!reader.Read())
             {
                 throw new JsonException();
@@ -68,16 +63,11 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            if (!reader.IsFinalBlock && !reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            return new ShardIdentification(shardID, shardCount);
+            return new PartySize(currentSize, maxSize);
         }
 
         /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, IShardIdentification? value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IPartySize? value, JsonSerializerOptions options)
         {
             if (value is null)
             {
@@ -86,8 +76,8 @@ namespace Remora.Discord.API.Json
             }
 
             writer.WriteStartArray();
-            writer.WriteNumberValue(value.ShardID);
-            writer.WriteNumberValue(value.ShardCount);
+            writer.WriteNumberValue(value.CurrentSize);
+            writer.WriteNumberValue(value.MaxSize);
             writer.WriteEndArray();
         }
     }

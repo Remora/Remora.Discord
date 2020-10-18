@@ -1,5 +1,5 @@
 //
-//  ColorConverter.cs
+//  OptionalConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,36 +21,34 @@
 //
 
 using System;
-using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts instances of the <see cref="Color"/> struct to and from JSON.
+    /// Converts optional fields to their JSON representation.
     /// </summary>
-    public class ColorConverter : JsonConverter<Color>
+    /// <typeparam name="TValue">The underlying type.</typeparam>
+    internal class OptionalConverter<TValue> : JsonConverter<Optional<TValue>>
     {
         /// <inheritdoc />
-        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override Optional<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType != JsonTokenType.Number)
-            {
-                throw new JsonException();
-            }
-
-            var value = reader.GetUInt32();
-            var clrValue = value ^ 0xFF000000;
-
-            return Color.FromArgb((int)clrValue);
+            return new Optional<TValue>(JsonSerializer.Deserialize<TValue>(ref reader, options));
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
         {
-            var val = value.ToArgb() & 0x00FFFFFF;
-            writer.WriteNumberValue((uint)val);
+            if (value.Value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            JsonSerializer.Serialize(writer, value.Value, options);
         }
     }
 }

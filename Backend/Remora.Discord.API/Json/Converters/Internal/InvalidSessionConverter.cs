@@ -1,5 +1,5 @@
 //
-//  ImageHashConverter.cs
+//  InvalidSessionConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,35 +23,33 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Gateway.Events;
 
 namespace Remora.Discord.API.Json
 {
-    /// <summary>
-    /// Converts an image hash to and from JSON.
-    /// </summary>
-    public class ImageHashConverter : JsonConverter<IImageHash?>
+    /// <inheritdoc />
+    internal class InvalidSessionConverter : JsonConverter<IInvalidSession?>
     {
         /// <inheritdoc />
-        public override IImageHash? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IInvalidSession Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (reader.TokenType == JsonTokenType.Null)
+            switch (reader.TokenType)
             {
-                return null;
+                case JsonTokenType.True:
+                case JsonTokenType.False:
+                {
+                    return new InvalidSession(reader.GetBoolean());
+                }
+                default:
+                {
+                    throw new JsonException();
+                }
             }
-
-            if (reader.TokenType != JsonTokenType.String)
-            {
-                throw new JsonException();
-            }
-
-            var value = reader.GetString();
-            return new ImageHash(value);
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IImageHash? value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IInvalidSession? value, JsonSerializerOptions options)
         {
             if (value is null)
             {
@@ -59,7 +57,7 @@ namespace Remora.Discord.API.Json
                 return;
             }
 
-            writer.WriteStringValue(value.Value);
+            writer.WriteBooleanValue(value.IsResumable);
         }
     }
 }

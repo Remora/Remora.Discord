@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts instances of the <see cref="DateTime"/> struct to and from an ISO8601 representation in JSON.
     /// </summary>
-    public class ISO8601DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+    internal class ISO8601DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
     {
         /// <inheritdoc />
         public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

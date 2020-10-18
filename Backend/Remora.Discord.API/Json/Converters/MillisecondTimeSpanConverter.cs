@@ -23,12 +23,14 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
     /// Converts a <see cref="TimeSpan"/> to and from milliseconds in JSON.
     /// </summary>
+    [PublicAPI]
     public class MillisecondTimeSpanConverter : JsonConverter<TimeSpan>
     {
         /// <inheritdoc />

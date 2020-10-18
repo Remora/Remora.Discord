@@ -1,5 +1,5 @@
 //
-//  InvalidSessionConverter.cs
+//  OptionalConverterFactory.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,43 +21,44 @@
 //
 
 using System;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Json
 {
-    /// <inheritdoc />
-    public class InvalidSessionConverter : JsonConverter<IInvalidSession?>
+    /// <summary>
+    /// Creates converters for <see cref="Optional{TValue}"/>.
+    /// </summary>
+    internal class OptionalConverterFactory : JsonConverterFactory
     {
         /// <inheritdoc />
-        public override IInvalidSession Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override bool CanConvert(Type typeToConvert)
         {
-            switch (reader.TokenType)
+            var typeInfo = typeToConvert.GetTypeInfo();
+            if (!typeInfo.IsGenericType || typeInfo.IsGenericTypeDefinition)
             {
-                case JsonTokenType.True:
-                case JsonTokenType.False:
-                {
-                    return new InvalidSession(reader.GetBoolean());
-                }
-                default:
-                {
-                    throw new JsonException();
-                }
+                return false;
             }
+
+            var genericType = typeInfo.GetGenericTypeDefinition();
+            return genericType == typeof(Optional<>);
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IInvalidSession? value, JsonSerializerOptions options)
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            if (value is null)
+            var typeInfo = typeToConvert.GetTypeInfo();
+
+            var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
+
+            if (!(Activator.CreateInstance(optionalType) is JsonConverter createdConverter))
             {
-                writer.WriteNullValue();
-                return;
+                throw new JsonException();
             }
 
-            writer.WriteBooleanValue(value.IsResumable);
+            return createdConverter;
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  NullableConverter.cs
+//  HeartbeatConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,42 +23,50 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
+using Remora.Discord.API.Gateway.Bidirectional;
 
 namespace Remora.Discord.API.Json
 {
-    /// <summary>
-    /// Converts from to and from <see cref="Nullable{T}"/>.
-    /// </summary>
-    /// <typeparam name="TValue">The inner nullable value.</typeparam>
-    public class NullableConverter<TValue> : JsonConverter<TValue?>
-        where TValue : struct
+    /// <inheritdoc />
+    internal class HeartbeatConverter : JsonConverter<IHeartbeat?>
     {
         /// <inheritdoc />
-        public override TValue? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
+                case JsonTokenType.Number:
+                {
+                    return new Heartbeat(reader.GetInt64());
+                }
                 case JsonTokenType.Null:
                 {
-                    return null;
+                    return new Heartbeat(null);
                 }
                 default:
                 {
-                    return JsonSerializer.Deserialize<TValue>(ref reader, options);
+                    throw new JsonException();
                 }
             }
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, TValue? value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IHeartbeat? value, JsonSerializerOptions options)
         {
-            if (!value.HasValue)
+            if (value is null)
             {
                 writer.WriteNullValue();
                 return;
             }
 
-            JsonSerializer.Serialize(writer, value.Value, options);
+            if (value.LastSequenceNumber is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            writer.WriteNumberValue(value.LastSequenceNumber.Value);
         }
     }
 }

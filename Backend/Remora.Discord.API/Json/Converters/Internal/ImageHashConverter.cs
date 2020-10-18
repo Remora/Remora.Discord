@@ -1,5 +1,5 @@
 //
-//  OptionalConverterFactory.cs
+//  ImageHashConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,44 +21,45 @@
 //
 
 using System;
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Remora.Discord.Core;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Creates converters for <see cref="Optional{TValue}"/>.
+    /// Converts an image hash to and from JSON.
     /// </summary>
-    public class OptionalConverterFactory : JsonConverterFactory
+    internal class ImageHashConverter : JsonConverter<IImageHash?>
     {
         /// <inheritdoc />
-        public override bool CanConvert(Type typeToConvert)
+        public override IImageHash? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var typeInfo = typeToConvert.GetTypeInfo();
-            if (!typeInfo.IsGenericType || typeInfo.IsGenericTypeDefinition)
+            if (reader.TokenType == JsonTokenType.Null)
             {
-                return false;
+                return null;
             }
 
-            var genericType = typeInfo.GetGenericTypeDefinition();
-            return genericType == typeof(Optional<>);
-        }
-
-        /// <inheritdoc />
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var typeInfo = typeToConvert.GetTypeInfo();
-
-            var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
-
-            if (!(Activator.CreateInstance(optionalType) is JsonConverter createdConverter))
+            if (reader.TokenType != JsonTokenType.String)
             {
                 throw new JsonException();
             }
 
-            return createdConverter;
+            var value = reader.GetString();
+            return new ImageHash(value);
+        }
+
+        /// <inheritdoc />
+        public override void Write(Utf8JsonWriter writer, IImageHash? value, JsonSerializerOptions options)
+        {
+            if (value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            writer.WriteStringValue(value.Value);
         }
     }
 }

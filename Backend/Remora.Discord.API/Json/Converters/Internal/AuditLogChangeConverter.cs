@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts <see cref="IAuditLogChange"/> objects to and from JSON.
     /// </summary>
-    public class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
+    internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
     {
         private static readonly IReadOnlyDictionary<string, Type> KeyTypes = new Dictionary<string, Type>
         {
