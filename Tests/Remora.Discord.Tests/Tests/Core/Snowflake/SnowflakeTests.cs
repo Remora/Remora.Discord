@@ -174,7 +174,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.ToString()"/> method.
+        /// Tests the <see cref="object.ToString"/> method.
         /// </summary>
         public new class ToString
         {
@@ -188,7 +188,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.Equals(object?)"/> method.
+        /// Tests the <see cref="object.Equals(object?)"/> method.
         /// </summary>
         public new class Equals
         {
@@ -230,7 +230,7 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.GetHashCode"/> method.
+        /// Tests the <see cref="object.GetHashCode"/> method.
         /// </summary>
         public new class GetHashCode
         {
