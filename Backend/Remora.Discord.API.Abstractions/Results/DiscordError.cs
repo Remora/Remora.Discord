@@ -156,6 +156,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownRedistributable = 10036,
 
         /// <summary>
+        /// Unknown guild template.
+        /// </summary>
+        UnknownGuildTemplate = 100057,
+
+        /// <summary>
         /// Bots cannot use this endpoint.
         /// </summary>
         NoBotsAllowed = 20001,
@@ -169,6 +174,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// This message cannot be edited due to announcement rate limits.
         /// </summary>
         EditingNotAllowedDueToAnnouncementRateLimits = 20022,
+
+        /// <summary>
+        /// The channel you are writing to has hit the write rate limit.
+        /// </summary>
+        WriteRateLimitHit = 20028,
 
         /// <summary>
         /// Maximum number of guilds reached (100).
