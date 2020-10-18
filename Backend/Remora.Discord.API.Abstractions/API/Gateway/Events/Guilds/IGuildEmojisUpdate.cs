@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents an update to a guild's emojis.
     /// </summary>
+    [PublicAPI]
     public interface IGuildEmojisUpdate : IGatewayEvent
     {
         /// <summary>

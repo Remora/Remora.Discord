@@ -32,6 +32,7 @@ namespace Remora.Discord.Gateway.Results
     /// Represents an attempt to receive a payload via the gateway.
     /// </summary>
     /// <typeparam name="TEntity">The entity to create.</typeparam>
+    [PublicAPI]
     public class ReceivePayloadResult<TEntity> : AbstractGatewayResult<ReceivePayloadResult<TEntity>>
     {
         /// <summary>
@@ -104,7 +105,7 @@ namespace Remora.Discord.Gateway.Results
         /// </summary>
         /// <param name="entity">The entity that was retrieved.</param>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
+        [Pure]
         public static ReceivePayloadResult<TEntity> FromSuccess(TEntity entity)
         {
             return new ReceivePayloadResult<TEntity>(entity);
@@ -115,7 +116,7 @@ namespace Remora.Discord.Gateway.Results
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>The successful result.</returns>
-        [PublicAPI, Pure]
+        [Pure]
         public static implicit operator ReceivePayloadResult<TEntity>(TEntity entity)
         {
             return FromSuccess(entity);

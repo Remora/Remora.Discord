@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents the creation of a message.
     /// </summary>
+    [PublicAPI]
     public interface IMessageUpdate : IGatewayEvent
     {
         /// <summary>

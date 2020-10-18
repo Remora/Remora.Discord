@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Sent when a user starts typing in a channel.
     /// </summary>
+    [PublicAPI]
     public interface ITypingStart : IGatewayEvent
     {
         /// <summary>

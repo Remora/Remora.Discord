@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Objects
     /// <summary>
     /// Represents a session start limit.
     /// </summary>
+    [PublicAPI]
     public class SessionStartLimit : ISessionStartLimit
     {
         /// <inheritdoc/>

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 namespace Remora.Discord.API.Gateway.Commands
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Gateway.Commands
     /// <summary>
     /// Represents an identification set for a sharded connection.
     /// </summary>
+    [PublicAPI]
     public class ShardIdentification : IShardIdentification
     {
         /// <inheritdoc />

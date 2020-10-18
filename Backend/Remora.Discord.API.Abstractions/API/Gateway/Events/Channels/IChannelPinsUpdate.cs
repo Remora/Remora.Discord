@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents a pin or unpin of a message in a channel. This is not sent when a pinned message is deleted.
     /// </summary>
+    [PublicAPI]
     public interface IChannelPinsUpdate : IGatewayEvent
     {
         /// <summary>

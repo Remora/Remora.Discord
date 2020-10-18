@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Gateway.Commands
     /// <summary>
     /// Represents a command used to request guild members.
     /// </summary>
+    [PublicAPI]
     public class RequestGuildMembers : IRequestGuildMembers
     {
         /// <inheritdoc />

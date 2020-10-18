@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Enumerates the various permissions in Discord.
     /// </summary>
-    [PublicAPI, Flags]
+    [Flags, PublicAPI]
     public enum DiscordPermission
     {
         /// <summary>

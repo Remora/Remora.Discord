@@ -21,11 +21,13 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class RoleTemplate : IRoleTemplate
     {
         /// <inheritdoc />

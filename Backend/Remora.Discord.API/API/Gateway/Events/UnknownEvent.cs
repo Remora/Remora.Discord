@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Gateway.Events
     /// <summary>
     /// Represents an unknown event from the Discord gateway.
     /// </summary>
+    [PublicAPI]
     public class UnknownEvent : IUnknownEvent
     {
         /// <inheritdoc />

@@ -33,6 +33,7 @@ namespace Remora.Discord.Rest.Results
     /// Represents an attempt to create an entity via the REST API.
     /// </summary>
     /// <typeparam name="TEntity">The entity to create.</typeparam>
+    [PublicAPI]
     public class RetrieveRestEntityResult<TEntity> :
         AbstractRestResult<RetrieveRestEntityResult<TEntity>>,
         IRetrieveRestEntityResult<TEntity>
@@ -105,7 +106,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="entity">The entity that was retrieved.</param>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
         public static RetrieveRestEntityResult<TEntity> FromSuccess(TEntity entity)
         {
             return new RetrieveRestEntityResult<TEntity>(entity);
@@ -116,7 +116,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>The successful result.</returns>
-        [PublicAPI, Pure]
         public static implicit operator RetrieveRestEntityResult<TEntity>(TEntity entity)
         {
             return FromSuccess(entity);

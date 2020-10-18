@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents a bulk deletion of a set of messages.
     /// </summary>
+    [PublicAPI]
     public interface IMessageDeleteBulk : IGatewayEvent
     {
         /// <summary>

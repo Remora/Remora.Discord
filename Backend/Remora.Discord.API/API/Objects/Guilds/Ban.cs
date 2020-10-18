@@ -20,11 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class Ban : IBan
     {
         /// <inheritdoc />

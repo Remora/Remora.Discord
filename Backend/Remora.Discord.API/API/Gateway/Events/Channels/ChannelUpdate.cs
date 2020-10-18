@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -30,6 +31,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelUpdate" />
+    [PublicAPI]
     public class ChannelUpdate : Channel, IChannelUpdate
     {
         /// <inheritdoc cref="Channel"/>

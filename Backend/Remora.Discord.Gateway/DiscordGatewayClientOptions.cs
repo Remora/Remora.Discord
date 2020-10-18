@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.Gateway
     /// <summary>
     /// Holds various client options for use in the gateway client.
     /// </summary>
+    [PublicAPI]
     public class DiscordGatewayClientOptions
     {
         /// <summary>

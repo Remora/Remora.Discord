@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
 
@@ -40,6 +41,7 @@ namespace Remora.Discord.Gateway.Transport
     /// connect and disconnect separately from sending and receiving, for example), but generally, it is kept to a
     /// minimum.
     /// </remarks>
+    [PublicAPI]
     public interface IPayloadTransportService
     {
         /// <summary>

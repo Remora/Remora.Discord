@@ -29,6 +29,7 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents the result of a user-defined event response.
     /// </summary>
+    [PublicAPI]
     public class EventResponseResult : ResultBase<EventResponseResult>
     {
         /// <summary>
@@ -53,7 +54,7 @@ namespace Remora.Discord.Gateway.Results
         /// Creates a new successful result.
         /// </summary>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
+        [Pure]
         public static EventResponseResult FromSuccess()
         {
             return new EventResponseResult();

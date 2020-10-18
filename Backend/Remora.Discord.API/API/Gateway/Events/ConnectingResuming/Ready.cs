@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -31,6 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
     /// <summary>
     /// Represents the Ready event.
     /// </summary>
+    [PublicAPI]
     public class Ready : IReady
     {
         /// <inheritdoc />

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 
 namespace Remora.Discord.API
@@ -28,6 +29,7 @@ namespace Remora.Discord.API
     /// Represents a payload from the Discord gateway.
     /// </summary>
     /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
+    [PublicAPI]
     public class Payload<TData> : IPayload<TData> where TData : IGatewayPayloadData
     {
         /// <inheritdoc/>

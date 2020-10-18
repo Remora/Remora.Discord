@@ -20,11 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IInvalidSession"/>
+    [PublicAPI]
     public class InvalidSession : IInvalidSession
     {
         /// <inheritdoc />

@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents information about a single error.
     /// </summary>
+    [PublicAPI]
     public interface IErrorDetails
     {
         /// <summary>

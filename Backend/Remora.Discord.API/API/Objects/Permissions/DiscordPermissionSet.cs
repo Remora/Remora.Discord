@@ -23,11 +23,13 @@
 using System;
 using System.Linq;
 using System.Numerics;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class DiscordPermissionSet : IDiscordPermissionSet
     {
         /// <inheritdoc />

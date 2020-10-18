@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.API.Gateway.Commands
     /// <summary>
     /// Represents a command to update the status of a user.
     /// </summary>
+    [PublicAPI]
     public class UpdateStatus : IUpdateStatus
     {
         /// <inheritdoc />

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
@@ -33,6 +34,7 @@ namespace Remora.Discord.API.Abstractions.Rest
     /// <summary>
     /// Represents the Discord REST template API.
     /// </summary>
+    [PublicAPI]
     public interface IDiscordRestTemplateAPI
     {
         /// <summary>

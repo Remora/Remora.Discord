@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents information about session start limits.
     /// </summary>
+    [PublicAPI]
     public interface ISessionStartLimit
     {
         /// <summary>

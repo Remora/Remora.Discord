@@ -35,6 +35,7 @@ namespace Remora.Discord.Rest.Results
     /// <summary>
     /// Represents an attempt to create an entity via the REST API.
     /// </summary>
+    [PublicAPI]
     public class DeleteRestEntityResult :
         AbstractRestResult<DeleteRestEntityResult>,
         IDeleteRestEntityResult
@@ -83,7 +84,6 @@ namespace Remora.Discord.Rest.Results
         /// Creates a new successful result.
         /// </summary>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
         public static DeleteRestEntityResult FromSuccess()
         {
             return new DeleteRestEntityResult();
@@ -94,6 +94,7 @@ namespace Remora.Discord.Rest.Results
     /// Represents an attempt to delete an entity via the REST API.
     /// </summary>
     /// <typeparam name="TEntity">The entity type to Delete.</typeparam>
+    [PublicAPI]
     public class DeleteRestEntityResult<TEntity> :
         AbstractRestResult<DeleteRestEntityResult<TEntity>>,
         IDeleteRestEntityResult<TEntity>
@@ -165,7 +166,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="entity">The modified entity.</param>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
         public static DeleteRestEntityResult<TEntity> FromSuccess(TEntity entity)
         {
             return new DeleteRestEntityResult<TEntity>(entity);
@@ -176,7 +176,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="entity">The modified entity.</param>
         /// <returns>The successful result.</returns>
-        [PublicAPI, Pure]
         public static implicit operator DeleteRestEntityResult<TEntity>(TEntity entity)
         {
             return FromSuccess(entity);

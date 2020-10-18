@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Enumerates various message flags.
     /// </summary>
-    [PublicAPI, Flags]
+    [Flags, PublicAPI]
     public enum MessageFlags
     {
         /// <summary>

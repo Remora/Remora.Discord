@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 
 namespace Remora.Discord.API.Gateway.Bidirectional
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Gateway.Bidirectional
     /// <summary>
     /// Represents a heartbeat acknowledgement.
     /// </summary>
+    [PublicAPI]
     public class HeartbeatAcknowledge : IHeartbeatAcknowledge
     {
     }

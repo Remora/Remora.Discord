@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Gateway
 {
     /// <summary>
     /// Enumerates operation codes sent to or received by the Discord gateway in payloads.
     /// </summary>
+    [PublicAPI]
     public enum OperationCode
     {
         /// <summary>

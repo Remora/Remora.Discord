@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Gateway.Events
     /// <summary>
     /// Represents the greeting event sent by the gateway after connection.
     /// </summary>
+    [PublicAPI]
     public class Hello : IHello
     {
         /// <inheritdoc />

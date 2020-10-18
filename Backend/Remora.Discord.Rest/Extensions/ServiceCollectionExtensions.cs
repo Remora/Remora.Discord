@@ -26,6 +26,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -40,6 +41,7 @@ namespace Remora.Discord.Rest.Extensions
     /// <summary>
     /// Defines various extension methods for the <see cref="IServiceCollection"/> interface.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>

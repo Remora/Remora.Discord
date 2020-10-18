@@ -28,6 +28,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -41,6 +42,7 @@ namespace Remora.Discord.Rest.API
     /// <summary>
     /// Implements the Discord REST channel API.
     /// </summary>
+    [PublicAPI]
     public class DiscordRestChannelAPI : IDiscordRestChannelAPI
     {
         private readonly DiscordHttpClient _discordHttpClient;

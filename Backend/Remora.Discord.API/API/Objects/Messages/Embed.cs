@@ -23,12 +23,14 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class Embed : IEmbed
     {
         /// <inheritdoc />

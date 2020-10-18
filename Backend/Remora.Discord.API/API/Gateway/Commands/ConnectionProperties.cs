@@ -21,6 +21,7 @@
 //
 
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 namespace Remora.Discord.API.Gateway.Commands
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Gateway.Commands
     /// <summary>
     /// Represents a set of connection properties sent to the Discord gateway.
     /// </summary>
+    [PublicAPI]
     public class ConnectionProperties : IConnectionProperties
     {
         /// <inheritdoc />

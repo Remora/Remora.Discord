@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
+    [PublicAPI]
     public interface IIdentify : IGatewayCommand
     {
         /// <summary>

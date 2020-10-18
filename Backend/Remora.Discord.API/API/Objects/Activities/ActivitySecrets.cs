@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Objects
     /// <summary>
     /// Represents a set of secrets used for interacting with the activity.
     /// </summary>
+    [PublicAPI]
     public class ActivitySecrets : IActivitySecrets
     {
         /// <inheritdoc />

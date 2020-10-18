@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a message.
     /// </summary>
+    [PublicAPI]
     public interface IMessage
     {
         /// <summary>

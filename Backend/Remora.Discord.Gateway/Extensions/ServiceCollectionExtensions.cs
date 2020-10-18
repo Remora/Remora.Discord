@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using System.Net.WebSockets;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Transport;
@@ -33,6 +34,7 @@ namespace Remora.Discord.Gateway.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="IServiceCollection"/> class.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>

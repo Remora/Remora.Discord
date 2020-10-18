@@ -30,6 +30,7 @@ namespace Remora.Discord.Rest.Results
     /// <summary>
     /// Represents an attempt to perform an arbitrary action via the REST API.
     /// </summary>
+    [PublicAPI]
     public class RestRequestResult : AbstractRestResult<RestRequestResult>
     {
         /// <summary>
@@ -76,7 +77,6 @@ namespace Remora.Discord.Rest.Results
         /// Creates a new successful result.
         /// </summary>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
         public static RestRequestResult FromSuccess()
         {
             return new RestRequestResult();

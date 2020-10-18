@@ -27,6 +27,7 @@ using System.Net.WebSockets;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -48,6 +49,7 @@ namespace Remora.Discord.Gateway
     /// <summary>
     /// Represents a Discord Gateway client.
     /// </summary>
+    [PublicAPI]
     public class DiscordGatewayClient : IDisposable
     {
         private readonly IServiceProvider _services;

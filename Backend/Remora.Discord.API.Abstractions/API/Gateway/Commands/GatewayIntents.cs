@@ -21,13 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Enumerates the gateway intents that can be specified.
     /// </summary>
-    [Flags]
+    [Flags, PublicAPI]
     public enum GatewayIntents
     {
         /// <summary>

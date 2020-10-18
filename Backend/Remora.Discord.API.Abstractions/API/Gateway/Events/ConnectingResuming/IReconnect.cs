@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents a reconnection request. This interface defines no data.
     /// </summary>
+    [PublicAPI]
     public interface IReconnect : IGatewayEvent
     {
     }

@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Objects
     /// <summary>
     /// Represents an error from the REST API.
     /// </summary>
+    [PublicAPI]
     public class RestError : IRestError
     {
         /// <inheritdoc />

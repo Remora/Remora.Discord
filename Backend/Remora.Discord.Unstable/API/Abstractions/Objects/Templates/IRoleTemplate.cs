@@ -21,12 +21,14 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a Discord role.
     /// </summary>
+    [PublicAPI]
     public interface IRoleTemplate
     {
         /// <summary>

@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -31,6 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
     /// <summary>
     /// Represents a presence update.
     /// </summary>
+    [PublicAPI]
     public class PresenceUpdate : Presence, IPresenceUpdate
     {
         /// <summary>

@@ -34,6 +34,7 @@ namespace Remora.Discord.Rest.Results
     /// Represents an abstract REST API result.
     /// </summary>
     /// <typeparam name="TActualResult">The actual result type.</typeparam>
+    [PublicAPI]
     public abstract class AbstractRestResult<TActualResult> : ResultBase<TActualResult>, IRestResult
         where TActualResult : ResultBase<TActualResult>
     {
@@ -46,7 +47,6 @@ namespace Remora.Discord.Rest.Results
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractRestResult{TResultType}"/> class.
         /// </summary>
-        [PublicAPI]
         protected AbstractRestResult()
         {
         }
@@ -56,7 +56,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="errorReason">A more detailed error description.</param>
         /// <param name="exception">The exception that caused the error (if any).</param>
-        [PublicAPI]
         protected AbstractRestResult
         (
             string? errorReason,
@@ -71,7 +70,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="errorReason">A more detailed error description.</param>
         /// <param name="discordError">The Discord status code of the error (if any).</param>
-        [PublicAPI]
         protected AbstractRestResult
         (
             string? errorReason,
@@ -87,7 +85,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="errorReason">A more detailed error description.</param>
         /// <param name="httpError">The HTTP status code of the error (if any).</param>
-        [PublicAPI]
         protected AbstractRestResult
         (
             string? errorReason,
@@ -103,7 +100,6 @@ namespace Remora.Discord.Rest.Results
         /// </summary>
         /// <param name="restResult">The failed REST result.</param>
         /// <returns>A failed result.</returns>
-        [PublicAPI, Pure]
         public static TActualResult FromError
         (
             IRestResult restResult
@@ -128,7 +124,6 @@ namespace Remora.Discord.Rest.Results
         /// <param name="errorReason">A more detailed error reason.</param>
         /// <param name="discordError">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
-        [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,
@@ -159,7 +154,6 @@ namespace Remora.Discord.Rest.Results
         /// <param name="errorReason">A more detailed error reason.</param>
         /// <param name="httpStatusCode">The HTTP error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
-        [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,

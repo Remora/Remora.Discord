@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a channel.
     /// </summary>
+    [PublicAPI]
     public interface IChannelTemplate
     {
         /// <summary>

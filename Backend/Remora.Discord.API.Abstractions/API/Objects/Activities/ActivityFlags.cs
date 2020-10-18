@@ -21,13 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Enumerates the flags an activity can have.
     /// </summary>
-    [Flags]
+    [Flags, PublicAPI]
     public enum ActivityFlags
     {
         /// <summary>

@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
@@ -38,6 +39,7 @@ namespace Remora.Discord.API.Extensions
     /// <summary>
     /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>

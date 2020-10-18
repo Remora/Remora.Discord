@@ -30,6 +30,7 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents an attempt to create and maintain a connection to the Discord gateway.
     /// </summary>
+    [PublicAPI]
     public class SendPayloadResult : AbstractGatewayResult<SendPayloadResult>
     {
         /// <summary>
@@ -76,7 +77,7 @@ namespace Remora.Discord.Gateway.Results
         /// Creates a new successful result.
         /// </summary>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
+        [Pure]
         public static SendPayloadResult FromSuccess()
         {
             return new SendPayloadResult();

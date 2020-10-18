@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class MessageDeleteBulk : IMessageDeleteBulk
     {
         /// <inheritdoc/>

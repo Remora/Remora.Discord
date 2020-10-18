@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Objects
     /// <summary>
     /// Represents information about an activity Discord is aware of.
     /// </summary>
+    [PublicAPI]
     public class Activity : IActivity
     {
         /// <inheritdoc />

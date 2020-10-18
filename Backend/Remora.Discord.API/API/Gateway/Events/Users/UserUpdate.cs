@@ -29,6 +29,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate" />
+    [PublicAPI]
     public class UserUpdate : User, IUserUpdate
     {
         /// <inheritdoc cref="User" />

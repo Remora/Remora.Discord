@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Results;
 
@@ -33,6 +34,7 @@ namespace Remora.Discord.Gateway.Responders
     /// <summary>
     /// Represents a marker interface for event responders.
     /// </summary>
+    [PublicAPI]
     public interface IResponder
     {
     }
@@ -41,6 +43,7 @@ namespace Remora.Discord.Gateway.Responders
     /// Represents a type that can respond to certain gateway events.
     /// </summary>
     /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
+    [PublicAPI]
     public interface IResponder<in TGatewayEvent> : IResponder
         where TGatewayEvent : IGatewayEvent
     {

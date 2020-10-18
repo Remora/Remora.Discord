@@ -27,6 +27,7 @@ using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Gateway.Transport
     /// <summary>
     /// Represents a websocket-based transport service.
     /// </summary>
+    [PublicAPI]
     public class WebSocketPayloadTransportService : IPayloadTransportService, IAsyncDisposable
     {
         private readonly IServiceProvider _services;

@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelPinsUpdate" />
+    [PublicAPI]
     public class ChannelPinsUpdate : IChannelPinsUpdate
     {
         /// <inheritdoc />

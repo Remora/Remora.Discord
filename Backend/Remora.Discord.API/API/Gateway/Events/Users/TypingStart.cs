@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -27,6 +28,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class TypingStart : ITypingStart
     {
         /// <inheritdoc/>
