@@ -47,7 +47,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IDiscordPermissionSet> permissions,
             string region,
             Snowflake? afkChannelID,
-            int afkTimeout,
+            TimeSpan afkTimeout,
             VerificationLevel verificationLevel,
             MessageNotificationLevel defaultMessageNotifications,
             ExplicitContentFilterLevel explicitContentFilter,

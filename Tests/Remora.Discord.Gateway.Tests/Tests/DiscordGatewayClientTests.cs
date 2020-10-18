@@ -62,7 +62,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
@@ -120,7 +120,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
@@ -143,7 +143,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
                             r =>
@@ -191,7 +191,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
@@ -214,7 +214,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
                             r =>

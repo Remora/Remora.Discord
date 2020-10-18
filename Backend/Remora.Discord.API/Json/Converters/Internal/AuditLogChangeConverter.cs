@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
@@ -52,7 +53,7 @@ namespace Remora.Discord.API.Json
             { "vanity_url_code", typeof(string) },
             { "$add", typeof(IReadOnlyList<IPartialRole>) },
             { "$remove", typeof(IReadOnlyList<IPartialRole>) },
-            { "prune_delete_days", typeof(int) },
+            { "prune_delete_days", typeof(TimeSpan) },
             { "widget_enabled", typeof(bool) },
             { "widget_channel_id", typeof(Snowflake) },
             { "system_channel_id", typeof(Snowflake) },
@@ -62,7 +63,7 @@ namespace Remora.Discord.API.Json
             { "permission_overwrites", typeof(IReadOnlyList<IPermissionOverwrite>) },
             { "nsfw", typeof(bool) },
             { "application_id", typeof(Snowflake) },
-            { "rate_limit_per_user", typeof(int) },
+            { "rate_limit_per_user", typeof(TimeSpan) },
             { "permissions", typeof(IDiscordPermissionSet) },
             { "color", typeof(Color) },
             { "hoist", typeof(bool) },
@@ -73,6 +74,8 @@ namespace Remora.Discord.API.Json
             { "channel_id", typeof(Snowflake) },
             { "inviter_id", typeof(Snowflake) },
             { "max_uses", typeof(int) },
+            { "uses", typeof(int) },
+            { "max_age", typeof(TimeSpan) },
             { "temporary", typeof(bool) },
             { "deaf", typeof(bool) },
             { "mute", typeof(bool) },
@@ -82,7 +85,17 @@ namespace Remora.Discord.API.Json
             { "type", typeof(string) },
             { "enable_emoticons", typeof(bool) },
             { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
-            { "expire_grace_period", typeof(int) },
+            { "expire_grace_period", typeof(TimeSpan) },
+        };
+
+        private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =
+        new Dictionary<string, JsonConverter>
+        {
+            { "afk_timeout", new UnitTimeSpanConverter(TimeUnit.Seconds) },
+            { "prune_delete_days", new UnitTimeSpanConverter(TimeUnit.Days) },
+            { "rate_limit_per_user", new UnitTimeSpanConverter(TimeUnit.Days) },
+            { "max_age", new UnitTimeSpanConverter(TimeUnit.Seconds) },
+            { "expire_grace_period", new UnitTimeSpanConverter(TimeUnit.Days) },
         };
 
         /// <inheritdoc />
@@ -103,6 +116,12 @@ namespace Remora.Discord.API.Json
             if (!KeyTypes.TryGetValue(key, out var valueType))
             {
                 throw new JsonException();
+            }
+
+            if (KeyConverters.TryGetValue(key, out var keyConverter))
+            {
+                options = options.Clone();
+                options.Converters.Add(keyConverter);
             }
 
             Optional<object> newValue = default;

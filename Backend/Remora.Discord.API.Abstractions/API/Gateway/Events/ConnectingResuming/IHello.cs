@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
@@ -31,8 +32,8 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     public interface IHello : IGatewayEvent
     {
         /// <summary>
-        /// Gets the heartbeat interval in milliseconds.
+        /// Gets the heartbeat interval.
         /// </summary>
-        ulong HeartbeatInterval { get; }
+        TimeSpan HeartbeatInterval { get; }
     }
 }

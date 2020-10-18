@@ -56,7 +56,7 @@ namespace Remora.Discord.API.Objects
         public IntegrationExpireBehaviour ExpireBehaviour { get; }
 
         /// <inheritdoc />
-        public int ExpireGracePeriod { get; }
+        public TimeSpan ExpireGracePeriod { get; }
 
         /// <inheritdoc />
         public Optional<IUser> User { get; }
@@ -104,7 +104,7 @@ namespace Remora.Discord.API.Objects
             Snowflake roleID,
             Optional<bool> enableEmoticons,
             IntegrationExpireBehaviour expireBehaviour,
-            int expireGracePeriod,
+            TimeSpan expireGracePeriod,
             Optional<IUser> user,
             IAccount account,
             DateTimeOffset syncedAt,

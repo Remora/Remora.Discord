@@ -66,7 +66,7 @@ namespace Remora.Discord.API.Objects
         public Optional<int> UserLimit { get; }
 
         /// <inheritdoc />
-        public Optional<int> RateLimitPerUser { get; }
+        public Optional<TimeSpan> RateLimitPerUser { get; }
 
         /// <inheritdoc />
         public Optional<IReadOnlyList<IUser>> Recipients { get; }
@@ -120,7 +120,7 @@ namespace Remora.Discord.API.Objects
             Optional<Snowflake?> lastMessageID,
             Optional<int> bitrate,
             Optional<int> userLimit,
-            Optional<int> rateLimitPerUser,
+            Optional<TimeSpan> rateLimitPerUser,
             Optional<IReadOnlyList<IUser>> recipients,
             Optional<IImageHash?> icon,
             Optional<Snowflake> ownerID,

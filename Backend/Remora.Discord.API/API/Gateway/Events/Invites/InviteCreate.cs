@@ -48,7 +48,7 @@ namespace Remora.Discord.API.Gateway.Events
         public Optional<IUser> Inviter { get; }
 
         /// <inheritdoc/>
-        public int MaxAge { get; }
+        public TimeSpan MaxAge { get; }
 
         /// <inheritdoc/>
         public int MaxUses { get; }
@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Gateway.Events
             DateTimeOffset createdAt,
             Optional<Snowflake> guildID,
             Optional<IUser> inviter,
-            int maxAge,
+            TimeSpan maxAge,
             int maxUses,
             Optional<IPartialUser> targetUser,
             Optional<TargetUserType> targetUserType,

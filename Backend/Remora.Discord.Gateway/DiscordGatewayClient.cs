@@ -348,7 +348,7 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Set up the send task
-                    var heartbeatInterval = TimeSpan.FromMilliseconds(hello.Data.HeartbeatInterval);
+                    var heartbeatInterval = hello.Data.HeartbeatInterval;
 
                     _sendTask = Task.Factory.StartNew
                     (

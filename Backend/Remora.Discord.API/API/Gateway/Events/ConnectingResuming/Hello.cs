@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -32,13 +33,13 @@ namespace Remora.Discord.API.Gateway.Events
     public class Hello : IHello
     {
         /// <inheritdoc />
-        public ulong HeartbeatInterval { get; }
+        public TimeSpan HeartbeatInterval { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Hello"/> class.
         /// </summary>
         /// <param name="heartbeatInterval">The heartbeat interval.</param>
-        public Hello(ulong heartbeatInterval)
+        public Hello(TimeSpan heartbeatInterval)
         {
             this.HeartbeatInterval = heartbeatInterval;
         }

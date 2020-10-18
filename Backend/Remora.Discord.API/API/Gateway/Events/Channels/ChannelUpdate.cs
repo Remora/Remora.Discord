@@ -48,7 +48,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
             Optional<Snowflake?> lastMessageID,
             Optional<int> bitrate,
             Optional<int> userLimit,
-            Optional<int> rateLimitPerUser,
+            Optional<TimeSpan> rateLimitPerUser,
             Optional<IReadOnlyList<IUser>> recipients,
             Optional<IImageHash?> icon,
             Optional<Snowflake> ownerID,

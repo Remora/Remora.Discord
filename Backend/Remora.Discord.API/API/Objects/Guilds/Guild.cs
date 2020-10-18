@@ -63,7 +63,7 @@ namespace Remora.Discord.API.Objects
         public Snowflake? AFKChannelID { get; }
 
         /// <inheritdoc />
-        public int AFKTimeout { get; }
+        public TimeSpan AFKTimeout { get; }
 
         /// <inheritdoc />
         public VerificationLevel VerificationLevel { get; }
@@ -223,7 +223,7 @@ namespace Remora.Discord.API.Objects
             Optional<IDiscordPermissionSet> permissions,
             string region,
             Snowflake? afkChannelID,
-            int afkTimeout,
+            TimeSpan afkTimeout,
             VerificationLevel verificationLevel,
             MessageNotificationLevel defaultMessageNotifications,
             ExplicitContentFilterLevel explicitContentFilter,

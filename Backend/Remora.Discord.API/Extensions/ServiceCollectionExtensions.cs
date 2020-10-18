@@ -164,7 +164,9 @@ namespace Remora.Discord.API.Extensions
             // Connecting and resuming
             options.AddConverter<InvalidSessionConverter>();
 
-            options.AddDataObjectConverter<IHello, Hello>();
+            options.AddDataObjectConverter<IHello, Hello>()
+                .WithPropertyConverter(h => h.HeartbeatInterval, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
+
             options.AddDataObjectConverter<IReady, Ready>()
                 .WithPropertyName(r => r.Version, "v");
 
@@ -173,13 +175,16 @@ namespace Remora.Discord.API.Extensions
 
             // Channels
             options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
@@ -187,18 +192,28 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
                 .WithPropertyName(d => d.IsUnavailable, "unavailable");
@@ -226,7 +241,8 @@ namespace Remora.Discord.API.Extensions
 
             // Invites
             options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
-                .WithPropertyName(c => c.IsTemporary, "temporary");
+                .WithPropertyName(c => c.IsTemporary, "temporary")
+                .WithPropertyConverter(c => c.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
 
@@ -336,10 +352,12 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddChannelObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IChannel, Channel>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
@@ -379,7 +397,7 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IGatewayEndpoint, GatewayEndpoint>();
             options.AddDataObjectConverter<ISessionStartLimit, SessionStartLimit>()
-                .WithPropertyConverter(st => st.ResetAfter, new MillisecondTimeSpanConverter());
+                .WithPropertyConverter(st => st.ResetAfter, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
 
             return options;
         }
@@ -401,7 +419,8 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -413,7 +432,8 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
@@ -467,12 +487,14 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IIntegration, Integration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
-                .WithPropertyName(i => i.IsRevoked, "revoked");
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IPartialIntegration, PartialIntegration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
-                .WithPropertyName(i => i.IsRevoked, "revoked");
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IIntegrationApplication, IntegrationApplication>();
 

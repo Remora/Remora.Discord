@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the AFK timeout (in seconds).
         /// </summary>
-        int AFKTimeout { get; }
+        TimeSpan AFKTimeout { get; }
 
         /// <summary>
         /// Gets the verification level required for the guild.

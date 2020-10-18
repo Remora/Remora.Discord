@@ -1,5 +1,5 @@
 //
-//  MillisecondTimeSpanConverter.cs
+//  TimeUnit.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,34 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts a <see cref="TimeSpan"/> to and from milliseconds in JSON.
+    /// Enumerates various units of time.
     /// </summary>
     [PublicAPI]
-    public class MillisecondTimeSpanConverter : JsonConverter<TimeSpan>
+    public enum TimeUnit
     {
-        /// <inheritdoc />
-        public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (!reader.TryGetDouble(out var milliseconds))
-            {
-                throw new JsonException();
-            }
+        /// <summary>
+        /// A unit of days.
+        /// </summary>
+        Days,
 
-            return TimeSpan.FromMilliseconds(milliseconds);
-        }
+        /// <summary>
+        /// A unit of hours.
+        /// </summary>
+        Hours,
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
-        {
-            writer.WriteNumberValue(value.TotalMilliseconds);
-        }
+        /// <summary>
+        /// A unit of minutes.
+        /// </summary>
+        Minutes,
+
+        /// <summary>
+        /// A unit of seconds.
+        /// </summary>
+        Seconds,
+
+        /// <summary>
+        /// A unit of milliseconds.
+        /// </summary>
+        Milliseconds
     }
 }
