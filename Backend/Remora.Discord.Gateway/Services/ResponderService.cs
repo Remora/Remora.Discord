@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 
@@ -31,6 +32,7 @@ namespace Remora.Discord.Gateway.Services
     /// <summary>
     /// Handles introspection of registered responders.
     /// </summary>
+    [PublicAPI]
     public class ResponderService : IResponderTypeRepository
     {
         private readonly Dictionary<Type, List<Type>> _registeredResponderTypes = new Dictionary<Type, List<Type>>();
@@ -39,7 +41,7 @@ namespace Remora.Discord.Gateway.Services
         /// Adds a responder to the service.
         /// </summary>
         /// <typeparam name="TResponder">The responder type.</typeparam>
-        public void RegisterResponderType<TResponder>() where TResponder : IResponder
+        internal void RegisterResponderType<TResponder>() where TResponder : IResponder
         {
             var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
             var responderInterfaces = responderTypeInterfaces.Where
