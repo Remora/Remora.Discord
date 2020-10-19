@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CommandLineParser" Version="2.8.0" />
+      <PackageReference Include="Remora.Results.Abstractions" Version="1.0.4" />
+      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
+    </ItemGroup>
+
+</Project>
