@@ -39,17 +39,17 @@ namespace Remora.Commands.Tests.Tokenization
         /// <param name="expectedTokenTypes">The type sequence to expect.</param>
         [Theory]
         [InlineData("", new TokenType[] { })]
-        [InlineData("a", new TokenType[] { Value })]
-        [InlineData("a b", new TokenType[] { Value, Value })]
-        [InlineData("-a b", new TokenType[] { ShortName, Value })]
-        [InlineData("-a=b", new TokenType[] { ShortName, Value })]
-        [InlineData("--a b", new TokenType[] { LongName, Value })]
-        [InlineData("--a=b", new TokenType[] { LongName, Value })]
-        [InlineData("-a -b", new TokenType[] { ShortName, ShortName })]
-        [InlineData("--a --b", new TokenType[] { LongName, LongName })]
-        [InlineData("--a --b c", new TokenType[] { LongName, LongName, Value })]
-        [InlineData("--b \"booga wooga\"", new TokenType[] { LongName, Value })]
-        [InlineData("--b=\"booga wooga\"", new TokenType[] { LongName, Value })]
+        [InlineData("a", new[] { Value })]
+        [InlineData("a b", new[] { Value, Value })]
+        [InlineData("-a b", new[] { ShortName, Value })]
+        [InlineData("-a=b", new[] { ShortName, Value })]
+        [InlineData("--a b", new[] { LongName, Value })]
+        [InlineData("--a=b", new[] { LongName, Value })]
+        [InlineData("-a -b", new[] { ShortName, ShortName })]
+        [InlineData("--a --b", new[] { LongName, LongName })]
+        [InlineData("--a --b c", new[] { LongName, LongName, Value })]
+        [InlineData("--b \"booga wooga\"", new[] { LongName, Value })]
+        [InlineData("--b=\"booga wooga\"", new[] { LongName, Value })]
         public void TokenizesStringCorrectly(string value, IEnumerable<TokenType> expectedTokenTypes)
         {
             var actualTokenTypes = new List<TokenType>();
