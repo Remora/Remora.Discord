@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace Remora.Commands.Tokenization
@@ -95,8 +96,24 @@ namespace Remora.Commands.Tokenization
                 var index = span.IndexOf(_delimiter);
                 if (index == -1)
                 {
-                    _value = ReadOnlySpan<char>.Empty;
-                    _current = span;
+                    var completeSegment = span;
+                    var completeRemainder = ReadOnlySpan<char>.Empty;
+                    if
+                    (
+                        AdjustForQuotedValues
+                        (
+                            completeSegment,
+                            completeSegment.Length,
+                            ref completeSegment,
+                            ref completeRemainder
+                        )
+                    )
+                    {
+                        return true;
+                    }
+
+                    _value = completeRemainder;
+                    _current = completeSegment;
 
                     // Everything that remains is one value
                     return true;
@@ -107,37 +124,8 @@ namespace Remora.Commands.Tokenization
                 var continuationIndex = Math.Clamp(index + _delimiter.Length, 0, span.Length);
                 var remainder = span.Slice(continuationIndex);
 
-                // Check if we're trying to read a quoted value
-                var foundStartQuote = false;
-                var foundEndQuote = false;
-                foreach (var (start, end) in Quotations)
+                if (AdjustForQuotedValues(span, continuationIndex, ref segment, ref remainder))
                 {
-                    if (!segment.Contains(start, StringComparison.Ordinal))
-                    {
-                        continue;
-                    }
-
-                    foundStartQuote = true;
-
-                    var closingIndex = remainder.IndexOf(end);
-                    if (closingIndex < 0)
-                    {
-                        continue;
-                    }
-
-                    segment = span.Slice(0, continuationIndex + closingIndex + 1);
-                    remainder = span.Slice(continuationIndex + closingIndex + 1);
-
-                    foundEndQuote = true;
-                    break;
-                }
-
-                if (foundStartQuote && !foundEndQuote)
-                {
-                    // Read to end if we can't find a matching quote
-                    _current = _value;
-                    _value = ReadOnlySpan<char>.Empty;
-
                     return true;
                 }
 
@@ -151,6 +139,66 @@ namespace Remora.Commands.Tokenization
 
                 return true;
             }
+        }
+
+        private bool AdjustForQuotedValues
+        (
+            ReadOnlySpan<char> span,
+            int continuationIndex,
+            ref ReadOnlySpan<char> segment,
+            ref ReadOnlySpan<char> remainder
+        )
+        {
+            // Check if we're trying to read a quoted value
+            var foundStartQuote = false;
+            var foundEndQuote = false;
+            foreach (var (start, end) in Quotations)
+            {
+                if (!segment.Contains(start, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                foundStartQuote = true;
+
+                // First, look for a closing quote in the segment
+
+                // Strip off the first quote
+                segment = segment.Slice(1);
+                var closingIndex = segment.IndexOf(end);
+                if (closingIndex >= 0)
+                {
+                    segment = span.Slice(1, closingIndex);
+                    remainder = span.Slice(closingIndex + 2);
+
+                    foundEndQuote = true;
+                    break;
+                }
+
+                // If there's none, keep searching in the remainder
+                closingIndex = remainder.IndexOf(end);
+                if (closingIndex < 0)
+                {
+                    continue;
+                }
+
+                segment = span.Slice(1, continuationIndex + closingIndex - 1);
+                remainder = span.Slice(continuationIndex + closingIndex + 1);
+
+                foundEndQuote = true;
+                break;
+            }
+
+            if (!foundStartQuote || foundEndQuote)
+            {
+                return false;
+            }
+
+            // Read to end if we can't find a matching quote
+            _current = _value;
+            _value = ReadOnlySpan<char>.Empty;
+
+            return true;
         }
     }
 }
