@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Commands.Tokenization;
 using Xunit;
 
@@ -92,41 +93,40 @@ namespace Remora.Commands.Tests.Tokenization
         /// Tests whether the enumerator splits values into the correct number of elements.
         /// </summary>
         /// <param name="value">The string value.</param>
-        /// <param name="expectedCount">The expected number of elements.</param>
+        /// <param name="expectedElements">The expected number of elements.</param>
         [Theory]
-        [InlineData("", 0)]
-        [InlineData("a", 1)]
-        [InlineData("a b", 2)]
-        [InlineData("a b c", 3)]
-        [InlineData("abc def", 2)]
-        [InlineData("\"abc\"", 1)]
-        [InlineData("\"abc def\"", 1)]
-        [InlineData("\"abc\" \"def\"", 2)]
-        [InlineData("\"abc\"    \"def\"", 2)]
-        [InlineData("\"abc\"\"def\"", 2)]
-        [InlineData("aa \"abc\"\"def\"", 3)]
-        [InlineData("\"abc\" \"def\" ghi jkl", 4)]
-        [InlineData("\"abc\"\"def\" ghi jkl", 4)]
-        [InlineData("\"abc\"\"def\"ghi jkl", 4)]
-        [InlineData(" ", 0)]
-        [InlineData("  ", 0)]
-        [InlineData(" a ", 1)]
-        [InlineData(" a b", 2)]
-        [InlineData(" a b ", 2)]
-        [InlineData(" a b     ", 2)]
-        [InlineData("      a b     ", 2)]
-        [InlineData("test -b=aa --aaaagh 10 \"booga wooga\"", 5)]
-        public void SplitsStringIntoCorrectNumberOfElements(string value, int expectedCount)
+        [InlineData("", new string[] { })]
+        [InlineData("a", new[] { "a" })]
+        [InlineData("a b", new[] { "a", "b" })]
+        [InlineData("a b c", new[] { "a", "b", "c" })]
+        [InlineData("abc def", new[] { "abc", "def" })]
+        [InlineData("\"abc\"", new[] { "\"abc\"" })]
+        [InlineData("\"abc def\"", new[] { "\"abc def\"" })]
+        [InlineData("\"abc\" \"def\"", new[] { "\"abc\"", "\"def\"" })]
+        [InlineData("\"abc\"    \"def\"", new[] { "\"abc\"", "\"def\"" })]
+        [InlineData("\"abc\"\"def\"", new[] { "\"abc\"", "\"def\"" })]
+        [InlineData("aa \"abc\"\"def\"", new[] { "aa", "\"abc\"", "\"def\"" })]
+        [InlineData("\"abc\" \"def\" ghi jkl", new[] { "\"abc\"", "\"def\"", "ghi", "jkl" })]
+        [InlineData("\"abc\"\"def\" ghi jkl", new[] { "\"abc\"", "\"def\"", "ghi", "jkl" })]
+        [InlineData("\"abc\"\"def\"ghi jkl", new[] { "\"abc\"", "\"def\"", "ghi", "jkl" })]
+        [InlineData(" ", new string[] { })]
+        [InlineData("  ", new string[] { })]
+        [InlineData(" a ", new[] { "a" })]
+        [InlineData(" a b", new[] { "a", "b" })]
+        [InlineData(" a b ", new[] { "a", "b" })]
+        [InlineData(" a b     ", new[] { "a", "b" })]
+        [InlineData("      a b     ", new[] { "a", "b" })]
+        [InlineData("test -b=aa --aaaagh 10 \"booga wooga\"", new[] { "test", "-b=aa", "--aaaagh", "10", "\"booga wooga\"" })]
+        [InlineData("--b=\"booga wooga\"", new[] { "--b=\"booga wooga\"" })]
+        public void SplitsStringIntoCorrectElements(string value, IEnumerable<string> expectedElements)
         {
-            var enumerator = new SpanSplitEnumerator(value, " ");
-
-            var actualCount = 0;
-            while (enumerator.MoveNext())
+            var actualElements = new List<string>();
+            foreach (var segment in new SpanSplitEnumerator(value, " "))
             {
-                ++actualCount;
+                actualElements.Add(segment.ToString());
             }
 
-            Assert.Equal(expectedCount, actualCount);
+            Assert.Equal(expectedElements, actualElements);
         }
     }
 }
