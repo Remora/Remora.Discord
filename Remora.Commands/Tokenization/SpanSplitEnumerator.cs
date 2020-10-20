@@ -154,7 +154,8 @@ namespace Remora.Commands.Tokenization
             var foundEndQuote = false;
             foreach (var (start, end) in Quotations)
             {
-                if (!segment.Contains(start, StringComparison.Ordinal))
+                var startIndex = segment.IndexOf(start);
+                if (startIndex < 0)
                 {
                     continue;
                 }
@@ -162,13 +163,15 @@ namespace Remora.Commands.Tokenization
                 foundStartQuote = true;
 
                 // First, look for a closing quote in the segment
-
-                // Strip off the first quote
-                segment = segment.Slice(1);
-                var closingIndex = segment.IndexOf(end);
+                var closingIndex = segment.Slice(startIndex + 1).IndexOf(end);
                 if (closingIndex >= 0)
                 {
-                    segment = span.Slice(1, closingIndex);
+                    closingIndex += startIndex;
+                }
+
+                if (closingIndex >= 0)
+                {
+                    segment = span.Slice(0, closingIndex + 2);
                     remainder = span.Slice(closingIndex + 2);
 
                     foundEndQuote = true;
@@ -182,7 +185,7 @@ namespace Remora.Commands.Tokenization
                     continue;
                 }
 
-                segment = span.Slice(1, continuationIndex + closingIndex - 1);
+                segment = span.Slice(0, continuationIndex + closingIndex + 1);
                 remainder = span.Slice(continuationIndex + closingIndex + 1);
 
                 foundEndQuote = true;
