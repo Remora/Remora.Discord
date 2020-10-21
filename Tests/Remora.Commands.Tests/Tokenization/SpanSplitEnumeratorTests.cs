@@ -118,6 +118,9 @@ namespace Remora.Commands.Tests.Tokenization
         [InlineData("      a b     ", new[] { "a", "b" })]
         [InlineData("test -b=aa --aaaagh 10 \"booga wooga\"", new[] { "test", "-b=aa", "--aaaagh", "10", "\"booga wooga\"" })]
         [InlineData("--b=\"booga wooga\"", new[] { "--b=\"booga wooga\"" })]
+        [InlineData("\"aaaasdasd done oops i forgot my end quote", new[] { "\"aaaasdasd done oops i forgot my end quote" })]
+        [InlineData("a \"b c", new[] { "a", "\"b c" })]
+        [InlineData("\"a", new[] { "\"a" })]
         public void SplitsStringIntoCorrectElements(string value, IEnumerable<string> expectedElements)
         {
             var actualElements = new List<string>();
