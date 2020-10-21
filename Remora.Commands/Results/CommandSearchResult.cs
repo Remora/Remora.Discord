@@ -73,5 +73,13 @@ namespace Remora.Commands.Results
             : base(errorReason, exception)
         {
         }
+
+        /// <summary>
+        /// Implicitly converts a command node to a successful result.
+        /// </summary>
+        /// <param name="commandNode">The node.</param>
+        /// <returns>The result.</returns>
+        public static implicit operator CommandSearchResult(CommandNode commandNode)
+            => new CommandSearchResult(commandNode);
     }
 }

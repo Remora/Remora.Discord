@@ -21,7 +21,9 @@
 //
 
 using System;
+using Remora.Commands.Extensions;
 using Remora.Commands.Results;
+using Remora.Commands.Tokenization;
 using Remora.Commands.Trees.Nodes;
 
 namespace Remora.Commands.Trees
@@ -52,7 +54,58 @@ namespace Remora.Commands.Trees
         /// <returns>A search result which may or may not have succeeded.</returns>
         public CommandSearchResult Search(ReadOnlySpan<char> commandString)
         {
-            throw new NotImplementedException();
+            var tokenizer = new TokenizingEnumerator(commandString);
+
+            IParentNode currentLevel = this.Root;
+            while (true)
+            {
+                if (!tokenizer.MoveNext())
+                {
+                    return CommandSearchResult.FromError("No matching command found.");
+                }
+
+                if (tokenizer.Current.Type != TokenType.Value)
+                {
+                    return CommandSearchResult.FromError("No matching command found.");
+                }
+
+                var currentToken = tokenizer.Current;
+
+                IChildNode? matchingChild = null;
+                foreach (var child in currentLevel.Children)
+                {
+                    if (child.Key != currentToken.Value)
+                    {
+                        continue;
+                    }
+
+                    matchingChild = child;
+                }
+
+                switch (matchingChild)
+                {
+                    case CommandNode commandNode when commandNode.SignatureMatches(tokenizer):
+                    {
+                        return commandNode;
+                    }
+                    case GroupNode groupNode:
+                    {
+                        currentLevel = groupNode;
+                        continue;
+                    }
+                    case null:
+                    {
+                        return CommandSearchResult.FromError("No matching command found.");
+                    }
+                    default:
+                    {
+                        throw new InvalidOperationException
+                        (
+                            "Unknown node type encountered; tree is invalid and the search cannot continue."
+                        );
+                    }
+                }
+            }
         }
     }
 }
