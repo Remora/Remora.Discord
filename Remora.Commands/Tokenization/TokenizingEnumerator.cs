@@ -102,6 +102,23 @@ namespace Remora.Commands.Tokenization
                 }
             }
 
+            // Remove quotes, if any
+            if (!span.IsEmpty)
+            {
+                foreach ((string start, string end) in Quotations.Pairs)
+                {
+                    if (span[0] != start[0])
+                    {
+                        continue;
+                    }
+
+                    if (span[^1] == end[0])
+                    {
+                        span = span.Slice(1, span.Length - 2);
+                    }
+                }
+            }
+
             _current = new Token(type, span);
             _segment = remainder;
 
