@@ -39,12 +39,6 @@ namespace Remora.Commands.Tokenization
     [PublicAPI]
     public ref struct SpanSplitEnumerator
     {
-        private static readonly IReadOnlyList<(string Start, string End)> Quotations = new List<(string Start, string End)>
-        {
-            ("\"", "\""),
-            ("'", "'")
-        };
-
         private readonly ReadOnlySpan<char> _delimiter;
         private readonly bool _ignoreEmpty;
 
@@ -152,7 +146,7 @@ namespace Remora.Commands.Tokenization
             // Check if we're trying to read a quoted value
             var foundStartQuote = false;
             var foundEndQuote = false;
-            foreach (var (start, end) in Quotations)
+            foreach (var (start, end) in Quotations.Pairs)
             {
                 var startIndex = segment.IndexOf(start);
                 if (startIndex < 0)
