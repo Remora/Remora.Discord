@@ -117,8 +117,8 @@ namespace Remora.Commands.Trees
                         var subgroups = groupType.GetNestedTypes().Where(t => typeof(ModuleBase).IsAssignableFrom(t));
 
                         // Extract submodules and commands
-                        groupChildren.AddRange(ToChildNodes(subgroups, groupNode));
                         groupChildren.AddRange(GetModuleCommands(groupType, groupNode));
+                        groupChildren.AddRange(ToChildNodes(subgroups, groupNode));
 
                         yield return groupNode;
                     }
