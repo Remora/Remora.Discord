@@ -39,7 +39,8 @@ namespace Remora.Commands.Extensions
         /// <returns>true if the signature matches; otherwise, false.</returns>
         public static bool SignatureMatches(this CommandNode commandNode, TokenizingEnumerator tokenizer)
         {
-            throw new NotImplementedException();
+            // TODO: Check signature
+            return true;
         }
     }
 }

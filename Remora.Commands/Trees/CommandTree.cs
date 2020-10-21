@@ -59,6 +59,41 @@ namespace Remora.Commands.Trees
             IParentNode currentLevel = this.Root;
             while (true)
             {
+                var advancedDeeper = false;
+                foreach (var child in currentLevel.Children)
+                {
+                    if (!IsNodeMatch(child, tokenizer))
+                    {
+                        continue;
+                    }
+
+                    switch (child)
+                    {
+                        case CommandNode commandNode:
+                        {
+                            return commandNode;
+                        }
+                        case IParentNode groupNode:
+                        {
+                            currentLevel = groupNode;
+                            advancedDeeper = true;
+                            break;
+                        }
+                        default:
+                        {
+                            throw new InvalidOperationException
+                            (
+                                "Unknown node type encountered; tree is invalid and the search cannot continue."
+                            );
+                        }
+                    }
+                }
+
+                if (!advancedDeeper)
+                {
+                    break;
+                }
+
                 if (!tokenizer.MoveNext())
                 {
                     return CommandSearchResult.FromError("No matching command found.");
@@ -68,44 +103,34 @@ namespace Remora.Commands.Trees
                 {
                     return CommandSearchResult.FromError("No matching command found.");
                 }
-
-                var currentToken = tokenizer.Current;
-
-                IChildNode? matchingChild = null;
-                foreach (var child in currentLevel.Children)
-                {
-                    if (child.Key != currentToken.Value)
-                    {
-                        continue;
-                    }
-
-                    matchingChild = child;
-                }
-
-                switch (matchingChild)
-                {
-                    case CommandNode commandNode when commandNode.SignatureMatches(tokenizer):
-                    {
-                        return commandNode;
-                    }
-                    case GroupNode groupNode:
-                    {
-                        currentLevel = groupNode;
-                        continue;
-                    }
-                    case null:
-                    {
-                        return CommandSearchResult.FromError("No matching command found.");
-                    }
-                    default:
-                    {
-                        throw new InvalidOperationException
-                        (
-                            "Unknown node type encountered; tree is invalid and the search cannot continue."
-                        );
-                    }
-                }
             }
+
+            return CommandSearchResult.FromError("No matching command found.");
+        }
+
+        private bool IsNodeMatch(IChildNode node, TokenizingEnumerator tokenizer)
+        {
+            if (!tokenizer.MoveNext())
+            {
+                return false;
+            }
+
+            if (tokenizer.Current.Type != TokenType.Value)
+            {
+                return false;
+            }
+
+            if (!tokenizer.Current.Value.Equals(node.Key, StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            if (node is GroupNode)
+            {
+                return true;
+            }
+
+            return node is CommandNode commandNode && commandNode.SignatureMatches(tokenizer);
         }
     }
 }
