@@ -20,14 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees.Nodes;
 
 namespace Remora.Commands.Extensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="CommandNode"/> struct.
+    /// Defines extension methods for the <see cref="CommandNode"/> class.
     /// </summary>
     public static class CommandNodeExtensions
     {
