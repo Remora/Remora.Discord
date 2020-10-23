@@ -35,6 +35,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Transport;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Results;
@@ -98,6 +99,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
@@ -169,6 +171,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
@@ -259,6 +262,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
