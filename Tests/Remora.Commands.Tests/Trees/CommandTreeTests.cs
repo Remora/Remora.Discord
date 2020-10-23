@@ -43,7 +43,7 @@ namespace Remora.Commands.Tests.Trees
             var tree = builder.Build();
 
             var result = tree.Search("a c d");
-            Assert.True(result.IsSuccess, result.IsSuccess ? string.Empty : result.ErrorReason);
+            Assert.NotEmpty(result);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Remora.Commands.Tests.Trees
             var tree = builder.Build();
 
             var result = tree.Search("a d c");
-            Assert.False(result.IsSuccess, "Result was successful.");
+            Assert.Empty(result);
         }
     }
 }

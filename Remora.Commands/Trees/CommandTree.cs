@@ -21,8 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Remora.Commands.Extensions;
-using Remora.Commands.Results;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees.Nodes;
 
@@ -48,66 +48,74 @@ namespace Remora.Commands.Trees
         }
 
         /// <summary>
-        /// Searches the command tree for a command that matches the given command string.
+        /// Searches the command tree for a command that matches the shape of the given command string.
         /// </summary>
         /// <param name="commandString">The raw command string.</param>
         /// <returns>A search result which may or may not have succeeded.</returns>
-        public CommandSearchResult Search(ReadOnlySpan<char> commandString)
+        public IEnumerable<CommandNode> Search(ReadOnlySpan<char> commandString)
         {
             var tokenizer = new TokenizingEnumerator(commandString);
+            return Search(this.Root, tokenizer);
+        }
 
-            IParentNode currentLevel = this.Root;
-            while (true)
+        /// <summary>
+        /// Performs a depth-first search of the given node.
+        /// </summary>
+        /// <param name="parentNode">The node.</param>
+        /// <param name="tokenizer">The tokenizer.</param>
+        /// <returns>The matching nodes.</returns>
+        private IEnumerable<CommandNode> Search(IParentNode parentNode, TokenizingEnumerator tokenizer)
+        {
+            var foundNodes = new List<CommandNode>();
+            foreach (var child in parentNode.Children)
             {
-                var advancedDeeper = false;
-                foreach (var child in currentLevel.Children)
+                if (!IsNodeMatch(child, tokenizer))
                 {
-                    if (!IsNodeMatch(child, tokenizer))
+                    continue;
+                }
+
+                switch (child)
+                {
+                    case CommandNode commandNode:
                     {
+                        tokenizer.MoveNext();
+
+                        foundNodes.Add(commandNode);
                         continue;
                     }
-
-                    switch (child)
+                    case IParentNode groupNode:
                     {
-                        case CommandNode commandNode:
+                        // Consume the token
+                        if (!tokenizer.MoveNext())
                         {
-                            return commandNode;
+                            // No more tokens, so we can't continue searching
+                            return foundNodes;
                         }
-                        case IParentNode groupNode:
-                        {
-                            currentLevel = groupNode;
-                            advancedDeeper = true;
-                            break;
-                        }
-                        default:
-                        {
-                            throw new InvalidOperationException
-                            (
-                                "Unknown node type encountered; tree is invalid and the search cannot continue."
-                            );
-                        }
+
+                        var nestedResults = Search(groupNode, tokenizer);
+                        foundNodes.AddRange(nestedResults);
+
+                        continue;
                     }
-                }
-
-                if (!advancedDeeper)
-                {
-                    break;
-                }
-
-                if (!tokenizer.MoveNext())
-                {
-                    return CommandSearchResult.FromError("No matching command found.");
-                }
-
-                if (tokenizer.Current.Type != TokenType.Value)
-                {
-                    return CommandSearchResult.FromError("No matching command found.");
+                    default:
+                    {
+                        throw new InvalidOperationException
+                        (
+                            "Unknown node type encountered; tree is invalid and the search cannot continue."
+                        );
+                    }
                 }
             }
 
-            return CommandSearchResult.FromError("No matching command found.");
+            return foundNodes;
         }
 
+        /// <summary>
+        /// Determines whether a node matches the current state of the tokenizer.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <param name="tokenizer">The tokenizer.</param>
+        /// <returns>true if the node matches; otherwise, false.</returns>
         private bool IsNodeMatch(IChildNode node, TokenizingEnumerator tokenizer)
         {
             if (!tokenizer.MoveNext())
