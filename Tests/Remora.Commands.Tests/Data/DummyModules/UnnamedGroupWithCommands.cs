@@ -1,5 +1,5 @@
 //
-//  UnnamedModuleWithNestedUnnamedModuleWithCommands.cs
+//  UnnamedGroupWithCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,43 +21,39 @@
 //
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Commands.Tests.Data.Modules
+namespace Remora.Commands.Tests.Data.DummyModules
 {
-    public class UnnamedModuleWithNestedUnnamedModuleWithCommands : ModuleBase
+    public class UnnamedGroupWithCommands : CommandGroup
     {
-        public class Nested : ModuleBase
+        [Command("a")]
+        public Task<IResult> A()
         {
-            [Command("a")]
-            public Task<IResult> A()
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
+        }
 
-            [Command("b")]
-            public Task<IResult> B()
-            {
-                throw new NotImplementedException();
-            }
+        [Command("b")]
+        public Task<IResult> B()
+        {
+            throw new NotImplementedException();
+        }
 
-            [Command("c")]
-            public Task<IResult> C()
-            {
-                throw new NotImplementedException();
-            }
+        [Command("c")]
+        public Task<IResult> C()
+        {
+            throw new NotImplementedException();
+        }
 
-            [Command("d")]
-            public Task<IResult> D()
-            {
-                throw new NotImplementedException();
-            }
+        [Command("d")]
+        public Task<IResult> D()
+        {
+            throw new NotImplementedException();
         }
     }
 }

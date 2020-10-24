@@ -1,5 +1,5 @@
 //
-//  TestCommandModule.cs
+//  BasicCommandGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,7 +22,7 @@
 
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
@@ -30,7 +30,7 @@ using Remora.Results;
 namespace Remora.Commands.Tests.Data.Modules
 {
     [Group("test")]
-    public class TestCommandModule : ModuleBase
+    public class BasicCommandGroup : CommandGroup
     {
         [Command("parameterless")]
         public Task<IResult> Parameterless()

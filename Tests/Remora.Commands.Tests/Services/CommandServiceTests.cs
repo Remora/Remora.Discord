@@ -49,7 +49,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<TestCommandModule>()
+                    .AddCommandModule<BasicCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -67,7 +67,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<TestCommandModule>()
+                    .AddCommandModule<BasicCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -85,7 +85,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<TestCommandModule>()
+                    .AddCommandModule<BasicCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -103,7 +103,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<TestCommandModule>()
+                    .AddCommandModule<BasicCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -121,7 +121,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<TestCommandModule>()
+                    .AddCommandModule<BasicCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -197,7 +197,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -215,7 +215,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -269,7 +269,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -287,7 +287,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -305,7 +305,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -323,7 +323,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -341,7 +341,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -359,7 +359,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -377,7 +377,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -395,7 +395,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -413,7 +413,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -431,7 +431,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -449,7 +449,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -460,7 +460,7 @@ namespace Remora.Commands.Tests.Services
 
             /// <summary>
             /// Tests whether the command service can execute a command with a
-            /// <see cref="BuiltinTypeCommandModule.TestEnum"/> parameter.
+            /// <see cref="BuiltinTypeCommandGroup.TestEnum"/> parameter.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
             [Fact]
@@ -468,7 +468,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<BuiltinTypeCommandModule>()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -493,7 +493,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<SpecializedCommandModule>()
+                    .AddCommandModule<SpecializedCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -563,7 +563,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<AdvancedCommandModule>()
+                    .AddCommandModule<AdvancedCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -585,7 +585,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<AdvancedCommandModule>()
+                    .AddCommandModule<AdvancedCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -607,7 +607,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<AdvancedCommandModule>()
+                    .AddCommandModule<AdvancedCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -630,7 +630,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<AdvancedCommandModule>()
+                    .AddCommandModule<AdvancedCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -658,7 +658,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -680,7 +680,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -702,7 +702,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -724,7 +724,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -746,7 +746,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -776,7 +776,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -806,7 +806,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();
@@ -845,7 +845,7 @@ namespace Remora.Commands.Tests.Services
             {
                 var services = new ServiceCollection()
                     .AddCommands()
-                    .AddCommandModule<CollectionCommandModule>()
+                    .AddCommandModule<CollectionCommandGroup>()
                     .BuildServiceProvider();
 
                 var commandService = services.GetRequiredService<CommandService>();

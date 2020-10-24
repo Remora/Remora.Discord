@@ -21,6 +21,7 @@
 //
 
 using System.Linq;
+using Remora.Commands.Tests.Data.DummyModules;
 using Remora.Commands.Tests.Data.Modules;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -34,13 +35,13 @@ namespace Remora.Commands.Tests.Trees
     public class CommandTreeBuilderTests
     {
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesNamedModuleWithCommandsCorrectly()
+        public void ParsesNamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -67,13 +68,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommandsWithNestedNamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommandsWithNestedNamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesNamedModuleWithCommandsWithNestedNamedModuleWithCommandsCorrectly()
+        public void ParsesNamedGroupWithCommandsWithNestedNamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithCommandsWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithCommandsWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -102,13 +103,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommandsWithNestedUnnamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommandsWithNestedUnnamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesNamedModuleWithCommandsWithNestedUnnamedModuleWithCommandsCorrectly()
+        public void ParsesNamedGroupWithCommandsWithNestedUnnamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithCommandsWithNestedUnnamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithCommandsWithNestedUnnamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -135,13 +136,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithNestedNamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithNestedNamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesNamedModuleWithNestedNamedModuleWithCommandsCorrectly()
+        public void ParsesNamedGroupWithNestedNamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -167,13 +168,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithNestedUnnamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithNestedUnnamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesNamedModuleWithNestedUnnamedModuleWithCommandsCorrectly()
+        public void ParsesNamedGroupWithNestedUnnamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithNestedUnnamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithNestedUnnamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -200,13 +201,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesUnnamedModuleWithCommandsCorrectly()
+        public void ParsesUnnamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<UnnamedModuleWithCommands>();
+            builder.RegisterModule<UnnamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -229,13 +230,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommandsWithNestedNamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommandsWithNestedNamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesUnnamedModuleWithCommandsWithNestedNamedModuleWithCommandsCorrectly()
+        public void ParsesUnnamedGroupWithCommandsWithNestedNamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<UnnamedModuleWithCommandsWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<UnnamedGroupWithCommandsWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -257,13 +258,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithCommandsWithNestedUnnamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithCommandsWithNestedUnnamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesUnnamedModuleWithCommandsWithNestedUnnamedModuleWithCommandsCorrectly()
+        public void ParsesUnnamedGroupWithCommandsWithNestedUnnamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<UnnamedModuleWithCommandsWithNestedUnnamedModuleWithCommands>();
+            builder.RegisterModule<UnnamedGroupWithCommandsWithNestedUnnamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -286,13 +287,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithNestedNamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithNestedNamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesUnnamedModuleWithNestedNamedModuleWithCommandsCorrectly()
+        public void ParsesUnnamedGroupWithNestedNamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<UnnamedModuleWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<UnnamedGroupWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;
@@ -319,13 +320,13 @@ namespace Remora.Commands.Tests.Trees
         }
 
         /// <summary>
-        /// Tests whether a <see cref="NamedModuleWithNestedUnnamedModuleWithCommands"/> can be correctly parsed into a tree.
+        /// Tests whether a <see cref="NamedGroupWithNestedUnnamedGroupWithCommands"/> can be correctly parsed into a tree.
         /// </summary>
         [Fact]
-        public void ParsesUnnamedModuleWithNestedUnnamedModuleWithCommandsCorrectly()
+        public void ParsesUnnamedGroupWithNestedUnnamedGroupWithCommandsCorrectly()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<UnnamedModuleWithNestedUnnamedModuleWithCommands>();
+            builder.RegisterModule<UnnamedGroupWithNestedUnnamedGroupWithCommands>();
 
             var tree = builder.Build();
             var root = tree.Root;

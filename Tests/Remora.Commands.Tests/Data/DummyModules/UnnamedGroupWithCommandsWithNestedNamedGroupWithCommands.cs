@@ -1,5 +1,5 @@
 //
-//  UnnamedModuleWithCommandsWithNestedNamedModuleWithCommands.cs
+//  UnnamedGroupWithCommandsWithNestedNamedGroupWithCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,17 +21,16 @@
 //
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Commands.Tests.Data.Modules
+namespace Remora.Commands.Tests.Data.DummyModules
 {
-    public class UnnamedModuleWithCommandsWithNestedNamedModuleWithCommands : ModuleBase
+    public class UnnamedGroupWithCommandsWithNestedNamedGroupWithCommands : CommandGroup
     {
         [Command("a")]
         public Task<IResult> A()
@@ -46,7 +45,7 @@ namespace Remora.Commands.Tests.Data.Modules
         }
 
         [Group("c")]
-        public class Nested : ModuleBase
+        public class Nested : CommandGroup
         {
             [Command("d")]
             public Task<IResult> D()

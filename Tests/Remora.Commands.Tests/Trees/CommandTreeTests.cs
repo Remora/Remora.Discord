@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Commands.Tests.Data.DummyModules;
 using Remora.Commands.Tests.Data.Modules;
 using Remora.Commands.Trees;
 using Xunit;
@@ -38,7 +39,7 @@ namespace Remora.Commands.Tests.Trees
         public void SearchIsSuccessfulIfAMatchingCommandExists()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithCommandsWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithCommandsWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
 
@@ -53,7 +54,7 @@ namespace Remora.Commands.Tests.Trees
         public void SearchIsUnsuccessfulIfNoMatchingCommandExists()
         {
             var builder = new CommandTreeBuilder();
-            builder.RegisterModule<NamedModuleWithCommandsWithNestedNamedModuleWithCommands>();
+            builder.RegisterModule<NamedGroupWithCommandsWithNestedNamedGroupWithCommands>();
 
             var tree = builder.Build();
 
