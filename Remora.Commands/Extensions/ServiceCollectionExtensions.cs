@@ -21,9 +21,11 @@
 //
 
 using System;
+using System.Numerics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Remora.Commands.Parsers;
 using Remora.Commands.Services;
 using Remora.Commands.Trees;
 
@@ -78,6 +80,61 @@ namespace Remora.Commands.Extensions
                 }
             );
 
+            serviceCollection
+                .AddSingletonParser<char, CharParser>()
+                .AddSingletonParser<bool, BooleanParser>()
+                .AddSingletonParser<byte, ByteParser>()
+                .AddSingletonParser<sbyte, SByteParser>()
+                .AddSingletonParser<ushort, UInt16Parser>()
+                .AddSingletonParser<short, Int16Parser>()
+                .AddSingletonParser<uint, UInt32Parser>()
+                .AddSingletonParser<int, Int32Parser>()
+                .AddSingletonParser<ulong, UInt64Parser>()
+                .AddSingletonParser<long, Int64Parser>()
+                .AddSingletonParser<float, SingleParser>()
+                .AddSingletonParser<double, DoubleParser>()
+                .AddSingletonParser<decimal, DecimalParser>()
+                .AddSingletonParser<BigInteger, BigIntegerParser>()
+                .AddSingletonParser<string, StringParser>()
+                .AddSingletonParser<DateTimeOffset, DateTimeOffsetParser>()
+                .TryAddSingleton(typeof(ITypeParser<>), typeof(EnumParser<>));
+
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a type parser as a singleton service.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TType">The type to parse.</typeparam>
+        /// <typeparam name="TParser">The type parser.</typeparam>
+        /// <returns>The service collection, with the parser.</returns>
+        public static IServiceCollection AddSingletonParser<TType, TParser>
+        (
+            this IServiceCollection serviceCollection
+        )
+            where TType : notnull
+            where TParser : class, ITypeParser<TType>
+        {
+            serviceCollection.TryAddSingleton<ITypeParser<TType>, TParser>();
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a type parser as a singleton service.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TType">The type to parse.</typeparam>
+        /// <typeparam name="TParser">The type parser.</typeparam>
+        /// <returns>The service collection, with the parser.</returns>
+        public static IServiceCollection AddParser<TType, TParser>
+        (
+            this IServiceCollection serviceCollection
+        )
+            where TType : notnull
+            where TParser : class, ITypeParser<TType>
+        {
+            serviceCollection.TryAddScoped<ITypeParser<TType>, TParser>();
             return serviceCollection;
         }
     }
