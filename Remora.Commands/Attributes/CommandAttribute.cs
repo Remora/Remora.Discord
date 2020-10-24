@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Commands.Attributes
 {
@@ -28,6 +29,7 @@ namespace Remora.Commands.Attributes
     /// Marks a method as being a command.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
+    [MeansImplicitUse]
     public class CommandAttribute : Attribute
     {
         /// <summary>
