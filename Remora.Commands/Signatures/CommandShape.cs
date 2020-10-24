@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Remora.Commands.Attributes;
+using Remora.Commands.Extensions;
 
 namespace Remora.Commands.Signatures
 {
@@ -97,16 +98,16 @@ namespace Remora.Commands.Signatures
             ParameterInfo parameter
         )
         {
-            var isCollection = typeof(IEnumerable).IsAssignableFrom(parameter.ParameterType);
+            var isCollection = parameter.ParameterType.IsSupportedEnumerable();
 
             IParameterShape newNamedParameter;
-            if (rangeAttribute is null || !isCollection)
-            {
-                newNamedParameter = CreateNamedSingleValueParameterShape(optionAttribute, parameter);
-            }
-            else if (parameter.ParameterType == typeof(bool))
+            if (parameter.ParameterType == typeof(bool))
             {
                 newNamedParameter = CreateNamedSwitchParameterShape(optionAttribute, parameter);
+            }
+            else if (!isCollection)
+            {
+                newNamedParameter = CreateNamedSingleValueParameterShape(optionAttribute, parameter);
             }
             else
             {
@@ -242,10 +243,10 @@ namespace Remora.Commands.Signatures
             ParameterInfo parameter
         )
         {
-            var isCollection = typeof(IEnumerable).IsAssignableFrom(parameter.ParameterType);
+            var isCollection = parameter.ParameterType.IsSupportedEnumerable();
 
             IParameterShape newPositionalParameter;
-            if (rangeAttribute is null || !isCollection)
+            if (!isCollection)
             {
                 newPositionalParameter = new PositionalParameterShape(parameter);
             }
