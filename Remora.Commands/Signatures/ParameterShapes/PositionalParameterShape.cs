@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.Reflection;
 using Remora.Commands.Tokenization;
 using static Remora.Commands.Tokenization.TokenType;
@@ -32,9 +31,6 @@ namespace Remora.Commands.Signatures
     /// </summary>
     public class PositionalParameterShape : IParameterShape
     {
-        /// <inheritdoc />
-        public IReadOnlyList<TokenType> ValidTypes => new[] { Value };
-
         /// <inheritdoc />
         public ParameterInfo Parameter { get; }
 

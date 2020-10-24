@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using Remora.Commands.Tokenization;
 
@@ -43,10 +42,6 @@ namespace Remora.Commands.Signatures
         /// <see cref="LongName"/> must be set.
         /// </summary>
         public string? LongName { get; }
-
-        /// <inheritdoc/>
-        public virtual IReadOnlyList<TokenType> ValidTypes =>
-            new[] { TokenType.LongName, TokenType.ShortName };
 
         /// <inheritdoc />
         public ParameterInfo Parameter { get; }

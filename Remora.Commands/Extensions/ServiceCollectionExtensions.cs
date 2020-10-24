@@ -25,7 +25,7 @@ using System.Numerics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Commands.Parsers;
 using Remora.Commands.Services;
 using Remora.Commands.Trees;
@@ -47,7 +47,7 @@ namespace Remora.Commands.Extensions
         (
             this IServiceCollection serviceCollection
         )
-            where TCommandModule : ModuleBase
+            where TCommandModule : CommandGroup
         {
             serviceCollection.AddScoped<TCommandModule>();
             serviceCollection.Configure<CommandTreeBuilder>

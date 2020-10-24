@@ -28,7 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Commands.Signatures;
@@ -117,7 +117,7 @@ namespace Remora.Commands.Services
             var method = boundCommandNode.Node.CommandMethod;
             var moduleType = boundCommandNode.Node.ModuleType;
 
-            var moduleInstance = (ModuleBase)_services.GetRequiredService(moduleType);
+            var moduleInstance = (CommandGroup)_services.GetRequiredService(moduleType);
             moduleInstance.SetCancellationToken(ct);
 
             try

@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Attributes;
 using Remora.Commands.Extensions;
-using Remora.Commands.Modules;
+using Remora.Commands.Groups;
 using Remora.Commands.Trees.Nodes;
 using Remora.Results;
 
@@ -46,7 +46,7 @@ namespace Remora.Commands.Trees
         /// Registers a module type with the builder.
         /// </summary>
         /// <typeparam name="TModule">The module type.</typeparam>
-        public void RegisterModule<TModule>() where TModule : ModuleBase
+        public void RegisterModule<TModule>() where TModule : CommandGroup
         {
             if (!_registeredModuleTypes.Contains(typeof(TModule)))
             {
@@ -94,7 +94,7 @@ namespace Remora.Commands.Trees
                     // Nest these commands and groups directly under the parent
                     foreach (var groupType in group)
                     {
-                        var subgroups = groupType.GetNestedTypes().Where(t => typeof(ModuleBase).IsAssignableFrom(t));
+                        var subgroups = groupType.GetNestedTypes().Where(t => typeof(CommandGroup).IsAssignableFrom(t));
 
                         // Extract submodules and commands
                         foreach (var child in GetModuleCommands(groupType, parent))
@@ -116,7 +116,7 @@ namespace Remora.Commands.Trees
 
                     foreach (var groupType in group)
                     {
-                        var subgroups = groupType.GetNestedTypes().Where(t => typeof(ModuleBase).IsAssignableFrom(t));
+                        var subgroups = groupType.GetNestedTypes().Where(t => typeof(CommandGroup).IsAssignableFrom(t));
 
                         // Extract submodules and commands
                         groupChildren.AddRange(GetModuleCommands(groupType, groupNode));

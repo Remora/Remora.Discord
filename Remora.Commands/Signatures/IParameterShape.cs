@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using System.Reflection;
 using Remora.Commands.Tokenization;
 
@@ -32,11 +31,6 @@ namespace Remora.Commands.Signatures
     /// </summary>
     public interface IParameterShape
     {
-        /// <summary>
-        /// Gets the token types that fit this shape.
-        /// </summary>
-        IReadOnlyList<TokenType> ValidTypes { get; }
-
         /// <summary>
         /// Gets the matching parameter.
         /// </summary>

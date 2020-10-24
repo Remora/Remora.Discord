@@ -1,5 +1,5 @@
 //
-//  ModuleBase.cs
+//  CommandGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,13 +23,13 @@
 using System.Threading;
 using JetBrains.Annotations;
 
-namespace Remora.Commands.Modules
+namespace Remora.Commands.Groups
 {
     /// <summary>
-    /// Represents an abstract base for command modules.
+    /// Represents an abstract base for command groups.
     /// </summary>
     [PublicAPI]
-    public abstract class ModuleBase
+    public abstract class CommandGroup
     {
         /// <summary>
         /// Gets the cancellation token for the command execution operation.
