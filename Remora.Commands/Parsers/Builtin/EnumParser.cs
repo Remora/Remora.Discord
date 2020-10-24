@@ -41,8 +41,8 @@ namespace Remora.Commands.Parsers
         {
             return new ValueTask<RetrieveEntityResult<TEnum>>
             (
-                !Enum.TryParse<TEnum>(value, out var result)
-                ? RetrieveEntityResult<TEnum>.FromError($"Failed to parse \"{value}\" as a tEnum.")
+                !Enum.TryParse<TEnum>(value, true, out var result)
+                ? RetrieveEntityResult<TEnum>.FromError($"Failed to parse \"{value}\" as a {typeof(TEnum).Name}.")
                 : RetrieveEntityResult<TEnum>.FromSuccess(result)
             );
         }
