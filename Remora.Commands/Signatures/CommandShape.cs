@@ -119,7 +119,7 @@ namespace Remora.Commands.Signatures
         private static IParameterShape CreateNamedCollectionParameterShape
         (
             OptionAttribute optionAttribute,
-            RangeAttribute rangeAttribute,
+            RangeAttribute? rangeAttribute,
             ParameterInfo parameter
         )
         {
@@ -130,8 +130,8 @@ namespace Remora.Commands.Signatures
                 (
                     parameter,
                     optionAttribute.LongName ?? throw new InvalidOperationException(),
-                    rangeAttribute.Min,
-                    rangeAttribute.Max
+                    rangeAttribute?.GetMin(),
+                    rangeAttribute?.GetMax()
                 );
             }
             else if (optionAttribute.LongName is null)
@@ -140,8 +140,8 @@ namespace Remora.Commands.Signatures
                 (
                     parameter,
                     optionAttribute.ShortName ?? throw new InvalidOperationException(),
-                    rangeAttribute.Min,
-                    rangeAttribute.Max
+                    rangeAttribute?.GetMin(),
+                    rangeAttribute?.GetMax()
                 );
             }
             else
@@ -151,8 +151,8 @@ namespace Remora.Commands.Signatures
                     parameter,
                     optionAttribute.ShortName ?? throw new InvalidOperationException(),
                     optionAttribute.LongName ?? throw new InvalidOperationException(),
-                    rangeAttribute.Min,
-                    rangeAttribute.Max
+                    rangeAttribute?.GetMin(),
+                    rangeAttribute?.GetMax()
                 );
             }
 
@@ -254,8 +254,8 @@ namespace Remora.Commands.Signatures
                 newPositionalParameter = new PositionalCollectionParameterShape
                 (
                     parameter,
-                    rangeAttribute.Min,
-                    rangeAttribute.Max
+                    rangeAttribute?.GetMin(),
+                    rangeAttribute?.GetMax()
                 );
             }
 
