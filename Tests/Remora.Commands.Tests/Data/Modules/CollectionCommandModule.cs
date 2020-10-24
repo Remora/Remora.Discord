@@ -68,5 +68,11 @@ namespace Remora.Commands.Tests.Data.Modules
         {
             return Task.FromResult<IResult>(OperationResult.FromSuccess());
         }
+
+        [Command("constrained-collection-with-positional-value")]
+        public Task<IResult> ConstrainedCollectionWithPositional([Range(Max = 2)] IEnumerable<string> values, string value)
+        {
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
+        }
     }
 }

@@ -704,6 +704,37 @@ namespace Remora.Commands.Tests.Services
 
                 Assert.False(executionResult.IsSuccess);
             }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a max-constrained collection and a
+            /// following positional argument.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteConstrainedCollectionWithPositionalValue()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<CollectionCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test constrained-collection-with-positional-value ra ra rasputin",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+
+                executionResult = await commandService.TryExecuteAsync
+                (
+                    "test constrained-collection-with-positional-value ra ra",
+                    default
+                );
+
+                Assert.False(executionResult.IsSuccess);
+            }
         }
     }
 }
