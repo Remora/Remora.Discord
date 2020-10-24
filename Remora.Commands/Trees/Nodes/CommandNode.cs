@@ -119,6 +119,7 @@ namespace Remora.Commands.Trees.Nodes
                         if (type != TokenType.Value)
                         {
                             // skip names, we've already checked them
+                            continue;
                         }
 
                         var value = tokenizer.Current.Value.ToString();
