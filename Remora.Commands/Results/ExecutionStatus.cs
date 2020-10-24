@@ -1,5 +1,5 @@
 //
-//  CommandNodeExtensions.cs
+//  ExecutionStatus.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Commands.Tokenization;
-using Remora.Commands.Trees.Nodes;
-
-namespace Remora.Commands.Extensions
+namespace Remora.Commands.Results
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="CommandNode"/> class.
+    /// Enumerates the resulting statuses an execution might have.
     /// </summary>
-    public static class CommandNodeExtensions
+    public enum ExecutionStatus
     {
         /// <summary>
-        /// Determines whether the given tokenizer matches the signature of the given command node.
+        /// A matching command was found, and the execution was successful.
         /// </summary>
-        /// <param name="commandNode">The command node to check against.</param>
-        /// <param name="tokenizer">The tokenizer with the offered tokens.</param>
-        /// <returns>true if the signature matches; otherwise, false.</returns>
-        public static bool SignatureMatches(this CommandNode commandNode, TokenizingEnumerator tokenizer)
-        {
-            // TODO: Check signature
-            return true;
-        }
+        Successful,
+
+        /// <summary>
+        /// A matching command was found, but the execution failed in user code.
+        /// </summary>
+        Failed,
+
+        /// <summary>
+        /// A matching command was found, but user code failed in an uncontrolled manner.
+        /// </summary>
+        Faulted,
+
+        /// <summary>
+        /// The matching commands were ambiguous, and no single command could be matched against.
+        /// </summary>
+        Ambiguous,
+
+        /// <summary>
+        /// No matching command was found.
+        /// </summary>
+        NotFound
     }
 }
