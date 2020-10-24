@@ -131,11 +131,13 @@ namespace Remora.Commands.Trees.Nodes
                 if (matchedParameters.Count == 0)
                 {
                     // Check if all remaining parameters are optional
-                    if (parametersToCheck.All(p => p.Parameter.IsOptional))
+                    if (!parametersToCheck.All(p => p.Parameter.IsOptional))
                     {
-                        boundCommandShape = new BoundCommandNode(this, boundParameters);
-                        return true;
+                        return false;
                     }
+
+                    boundCommandShape = new BoundCommandNode(this, boundParameters);
+                    return true;
                 }
 
                 foreach (var matchedParameter in matchedParameters)
