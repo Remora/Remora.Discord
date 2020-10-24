@@ -21,7 +21,10 @@
 //
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using Remora.Commands.Attributes;
 
@@ -50,6 +53,35 @@ namespace Remora.Commands.Extensions
 
             groupName = groupNameAttribute.Name;
             return true;
+        }
+
+        /// <summary>
+        /// Determines whether the type is an enumerable type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is an enumerable type; otherwise, false.</returns>
+        public static bool IsEnumerable(this Type type)
+        {
+            var typeInterfaces = type.GetInterfaces();
+            return typeInterfaces.Contains(typeof(IEnumerable)) ||
+                   typeInterfaces.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+        }
+
+        /// <summary>
+        /// Gets the element type of the given type. The type is assumed to implement at least one
+        /// <see cref="IEnumerable{T}"/> interface, and the element type of the first one is returned.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>The element type.</returns>
+        public static Type GetCollectionElementType(this Type type)
+        {
+            var typeInterfaces = type.GetInterfaces();
+            var firstEnumerableInterface = typeInterfaces.First
+            (
+                t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+            );
+
+            return firstEnumerableInterface.GetGenericArguments()[0];
         }
     }
 }
