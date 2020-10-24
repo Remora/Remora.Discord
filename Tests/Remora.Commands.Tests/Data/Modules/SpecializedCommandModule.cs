@@ -1,5 +1,5 @@
 //
-//  TestCommandModule.cs
+//  SpecializedCommandModule.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,34 +30,10 @@ using Remora.Results;
 namespace Remora.Commands.Tests.Data.Modules
 {
     [Group("test")]
-    public class TestCommandModule : ModuleBase
+    public class SpecializedCommandModule : ModuleBase
     {
-        [Command("parameterless")]
-        public Task<IResult> Parameterless()
-        {
-            return Task.FromResult<IResult>(OperationResult.FromSuccess());
-        }
-
-        [Command("single-positional")]
-        public Task<IResult> SinglePositional(string value)
-        {
-            return Task.FromResult<IResult>(OperationResult.FromSuccess());
-        }
-
-        [Command("single-optional-positional")]
-        public Task<IResult> SingleOptionalPositional(string value = "dooga")
-        {
-            return Task.FromResult<IResult>(OperationResult.FromSuccess());
-        }
-
-        [Command("single-named")]
-        public Task<IResult> SingleNamed([Option("value")] string value)
-        {
-            return Task.FromResult<IResult>(OperationResult.FromSuccess());
-        }
-
-        [Command("single-optional-named")]
-        public Task<IResult> SingleOptionalNamed([Option("value")] string value = "dooga")
+        [Command("switch")]
+        public Task<IResult> SingleNamedBool([Option("enable")] bool value = false)
         {
             return Task.FromResult<IResult>(OperationResult.FromSuccess());
         }
