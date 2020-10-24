@@ -21,8 +21,8 @@
 //
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -193,7 +193,8 @@ namespace Remora.Commands.Services
 
                 if (isCollection)
                 {
-                    var collection = new List<object>();
+                    var collectionType = typeof(List<>).MakeGenericType(typeToParse);
+                    IList collection = (IList)Activator.CreateInstance(collectionType);
                     foreach (var value in boundParameter.Tokens)
                     {
                         var parseResult = await parser.TryParseAsync(value, ct);
