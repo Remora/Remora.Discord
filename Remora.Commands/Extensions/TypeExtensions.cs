@@ -95,7 +95,7 @@ namespace Remora.Commands.Extensions
         /// <returns>The element type.</returns>
         public static Type GetCollectionElementType(this Type type)
         {
-            return type.GetGenericTypeDefinition().GetGenericArguments()[0];
+            return type.GetGenericArguments()[0];
         }
     }
 }
