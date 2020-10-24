@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using Remora.Commands.Extensions;
+using Remora.Commands.Signatures;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees.Nodes;
 
@@ -52,7 +52,7 @@ namespace Remora.Commands.Trees
         /// </summary>
         /// <param name="commandString">The raw command string.</param>
         /// <returns>A search result which may or may not have succeeded.</returns>
-        public IEnumerable<CommandNode> Search(ReadOnlySpan<char> commandString)
+        public IEnumerable<BoundCommandNode> Search(ReadOnlySpan<char> commandString)
         {
             var tokenizer = new TokenizingEnumerator(commandString);
             return Search(this.Root, tokenizer);
@@ -64,9 +64,9 @@ namespace Remora.Commands.Trees
         /// <param name="parentNode">The node.</param>
         /// <param name="tokenizer">The tokenizer.</param>
         /// <returns>The matching nodes.</returns>
-        private IEnumerable<CommandNode> Search(IParentNode parentNode, TokenizingEnumerator tokenizer)
+        private IEnumerable<BoundCommandNode> Search(IParentNode parentNode, TokenizingEnumerator tokenizer)
         {
-            var foundNodes = new List<CommandNode>();
+            var boundCommandNodes = new List<BoundCommandNode>();
             foreach (var child in parentNode.Children)
             {
                 if (!IsNodeMatch(child, tokenizer))
@@ -80,8 +80,13 @@ namespace Remora.Commands.Trees
                     {
                         tokenizer.MoveNext();
 
-                        foundNodes.Add(commandNode);
-                        continue;
+                        if (!commandNode.TryBind(tokenizer, out var boundCommandShape))
+                        {
+                             continue;
+                        }
+
+                        boundCommandNodes.Add(boundCommandShape);
+                        break;
                     }
                     case IParentNode groupNode:
                     {
@@ -89,11 +94,11 @@ namespace Remora.Commands.Trees
                         if (!tokenizer.MoveNext())
                         {
                             // No more tokens, so we can't continue searching
-                            return foundNodes;
+                            return boundCommandNodes;
                         }
 
                         var nestedResults = Search(groupNode, tokenizer);
-                        foundNodes.AddRange(nestedResults);
+                        boundCommandNodes.AddRange(nestedResults);
 
                         continue;
                     }
@@ -107,7 +112,7 @@ namespace Remora.Commands.Trees
                 }
             }
 
-            return foundNodes;
+            return boundCommandNodes;
         }
 
         /// <summary>
@@ -128,17 +133,7 @@ namespace Remora.Commands.Trees
                 return false;
             }
 
-            if (!tokenizer.Current.Value.Equals(node.Key, StringComparison.Ordinal))
-            {
-                return false;
-            }
-
-            if (node is GroupNode)
-            {
-                return true;
-            }
-
-            return node is CommandNode commandNode && commandNode.SignatureMatches(tokenizer);
+            return tokenizer.Current.Value.Equals(node.Key, StringComparison.Ordinal);
         }
     }
 }
