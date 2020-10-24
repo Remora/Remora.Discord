@@ -37,5 +37,17 @@ namespace Remora.Commands.Tests.Data.Modules
         {
             return Task.FromResult<IResult>(OperationResult.FromSuccess());
         }
+
+        [Command("switch-short-name")]
+        public Task<IResult> SingleShortNamedBool([Option('e')] bool value = false)
+        {
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
+        }
+
+        [Command("switch-short-and-long-name")]
+        public Task<IResult> SingleShortAndLongNamedBool([Option('e', "enable")] bool value = false)
+        {
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
+        }
     }
 }

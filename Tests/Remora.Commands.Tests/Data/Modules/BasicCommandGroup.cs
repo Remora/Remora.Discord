@@ -61,5 +61,17 @@ namespace Remora.Commands.Tests.Data.Modules
         {
             return Task.FromResult<IResult>(OperationResult.FromSuccess());
         }
+
+        [Command("single-named-with-short-name")]
+        public Task<IResult> SingleNamedWithShortName([Option('v')] string value)
+        {
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
+        }
+
+        [Command("single-named-with-long-and-short-name")]
+        public Task<IResult> SingleNamedWithLongAndShortName([Option('v', "value")] string value)
+        {
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
+        }
     }
 }

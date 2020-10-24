@@ -129,6 +129,58 @@ namespace Remora.Commands.Tests.Services
 
                 Assert.True(executionResult.IsSuccess);
             }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a single short-name parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteSingleShortNameCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<BasicCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test single-named-with-short-name -v booga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a single short and long-name parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteSingleShortAndLongNameCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<BasicCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test single-named-with-long-and-short-name -v booga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+
+                executionResult = await commandService.TryExecuteAsync
+                (
+                    "test single-named-with-long-and-short-name --value booga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
         }
 
         /// <summary>
@@ -168,6 +220,42 @@ namespace Remora.Commands.Tests.Services
 
                 var commandService = services.GetRequiredService<CommandService>();
                 var executionResult = await commandService.TryExecuteAsync("test char 1", default);
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a <see cref="sbyte"/> parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteSByteCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync("test sbyte 1", default);
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a <see cref="byte"/> parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteByteCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<BuiltinTypeCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync("test byte 1", default);
 
                 Assert.True(executionResult.IsSuccess);
             }
@@ -414,6 +502,48 @@ namespace Remora.Commands.Tests.Services
                 Assert.True(executionResult.IsSuccess);
 
                 executionResult = await commandService.TryExecuteAsync("test switch", default);
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a single short-named boolean parameter -
+            /// that is, a switch.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteShortNameSwitchCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<SpecializedCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync("test switch-short-name -e", default);
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a single short and long-named boolean
+            /// parameter - that is, a switch.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteShortAndLongNameSwitchCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<SpecializedCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync("test switch-short-and-long-name -e", default);
+
+                Assert.True(executionResult.IsSuccess);
+
+                executionResult = await commandService.TryExecuteAsync("test switch-short-and-long-name --enable", default);
 
                 Assert.True(executionResult.IsSuccess);
             }
