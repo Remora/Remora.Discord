@@ -418,5 +418,128 @@ namespace Remora.Commands.Tests.Services
                 Assert.True(executionResult.IsSuccess);
             }
         }
+
+        /// <summary>
+        /// Tests advanced options.
+        /// </summary>
+        public class Advanced
+        {
+            /// <summary>
+            /// Tests whether the command service can execute a command with a positional and a named parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecutePositionalAndNamedCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<AdvancedCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test positional-and-named booga --another wooga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with a named and a positional parameter.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteNamedAndPositionalCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<AdvancedCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test named-and-positional --first wooga booga ",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with multiple mixed parameters.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteMixedCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<AdvancedCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test mixed --first wooga booga --third dooga --enable",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+
+            /// <summary>
+            /// Tests whether the command service can execute a command with multiple mixed parameters where named
+            /// options are passed out of order.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteOutOfOrderMixedCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<AdvancedCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test mixed booga --enable --third dooga --first wooga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+        }
+
+        /// <summary>
+        /// Tests collection arguments.
+        /// </summary>
+        public class Collections
+        {
+            /// <summary>
+            /// Tests whether the command service can execute a command with a positional collection.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecutePositionalCollectionCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<CollectionCommandModule>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test positional-collection ra ra rasputin",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+        }
     }
 }
