@@ -168,7 +168,11 @@ namespace Remora.Commands.Signatures
         {
             if (!parameter.IsOptional)
             {
-                throw new InvalidOperationException("Switches must have a default value.");
+                throw new InvalidOperationException
+                (
+                    $"{parameter.Member.Name}::{parameter.Name} incorrectly declared: " +
+                    $"switches must have a default value."
+                );
             }
 
             IParameterShape newNamedParameter;
