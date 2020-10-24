@@ -56,32 +56,46 @@ namespace Remora.Commands.Extensions
         }
 
         /// <summary>
-        /// Determines whether the type is an enumerable type.
+        /// Determines whether the type is a supported enumerable type.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>true if the type is an enumerable type; otherwise, false.</returns>
-        public static bool IsEnumerable(this Type type)
+        public static bool IsSupportedEnumerable(this Type type)
         {
-            var typeInterfaces = type.GetInterfaces();
-            return typeInterfaces.Contains(typeof(IEnumerable)) ||
-                   typeInterfaces.Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            type = type.GetGenericTypeDefinition();
+
+            switch (type)
+            {
+                case var _ when type == typeof(IEnumerable<>):
+                case var _ when type == typeof(ICollection<>):
+                case var _ when type == typeof(IList<>):
+                case var _ when type == typeof(IReadOnlyCollection<>):
+                case var _ when type == typeof(IReadOnlyList<>):
+                case var _ when type == typeof(List<>):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>
-        /// Gets the element type of the given type. The type is assumed to implement at least one
-        /// <see cref="IEnumerable{T}"/> interface, and the element type of the first one is returned.
+        /// Gets the element type of the given type. The type is assumed to return true if
+        /// <see cref="IsSupportedEnumerable"/> were to be called on it.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>The element type.</returns>
         public static Type GetCollectionElementType(this Type type)
         {
-            var typeInterfaces = type.GetInterfaces();
-            var firstEnumerableInterface = typeInterfaces.First
-            (
-                t => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-            );
-
-            return firstEnumerableInterface.GetGenericArguments()[0];
+            return type.GetGenericTypeDefinition().GetGenericArguments()[0];
         }
     }
 }

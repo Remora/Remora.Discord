@@ -175,7 +175,7 @@ namespace Remora.Commands.Services
                 }
 
                 var typeToParse = parameter.ParameterType;
-                var isCollection = typeToParse.IsEnumerable();
+                var isCollection = typeToParse.IsSupportedEnumerable();
                 if (isCollection)
                 {
                     typeToParse = typeToParse.GetCollectionElementType();
