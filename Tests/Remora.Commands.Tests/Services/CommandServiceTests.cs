@@ -43,11 +43,123 @@ namespace Remora.Commands.Tests.Services
         {
             var services = new ServiceCollection()
                 .AddCommands()
-                .AddCommandModule<ParameterlessCommandModule>()
+                .AddCommandModule<TestCommandModule>()
                 .BuildServiceProvider();
 
             var commandService = services.GetRequiredService<CommandService>();
             var executionResult = await commandService.TryExecuteAsync("test parameterless", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single positional parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSinglePositionalCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-positional booga", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single optional positional parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSingleOptionalPositionalCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-optional-positional", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single positional parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSingleNamedCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-named --value booga", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single positional parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSingleOptionalNamedCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-optional-named", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single positional boolean parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSinglePositionalBoolCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-positional-bool true", default);
+
+            Assert.True(executionResult.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the command service can execute a command with a single positional boolean parameter.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        [Fact]
+        public async Task CanExecuteSingleNamedBoolCommand()
+        {
+            var services = new ServiceCollection()
+                .AddCommands()
+                .AddCommandModule<TestCommandModule>()
+                .BuildServiceProvider();
+
+            var commandService = services.GetRequiredService<CommandService>();
+            var executionResult = await commandService.TryExecuteAsync("test single-named-bool --enable", default);
+
+            Assert.True(executionResult.IsSuccess);
+
+            executionResult = await commandService.TryExecuteAsync("test single-named-bool", default);
 
             Assert.True(executionResult.IsSuccess);
         }
