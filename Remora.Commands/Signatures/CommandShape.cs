@@ -51,53 +51,6 @@ namespace Remora.Commands.Signatures
         }
 
         /// <summary>
-        /// Determines whether the given token sequence matches the command shape.
-        /// </summary>
-        /// <param name="tokenizer">The token sequence.</param>
-        /// <returns>true if the shape matches; otherwise, false.</returns>
-        public bool Matches(TokenizingEnumerator tokenizer)
-        {
-            var parametersToCheck = new List<IParameterShape>(this.Parameters);
-
-            while (parametersToCheck.Count > 0)
-            {
-                var matchedParameters = new List<IParameterShape>();
-                foreach (var parameterToCheck in parametersToCheck)
-                {
-                    if (!parameterToCheck.Matches(tokenizer, out var consumedTokens))
-                    {
-                        continue;
-                    }
-
-                    // gobble up the tokens
-                    // TODO: This is probably where we'll extract the tokens as strings
-                    matchedParameters.Add(parameterToCheck);
-                    for (ulong i = 0; i < consumedTokens; ++i)
-                    {
-                        if (!tokenizer.MoveNext())
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                if (matchedParameters.Count == 0)
-                {
-                    // Check if all remaining parameters are optional
-                    return parametersToCheck.All(p => !p.IsRequired);
-                }
-
-                foreach (var matchedParameter in matchedParameters)
-                {
-                    parametersToCheck.Remove(matchedParameter);
-                }
-            }
-
-            // if there are more tokens to come, we don't match
-            return !tokenizer.MoveNext();
-        }
-
-        /// <summary>
         /// Creates a new <see cref="CommandShape"/> from the given method.
         /// </summary>
         /// <param name="method">The method.</param>

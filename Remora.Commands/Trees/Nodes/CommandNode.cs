@@ -21,8 +21,13 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Remora.Commands.Signatures;
+using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Trees.Nodes
 {
@@ -45,6 +50,11 @@ namespace Remora.Commands.Trees.Nodes
         /// <inheritdoc/>
         public IParentNode Parent { get; }
 
+        /// <summary>
+        /// Gets the general shape of the command.
+        /// </summary>
+        public CommandShape Shape { get; }
+
         /// <inheritdoc/>
         /// <remarks>
         /// This key value represents the name of the command, which terminates the command prefix.
@@ -64,6 +74,79 @@ namespace Remora.Commands.Trees.Nodes
             this.Key = key;
             this.ModuleType = moduleType;
             this.CommandMethod = commandMethod;
+            this.Shape = CommandShape.FromMethod(this.CommandMethod);
+        }
+
+        /// <summary>
+        /// Attempts to bind the command shape to the given tokenizer, materializing values for its parameters.
+        /// </summary>
+        /// <param name="tokenizer">The token sequence.</param>
+        /// <param name="boundCommandShape">The resulting shape, if any.</param>
+        /// <returns>true if the shape matches; otherwise, false.</returns>
+        public bool TryBind
+        (
+            TokenizingEnumerator tokenizer,
+            [NotNullWhen(true)] out BoundCommandNode? boundCommandShape
+        )
+        {
+            boundCommandShape = null;
+
+            var parametersToCheck = new List<IParameterShape>(this.Shape.Parameters);
+
+            var boundParameters = new List<BoundParameterShape>();
+            while (parametersToCheck.Count > 0)
+            {
+                var matchedParameters = new List<IParameterShape>();
+                foreach (var parameterToCheck in parametersToCheck)
+                {
+                    if (!parameterToCheck.Matches(tokenizer, out var consumedTokens))
+                    {
+                        continue;
+                    }
+
+                    // gobble up the tokens
+                    matchedParameters.Add(parameterToCheck);
+
+                    var boundTokens = new List<(TokenType Type, string Value)>();
+                    for (ulong i = 0; i < consumedTokens; ++i)
+                    {
+                        if (!tokenizer.MoveNext())
+                        {
+                            return false;
+                        }
+
+                        var type = tokenizer.Current.Type;
+                        var value = tokenizer.Current.Value.ToString();
+                        boundTokens.Add((type, value));
+                    }
+
+                    boundParameters.Add(new BoundParameterShape(parameterToCheck, boundTokens));
+                }
+
+                if (matchedParameters.Count == 0)
+                {
+                    // Check if all remaining parameters are optional
+                    if (parametersToCheck.All(p => p.Parameter.IsOptional))
+                    {
+                        boundCommandShape = new BoundCommandNode(this, boundParameters);
+                        return true;
+                    }
+                }
+
+                foreach (var matchedParameter in matchedParameters)
+                {
+                    parametersToCheck.Remove(matchedParameter);
+                }
+            }
+
+            // if there are more tokens to come, we don't match
+            if (tokenizer.MoveNext())
+            {
+                return false;
+            }
+
+            boundCommandShape = new BoundCommandNode(this, boundParameters);
+            return true;
         }
     }
 }
