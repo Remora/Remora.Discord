@@ -88,7 +88,7 @@ namespace Remora.Commands.Signatures
                 }
             }
 
-            return new CommandShape(positionalParameters.Concat(namedParameters).ToList());
+            return new CommandShape(namedParameters.Concat(positionalParameters).ToList());
         }
 
         private static IParameterShape CreateNamedParameterShape
