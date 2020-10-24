@@ -21,7 +21,6 @@
 //
 
 using System.Collections.Generic;
-using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Signatures
 {
@@ -38,14 +37,14 @@ namespace Remora.Commands.Signatures
         /// <summary>
         /// Gets the tokens bound to the parameter.
         /// </summary>
-        public IReadOnlyList<(TokenType Type, string Value)> Tokens { get; }
+        public IReadOnlyList<string> Tokens { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BoundParameterShape"/> class.
         /// </summary>
         /// <param name="parameterShape">The parameter shape.</param>
         /// <param name="tokens">The bound tokens.</param>
-        public BoundParameterShape(IParameterShape parameterShape, IReadOnlyList<(TokenType Type, string Value)> tokens)
+        public BoundParameterShape(IParameterShape parameterShape, IReadOnlyList<string> tokens)
         {
             this.ParameterShape = parameterShape;
             this.Tokens = tokens;

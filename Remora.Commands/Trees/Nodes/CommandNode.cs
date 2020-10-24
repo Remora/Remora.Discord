@@ -107,7 +107,7 @@ namespace Remora.Commands.Trees.Nodes
                     // gobble up the tokens
                     matchedParameters.Add(parameterToCheck);
 
-                    var boundTokens = new List<(TokenType Type, string Value)>();
+                    var boundTokens = new List<string>();
                     for (ulong i = 0; i < consumedTokens; ++i)
                     {
                         if (!tokenizer.MoveNext())
@@ -116,8 +116,13 @@ namespace Remora.Commands.Trees.Nodes
                         }
 
                         var type = tokenizer.Current.Type;
+                        if (type != TokenType.Value)
+                        {
+                            // skip names, we've already checked them
+                        }
+
                         var value = tokenizer.Current.Value.ToString();
-                        boundTokens.Add((type, value));
+                        boundTokens.Add(value);
                     }
 
                     boundParameters.Add(new BoundParameterShape(parameterToCheck, boundTokens));
