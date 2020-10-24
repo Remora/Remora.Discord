@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Reflection;
 using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Signatures
@@ -37,9 +38,9 @@ namespace Remora.Commands.Signatures
         IReadOnlyList<TokenType> ValidTypes { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the parameter is required.
+        /// Gets the matching parameter.
         /// </summary>
-        bool IsRequired { get; }
+        ParameterInfo Parameter { get; }
 
         /// <summary>
         /// Determines whether the given token sequence matches the parameter shape.

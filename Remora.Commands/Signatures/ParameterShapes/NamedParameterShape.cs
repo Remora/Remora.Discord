@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Signatures
@@ -48,43 +49,41 @@ namespace Remora.Commands.Signatures
             new[] { TokenType.LongName, TokenType.ShortName, TokenType.Value };
 
         /// <inheritdoc />
-        public bool IsRequired { get; }
+        public ParameterInfo Parameter { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
         /// <param name="longName">The long name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public NamedParameterShape(char shortName, string longName, bool isRequired)
+        public NamedParameterShape(ParameterInfo parameter, char shortName, string longName)
         {
+            this.Parameter = parameter;
             this.ShortName = shortName;
             this.LongName = longName;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="longName">The long name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        /// <exception cref="ArgumentException">Thrown if neither the short nor the long name is set.</exception>
-        public NamedParameterShape(string longName, bool isRequired)
+        public NamedParameterShape(ParameterInfo parameter, string longName)
         {
+            this.Parameter = parameter;
             this.LongName = longName;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        /// <exception cref="ArgumentException">Thrown if neither the short nor the long name is set.</exception>
-        public NamedParameterShape(char shortName, bool isRequired)
+        public NamedParameterShape(ParameterInfo parameter, char shortName)
         {
+            this.Parameter = parameter;
             this.ShortName = shortName;
-            this.IsRequired = isRequired;
         }
 
         /// <inheritdoc/>

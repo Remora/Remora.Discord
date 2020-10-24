@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Reflection;
 using Remora.Commands.Tokenization;
 using static Remora.Commands.Tokenization.TokenType;
 
@@ -39,11 +40,11 @@ namespace Remora.Commands.Signatures
         /// <summary>
         /// Initializes a new instance of the <see cref="PositionalCollectionParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="min">The minimum number of elements.</param>
         /// <param name="max">The maximum number of elements.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public PositionalCollectionParameterShape(ulong? min, ulong? max, bool isRequired)
-            : base(isRequired)
+        public PositionalCollectionParameterShape(ParameterInfo parameter, ulong? min, ulong? max)
+            : base(parameter)
         {
             this.Min = min;
             this.Max = max;

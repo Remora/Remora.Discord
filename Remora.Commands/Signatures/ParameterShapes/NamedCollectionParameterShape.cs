@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Reflection;
 using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Signatures
@@ -39,20 +40,20 @@ namespace Remora.Commands.Signatures
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedCollectionParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
         /// <param name="longName">The long name.</param>
         /// <param name="min">The minimum number of items in the collection.</param>
         /// <param name="max">The maximum number of items in the collection.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
         public NamedCollectionParameterShape
         (
+            ParameterInfo parameter,
             char shortName,
             string longName,
             ulong? min,
-            ulong? max,
-            bool isRequired
+            ulong? max
         )
-            : base(shortName, longName, isRequired)
+            : base(parameter, shortName, longName)
         {
             this.Min = min;
             this.Max = max;
@@ -61,18 +62,18 @@ namespace Remora.Commands.Signatures
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedCollectionParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
         /// <param name="min">The minimum number of items in the collection.</param>
         /// <param name="max">The maximum number of items in the collection.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
         public NamedCollectionParameterShape
         (
+            ParameterInfo parameter,
             char shortName,
             ulong? min,
-            ulong? max,
-            bool isRequired
+            ulong? max
         )
-            : base(shortName, isRequired)
+            : base(parameter, shortName)
         {
             this.Min = min;
             this.Max = max;
@@ -81,18 +82,18 @@ namespace Remora.Commands.Signatures
         /// <summary>
         /// Initializes a new instance of the <see cref="NamedCollectionParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="longName">The long name.</param>
         /// <param name="min">The minimum number of items in the collection.</param>
         /// <param name="max">The maximum number of items in the collection.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
         public NamedCollectionParameterShape
         (
+            ParameterInfo parameter,
             string longName,
             ulong? min,
-            ulong? max,
-            bool isRequired
+            ulong? max
         )
-            : base(longName, isRequired)
+            : base(parameter, longName)
         {
             this.Min = min;
             this.Max = max;

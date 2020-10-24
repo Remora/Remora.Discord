@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Remora.Commands.Tokenization;
 
 namespace Remora.Commands.Signatures
@@ -48,41 +49,41 @@ namespace Remora.Commands.Signatures
             new[] { TokenType.LongName, TokenType.ShortName };
 
         /// <inheritdoc />
-        public bool IsRequired { get; }
+        public ParameterInfo Parameter { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwitchParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
         /// <param name="longName">The long name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public SwitchParameterShape(char shortName, string longName, bool isRequired)
+        public SwitchParameterShape(ParameterInfo parameter, char shortName, string longName)
         {
+            this.Parameter = parameter;
             this.ShortName = shortName;
             this.LongName = longName;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwitchParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="shortName">The short name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public SwitchParameterShape(char shortName, bool isRequired)
+        public SwitchParameterShape(ParameterInfo parameter, char shortName)
         {
+            this.Parameter = parameter;
             this.ShortName = shortName;
-            this.IsRequired = isRequired;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwitchParameterShape"/> class.
         /// </summary>
+        /// <param name="parameter">The underlying parameter.</param>
         /// <param name="longName">The long name.</param>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public SwitchParameterShape(string longName, bool isRequired)
+        public SwitchParameterShape(ParameterInfo parameter, string longName)
         {
+            this.Parameter = parameter;
             this.LongName = longName;
-            this.IsRequired = isRequired;
         }
 
         /// <inheritdoc/>

@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Reflection;
 using Remora.Commands.Tokenization;
 using static Remora.Commands.Tokenization.TokenType;
 
@@ -35,15 +36,15 @@ namespace Remora.Commands.Signatures
         public IReadOnlyList<TokenType> ValidTypes => new[] { Value };
 
         /// <inheritdoc />
-        public bool IsRequired { get; }
+        public ParameterInfo Parameter { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PositionalParameterShape"/> class.
         /// </summary>
-        /// <param name="isRequired">Whether the parameter is required.</param>
-        public PositionalParameterShape(bool isRequired)
+        /// <param name="parameter">The underlying parameter.</param>
+        public PositionalParameterShape(ParameterInfo parameter)
         {
-            this.IsRequired = isRequired;
+            this.Parameter = parameter;
         }
 
         /// <inheritdoc />
