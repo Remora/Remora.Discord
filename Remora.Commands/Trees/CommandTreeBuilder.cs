@@ -24,11 +24,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Attributes;
 using Remora.Commands.Extensions;
 using Remora.Commands.Modules;
 using Remora.Commands.Trees.Nodes;
+using Remora.Results;
 
 namespace Remora.Commands.Trees
 {
@@ -141,6 +143,14 @@ namespace Remora.Commands.Trees
                 if (commandAttribute is null)
                 {
                     continue;
+                }
+
+                if (method.ReturnType != typeof(Task<IResult>))
+                {
+                    throw new InvalidOperationException
+                    (
+                        "Methods marked as commands must return Task<IResult>."
+                    );
                 }
 
                 yield return new CommandNode(parent, commandAttribute.Name, moduleType, method);

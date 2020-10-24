@@ -20,9 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Modules;
+using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
@@ -36,13 +39,15 @@ namespace Remora.Commands.Tests.Data.Modules
         }
 
         [Command("a")]
-        public void A()
+        public Task<IResult> A()
         {
+            throw new NotImplementedException();
         }
 
         [Command("b")]
-        public void B()
+        public Task<IResult> B()
         {
+            throw new NotImplementedException();
         }
 
         [Group("c")]
@@ -54,8 +59,9 @@ namespace Remora.Commands.Tests.Data.Modules
             }
 
             [Command("d")]
-            public void D()
+            public Task<IResult> D()
             {
+                throw new NotImplementedException();
             }
         }
     }
