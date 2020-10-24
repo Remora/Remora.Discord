@@ -60,7 +60,7 @@ namespace Remora.Commands.Signatures
             {
                 if (!tokenizer.MoveNext())
                 {
-                    return false;
+                    break;
                 }
 
                 if (tokenizer.Current.Type != Value)
