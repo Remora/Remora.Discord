@@ -33,11 +33,6 @@ namespace Remora.Commands.Tests.Data.Modules
 {
     public class UnnamedModuleWithCommands : ModuleBase
     {
-        public UnnamedModuleWithCommands(CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-        }
-
         [Command("a")]
         public Task<IResult> A()
         {

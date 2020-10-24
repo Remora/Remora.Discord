@@ -22,11 +22,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
+using Remora.Commands.Modules;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Commands.Signatures;
@@ -36,7 +38,7 @@ using Remora.Results;
 namespace Remora.Commands.Services
 {
     /// <summary>
-    /// Handles search & dispatch of commands.
+    /// Handles search and dispatch of commands.
     /// </summary>
     public class CommandService
     {
@@ -114,7 +116,9 @@ namespace Remora.Commands.Services
 
             var method = boundCommandNode.Node.CommandMethod;
             var moduleType = boundCommandNode.Node.ModuleType;
-            var moduleInstance = _services.GetRequiredService(moduleType);
+
+            var moduleInstance = (ModuleBase)_services.GetRequiredService(moduleType);
+            moduleInstance.SetCancellationToken(ct);
 
             try
             {

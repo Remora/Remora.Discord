@@ -1,5 +1,5 @@
 //
-//  ModuleBase.cs
+//  NamedModuleWithCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
-using JetBrains.Annotations;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Modules;
+using Remora.Results;
 
-namespace Remora.Commands.Modules
+#pragma warning disable CS1591, SA1600
+
+namespace Remora.Commands.Tests.Data.Modules
 {
-    /// <summary>
-    /// Represents an abstract base for command modules.
-    /// </summary>
-    [PublicAPI]
-    public abstract class ModuleBase
+    [Group("a")]
+    public class NamedModuleWithCommands : ModuleBase
     {
-        /// <summary>
-        /// Gets the cancellation token for the command execution operation.
-        /// </summary>
-        protected CancellationToken CancellationToken { get; private set; }
-
-        /// <summary>
-        /// Sets the cancellation token of the module.
-        /// </summary>
-        /// <param name="ct">The token.</param>
-        internal void SetCancellationToken(CancellationToken ct)
+        [Command("b")]
+        public Task<IResult> B()
         {
-            this.CancellationToken = ct;
+            throw new NotImplementedException();
+        }
+
+        [Command("c")]
+        public Task<IResult> C()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("d")]
+        public Task<IResult> D()
+        {
+            throw new NotImplementedException();
         }
     }
 }

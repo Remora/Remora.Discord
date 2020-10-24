@@ -1,5 +1,5 @@
 //
-//  UnnamedModuleWithNestedNamedModuleWithCommands.cs
+//  ParameterlessCommandModule.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
@@ -31,38 +30,13 @@ using Remora.Results;
 
 namespace Remora.Commands.Tests.Data.Modules
 {
-    public class UnnamedModuleWithNestedNamedModuleWithCommands : ModuleBase
+    [Group("test")]
+    public class ParameterlessCommandModule : ModuleBase
     {
-        public UnnamedModuleWithNestedNamedModuleWithCommands(CancellationToken cancellationToken)
-            : base(cancellationToken)
+        [Command("parameterless")]
+        public Task<IResult> Parameterless()
         {
-        }
-
-        [Group("a")]
-        public class Nested : ModuleBase
-        {
-            public Nested(CancellationToken cancellationToken)
-                : base(cancellationToken)
-            {
-            }
-
-            [Command("b")]
-            public Task<IResult> B()
-            {
-                throw new NotImplementedException();
-            }
-
-            [Command("c")]
-            public Task<IResult> C()
-            {
-                throw new NotImplementedException();
-            }
-
-            [Command("d")]
-            public Task<IResult> D()
-            {
-                throw new NotImplementedException();
-            }
+            return Task.FromResult<IResult>(OperationResult.FromSuccess());
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  NamedModuleWithCommandsWithNestedNamedModuleWithCommands.cs
+//  UnnamedModuleWithCommandsWithNestedUnnamedModuleWithCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -31,26 +31,26 @@ using Remora.Results;
 
 namespace Remora.Commands.Tests.Data.Modules
 {
-    [Group("a")]
-    public class NamedModuleWithCommandsWithNestedNamedModuleWithCommands : ModuleBase
+    public class UnnamedModuleWithCommandsWithNestedUnnamedModuleWithCommands : ModuleBase
     {
-        public NamedModuleWithCommandsWithNestedNamedModuleWithCommands(CancellationToken cancellationToken)
-            : base(cancellationToken)
-        {
-        }
-
-        [Command("b")]
-        public Task<IResult> B()
+        [Command("a")]
+        public Task<IResult> A()
         {
             throw new NotImplementedException();
         }
 
-        [Group("c")]
         public class Nested : ModuleBase
         {
-            public Nested(CancellationToken cancellationToken)
-                : base(cancellationToken)
+            [Command("b")]
+            public Task<IResult> B()
             {
+                throw new NotImplementedException();
+            }
+
+            [Command("c")]
+            public Task<IResult> C()
+            {
+                throw new NotImplementedException();
             }
 
             [Command("d")]
