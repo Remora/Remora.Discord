@@ -23,7 +23,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Remora.Commands.Attributes;
@@ -166,6 +165,11 @@ namespace Remora.Commands.Signatures
             ParameterInfo parameter
         )
         {
+            if (!parameter.IsOptional)
+            {
+                throw new InvalidOperationException("Switches must have a default value.");
+            }
+
             IParameterShape newNamedParameter;
             if (optionAttribute.ShortName is null)
             {
