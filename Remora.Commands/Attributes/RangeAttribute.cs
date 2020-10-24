@@ -32,25 +32,48 @@ namespace Remora.Commands.Attributes
     [AttributeUsage(AttributeTargets.Parameter)]
     public class RangeAttribute : Attribute
     {
+        private ulong? _min;
+        private ulong? _max;
+
         /// <summary>
-        /// Gets the minimum number of elements in the collection.
+        /// Sets the minimum number of elements in the collection.
         /// </summary>
-        public ulong? Min { get; }
+        /// <exception cref="InvalidOperationException">Thrown if the getter is used.</exception>
+#pragma warning disable SA1623
+        public ulong Min
+        {
+            [Obsolete("Do not use.", true)] get => throw new InvalidOperationException();
+            set => _min = value;
+        }
+
+        /// <summary>
+        /// Sets the minimum number of elements in the collection.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if the getter is used.</exception>
+        public ulong Max
+        {
+            [Obsolete("Do not use.", true)] get => throw new InvalidOperationException();
+            set => _max = value;
+        }
+#pragma warning restore
 
         /// <summary>
         /// Gets the minimum number of elements in the collection.
         /// </summary>
-        public ulong? Max { get; }
+        /// <returns>The minimum number.</returns>
+        public ulong? GetMin() => _min;
+
+        /// <summary>
+        /// Gets the maximum number of elements in the collection.
+        /// </summary>
+        /// <returns>The maximum number of elements.</returns>
+        public ulong? GetMax() => _max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RangeAttribute"/> class.
         /// </summary>
-        /// <param name="min">The minimum number of elements in the collection.</param>
-        /// <param name="max">The maximum number of elements in the collection.</param>
-        public RangeAttribute(ulong? min, ulong? max)
+        public RangeAttribute()
         {
-            this.Min = min;
-            this.Max = max;
         }
     }
 }
