@@ -25,6 +25,7 @@ using System.Numerics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Remora.Commands.Modules;
 using Remora.Commands.Parsers;
 using Remora.Commands.Services;
 using Remora.Commands.Trees;
@@ -37,18 +38,23 @@ namespace Remora.Commands.Extensions
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Configures command modules, allowing a user to register modules.
+        /// Adds a command module to the available services.
         /// </summary>
+        /// <typeparam name="TCommandModule">The command module to register.</typeparam>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="builder">The registration action.</param>
         /// <returns>The service collection, with the configured modules.</returns>
-        public static IServiceCollection ConfigureCommandModules
+        public static IServiceCollection AddCommandModule<TCommandModule>
         (
-            this IServiceCollection serviceCollection,
-            Action<CommandTreeBuilder> builder
+            this IServiceCollection serviceCollection
         )
+            where TCommandModule : ModuleBase
         {
-            serviceCollection.Configure(builder);
+            serviceCollection.AddScoped<TCommandModule>();
+            serviceCollection.Configure<CommandTreeBuilder>
+            (
+                builder => builder.RegisterModule<TCommandModule>()
+            );
+
             return serviceCollection;
         }
 
