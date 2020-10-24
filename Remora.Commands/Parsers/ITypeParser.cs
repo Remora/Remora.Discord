@@ -37,7 +37,7 @@ namespace Remora.Commands.Parsers
     public interface ITypeParser<TType> where TType : notnull
     {
         /// <summary>
-        /// Attempts to parse the given string into an instance of <see cref="TType"/>.
+        /// Attempts to parse the given string into an instance of <typeparamref name="TType"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
