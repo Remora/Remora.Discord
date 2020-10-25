@@ -866,5 +866,49 @@ namespace Remora.Commands.Tests.Services
                 Assert.False(executionResult.IsSuccess);
             }
         }
+
+        /// <summary>
+        /// Tests overloads.
+        /// </summary>
+        public class Overloads
+        {
+            /// <summary>
+            /// Tests whether the command service can execute an overloaded command.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task CanExecuteOverloadedCommand()
+            {
+                var services = new ServiceCollection()
+                    .AddCommands()
+                    .AddCommandModule<OverloadCommandGroup>()
+                    .BuildServiceProvider();
+
+                var commandService = services.GetRequiredService<CommandService>();
+                var executionResult = await commandService.TryExecuteAsync
+                (
+                    "test overload",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+
+                executionResult = await commandService.TryExecuteAsync
+                (
+                    "test overload booga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+
+                executionResult = await commandService.TryExecuteAsync
+                (
+                    "test overload --value-2 booga wooga",
+                    default
+                );
+
+                Assert.True(executionResult.IsSuccess);
+            }
+        }
     }
 }
