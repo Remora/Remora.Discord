@@ -78,8 +78,6 @@ namespace Remora.Commands.Trees
                 {
                     case CommandNode commandNode:
                     {
-                        tokenizer.MoveNext();
-
                         if (!commandNode.TryBind(tokenizer, out var boundCommandShape))
                         {
                              continue;

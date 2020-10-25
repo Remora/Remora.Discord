@@ -91,6 +91,11 @@ namespace Remora.Commands.Trees.Nodes
         {
             boundCommandShape = null;
 
+            if (!tokenizer.MoveNext())
+            {
+                return false;
+            }
+
             var parametersToCheck = new List<IParameterShape>(this.Shape.Parameters);
 
             var boundParameters = new List<BoundParameterShape>();
