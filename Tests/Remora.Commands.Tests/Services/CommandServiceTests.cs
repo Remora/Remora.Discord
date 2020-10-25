@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -370,7 +371,7 @@ namespace Remora.Commands.Tests.Services
             }
 
             /// <summary>
-            /// Tests whether the command service can execute a command with a <see cref="single"/> parameter.
+            /// Tests whether the command service can execute a command with a <see cref="float"/> parameter.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
             [Fact]
@@ -442,7 +443,7 @@ namespace Remora.Commands.Tests.Services
             }
 
             /// <summary>
-            /// Tests whether the command service can execute a command with a <see cref="dateTimeOffset"/> parameter.
+            /// Tests whether the command service can execute a command with a <see cref="DateTimeOffset"/> parameter.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
             [Fact]
