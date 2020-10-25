@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Commands.Extensions;
 using Remora.Commands.Services;
 using Remora.Commands.Tests.Data.Modules;
+using Remora.Results;
 using Xunit;
 
 namespace Remora.Commands.Tests.Services
@@ -892,6 +893,7 @@ namespace Remora.Commands.Tests.Services
                 );
 
                 Assert.True(executionResult.IsSuccess);
+                Assert.Equal("overload-1", ((RetrieveEntityResult<string>)executionResult.InnerResult!).Entity);
 
                 executionResult = await commandService.TryExecuteAsync
                 (
@@ -900,6 +902,7 @@ namespace Remora.Commands.Tests.Services
                 );
 
                 Assert.True(executionResult.IsSuccess);
+                Assert.Equal("overload-2", ((RetrieveEntityResult<string>)executionResult.InnerResult!).Entity);
 
                 executionResult = await commandService.TryExecuteAsync
                 (
@@ -908,6 +911,7 @@ namespace Remora.Commands.Tests.Services
                 );
 
                 Assert.True(executionResult.IsSuccess);
+                Assert.Equal("overload-3", ((RetrieveEntityResult<string>)executionResult.InnerResult!).Entity);
             }
         }
     }

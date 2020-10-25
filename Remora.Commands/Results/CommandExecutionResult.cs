@@ -38,12 +38,27 @@ namespace Remora.Commands.Results
         public ExecutionStatus Status { get; private set; }
 
         /// <summary>
+        /// Gets the result that the executed command returned, if any.
+        /// </summary>
+        public IResult? InnerResult { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CommandExecutionResult"/> class.
         /// </summary>
         /// <param name="commandNode">The found command.</param>
         protected CommandExecutionResult(ExecutionStatus commandNode)
         {
             this.Status = commandNode;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandExecutionResult"/> class.
+        /// </summary>
+        /// <param name="innerResult">The result from the command execution.</param>
+        protected CommandExecutionResult(IResult innerResult)
+        {
+            this.Status = ExecutionStatus.Successful;
+            this.InnerResult = innerResult;
         }
 
         /// <summary>
@@ -106,10 +121,11 @@ namespace Remora.Commands.Results
         /// <summary>
         /// Creates a successful result.
         /// </summary>
+        /// <param name="inner">The inner result.</param>
         /// <returns>The result.</returns>
-        public static CommandExecutionResult FromSuccess()
+        public static CommandExecutionResult FromSuccess(IResult inner)
         {
-            return new CommandExecutionResult(ExecutionStatus.Successful);
+            return new CommandExecutionResult(inner);
         }
     }
 }

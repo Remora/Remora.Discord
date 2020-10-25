@@ -129,7 +129,7 @@ namespace Remora.Commands.Services
                     return CommandExecutionResult.Failed(result);
                 }
 
-                return CommandExecutionResult.FromSuccess();
+                return CommandExecutionResult.FromSuccess(result);
             }
             catch (Exception ex)
             {
