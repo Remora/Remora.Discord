@@ -62,6 +62,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Gateway.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Unstable", "Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj", "{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Commands", "Remora.Discord.Commands\Remora.Discord.Commands.csproj", "{B443C36D-5328-4031-818C-15FE47552E84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,10 @@ Global
 		{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B443C36D-5328-4031-818C-15FE47552E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B443C36D-5328-4031-818C-15FE47552E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B443C36D-5328-4031-818C-15FE47552E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B443C36D-5328-4031-818C-15FE47552E84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC82899D-871E-4DC9-B61C-7619111800DE} = {26E93608-29BA-45C7-993A-AA24A49D6013}

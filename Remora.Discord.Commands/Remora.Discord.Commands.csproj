@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Remora.Commands" Version="1.0.0" />
+    </ItemGroup>
+
+</Project>
