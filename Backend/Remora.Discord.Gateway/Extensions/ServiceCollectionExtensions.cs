@@ -55,7 +55,9 @@ namespace Remora.Discord.Gateway.Extensions
                 .AddSingleton<Random>()
                 .AddTransient<ClientWebSocket>()
                 .AddSingleton<IPayloadTransportService, WebSocketPayloadTransportService>()
-                .AddSingleton<DiscordGatewayClient>();
+                .AddSingleton<DiscordGatewayClient>()
+                .AddSingleton<ResponderService>()
+                .AddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<ResponderService>());
 
             return serviceCollection;
         }
@@ -65,13 +67,11 @@ namespace Remora.Discord.Gateway.Extensions
         /// <see cref="IResponder{T}"/> implementations it supports.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="responderService">The responder service.</param>
         /// <typeparam name="TResponder">The concrete responder type.</typeparam>
         /// <returns>The service collection, with the responder added.</returns>
         public static IServiceCollection AddResponder<TResponder>
         (
-            this IServiceCollection serviceCollection,
-            ResponderService responderService
+            this IServiceCollection serviceCollection
         )
             where TResponder : IResponder
         {
@@ -88,7 +88,10 @@ namespace Remora.Discord.Gateway.Extensions
 
             serviceCollection.AddScoped(typeof(TResponder));
 
-            responderService.RegisterResponderType<TResponder>();
+            serviceCollection.Configure<ResponderService>
+            (
+                responderService => responderService.RegisterResponderType<TResponder>()
+            );
 
             return serviceCollection;
         }

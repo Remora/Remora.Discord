@@ -58,7 +58,6 @@ namespace Remora.Discord.Samples.UnknownEventLogger
                     "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a valid token."
                 );
 
-            var responderService = new ResponderService();
             var services = new ServiceCollection()
                 .AddLogging
                 (
@@ -68,8 +67,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
                         .AddFilter("System.Net.Http.HttpClient.Discord.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
-                .AddResponder<UnknownEventResponder>(responderService)
-                .AddSingleton<IResponderTypeRepository>(responderService)
+                .AddResponder<UnknownEventResponder>()
                 .BuildServiceProvider();
 
             var log = services.GetRequiredService<ILogger<Program>>();
