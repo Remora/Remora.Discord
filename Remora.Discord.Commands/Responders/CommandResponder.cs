@@ -20,11 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
@@ -37,15 +44,23 @@ namespace Remora.Discord.Commands.Responders
     {
         private readonly CommandService _commandService;
         private readonly ICommandResponderOptions _options;
+        private readonly IServiceProvider _services;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandResponder"/> class.
         /// </summary>
         /// <param name="commandService">The command service.</param>
         /// <param name="options">The command responder options.</param>
-        public CommandResponder(CommandService commandService, IOptions<CommandResponderOptions> options)
+        /// <param name="services">The available services.</param>
+        public CommandResponder
+        (
+            CommandService commandService,
+            IOptions<CommandResponderOptions> options,
+            IServiceProvider services
+        )
         {
             _commandService = commandService;
+            _services = services;
             _options = options.Value;
         }
 
@@ -71,7 +86,40 @@ namespace Remora.Discord.Commands.Responders
                 return EventResponseResult.FromSuccess();
             }
 
-            return await ExecuteCommandAsync(gatewayEvent.Content, ct);
+            var context = new MessageContext
+            (
+                gatewayEvent.ID,
+                gatewayEvent.ChannelID,
+                new PartialMessage
+                (
+                    gatewayEvent.ID,
+                    gatewayEvent.ChannelID,
+                    gatewayEvent.GuildID,
+                    new Optional<IUser>(gatewayEvent.Author),
+                    gatewayEvent.Member,
+                    gatewayEvent.Content,
+                    gatewayEvent.Timestamp,
+                    gatewayEvent.EditedTimestamp,
+                    gatewayEvent.IsTTS,
+                    gatewayEvent.MentionsEveryone,
+                    new Optional<IReadOnlyList<IUserMention>>(gatewayEvent.Mentions),
+                    new Optional<IReadOnlyList<Snowflake>>(gatewayEvent.MentionedRoles),
+                    gatewayEvent.MentionedChannels,
+                    new Optional<IReadOnlyList<IAttachment>>(gatewayEvent.Attachments),
+                    new Optional<IReadOnlyList<IEmbed>>(gatewayEvent.Embeds),
+                    gatewayEvent.Reactions,
+                    gatewayEvent.Nonce,
+                    gatewayEvent.IsPinned,
+                    gatewayEvent.WebhookID,
+                    gatewayEvent.Type,
+                    gatewayEvent.Activity,
+                    gatewayEvent.Application,
+                    gatewayEvent.MessageReference,
+                    gatewayEvent.Flags
+                )
+            );
+
+            return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
         }
 
         /// <inheritdoc/>
@@ -104,12 +152,42 @@ namespace Remora.Discord.Commands.Responders
                 }
             }
 
-            return await ExecuteCommandAsync(gatewayEvent.Content.Value!, ct);
+            var context = new MessageContext
+            (
+                gatewayEvent.ID.Value,
+                gatewayEvent.ChannelID.Value,
+                gatewayEvent
+            );
+
+            return await ExecuteCommandAsync(gatewayEvent.Content.Value!, context, ct);
         }
 
-        private async Task<EventResponseResult> ExecuteCommandAsync(string content, CancellationToken ct = default)
+        private async Task<EventResponseResult> ExecuteCommandAsync
+        (
+            string content,
+            MessageContext messageContext,
+            CancellationToken ct = default
+        )
         {
-            var executeResult = await _commandService.TryExecuteAsync(content, ct);
+            // Strip off the prefix
+            if (!(_options.Prefix is null))
+            {
+                content = content.Substring
+                (
+                    content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length
+                );
+            }
+
+            var additionalParameters = new object[] { messageContext };
+
+            var executeResult = await _commandService.TryExecuteAsync
+            (
+                content,
+                _services,
+                additionalParameters,
+                ct
+            );
+
             return executeResult.IsSuccess
                 ? EventResponseResult.FromSuccess()
                 : EventResponseResult.FromError(executeResult);
