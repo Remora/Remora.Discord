@@ -544,6 +544,13 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.IsTTS, "tts")
                 .WithPropertyName(m => m.IsPinned, "pinned");
 
+            options.AddDataObjectConverter<IPartialMessage, PartialMessage>()
+                .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
+                .WithPropertyName(m => m.MentionedRoles, "mention_roles")
+                .WithPropertyName(m => m.MentionedChannels, "mention_channels")
+                .WithPropertyName(m => m.IsTTS, "tts")
+                .WithPropertyName(m => m.IsPinned, "pinned");
+
             options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
             options.AddDataObjectConverter<IMessageApplication, MessageApplication>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();

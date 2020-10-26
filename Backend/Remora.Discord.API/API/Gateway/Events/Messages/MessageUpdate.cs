@@ -25,86 +25,15 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageUpdate"/>
     [PublicAPI]
-    public class MessageUpdate : IMessageUpdate
+    public class MessageUpdate : PartialMessage, IMessageUpdate
     {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> Author { get; }
-
-        /// <inheritdoc />
-        public Optional<IGuildMember> Member { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Content { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset> Timestamp { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset?> EditedTimestamp { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsTTS { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> MentionsEveryone { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IUserMention>> Mentions { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<Snowflake>> MentionedRoles { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IAttachment>> Attachments { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IEmbed>> Embeds { get; }
-
-        /// <inheritdoc />
-        public Optional<IReaction> Reactions { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Nonce { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsPinned { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> WebhookID { get; }
-
-        /// <inheritdoc />
-        public Optional<MessageType> Type { get; }
-
-        /// <inheritdoc />
-        public Optional<IMessageActivity> Activity { get; }
-
-        /// <inheritdoc />
-        public Optional<IMessageApplication> Application { get; }
-
-        /// <inheritdoc />
-        public Optional<IMessageReference> MessageReference { get; }
-
-        /// <inheritdoc />
-        public Optional<MessageFlags> Flags { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageUpdate"/> class.
         /// </summary>
@@ -134,11 +63,11 @@ namespace Remora.Discord.API.Gateway.Events
         /// <param name="flags">The message flags.</param>
         public MessageUpdate
         (
-            Snowflake id,
-            Snowflake channelID,
+            Optional<Snowflake> id,
+            Optional<Snowflake> channelID,
             Optional<Snowflake> guildID,
             Optional<IUser> author,
-            Optional<IGuildMember> member,
+            Optional<IPartialGuildMember> member,
             Optional<string> content,
             Optional<DateTimeOffset> timestamp,
             Optional<DateTimeOffset?> editedTimestamp,
@@ -149,7 +78,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
             Optional<IReadOnlyList<IAttachment>> attachments,
             Optional<IReadOnlyList<IEmbed>> embeds,
-            Optional<IReaction> reactions,
+            Optional<IReadOnlyList<IReaction>> reactions,
             Optional<string> nonce,
             Optional<bool> isPinned,
             Optional<Snowflake> webhookID,
@@ -159,31 +88,34 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IMessageReference> messageReference,
             Optional<MessageFlags> flags
         )
+            : base
+            (
+                id,
+                channelID,
+                guildID,
+                author,
+                member,
+                content,
+                timestamp,
+                editedTimestamp,
+                isTTS,
+                mentionsEveryone,
+                mentions,
+                mentionedRoles,
+                mentionedChannels,
+                attachments,
+                embeds,
+                reactions,
+                nonce,
+                isPinned,
+                webhookID,
+                type,
+                activity,
+                application,
+                messageReference,
+                flags
+            )
         {
-            this.ID = id;
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-            this.Author = author;
-            this.Member = member;
-            this.Content = content;
-            this.Timestamp = timestamp;
-            this.EditedTimestamp = editedTimestamp;
-            this.IsTTS = isTTS;
-            this.MentionsEveryone = mentionsEveryone;
-            this.Mentions = mentions;
-            this.MentionedRoles = mentionedRoles;
-            this.MentionedChannels = mentionedChannels;
-            this.Attachments = attachments;
-            this.Embeds = embeds;
-            this.Reactions = reactions;
-            this.Nonce = nonce;
-            this.IsPinned = isPinned;
-            this.WebhookID = webhookID;
-            this.Type = type;
-            this.Activity = activity;
-            this.Application = application;
-            this.MessageReference = messageReference;
-            this.Flags = flags;
         }
     }
 }
