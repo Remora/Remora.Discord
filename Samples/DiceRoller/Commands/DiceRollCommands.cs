@@ -1,5 +1,5 @@
 //
-//  DiceRollResponder.cs
+//  DiceRollCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,73 +25,65 @@ using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Core;
-using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Samples.DiceRoller.API;
 using Remora.Results;
 
-namespace Remora.Discord.Samples.DiceRoller.Responders
+namespace Remora.Discord.Samples.DiceRoller.Commands
 {
     /// <summary>
-    /// Responds to requests for dice rolls.
+    /// Contains commands for rolling dice.
     /// </summary>
-    public class DiceRollResponder : IResponder<IMessageCreate>, IResponder<IMessageUpdate>, IDisposable
+    public class DiceRollCommands : CommandGroup, IDisposable
     {
         private readonly HttpClient _httpClient;
         private readonly IDiscordRestChannelAPI _channelAPI;
+        private readonly MessageContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiceRollResponder"/> class.
+        /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
         /// </summary>
         /// <param name="httpClientFactory">The http client factory used for API requests.</param>
         /// <param name="channelAPI">The Discord channel API.</param>
-        public DiceRollResponder(IHttpClientFactory httpClientFactory, IDiscordRestChannelAPI channelAPI)
+        /// <param name="context">Additional context about the original message.</param>
+        public DiceRollCommands
+        (
+            IHttpClientFactory httpClientFactory,
+            IDiscordRestChannelAPI channelAPI,
+            MessageContext context
+        )
         {
             _httpClient = httpClientFactory.CreateClient();
             _channelAPI = channelAPI;
+            _context = context;
         }
 
-        /// <inheritdoc />
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        /// <summary>
+        /// Rolls a dice using an online service.
+        /// </summary>
+        /// <param name="value">The command to send to the online service.</param>
+        /// <returns>The result of the operation.</returns>
+        [Command("roll")]
+        public async Task<IResult> RollDiceAsync(string value)
         {
-            if (!gatewayEvent.Content.StartsWith('!'))
+            var rollRequests = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (rollRequests.Length == 0)
             {
                 return EventResponseResult.FromSuccess();
             }
 
-            return await RollDiceAsync(gatewayEvent.Content, gatewayEvent.ChannelID);
-        }
-
-        /// <inheritdoc />
-        public async Task<EventResponseResult> RespondAsync(IMessageUpdate gatewayEvent, CancellationToken ct = default)
-        {
-            if (!gatewayEvent.Content.HasValue)
-            {
-                return EventResponseResult.FromSuccess();
-            }
-
-            return await RollDiceAsync(gatewayEvent.Content.Value!, gatewayEvent.ChannelID);
-        }
-
-        private async Task<EventResponseResult> RollDiceAsync(string value, Snowflake channel)
-        {
-            var parsedRollRequests = ParseRollRequests(value);
-            if (parsedRollRequests.Length == 0)
-            {
-                return EventResponseResult.FromSuccess();
-            }
-
-            var getRolls = await GetRollsAsync(parsedRollRequests);
+            var getRolls = await GetRollsAsync(rollRequests);
             if (!getRolls.IsSuccess)
             {
-                var replyWithFailure = await ReplyWithFailureAsync(channel);
+                var replyWithFailure = await ReplyWithFailureAsync(_context.ChannelID);
 
                 return replyWithFailure.IsSuccess
                     ? EventResponseResult.FromError(getRolls)
@@ -100,7 +92,7 @@ namespace Remora.Discord.Samples.DiceRoller.Responders
 
             var rollResponse = getRolls.Entity;
 
-            return await ReplyWithRollsAsync(channel, rollResponse);
+            return await ReplyWithRollsAsync(_context.ChannelID, rollResponse);
         }
 
         private async Task<RetrieveEntityResult<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
@@ -152,26 +144,6 @@ namespace Remora.Discord.Samples.DiceRoller.Responders
             return !replyRolls.IsSuccess
                 ? EventResponseResult.FromError(replyRolls)
                 : EventResponseResult.FromSuccess();
-        }
-
-        private string[] ParseRollRequests(string value)
-        {
-            if (value.Length <= 5)
-            {
-                return Array.Empty<string>();
-            }
-
-            if (value[0] != '!')
-            {
-                return Array.Empty<string>();
-            }
-
-            if (value[1..5] != "roll")
-            {
-                return Array.Empty<string>();
-            }
-
-            return value[5..].Split(' ', StringSplitOptions.RemoveEmptyEntries);
         }
 
         /// <inheritdoc />
