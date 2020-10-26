@@ -25,6 +25,7 @@ using System.Linq;
 using System.Net.WebSockets;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
@@ -56,8 +57,7 @@ namespace Remora.Discord.Gateway.Extensions
                 .AddTransient<ClientWebSocket>()
                 .AddSingleton<IPayloadTransportService, WebSocketPayloadTransportService>()
                 .AddSingleton<DiscordGatewayClient>()
-                .AddSingleton<ResponderService>()
-                .AddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<ResponderService>());
+                .AddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
 
             return serviceCollection;
         }
