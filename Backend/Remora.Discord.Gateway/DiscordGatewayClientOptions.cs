@@ -49,7 +49,7 @@ namespace Remora.Discord.Gateway
         /// Gets or sets the shard identification information. This is used to connect the client as a sharded
         /// connection, where events are distributed over a set of active connections.
         /// </summary>
-        public IShardIdentification? ShardIdentification { get; set; } = null;
+        public IShardIdentification? ShardIdentification { get; set; }
 
         /// <summary>
         /// Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and
