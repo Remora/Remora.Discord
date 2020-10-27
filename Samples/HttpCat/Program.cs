@@ -27,7 +27,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Gateway.Services;
 using Remora.Discord.Samples.HttpCat.Responders;
 
 namespace Remora.Discord.Samples.HttpCat
