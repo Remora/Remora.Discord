@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Moq" Version="4.14.6" />
+      <PackageReference Include="Moq" Version="4.14.7" />
       <PackageReference Include="OneOf" Version="2.1.155" />
     </ItemGroup>
     
