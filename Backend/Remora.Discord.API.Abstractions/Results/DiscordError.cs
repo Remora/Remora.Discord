@@ -367,8 +367,8 @@ namespace Remora.Discord.API.Abstractions.Results
         MessageTooOldToBulkDelete = 50034,
 
         /// <summary>
-        /// Invalid form body (returned for both <code>application/json</code> and <code>multipart/form-data</code>
-        /// bodies), or invalid <code>Content-Type</code> provided.
+        /// Invalid form body (returned for both application/json and multipart/form-data bodies), or invalid
+        /// Content-Type provided.
         /// </summary>
         InvalidFormBody = 50035,
 

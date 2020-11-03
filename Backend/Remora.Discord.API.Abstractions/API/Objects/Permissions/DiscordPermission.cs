@@ -118,8 +118,8 @@ namespace Remora.Discord.API.Abstractions.Objects
         ReadMessageHistory = 16,
 
         /// <summary>
-        /// Allows for using the <code>@everyone</code> tag to notify all users in a guild, and the <code>@here</code>
-        /// tag to notify all online users in a channel.
+        /// Allows for using the @everyone tag to notify all users in a guild, and the @here tag to notify all online
+        /// users in a channel.
         /// </summary>
         MentionEveryone = 17,
 
