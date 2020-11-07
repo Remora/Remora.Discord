@@ -1,5 +1,5 @@
 //
-//  ServiceCollectionExtensions.cs
+//  HostBuilderExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Remora.Discord.Gateway.Extensions;
@@ -29,23 +30,29 @@ using Remora.Discord.Hosting.Services;
 namespace Remora.Discord.Hosting.Extensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="IServiceCollection"/> interface.
+    /// Defines extension methods for the <see cref="IHostBuilder"/> interface.
     /// </summary>
-    public static class ServiceCollectionExtensions
+    [PublicAPI]
+    public static class HostBuilderExtensions
     {
         /// <summary>
         /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation.
         /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="hostBuilder">The host builder.</param>
         /// <param name="token">A function that retrieves the bot token.</param>
         /// <returns>The service collection, with the services added.</returns>
-        public static IServiceCollection AddDiscordService(this IServiceCollection serviceCollection, Func<string> token)
+        public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<string> token)
         {
-            serviceCollection
-                .AddDiscordGateway(token)
-                .AddSingleton<IHostedService, DiscordService>();
+            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+            {
+                serviceCollection
+                    .AddDiscordGateway(token)
+                    .AddSingleton<DiscordService>()
+                    .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
+                        serviceProvider.GetRequiredService<DiscordService>());
+            });
 
-            return serviceCollection;
+            return hostBuilder;
         }
     }
 }
