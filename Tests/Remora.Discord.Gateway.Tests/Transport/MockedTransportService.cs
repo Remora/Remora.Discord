@@ -50,6 +50,9 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
         private DateTimeOffset _lastAdvance;
 
+        /// <inheritdoc />
+        public bool IsConnected { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
         /// </summary>
@@ -156,6 +159,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
+                this.IsConnected = true;
                 return GatewayConnectionResult.FromSuccess();
             }
             finally
@@ -404,6 +408,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
+                this.IsConnected = false;
                 return GatewayConnectionResult.FromSuccess();
             }
             finally

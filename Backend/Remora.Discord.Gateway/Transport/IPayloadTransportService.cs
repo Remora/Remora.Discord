@@ -45,6 +45,11 @@ namespace Remora.Discord.Gateway.Transport
     public interface IPayloadTransportService
     {
         /// <summary>
+        /// Gets a value indicating whether the service has successfully connected.
+        /// </summary>
+        bool IsConnected { get; }
+
+        /// <summary>
         /// Connects to the transport endpoint, enabling I/O operations.
         /// </summary>
         /// <param name="endpoint">The endpoint to connect to.</param>

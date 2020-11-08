@@ -23,6 +23,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Threading;
@@ -224,11 +226,14 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
-                    if (!disconnectResult.IsSuccess)
+                    if (_transportService.IsConnected)
                     {
-                        // Couldn't disconnect cleanly :(
-                        return disconnectResult;
+                        var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
+                        if (!disconnectResult.IsSuccess)
+                        {
+                            // Couldn't disconnect cleanly :(
+                            return disconnectResult;
+                        }
                     }
 
                     // Finish up the responders
@@ -240,10 +245,7 @@ namespace Remora.Discord.Gateway
                     if (ct.IsCancellationRequested)
                     {
                         // The user requested a termination, and we don't intend to reconnect.
-                        _sessionID = null;
-                        _connectionStatus = GatewayConnectionStatus.Offline;
-
-                        return GatewayConnectionResult.FromSuccess();
+                        return iterationResult;
                     }
 
                     switch (iterationResult.GatewayCloseStatus)
@@ -274,8 +276,23 @@ namespace Remora.Discord.Gateway
                         }
                     }
 
-                    // Reconnection is not allowed.
-                    return iterationResult;
+                    switch (iterationResult.Exception)
+                    {
+                        case HttpRequestException _:
+                        case WebSocketException _:
+                        {
+                            _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
+
+                            // Reconnection is allowed, since this is probably a transient error
+                            _connectionStatus = GatewayConnectionStatus.Disconnected;
+                            break;
+                        }
+                        default:
+                        {
+                            // Something has gone terribly wrong, and we won't keep trying to connect
+                            return iterationResult;
+                        }
+                    }
                 }
 
                 var userRequestedDisconnect = await _transportService.DisconnectAsync(false, ct);
@@ -293,8 +310,12 @@ namespace Remora.Discord.Gateway
             {
                 return GatewayConnectionResult.FromError(e);
             }
-
-            _connectionStatus = GatewayConnectionStatus.Offline;
+            finally
+            {
+                // Reconnection is not allowed.
+                _sessionID = null;
+                _connectionStatus = GatewayConnectionStatus.Offline;
+            }
 
             return GatewayConnectionResult.FromSuccess();
         }
