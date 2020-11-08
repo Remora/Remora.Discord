@@ -5,3 +5,6 @@ script:
   - dotnet restore
   - dotnet build
   - dotnet test
+branches:
+  except:
+    - gh-pages
