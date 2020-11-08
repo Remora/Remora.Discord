@@ -1,5 +1,6 @@
 language: csharp
 solution: Remora.Discord.sln
+mono: none
 dotnet: 3.1.9
 script:
   - dotnet restore
