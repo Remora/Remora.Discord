@@ -43,7 +43,24 @@ namespace Remora.Discord.Gateway.Services
         /// <typeparam name="TResponder">The responder type.</typeparam>
         internal void RegisterResponderType<TResponder>() where TResponder : IResponder
         {
-            var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
+            RegisterResponderType(typeof(TResponder));
+        }
+
+        /// <summary>
+        /// Adds a responder to the service.
+        /// </summary>
+        /// <param name="responderType">The responder type.</param>
+        internal void RegisterResponderType(Type responderType)
+        {
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            if (!(responderType is IResponder))
+            {
+                throw new ArgumentException(
+                    $"{nameof(responderType)} should implement {nameof(IResponder)}.",
+                    nameof(responderType));
+            }
+
+            var responderTypeInterfaces = responderType.GetInterfaces();
             var responderInterfaces = responderTypeInterfaces.Where
             (
                 r => r.IsGenericType && r.GetGenericTypeDefinition() == typeof(IResponder<>)
@@ -57,12 +74,12 @@ namespace Remora.Discord.Gateway.Services
                     _registeredResponderTypes.Add(responderInterface, responderTypeList);
                 }
 
-                if (responderTypeList.Contains(typeof(TResponder)))
+                if (responderTypeList.Contains(responderType))
                 {
                     continue;
                 }
 
-                responderTypeList.Add(typeof(TResponder));
+                responderTypeList.Add(responderType);
             }
         }
 
