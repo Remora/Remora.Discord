@@ -1,5 +1,4 @@
 language: csharp
-virt: lxd
 dist: focal
 solution: Remora.Discord.sln
 mono: none
