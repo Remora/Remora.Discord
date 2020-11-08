@@ -36,7 +36,7 @@ namespace Remora.Discord.Gateway.Extensions
         /// </summary>
         /// <param name="type">The <see cref="Type"/> to check against.</param>
         /// <returns>True if the type implements <see cref="IResponder{T}"/>.</returns>
-        internal static bool IsResponder(this Type type)
+        public static bool IsResponder(this Type type)
         {
             var interfaces = type.GetInterfaces();
             return interfaces.Any(
