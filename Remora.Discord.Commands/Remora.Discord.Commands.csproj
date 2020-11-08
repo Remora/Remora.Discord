@@ -9,11 +9,10 @@
         <Description>
             $(BaseDescription)
 
-            This package is a metapackage for Remora.Discord, providing references to everything you need to get
-            started.
+            This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement better support for partial types.
+            Initial release.
         </PackageReleaseNotes>
     </PropertyGroup>
 
