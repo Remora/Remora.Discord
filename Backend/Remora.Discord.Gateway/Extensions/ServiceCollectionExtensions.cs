@@ -80,31 +80,6 @@ namespace Remora.Discord.Gateway.Extensions
         }
 
         /// <summary>
-        /// Adds all exported responders in the provided assembly to the service collection.
-        /// This method registers the responder as being available for all <see cref="IResponder{T}"/>
-        /// implementations it supports.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="assembly">The assembly to search.</param>
-        /// <returns>The service collection, with the responder added.</returns>
-        public static IServiceCollection AddRespondersFromAssembly
-        (
-            this IServiceCollection serviceCollection,
-            Assembly assembly
-        )
-        {
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.IsResponder());
-
-            foreach (var type in types)
-            {
-                serviceCollection.AddResponder(type);
-            }
-
-            return serviceCollection;
-        }
-
-        /// <summary>
         /// Adds a responder to the service collection. This method registers the responder as being available for all
         /// <see cref="IResponder{T}"/> implementations it supports.
         /// </summary>
