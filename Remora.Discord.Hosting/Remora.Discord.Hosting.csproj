@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta4</Version>
+        <Version>1.0.0-beta1</Version>
         <Description>
             $(BaseDescription)
 
-            This package provides simple glue code for using Remora.Commands with Remora.Discord.
+            This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
             Initial release.
@@ -17,11 +17,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj"/>
+        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="1.0.0-beta3"/>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.9" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.9" />
     </ItemGroup>
 
 </Project>

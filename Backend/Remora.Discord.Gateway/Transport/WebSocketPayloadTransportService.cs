@@ -49,6 +49,9 @@ namespace Remora.Discord.Gateway.Transport
         /// </summary>
         private ClientWebSocket? _clientWebSocket;
 
+        /// <inheritdoc />
+        public bool IsConnected { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketPayloadTransportService"/> class.
         /// </summary>
@@ -98,6 +101,8 @@ namespace Remora.Discord.Gateway.Transport
             }
 
             _clientWebSocket = socket;
+
+            this.IsConnected = true;
             return GatewayConnectionResult.FromSuccess();
         }
 
@@ -272,6 +277,7 @@ namespace Remora.Discord.Gateway.Transport
             _clientWebSocket.Dispose();
             _clientWebSocket = null;
 
+            this.IsConnected = false;
             return GatewayConnectionResult.FromSuccess();
         }
 
