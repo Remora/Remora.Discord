@@ -40,7 +40,7 @@ namespace Remora.Discord.Gateway.Extensions
         {
             var interfaces = type.GetInterfaces();
             return interfaces.Any(
-                i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder)
+                i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
             );
         }
     }
