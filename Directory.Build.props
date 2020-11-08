@@ -18,19 +18,6 @@
         <SolutionDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)/))</SolutionDir>
     </PropertyGroup>
 
-    <Choose>
-        <When Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netcoreapp'">
-            <PropertyGroup>
-                <IsRunnableTarget>true</IsRunnableTarget>
-            </PropertyGroup>
-        </When>
-        <Otherwise>
-            <PropertyGroup>
-                <IsRunnableTarget>false</IsRunnableTarget>
-            </PropertyGroup>
-        </Otherwise>
-    </Choose>
-
     <!-- NuGet-related properties -->
     <PropertyGroup>
         <Title>$(AssemblyName)</Title>
