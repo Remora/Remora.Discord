@@ -4,12 +4,25 @@
         <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <Version>1.0.0-beta1</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package is a metapackage for Remora.Discord, providing references to everything you need to get
+            started.
+        </Description>
+        <PackageReleaseNotes>
+            Implement better support for partial types.
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
     <ItemGroup>
-      <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="1.0.0-beta3" />
+        <PackageReference Include="Remora.Commands" Version="1.0.0-beta3"/>
     </ItemGroup>
 
 </Project>
