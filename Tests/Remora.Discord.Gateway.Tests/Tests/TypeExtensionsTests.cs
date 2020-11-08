@@ -32,15 +32,33 @@ namespace Remora.Discord.Gateway.Tests.Tests
     public class TypeExtensionsTests
     {
         /// <summary>
-        /// Tests whether the return result from IsResponders is correct.
+        /// Tests for the IResponder method in <see cref="TypeExtensions"/> class.
         /// </summary>
-        [Fact]
-        public void DoesIsResponderReturnTrue()
+        public class IsResponder
         {
-            var mockedResponderType = typeof(MockedResponder);
-            var doesImplementResponder = mockedResponderType.IsResponder();
+            /// <summary>
+            /// Tests whether a type implementing IResponder returns true.
+            /// </summary>
+            [Fact]
+            public void ReturnsTrueForTypeImplementingIResponder()
+            {
+                var type = typeof(MockedResponder);
+                var doesImplementResponder = type.IsResponder();
 
-            Assert.True(doesImplementResponder);
+                Assert.True(doesImplementResponder);
+            }
+
+            /// <summary>
+            /// Tests whether a type not implementing IResponder returns true.
+            /// </summary>
+            [Fact]
+            public void ReturnsFalseForTypeImplementingIResponder()
+            {
+                var type = typeof(string);
+                var doesImplementResponder = type.IsResponder();
+
+                Assert.False(doesImplementResponder);
+            }
         }
     }
 }
