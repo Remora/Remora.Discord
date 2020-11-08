@@ -93,9 +93,8 @@ namespace Remora.Discord.Gateway.Extensions
             Assembly assembly
         )
         {
-            // ReSharper disable once SuspiciousTypeConversion.Global
             var types = assembly.GetExportedTypes()
-                .Where(t => t is IResponder);
+                .Where(t => t.IsResponder());
 
             foreach (var type in types)
             {
@@ -115,8 +114,7 @@ namespace Remora.Discord.Gateway.Extensions
         /// <exception cref="ArgumentException">Throws if responderType does not implement <see cref="IResponder"/>.</exception>
         public static IServiceCollection AddResponder(this IServiceCollection serviceCollection, Type responderType)
         {
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            if (!(responderType is IResponder))
+            if (!responderType.IsResponder())
             {
                 throw new ArgumentException(
                     $"{nameof(responderType)} should implement {nameof(IResponder)}.",

@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
 
 namespace Remora.Discord.Gateway.Services
@@ -52,8 +53,7 @@ namespace Remora.Discord.Gateway.Services
         /// <param name="responderType">The responder type.</param>
         internal void RegisterResponderType(Type responderType)
         {
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            if (!(responderType is IResponder))
+            if (!responderType.IsResponder())
             {
                 throw new ArgumentException(
                     $"{nameof(responderType)} should implement {nameof(IResponder)}.",
