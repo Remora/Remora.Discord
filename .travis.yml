@@ -1,5 +1,6 @@
 language: csharp
 dist: bionic
+virt: lxd
 solution: Remora.Discord.sln
 mono: none
 dotnet: 3.1.403
