@@ -1,5 +1,5 @@
 language: csharp
-dist: focal
+dist: bionic
 solution: Remora.Discord.sln
 mono: none
 dotnet: 3.1.403
