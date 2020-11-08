@@ -44,8 +44,8 @@ namespace Remora.Discord.Hosting.Services
         /// <param name="logger">The <see cref="ILogger"/>.</param>
         public DiscordService(DiscordGatewayClient gatewayClient, ILogger<DiscordService> logger)
         {
-            this._gatewayClient = gatewayClient;
-            this._logger = logger;
+            _gatewayClient = gatewayClient;
+            _logger = logger;
         }
 
         /// <inheritdoc />
@@ -53,20 +53,20 @@ namespace Remora.Discord.Hosting.Services
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var runResult = await this._gatewayClient.RunAsync(stoppingToken);
+                var runResult = await _gatewayClient.RunAsync(stoppingToken);
 
                 if (!runResult.IsSuccess)
                 {
-                    this._logger.LogError(runResult.Exception, runResult.ErrorReason);
+                    _logger.LogError(runResult.Exception, runResult.ErrorReason);
 
                     if (runResult.GatewayCloseStatus.HasValue)
                     {
-                        this._logger.LogError("Gateway close status: {gatewayClosedStatus}", runResult.GatewayCloseStatus.Value);
+                        _logger.LogError("Gateway close status: {gatewayClosedStatus}", runResult.GatewayCloseStatus.Value);
                     }
 
                     if (runResult.WebSocketCloseStatus.HasValue)
                     {
-                        this._logger.LogError("Websocket close status: {websocketCloseStatus}", runResult.WebSocketCloseStatus.Value);
+                        _logger.LogError("Websocket close status: {websocketCloseStatus}", runResult.WebSocketCloseStatus.Value);
                     }
                 }
 
