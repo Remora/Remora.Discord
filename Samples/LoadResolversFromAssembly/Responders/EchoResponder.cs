@@ -55,10 +55,12 @@ namespace Remora.Discord.Samples.LoadResolversFromAssembly.Responders
                 return EventResponseResult.FromSuccess();
             }
 
-            var replyResult = await this._channelAPI.CreateMessageAsync(
+            var replyResult = await _channelAPI.CreateMessageAsync
+            (
                 gatewayEvent.ChannelID,
                 gatewayEvent.Content,
-                ct: ct);
+                ct: ct
+            );
 
             return replyResult.IsSuccess
                 ? EventResponseResult.FromSuccess()
