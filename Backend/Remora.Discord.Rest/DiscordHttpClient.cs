@@ -584,7 +584,7 @@ namespace Remora.Discord.Rest
         {
             if (response.IsSuccessStatusCode)
             {
-                if (response.Content is null)
+                if (response.Content is null || response.Content.Headers.ContentLength == 0)
                 {
                     if (!allowNullReturn)
                     {
