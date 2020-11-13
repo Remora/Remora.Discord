@@ -43,7 +43,7 @@ namespace Remora.Discord.Hosting.Extensions
         /// <returns>The service collection, with the services added.</returns>
         public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<string> token)
         {
-            hostBuilder.ConfigureServices((hostBuilderContext, serviceCollection) =>
+            hostBuilder.ConfigureServices((_, serviceCollection) =>
             {
                 serviceCollection
                     .AddDiscordGateway(token)

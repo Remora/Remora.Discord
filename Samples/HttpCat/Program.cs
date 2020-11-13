@@ -45,7 +45,7 @@ namespace Remora.Discord.Samples.HttpCat
         {
             var cancellationSource = new CancellationTokenSource();
 
-            Console.CancelKeyPress += (sender, eventArgs) =>
+            Console.CancelKeyPress += (_, eventArgs) =>
             {
                 eventArgs.Cancel = true;
                 cancellationSource.Cancel();

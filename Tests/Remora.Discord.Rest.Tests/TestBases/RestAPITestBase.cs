@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.Tests.TestBases
                 () => "TEST_TOKEN",
                 b => b.ConfigurePrimaryHttpMessageHandler
                 (
-                    services =>
+                    _ =>
                     {
                         var mockHandler = new MockHttpMessageHandler();
                         builder(mockHandler);

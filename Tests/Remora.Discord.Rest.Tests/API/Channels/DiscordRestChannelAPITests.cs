@@ -248,7 +248,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var name = new string('b', 101);
 
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var result = await api.ModifyChannelAsync
                 (
@@ -269,7 +269,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var name = new string('b', 1);
 
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var result = await api.ModifyChannelAsync
                 (
@@ -290,7 +290,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var topic = new string('b', 1025);
 
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var result = await api.ModifyChannelAsync
                 (
@@ -311,7 +311,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var userLimit = -1;
 
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var result = await api.ModifyChannelAsync
                 (
@@ -332,7 +332,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var userLimit = 100;
 
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var result = await api.ModifyChannelAsync
                 (
@@ -565,7 +565,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfLimitIsOutsideValidRange()
             {
-                var api = CreateAPI(b => { });
+                var api = CreateAPI(_ => { });
 
                 var channelId = new Snowflake(0);
 

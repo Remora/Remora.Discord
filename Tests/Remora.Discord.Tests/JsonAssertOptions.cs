@@ -54,7 +54,7 @@ namespace Remora.Discord.Tests
         )
         {
             this.AllowMissing = allowMissing ?? new List<string>();
-            this.AllowMissingBy = allowMissingBy ?? (p => false);
+            this.AllowMissingBy = allowMissingBy ?? (_ => false);
         }
 
         /// <summary>

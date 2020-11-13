@@ -76,7 +76,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -115,7 +115,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -164,7 +164,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -206,7 +206,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -251,7 +251,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -293,7 +293,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -335,7 +335,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -380,7 +380,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -425,7 +425,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -467,7 +467,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);

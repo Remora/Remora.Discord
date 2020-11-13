@@ -100,7 +100,7 @@ namespace Remora.Discord.Rest.Extensions
                         .WaitAndRetryAsync
                         (
                             1,
-                            (retryCount, response, context) =>
+                            (_, response, _) =>
                             {
                                 if (response.Result == default)
                                 {
@@ -114,7 +114,7 @@ namespace Remora.Discord.Rest.Extensions
 
                                 return response.Result.Headers.RetryAfter.Delta.Value;
                             },
-                            (x, y, z, w) => Task.CompletedTask
+                            (_, _, _, _) => Task.CompletedTask
                         )
                 );
 
@@ -122,7 +122,7 @@ namespace Remora.Discord.Rest.Extensions
             buildClient?.Invoke(clientBuilder);
 
             serviceCollection
-                .AddSingleton<ITokenStore>(s => new TokenStore(token()));
+                .AddSingleton<ITokenStore>(_ => new TokenStore(token()));
 
             serviceCollection
                 .AddScoped<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()

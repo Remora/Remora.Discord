@@ -95,7 +95,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
             [Fact]
             public async Task ReturnsErrorIfLimitIsOutsideValidRange()
             {
-                var services = CreateConfiguredAPIServices(b => { });
+                var services = CreateConfiguredAPIServices(_ => { });
                 var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
 
                 var guildID = new Snowflake(0);

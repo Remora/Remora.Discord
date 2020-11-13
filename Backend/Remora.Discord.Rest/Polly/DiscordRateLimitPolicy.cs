@@ -111,7 +111,7 @@ namespace Remora.Discord.Rest.Polly
             (
                 endpoint,
                 newLimits,
-                (s, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
+                (_, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
             );
 
             return response;
