@@ -102,13 +102,18 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             using var response = await _httpClient.GetAsync(requestUrl);
             if (!response.IsSuccessStatusCode)
             {
-                return RetrieveEntityResult<RollResponse>.FromError(response.ReasonPhrase);
+                return RetrieveEntityResult<RollResponse>.FromError(response.ReasonPhrase ?? "No reason given.");
             }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync();
 
             var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
             var rollResponse = await JsonSerializer.DeserializeAsync<RollResponse>(responseStream, jsonOptions);
+
+            if (rollResponse is null)
+            {
+                return RetrieveEntityResult<RollResponse>.FromError("The roll response was null.");
+            }
 
             return !rollResponse.Success
                 ? RetrieveEntityResult<RollResponse>.FromError("Dice rolling failed :(")

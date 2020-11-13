@@ -69,6 +69,11 @@ namespace Remora.Discord.Samples.UnknownEventLogger
             }
 
             var eventType = eventTypeElement.GetString();
+            if (eventType is null)
+            {
+                return EventResponseResult.FromError("The event type was null.");
+            }
+
             var sequenceNumber = eventSequenceElement.GetInt64();
             var logTime = $"{DateTime.UtcNow:u}";
 

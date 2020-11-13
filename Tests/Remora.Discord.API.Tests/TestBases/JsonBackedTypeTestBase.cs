@@ -108,10 +108,10 @@ namespace Remora.Discord.API.Tests.TestBases
             await using var sampleData = File.OpenRead(sampleDataPath);
             var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
-            await using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, payload, this.Options);
-
             Assert.NotNull(payload);
+
+            await using var stream = new MemoryStream();
+            await JsonSerializer.SerializeAsync(stream, payload!, this.Options);
         }
 
         /// <summary>
@@ -127,8 +127,10 @@ namespace Remora.Discord.API.Tests.TestBases
             await using var sampleData = File.OpenRead(sampleDataPath);
             var deserialized = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
+            Assert.NotNull(deserialized);
+
             await using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, deserialized, this.Options);
+            await JsonSerializer.SerializeAsync(stream, deserialized!, this.Options);
 
             await stream.FlushAsync();
 
