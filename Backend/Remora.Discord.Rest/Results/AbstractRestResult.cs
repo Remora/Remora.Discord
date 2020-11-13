@@ -105,7 +105,7 @@ namespace Remora.Discord.Rest.Results
             IRestResult restResult
         )
         {
-            if (!(restResult.DiscordError is null))
+            if (restResult.DiscordError is not null)
             {
                 return FromError(restResult.ErrorReason, restResult.DiscordError);
             }
@@ -192,7 +192,7 @@ namespace Remora.Discord.Rest.Results
                 throw new InvalidOperationException();
             }
 
-            if (!(otherResult.DiscordError is null))
+            if (otherResult.DiscordError is not null)
             {
                 return FromError(otherResult.ErrorReason, otherResult.DiscordError);
             }

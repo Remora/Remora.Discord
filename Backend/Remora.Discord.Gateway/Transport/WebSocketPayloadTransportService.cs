@@ -70,7 +70,7 @@ namespace Remora.Discord.Gateway.Transport
         /// <inheritdoc />
         public async Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
         {
-            if (!(_clientWebSocket is null))
+            if (_clientWebSocket is not null)
             {
                 return GatewayConnectionResult.FromError("The transport service is already connected.");
             }
@@ -164,7 +164,7 @@ namespace Remora.Discord.Gateway.Transport
             }
             finally
             {
-                if (!(buffer is null))
+                if (buffer is not null)
                 {
                     ArrayPool<byte>.Shared.Return(buffer);
                 }

@@ -104,7 +104,7 @@ namespace Remora.Discord.API.Json
         {
             writer.WriteStartObject();
             {
-                if (!(value.MemberErrors is null))
+                if (value.MemberErrors is not null)
                 {
                     foreach (var (propertyName, memberError) in value.MemberErrors)
                     {
@@ -113,7 +113,7 @@ namespace Remora.Discord.API.Json
                     }
                 }
 
-                if (!(value.Errors is null))
+                if (value.Errors is not null)
                 {
                     writer.WritePropertyName("_errors");
                     JsonSerializer.Serialize(writer, value.Errors, options);

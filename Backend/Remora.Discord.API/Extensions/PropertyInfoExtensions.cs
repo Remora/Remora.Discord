@@ -73,7 +73,7 @@ namespace Remora.Discord.API.Extensions
 
             var topLevelNullability = Nullability.Oblivious;
 
-            if (!(nullableAttribute is null))
+            if (nullableAttribute is not null)
             {
                 var nullableArgument = nullableAttribute.ConstructorArguments.Single();
                 if (nullableArgument.Value is byte singleArg)

@@ -100,7 +100,7 @@ namespace Remora.Discord.API.Rest
                     {
                         j.WriteString("name", name);
 
-                        if (!(iconDataString is null))
+                        if (iconDataString is not null)
                         {
                             j.WriteString("icon", iconDataString);
                         }

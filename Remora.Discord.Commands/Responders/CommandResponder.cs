@@ -66,7 +66,7 @@ namespace Remora.Discord.Commands.Responders
         /// <inheritdoc/>
         public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
-            if (!(_options.Prefix is null))
+            if (_options.Prefix is not null)
             {
                 if (!gatewayEvent.Content.StartsWith(_options.Prefix))
                 {
@@ -129,7 +129,7 @@ namespace Remora.Discord.Commands.Responders
                 return EventResponseResult.FromSuccess();
             }
 
-            if (!(_options.Prefix is null))
+            if (_options.Prefix is not null)
             {
                 if (!gatewayEvent.Content.Value!.StartsWith(_options.Prefix))
                 {
@@ -169,7 +169,7 @@ namespace Remora.Discord.Commands.Responders
         )
         {
             // Strip off the prefix
-            if (!(_options.Prefix is null))
+            if (_options.Prefix is not null)
             {
                 content = content.Substring
                 (

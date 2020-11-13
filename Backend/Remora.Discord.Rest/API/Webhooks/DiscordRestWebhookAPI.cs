@@ -77,7 +77,7 @@ namespace Remora.Discord.Rest.API
             }
 
             string? avatarDataString = null;
-            if (!(avatar is null))
+            if (avatar is not null)
             {
                 var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
                 if (!packAvatar.IsSuccess)

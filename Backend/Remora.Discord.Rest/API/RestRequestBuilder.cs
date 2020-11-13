@@ -243,7 +243,7 @@ namespace Remora.Discord.Rest.API
             {
                 var multipartContent = new MultipartFormDataContent();
 
-                if (!(jsonBody is null))
+                if (jsonBody is not null)
                 {
                     multipartContent.Add(jsonBody, "payload_json");
                 }

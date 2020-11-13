@@ -421,7 +421,7 @@ namespace Remora.Discord.API.Json
                         p => GetReadJsonPropertyName(p, options).Contains(propertyName)
                     );
 
-                    if (!(dtoProperty is null))
+                    if (dtoProperty is not null)
                     {
                         isPrimaryChoice = false;
                     }

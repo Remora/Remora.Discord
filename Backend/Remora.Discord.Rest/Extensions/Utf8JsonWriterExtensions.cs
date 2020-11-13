@@ -126,7 +126,7 @@ namespace Remora.Discord.Rest.Extensions
 
             if (!asInteger)
             {
-                if (!(jsonOptions is null))
+                if (jsonOptions is not null)
                 {
                     var clonedOptions = jsonOptions.Clone();
 
