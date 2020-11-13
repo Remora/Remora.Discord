@@ -113,6 +113,11 @@ namespace Remora.Discord.API.Json
             }
 
             var key = keyProperty.GetString();
+            if (key is null)
+            {
+                throw new JsonException();
+            }
+
             if (!KeyTypes.TryGetValue(key, out var valueType))
             {
                 throw new JsonException();

@@ -37,7 +37,13 @@ namespace Remora.Discord.API.Json
             {
                 case JsonTokenType.String:
                 {
-                    if (!Snowflake.TryParse(reader.GetString(), out var snowflake))
+                    var value = reader.GetString();
+                    if (value is null)
+                    {
+                        throw new JsonException();
+                    }
+
+                    if (!Snowflake.TryParse(value, out var snowflake))
                     {
                         throw new JsonException();
                     }

@@ -47,6 +47,11 @@ namespace Remora.Discord.API.Json
             }
 
             var value = reader.GetString();
+            if (value is null)
+            {
+                throw new JsonException();
+            }
+
             return new ImageHash(value);
         }
 

@@ -62,6 +62,10 @@ namespace Remora.Discord.API.Json
                 }
 
                 var propertyName = reader.GetString();
+                if (propertyName is null)
+                {
+                    throw new JsonException();
+                }
 
                 if (!reader.Read())
                 {
@@ -88,6 +92,11 @@ namespace Remora.Discord.API.Json
                 memberErrors ??= new Dictionary<string, IPropertyErrorDetails>();
 
                 var propertyErrorDetails = JsonSerializer.Deserialize<IPropertyErrorDetails>(ref reader, options);
+                if (propertyErrorDetails is null)
+                {
+                    throw new JsonException();
+                }
+
                 if (!reader.Read())
                 {
                     throw new JsonException();

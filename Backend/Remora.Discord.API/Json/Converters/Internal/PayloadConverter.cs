@@ -256,6 +256,11 @@ namespace Remora.Discord.API.Json
             where TData : IGatewayPayloadData
         {
             var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
+            if (data is null)
+            {
+                throw new JsonException();
+            }
+
             return new Payload<TData>(data);
         }
 

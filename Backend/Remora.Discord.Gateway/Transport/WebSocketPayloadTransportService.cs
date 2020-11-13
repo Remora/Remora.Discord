@@ -223,6 +223,14 @@ namespace Remora.Discord.Gateway.Transport
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
                 var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
+                if (payload is null)
+                {
+                    return ReceivePayloadResult<IPayload>.FromError
+                    (
+                        "The received payload deserialized as a null value."
+                    );
+                }
+
                 return ReceivePayloadResult<IPayload>.FromSuccess(payload);
             }
             finally

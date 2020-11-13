@@ -35,7 +35,7 @@ namespace Remora.Discord.API
         where TEventData : IGatewayEvent
     {
         /// <inheritdoc />
-        public string EventName { get; }
+        public string? EventName { get; }
 
         /// <inheritdoc />
         public int SequenceNumber { get; }
@@ -50,7 +50,7 @@ namespace Remora.Discord.API
         /// <param name="sequenceNumber">The sequence number.</param>
         /// <param name="operationCode">The operation code for the event.</param>
         /// <param name="data">The event data.</param>
-        public EventPayload(string eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
+        public EventPayload(string? eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
             : base(data)
         {
             this.EventName = eventName;

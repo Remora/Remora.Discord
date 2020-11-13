@@ -541,6 +541,15 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
+                if (jsonError is null)
+                {
+                    return RestRequestResult.FromError
+                    (
+                        response.ReasonPhrase,
+                        response.StatusCode
+                    );
+                }
+
                 return RestRequestResult.FromError
                 (
                     jsonError.Message,
@@ -593,7 +602,18 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                return RetrieveRestEntityResult<TEntity>.FromSuccess(entity);
+                if (entity is not null)
+                {
+                    return RetrieveRestEntityResult<TEntity>.FromSuccess(entity);
+                }
+
+                if (!allowNullReturn)
+                {
+                    throw new InvalidOperationException("Response content null, but null returns not allowed.");
+                }
+
+                // Null is okay as a default here, since TEntity might be TEntity?
+                return RetrieveRestEntityResult<TEntity>.FromSuccess(default!);
             }
 
             // See if we have a JSON error to get some more details from
@@ -623,6 +643,15 @@ namespace Remora.Discord.Rest
                     _serializerOptions,
                     ct
                 );
+
+                if (jsonError is null)
+                {
+                    return RetrieveRestEntityResult<TEntity>.FromError
+                    (
+                        response.ReasonPhrase,
+                        response.StatusCode
+                    );
+                }
 
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (

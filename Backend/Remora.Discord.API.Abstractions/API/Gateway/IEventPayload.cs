@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Abstractions.Gateway
         /// <summary>
         /// Gets the name of the event.
         /// </summary>
-        string EventName { get; }
+        string? EventName { get; }
 
         /// <summary>
         /// Gets the operation code of the event.

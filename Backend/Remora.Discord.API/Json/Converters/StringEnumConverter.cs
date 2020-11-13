@@ -82,6 +82,10 @@ namespace Remora.Discord.API.Json
                 case JsonTokenType.String:
                 {
                     var value = reader.GetString();
+                    if (value is null)
+                    {
+                        throw new JsonException();
+                    }
 
                     if (Enum.TryParse(value, out result))
                     {
