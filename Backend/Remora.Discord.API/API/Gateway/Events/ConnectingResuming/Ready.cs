@@ -27,51 +27,18 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents the Ready event.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IReady" />
     [PublicAPI]
-    public class Ready : IReady
-    {
-        /// <inheritdoc />
-        public int Version { get; }
-
-        /// <inheritdoc />
-        public IUser User { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IUnavailableGuild> Guilds { get; }
-
-        /// <inheritdoc />
-        public string SessionID { get; }
-
-        /// <inheritdoc />
-        public Optional<IShardIdentification> Shard { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Ready"/> class.
-        /// </summary>
-        /// <param name="version">The gateway version.</param>
-        /// <param name="user">The user object.</param>
-        /// <param name="guilds">The guilds the bot is in.</param>
-        /// <param name="sessionID">The session ID.</param>
-        /// <param name="shard">The sharding information.</param>
-        public Ready
-        (
-            int version,
-            IUser user,
-            IReadOnlyList<IUnavailableGuild> guilds,
-            string sessionID,
-            Optional<IShardIdentification> shard
-        )
-        {
-            this.Version = version;
-            this.User = user;
-            this.Guilds = guilds;
-            this.SessionID = sessionID;
-            this.Shard = shard;
-        }
-    }
+    public record Ready
+    (
+        int Version,
+        IUser User,
+        IReadOnlyList<IUnavailableGuild> Guilds,
+        string SessionID,
+        Optional<IShardIdentification> Shard
+    ) : IReady;
 }

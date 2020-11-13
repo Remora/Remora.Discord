@@ -24,32 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageReference" />
     [PublicAPI]
-    public class MessageReference : IMessageReference
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake> MessageID { get; }
-
-        /// <inheritdoc />
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageReference"/> class.
-        /// </summary>
-        /// <param name="messageID">The ID of the referenced message.</param>
-        /// <param name="channelID">The ID of the channel the referenced message is in.</param>
-        /// <param name="guildID">The ID of the guild the referenced message is in.</param>
-        public MessageReference(Optional<Snowflake> messageID, Snowflake channelID, Optional<Snowflake> guildID)
-        {
-            this.MessageID = messageID;
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-        }
-    }
+    public record MessageReference
+    (
+        Optional<Snowflake> MessageID,
+        Snowflake ChannelID,
+        Optional<Snowflake> GuildID
+    ) : IMessageReference;
 }

@@ -24,27 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAccount" />
     [PublicAPI]
-    public class Account : IAccount
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc/>
-        public string Name { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Account"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the account.</param>
-        /// <param name="name">The name of the account.</param>
-        public Account(Snowflake id, string name)
-        {
-            this.ID = id;
-            this.Name = name;
-        }
-    }
+    public record Account(Snowflake ID, string Name) : IAccount;
 }

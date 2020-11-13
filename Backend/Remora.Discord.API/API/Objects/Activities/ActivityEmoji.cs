@@ -24,34 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents an emoji displayed in an activity.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityEmoji" />
     [PublicAPI]
-    public class ActivityEmoji : IActivityEmoji
-    {
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> Animated { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ActivityEmoji"/> class.
-        /// </summary>
-        /// <param name="name">The name of the emoji.</param>
-        /// <param name="id">The ID of the emoji.</param>
-        /// <param name="animated">Whether the emoji is animated.</param>
-        public ActivityEmoji(string name, Optional<Snowflake> id = default, Optional<bool> animated = default)
-        {
-            this.Name = name;
-            this.ID = id;
-            this.Animated = animated;
-        }
-    }
+    public record ActivityEmoji
+    (
+        string Name,
+        Optional<Snowflake> ID = default,
+        Optional<bool> Animated = default
+    ) : IActivityEmoji;
 }

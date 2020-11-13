@@ -24,45 +24,17 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a set of descriptive assets related to an activity.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityAssets" />
     [PublicAPI]
-    public class ActivityAssets : IActivityAssets
-    {
-        /// <inheritdoc />
-        public Optional<string> LargeImage { get; }
-
-        /// <inheritdoc />
-        public Optional<string> LargeText { get; }
-
-        /// <inheritdoc />
-        public Optional<string> SmallImage { get; }
-
-        /// <inheritdoc />
-        public Optional<string> SmallText { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ActivityAssets"/> class.
-        /// </summary>
-        /// <param name="largeImage">The ID of the large image.</param>
-        /// <param name="largeText">The hover text of the large image.</param>
-        /// <param name="smallImage">The ID of the small image.</param>
-        /// <param name="smallText">The hover text of the small image.</param>
-        public ActivityAssets
-        (
-            Optional<string> largeImage = default,
-            Optional<string> largeText = default,
-            Optional<string> smallImage = default,
-            Optional<string> smallText = default
-        )
-        {
-            this.LargeImage = largeImage;
-            this.LargeText = largeText;
-            this.SmallImage = smallImage;
-            this.SmallText = smallText;
-        }
-    }
+    public record ActivityAssets
+    (
+        Optional<string> LargeImage = default,
+        Optional<string> LargeText = default,
+        Optional<string> SmallImage = default,
+        Optional<string> SmallText = default
+    ) : IActivityAssets;
 }

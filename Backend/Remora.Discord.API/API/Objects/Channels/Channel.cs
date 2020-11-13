@@ -26,127 +26,31 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannel" />
     [PublicAPI]
-    public class Channel : IChannel
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public ChannelType Type { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Position { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Topic { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsNsfw { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake?> LastMessageID { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Bitrate { get; }
-
-        /// <inheritdoc />
-        public Optional<int> UserLimit { get; }
-
-        /// <inheritdoc />
-        public Optional<TimeSpan> RateLimitPerUser { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IUser>> Recipients { get; }
-
-        /// <inheritdoc />
-        public Optional<IImageHash?> Icon { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> OwnerID { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> ApplicationID { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake?> ParentID { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset?> LastPinTimestamp { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Channel"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the channel.</param>
-        /// <param name="type">The channel type.</param>
-        /// <param name="guildID">The ID of the guild the channel belongs to.</param>
-        /// <param name="position">The sorting position of the channel.</param>
-        /// <param name="permissionOverwrites">The permission overwrites of the channel.</param>
-        /// <param name="name">The name of the channel.</param>
-        /// <param name="topic">The topic of the channel.</param>
-        /// <param name="isNsfw">Whether the channel is NSFW.</param>
-        /// <param name="lastMessageID">The ID of the last message in the channel.</param>
-        /// <param name="bitrate">The bitrate of the channel.</param>
-        /// <param name="userLimit">The user limit of the channel.</param>
-        /// <param name="rateLimitPerUser">The per-user message rate limit.</param>
-        /// <param name="recipients">The recipients of the channel.</param>
-        /// <param name="icon">The icon of the channel.</param>
-        /// <param name="ownerID">The ID of the channel's owner.</param>
-        /// <param name="applicationID">The ID of the application that manages the channel.</param>
-        /// <param name="parentID">The ID of the parent category.</param>
-        /// <param name="lastPinTimestamp">The time when the last message was pinned.</param>
-        public Channel
-        (
-            Snowflake id,
-            ChannelType type,
-            Optional<Snowflake> guildID,
-            Optional<int> position,
-            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites,
-            Optional<string> name,
-            Optional<string?> topic,
-            Optional<bool> isNsfw,
-            Optional<Snowflake?> lastMessageID,
-            Optional<int> bitrate,
-            Optional<int> userLimit,
-            Optional<TimeSpan> rateLimitPerUser,
-            Optional<IReadOnlyList<IUser>> recipients,
-            Optional<IImageHash?> icon,
-            Optional<Snowflake> ownerID,
-            Optional<Snowflake> applicationID,
-            Optional<Snowflake?> parentID,
-            Optional<DateTimeOffset?> lastPinTimestamp
-        )
-        {
-            this.ID = id;
-            this.Type = type;
-            this.GuildID = guildID;
-            this.Position = position;
-            this.PermissionOverwrites = permissionOverwrites;
-            this.Name = name;
-            this.Topic = topic;
-            this.IsNsfw = isNsfw;
-            this.LastMessageID = lastMessageID;
-            this.Bitrate = bitrate;
-            this.UserLimit = userLimit;
-            this.RateLimitPerUser = rateLimitPerUser;
-            this.Recipients = recipients;
-            this.Icon = icon;
-            this.OwnerID = ownerID;
-            this.ApplicationID = applicationID;
-            this.ParentID = parentID;
-            this.LastPinTimestamp = lastPinTimestamp;
-        }
-    }
+    public record Channel
+    (
+        Snowflake ID,
+        ChannelType Type,
+        Optional<Snowflake> GuildID,
+        Optional<int> Position,
+        Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites,
+        Optional<string> Name,
+        Optional<string?> Topic,
+        Optional<bool> IsNsfw,
+        Optional<Snowflake?> LastMessageID,
+        Optional<int> Bitrate,
+        Optional<int> UserLimit,
+        Optional<TimeSpan> RateLimitPerUser,
+        Optional<IReadOnlyList<IUser>> Recipients,
+        Optional<IImageHash?> Icon,
+        Optional<Snowflake> OwnerID,
+        Optional<Snowflake> ApplicationID,
+        Optional<Snowflake?> ParentID,
+        Optional<DateTimeOffset?> LastPinTimestamp
+    ) : IChannel;
 }

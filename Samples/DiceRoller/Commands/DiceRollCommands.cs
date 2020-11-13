@@ -117,7 +117,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
 
         private async Task<EventResponseResult> ReplyWithFailureAsync(Snowflake channel)
         {
-            var failEmbed = new Embed(description: "Dice rolling failed :(", colour: Color.OrangeRed);
+            var failEmbed = new Embed(Description: "Dice rolling failed :(", Colour: Color.OrangeRed);
 
             var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
 
@@ -137,7 +137,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
                 );
 
             var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
-            var embed = new Embed("Rolls", fields: fields, colour: Color.LawnGreen);
+            var embed = new Embed("Rolls", Fields: fields, Colour: Color.LawnGreen);
 
             var replyRolls = await _channelAPI.CreateMessageAsync(channel, embed: embed);
 

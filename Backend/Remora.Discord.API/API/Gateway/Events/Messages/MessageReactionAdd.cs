@@ -25,55 +25,19 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionAdd" />
     [PublicAPI]
-    public class MessageReactionAdd : IMessageReactionAdd
-    {
-        /// <inheritdoc/>
-        public Snowflake UserID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake MessageID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc/>
-        public Optional<IGuildMember> Member { get; }
-
-        /// <inheritdoc/>
-        public IPartialEmoji Emoji { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageReactionAdd"/> class.
-        /// </summary>
-        /// <param name="userID">The ID of the reacting user.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="messageID">The ID of the message.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="member">The member information.</param>
-        /// <param name="emoji">The emoji.</param>
-        public MessageReactionAdd
-        (
-            Snowflake userID,
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<Snowflake> guildID,
-            Optional<IGuildMember> member,
-            IPartialEmoji emoji
-        )
-        {
-            this.UserID = userID;
-            this.ChannelID = channelID;
-            this.MessageID = messageID;
-            this.GuildID = guildID;
-            this.Member = member;
-            this.Emoji = emoji;
-        }
-    }
+    public record MessageReactionAdd
+    (
+        Snowflake UserID,
+        Snowflake ChannelID,
+        Snowflake MessageID,
+        Optional<Snowflake> GuildID,
+        Optional<IGuildMember> Member,
+        IPartialEmoji Emoji
+    ) : IMessageReactionAdd;
 }

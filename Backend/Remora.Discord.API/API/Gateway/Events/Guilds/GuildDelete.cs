@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IGuildDelete"/>
     [PublicAPI]
-    public class GuildDelete : UnavailableGuild, IGuildDelete
+    public record GuildDelete : UnavailableGuild, IGuildDelete
     {
         /// <inheritdoc cref="UnavailableGuild" />
         public GuildDelete(Snowflake guildID, Optional<bool> isUnavailable)

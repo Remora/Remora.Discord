@@ -23,24 +23,11 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents an unknown event from the Discord gateway.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUnknownEvent" />
     [PublicAPI]
-    public class UnknownEvent : IUnknownEvent
-    {
-        /// <inheritdoc />
-        public string Data { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnknownEvent"/> class.
-        /// </summary>
-        /// <param name="data">The JSON data that represents the payload.</param>
-        public UnknownEvent(string data)
-        {
-            this.Data = data;
-        }
-    }
+    public record UnknownEvent(string Data) : IUnknownEvent;
 }

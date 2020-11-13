@@ -24,32 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedVideo" />
     [PublicAPI]
-    public class EmbedVideo : IEmbedVideo
-    {
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Height { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Width { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedVideo"/> class.
-        /// </summary>
-        /// <param name="url">The video URL.</param>
-        /// <param name="height">The height of the video.</param>
-        /// <param name="width">The width of the video.</param>
-        public EmbedVideo(Optional<string> url, Optional<int> height, Optional<int> width)
-        {
-            this.Url = url;
-            this.Height = height;
-            this.Width = width;
-        }
-    }
+    public record EmbedVideo(Optional<string> Url, Optional<int> Height, Optional<int> Width) : IEmbedVideo;
 }

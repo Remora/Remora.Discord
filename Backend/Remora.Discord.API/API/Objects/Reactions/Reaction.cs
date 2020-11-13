@@ -23,32 +23,11 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IReaction" />
     [PublicAPI]
-    public class Reaction : IReaction
-    {
-        /// <inheritdoc />
-        public int Count { get; }
-
-        /// <inheritdoc />
-        public bool HasCurrentUserReacted { get; }
-
-        /// <inheritdoc />
-        public IPartialEmoji Emoji { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Reaction"/> class.
-        /// </summary>
-        /// <param name="count">The number of times users have reacted with this emoji.</param>
-        /// <param name="hasCurrentUserReacted">Whether the current user has reacted.</param>
-        /// <param name="emoji">The emoji.</param>
-        public Reaction(int count, bool hasCurrentUserReacted, IPartialEmoji emoji)
-        {
-            this.Count = count;
-            this.HasCurrentUserReacted = hasCurrentUserReacted;
-            this.Emoji = emoji;
-        }
-    }
+    public record Reaction(int Count, bool HasCurrentUserReacted, IPartialEmoji Emoji) : IReaction;
 }

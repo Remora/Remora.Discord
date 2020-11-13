@@ -31,7 +31,7 @@ namespace Remora.Discord.API
     /// </summary>
     /// <typeparam name="TEventData">The event data.</typeparam>
     [PublicAPI]
-    public class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
+    public record EventPayload<TEventData> : Payload<TEventData>, IEventPayload
         where TEventData : IGatewayEvent
     {
         /// <inheritdoc />

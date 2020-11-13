@@ -23,24 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Bidirectional
 {
     /// <summary>
     /// Represents a heartbeat command to or from Discord.
     /// </summary>
     [PublicAPI]
-    public class Heartbeat : IHeartbeat
-    {
-        /// <inheritdoc />
-        public long? LastSequenceNumber { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Heartbeat"/> class.
-        /// </summary>
-        /// <param name="lastSequenceNumber">The last sequence number received by the client.</param>
-        public Heartbeat(long? lastSequenceNumber)
-        {
-            this.LastSequenceNumber = lastSequenceNumber;
-        }
-    }
+    public record Heartbeat(long? LastSequenceNumber) : IHeartbeat;
 }

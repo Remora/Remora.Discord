@@ -23,6 +23,8 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API
 {
     /// <summary>
@@ -30,18 +32,5 @@ namespace Remora.Discord.API
     /// </summary>
     /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
     [PublicAPI]
-    public class Payload<TData> : IPayload<TData> where TData : IGatewayPayloadData
-    {
-        /// <inheritdoc/>
-        public TData Data { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
-        /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
-        {
-            this.Data = data;
-        }
-    }
+    public record Payload<TData>(TData Data) : IPayload<TData> where TData : IGatewayPayloadData;
 }

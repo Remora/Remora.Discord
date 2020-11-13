@@ -24,24 +24,11 @@ using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents the greeting event sent by the gateway after connection.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IHello" />
     [PublicAPI]
-    public class Hello : IHello
-    {
-        /// <inheritdoc />
-        public TimeSpan HeartbeatInterval { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Hello"/> class.
-        /// </summary>
-        /// <param name="heartbeatInterval">The heartbeat interval.</param>
-        public Hello(TimeSpan heartbeatInterval)
-        {
-            this.HeartbeatInterval = heartbeatInterval;
-        }
-    }
+    public record Hello(TimeSpan HeartbeatInterval) : IHello;
 }

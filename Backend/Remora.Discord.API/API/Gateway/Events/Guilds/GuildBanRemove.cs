@@ -25,27 +25,11 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildBanRemove" />
     [PublicAPI]
-    public class GuildBanRemove : IGuildBanRemove
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public IUser User { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildBanRemove"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="user">The banned user.</param>
-        public GuildBanRemove(Snowflake guildID, IUser user)
-        {
-            this.GuildID = guildID;
-            this.User = user;
-        }
-    }
+    public record GuildBanRemove(Snowflake GuildID, IUser User) : IGuildBanRemove;
 }

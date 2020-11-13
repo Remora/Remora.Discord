@@ -27,97 +27,26 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbed" />
     [PublicAPI]
-    public class Embed : IEmbed
-    {
-        /// <inheritdoc />
-        public Optional<string> Title { get; }
-
-        /// <inheritdoc />
-        public Optional<EmbedType> Type { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Description { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset> Timestamp { get; }
-
-        /// <inheritdoc />
-        public Optional<Color> Colour { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedFooter> Footer { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedImage> Image { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedThumbnail> Thumbnail { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedVideo> Video { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedProvider> Provider { get; }
-
-        /// <inheritdoc />
-        public Optional<IEmbedAuthor> Author { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IEmbedField>> Fields { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Embed"/> class.
-        /// </summary>
-        /// <param name="title">The title of the embed.</param>
-        /// <param name="type">The type of embed.</param>
-        /// <param name="description">The embed description.</param>
-        /// <param name="url">The embed URL.</param>
-        /// <param name="timestamp">The embed timestamp.</param>
-        /// <param name="colour">The embed colour.</param>
-        /// <param name="footer">The footer of the embed.</param>
-        /// <param name="image">The image of the embed.</param>
-        /// <param name="thumbnail">The thumbnail of the embed.</param>
-        /// <param name="video">The video of the embed.</param>
-        /// <param name="provider">The embed provider.</param>
-        /// <param name="author">The embed author.</param>
-        /// <param name="fields">The fields in the embed.</param>
-        public Embed
-        (
-            Optional<string> title = default,
-            Optional<EmbedType> type = default,
-            Optional<string> description = default,
-            Optional<string> url = default,
-            Optional<DateTimeOffset> timestamp = default,
-            Optional<Color> colour = default,
-            Optional<IEmbedFooter> footer = default,
-            Optional<IEmbedImage> image = default,
-            Optional<IEmbedThumbnail> thumbnail = default,
-            Optional<IEmbedVideo> video = default,
-            Optional<IEmbedProvider> provider = default,
-            Optional<IEmbedAuthor> author = default,
-            Optional<IReadOnlyList<IEmbedField>> fields = default
-        )
-        {
-            this.Title = title;
-            this.Type = type;
-            this.Description = description;
-            this.Url = url;
-            this.Timestamp = timestamp;
-            this.Colour = colour;
-            this.Footer = footer;
-            this.Image = image;
-            this.Thumbnail = thumbnail;
-            this.Video = video;
-            this.Provider = provider;
-            this.Author = author;
-            this.Fields = fields;
-        }
-    }
+    public record Embed
+    (
+        Optional<string> Title = default,
+        Optional<EmbedType> Type = default,
+        Optional<string> Description = default,
+        Optional<string> Url = default,
+        Optional<DateTimeOffset> Timestamp = default,
+        Optional<Color> Colour = default,
+        Optional<IEmbedFooter> Footer = default,
+        Optional<IEmbedImage> Image = default,
+        Optional<IEmbedThumbnail> Thumbnail = default,
+        Optional<IEmbedVideo> Video = default,
+        Optional<IEmbedProvider> Provider = default,
+        Optional<IEmbedAuthor> Author = default,
+        Optional<IReadOnlyList<IEmbedField>> Fields = default
+    ) : IEmbed;
 }

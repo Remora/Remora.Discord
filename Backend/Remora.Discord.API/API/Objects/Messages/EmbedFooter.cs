@@ -24,32 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedFooter" />
     [PublicAPI]
-    public class EmbedFooter : IEmbedFooter
-    {
-        /// <inheritdoc />
-        public string Text { get; }
-
-        /// <inheritdoc />
-        public Optional<string> IconUrl { get; }
-
-        /// <inheritdoc />
-        public Optional<string> ProxyIconUrl { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedFooter"/> class.
-        /// </summary>
-        /// <param name="text">The footer text.</param>
-        /// <param name="iconUrl">The footer icon.</param>
-        /// <param name="proxyIconUrl">The proxied url of the icon.</param>
-        public EmbedFooter(string text, Optional<string> iconUrl, Optional<string> proxyIconUrl)
-        {
-            this.Text = text;
-            this.IconUrl = iconUrl;
-            this.ProxyIconUrl = proxyIconUrl;
-        }
-    }
+    public record EmbedFooter(string Text, Optional<string> IconUrl, Optional<string> ProxyIconUrl) : IEmbedFooter;
 }

@@ -25,27 +25,11 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleCreate" />
     [PublicAPI]
-    public class GuildRoleCreate : IGuildRoleCreate
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public IRole Role { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildRoleCreate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="role">The role.</param>
-        public GuildRoleCreate(Snowflake guildID, IRole role)
-        {
-            this.GuildID = guildID;
-            this.Role = role;
-        }
-    }
+    public record GuildRoleCreate(Snowflake GuildID, IRole Role) : IGuildRoleCreate;
 }

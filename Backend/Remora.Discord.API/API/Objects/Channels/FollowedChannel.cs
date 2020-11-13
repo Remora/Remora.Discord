@@ -24,27 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IFollowedChannel" />
     [PublicAPI]
-    public class FollowedChannel : IFollowedChannel
-    {
-        /// <inheritdoc />
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc />
-        public Snowflake WebhookID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FollowedChannel"/> class.
-        /// </summary>
-        /// <param name="channelID">The ID of the news channel.</param>
-        /// <param name="webhookID">The ID of the created webhook.</param>
-        public FollowedChannel(Snowflake channelID, Snowflake webhookID)
-        {
-            this.ChannelID = channelID;
-            this.WebhookID = webhookID;
-        }
-    }
+    public record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;
 }

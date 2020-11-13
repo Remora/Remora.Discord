@@ -24,49 +24,18 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageApplication" />
     [PublicAPI]
-    public class MessageApplication : IMessageApplication
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public Optional<IImageHash> CoverImage { get; }
-
-        /// <inheritdoc />
-        public string Description { get; }
-
-        /// <inheritdoc />
-        public IImageHash? Icon { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageApplication"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the application.</param>
-        /// <param name="coverImage">The cover image of the application.</param>
-        /// <param name="description">The description of the application.</param>
-        /// <param name="icon">The application's icon.</param>
-        /// <param name="name">The name of the application.</param>
-        public MessageApplication
-        (
-            Snowflake id,
-            Optional<IImageHash> coverImage,
-            string description,
-            IImageHash? icon,
-            string name
-        )
-        {
-            this.ID = id;
-            this.CoverImage = coverImage;
-            this.Description = description;
-            this.Icon = icon;
-            this.Name = name;
-        }
-    }
+    public record MessageApplication
+    (
+        Snowflake ID,
+        Optional<IImageHash> CoverImage,
+        string Description,
+        IImageHash? Icon,
+        string Name
+    ) : IMessageApplication;
 }

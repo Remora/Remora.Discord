@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUserMention"/>
     [PublicAPI]
-    public class UserMention : User, IUserMention
+    public record UserMention : User, IUserMention
     {
         /// <inheritdoc />
         public Optional<IPartialGuildMember> Member { get; }

@@ -25,61 +25,20 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuditLogEntry" />
     [PublicAPI]
-    public class AuditLogEntry : IAuditLogEntry
-    {
-        /// <inheritdoc />
-        public string? TargetID { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IAuditLogChange>> Changes { get; }
-
-        /// <inheritdoc />
-        public Snowflake UserID { get; }
-
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public AuditLogEvent ActionType { get; }
-
-        /// <inheritdoc />
-        public Optional<IOptionalAuditEntryInfo> Options { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Reason { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuditLogEntry"/> class.
-        /// </summary>
-        /// <param name="targetID">The ID of the affected entity.</param>
-        /// <param name="changes">The changes made to the target.</param>
-        /// <param name="userID">The ID of the user who made the changes.</param>
-        /// <param name="id">The ID of the entry itself.</param>
-        /// <param name="actionType">The type of action that occurred.</param>
-        /// <param name="options">Additional info for certain action types.</param>
-        /// <param name="reason">The reason for the change.</param>
-        public AuditLogEntry
-        (
-            string? targetID,
-            Optional<IReadOnlyList<IAuditLogChange>> changes,
-            Snowflake userID,
-            Snowflake id,
-            AuditLogEvent actionType,
-            Optional<IOptionalAuditEntryInfo> options,
-            Optional<string> reason
-        )
-        {
-            this.TargetID = targetID;
-            this.Changes = changes;
-            this.UserID = userID;
-            this.ID = id;
-            this.ActionType = actionType;
-            this.Options = options;
-            this.Reason = reason;
-        }
-    }
+    public record AuditLogEntry
+    (
+        string? TargetID,
+        Optional<IReadOnlyList<IAuditLogChange>> Changes,
+        Snowflake UserID,
+        Snowflake ID,
+        AuditLogEvent ActionType,
+        Optional<IOptionalAuditEntryInfo> Options,
+        Optional<string> Reason
+    ) : IAuditLogEntry;
 }

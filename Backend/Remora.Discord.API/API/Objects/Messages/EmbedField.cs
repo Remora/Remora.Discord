@@ -24,32 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedField" />
     [PublicAPI]
-    public class EmbedField : IEmbedField
-    {
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public string Value { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsInline { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedField"/> class.
-        /// </summary>
-        /// <param name="name">The name of the field.</param>
-        /// <param name="value">The field value.</param>
-        /// <param name="isInline">Whether the field is inline.</param>
-        public EmbedField(string name, string value, Optional<bool> isInline)
-        {
-            this.Name = name;
-            this.Value = value;
-            this.IsInline = isInline;
-        }
-    }
+    public record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
 }

@@ -24,37 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannelMention" />
     [PublicAPI]
-    public class ChannelMention : IChannelMention
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public ChannelType Type { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelMention"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the mentioned channel.</param>
-        /// <param name="guildID">The ID of the guild the channel is in.</param>
-        /// <param name="type">The type of channel that was mentioned.</param>
-        /// <param name="name">The name of the channel.</param>
-        public ChannelMention(Snowflake id, Snowflake guildID, ChannelType type, string name)
-        {
-            this.ID = id;
-            this.GuildID = guildID;
-            this.Type = type;
-            this.Name = name;
-        }
-    }
+    public record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
 }

@@ -25,11 +25,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a reconnection request.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IReconnect" />
     [PublicAPI]
-    public class Reconnect : IReconnect
-    {
-    }
+    public record Reconnect : IReconnect;
 }

@@ -24,29 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a party of people in an activity.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityParty" />
     [PublicAPI]
-    public class ActivityParty : IActivityParty
-    {
-        /// <inheritdoc />
-        public Optional<string> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<IPartySize> Size { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ActivityParty"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the party.</param>
-        /// <param name="size">The size of the party.</param>
-        public ActivityParty(Optional<string> id = default, Optional<IPartySize> size = default)
-        {
-            this.ID = id;
-            this.Size = size;
-        }
-    }
+    public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
 }

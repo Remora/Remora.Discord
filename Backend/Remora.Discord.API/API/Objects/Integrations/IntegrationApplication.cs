@@ -24,55 +24,19 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IIntegrationApplication" />
     [PublicAPI]
-    public class IntegrationApplication : IIntegrationApplication
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public IImageHash? Icon { get; }
-
-        /// <inheritdoc />
-        public string Description { get; }
-
-        /// <inheritdoc />
-        public string Summary { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> Bot { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IntegrationApplication"/> class.
-        /// </summary>
-        /// <param name="id">The application ID.</param>
-        /// <param name="name">The name of the application.</param>
-        /// <param name="icon">The application's icon.</param>
-        /// <param name="description">The description of the application.</param>
-        /// <param name="summary">The summary of the application.</param>
-        /// <param name="bot">The bot associated with this application, if any.</param>
-        public IntegrationApplication
-        (
-            Snowflake id,
-            string name,
-            IImageHash? icon,
-            string description,
-            string summary,
-            Optional<IUser> bot
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Icon = icon;
-            this.Description = description;
-            this.Summary = summary;
-            this.Bot = bot;
-        }
-    }
+    public record IntegrationApplication
+    (
+        Snowflake ID,
+        string Name,
+        IImageHash? Icon,
+        string Description,
+        string Summary,
+        Optional<IUser> Bot
+    ) : IIntegrationApplication;
 }

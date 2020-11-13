@@ -25,9 +25,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IResumed" />
     [PublicAPI]
-    public class Resumed : IResumed
-    {
-    }
+    public record Resumed : IResumed;
 }

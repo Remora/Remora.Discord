@@ -32,35 +32,9 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageUpdate"/>
     [PublicAPI]
-    public class MessageUpdate : PartialMessage, IMessageUpdate
+    public record MessageUpdate : PartialMessage, IMessageUpdate
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageUpdate"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the message.</param>
-        /// <param name="channelID">The ID of the channel the message was sent in.</param>
-        /// <param name="guildID">The ID of the guild the message was sent in.</param>
-        /// <param name="author">The ID of the message author.</param>
-        /// <param name="member">The member information of the author.</param>
-        /// <param name="content">The contents of the message.</param>
-        /// <param name="timestamp">The time when the message was sent.</param>
-        /// <param name="editedTimestamp">The time when the message was last edited.</param>
-        /// <param name="isTTS">Whether the message is a TTS message.</param>
-        /// <param name="mentionsEveryone">Whether the message mentions everyone.</param>
-        /// <param name="mentions">The people the message mentions.</param>
-        /// <param name="mentionedRoles">The roles the message mentions.</param>
-        /// <param name="mentionedChannels">The channels the message mentions.</param>
-        /// <param name="attachments">The message attachments.</param>
-        /// <param name="embeds">The message embeds.</param>
-        /// <param name="reactions">The reactions to the message.</param>
-        /// <param name="nonce">The message nonce.</param>
-        /// <param name="isPinned">Whether the message is pinned.</param>
-        /// <param name="webhookID">The ID of the webhook that sent this message.</param>
-        /// <param name="type">The message type.</param>
-        /// <param name="activity">The activity that the message is associated with.</param>
-        /// <param name="application">The application that the message is associated with.</param>
-        /// <param name="messageReference">The message that this message refers to.</param>
-        /// <param name="flags">The message flags.</param>
+        /// <inheritdoc cref="PartialMessage"/>
         public MessageUpdate
         (
             Optional<Snowflake> id,

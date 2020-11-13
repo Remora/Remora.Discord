@@ -23,25 +23,15 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IImageHash" />
     [PublicAPI]
-    public class ImageHash : IImageHash
+    public record ImageHash(string Value) : IImageHash
     {
         /// <inheritdoc />
-        public string Value { get; }
-
-        /// <inheritdoc />
         public bool HasGif => this.Value.StartsWith("a_");
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageHash"/> class.
-        /// </summary>
-        /// <param name="value">The hash.</param>
-        public ImageHash(string value)
-        {
-            this.Value = value;
-        }
     }
 }

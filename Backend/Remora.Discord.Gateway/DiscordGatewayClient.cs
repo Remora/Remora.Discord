@@ -679,9 +679,9 @@ namespace Remora.Discord.Gateway
                 (
                     _tokenStore.Token,
                     _gatewayOptions.ConnectionProperties,
-                    intents: _gatewayOptions.Intents,
-                    compress: false,
-                    shard: shardInformation
+                    Intents: _gatewayOptions.Intents,
+                    Compress: false,
+                    Shard: shardInformation
                 )
             );
 

@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IGuildCreate"/>
     [PublicAPI]
-    public class GuildCreate : Guild, IGuildCreate
+    public record GuildCreate : Guild, IGuildCreate
     {
         /// <inheritdoc cref="Guild"/>
         public GuildCreate

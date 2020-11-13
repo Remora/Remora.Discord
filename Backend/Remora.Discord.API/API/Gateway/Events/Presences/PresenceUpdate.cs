@@ -29,20 +29,11 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a presence update.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IPresenceUpdate" />
     [PublicAPI]
-    public class PresenceUpdate : Presence, IPresenceUpdate
+    public record PresenceUpdate : Presence, IPresenceUpdate
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PresenceUpdate"/> class.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="status">The user's status.</param>
-        /// <param name="activities">The user's current activities.</param>
-        /// <param name="clientStatus">The user's platform-dependent status.</param>
+        /// <inheritdoc cref="Presence"/>
         public PresenceUpdate
         (
             IPartialUser user,

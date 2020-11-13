@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageCreate"/>
     [PublicAPI]
-    public class MessageCreate : Message, IMessageCreate
+    public record MessageCreate : Message, IMessageCreate
     {
         /// <inheritdoc cref="Message"/>
         public MessageCreate

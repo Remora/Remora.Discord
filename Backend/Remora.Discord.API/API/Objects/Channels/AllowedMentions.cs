@@ -25,37 +25,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAllowedMentions" />
     [PublicAPI]
-    public class AllowedMentions : IAllowedMentions
-    {
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<MentionType>> Parse { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<Snowflake>> Roles { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<Snowflake>> Users { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AllowedMentions"/> class.
-        /// </summary>
-        /// <param name="parse">The mention types to parse.</param>
-        /// <param name="roles">The roles that may be mentioned.</param>
-        /// <param name="users">The users that may be mentioned.</param>
-        public AllowedMentions
-        (
-            Optional<IReadOnlyList<MentionType>> parse,
-            Optional<IReadOnlyList<Snowflake>> roles,
-            Optional<IReadOnlyList<Snowflake>> users
-        )
-        {
-            this.Parse = parse;
-            this.Roles = roles;
-            this.Users = users;
-        }
-    }
+    public record AllowedMentions
+    (
+        Optional<IReadOnlyList<MentionType>> Parse,
+        Optional<IReadOnlyList<Snowflake>> Roles,
+        Optional<IReadOnlyList<Snowflake>> Users
+    ) : IAllowedMentions;
 }

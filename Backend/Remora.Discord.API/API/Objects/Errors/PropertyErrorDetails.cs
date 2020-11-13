@@ -24,31 +24,15 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails" />
     [PublicAPI]
-    public class PropertyErrorDetails : IPropertyErrorDetails
-    {
-        /// <inheritdoc />
-        public IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IErrorDetails>? Errors { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PropertyErrorDetails"/> class.
-        /// </summary>
-        /// <param name="memberErrors">Errors of inner members, if any.</param>
-        /// <param name="errors">Errors related to this property, if any.</param>
-        public PropertyErrorDetails
-        (
-            IReadOnlyDictionary<string, IPropertyErrorDetails>? memberErrors = null,
-            IReadOnlyList<IErrorDetails>? errors = null
-        )
-        {
-            this.MemberErrors = memberErrors;
-            this.Errors = errors;
-        }
-    }
+    public record PropertyErrorDetails
+    (
+        IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors = null,
+        IReadOnlyList<IErrorDetails>? Errors = null
+    ) : IPropertyErrorDetails;
 }

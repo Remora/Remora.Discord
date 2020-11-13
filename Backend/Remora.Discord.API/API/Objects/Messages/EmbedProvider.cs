@@ -24,27 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedProvider" />
     [PublicAPI]
-    public class EmbedProvider : IEmbedProvider
-    {
-        /// <inheritdoc />
-        public Optional<string> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedProvider"/> class.
-        /// </summary>
-        /// <param name="name">The name of the provider.</param>
-        /// <param name="url">The provider's URL.</param>
-        public EmbedProvider(Optional<string> name, Optional<string> url)
-        {
-            this.Name = name;
-            this.Url = url;
-        }
-    }
+    public record EmbedProvider(Optional<string> Name, Optional<string> Url) : IEmbedProvider;
 }

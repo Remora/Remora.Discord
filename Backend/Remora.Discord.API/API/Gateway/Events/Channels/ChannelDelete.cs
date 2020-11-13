@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelDelete" />
     [PublicAPI]
-    public class ChannelDelete : Channel, IChannelDelete
+    public record ChannelDelete : Channel, IChannelDelete
     {
         /// <inheritdoc cref="Channel"/>
         public ChannelDelete

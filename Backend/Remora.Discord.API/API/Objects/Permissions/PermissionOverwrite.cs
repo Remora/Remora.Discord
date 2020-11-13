@@ -24,43 +24,17 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite" />
     [PublicAPI]
-    public class PermissionOverwrite : IPermissionOverwrite
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public PermissionOverwriteType Type { get; }
-
-        /// <inheritdoc />
-        public IDiscordPermissionSet Allow { get; }
-
-        /// <inheritdoc />
-        public IDiscordPermissionSet Deny { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PermissionOverwrite"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the overwrite.</param>
-        /// <param name="type">The type of the overwrite target.</param>
-        /// <param name="allow">The permissions explicitly allowed.</param>
-        /// <param name="deny">The permissions explicitly denied.</param>
-        public PermissionOverwrite
-        (
-            Snowflake id,
-            PermissionOverwriteType type,
-            IDiscordPermissionSet allow,
-            IDiscordPermissionSet deny
-        )
-        {
-            this.ID = id;
-            this.Type = type;
-            this.Allow = allow;
-            this.Deny = deny;
-        }
-    }
+    public record PermissionOverwrite
+    (
+        Snowflake ID,
+        PermissionOverwriteType Type,
+        IDiscordPermissionSet Allow,
+        IDiscordPermissionSet Deny
+    ) : IPermissionOverwrite;
 }

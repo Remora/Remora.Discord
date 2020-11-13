@@ -24,67 +24,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IOptionalAuditEntryInfo" />
     [PublicAPI]
-    public class OptionalAuditEntryInfo : IOptionalAuditEntryInfo
-    {
-        /// <inheritdoc/>
-        public Optional<string> DeleteMemberDays { get; }
-
-        /// <inheritdoc/>
-        public Optional<string> MembersRemoved { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> MessageID { get; }
-
-        /// <inheritdoc/>
-        public Optional<string> Count { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> ID { get; }
-
-        /// <inheritdoc/>
-        public Optional<PermissionOverwriteType> Type { get; }
-
-        /// <inheritdoc/>
-        public Optional<string> RoleName { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OptionalAuditEntryInfo"/> class.
-        /// </summary>
-        /// <param name="deleteMemberDays">The number of days after which inactive members were kicked.</param>
-        /// <param name="membersRemoved">The number of members removed by the prune.</param>
-        /// <param name="channelID">The channel in which the entities were targeted.</param>
-        /// <param name="messageID">The ID of the message that was targeted.</param>
-        /// <param name="count">The number of entities that were targeted.</param>
-        /// <param name="id">The ID of the overwritten entity.</param>
-        /// <param name="type">The type of the overwritten entity.</param>
-        /// <param name="roleName">The name of the role, if the <paramref name="type"/> is "role".</param>
-        public OptionalAuditEntryInfo
-        (
-            Optional<string> deleteMemberDays,
-            Optional<string> membersRemoved,
-            Optional<Snowflake> channelID,
-            Optional<Snowflake> messageID,
-            Optional<string> count,
-            Optional<Snowflake> id,
-            Optional<PermissionOverwriteType> type,
-            Optional<string> roleName
-        )
-        {
-            this.DeleteMemberDays = deleteMemberDays;
-            this.MembersRemoved = membersRemoved;
-            this.ChannelID = channelID;
-            this.MessageID = messageID;
-            this.Count = count;
-            this.ID = id;
-            this.Type = type;
-            this.RoleName = roleName;
-        }
-    }
+    public record OptionalAuditEntryInfo
+    (
+        Optional<string> DeleteMemberDays,
+        Optional<string> MembersRemoved,
+        Optional<Snowflake> ChannelID,
+        Optional<Snowflake> MessageID,
+        Optional<string> Count,
+        Optional<Snowflake> ID,
+        Optional<PermissionOverwriteType> Type,
+        Optional<string> RoleName
+    ) : IOptionalAuditEntryInfo;
 }

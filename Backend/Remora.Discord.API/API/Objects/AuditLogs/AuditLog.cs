@@ -24,43 +24,17 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuditLog" />
     [PublicAPI]
-    public class AuditLog : IAuditLog
-    {
-        /// <inheritdoc />
-        public IReadOnlyList<IWebhook> Webhooks { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IUser> Users { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IPartialIntegration> Integrations { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuditLog"/> class.
-        /// </summary>
-        /// <param name="webhooks">The webhooks in the log.</param>
-        /// <param name="users">The users in the log.</param>
-        /// <param name="auditLogEntries">The entries in the log.</param>
-        /// <param name="integrations">The integrations for the log.</param>
-        public AuditLog
-        (
-            IReadOnlyList<IWebhook> webhooks,
-            IReadOnlyList<IUser> users,
-            IReadOnlyList<IAuditLogEntry> auditLogEntries,
-            IReadOnlyList<IPartialIntegration> integrations
-        )
-        {
-            this.Webhooks = webhooks;
-            this.Users = users;
-            this.AuditLogEntries = auditLogEntries;
-            this.Integrations = integrations;
-        }
-    }
+    public record AuditLog
+    (
+        IReadOnlyList<IWebhook> Webhooks,
+        IReadOnlyList<IUser> Users,
+        IReadOnlyList<IAuditLogEntry> AuditLogEntries,
+        IReadOnlyList<IPartialIntegration> Integrations
+    ) : IAuditLog;
 }

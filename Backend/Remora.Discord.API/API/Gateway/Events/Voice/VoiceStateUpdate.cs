@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IVoiceStateUpdate" />
     [PublicAPI]
-    public class VoiceStateUpdate : VoiceState, IVoiceStateUpdate
+    public record VoiceStateUpdate : VoiceState, IVoiceStateUpdate
     {
         /// <inheritdoc cref="VoiceState" />
         public VoiceStateUpdate

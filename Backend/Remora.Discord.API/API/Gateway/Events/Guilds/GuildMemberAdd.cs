@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IGuildMemberAdd" />
     [PublicAPI]
-    public class GuildMemberAdd : GuildMember, IGuildMemberAdd
+    public record GuildMemberAdd : GuildMember, IGuildMemberAdd
     {
         /// <inheritdoc />
         public Snowflake GuildID { get; }

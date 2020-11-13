@@ -25,109 +25,28 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IIntegration" />
     [PublicAPI]
-    public class Integration : IIntegration
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public string Type { get; }
-
-        /// <inheritdoc />
-        public bool IsEnabled { get; }
-
-        /// <inheritdoc />
-        public bool IsSyncing { get; }
-
-        /// <inheritdoc />
-        public Snowflake RoleID { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> EnableEmoticons { get; }
-
-        /// <inheritdoc />
-        public IntegrationExpireBehaviour ExpireBehaviour { get; }
-
-        /// <inheritdoc />
-        public TimeSpan ExpireGracePeriod { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> User { get; }
-
-        /// <inheritdoc />
-        public IAccount Account { get; }
-
-        /// <inheritdoc />
-        public DateTimeOffset SyncedAt { get; }
-
-        /// <inheritdoc />
-        public int SubscriberCount { get; }
-
-        /// <inheritdoc />
-        public bool IsRevoked { get; }
-
-        /// <inheritdoc />
-        public Optional<IIntegrationApplication> Application { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Integration"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the integration.</param>
-        /// <param name="name">The name of the integration.</param>
-        /// <param name="type">The integration's type.</param>
-        /// <param name="isEnabled">Whether the integration is enabled.</param>
-        /// <param name="isSyncing">Whether the integration is syncing.</param>
-        /// <param name="roleID">The ID of the role the integration is associated with.</param>
-        /// <param name="enableEmoticons">Whether emoticons should be synced for this integration.</param>
-        /// <param name="expireBehaviour">The behaviour of expiring subscribers.</param>
-        /// <param name="expireGracePeriod">The grace period for an expired subscriber.</param>
-        /// <param name="user">The user for this integration.</param>
-        /// <param name="account">The integration account information.</param>
-        /// <param name="syncedAt">The last time when the integration was synced.</param>
-        /// <param name="subscriberCount">The subscriber count.</param>
-        /// <param name="isRevoked">Whether the integration has been revoked.</param>
-        /// <param name="application">The integration application, if any.</param>
-        public Integration
-        (
-            Snowflake id,
-            string name,
-            string type,
-            bool isEnabled,
-            bool isSyncing,
-            Snowflake roleID,
-            Optional<bool> enableEmoticons,
-            IntegrationExpireBehaviour expireBehaviour,
-            TimeSpan expireGracePeriod,
-            Optional<IUser> user,
-            IAccount account,
-            DateTimeOffset syncedAt,
-            int subscriberCount,
-            bool isRevoked,
-            Optional<IIntegrationApplication> application
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Type = type;
-            this.IsEnabled = isEnabled;
-            this.IsSyncing = isSyncing;
-            this.RoleID = roleID;
-            this.EnableEmoticons = enableEmoticons;
-            this.ExpireBehaviour = expireBehaviour;
-            this.ExpireGracePeriod = expireGracePeriod;
-            this.User = user;
-            this.Account = account;
-            this.SyncedAt = syncedAt;
-            this.SubscriberCount = subscriberCount;
-            this.IsRevoked = isRevoked;
-            this.Application = application;
-        }
-    }
+    public record Integration
+    (
+        Snowflake ID,
+        string Name,
+        string Type,
+        bool IsEnabled,
+        bool IsSyncing,
+        Snowflake RoleID,
+        Optional<bool> EnableEmoticons,
+        IntegrationExpireBehaviour ExpireBehaviour,
+        TimeSpan ExpireGracePeriod,
+        Optional<IUser> User,
+        IAccount Account,
+        DateTimeOffset SyncedAt,
+        int SubscriberCount,
+        bool IsRevoked,
+        Optional<IIntegrationApplication> Application
+    ) : IIntegration;
 }

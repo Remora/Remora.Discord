@@ -23,22 +23,11 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPruneCount" />
     [PublicAPI]
-    public class PruneCount : IPruneCount
-    {
-        /// <inheritdoc />
-        public int? Pruned { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PruneCount"/> class.
-        /// </summary>
-        /// <param name="pruned">The number of members that would be pruned.</param>
-        public PruneCount(int? pruned)
-        {
-            this.Pruned = pruned;
-        }
-    }
+    public record PruneCount(int? Pruned) : IPruneCount;
 }

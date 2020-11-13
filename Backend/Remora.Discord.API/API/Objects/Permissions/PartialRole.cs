@@ -25,67 +25,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialRole" />
     [PublicAPI]
-    public class PartialRole : IPartialRole
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<Color> Colour { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsHoisted { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Position { get; }
-
-        /// <inheritdoc />
-        public Optional<IDiscordPermissionSet> Permissions { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsManaged { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsMentionable { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialRole"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the role.</param>
-        /// <param name="name">The name of the role.</param>
-        /// <param name="colour">The colour of the role.</param>
-        /// <param name="isHoisted">Whether the role is displayed separately from other roles.</param>
-        /// <param name="position">The position of the role.</param>
-        /// <param name="permissions">The permissions of the role.</param>
-        /// <param name="isManaged">Whether the role is managed by an integration.</param>
-        /// <param name="isMentionable">Whether the role is mentionable.</param>
-        public PartialRole
-        (
-            Optional<Snowflake> id,
-            Optional<string> name,
-            Optional<Color> colour,
-            Optional<bool> isHoisted,
-            Optional<int> position,
-            Optional<IDiscordPermissionSet> permissions,
-            Optional<bool> isManaged,
-            Optional<bool> isMentionable
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Colour = colour;
-            this.IsHoisted = isHoisted;
-            this.Position = position;
-            this.Permissions = permissions;
-            this.IsManaged = isManaged;
-            this.IsMentionable = isMentionable;
-        }
-    }
+    public record PartialRole
+    (
+        Optional<Snowflake> ID,
+        Optional<string> Name,
+        Optional<Color> Colour,
+        Optional<bool> IsHoisted,
+        Optional<int> Position,
+        Optional<IDiscordPermissionSet> Permissions,
+        Optional<bool> IsManaged,
+        Optional<bool> IsMentionable
+    ) : IPartialRole;
 }

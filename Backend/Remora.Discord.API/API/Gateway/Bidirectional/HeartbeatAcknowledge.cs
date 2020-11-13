@@ -29,7 +29,5 @@ namespace Remora.Discord.API.Gateway.Bidirectional
     /// Represents a heartbeat acknowledgement.
     /// </summary>
     [PublicAPI]
-    public class HeartbeatAcknowledge : IHeartbeatAcknowledge
-    {
-    }
+    public record HeartbeatAcknowledge : IHeartbeatAcknowledge;
 }

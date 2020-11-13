@@ -24,27 +24,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageActivity" />
     [PublicAPI]
-    public class MessageActivity : IMessageActivity
-    {
-        /// <inheritdoc />
-        public MessageActivityType Type { get; }
-
-        /// <inheritdoc />
-        public Optional<string> PartyID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageActivity"/> class.
-        /// </summary>
-        /// <param name="type">The activity type.</param>
-        /// <param name="partyID">The party ID.</param>
-        public MessageActivity(MessageActivityType type, Optional<string> partyID)
-        {
-            this.Type = type;
-            this.PartyID = partyID;
-        }
-    }
+    public record MessageActivity(MessageActivityType Type, Optional<string> PartyID) : IMessageActivity;
 }

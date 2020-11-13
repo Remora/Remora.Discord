@@ -25,37 +25,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelPinsUpdate" />
     [PublicAPI]
-    public class ChannelPinsUpdate : IChannelPinsUpdate
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc />
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset> LastPinTimestamp { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelPinsUpdate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="lastPinTimestamp">The timestamp of the last pin.</param>
-        public ChannelPinsUpdate
-        (
-            Optional<Snowflake> guildID,
-            Snowflake channelID,
-            Optional<DateTimeOffset> lastPinTimestamp
-        )
-        {
-            this.GuildID = guildID;
-            this.ChannelID = channelID;
-            this.LastPinTimestamp = lastPinTimestamp;
-        }
-    }
+    public record ChannelPinsUpdate
+    (
+        Optional<Snowflake> GuildID,
+        Snowflake ChannelID,
+        Optional<DateTimeOffset> LastPinTimestamp
+    ) : IChannelPinsUpdate;
 }

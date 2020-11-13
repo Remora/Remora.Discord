@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelUpdate" />
     [PublicAPI]
-    public class ChannelUpdate : Channel, IChannelUpdate
+    public record ChannelUpdate : Channel, IChannelUpdate
     {
         /// <inheritdoc cref="Channel"/>
         public ChannelUpdate

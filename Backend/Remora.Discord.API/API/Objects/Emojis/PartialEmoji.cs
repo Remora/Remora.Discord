@@ -25,67 +25,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialEmoji" />
     [PublicAPI]
-    public class PartialEmoji : IPartialEmoji
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake?> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<Snowflake>> Roles { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> User { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> RequireColons { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsManaged { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsAnimated { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsAvailable { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialEmoji"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the emoji, if it is custom.</param>
-        /// <param name="name">The name of the emoji, if it is custom; Otherwise, the unicode representation.</param>
-        /// <param name="roles">The roles that may use the emoji.</param>
-        /// <param name="user">The user that made the emoji.</param>
-        /// <param name="requireColons">Whether the emoji must be surrounded with colons.</param>
-        /// <param name="isManaged">Whether the emoji is managed by an integration.</param>
-        /// <param name="isAnimated">Whether the emoji is animated.</param>
-        /// <param name="isAvailable">Whether the emoji is currently available.</param>
-        public PartialEmoji
-        (
-            Optional<Snowflake?> id,
-            Optional<string?> name,
-            Optional<IReadOnlyList<Snowflake>> roles,
-            Optional<IUser> user,
-            Optional<bool> requireColons,
-            Optional<bool> isManaged,
-            Optional<bool> isAnimated,
-            Optional<bool> isAvailable
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Roles = roles;
-            this.User = user;
-            this.RequireColons = requireColons;
-            this.IsManaged = isManaged;
-            this.IsAnimated = isAnimated;
-            this.IsAvailable = isAvailable;
-        }
-    }
+    public record PartialEmoji
+    (
+        Optional<Snowflake?> ID,
+        Optional<string?> Name,
+        Optional<IReadOnlyList<Snowflake>> Roles,
+        Optional<IUser> User,
+        Optional<bool> RequireColons,
+        Optional<bool> IsManaged,
+        Optional<bool> IsAnimated,
+        Optional<bool> IsAvailable
+    ) : IPartialEmoji;
 }

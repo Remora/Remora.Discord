@@ -25,79 +25,23 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildPreview" />
     [PublicAPI]
-    public class GuildPreview : IGuildPreview
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public IImageHash? Icon { get; }
-
-        /// <inheritdoc />
-        public IImageHash? Splash { get; }
-
-        /// <inheritdoc />
-        public IImageHash? DiscoverySplash { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IEmoji> Emojis { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<GuildFeature> Features { get; }
-
-        /// <inheritdoc />
-        public Optional<int> ApproximatePresenceCount { get; }
-
-        /// <inheritdoc />
-        public Optional<int> ApproximateMemberCount { get; }
-
-        /// <inheritdoc />
-        public string? Description { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildPreview"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the guild.</param>
-        /// <param name="name">The name of the guild.</param>
-        /// <param name="icon">The guild's icon.</param>
-        /// <param name="splash">The guild's splash.</param>
-        /// <param name="discoverySplash">The guild's discovery splash.</param>
-        /// <param name="emojis">The emojis in the guild.</param>
-        /// <param name="features">The features the guild has.</param>
-        /// <param name="approximatePresenceCount">The approximate presence count.</param>
-        /// <param name="approximateMemberCount">The approximate member count.</param>
-        /// <param name="description">The guild's description.</param>
-        public GuildPreview
-        (
-            Snowflake id,
-            string name,
-            IImageHash? icon,
-            IImageHash? splash,
-            IImageHash? discoverySplash,
-            IReadOnlyList<IEmoji> emojis,
-            IReadOnlyList<GuildFeature> features,
-            Optional<int> approximatePresenceCount,
-            Optional<int> approximateMemberCount,
-            string? description
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Icon = icon;
-            this.Splash = splash;
-            this.DiscoverySplash = discoverySplash;
-            this.Emojis = emojis;
-            this.Features = features;
-            this.ApproximatePresenceCount = approximatePresenceCount;
-            this.ApproximateMemberCount = approximateMemberCount;
-            this.Description = description;
-        }
-    }
+    public record GuildPreview
+    (
+        Snowflake ID,
+        string Name,
+        IImageHash? Icon,
+        IImageHash? Splash,
+        IImageHash? DiscoverySplash,
+        IReadOnlyList<IEmoji> Emojis,
+        IReadOnlyList<GuildFeature> Features,
+        Optional<int> ApproximatePresenceCount,
+        Optional<int> ApproximateMemberCount,
+        string? Description
+    ) : IGuildPreview;
 }
