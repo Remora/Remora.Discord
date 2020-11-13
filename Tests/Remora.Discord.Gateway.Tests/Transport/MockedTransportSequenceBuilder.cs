@@ -36,7 +36,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
     /// </summary>
     public class MockedTransportSequenceBuilder
     {
-        private readonly List<IEvent> _sequence = new List<IEvent>();
+        private readonly List<IEvent> _sequence = new();
 
         /// <summary>
         /// Expects a connection to the following URI.

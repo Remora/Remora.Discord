@@ -44,9 +44,9 @@ namespace Remora.Discord.Gateway.Tests.Transport
         private readonly MockedTransportServiceOptions _serviceOptions;
         private readonly CancellationTokenSource _finisher;
 
-        private readonly List<MockedTransportSequence> _finishedSequences = new List<MockedTransportSequence>();
+        private readonly List<MockedTransportSequence> _finishedSequences = new();
 
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim _semaphore = new(1);
 
         private DateTimeOffset _lastAdvance;
 

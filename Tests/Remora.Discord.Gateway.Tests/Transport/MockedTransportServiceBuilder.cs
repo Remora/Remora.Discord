@@ -32,12 +32,12 @@ namespace Remora.Discord.Gateway.Tests.Transport
     /// </summary>
     public class MockedTransportServiceBuilder
     {
-        private readonly MockedTransportServiceOptions _serviceOptions = new MockedTransportServiceOptions();
-        private readonly List<MockedTransportSequence> _sequences = new List<MockedTransportSequence>();
+        private readonly MockedTransportServiceOptions _serviceOptions = new();
+        private readonly List<MockedTransportSequence> _sequences = new();
 
-        private readonly List<MockedTransportSequence> _continuousSequences = new List<MockedTransportSequence>();
+        private readonly List<MockedTransportSequence> _continuousSequences = new();
 
-        private CancellationTokenSource _finisher = new CancellationTokenSource();
+        private CancellationTokenSource _finisher = new();
 
         /// <summary>
         /// Sets a timeout for the service. If no sequences have advanced within this timeout, the service will

@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Json
     /// <inheritdoc />
     internal class PayloadConverter : JsonConverter<IPayload?>
     {
-        private readonly SnakeCaseNamingPolicy _snakeCase = new SnakeCaseNamingPolicy();
+        private readonly SnakeCaseNamingPolicy _snakeCase = new();
 
         /// <summary>
         /// Gets a value indicating whether unknown events are allowed to be deserialized.

@@ -36,7 +36,7 @@ namespace Remora.Discord.Gateway.Services
     [PublicAPI]
     public class ResponderService : IResponderTypeRepository
     {
-        private readonly Dictionary<Type, List<Type>> _registeredResponderTypes = new Dictionary<Type, List<Type>>();
+        private readonly Dictionary<Type, List<Type>> _registeredResponderTypes = new();
 
         /// <summary>
         /// Adds a responder to the service.
