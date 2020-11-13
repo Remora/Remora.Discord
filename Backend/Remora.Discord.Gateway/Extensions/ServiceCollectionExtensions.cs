@@ -23,7 +23,6 @@
 using System;
 using System.Linq;
 using System.Net.WebSockets;
-using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
