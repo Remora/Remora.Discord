@@ -59,6 +59,11 @@ namespace Remora.Discord.API.Json
             }
 
             var value = reader.GetString();
+            if (value is null)
+            {
+                throw new JsonException();
+            }
+
             var elements = value.Split(_separator);
 
             // special case: straight strings
@@ -67,7 +72,19 @@ namespace Remora.Discord.API.Json
                 return elements.Select(e => e).Cast<TElement>().ToList();
             }
 
-            return elements.Select(e => (TElement)JsonSerializer.Deserialize(e, typeof(TElement), options)).ToList();
+            return elements.Select
+            (
+                e =>
+                {
+                    var element = JsonSerializer.Deserialize(e, typeof(TElement), options);
+                    if (element is null)
+                    {
+                        throw new JsonException();
+                    }
+
+                    return (TElement)element;
+                }
+            ).ToList();
         }
 
         /// <inheritdoc />
