@@ -388,6 +388,11 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidAPIVersion = 50041,
 
         /// <summary>
+        /// Invalid sticker sent.
+        /// </summary>
+        InvalidSticker = 50081,
+
+        /// <summary>
         /// Reaction was blocked.
         /// </summary>
         ReactionBlocked = 90001,

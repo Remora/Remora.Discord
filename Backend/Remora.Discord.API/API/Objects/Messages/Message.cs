@@ -57,6 +57,7 @@ namespace Remora.Discord.API.Objects
         Optional<IMessageActivity> Activity,
         Optional<IMessageApplication> Application,
         Optional<IMessageReference> MessageReference,
-        Optional<MessageFlags> Flags
+        Optional<MessageFlags> Flags,
+        Optional<IReadOnlyList<IMessageSticker>> Stickers
     ) : IMessage;
 }

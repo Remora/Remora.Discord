@@ -163,5 +163,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a set of bitwise flags describing extra features of the message.
         /// </summary>
         Optional<MessageFlags> Flags { get; }
+
+        /// <summary>
+        /// Gets the stickers sent with the message.
+        /// </summary>
+        Optional<IReadOnlyList<IMessageSticker>> Stickers { get; }
     }
 }
