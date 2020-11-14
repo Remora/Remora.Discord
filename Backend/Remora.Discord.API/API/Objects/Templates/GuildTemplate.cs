@@ -1,5 +1,5 @@
 //
-//  ServiceCollectionExtensions.cs
+//  GuildTemplate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions.Objects;
 
-// ReSharper disable once CheckNamespace
-namespace Remora.Discord.Unstable.Extensions
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildTemplate" />
     [PublicAPI]
-    public static class ServiceCollectionExtensions
-    {
-        /// <summary>
-        /// Adds experimental features from the Discord API.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <returns>The service collection, with the services.</returns>
-        public static IServiceCollection AddExperimentalDiscordApi
-        (
-            this IServiceCollection serviceCollection
-        )
-        {
-            return serviceCollection;
-        }
-    }
+    public record GuildTemplate
+    (
+        string Name,
+        string? Description,
+        string Region,
+        IImageHash? IconHash,
+        VerificationLevel VerificationLevel,
+        MessageNotificationLevel DefaultMessageNotifications,
+        ExplicitContentFilterLevel ExplicitContentFilter,
+        string PreferredLocale,
+        int AFKTimeout,
+        IReadOnlyList<IRoleTemplate> Roles,
+        IReadOnlyList<IChannelTemplate> Channels,
+        int? AFKChannelID,
+        int? SystemChannelID,
+        SystemChannelFlags SystemChannelFlags
+    ) : IGuildTemplate;
 }

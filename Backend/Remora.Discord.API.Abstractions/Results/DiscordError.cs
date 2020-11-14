@@ -226,6 +226,11 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxGuildInvitesReached = 30016,
 
         /// <summary>
+        /// The guild already has a template.
+        /// </summary>
+        GuildAlreadyHasATemplate = 30031,
+
+        /// <summary>
         /// Unauthorized. Provide a valid token and try again.
         /// </summary>
         Unauthorized = 40001,

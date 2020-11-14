@@ -1,5 +1,5 @@
 //
-//  ServiceCollectionExtensions.cs
+//  PermissionOverwriteTemplate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,28 +21,17 @@
 //
 
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions.Objects;
 
-// ReSharper disable once CheckNamespace
-namespace Remora.Discord.Unstable.Extensions
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwriteTemplate" />
     [PublicAPI]
-    public static class ServiceCollectionExtensions
-    {
-        /// <summary>
-        /// Adds experimental features from the Discord API.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <returns>The service collection, with the services.</returns>
-        public static IServiceCollection AddExperimentalDiscordApi
-        (
-            this IServiceCollection serviceCollection
-        )
-        {
-            return serviceCollection;
-        }
-    }
+    public record PermissionOverwriteTemplate
+    (
+        int ID,
+        PermissionOverwriteType Type,
+        IDiscordPermissionSet Allow,
+        IDiscordPermissionSet Deny
+    ) : IPermissionOverwriteTemplate;
 }
