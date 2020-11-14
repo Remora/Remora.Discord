@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta4</Version>
+        <Version>1.0.0-beta5</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,8 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement better support for partial types.
+            Implement support for server templates and stickers.
+            Use C#9 records for all API types.
         </PackageReleaseNotes>
     </PropertyGroup>
 

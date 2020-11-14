@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta1</Version>
+        <Version>1.0.0-beta2</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            Initial release.
+            Implement support for server templates and stickers.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta3</Version>
+        <Version>1.0.0-beta4</Version>
         <Description>
             $(BaseDescription)
 
@@ -18,7 +18,7 @@
             component to the appropriate stable component of Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement better support for partial types.
+            Move server template functionality to stable.
         </PackageReleaseNotes>
     </PropertyGroup>
 

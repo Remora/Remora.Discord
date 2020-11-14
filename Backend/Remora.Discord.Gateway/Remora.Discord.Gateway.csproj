@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta5</Version>
+        <Version>1.0.0-beta6</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Expose a non-generic variant of AddResponder.
+            Implement support for server templates and stickers.
         </PackageReleaseNotes>
     </PropertyGroup>
 
