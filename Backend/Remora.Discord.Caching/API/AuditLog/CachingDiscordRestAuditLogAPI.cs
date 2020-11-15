@@ -64,7 +64,7 @@ namespace Remora.Discord.Caching.API.AuditLog
             CancellationToken ct = default
         )
         {
-            var key = (guildID, new { userID, actionType, before, limit });
+            var key = (nameof(GetAuditLogAsync), guildID, new { userID, actionType, before, limit });
             return _memoryCache
             .GetOrCreateAsync
             (
