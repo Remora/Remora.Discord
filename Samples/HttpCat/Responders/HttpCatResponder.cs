@@ -52,8 +52,13 @@ namespace Remora.Discord.Samples.HttpCat.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync(IMessageCreate? gatewayEvent, CancellationToken ct = default)
         {
+            if (gatewayEvent is null)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
             if (!gatewayEvent.Content.StartsWith('!'))
             {
                 return EventResponseResult.FromSuccess();

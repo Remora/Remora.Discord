@@ -51,10 +51,15 @@ namespace Remora.Discord.Samples.UnknownEventLogger
         /// <inheritdoc/>
         public async Task<EventResponseResult> RespondAsync
         (
-            IUnknownEvent gatewayEvent,
+            IUnknownEvent? gatewayEvent,
             CancellationToken ct = default
         )
         {
+            if (gatewayEvent is null)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
             using var jsonDocument = JsonDocument.Parse(gatewayEvent.Data);
             if (!jsonDocument.RootElement.TryGetProperty("t", out var eventTypeElement))
             {

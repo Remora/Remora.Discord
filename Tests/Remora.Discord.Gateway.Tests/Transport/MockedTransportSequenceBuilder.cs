@@ -86,7 +86,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// <param name="expectation">A predicate that matches the expected payload.</param>
         /// <typeparam name="TExpected">The expected type.</typeparam>
         /// <returns>The action builder, with the expectation.</returns>
-        public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected, bool>? expectation = null)
+        public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected?, bool>? expectation = null)
             where TExpected : IGatewayCommand
         {
             _sequence.Add

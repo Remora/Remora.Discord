@@ -68,7 +68,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -127,7 +127,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -150,7 +150,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             r =>
                             {
-                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
                                 return true;
                             }
                         )
@@ -199,7 +199,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -222,7 +222,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             r =>
                             {
-                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
                                 return true;
                             }
                         )
@@ -231,7 +231,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )

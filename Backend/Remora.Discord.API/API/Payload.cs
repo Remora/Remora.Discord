@@ -32,5 +32,5 @@ namespace Remora.Discord.API
     /// </summary>
     /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
     [PublicAPI]
-    public record Payload<TData>(TData Data) : IPayload<TData> where TData : IGatewayPayloadData;
+    public record Payload<TData>(TData? Data) : IPayload<TData> where TData : IGatewayPayloadData;
 }

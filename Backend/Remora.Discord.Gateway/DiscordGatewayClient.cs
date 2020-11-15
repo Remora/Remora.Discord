@@ -363,7 +363,7 @@ namespace Remora.Discord.Gateway
                         return GatewayConnectionResult.FromError(receiveHello);
                     }
 
-                    if (!(receiveHello.Entity is IPayload<IHello> hello))
+                    if (!(receiveHello.Entity is IPayload<IHello> hello) || hello.Data is null)
                     {
                         // Not receiving a hello is a non-recoverable error
                         return GatewayConnectionResult.FromError
@@ -697,7 +697,7 @@ namespace Remora.Discord.Gateway
                     continue;
                 }
 
-                if (!(receiveReady.Entity is IPayload<IReady> ready))
+                if (!(receiveReady.Entity is IPayload<IReady> ready) || ready.Data is null)
                 {
                     return GatewayConnectionResult.FromError
                     (
@@ -922,7 +922,7 @@ namespace Remora.Discord.Gateway
                         case IPayload<IInvalidSession> invalidSession:
                         {
                             _shouldReconnect = true;
-                            _isSessionResumable = invalidSession.Data.IsResumable;
+                            _isSessionResumable = invalidSession.Data?.IsResumable ?? false;
 
                             break;
                         }

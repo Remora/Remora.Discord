@@ -64,8 +64,13 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync(IMessageCreate? gatewayEvent, CancellationToken ct = default)
         {
+            if (gatewayEvent is null)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
             if (_options.Prefix is not null)
             {
                 if (!gatewayEvent.Content.StartsWith(_options.Prefix))
@@ -122,8 +127,13 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageUpdate gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync(IMessageUpdate? gatewayEvent, CancellationToken ct = default)
         {
+            if (gatewayEvent is null)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
             if (!gatewayEvent.Content.HasValue)
             {
                 return EventResponseResult.FromSuccess();

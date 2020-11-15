@@ -36,6 +36,6 @@ namespace Remora.Discord.API.Abstractions.Gateway
         /// <summary>
         /// Gets the data contained in the payload.
         /// </summary>
-        TData Data { get; }
+        TData? Data { get; }
     }
 }
