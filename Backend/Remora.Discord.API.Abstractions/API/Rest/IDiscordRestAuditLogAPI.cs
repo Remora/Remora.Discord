@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -42,6 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="actionType">The action type to filter on.</param>
         /// <param name="before">The ID of the audit log entry to limit searches before.</param>
         /// <param name="limit">The number of log entries to limit the request to.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
         (
@@ -49,7 +51,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Snowflake> userID = default,
             Optional<AuditLogEvent> actionType = default,
             Optional<Snowflake> before = default,
-            Optional<byte> limit = default
+            Optional<byte> limit = default,
+            CancellationToken ct = default
         );
     }
 }

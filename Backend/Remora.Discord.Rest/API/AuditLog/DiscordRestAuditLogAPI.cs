@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -52,7 +53,8 @@ namespace Remora.Discord.Rest.API
             Optional<Snowflake> userID = default,
             Optional<AuditLogEvent> actionType = default,
             Optional<Snowflake> before = default,
-            Optional<byte> limit = default
+            Optional<byte> limit = default,
+            CancellationToken ct = default
         )
         {
             if (limit.HasValue && (limit.Value > 100 || limit.Value == 0))
@@ -87,7 +89,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
-                }
+                },
+                ct: ct
             );
         }
     }
