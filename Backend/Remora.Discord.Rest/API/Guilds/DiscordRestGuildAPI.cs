@@ -59,7 +59,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<ICreateRestEntityResult<IGuild>> CreateGuildAsync
+        public virtual async Task<ICreateRestEntityResult<IGuild>> CreateGuildAsync
         (
             string name,
             Optional<string> region = default,
@@ -124,7 +124,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGuild>> GetGuildAsync
+        public virtual Task<IRetrieveRestEntityResult<IGuild>> GetGuildAsync
         (
             Snowflake guildID,
             Optional<bool> withCounts = default,
@@ -146,7 +146,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGuildPreview>> GetGuildPreviewAsync
+        public virtual Task<IRetrieveRestEntityResult<IGuildPreview>> GetGuildPreviewAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -160,7 +160,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IGuild>> ModifyGuildAsync
+        public virtual async Task<IModifyRestEntityResult<IGuild>> ModifyGuildAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -280,7 +280,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
+        public virtual Task<IDeleteRestEntityResult> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
             return _discordHttpClient.DeleteAsync
             (
@@ -290,7 +290,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -304,7 +304,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IChannel>> CreateGuildChannelAsync
+        public virtual Task<ICreateRestEntityResult<IChannel>> CreateGuildChannelAsync
         (
             Snowflake guildID,
             string name,
@@ -344,7 +344,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> ModifyGuildChannelPositionsAsync
+        public virtual Task<IRestResult> ModifyGuildChannelPositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake ChannelID, int? Position)> positionModifications,
@@ -381,7 +381,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGuildMember>> GetGuildMemberAsync
+        public virtual Task<IRetrieveRestEntityResult<IGuildMember>> GetGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -396,7 +396,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
         (
             Snowflake guildID,
             Optional<int> limit = default,
@@ -424,7 +424,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IGuildMember?>> AddGuildMemberAsync
+        public virtual Task<ICreateRestEntityResult<IGuildMember?>> AddGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -456,7 +456,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> ModifyGuildMemberAsync
+        public virtual Task<IRestResult> ModifyGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -487,7 +487,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<string>> ModifyCurrentUserNickAsync
+        public virtual Task<IModifyRestEntityResult<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
@@ -503,7 +503,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> AddGuildMemberRoleAsync
+        public virtual Task<IRestResult> AddGuildMemberRoleAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -519,7 +519,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> RemoveGuildMemberRoleAsync
+        public virtual Task<IDeleteRestEntityResult> RemoveGuildMemberRoleAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -535,7 +535,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> RemoveGuildMemberAsync
+        public virtual Task<IDeleteRestEntityResult> RemoveGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -550,7 +550,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IBan>>> GetGuildBansAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IBan>>> GetGuildBansAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -564,7 +564,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IBan>> GetGuildBanAsync
+        public virtual Task<IRetrieveRestEntityResult<IBan>> GetGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -579,7 +579,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> CreateGuildBanAsync
+        public virtual Task<IRestResult> CreateGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -604,7 +604,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> RemoveGuildBanAsync
+        public virtual Task<IDeleteRestEntityResult> RemoveGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -619,7 +619,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IRole>>> GetGuildRolesAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IRole>>> GetGuildRolesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -633,7 +633,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IRole>> CreateGuildRoleAsync
+        public virtual Task<ICreateRestEntityResult<IRole>> CreateGuildRoleAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -663,7 +663,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+        public virtual Task<IModifyRestEntityResult<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
@@ -693,7 +693,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IRole>> ModifyGuildRoleAsync
+        public virtual Task<IModifyRestEntityResult<IRole>> ModifyGuildRoleAsync
         (
             Snowflake guildID,
             Snowflake roleID,
@@ -724,7 +724,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteGuildRoleAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteGuildRoleAsync
         (
             Snowflake guildId,
             Snowflake roleID,
@@ -739,7 +739,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
+        public virtual Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -771,7 +771,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
+        public virtual Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -797,7 +797,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -811,7 +811,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -825,7 +825,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
         (
             Snowflake guildID,
             Optional<bool> includeApplications = default,
@@ -851,7 +851,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetSettingsAsync
+        public virtual Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetSettingsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -865,7 +865,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IGuildWidget>> ModifyGuildWidgetAsync
+        public virtual Task<IModifyRestEntityResult<IGuildWidget>> ModifyGuildWidgetAsync
         (
             Snowflake guildID,
             Optional<bool> isEnabled = default,
@@ -889,7 +889,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IPartialInvite>> GetGuildVanityUrlAsync
+        public virtual Task<IRetrieveRestEntityResult<IPartialInvite>> GetGuildVanityUrlAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -903,7 +903,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<Stream>> GetGuildWidgetImageAsync
+        public virtual Task<IRetrieveRestEntityResult<Stream>> GetGuildWidgetImageAsync
         (
             Snowflake guildID,
             Optional<WidgetImageStyle> style = default,

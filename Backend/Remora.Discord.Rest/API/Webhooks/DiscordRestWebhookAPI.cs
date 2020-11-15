@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<ICreateRestEntityResult<IWebhook>> CreateWebhookAsync
+        public virtual async Task<ICreateRestEntityResult<IWebhook>> CreateWebhookAsync
         (
             Snowflake channelID,
             string name,
@@ -104,7 +104,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -118,7 +118,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -132,7 +132,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookAsync
+        public virtual Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookAsync
         (
             Snowflake webhookID,
             CancellationToken ct = default
@@ -146,7 +146,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookWithTokenAsync
+        public virtual Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -161,7 +161,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookAsync
+        public virtual async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookAsync
         (
             Snowflake webhookID,
             Optional<string> name = default,
@@ -206,7 +206,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookWithTokenAsync
+        public virtual async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -250,7 +250,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
+        public virtual Task<IDeleteRestEntityResult> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
         {
             return _discordHttpClient.DeleteAsync
             (
@@ -260,7 +260,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteWebhookWithTokenAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -275,7 +275,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IMessage>> ExecuteWebhookAsync
+        public virtual Task<ICreateRestEntityResult<IMessage>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,

@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IInvite>> GetInviteAsync
+        public virtual Task<IRetrieveRestEntityResult<IInvite>> GetInviteAsync
         (
             string inviteCode,
             Optional<bool> withCounts = default,
@@ -68,7 +68,11 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync(string inviteCode, CancellationToken ct = default)
+        public virtual Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync
+        (
+            string inviteCode,
+            CancellationToken ct = default
+        )
         {
             return _discordHttpClient.DeleteAsync<IInvite>
             (

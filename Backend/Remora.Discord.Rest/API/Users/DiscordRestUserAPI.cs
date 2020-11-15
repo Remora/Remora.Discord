@@ -56,7 +56,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+        public virtual Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
         {
             return _discordHttpClient.GetAsync<IUser>
             (
@@ -66,7 +66,11 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default)
+        public virtual Task<IRetrieveRestEntityResult<IUser>> GetUserAsync
+        (
+            Snowflake userID,
+            CancellationToken ct = default
+        )
         {
             return _discordHttpClient.GetAsync<IUser>
             (
@@ -76,7 +80,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
+        public virtual async Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
         (
             Optional<string> username,
             Optional<Stream?> avatar = default,
@@ -118,7 +122,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
+        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
         (
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
@@ -159,7 +163,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
+        public virtual Task<IDeleteRestEntityResult> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
             return _discordHttpClient.DeleteAsync
             (
@@ -169,7 +173,10 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync(CancellationToken ct = default)
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync
+        (
+            CancellationToken ct = default
+        )
         {
             return _discordHttpClient.GetAsync<IReadOnlyList<IChannel>>
             (
@@ -179,7 +186,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
+        public virtual Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
         (
             Snowflake recipientID,
             CancellationToken ct = default
@@ -200,7 +207,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
         (
             CancellationToken ct = default
         )

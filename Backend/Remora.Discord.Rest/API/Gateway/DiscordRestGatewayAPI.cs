@@ -47,13 +47,16 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
+        public virtual Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
         {
             return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default)
+        public virtual Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayBotAsync
+        (
+            CancellationToken ct = default
+        )
         {
             return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
         }

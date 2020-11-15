@@ -56,7 +56,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -70,7 +70,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
+        public virtual Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -85,7 +85,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
+        public virtual async Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
         (
             Snowflake guildID,
             string name,
@@ -126,7 +126,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
+        public virtual Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -151,7 +151,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,

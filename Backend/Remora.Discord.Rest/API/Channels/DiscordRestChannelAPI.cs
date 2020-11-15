@@ -60,7 +60,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
+        public virtual Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -74,7 +74,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
+        public virtual async Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -129,7 +129,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteChannelAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -143,7 +143,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
         (
             Snowflake channelID,
             Optional<Snowflake> around = default,
@@ -201,7 +201,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
+        public virtual Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -216,7 +216,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
+        public virtual Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
         (
             Snowflake channelID,
             Optional<string> content = default,
@@ -255,7 +255,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> CreateReactionAsync
+        public virtual Task<IRestResult> CreateReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -271,7 +271,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteOwnReactionAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteOwnReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -287,7 +287,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteUserReactionAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteUserReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -304,7 +304,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
+        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -345,7 +345,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteAllReactionsAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteAllReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -360,7 +360,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteAllReactionsForEmojiAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteAllReactionsForEmojiAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -376,7 +376,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IMessage>> EditMessageAsync
+        public virtual Task<IModifyRestEntityResult<IMessage>> EditMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -403,7 +403,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteMessageAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -418,7 +418,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
+        public virtual async Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
@@ -446,7 +446,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> EditChannelPermissionsAsync
+        public virtual Task<IRestResult> EditChannelPermissionsAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -473,7 +473,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -487,7 +487,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
+        public virtual Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
             Optional<TimeSpan> maxAge = default,
@@ -523,7 +523,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteChannelPermissionAsync
+        public virtual Task<IDeleteRestEntityResult> DeleteChannelPermissionAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -538,7 +538,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
+        public virtual Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
         (
             Snowflake channelID,
             Snowflake webhookChannelID,
@@ -560,7 +560,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> TriggerTypingIndicatorAsync
+        public virtual Task<IRestResult> TriggerTypingIndicatorAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -574,7 +574,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -588,7 +588,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> AddPinnedChannelMessageAsync
+        public virtual Task<IRestResult> AddPinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -603,7 +603,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeletePinnedChannelMessageAsync
+        public virtual Task<IDeleteRestEntityResult> DeletePinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -618,7 +618,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRestResult> GroupDMAddRecipientAsync
+        public virtual Task<IRestResult> GroupDMAddRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,
@@ -643,7 +643,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> GroupDMRemoveRecipientAsync
+        public virtual Task<IDeleteRestEntityResult> GroupDMRemoveRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,

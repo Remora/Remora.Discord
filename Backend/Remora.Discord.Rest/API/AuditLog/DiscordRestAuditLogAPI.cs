@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
+        public virtual async Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
         (
             Snowflake guildID,
             Optional<Snowflake> userID = default,
