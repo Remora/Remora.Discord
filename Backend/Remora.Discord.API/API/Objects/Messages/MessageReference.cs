@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Objects
     public record MessageReference
     (
         Optional<Snowflake> MessageID,
-        Snowflake ChannelID,
+        Optional<Snowflake> ChannelID,
         Optional<Snowflake> GuildID
     ) : IMessageReference;
 }

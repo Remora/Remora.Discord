@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the originating message's channel.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<Snowflake> ChannelID { get; }
 
         /// <summary>
         /// Gets the ID of the originating message's guild.
