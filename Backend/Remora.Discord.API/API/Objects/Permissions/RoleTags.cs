@@ -1,5 +1,5 @@
 //
-//  PartialRole.cs
+//  RoleTags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Drawing;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialRole" />
-    [PublicAPI]
-    public record PartialRole
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRoleTags" />
+    public record RoleTags
     (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<Color> Colour,
-        Optional<bool> IsHoisted,
-        Optional<int> Position,
-        Optional<IDiscordPermissionSet> Permissions,
-        Optional<bool> IsManaged,
-        Optional<bool> IsMentionable,
-        Optional<IRoleTags> Tags
-    ) : IPartialRole;
+        Optional<Snowflake> BotID,
+        Optional<Snowflake> IntegrationID,
+        Optional<bool?> IsPremiumSubscriberRole
+    ) : IRoleTags;
 }
