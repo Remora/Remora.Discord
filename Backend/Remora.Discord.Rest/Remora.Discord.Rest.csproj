@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta5</Version>
+        <Version>1.0.0-beta6</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Implement support for server templates and stickers.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
