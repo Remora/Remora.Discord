@@ -585,6 +585,9 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(r => r.IsManaged, "managed")
                 .WithPropertyName(r => r.IsMentionable, "mentionable");
 
+            options.AddDataObjectConverter<IRoleTags, RoleTags>()
+                .WithPropertyName(t => t.IsPremiumSubscriberRole, "premium_subscriber");
+
             return options;
         }
 

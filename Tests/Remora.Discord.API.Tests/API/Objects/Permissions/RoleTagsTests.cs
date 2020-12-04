@@ -1,5 +1,5 @@
 //
-//  PartialRole.cs
+//  RoleTagsTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Drawing;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialRole" />
-    [PublicAPI]
-    public record PartialRole
-    (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<Color> Colour,
-        Optional<bool> IsHoisted,
-        Optional<int> Position,
-        Optional<IDiscordPermissionSet> Permissions,
-        Optional<bool> IsManaged,
-        Optional<bool> IsMentionable,
-        Optional<IRoleTags> Tags
-    ) : IPartialRole;
+    /// <inheritdoc />
+    public class RoleTagsTests : ObjectTestBase<IRoleTags>
+    {
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  IMessageReference.cs
+//  IRoleTags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,30 +20,32 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a message reference.
+    /// Represents a set of role tags.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageReference
+    public interface IRoleTags
     {
         /// <summary>
-        /// Gets the ID of the originating message.
+        /// Gets the ID of the bot the role belongs to.
         /// </summary>
-        Optional<Snowflake> MessageID { get; }
+        Optional<Snowflake> BotID { get; }
 
         /// <summary>
-        /// Gets the ID of the originating message's channel.
+        /// Gets the ID of the integration the role belongs to.
         /// </summary>
-        Optional<Snowflake> ChannelID { get; }
+        Optional<Snowflake> IntegrationID { get; }
 
         /// <summary>
-        /// Gets the ID of the originating message's guild.
+        /// Gets a value indicating whether this role is the premium subscriber role.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        /// <remarks>
+        /// This value is strangely documented in Discord. It appears that a null value may correspond to "true", and
+        /// nonpresence may correspond to "false".
+        /// </remarks>
+        Optional<bool?> IsPremiumSubscriberRole { get; }
     }
 }
