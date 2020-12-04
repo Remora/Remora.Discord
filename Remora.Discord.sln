@@ -71,6 +71,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Hosting", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Caching", "Backend\Remora.Discord.Caching\Remora.Discord.Caching.csproj", "{7B902015-C8E7-496C-8030-5094CCC93800}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generators", "Generators", "{C4718641-C216-4FA6-BE96-DA23ECDCC0BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Generators", "Generators\Remora.Discord.Generators\Remora.Discord.Generators.csproj", "{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Generators.Support", "Generators\Remora.Discord.Generators.Support\Remora.Discord.Generators.Support.csproj", "{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +155,14 @@ Global
 		{7B902015-C8E7-496C-8030-5094CCC93800}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B902015-C8E7-496C-8030-5094CCC93800}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B902015-C8E7-496C-8030-5094CCC93800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC82899D-871E-4DC9-B61C-7619111800DE} = {26E93608-29BA-45C7-993A-AA24A49D6013}
@@ -167,5 +181,7 @@ Global
 		{2DAC9E24-AB35-45E3-9C5B-5CE3DA4E4FE5} = {26E93608-29BA-45C7-993A-AA24A49D6013}
 		{DBC5EC20-B1A9-44F9-BC32-BC3A21551D87} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
 		{7B902015-C8E7-496C-8030-5094CCC93800} = {26E93608-29BA-45C7-993A-AA24A49D6013}
+		{F3E3DD17-B426-40E5-8467-42E5EB0D3A0D} = {C4718641-C216-4FA6-BE96-DA23ECDCC0BF}
+		{7BD7C730-FB0D-4F0F-8CE4-D4C25F7C27AE} = {C4718641-C216-4FA6-BE96-DA23ECDCC0BF}
 	EndGlobalSection
 EndGlobal

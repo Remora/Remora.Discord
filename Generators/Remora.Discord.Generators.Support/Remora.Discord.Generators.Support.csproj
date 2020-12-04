@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>1.0.0-beta1</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package contains supporting types for the source generators used by Remora.Discord.
+        </Description>
+        <PackageReleaseNotes>
+            Update dependencies.
+        </PackageReleaseNotes>
+    </PropertyGroup>
+
+</Project>
