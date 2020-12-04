@@ -24,14 +24,15 @@ using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRole" />
-    [PublicAPI]
-    public record Role
+    [PublicAPI, UpdateableRecord]
+    public partial record Role
     (
         Snowflake ID,
         string Name,

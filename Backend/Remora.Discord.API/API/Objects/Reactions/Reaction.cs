@@ -22,12 +22,13 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IReaction" />
-    [PublicAPI]
-    public record Reaction(int Count, bool HasCurrentUserReacted, IPartialEmoji Emoji) : IReaction;
+    [PublicAPI, UpdateableRecord]
+    public partial record Reaction(int Count, bool HasCurrentUserReacted, IPartialEmoji Emoji) : IReaction;
 }

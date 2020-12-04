@@ -26,14 +26,15 @@ using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbed" />
-    [PublicAPI]
-    public record Embed
+    [PublicAPI, UpdateableRecord]
+    public partial record Embed
     (
         Optional<string> Title = default,
         Optional<EmbedType> Type = default,

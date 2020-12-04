@@ -23,14 +23,15 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialUser" />
-    [PublicAPI]
-    public record PartialUser
+    [PublicAPI, UpdateableRecord]
+    public partial record PartialUser
     (
         Optional<Snowflake> ID,
         Optional<string> Username,

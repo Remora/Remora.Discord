@@ -23,14 +23,15 @@
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRoleTemplate" />
-    [PublicAPI]
-    public record RoleTemplate
+    [PublicAPI, UpdateableRecord]
+    public partial record RoleTemplate
     (
         int ID,
         string Name,

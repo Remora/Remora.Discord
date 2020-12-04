@@ -23,14 +23,15 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildTemplate" />
-    [PublicAPI]
-    public record GuildTemplate
+    [PublicAPI, UpdateableRecord]
+    public partial record GuildTemplate
     (
         string Name,
         string? Description,

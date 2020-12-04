@@ -23,12 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannelMention" />
-    [PublicAPI]
-    public record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
+    [PublicAPI, UpdateableRecord]
+    public partial record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
 }

@@ -22,14 +22,15 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwriteTemplate" />
-    [PublicAPI]
-    public record PermissionOverwriteTemplate
+    [PublicAPI, UpdateableRecord]
+    public partial record PermissionOverwriteTemplate
     (
         int ID,
         PermissionOverwriteType Type,

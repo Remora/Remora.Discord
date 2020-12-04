@@ -22,14 +22,15 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IImageHash" />
-    [PublicAPI]
-    public record ImageHash(string Value) : IImageHash
+    [PublicAPI, UpdateableRecord]
+    public partial record ImageHash(string Value) : IImageHash
     {
         /// <inheritdoc />
         public bool HasGif => this.Value.StartsWith("a_");

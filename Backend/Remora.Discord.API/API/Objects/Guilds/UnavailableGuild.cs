@@ -23,12 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IUnavailableGuild" />
-    [PublicAPI]
-    public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable) : IUnavailableGuild;
+    [PublicAPI, UpdateableRecord]
+    public partial record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable) : IUnavailableGuild;
 }

@@ -23,14 +23,15 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedImage" />
-    [PublicAPI]
-    public record EmbedImage
+    [PublicAPI, UpdateableRecord]
+    public partial record EmbedImage
     (
         Optional<string> Url = default,
         Optional<string> ProxyUrl = default,

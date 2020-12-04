@@ -23,14 +23,15 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ISessionStartLimit" />
-    [PublicAPI]
-    public record SessionStartLimit
+    [PublicAPI, UpdateableRecord]
+    public partial record SessionStartLimit
     (
         int Total,
         int Remaining,

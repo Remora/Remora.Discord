@@ -23,12 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUserMention"/>
-    [PublicAPI]
-    public record UserMention : User, IUserMention
+    [PublicAPI, UpdateableRecord]
+    public partial record UserMention : User, IUserMention
     {
         /// <inheritdoc />
         public Optional<IPartialGuildMember> Member { get; }

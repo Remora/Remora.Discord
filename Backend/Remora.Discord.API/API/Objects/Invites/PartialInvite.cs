@@ -23,14 +23,15 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialInvite" />
-    [PublicAPI]
-    public record PartialInvite
+    [PublicAPI, UpdateableRecord]
+    public partial record PartialInvite
     (
         Optional<string> Code,
         Optional<IPartialGuild> Guild,

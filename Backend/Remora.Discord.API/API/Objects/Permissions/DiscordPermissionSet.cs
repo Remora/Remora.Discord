@@ -25,11 +25,12 @@ using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Generators.Support;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
-    [PublicAPI]
+    [PublicAPI, UpdateableRecord]
     public class DiscordPermissionSet : IDiscordPermissionSet
     {
         /// <inheritdoc />

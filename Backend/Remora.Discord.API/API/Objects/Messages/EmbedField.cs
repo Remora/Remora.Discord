@@ -23,12 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedField" />
-    [PublicAPI]
-    public record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
+    [PublicAPI, UpdateableRecord]
+    public partial record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
 }

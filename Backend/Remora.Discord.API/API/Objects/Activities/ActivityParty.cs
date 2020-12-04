@@ -23,12 +23,13 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityParty" />
-    [PublicAPI]
-    public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
+    [PublicAPI, UpdateableRecord]
+    public partial record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
 }

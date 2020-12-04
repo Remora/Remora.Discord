@@ -23,14 +23,15 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
+using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUser"/>
-    [PublicAPI]
-    public record User
+    [PublicAPI, UpdateableRecord]
+    public partial record User
     (
         Snowflake ID,
         string Username,
