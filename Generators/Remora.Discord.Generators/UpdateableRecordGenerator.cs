@@ -162,7 +162,6 @@ namespace Remora.Discord.Generators
                 .NormalizeWhitespace();
 
             var text = generatedPart.GetText(Encoding.UTF8);
-            File.WriteAllText("/home/jarl/test.cs", text.ToString());
             context.AddSource($"{updateableRecord.Identifier.ToString()}.g.cs", text);
         }
 
