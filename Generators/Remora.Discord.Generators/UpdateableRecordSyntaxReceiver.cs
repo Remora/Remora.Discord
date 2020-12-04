@@ -25,7 +25,6 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Remora.Discord.Generators.Support;
 
 namespace Remora.Discord.Generators
 {
@@ -57,7 +56,7 @@ namespace Remora.Discord.Generators
 
             var attributeSyntheses = recordDeclaration.AttributeLists
                 .SelectMany(a => a.Attributes)
-                .Where(a => nameof(UpdateableRecordAttribute).StartsWith(a.Name.ToString()));
+                .Where(a => "UpdateableRecordAttribute".StartsWith(a.Name.ToString()));
 
             if (!attributeSyntheses.Any())
             {
