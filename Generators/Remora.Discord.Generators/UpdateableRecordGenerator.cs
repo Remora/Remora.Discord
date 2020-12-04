@@ -132,7 +132,7 @@ namespace Remora.Discord.Generators
         {
             var syntaxTree = updateableRecord.SyntaxTree;
             var model = context.Compilation.GetSemanticModel(syntaxTree);
-            var declaredSymbol = ModelExtensions.GetDeclaredSymbol(model, updateableRecord);
+            var declaredSymbol = model.GetDeclaredSymbol(updateableRecord);
             var containingNamespace = declaredSymbol?.ContainingNamespace;
 
             if (containingNamespace is null)
