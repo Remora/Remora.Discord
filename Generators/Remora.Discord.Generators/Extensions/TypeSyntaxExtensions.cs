@@ -1,5 +1,5 @@
 //
-//  ParameterSyntaxExtensions.cs
+//  TypeSyntaxExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,31 +25,29 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Remora.Discord.Generators.Extensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="ParameterSyntax"/> class.
+    /// Defines extension methods for the <see cref="TypeSyntax"/> class.
     /// </summary>
-    public static class ParameterSyntaxExtensions
+    public static class TypeSyntaxExtensions
     {
         /// <summary>
-        /// Determines whether the parameter's type is an Optional.
+        /// Determines whether the type is an Optional.
         /// </summary>
         /// <param name="parameterSyntax">The parameter syntax node.</param>
         /// <returns>true if the parameter is an Optional; otherwise, false.</returns>
-        public static bool IsOptional(this ParameterSyntax parameterSyntax)
+        public static bool IsOptional(this TypeSyntax parameterSyntax)
         {
-            return parameterSyntax.Type is not null &&
-                   parameterSyntax.Type is GenericNameSyntax genericName &&
+            return parameterSyntax is GenericNameSyntax genericName &&
                    genericName.Identifier.ToString() == "Optional";
         }
 
         /// <summary>
-        /// Determines whether the parameter's type is a nullable Optional.
+        /// Determines whether the type is a nullable Optional.
         /// </summary>
         /// <param name="parameterSyntax">The parameter syntax node.</param>
         /// <returns>true if the parameter is a nullable Optional; otherwise, false.</returns>
-        public static bool IsNullableOptional(this ParameterSyntax parameterSyntax)
+        public static bool IsNullableOptional(this TypeSyntax parameterSyntax)
         {
-            return parameterSyntax.Type is not null &&
-                   parameterSyntax.Type is NullableTypeSyntax nullableType &&
+            return parameterSyntax is NullableTypeSyntax nullableType &&
                    nullableType.ElementType is GenericNameSyntax nullableGenericName &&
                    nullableGenericName.Identifier.ToString() == "Optional";
         }

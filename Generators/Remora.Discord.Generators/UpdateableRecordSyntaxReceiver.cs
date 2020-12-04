@@ -77,20 +77,6 @@ namespace Remora.Discord.Generators
                 return;
             }
 
-            if (recordDeclaration.ParameterList is null)
-            {
-                _diagnostics.Add
-                (
-                    Diagnostic.Create
-                    (
-                        DiagnosticDescriptors.UpdateableRecordsMustBePositional,
-                        recordDeclaration.GetLocation()
-                    )
-                );
-
-                return;
-            }
-
             _updatableRecords.Add(recordDeclaration);
         }
     }

@@ -41,18 +41,5 @@ namespace Remora.Discord.Generators
             DiagnosticSeverity.Error,
             true
         );
-
-        /// <summary>
-        /// Gets an error-level diagnostic enforcing that updateable records are positional.
-        /// </summary>
-        public static DiagnosticDescriptor UpdateableRecordsMustBePositional { get; } = new
-        (
-            "SC0002",
-            "Updateable records must be positional",
-            "Updateable records must be positional",
-            "Syntax",
-            DiagnosticSeverity.Error,
-            true
-        );
     }
 }
