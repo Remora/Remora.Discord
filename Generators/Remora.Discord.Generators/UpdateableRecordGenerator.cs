@@ -250,6 +250,18 @@ namespace Remora.Discord.Generators
                         .AddInitializerExpressions(memberUpdateExpressions.ToArray())
                     )
                 )
+            )
+            .WithLeadingTrivia
+            (
+                Trivia
+                (
+                    DocumentationComment
+                    (
+                        XmlText(" "),
+                        XmlEmptyElement("inheritdoc"),
+                        XmlText(XmlTextNewLine("\n", false))
+                    )
+                )
             );
         }
 
