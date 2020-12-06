@@ -33,6 +33,7 @@ using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -59,7 +60,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
+        public override async Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -67,22 +68,21 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+            if (_memoryCache.TryGetValue<IEmoji>(key, out var cachedInstance))
+            {
+                return RetrieveRestEntityResult<IEmoji>.FromSuccess(cachedInstance);
+            }
 
-            return _memoryCache
-            .GetOrCreateAsync
-            (
-                key,
-                entry =>
-                {
-                    entry.SlidingExpiration = _cacheSettings
-                        .GetSlidingExpirationOrDefault<IEmoji>();
+            var getResult = await base.GetGuildEmojiAsync(guildID, emojiID, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
 
-                    entry.AbsoluteExpirationRelativeToNow = _cacheSettings
-                        .GetAbsoluteExpirationOrDefault<IEmoji>();
+            var emoji = getResult.Entity;
+            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
 
-                    return base.GetGuildEmojiAsync(guildID, emojiID, ct);
-                }
-            );
+            return getResult;
         }
 
         /// <inheritdoc />
@@ -109,7 +109,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
-            _memoryCache.Set(key, emoji);
+            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
 
             return createResult;
         }
@@ -132,7 +132,7 @@ namespace Remora.Discord.Caching.API
 
             var emoji = modifyResult.Entity;
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-            _memoryCache.Set(key, emoji);
+            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
 
             return modifyResult;
         }

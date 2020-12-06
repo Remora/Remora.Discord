@@ -315,7 +315,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var invite = createResult.Entity;
-            var key = KeyHelpers.CreateInviteCacheKey(channelID, invite.Code);
+            var key = KeyHelpers.CreateInviteCacheKey(invite.Code);
             _memoryCache.Set(key, invite);
 
             return createResult;
