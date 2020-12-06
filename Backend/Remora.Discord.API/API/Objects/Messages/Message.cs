@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
-using Remora.Discord.Generators.Support;
 
 #pragma warning disable CS1591
 

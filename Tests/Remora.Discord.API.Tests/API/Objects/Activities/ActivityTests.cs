@@ -21,7 +21,6 @@
 //
 
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
 namespace Remora.Discord.API.Tests.Objects
