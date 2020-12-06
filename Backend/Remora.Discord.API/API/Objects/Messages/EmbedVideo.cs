@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedVideo" />
-    [PublicAPI, UpdateableRecord]
-    public partial record EmbedVideo(Optional<string> Url, Optional<int> Height, Optional<int> Width) : IEmbedVideo;
+    [PublicAPI]
+    public record EmbedVideo(Optional<string> Url, Optional<int> Height, Optional<int> Width) : IEmbedVideo;
 }

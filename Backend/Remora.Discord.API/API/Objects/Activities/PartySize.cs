@@ -29,6 +29,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartySize" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartySize(int CurrentSize, int MaxSize) : IPartySize;
+    [PublicAPI]
+    public record PartySize(int CurrentSize, int MaxSize) : IPartySize;
 }

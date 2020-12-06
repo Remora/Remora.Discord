@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IFollowedChannel" />
-    [PublicAPI, UpdateableRecord]
-    public partial record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;
+    [PublicAPI]
+    public record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;
 }

@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildTemplate" />
-    [PublicAPI, UpdateableRecord]
-    public partial record GuildTemplate
+    [PublicAPI]
+    public record GuildTemplate
     (
         string Name,
         string? Description,

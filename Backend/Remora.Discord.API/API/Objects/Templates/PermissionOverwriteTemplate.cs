@@ -29,8 +29,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwriteTemplate" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PermissionOverwriteTemplate
+    [PublicAPI]
+    public record PermissionOverwriteTemplate
     (
         int ID,
         PermissionOverwriteType Type,

@@ -29,8 +29,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IImageHash" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ImageHash(string Value) : IImageHash
+    [PublicAPI]
+    public record ImageHash(string Value) : IImageHash
     {
         /// <inheritdoc />
         public bool HasGif => this.Value.StartsWith("a_");

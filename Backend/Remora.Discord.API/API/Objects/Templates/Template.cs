@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITemplate" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Template
+    [PublicAPI]
+    public record Template
     (
         string Code,
         string Name,

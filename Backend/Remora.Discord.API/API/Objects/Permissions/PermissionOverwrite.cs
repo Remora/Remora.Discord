@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwrite" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PermissionOverwrite
+    [PublicAPI]
+    public record PermissionOverwrite
     (
         Snowflake ID,
         PermissionOverwriteType Type,

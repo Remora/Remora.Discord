@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUser"/>
-    [PublicAPI, UpdateableRecord]
-    public partial record User
+    [PublicAPI]
+    public record User
     (
         Snowflake ID,
         string Username,

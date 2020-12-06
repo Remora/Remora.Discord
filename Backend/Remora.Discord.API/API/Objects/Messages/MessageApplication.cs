@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageApplication" />
-    [PublicAPI, UpdateableRecord]
-    public partial record MessageApplication
+    [PublicAPI]
+    public record MessageApplication
     (
         Snowflake ID,
         Optional<IImageHash> CoverImage,

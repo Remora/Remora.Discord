@@ -29,6 +29,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IBan" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Ban(string? Reason, IUser User) : IBan;
+    [PublicAPI]
+    public record Ban(string? Reason, IUser User) : IBan;
 }

@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageReference" />
-    [PublicAPI, UpdateableRecord]
-    public partial record MessageReference
+    [PublicAPI]
+    public record MessageReference
     (
         Optional<Snowflake> MessageID,
         Optional<Snowflake> ChannelID,

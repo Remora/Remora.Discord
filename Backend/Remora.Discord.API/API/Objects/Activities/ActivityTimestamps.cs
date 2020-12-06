@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityTimestamps" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ActivityTimestamps
+    [PublicAPI]
+    public record ActivityTimestamps
     (
         Optional<DateTime> Start = default,
         Optional<DateTime> End = default

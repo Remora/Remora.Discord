@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAccount" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Account(Snowflake ID, string Name) : IAccount;
+    [PublicAPI]
+    public record Account(Snowflake ID, string Name) : IAccount;
 }

@@ -33,8 +33,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbed" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Embed
+    [PublicAPI]
+    public record Embed
     (
         Optional<string> Title = default,
         Optional<EmbedType> Type = default,

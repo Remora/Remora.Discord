@@ -28,8 +28,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUserMention"/>
-    [PublicAPI, UpdateableRecord]
-    public partial record UserMention : User, IUserMention
+    [PublicAPI]
+    public record UserMention : User, IUserMention
     {
         /// <inheritdoc />
         public Optional<IPartialGuildMember> Member { get; }

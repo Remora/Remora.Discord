@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialPresence" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialPresence
+    [PublicAPI]
+    public record PartialPresence
     (
         Optional<IPartialUser> User,
         Optional<Snowflake> GuildID,

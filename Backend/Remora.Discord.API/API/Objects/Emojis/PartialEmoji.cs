@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialEmoji" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialEmoji
+    [PublicAPI]
+    public record PartialEmoji
     (
         Optional<Snowflake?> ID,
         Optional<string?> Name,

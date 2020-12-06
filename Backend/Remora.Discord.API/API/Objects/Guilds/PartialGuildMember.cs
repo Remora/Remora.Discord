@@ -32,8 +32,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialGuildMember
+    [PublicAPI]
+    public record PartialGuildMember
     (
         Optional<IUser> User,
         Optional<string?> Nickname,

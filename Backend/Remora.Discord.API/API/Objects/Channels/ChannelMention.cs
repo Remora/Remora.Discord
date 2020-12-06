@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannelMention" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
+    [PublicAPI]
+    public record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
 }

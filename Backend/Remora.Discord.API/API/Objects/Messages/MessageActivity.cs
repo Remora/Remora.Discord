@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageActivity" />
-    [PublicAPI, UpdateableRecord]
-    public partial record MessageActivity(MessageActivityType Type, Optional<string> PartyID) : IMessageActivity;
+    [PublicAPI]
+    public record MessageActivity(MessageActivityType Type, Optional<string> PartyID) : IMessageActivity;
 }

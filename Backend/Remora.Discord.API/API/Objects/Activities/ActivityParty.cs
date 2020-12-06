@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityParty" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
+    [PublicAPI]
+    public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
 }

@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityEmoji" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ActivityEmoji
+    [PublicAPI]
+    public record ActivityEmoji
     (
         string Name,
         Optional<Snowflake> ID = default,

@@ -32,8 +32,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannel" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Channel
+    [PublicAPI]
+    public record Channel
     (
         Snowflake ID,
         ChannelType Type,

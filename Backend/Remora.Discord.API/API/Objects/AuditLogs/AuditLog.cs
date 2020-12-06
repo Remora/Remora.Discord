@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuditLog" />
-    [PublicAPI, UpdateableRecord]
-    public partial record AuditLog
+    [PublicAPI]
+    public record AuditLog
     (
         IReadOnlyList<IWebhook> Webhooks,
         IReadOnlyList<IUser> Users,

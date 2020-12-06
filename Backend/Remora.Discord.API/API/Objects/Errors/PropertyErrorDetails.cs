@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPropertyErrorDetails" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PropertyErrorDetails
+    [PublicAPI]
+    public record PropertyErrorDetails
     (
         IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors = null,
         IReadOnlyList<IErrorDetails>? Errors = null

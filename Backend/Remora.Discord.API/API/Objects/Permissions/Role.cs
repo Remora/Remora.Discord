@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRole" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Role
+    [PublicAPI]
+    public record Role
     (
         Snowflake ID,
         string Name,

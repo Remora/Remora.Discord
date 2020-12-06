@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialInvite" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialInvite
+    [PublicAPI]
+    public record PartialInvite
     (
         Optional<string> Code,
         Optional<IPartialGuild> Guild,

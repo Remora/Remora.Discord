@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPresence" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Presence
+    [PublicAPI]
+    public record Presence
     (
         IPartialUser User,
         Snowflake GuildID,

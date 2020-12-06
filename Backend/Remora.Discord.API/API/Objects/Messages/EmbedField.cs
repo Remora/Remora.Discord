@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedField" />
-    [PublicAPI, UpdateableRecord]
-    public partial record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
+    [PublicAPI]
+    public record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
 }

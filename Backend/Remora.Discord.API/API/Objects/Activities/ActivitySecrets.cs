@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivitySecrets" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ActivitySecrets
+    [PublicAPI]
+    public record ActivitySecrets
     (
         Optional<string> Join = default,
         Optional<string> Spectate = default,

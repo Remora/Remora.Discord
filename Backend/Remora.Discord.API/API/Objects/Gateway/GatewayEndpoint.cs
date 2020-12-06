@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGatewayEndpoint" />
-    [PublicAPI, UpdateableRecord]
-    public partial record GatewayEndpoint
+    [PublicAPI]
+    public record GatewayEndpoint
     (
         string Url,
         Optional<int> Shards,

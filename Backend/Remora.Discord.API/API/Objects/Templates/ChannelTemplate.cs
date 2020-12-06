@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IChannelTemplate" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ChannelTemplate
+    [PublicAPI]
+    public record ChannelTemplate
     (
         int ID,
         ChannelType Type,

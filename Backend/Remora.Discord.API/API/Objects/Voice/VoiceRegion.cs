@@ -29,8 +29,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IVoiceRegion" />
-    [PublicAPI, UpdateableRecord]
-    public partial record VoiceRegion
+    [PublicAPI]
+    public record VoiceRegion
     (
         string ID,
         string Name,

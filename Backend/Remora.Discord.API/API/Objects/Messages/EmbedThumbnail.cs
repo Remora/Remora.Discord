@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedThumbnail" />
-    [PublicAPI, UpdateableRecord]
-    public partial record EmbedThumbnail
+    [PublicAPI]
+    public record EmbedThumbnail
     (
         Optional<string> Url,
         Optional<string> ProxyUrl,

@@ -29,6 +29,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IErrorDetails" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ErrorDetails(string Code, string Message) : IErrorDetails;
+    [PublicAPI]
+    public record ErrorDetails(string Code, string Message) : IErrorDetails;
 }

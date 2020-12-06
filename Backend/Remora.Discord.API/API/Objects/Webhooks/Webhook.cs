@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWebhook" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Webhook
+    [PublicAPI]
+    public record Webhook
     (
         Snowflake ID,
         WebhookType Type,

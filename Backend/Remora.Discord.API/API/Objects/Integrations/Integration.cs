@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IIntegration" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Integration
+    [PublicAPI]
+    public record Integration
     (
         Snowflake ID,
         string Name,

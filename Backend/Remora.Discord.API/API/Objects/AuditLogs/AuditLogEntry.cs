@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuditLogEntry" />
-    [PublicAPI, UpdateableRecord]
-    public partial record AuditLogEntry
+    [PublicAPI]
+    public record AuditLogEntry
     (
         string? TargetID,
         Optional<IReadOnlyList<IAuditLogChange>> Changes,

@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAllowedMentions" />
-    [PublicAPI, UpdateableRecord]
-    public partial record AllowedMentions
+    [PublicAPI]
+    public record AllowedMentions
     (
         Optional<IReadOnlyList<MentionType>> Parse,
         Optional<IReadOnlyList<Snowflake>> Roles,

@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialVoiceState" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialVoiceState
+    [PublicAPI]
+    public record PartialVoiceState
     (
         Optional<Snowflake> GuildID,
         Optional<Snowflake?> ChannelID,

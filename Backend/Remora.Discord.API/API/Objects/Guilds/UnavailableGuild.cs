@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IUnavailableGuild" />
-    [PublicAPI, UpdateableRecord]
-    public partial record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable) : IUnavailableGuild;
+    [PublicAPI]
+    public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable) : IUnavailableGuild;
 }

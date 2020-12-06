@@ -32,8 +32,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialGuild" />
-    [PublicAPI, UpdateableRecord]
-    public partial record PartialGuild
+    [PublicAPI]
+    public record PartialGuild
     (
         Optional<Snowflake> ID,
         Optional<string> Name,

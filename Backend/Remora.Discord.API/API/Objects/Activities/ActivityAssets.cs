@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityAssets" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ActivityAssets
+    [PublicAPI]
+    public record ActivityAssets
     (
         Optional<string> LargeImage = default,
         Optional<string> LargeText = default,

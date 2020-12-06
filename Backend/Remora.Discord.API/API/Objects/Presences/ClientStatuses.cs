@@ -30,8 +30,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IClientStatuses" />
-    [PublicAPI, UpdateableRecord]
-    public partial record ClientStatuses
+    [PublicAPI]
+    public record ClientStatuses
     (
         Optional<ClientStatus> Desktop,
         Optional<ClientStatus> Mobile,

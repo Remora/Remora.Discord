@@ -31,8 +31,8 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivity" />
-    [PublicAPI, UpdateableRecord]
-    public partial record Activity
+    [PublicAPI]
+    public record Activity
     (
         string Name,
         ActivityType Type,

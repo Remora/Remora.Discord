@@ -30,7 +30,7 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc />
-    [PublicAPI, UpdateableRecord]
+    [PublicAPI]
     public class DiscordPermissionSet : IDiscordPermissionSet
     {
         /// <inheritdoc />

@@ -30,6 +30,6 @@ using Remora.Discord.Generators.Support;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
-    [PublicAPI, UpdateableRecord]
-    public partial record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;
+    [PublicAPI]
+    public record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;
 }
