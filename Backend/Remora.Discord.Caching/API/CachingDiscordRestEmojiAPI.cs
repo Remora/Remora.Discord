@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 
-namespace Remora.Discord.Caching.API.Emoji
+namespace Remora.Discord.Caching.API
 {
     /// <summary>
     /// Implements a caching version of the channel API.
@@ -58,32 +59,6 @@ namespace Remora.Discord.Caching.API.Emoji
         }
 
         /// <inheritdoc />
-        public override Task<IRetrieveRestEntityResult<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            var key = (nameof(ListGuildEmojisAsync), guildID);
-
-            return _memoryCache
-            .GetOrCreateAsync
-            (
-                key,
-                entry =>
-                {
-                    entry.SlidingExpiration = _cacheSettings
-                        .GetSlidingExpirationOrDefault<IReadOnlyList<IEmoji>>();
-
-                    entry.AbsoluteExpirationRelativeToNow = _cacheSettings
-                        .GetAbsoluteExpirationOrDefault<IReadOnlyList<IEmoji>>();
-
-                    return base.ListGuildEmojisAsync(guildID, ct);
-                }
-            );
-        }
-
-        /// <inheritdoc />
         public override Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
@@ -91,7 +66,7 @@ namespace Remora.Discord.Caching.API.Emoji
             CancellationToken ct = default
         )
         {
-            var key = (nameof(GetGuildEmojiAsync), guildID, emojiID);
+            var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
 
             return _memoryCache
             .GetOrCreateAsync
@@ -108,6 +83,78 @@ namespace Remora.Discord.Caching.API.Emoji
                     return base.GetGuildEmojiAsync(guildID, emojiID, ct);
                 }
             );
+        }
+
+        /// <inheritdoc />
+        public override async Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
+        (
+            Snowflake guildID,
+            string name,
+            Stream image,
+            IReadOnlyList<Snowflake> roles,
+            CancellationToken ct = default
+        )
+        {
+            var createResult = await base.CreateGuildEmojiAsync(guildID, name, image, roles, ct);
+            if (!createResult.IsSuccess)
+            {
+                return createResult;
+            }
+
+            var emoji = createResult.Entity;
+            if (emoji.ID is null)
+            {
+                // We can't, or shouldn't, cache this
+                return createResult;
+            }
+
+            var key = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
+            _memoryCache.Set(key, emoji);
+
+            return createResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
+        (
+            Snowflake guildID,
+            Snowflake emojiID,
+            Optional<string> name = default,
+            Optional<IReadOnlyList<Snowflake>?> roles = default,
+            CancellationToken ct = default
+        )
+        {
+            var modifyResult = await base.ModifyGuildEmojiAsync(guildID, emojiID, name, roles, ct);
+            if (!modifyResult.IsSuccess)
+            {
+                return modifyResult;
+            }
+
+            var emoji = modifyResult.Entity;
+            var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+            _memoryCache.Set(key, emoji);
+
+            return modifyResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
+        (
+            Snowflake guildID,
+            Snowflake emojiID,
+            CancellationToken ct = default
+        )
+        {
+            var deleteResult = await base.DeleteGuildEmojiAsync(guildID, emojiID, ct);
+            if (!deleteResult.IsSuccess)
+            {
+                return deleteResult;
+            }
+
+            var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
+            _memoryCache.Remove(key);
+
+            return deleteResult;
         }
     }
 }
