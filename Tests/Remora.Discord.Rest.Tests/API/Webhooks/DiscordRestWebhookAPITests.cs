@@ -786,5 +786,60 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+        /// </summary>
+        public class EditWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                var content = "booga";
+                var embeds = new List<IEmbed>();
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID,
+                    content,
+                    embeds,
+                    allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }

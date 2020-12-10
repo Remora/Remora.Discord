@@ -201,5 +201,27 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default
         );
+
+        /// <summary>
+        /// Edits a messages posted by a webhook.
+        /// </summary>
+        /// <param name="webhookID">The ID of the webhook.</param>
+        /// <param name="token">The token for the webhook.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="content">The new content, if any.</param>
+        /// <param name="embeds">The new embeds, if any.</param>
+        /// <param name="allowedMentions">The new allowed mentions, if any.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<IModifyRestEntityResult<IMessage>> EditWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        );
     }
 }

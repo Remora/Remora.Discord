@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta7</Version>
+        <Version>1.0.0-beta8</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,8 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Implement support for role tags.
-            Correct message reference field optionality.
+            Add support for editing webhook messages.
         </PackageReleaseNotes>
     </PropertyGroup>
 

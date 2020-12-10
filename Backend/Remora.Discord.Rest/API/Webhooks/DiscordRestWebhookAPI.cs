@@ -321,5 +321,46 @@ namespace Remora.Discord.Rest.API
                 ct: ct
             );
         }
+
+        /// <inheritdoc />
+        public async Task<IModifyRestEntityResult<IMessage>> EditWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        )
+        {
+            if (content.HasValue && content.Value?.Length > 2000)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+            }
+
+            if (embeds.HasValue && embeds.Value?.Count > 10)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+            }
+
+            return await _discordHttpClient.PatchAsync<IMessage>
+            (
+                $"webhooks/{webhookID}/{token}/messages/{messageID}",
+                b =>
+                {
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
     }
 }
