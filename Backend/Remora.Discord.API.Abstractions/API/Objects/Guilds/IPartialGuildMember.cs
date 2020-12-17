@@ -67,5 +67,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the user is muted in voice channels.
         /// </summary>
         Optional<bool> IsMuted { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user has passed the guild membership screening requirements.
+        /// </summary>
+        Optional<bool?> IsPending { get; }
     }
 }

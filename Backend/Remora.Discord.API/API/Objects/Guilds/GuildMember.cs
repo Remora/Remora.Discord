@@ -40,6 +40,7 @@ namespace Remora.Discord.API.Objects
         DateTimeOffset JoinedAt,
         Optional<DateTimeOffset?> PremiumSince,
         bool IsDeafened,
-        bool IsMuted
+        bool IsMuted,
+        Optional<bool?> IsPending
     ) : IGuildMember;
 }

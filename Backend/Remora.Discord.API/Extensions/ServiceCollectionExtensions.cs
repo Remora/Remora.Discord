@@ -227,7 +227,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
             options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
@@ -438,12 +439,14 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IPartialGuildMember, PartialGuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
                 .WithPropertyName(u => u.GuildID, "id")
