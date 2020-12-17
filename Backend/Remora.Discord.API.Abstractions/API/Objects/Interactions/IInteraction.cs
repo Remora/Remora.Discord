@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  IInteraction.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,45 +20,56 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Represents a user interaction.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public interface IInteraction
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// Gets the interaction ID.
+        /// </summary>
+        Snowflake ID { get; }
+
+        /// <summary>
+        /// Gets the type of the interaction.
+        /// </summary>
+        InteractionType Type { get; }
+
+        /// <summary>
+        /// Gets the command data payload.
+        /// </summary>
+        Optional<IApplicationCommandInteractionData> Data { get; }
+
+        /// <summary>
+        /// Gets the ID of the guild the interaction was sent from.
+        /// </summary>
+        Snowflake GuildID { get; }
+
+        /// <summary>
+        /// Gets the ID of the channel the interaction was sent from.
+        /// </summary>
+        Snowflake ChannelID { get; }
+
+        /// <summary>
+        /// Gets the guild member that invoked the command.
+        /// </summary>
+        IGuildMember Member { get; }
+
+        /// <summary>
+        /// Gets a continuation token for responding to the interaction.
+        /// </summary>
+        /// <remarks>This token is valid for 15 minutes.</remarks>
+        string Token { get; }
+
+        /// <summary>
+        /// Gets the version of the interaction API in use. Currently 1.
         /// </summary>
         int Version { get; }
-
-        /// <summary>
-        /// Gets information about the current user.
-        /// </summary>
-        IUser User { get; }
-
-        /// <summary>
-        /// Gets a list of guilds the user is in.
-        /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
-
-        /// <summary>
-        /// Gets the session ID. Used for resuming.
-        /// </summary>
-        string SessionID { get; }
-
-        /// <summary>
-        /// Gets the shard information associated with this session.
-        /// </summary>
-        Optional<IShardIdentification> Shard { get; }
-
-        // TODO: OAuth2 application object here
     }
 }

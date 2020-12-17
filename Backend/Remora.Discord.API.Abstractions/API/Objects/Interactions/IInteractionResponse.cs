@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  IInteractionResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,45 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Represents a response to an interaction.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public interface IInteractionResponse
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// Gets the response type.
         /// </summary>
-        int Version { get; }
+        InteractionResponseType Type { get; }
 
         /// <summary>
-        /// Gets information about the current user.
+        /// Gets the response payload.
         /// </summary>
-        IUser User { get; }
-
-        /// <summary>
-        /// Gets a list of guilds the user is in.
-        /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
-
-        /// <summary>
-        /// Gets the session ID. Used for resuming.
-        /// </summary>
-        string SessionID { get; }
-
-        /// <summary>
-        /// Gets the shard information associated with this session.
-        /// </summary>
-        Optional<IShardIdentification> Shard { get; }
-
-        // TODO: OAuth2 application object here
+        Optional<IInteractionApplicationCommandCallbackData> Data { get; }
     }
 }

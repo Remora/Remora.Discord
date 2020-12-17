@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  IApplicationCommand.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,43 +22,41 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Represents an application command.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public interface IApplicationCommand
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// Gets the ID of the command.
         /// </summary>
-        int Version { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets information about the current user.
+        /// Gets the ID of the application.
         /// </summary>
-        IUser User { get; }
+        Snowflake ApplicationID { get; }
 
         /// <summary>
-        /// Gets a list of guilds the user is in.
+        /// Gets the name of the command.
         /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
+        /// <remarks>The length of the name must be between 3 and 32 characters.</remarks>
+        string Name { get; }
 
         /// <summary>
-        /// Gets the session ID. Used for resuming.
+        /// Gets the description of the command.
         /// </summary>
-        string SessionID { get; }
+        /// <remarks>The length of the description must be between 1 and 100 characters.</remarks>
+        string Description { get; }
 
         /// <summary>
-        /// Gets the shard information associated with this session.
+        /// Gets the parameters of the command.
         /// </summary>
-        Optional<IShardIdentification> Shard { get; }
-
-        // TODO: OAuth2 application object here
+        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
     }
 }

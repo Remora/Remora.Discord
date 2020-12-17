@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  InteractionResponseType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,45 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Enumerates various response types.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public enum InteractionResponseType
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// Acknowledge a <see cref="InteractionType.Ping"/>.
         /// </summary>
-        int Version { get; }
+        Pong = 1,
 
         /// <summary>
-        /// Gets information about the current user.
+        /// Acknowledge a command without sending a message in return.
         /// </summary>
-        IUser User { get; }
+        Acknowledge = 2,
 
         /// <summary>
-        /// Gets a list of guilds the user is in.
+        /// Respond with a message, consuming the user input.
         /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
+        ChannelMessage = 3,
 
         /// <summary>
-        /// Gets the session ID. Used for resuming.
+        /// Respond with a message, showing the user input.
         /// </summary>
-        string SessionID { get; }
+        ChannelMessageWithSource = 4,
 
         /// <summary>
-        /// Gets the shard information associated with this session.
+        /// Acknowledge a command without sending a message, showing the user input.
         /// </summary>
-        Optional<IShardIdentification> Shard { get; }
-
-        // TODO: OAuth2 application object here
+        AcknowledgeWithSource = 5
     }
 }

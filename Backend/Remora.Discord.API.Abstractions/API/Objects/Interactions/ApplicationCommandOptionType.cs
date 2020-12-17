@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  ApplicationCommandOptionType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,45 +20,54 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Enumerates various option types.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public enum ApplicationCommandOptionType
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// The option is not a value; rather, it is a subcommand.
         /// </summary>
-        int Version { get; }
+        SubCommand = 1,
 
         /// <summary>
-        /// Gets information about the current user.
+        /// The option is not a value; rather, it is a subgroup.
         /// </summary>
-        IUser User { get; }
+        SubCommandGroup = 2,
 
         /// <summary>
-        /// Gets a list of guilds the user is in.
+        /// The option is a string.
         /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
+        String = 3,
 
         /// <summary>
-        /// Gets the session ID. Used for resuming.
+        /// The option is an integer.
         /// </summary>
-        string SessionID { get; }
+        Integer = 4,
 
         /// <summary>
-        /// Gets the shard information associated with this session.
+        /// The option is a boolean.
         /// </summary>
-        Optional<IShardIdentification> Shard { get; }
+        Boolean = 5,
 
-        // TODO: OAuth2 application object here
+        /// <summary>
+        /// The option is a user reference.
+        /// </summary>
+        User = 6,
+
+        /// <summary>
+        /// The option is a channel reference.
+        /// </summary>
+        Channel = 7,
+
+        /// <summary>
+        /// The option is a role reference.
+        /// </summary>
+        Role = 8
     }
 }

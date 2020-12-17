@@ -14,6 +14,7 @@
         </Description>
         <PackageReleaseNotes>
             Add new field in IGuildMember.
+            Add support for slash commands.
         </PackageReleaseNotes>
     </PropertyGroup>
 

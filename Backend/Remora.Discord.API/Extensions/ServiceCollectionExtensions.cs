@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Gateway.Events.Interactions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
@@ -84,7 +85,8 @@ namespace Remora.Discord.API.Extensions
                             .AddVoiceObjectConverters()
                             .AddWebhookObjectConverters()
                             .AddErrorObjectConverters()
-                            .AddTemplateObjectConverters();
+                            .AddTemplateObjectConverters()
+                            .AddInteractionObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -297,6 +299,9 @@ namespace Remora.Discord.API.Extensions
 
             // Webhooks
             options.AddDataObjectConverter<IWebhooksUpdate, WebhooksUpdate>();
+
+            // Interactions
+            options.AddDataObjectConverter<IInteractionCreate, InteractionCreate>();
 
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -741,6 +746,37 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(c => c.IsNsfw, "nsfw");
 
             options.AddDataObjectConverter<IPermissionOverwriteTemplate, PermissionOverwriteTemplate>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle interaction objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddInteractionObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>();
+            options.AddDataObjectConverter
+            <
+                IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
+            >();
+
+            options.AddDataObjectConverter<IInteraction, Interaction>();
+            options.AddDataObjectConverter
+            <
+                IInteractionApplicationCommandCallbackData, InteractionApplicationCommandCallbackData
+            >()
+            .WithPropertyName(d => d.IsTTS, "tts");
+
+            options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
+
+            options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
+            options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
+                .WithPropertyName(o => o.IsDefault, "default")
+                .WithPropertyName(o => o.IsRequired, "required");
+            options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
 
             return options;
         }

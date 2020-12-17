@@ -1,5 +1,5 @@
 //
-//  IReady.cs
+//  IInteractionApplicationCommandCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,43 +22,34 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Represents return payload data for an interaction response.
     /// </summary>
     [PublicAPI]
-    public interface IReady : IGatewayEvent
+    public interface IInteractionApplicationCommandCallbackData
     {
         /// <summary>
-        /// Gets the gateway version.
+        /// Gets a value indicating whether the message is a TTS message.
         /// </summary>
-        int Version { get; }
+        Optional<bool?> IsTTS { get; }
 
         /// <summary>
-        /// Gets information about the current user.
+        /// Gets the content of the message.
         /// </summary>
-        IUser User { get; }
+        string Content { get; }
 
         /// <summary>
-        /// Gets a list of guilds the user is in.
+        /// Gets the embeds of the message.
         /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
+        Optional<IReadOnlyList<IEmbed>> Embeds { get; }
 
         /// <summary>
-        /// Gets the session ID. Used for resuming.
+        /// Gets the allowed mentions in the message.
         /// </summary>
-        string SessionID { get; }
-
-        /// <summary>
-        /// Gets the shard information associated with this session.
-        /// </summary>
-        Optional<IShardIdentification> Shard { get; }
-
-        // TODO: OAuth2 application object here
+        Optional<IAllowedMentions> AllowedMentions { get; }
     }
 }
