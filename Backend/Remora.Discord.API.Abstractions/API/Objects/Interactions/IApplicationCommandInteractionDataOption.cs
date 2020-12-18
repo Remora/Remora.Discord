@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -40,7 +41,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the value of the pair.
         /// </summary>
-        Optional<object?> Value { get; }
+        OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake> Value { get; }
 
         /// <summary>
         /// Gets the options supplied to the subcommand or subgroup.

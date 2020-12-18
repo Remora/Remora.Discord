@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -30,7 +31,7 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommandInteractionDataOption
     (
         string Name,
-        Optional<object?> Value,
+        OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake> Value,
         Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options
     )
     : IApplicationCommandInteractionDataOption;
