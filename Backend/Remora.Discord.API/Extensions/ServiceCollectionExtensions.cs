@@ -85,7 +85,9 @@ namespace Remora.Discord.API.Extensions
                             .AddWebhookObjectConverters()
                             .AddErrorObjectConverters()
                             .AddTemplateObjectConverters()
-                            .AddInteractionObjectConverters();
+                            .AddInteractionObjectConverters()
+                            .AddOAuth2ObjectConverters()
+                            .AddTeamObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -777,6 +779,34 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(o => o.IsDefault, "default")
                 .WithPropertyName(o => o.IsRequired, "required");
             options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle OAuth2 objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddOAuth2ObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplication, Application>()
+                .WithPropertyName(a => a.IsBotPublic, "bot_public")
+                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle team objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ITeam, Team>();
+            options.AddDataObjectConverter<ITeamMember, TeamMember>();
 
             return options;
         }

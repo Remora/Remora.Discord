@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta9</Version>
+        <Version>1.0.0-beta10</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,8 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Add new field in IGuildMember.
-            Add support for slash commands.
+            Implement OAuth2 and Teams support.
         </PackageReleaseNotes>
     </PropertyGroup>
 
