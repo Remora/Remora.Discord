@@ -106,71 +106,8 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override TOneOf? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            TOneOf? result;
-
-            var checkedTypes = new List<Type>();
-            switch (reader.TokenType)
-            {
-                case JsonTokenType.String:
-                {
-                    if (BuiltinUnionMemberTypes.Contains(typeof(string)))
-                    {
-                        var method = FromValueMethods[typeof(string)];
-
-                        var value = reader.GetString() ?? throw new InvalidOperationException();
-                        return (TOneOf)method.Invoke(null, new object[] { value });
-                    }
-
-                    break;
-                }
-                case JsonTokenType.True:
-                case JsonTokenType.False:
-                {
-                    if (BuiltinUnionMemberTypes.Contains(typeof(bool)))
-                    {
-                        var method = FromValueMethods[typeof(bool)];
-
-                        var value = reader.GetBoolean();
-                        return (TOneOf)method.Invoke(null, new object[] { value });
-                    }
-
-                    break;
-                }
-                case JsonTokenType.Number:
-                {
-                    if (TryCreateOneOf(ref reader, NumericUnionMemberTypes, options, out result))
-                    {
-                        return result;
-                    }
-
-                    checkedTypes.AddRange(NumericUnionMemberTypes);
-                    break;
-                }
-                case JsonTokenType.StartObject:
-                {
-                    if (TryCreateOneOf(ref reader, OtherUnionMemberTypes, options, out result))
-                    {
-                        return result;
-                    }
-
-                    checkedTypes.AddRange(OtherUnionMemberTypes);
-                    break;
-                }
-                case JsonTokenType.StartArray:
-                {
-                    if (TryCreateOneOf(ref reader, CollectionUnionMemberTypes, options, out result))
-                    {
-                        return result;
-                    }
-
-                    checkedTypes.AddRange(CollectionUnionMemberTypes);
-                    break;
-                }
-            }
-
-            // Still nothing? We'll try to bruteforce it
-            var remainingTypes = UnionMemberTypes.Except(checkedTypes);
-            if (TryCreateOneOf(ref reader, remainingTypes, options, out result))
+            // Attempt to deserialize a union member, starting with complex types
+            if (TryCreateOneOf(ref reader, UnionMemberTypes.OrderBy(t => t.IsBuiltin()), options, out var result))
             {
                 return result;
             }
