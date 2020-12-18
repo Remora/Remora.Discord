@@ -841,5 +841,354 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.EditOriginalInteractionResponseAsync"/> method.
+        /// </summary>
+        public class EditOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                var content = "booga";
+                var embeds = new List<IEmbed>();
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditOriginalInteractionResponseAsync
+                (
+                    applicationID,
+                    token,
+                    content,
+                    embeds,
+                    allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteOriginalInteractionResponseAsync"/> method.
+        /// </summary>
+        public class DeleteOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aaa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteOriginalInteractionResponseAsync
+                (
+                    applicationID,
+                    token
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.CreateFollowupMessageAsync"/> method.
+        /// </summary>
+        public class CreateFollowupMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+             /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNormalRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                var shouldWait = true;
+                var content = "brr";
+                var username = "aaaag";
+                var avatarUrl = "http://aaaa";
+                var tts = false;
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                        .WithQueryString("wait", shouldWait.ToString())
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("username", p => p.Is(username))
+                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                    .WithProperty("tts", p => p.Is(tts))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    shouldWait,
+                    content,
+                    username,
+                    avatarUrl,
+                    tts,
+                    allowedMentions: allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsEmbedRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                var shouldWait = true;
+                var embeds = new List<Embed>();
+                var username = "aaaag";
+                var avatarUrl = "http://aaaa";
+                var tts = false;
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                        .WithQueryString("wait", shouldWait.ToString())
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("embeds", p => p.IsArray())
+                                    .WithProperty("username", p => p.Is(username))
+                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
+                                    .WithProperty("tts", p => p.Is(tts))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    shouldWait,
+                    username: username,
+                    avatarUrl: avatarUrl,
+                    isTTS: tts,
+                    embeds: embeds,
+                    allowedMentions: allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                var shouldWait = true;
+                var tts = false;
+
+                await using var file = new MemoryStream();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                        .WithQueryString("wait", shouldWait.ToString())
+                        .With
+                        (
+                            m =>
+                            {
+                                if (!(m.Content is MultipartFormDataContent multipart))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.Any(c => c is StreamContent))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.Any(c => c is StringContent))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    shouldWait,
+                    isTTS: tts,
+                    file: file
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
+        /// </summary>
+        public class EditFollowupMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                var content = "booga";
+                var embeds = new List<IEmbed>();
+                var allowedMentions = new AllowedMentions(default, default, default);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID,
+                    content,
+                    embeds,
+                    allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteFollowupMessageAsync"/> method.
+        /// </summary>
+        public class DeleteFollowupMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aaa";
+                var messageID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }
