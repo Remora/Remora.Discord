@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
@@ -30,7 +31,7 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommandOptionChoice
     (
         string Name,
-        string Value
+        OneOf<string, int> Value
     )
     : IApplicationCommandOptionChoice;
 }

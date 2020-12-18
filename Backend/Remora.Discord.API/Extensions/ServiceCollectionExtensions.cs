@@ -95,7 +95,8 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<NullableConverterFactory>()
                             .AddConverter<SnowflakeConverter>()
                             .AddConverter<ColorConverter>()
-                            .AddConverter<PropertyErrorDetailsConverter>();
+                            .AddConverter<PropertyErrorDetailsConverter>()
+                            .AddConverter<OneOfConverterFactory>();
 
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;

@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
@@ -42,6 +43,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <remarks>
         /// TODO: Need to investigate OneOf types, since this can also be an integer.
         /// </remarks>
-        string Value { get; }
+        OneOf<string, int> Value { get; }
     }
 }
