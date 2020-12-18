@@ -58,7 +58,7 @@ namespace Remora.Discord.API.Json
         }
 
         /// <inheritdoc />
-        public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {
             var typeInfo = typeToConvert.GetTypeInfo();
             var optionalType = typeof(OneOfConverter<>).MakeGenericType(typeInfo);
