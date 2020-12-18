@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake interactionID,
             string interactionToken,
             IInteractionResponse response,
-            CancellationToken ct
+            CancellationToken ct = default
         );
     }
 }

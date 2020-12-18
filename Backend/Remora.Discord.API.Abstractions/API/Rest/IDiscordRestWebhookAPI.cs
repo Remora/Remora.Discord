@@ -256,7 +256,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             string token,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>

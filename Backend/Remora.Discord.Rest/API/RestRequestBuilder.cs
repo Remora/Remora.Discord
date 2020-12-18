@@ -72,6 +72,18 @@ namespace Remora.Discord.Rest.API
         private HttpMethod _method = HttpMethod.Get;
 
         /// <summary>
+        /// Holds a value indicating whether JSON object start and end markers (curly braces) should be automatically
+        /// added.
+        /// </summary>
+        private bool _addJsonObjectStartEndMarkers = true;
+
+        /// <summary>
+        /// Holds a value indicating whether JSON array start and end markers (angle brackets) should be automatically
+        /// added.
+        /// </summary>
+        private bool _addJsonArrayStartEndMarkers = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="RestRequestBuilder"/> class.
         /// </summary>
         /// <param name="endpoint">The API endpoint.</param>
@@ -129,8 +141,11 @@ namespace Remora.Discord.Rest.API
         /// This method is mutually exclusive with <see cref="WithJsonArray"/>.
         /// </summary>
         /// <param name="propertyWriter">The JSON configurator.</param>
+        /// <param name="withStartEndMarkers">
+        /// Whether JSON object start and end markers (curly braces) should be automatically added.
+        /// </param>
         /// <returns>The builder, with the property added.</returns>
-        public RestRequestBuilder WithJson(Action<Utf8JsonWriter> propertyWriter)
+        public RestRequestBuilder WithJson(Action<Utf8JsonWriter> propertyWriter, bool withStartEndMarkers = true)
         {
             if (_jsonArrayConfigurators.Count > 0)
             {
@@ -138,6 +153,7 @@ namespace Remora.Discord.Rest.API
             }
 
             _jsonObjectConfigurators.Add(propertyWriter);
+            _addJsonObjectStartEndMarkers = withStartEndMarkers;
             return this;
         }
 
@@ -148,8 +164,15 @@ namespace Remora.Discord.Rest.API
         /// This method is mutually exclusive with <see cref="WithJson"/>.
         /// </summary>
         /// <param name="arrayElementWriter">The JSON configurator.</param>
+        /// <param name="withStartEndMarkers">
+        /// Whether JSON array start and end markers (angle brackets) should be automatically added.
+        /// </param>
         /// <returns>The builder, with the property added.</returns>
-        public RestRequestBuilder WithJsonArray(Action<Utf8JsonWriter> arrayElementWriter)
+        public RestRequestBuilder WithJsonArray
+        (
+            Action<Utf8JsonWriter> arrayElementWriter,
+            bool withStartEndMarkers = true
+        )
         {
             if (_jsonObjectConfigurators.Count > 0)
             {
@@ -157,6 +180,7 @@ namespace Remora.Discord.Rest.API
             }
 
             _jsonArrayConfigurators.Add(arrayElementWriter);
+            _addJsonArrayStartEndMarkers = withStartEndMarkers;
             return this;
         }
 
@@ -197,14 +221,21 @@ namespace Remora.Discord.Rest.API
                 using var jsonStream = new MemoryStream();
                 var jsonWriter = new Utf8JsonWriter(jsonStream);
 
-                jsonWriter.WriteStartObject();
+                if (_addJsonObjectStartEndMarkers)
+                {
+                    jsonWriter.WriteStartObject();
+                }
 
                 foreach (var jsonConfigurator in _jsonObjectConfigurators)
                 {
                     jsonConfigurator(jsonWriter);
                 }
 
-                jsonWriter.WriteEndObject();
+                if (_addJsonObjectStartEndMarkers)
+                {
+                    jsonWriter.WriteEndObject();
+                }
+
                 jsonWriter.Flush();
 
                 jsonStream.Seek(0, SeekOrigin.Begin);
@@ -220,14 +251,21 @@ namespace Remora.Discord.Rest.API
                 using var jsonStream = new MemoryStream();
                 var jsonWriter = new Utf8JsonWriter(jsonStream);
 
-                jsonWriter.WriteStartArray();
+                if (_addJsonArrayStartEndMarkers)
+                {
+                    jsonWriter.WriteStartArray();
+                }
 
                 foreach (var elementConfigurator in _jsonArrayConfigurators)
                 {
                     elementConfigurator(jsonWriter);
                 }
 
-                jsonWriter.WriteEndArray();
+                if (_addJsonArrayStartEndMarkers)
+                {
+                    jsonWriter.WriteEndArray();
+                }
+
                 jsonWriter.Flush();
 
                 jsonStream.Seek(0, SeekOrigin.Begin);

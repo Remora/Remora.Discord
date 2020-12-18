@@ -134,7 +134,9 @@ namespace Remora.Discord.Rest.Extensions
                 .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
                 .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
                 .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>()
-                .AddScoped<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>();
+                .AddScoped<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>()
+                .AddScoped<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>()
+                .AddScoped<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>();
 
             return serviceCollection;
         }

@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> name,
             Optional<string> description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             Snowflake commandID,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             Snowflake guildID,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> name,
             Optional<string> description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            CancellationToken ct
+            CancellationToken ct = default
         );
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake applicationID,
             Snowflake guildID,
             Snowflake commandID,
-            CancellationToken ct
+            CancellationToken ct = default
         );
     }
 }
