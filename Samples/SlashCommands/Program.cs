@@ -133,10 +133,6 @@ namespace Remora.Discord.Samples.SlashCommands
 
             var commands = getCommands.Entity;
             var catCommand = commands.FirstOrDefault(c => c.Name == "cat");
-            if (catCommand is not null)
-            {
-                return OperationResult.FromSuccess();
-            }
 
             var commandOption = new ApplicationCommandOption
             (
@@ -148,6 +144,16 @@ namespace Remora.Discord.Samples.SlashCommands
                 default,
                 default
             );
+
+            if (catCommand is not null)
+            {
+                var needsUpdate = !catCommand.Options.HasValue ||
+                                  (ApplicationCommandOption)catCommand.Options.Value!.Single() != commandOption;
+                if (!needsUpdate)
+                {
+                    return OperationResult.FromSuccess();
+                }
+            }
 
             var createCommand = await applications.CreateGlobalApplicationCommandAsync
             (
