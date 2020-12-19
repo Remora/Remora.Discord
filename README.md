@@ -7,6 +7,10 @@ bots.
 
 The library is currently in early development.
 
+Want to chat with users and developers? Come join us!
+
+[![Discord Server][5]][4] 
+
 # Table of Contents
 1. [Goals](#1-goals)
     1. [Correctness](#11-correctness)
@@ -84,3 +88,5 @@ See [Contributing][2].
 [1]: https://nihlus.github.io/Remora.Discord/
 [2]: .github/CONTRIBUTING.md
 [3]: https://www.nuget.org/packages/Remora.Discord/
+[4]: https://discord.gg/tRJbg8HNdt
+[5]: https://img.shields.io/static/v1?label=Chat&message=on%20Discord&color=7289da&logo=discord
