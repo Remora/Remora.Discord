@@ -53,7 +53,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IInteractionResponse>> CreateInteractionResponseAsync
+        public Task<IRestResult> CreateInteractionResponseAsync
         (
             Snowflake interactionID,
             string interactionToken,
@@ -61,7 +61,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.PostAsync<IInteractionResponse>
+            return _discordHttpClient.PostAsync
             (
                 $"interactions/{interactionID}/{interactionToken}/callback",
                 b => b.WithJson

@@ -36,7 +36,6 @@ namespace Remora.Discord.API.Abstractions.Rest
     public interface IDiscordRestInteractionAPI
     {
         /// <summary>
-        /// TODO: Check if we actually get an IInteractionResponse back from this.
         /// Creates a response to an interaction from the gateway.
         /// </summary>
         /// <param name="interactionID">The ID of the interaction.</param>
@@ -44,7 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="response">The response.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IInteractionResponse>> CreateInteractionResponseAsync
+        Task<IRestResult> CreateInteractionResponseAsync
         (
             Snowflake interactionID,
             string interactionToken,
