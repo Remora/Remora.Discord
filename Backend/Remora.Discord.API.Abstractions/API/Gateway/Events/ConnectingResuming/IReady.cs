@@ -59,6 +59,9 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// </summary>
         Optional<IShardIdentification> Shard { get; }
 
-        // TODO: OAuth2 application object here
+        /// <summary>
+        /// Gets the OAuth2 application associated with this session.
+        /// </summary>
+        IPartialApplication Application { get; }
     }
 }
