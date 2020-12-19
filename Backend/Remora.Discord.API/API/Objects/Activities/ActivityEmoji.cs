@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityEmoji" />
+    /// <inheritdoc cref="IActivityEmoji" />
     [PublicAPI]
     public record ActivityEmoji
     (

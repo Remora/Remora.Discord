@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedImage" />
+    /// <inheritdoc cref="IEmbedImage" />
     [PublicAPI]
     public record EmbedImage
     (

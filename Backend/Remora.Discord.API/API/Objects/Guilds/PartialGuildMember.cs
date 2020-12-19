@@ -30,7 +30,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialGuildMember" />
+    /// <inheritdoc cref="IPartialGuildMember" />
     [PublicAPI]
     public record PartialGuildMember
     (

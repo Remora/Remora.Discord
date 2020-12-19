@@ -27,7 +27,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRoleTags" />
+    /// <inheritdoc cref="IRoleTags" />
     public record RoleTags
     (
         Optional<Snowflake> BotID,

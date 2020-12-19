@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageActivity" />
+    /// <inheritdoc cref="IMessageActivity" />
     [PublicAPI]
     public record MessageActivity(MessageActivityType Type, Optional<string> PartyID) : IMessageActivity;
 }

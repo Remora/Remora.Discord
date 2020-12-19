@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPruneCount" />
+    /// <inheritdoc cref="IPruneCount" />
     [PublicAPI]
     public record PruneCount(int? Pruned) : IPruneCount;
 }

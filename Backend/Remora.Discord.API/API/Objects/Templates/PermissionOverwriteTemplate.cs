@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPermissionOverwriteTemplate" />
+    /// <inheritdoc cref="IPermissionOverwriteTemplate" />
     [PublicAPI]
     public record PermissionOverwriteTemplate
     (

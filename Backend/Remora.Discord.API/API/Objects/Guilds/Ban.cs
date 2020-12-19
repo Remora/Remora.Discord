@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IBan" />
+    /// <inheritdoc cref="IBan" />
     [PublicAPI]
     public record Ban(string? Reason, IUser User) : IBan;
 }

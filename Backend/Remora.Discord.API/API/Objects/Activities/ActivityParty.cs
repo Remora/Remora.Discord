@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActivityParty" />
+    /// <inheritdoc cref="IActivityParty" />
     [PublicAPI]
     public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
 }

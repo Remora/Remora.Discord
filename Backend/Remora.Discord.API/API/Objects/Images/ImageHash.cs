@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IImageHash" />
+    /// <inheritdoc cref="IImageHash" />
     [PublicAPI]
     public record ImageHash(string Value) : IImageHash
     {

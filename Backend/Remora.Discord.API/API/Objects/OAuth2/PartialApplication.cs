@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplication" />
+    /// <inheritdoc cref="IApplication" />
     public record PartialApplication
     (
         Optional<Snowflake> ID = default,

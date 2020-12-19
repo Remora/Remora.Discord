@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IFollowedChannel" />
+    /// <inheritdoc cref="IFollowedChannel" />
     [PublicAPI]
     public record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;
 }

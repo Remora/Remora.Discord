@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITeamMember" />
+    /// <inheritdoc cref="ITeamMember" />
     public record TeamMember
     (
         MembershipState MembershipState,

@@ -28,7 +28,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandOptionChoice" />
+    /// <inheritdoc cref="IApplicationCommandOptionChoice" />
     [PublicAPI]
     public record ApplicationCommandOptionChoice
     (

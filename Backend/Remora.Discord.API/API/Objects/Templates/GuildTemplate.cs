@@ -28,7 +28,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildTemplate" />
+    /// <inheritdoc cref="IGuildTemplate" />
     [PublicAPI]
     public record GuildTemplate
     (

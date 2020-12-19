@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAccount" />
+    /// <inheritdoc cref="IAccount" />
     [PublicAPI]
     public record Account(Snowflake ID, string Name) : IAccount;
 }

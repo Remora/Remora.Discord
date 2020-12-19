@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
+    /// <inheritdoc cref="IGuildWidget" />
     [PublicAPI]
     public record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;
 }

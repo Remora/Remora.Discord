@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialUser" />
+    /// <inheritdoc cref="IPartialUser" />
     [PublicAPI]
     public record PartialUser
     (

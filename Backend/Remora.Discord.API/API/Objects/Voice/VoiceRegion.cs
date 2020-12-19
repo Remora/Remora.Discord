@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IVoiceRegion" />
+    /// <inheritdoc cref="IVoiceRegion" />
     [PublicAPI]
     public record VoiceRegion
     (

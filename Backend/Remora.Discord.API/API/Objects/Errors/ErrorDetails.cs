@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IErrorDetails" />
+    /// <inheritdoc cref="IErrorDetails" />
     [PublicAPI]
     public record ErrorDetails(string Code, string Message) : IErrorDetails;
 }

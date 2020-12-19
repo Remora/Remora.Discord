@@ -29,7 +29,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommand" />
+    /// <inheritdoc cref="IApplicationCommand" />
     [PublicAPI]
     public record ApplicationCommand
     (
