@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -118,7 +119,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 binaryWriter.Write(9894494448401390090);
                 image.Position = 0;
 
-                var roles = new List<Snowflake>();
+                var roles = Array.Empty<Snowflake>();
 
                 var api = CreateAPI
                 (
@@ -157,7 +158,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 binaryWriter.Write(0x00000000);
                 image.Position = 0;
 
-                var roles = new List<Snowflake>();
+                var roles = Array.Empty<Snowflake>();
 
                 var api = CreateAPI
                 (
@@ -196,7 +197,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 binaryWriter.Write(new byte[256001]);
                 image.Position = 0;
 
-                var roles = new List<Snowflake>();
+                var roles = Array.Empty<Snowflake>();
 
                 var api = CreateAPI
                 (
