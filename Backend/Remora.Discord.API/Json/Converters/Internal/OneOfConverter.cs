@@ -41,12 +41,6 @@ namespace Remora.Discord.API.Json
         where TOneOf : IOneOf
     {
         /// <summary>
-        /// Holds all types that are a member of the union.
-        /// </summary>
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly IReadOnlyList<Type> UnionMemberTypes;
-
-        /// <summary>
         /// Holds the member types, sorted in the order they should be attempted to be deserialized.
         /// </summary>
         /// <remarks>
@@ -74,15 +68,16 @@ namespace Remora.Discord.API.Json
         static OneOfConverter()
         {
             Type unionType = typeof(TOneOf);
-            UnionMemberTypes = unionType.GetGenericArguments();
-            OrderedUnionMemberTypes = UnionMemberTypes
+            var unionMemberTypes = unionType.GetGenericArguments();
+
+            OrderedUnionMemberTypes = unionMemberTypes
                 .OrderByDescending(t => t.IsNumeric())
                 .ThenByDescending(t => t.IsCollection())
                 .ThenBy(t => t.IsBuiltin())
                 .ToList();
 
             var fromValueMethods = new Dictionary<Type, MethodInfo>();
-            for (var i = 0; i < UnionMemberTypes.Count; ++i)
+            for (var i = 0; i < unionMemberTypes.Length; ++i)
             {
                 var methodInfo = unionType.GetMethod($"FromT{i}");
                 if (methodInfo is null)
@@ -90,7 +85,7 @@ namespace Remora.Discord.API.Json
                     throw new InvalidOperationException();
                 }
 
-                fromValueMethods.Add(UnionMemberTypes[i], methodInfo);
+                fromValueMethods.Add(unionMemberTypes[i], methodInfo);
             }
 
             FromValueMethods = fromValueMethods;
