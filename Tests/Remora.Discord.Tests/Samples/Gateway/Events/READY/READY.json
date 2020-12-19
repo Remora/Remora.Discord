@@ -14,7 +14,11 @@
             "avatar": null
         },
         "session_id": "3b6ede00b556bd7a5310f524fe695b2d",
-        "guilds": []
+        "guilds": [],
+        "application": {
+            "id": "172150183260323840",
+            "flags": 0
+        }
     },
     "s": 1,
     "t": "READY"
