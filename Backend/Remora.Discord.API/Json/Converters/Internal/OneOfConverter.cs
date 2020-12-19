@@ -29,6 +29,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 using Remora.Discord.API.Extensions;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Json
 {
@@ -46,28 +47,23 @@ namespace Remora.Discord.API.Json
         private static readonly IReadOnlyList<Type> UnionMemberTypes;
 
         /// <summary>
-        /// Holds all member types that are builtin C# types.
+        /// Holds the member types, sorted in the order they should be attempted to be deserialized.
         /// </summary>
+        /// <remarks>
+        /// The order is constructed to produce correct results in as many cases as possible, giving leeway to the fact
+        /// that multiple type parsers can take primitive elements from JSON as an input. A typical example of this is
+        /// integers vs <see cref="Snowflake"/>.
+        ///
+        /// The order is as follows:
+        ///   * Numeric C# types
+        ///   * Collection types
+        ///   * Complex types (classes, records, etc)
+        ///   * Builtin C# types (string, etc)
+        ///
+        /// Hopefully, this works for most cases.
+        /// </remarks>
         // ReSharper disable once StaticMemberInGenericType
-        private static readonly IReadOnlyList<Type> BuiltinUnionMemberTypes;
-
-        /// <summary>
-        /// Holds all member types that are builtin numeric C# types.
-        /// </summary>
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly IReadOnlyList<Type> NumericUnionMemberTypes;
-
-        /// <summary>
-        /// Holds all member types that are collection types.
-        /// </summary>
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly IReadOnlyList<Type> CollectionUnionMemberTypes;
-
-        /// <summary>
-        /// Holds all other member types.
-        /// </summary>
-        // ReSharper disable once StaticMemberInGenericType
-        private static readonly IReadOnlyList<Type> OtherUnionMemberTypes;
+        private static readonly IReadOnlyList<Type> OrderedUnionMemberTypes;
 
         /// <summary>
         /// Holds a mapping between the member types and the FromT methods of the union.
@@ -79,13 +75,10 @@ namespace Remora.Discord.API.Json
         {
             Type unionType = typeof(TOneOf);
             UnionMemberTypes = unionType.GetGenericArguments();
-
-            BuiltinUnionMemberTypes = UnionMemberTypes.Where(t => t.IsBuiltin()).ToList();
-            NumericUnionMemberTypes = UnionMemberTypes.Where(t => t.IsNumeric()).ToList();
-            CollectionUnionMemberTypes = UnionMemberTypes.Where(t => t.IsCollection()).ToList();
-            OtherUnionMemberTypes = UnionMemberTypes
-                .Except(BuiltinUnionMemberTypes)
-                .Except(CollectionUnionMemberTypes)
+            OrderedUnionMemberTypes = UnionMemberTypes
+                .OrderByDescending(t => t.IsNumeric())
+                .ThenByDescending(t => t.IsCollection())
+                .ThenBy(t => t.IsBuiltin())
                 .ToList();
 
             var fromValueMethods = new Dictionary<Type, MethodInfo>();
@@ -106,12 +99,7 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override TOneOf? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // Attempt to deserialize a union member, starting with numeric, then complex, then builtin types
-            var orderedMembers = UnionMemberTypes
-                .OrderByDescending(t => t.IsNumeric())
-                .ThenBy(t => t.IsBuiltin());
-
-            if (TryCreateOneOf(ref reader, orderedMembers, options, out var result))
+            if (TryCreateOneOf(ref reader, OrderedUnionMemberTypes, options, out var result))
             {
                 return result;
             }
