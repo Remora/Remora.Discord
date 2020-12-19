@@ -40,9 +40,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the value of the choice.
         /// </summary>
-        /// <remarks>
-        /// TODO: Need to investigate OneOf types, since this can also be an integer.
-        /// </remarks>
         OneOf<string, int> Value { get; }
     }
 }
