@@ -70,7 +70,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// TODO: Check if name/description are actually optional. Docs say they aren't.
         /// Edits a new global command.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
@@ -142,7 +141,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// TODO: Check if name/description are actually optional. Docs say they aren't.
         /// Edits a new guild command.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
