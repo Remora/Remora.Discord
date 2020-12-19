@@ -40,6 +40,7 @@ namespace Remora.Discord.Samples.SlashCommands.Responders
     public class HttpCatResponder : IResponder<IInteractionCreate>, IDisposable
     {
         private readonly HttpClient _httpClient;
+        private readonly IDiscordRestInteractionAPI _interactionAPI;
         private readonly IDiscordRestChannelAPI _channelAPI;
 
         /// <summary>
@@ -47,10 +48,17 @@ namespace Remora.Discord.Samples.SlashCommands.Responders
         /// </summary>
         /// <param name="httpClientFactory">The http client factory.</param>
         /// <param name="channelAPI">The channel API.</param>
-        public HttpCatResponder(IHttpClientFactory httpClientFactory, IDiscordRestChannelAPI channelAPI)
+        /// <param name="interactionAPI">The interaction API.</param>
+        public HttpCatResponder
+        (
+            IHttpClientFactory httpClientFactory,
+            IDiscordRestChannelAPI channelAPI,
+            IDiscordRestInteractionAPI interactionAPI
+        )
         {
             _httpClient = httpClientFactory.CreateClient();
             _channelAPI = channelAPI;
+            _interactionAPI = interactionAPI;
         }
 
         /// <inheritdoc/>
@@ -68,6 +76,20 @@ namespace Remora.Discord.Samples.SlashCommands.Responders
             if (gatewayEvent.Type != InteractionType.ApplicationCommand)
             {
                 return EventResponseResult.FromSuccess();
+            }
+
+            // Thanks, we'll deal with this on our own
+            var asyncHandlingReply = await _interactionAPI.CreateInteractionResponseAsync
+            (
+                gatewayEvent.ID,
+                gatewayEvent.Token,
+                new InteractionResponse(InteractionResponseType.Acknowledge, default),
+                ct
+            );
+
+            if (!asyncHandlingReply.IsSuccess)
+            {
+                return EventResponseResult.FromError(asyncHandlingReply);
             }
 
             if (!gatewayEvent.Data.HasValue)
@@ -108,7 +130,7 @@ namespace Remora.Discord.Samples.SlashCommands.Responders
 
             var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embed: embed, ct: ct);
             return !reply.IsSuccess
-                ? EventResponseResult.FromError(reply)
+                ? EventResponseResult.FromError(asyncHandlingReply)
                 : EventResponseResult.FromSuccess();
         }
 
