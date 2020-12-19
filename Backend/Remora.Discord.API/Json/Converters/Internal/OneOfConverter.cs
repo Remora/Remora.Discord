@@ -106,8 +106,12 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override TOneOf? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // Attempt to deserialize a union member, starting with complex types
-            if (TryCreateOneOf(ref reader, UnionMemberTypes.OrderBy(t => t.IsBuiltin()), options, out var result))
+            // Attempt to deserialize a union member, starting with numeric, then complex, then builtin types
+            var orderedMembers = UnionMemberTypes
+                .OrderByDescending(t => t.IsNumeric())
+                .ThenBy(t => t.IsBuiltin());
+
+            if (TryCreateOneOf(ref reader, orderedMembers, options, out var result))
             {
                 return result;
             }
