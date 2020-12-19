@@ -92,7 +92,7 @@ namespace Remora.Discord.API.Json
         }
 
         /// <inheritdoc />
-        public override TOneOf? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override TOneOf Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (TryCreateOneOf(ref reader, OrderedUnionMemberTypes, options, out var result))
             {
