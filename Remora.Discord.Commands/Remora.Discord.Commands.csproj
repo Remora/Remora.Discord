@@ -17,11 +17,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj"/>
+        <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="1.0.0-beta3"/>
+        <PackageReference Include="Remora.Commands" Version="1.0.0-beta5" />
     </ItemGroup>
 
 </Project>
