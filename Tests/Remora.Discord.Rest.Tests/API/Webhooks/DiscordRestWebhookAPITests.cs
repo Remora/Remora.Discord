@@ -743,6 +743,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var tts = false;
 
                 await using var file = new MemoryStream();
+                var fileName = "file.bin";
 
                 var api = CreateAPI
                 (
@@ -758,7 +759,13 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     return false;
                                 }
 
-                                if (!multipart.Any(c => c is StreamContent))
+                                var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
+                                if (streamContent is null || streamContent.Headers.ContentDisposition is null)
+                                {
+                                    return false;
+                                }
+
+                                if (streamContent.Headers.ContentDisposition.FileName != fileName)
                                 {
                                     return false;
                                 }
@@ -780,7 +787,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     shouldWait,
                     isTTS: tts,
-                    file: file
+                    file: new Discord.API.Objects.File(fileName, file)
                 );
 
                 ResultAssert.Successful(result);
@@ -1054,6 +1061,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var tts = false;
 
                 await using var file = new MemoryStream();
+                var fileName = "file.bin";
 
                 var api = CreateAPI
                 (
@@ -1069,7 +1077,13 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     return false;
                                 }
 
-                                if (!multipart.Any(c => c is StreamContent))
+                                var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
+                                if (streamContent is null || streamContent.Headers.ContentDisposition is null)
+                                {
+                                    return false;
+                                }
+
+                                if (streamContent.Headers.ContentDisposition.FileName != fileName)
                                 {
                                     return false;
                                 }
@@ -1091,7 +1105,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     shouldWait,
                     isTTS: tts,
-                    file: file
+                    file: new Discord.API.Objects.File(fileName, file)
                 );
 
                 ResultAssert.Successful(result);

@@ -64,7 +64,7 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Holds the additional content.
         /// </summary>
-        private readonly Dictionary<string, HttpContent> _additionalContent;
+        private readonly Dictionary<string, (HttpContent, string?)> _additionalContent;
 
         /// <summary>
         /// Holds the configured Http request method.
@@ -95,7 +95,7 @@ namespace Remora.Discord.Rest.API
             _jsonObjectConfigurators = new List<Action<Utf8JsonWriter>>();
             _jsonArrayConfigurators = new List<Action<Utf8JsonWriter>>();
             _additionalHeaders = new Dictionary<string, string>();
-            _additionalContent = new Dictionary<string, HttpContent>();
+            _additionalContent = new Dictionary<string, (HttpContent, string?)>();
         }
 
         /// <summary>
@@ -104,10 +104,11 @@ namespace Remora.Discord.Rest.API
         /// </summary>
         /// <param name="content">The content to add.</param>
         /// <param name="name">The name of the content.</param>
+        /// <param name="fileName">The file name of the content.</param>
         /// <returns>The request builder, with the content.</returns>
-        public RestRequestBuilder AddContent(HttpContent content, string name)
+        public RestRequestBuilder AddContent(HttpContent content, string name, string? fileName = default)
         {
-            _additionalContent.Add(name, content);
+            _additionalContent.Add(name, (content, fileName));
             return this;
         }
 
@@ -286,9 +287,16 @@ namespace Remora.Discord.Rest.API
                     multipartContent.Add(jsonBody, "payload_json");
                 }
 
-                foreach (var (name, value) in _additionalContent)
+                foreach (var (name, (content, fileName)) in _additionalContent)
                 {
-                    multipartContent.Add(value, name);
+                    if (fileName is null)
+                    {
+                        multipartContent.Add(content, name);
+                    }
+                    else
+                    {
+                        multipartContent.Add(content, name, fileName);
+                    }
                 }
 
                 request.Content = multipartContent;

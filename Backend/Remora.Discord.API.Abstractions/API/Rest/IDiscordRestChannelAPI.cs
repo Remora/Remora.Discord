@@ -153,7 +153,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<Stream> file = default,
+            Optional<IFile> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default
