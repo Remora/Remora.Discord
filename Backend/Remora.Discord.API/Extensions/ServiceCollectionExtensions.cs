@@ -369,6 +369,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
+                .WithPropertyName(a => a.MentionRepliedUser, "replied_user")
                 .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
             options.AddDataObjectConverter<IFollowedChannel, FollowedChannel>();

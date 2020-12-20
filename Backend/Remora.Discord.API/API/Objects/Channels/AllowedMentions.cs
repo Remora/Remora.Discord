@@ -35,6 +35,7 @@ namespace Remora.Discord.API.Objects
     (
         Optional<IReadOnlyList<MentionType>> Parse,
         Optional<IReadOnlyList<Snowflake>> Roles,
-        Optional<IReadOnlyList<Snowflake>> Users
+        Optional<IReadOnlyList<Snowflake>> Users,
+        Optional<bool> MentionRepliedUser
     ) : IAllowedMentions;
 }
