@@ -187,6 +187,7 @@ namespace Remora.Discord.Caching.API
             Optional<Stream> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<IMessageReference> messageReference = default,
             CancellationToken ct = default
         )
         {
@@ -199,6 +200,7 @@ namespace Remora.Discord.Caching.API
                 file,
                 embed,
                 allowedMentions,
+                messageReference,
                 ct
             );
 
@@ -222,10 +224,20 @@ namespace Remora.Discord.Caching.API
             Optional<string?> content = default,
             Optional<IEmbed?> embed = default,
             Optional<MessageFlags?> flags = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
             CancellationToken ct = default
         )
         {
-            var editResult = await base.EditMessageAsync(channelID, messageID, content, embed, flags, ct);
+            var editResult = await base.EditMessageAsync
+            (
+                channelID,
+                messageID,
+                content,
+                embed,
+                flags,
+                allowedMentions,
+                ct
+            );
 
             if (!editResult.IsSuccess)
             {
