@@ -23,12 +23,14 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
     /// Converts a <see cref="DateTime"/> to and from unix time.
     /// </summary>
+    [PublicAPI]
     public class UnixDateTimeConverter : JsonConverter<DateTime>
     {
         /// <inheritdoc />

@@ -20,99 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PartialUser : IPartialUser
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Username { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Discriminator { get; }
-
-        /// <inheritdoc />
-        public Optional<IImageHash?> Avatar { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsBot { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsSystem { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsMFAEnabled { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Locale { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsVerified { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Email { get; }
-
-        /// <inheritdoc />
-        public Optional<UserFlags> Flags { get; }
-
-        /// <inheritdoc />
-        public Optional<PremiumType> PremiumType { get; }
-
-        /// <inheritdoc />
-        public Optional<UserFlags> PublicFlags { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialUser"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the user.</param>
-        /// <param name="username">The user's username.</param>
-        /// <param name="discriminator">The user's discriminator.</param>
-        /// <param name="avatar">The user's avatar.</param>
-        /// <param name="isBot">Whether the user is a bot.</param>
-        /// <param name="isSystem">Whether the user is a system user.</param>
-        /// <param name="isMFAEnabled">Whether MFA is enabled.</param>
-        /// <param name="locale">The user's locale.</param>
-        /// <param name="isVerified">Whether the user is verified.</param>
-        /// <param name="email">The user's email.</param>
-        /// <param name="flags">The user's flags.</param>
-        /// <param name="premiumType">The user's premium type.</param>
-        /// <param name="publicFlags">The user's public flags.</param>
-        public PartialUser
-        (
-            Optional<Snowflake> id,
-            Optional<string> username,
-            Optional<string> discriminator,
-            Optional<IImageHash?> avatar,
-            Optional<bool> isBot,
-            Optional<bool> isSystem,
-            Optional<bool> isMFAEnabled,
-            Optional<string> locale,
-            Optional<bool> isVerified,
-            Optional<string?> email,
-            Optional<UserFlags> flags,
-            Optional<PremiumType> premiumType,
-            Optional<UserFlags> publicFlags
-        )
-        {
-            this.ID = id;
-            this.Username = username;
-            this.Discriminator = discriminator;
-            this.Avatar = avatar;
-            this.IsBot = isBot;
-            this.IsSystem = isSystem;
-            this.IsMFAEnabled = isMFAEnabled;
-            this.Locale = locale;
-            this.IsVerified = isVerified;
-            this.Email = email;
-            this.Flags = flags;
-            this.PremiumType = premiumType;
-            this.PublicFlags = publicFlags;
-        }
-    }
+    /// <inheritdoc cref="IPartialUser" />
+    [PublicAPI]
+    public record PartialUser
+    (
+        Optional<Snowflake> ID,
+        Optional<string> Username,
+        Optional<string> Discriminator,
+        Optional<IImageHash?> Avatar,
+        Optional<bool> IsBot,
+        Optional<bool> IsSystem,
+        Optional<bool> IsMFAEnabled,
+        Optional<string> Locale,
+        Optional<bool> IsVerified,
+        Optional<string?> Email,
+        Optional<UserFlags> Flags,
+        Optional<PremiumType> PremiumType,
+        Optional<UserFlags> PublicFlags
+    ) : IPartialUser;
 }

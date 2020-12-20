@@ -22,58 +22,24 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildMemberUpdate : IGuildMemberUpdate
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public IReadOnlyList<Snowflake> Roles { get; }
-
-        /// <inheritdoc/>
-        public IUser User { get; }
-
-        /// <inheritdoc/>
-        public Optional<string?> Nickname { get; }
-
-        /// <inheritdoc/>
-        public DateTimeOffset JoinedAt { get; }
-
-        /// <inheritdoc/>
-        public Optional<DateTimeOffset?> PremiumSince { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildMemberUpdate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="roles">The user's roles.</param>
-        /// <param name="user">The user.</param>
-        /// <param name="nickname">The user's nickname.</param>
-        /// <param name="joinedAt">When the user joined.</param>
-        /// <param name="premiumSince">When the user started boosting the guild.</param>
-        public GuildMemberUpdate
-        (
-            Snowflake guildID,
-            IReadOnlyList<Snowflake> roles,
-            IUser user,
-            Optional<string?> nickname,
-            DateTimeOffset joinedAt,
-            Optional<DateTimeOffset?> premiumSince
-        )
-        {
-            this.GuildID = guildID;
-            this.Roles = roles;
-            this.User = user;
-            this.Nickname = nickname;
-            this.JoinedAt = joinedAt;
-            this.PremiumSince = premiumSince;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate" />
+    [PublicAPI]
+    public record GuildMemberUpdate
+    (
+        Snowflake GuildID,
+        IReadOnlyList<Snowflake> Roles,
+        IUser User,
+        Optional<string?> Nickname,
+        DateTimeOffset JoinedAt,
+        Optional<DateTimeOffset?> PremiumSince
+    ) : IGuildMemberUpdate;
 }

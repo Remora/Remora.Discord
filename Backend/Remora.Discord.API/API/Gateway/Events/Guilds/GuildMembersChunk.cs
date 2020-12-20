@@ -21,64 +21,25 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildMembersChunk : IGuildMembersChunk
-    {
-        /// <inheritdoc/>
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public IReadOnlyList<IGuildMember> Members { get; }
-
-        /// <inheritdoc/>
-        public int ChunkIndex { get; }
-
-        /// <inheritdoc/>
-        public int ChunkCount { get; }
-
-        /// <inheritdoc/>
-        public Optional<IReadOnlyList<Snowflake>> NotFound { get; }
-
-        /// <inheritdoc/>
-        public Optional<IReadOnlyList<IPresence>> Presences { get; }
-
-        /// <inheritdoc/>
-        public Optional<string> Nonce { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildMembersChunk"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="members">The members in the chunk.</param>
-        /// <param name="chunkIndex">The index of the chunk.</param>
-        /// <param name="chunkCount">The total number of expected chunks.</param>
-        /// <param name="notFound">Snowflakes that weren't found, or were otherwise invalid.</param>
-        /// <param name="presences">The presences of the members in the chunk.</param>
-        /// <param name="nonce">A unique request identifier.</param>
-        public GuildMembersChunk
-        (
-            Snowflake guildID,
-            IReadOnlyList<IGuildMember> members,
-            int chunkIndex,
-            int chunkCount,
-            Optional<IReadOnlyList<Snowflake>> notFound,
-            Optional<IReadOnlyList<IPresence>> presences,
-            Optional<string> nonce
-        )
-        {
-            this.GuildID = guildID;
-            this.Members = members;
-            this.ChunkIndex = chunkIndex;
-            this.ChunkCount = chunkCount;
-            this.NotFound = notFound;
-            this.Presences = presences;
-            this.Nonce = nonce;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMembersChunk" />
+    [PublicAPI]
+    public record GuildMembersChunk
+    (
+        Snowflake GuildID,
+        IReadOnlyList<IGuildMember> Members,
+        int ChunkIndex,
+        int ChunkCount,
+        Optional<IReadOnlyList<Snowflake>> NotFound,
+        Optional<IReadOnlyList<IPresence>> Presences,
+        Optional<string> Nonce
+    ) : IGuildMembersChunk;
 }

@@ -22,47 +22,23 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents a command to update the status of a user.
     /// </summary>
-    public class UpdateStatus : IUpdateStatus
-    {
-        /// <inheritdoc />
-        public DateTime? Since { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IActivity>? Activities { get; }
-
-        /// <inheritdoc />
-        public ClientStatus Status { get; }
-
-        /// <inheritdoc />
-        public bool IsAFK { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateStatus"/> class.
-        /// </summary>
-        /// <param name="status">The user's status.</param>
-        /// <param name="isAFK">Whether the user is AFK.</param>
-        /// <param name="since">The time that the client went idle.</param>
-        /// <param name="activities">The activities that the user is performing.</param>
-        public UpdateStatus
-        (
-            ClientStatus status,
-            bool isAFK,
-            DateTime? since = null,
-            IReadOnlyList<IActivity>? activities = null
-        )
-        {
-            this.Since = since;
-            this.Status = status;
-            this.IsAFK = isAFK;
-            this.Activities = activities;
-        }
-    }
+    [PublicAPI]
+    public record UpdateStatus
+    (
+        ClientStatus Status,
+        bool IsAFK,
+        DateTime? Since = null,
+        IReadOnlyList<IActivity>? Activities = null
+    ) : IUpdateStatus;
 }

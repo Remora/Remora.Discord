@@ -21,69 +21,26 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Role : IRole
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public Color Colour { get; }
-
-        /// <inheritdoc />
-        public bool IsHoisted { get; }
-
-        /// <inheritdoc />
-        public int Position { get; }
-
-        /// <inheritdoc />
-        public IDiscordPermissionSet Permissions { get; }
-
-        /// <inheritdoc />
-        public bool IsManaged { get; }
-
-        /// <inheritdoc />
-        public bool IsMentionable { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Role"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the role.</param>
-        /// <param name="name">The name of the role.</param>
-        /// <param name="colour">The colour of the role.</param>
-        /// <param name="isHoisted">Whether the role is displayed separately from other roles.</param>
-        /// <param name="position">The position of the role.</param>
-        /// <param name="permissions">The permissions of the role.</param>
-        /// <param name="isManaged">Whether the role is managed by an integration.</param>
-        /// <param name="isMentionable">Whether the role is mentionable.</param>
-        public Role
-        (
-            Snowflake id,
-            string name,
-            Color colour,
-            bool isHoisted,
-            int position,
-            IDiscordPermissionSet permissions,
-            bool isManaged,
-            bool isMentionable
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Colour = colour;
-            this.IsHoisted = isHoisted;
-            this.Position = position;
-            this.Permissions = permissions;
-            this.IsManaged = isManaged;
-            this.IsMentionable = isMentionable;
-        }
-    }
+    /// <inheritdoc cref="IRole" />
+    [PublicAPI]
+    public record Role
+    (
+        Snowflake ID,
+        string Name,
+        Color Colour,
+        bool IsHoisted,
+        int Position,
+        IDiscordPermissionSet Permissions,
+        bool IsManaged,
+        bool IsMentionable,
+        Optional<IRoleTags> Tags
+    ) : IRole;
 }

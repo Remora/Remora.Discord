@@ -21,31 +21,19 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
-    /// </summary>
-    public class ActivityTimestamps : IActivityTimestamps
-    {
-        /// <inheritdoc />
-        public Optional<DateTime> Start { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTime> End { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ActivityTimestamps"/> class.
-        /// </summary>
-        /// <param name="start">The start timestamp.</param>
-        /// <param name="end">The end timestamp.</param>
-        public ActivityTimestamps(Optional<DateTime> start = default, Optional<DateTime> end = default)
-        {
-            this.Start = start;
-            this.End = end;
-        }
-    }
+    /// <inheritdoc cref="IActivityTimestamps" />
+    [PublicAPI]
+    public record ActivityTimestamps
+    (
+        Optional<DateTime> Start = default,
+        Optional<DateTime> End = default
+    ) : IActivityTimestamps;
 }

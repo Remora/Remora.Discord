@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
@@ -31,6 +32,7 @@ namespace Remora.Discord.Rest.API
     /// <summary>
     /// Implements the Discord REST gateway API.
     /// </summary>
+    [PublicAPI]
     public class DiscordRestGatewayAPI : IDiscordRestGatewayAPI
     {
         private readonly DiscordHttpClient _discordHttpClient;

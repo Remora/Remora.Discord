@@ -20,23 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PruneCount : IPruneCount
-    {
-        /// <inheritdoc />
-        public int? Pruned { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PruneCount"/> class.
-        /// </summary>
-        /// <param name="pruned">The number of members that would be pruned.</param>
-        public PruneCount(int? pruned)
-        {
-            this.Pruned = pruned;
-        }
-    }
+    /// <inheritdoc cref="IPruneCount" />
+    [PublicAPI]
+    public record PruneCount(int? Pruned) : IPruneCount;
 }

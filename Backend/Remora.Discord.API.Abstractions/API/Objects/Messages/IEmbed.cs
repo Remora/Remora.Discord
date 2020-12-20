@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -30,6 +31,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents an embed.
     /// </summary>
+    [PublicAPI]
     public interface IEmbed
     {
         /// <summary>

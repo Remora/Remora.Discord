@@ -21,111 +21,32 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PartialIntegration : IPartialIntegration
-    {
-        /// <inheritdoc />
-        public Optional<Snowflake> ID { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Type { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsEnabled { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsSyncing { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> RoleID { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> EnableEmoticons { get; }
-
-        /// <inheritdoc />
-        public Optional<IntegrationExpireBehaviour> ExpireBehaviour { get; }
-
-        /// <inheritdoc />
-        public Optional<int> ExpireGracePeriod { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> User { get; }
-
-        /// <inheritdoc />
-        public Optional<IAccount> Account { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset> SyncedAt { get; }
-
-        /// <inheritdoc />
-        public Optional<int> SubscriberCount { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsRevoked { get; }
-
-        /// <inheritdoc />
-        public Optional<IIntegrationApplication> Application { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialIntegration"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the integration.</param>
-        /// <param name="name">The name of the integration.</param>
-        /// <param name="type">The integration's type.</param>
-        /// <param name="isEnabled">Whether the integration is enabled.</param>
-        /// <param name="isSyncing">Whether the integration is syncing.</param>
-        /// <param name="roleID">The ID of the role the integration is associated with.</param>
-        /// <param name="enableEmoticons">Whether emoticons should be synced for this integration.</param>
-        /// <param name="expireBehaviour">The behaviour of expiring subscribers.</param>
-        /// <param name="expireGracePeriod">The grace period for an expired subscriber.</param>
-        /// <param name="user">The user for this integration.</param>
-        /// <param name="account">The integration account information.</param>
-        /// <param name="syncedAt">The last time when the integration was synced.</param>
-        /// <param name="subscriberCount">The subscriber count.</param>
-        /// <param name="isRevoked">Whether the integration has been revoked.</param>
-        /// <param name="application">The integration application, if any.</param>
-        public PartialIntegration
-        (
-            Optional<Snowflake> id,
-            Optional<string> name,
-            Optional<string> type,
-            Optional<bool> isEnabled,
-            Optional<bool> isSyncing,
-            Optional<Snowflake> roleID,
-            Optional<bool> enableEmoticons,
-            Optional<IntegrationExpireBehaviour> expireBehaviour,
-            Optional<int> expireGracePeriod,
-            Optional<IUser> user,
-            Optional<IAccount> account,
-            Optional<DateTimeOffset> syncedAt,
-            Optional<int> subscriberCount,
-            Optional<bool> isRevoked,
-            Optional<IIntegrationApplication> application
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Type = type;
-            this.IsEnabled = isEnabled;
-            this.IsSyncing = isSyncing;
-            this.RoleID = roleID;
-            this.EnableEmoticons = enableEmoticons;
-            this.ExpireBehaviour = expireBehaviour;
-            this.ExpireGracePeriod = expireGracePeriod;
-            this.User = user;
-            this.Account = account;
-            this.SyncedAt = syncedAt;
-            this.SubscriberCount = subscriberCount;
-            this.IsRevoked = isRevoked;
-            this.Application = application;
-        }
-    }
+    /// <inheritdoc cref="IPartialIntegration" />
+    [PublicAPI]
+    public record PartialIntegration
+    (
+        Optional<Snowflake> ID,
+        Optional<string> Name,
+        Optional<string> Type,
+        Optional<bool> IsEnabled,
+        Optional<bool> IsSyncing,
+        Optional<Snowflake> RoleID,
+        Optional<bool> EnableEmoticons,
+        Optional<IntegrationExpireBehaviour> ExpireBehaviour,
+        Optional<TimeSpan> ExpireGracePeriod,
+        Optional<IUser> User,
+        Optional<IAccount> Account,
+        Optional<DateTimeOffset> SyncedAt,
+        Optional<int> SubscriberCount,
+        Optional<bool> IsRevoked,
+        Optional<IIntegrationApplication> Application
+    ) : IPartialIntegration;
 }

@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
@@ -38,6 +39,7 @@ namespace Remora.Discord.API.Extensions
     /// <summary>
     /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>
@@ -81,7 +83,11 @@ namespace Remora.Discord.API.Extensions
                             .AddUserObjectConverters()
                             .AddVoiceObjectConverters()
                             .AddWebhookObjectConverters()
-                            .AddErrorObjectConverters();
+                            .AddErrorObjectConverters()
+                            .AddTemplateObjectConverters()
+                            .AddInteractionObjectConverters()
+                            .AddOAuth2ObjectConverters()
+                            .AddTeamObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -91,7 +97,8 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<NullableConverterFactory>()
                             .AddConverter<SnowflakeConverter>()
                             .AddConverter<ColorConverter>()
-                            .AddConverter<PropertyErrorDetailsConverter>();
+                            .AddConverter<PropertyErrorDetailsConverter>()
+                            .AddConverter<OneOfConverterFactory>();
 
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;
@@ -122,8 +129,7 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddGatewayCommandConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IIdentify, Identify>()
-                .WithPropertyName(i => i.DispatchGuildSubscriptions, "guild_subscriptions");
+            options.AddDataObjectConverter<IIdentify, Identify>();
 
             options.AddDataObjectConverter<IConnectionProperties, ConnectionProperties>()
                 .WithPropertyName(p => p.OperatingSystem, "$os")
@@ -162,7 +168,9 @@ namespace Remora.Discord.API.Extensions
             // Connecting and resuming
             options.AddConverter<InvalidSessionConverter>();
 
-            options.AddDataObjectConverter<IHello, Hello>();
+            options.AddDataObjectConverter<IHello, Hello>()
+                .WithPropertyConverter(h => h.HeartbeatInterval, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
+
             options.AddDataObjectConverter<IReady, Ready>()
                 .WithPropertyName(r => r.Version, "v");
 
@@ -171,13 +179,16 @@ namespace Remora.Discord.API.Extensions
 
             // Channels
             options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
@@ -185,18 +196,28 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
+                .WithPropertyConverter
+                (
+                    g => g.GuildFeatures,
+                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
+                )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithReadPropertyName(g => g.Permissions, "permissions_new", "permissions");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
                 .WithPropertyName(d => d.IsUnavailable, "unavailable");
@@ -210,7 +231,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
             options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
@@ -224,7 +246,8 @@ namespace Remora.Discord.API.Extensions
 
             // Invites
             options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
-                .WithPropertyName(c => c.IsTemporary, "temporary");
+                .WithPropertyName(c => c.IsTemporary, "temporary")
+                .WithPropertyConverter(c => c.MaxAge, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IInviteDelete, InviteDelete>();
 
@@ -278,6 +301,9 @@ namespace Remora.Discord.API.Extensions
 
             // Webhooks
             options.AddDataObjectConverter<IWebhooksUpdate, WebhooksUpdate>();
+
+            // Interactions
+            options.AddDataObjectConverter<IInteractionCreate, InteractionCreate>();
 
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
@@ -334,10 +360,12 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddChannelObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IChannel, Channel>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
@@ -377,7 +405,7 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IGatewayEndpoint, GatewayEndpoint>();
             options.AddDataObjectConverter<ISessionStartLimit, SessionStartLimit>()
-                .WithPropertyConverter(st => st.ResetAfter, new MillisecondTimeSpanConverter());
+                .WithPropertyConverter(st => st.ResetAfter, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
 
             return options;
         }
@@ -399,7 +427,8 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -411,17 +440,20 @@ namespace Remora.Discord.API.Extensions
                 )
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
-                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled");
+                .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IPartialGuildMember, PartialGuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
                 .WithPropertyName(u => u.GuildID, "id")
@@ -465,12 +497,14 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IIntegration, Integration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
-                .WithPropertyName(i => i.IsRevoked, "revoked");
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IPartialIntegration, PartialIntegration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
-                .WithPropertyName(i => i.IsRevoked, "revoked");
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IIntegrationApplication, IntegrationApplication>();
 
@@ -521,9 +555,19 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.IsTTS, "tts")
                 .WithPropertyName(m => m.IsPinned, "pinned");
 
+            options.AddDataObjectConverter<IPartialMessage, PartialMessage>()
+                .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
+                .WithPropertyName(m => m.MentionedRoles, "mention_roles")
+                .WithPropertyName(m => m.MentionedChannels, "mention_channels")
+                .WithPropertyName(m => m.IsTTS, "tts")
+                .WithPropertyName(m => m.IsPinned, "pinned");
+
             options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
             options.AddDataObjectConverter<IMessageApplication, MessageApplication>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
+
+            options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
+                .WithPropertyConverter(s => s.Tags, new DelimitedListConverter<string>(";"));
 
             return options;
         }
@@ -550,6 +594,9 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(r => r.IsHoisted, "hoist")
                 .WithPropertyName(r => r.IsManaged, "managed")
                 .WithPropertyName(r => r.IsMentionable, "mentionable");
+
+            options.AddDataObjectConverter<IRoleTags, RoleTags>()
+                .WithPropertyName(t => t.IsPremiumSubscriberRole, "premium_subscriber");
 
             return options;
         }
@@ -679,6 +726,92 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IRestError, RestError>();
             options.AddDataObjectConverter<IErrorDetails, ErrorDetails>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle template objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddTemplateObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ITemplate, Template>();
+            options.AddDataObjectConverter<IGuildTemplate, GuildTemplate>();
+            options.AddDataObjectConverter<IRoleTemplate, RoleTemplate>()
+                .WithPropertyName(r => r.Colour, "color")
+                .WithPropertyName(r => r.IsHoisted, "hoist")
+                .WithPropertyName(r => r.IsMentionable, "mentionable");
+
+            options.AddDataObjectConverter<IChannelTemplate, ChannelTemplate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw");
+
+            options.AddDataObjectConverter<IPermissionOverwriteTemplate, PermissionOverwriteTemplate>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle interaction objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddInteractionObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>();
+            options.AddDataObjectConverter
+            <
+                IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
+            >();
+
+            options.AddDataObjectConverter<IInteraction, Interaction>();
+            options.AddDataObjectConverter
+            <
+                IInteractionApplicationCommandCallbackData, InteractionApplicationCommandCallbackData
+            >()
+            .WithPropertyName(d => d.IsTTS, "tts");
+
+            options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
+
+            options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
+            options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
+                .WithPropertyName(o => o.IsDefault, "default")
+                .WithPropertyName(o => o.IsRequired, "required");
+            options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle OAuth2 objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddOAuth2ObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplication, Application>()
+                .WithPropertyName(a => a.IsBotPublic, "bot_public")
+                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+            options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
+                .WithPropertyName(a => a.IsBotPublic, "bot_public")
+                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle team objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ITeam, Team>();
+            options.AddDataObjectConverter<ITeamMember, TeamMember>();
 
             return options;
         }

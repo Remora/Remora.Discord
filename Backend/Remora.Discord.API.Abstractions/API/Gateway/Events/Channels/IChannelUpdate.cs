@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents the update of a channel.
     /// </summary>
+    [PublicAPI]
     public interface IChannelUpdate : IGatewayEvent, IChannel
     {
     }

@@ -44,11 +44,14 @@ namespace Remora.Discord.Gateway.Tests.Transport
         private readonly MockedTransportServiceOptions _serviceOptions;
         private readonly CancellationTokenSource _finisher;
 
-        private readonly List<MockedTransportSequence> _finishedSequences = new List<MockedTransportSequence>();
+        private readonly List<MockedTransportSequence> _finishedSequences = new();
 
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim _semaphore = new(1);
 
         private DateTimeOffset _lastAdvance;
+
+        /// <inheritdoc />
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
@@ -156,6 +159,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
+                this.IsConnected = true;
                 return GatewayConnectionResult.FromSuccess();
             }
             finally
@@ -404,6 +408,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
+                this.IsConnected = false;
                 return GatewayConnectionResult.FromSuccess();
             }
             finally

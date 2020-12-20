@@ -20,52 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class TypingStart : ITypingStart
-    {
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake UserID { get; }
-
-        /// <inheritdoc/>
-        public int Timestamp { get; }
-
-        /// <inheritdoc/>
-        public Optional<IGuildMember> Member { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TypingStart"/> class.
-        /// </summary>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="userID">The ID of the user.</param>
-        /// <param name="timestamp">The time when typing started.</param>
-        /// <param name="member">The member information.</param>
-        public TypingStart
-        (
-            Snowflake channelID,
-            Optional<Snowflake> guildID,
-            Snowflake userID,
-            int timestamp,
-            Optional<IGuildMember> member
-        )
-        {
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-            this.UserID = userID;
-            this.Timestamp = timestamp;
-            this.Member = member;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.ITypingStart" />
+    [PublicAPI]
+    public record TypingStart
+    (
+        Snowflake ChannelID,
+        Optional<Snowflake> GuildID,
+        Snowflake UserID,
+        int Timestamp,
+        Optional<IGuildMember> Member
+    ) : ITypingStart;
 }

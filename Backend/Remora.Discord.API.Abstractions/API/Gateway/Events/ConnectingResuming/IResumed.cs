@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Represents an event that marks the completion of a session resumption.
     /// </summary>
+    [PublicAPI]
     public interface IResumed : IGatewayEvent
     {
     }

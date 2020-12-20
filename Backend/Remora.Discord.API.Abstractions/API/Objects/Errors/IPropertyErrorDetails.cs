@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents detailed information about errors in a property from Discord.
     /// </summary>
+    [PublicAPI]
     public interface IPropertyErrorDetails
     {
         /// <summary>

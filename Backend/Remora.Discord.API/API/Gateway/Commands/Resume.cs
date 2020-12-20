@@ -20,35 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents a resume command.
     /// </summary>
-    public class Resume : IResume
-    {
-        /// <inheritdoc />
-        public string Token { get; }
-
-        /// <inheritdoc />
-        public string SessionID { get; }
-
-        /// <inheritdoc />
-        public int SequenceNumber { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Resume"/> class.
-        /// </summary>
-        /// <param name="token">The session token.</param>
-        /// <param name="sessionID">The ID of the session.</param>
-        /// <param name="sequenceNumber">The last received sequence number.</param>
-        public Resume(string token, string sessionID, int sequenceNumber)
-        {
-            this.Token = token;
-            this.SessionID = sessionID;
-            this.SequenceNumber = sequenceNumber;
-        }
-    }
+    [PublicAPI]
+    public record Resume(string Token, string SessionID, int SequenceNumber) : IResume;
 }

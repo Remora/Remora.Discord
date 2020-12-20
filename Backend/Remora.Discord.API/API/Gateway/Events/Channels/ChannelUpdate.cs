@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -30,7 +31,8 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelUpdate" />
-    public class ChannelUpdate : Channel, IChannelUpdate
+    [PublicAPI]
+    public record ChannelUpdate : Channel, IChannelUpdate
     {
         /// <inheritdoc cref="Channel"/>
         public ChannelUpdate
@@ -46,7 +48,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
             Optional<Snowflake?> lastMessageID,
             Optional<int> bitrate,
             Optional<int> userLimit,
-            Optional<int> rateLimitPerUser,
+            Optional<TimeSpan> rateLimitPerUser,
             Optional<IReadOnlyList<IUser>> recipients,
             Optional<IImageHash?> icon,
             Optional<Snowflake> ownerID,

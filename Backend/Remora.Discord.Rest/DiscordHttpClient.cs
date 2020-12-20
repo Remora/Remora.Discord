@@ -26,6 +26,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.API.Objects;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Rest
     /// <summary>
     /// Represents a specialized HTTP client for the Discord API.
     /// </summary>
+    [PublicAPI]
     public class DiscordHttpClient
     {
         private readonly HttpClient _httpClient;
@@ -74,7 +76,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -113,7 +115,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -162,7 +164,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -204,7 +206,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -249,7 +251,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -291,7 +293,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -333,7 +335,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -378,7 +380,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -423,7 +425,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -465,7 +467,7 @@ namespace Remora.Discord.Rest
             CancellationToken ct = default
         )
         {
-            configureRequestBuilder ??= q => { };
+            configureRequestBuilder ??= _ => { };
 
             var requestBuilder = new RestRequestBuilder(endpoint);
             configureRequestBuilder(requestBuilder);
@@ -539,6 +541,15 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
+                if (jsonError is null)
+                {
+                    return RestRequestResult.FromError
+                    (
+                        response.ReasonPhrase,
+                        response.StatusCode
+                    );
+                }
+
                 return RestRequestResult.FromError
                 (
                     jsonError.Message,
@@ -573,7 +584,7 @@ namespace Remora.Discord.Rest
         {
             if (response.IsSuccessStatusCode)
             {
-                if (response.Content is null)
+                if (response.Content is null || response.Content.Headers.ContentLength == 0)
                 {
                     if (!allowNullReturn)
                     {
@@ -591,7 +602,18 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                return RetrieveRestEntityResult<TEntity>.FromSuccess(entity);
+                if (entity is not null)
+                {
+                    return RetrieveRestEntityResult<TEntity>.FromSuccess(entity);
+                }
+
+                if (!allowNullReturn)
+                {
+                    throw new InvalidOperationException("Response content null, but null returns not allowed.");
+                }
+
+                // Null is okay as a default here, since TEntity might be TEntity?
+                return RetrieveRestEntityResult<TEntity>.FromSuccess(default!);
             }
 
             // See if we have a JSON error to get some more details from
@@ -621,6 +643,15 @@ namespace Remora.Discord.Rest
                     _serializerOptions,
                     ct
                 );
+
+                if (jsonError is null)
+                {
+                    return RetrieveRestEntityResult<TEntity>.FromError
+                    (
+                        response.ReasonPhrase,
+                        response.StatusCode
+                    );
+                }
 
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (

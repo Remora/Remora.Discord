@@ -20,29 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class UnavailableGuild : IUnavailableGuild
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsUnavailable { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnavailableGuild"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="isUnavailable">Whether the guild is unavailable.</param>
-        public UnavailableGuild(Snowflake guildID, Optional<bool> isUnavailable)
-        {
-            this.GuildID = guildID;
-            this.IsUnavailable = isUnavailable;
-        }
-    }
+    /// <inheritdoc cref="IUnavailableGuild" />
+    [PublicAPI]
+    public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable) : IUnavailableGuild;
 }

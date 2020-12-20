@@ -21,34 +21,20 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class MessageDeleteBulk : IMessageDeleteBulk
-    {
-        /// <inheritdoc/>
-        public IReadOnlyList<Snowflake> MessageIDs { get; }
-
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageDeleteBulk"/> class.
-        /// </summary>
-        /// <param name="messageIDs">The IDs of the deleted messages.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        public MessageDeleteBulk(IReadOnlyList<Snowflake> messageIDs, Snowflake channelID, Optional<Snowflake> guildID)
-        {
-            this.MessageIDs = messageIDs;
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageDeleteBulk" />
+    [PublicAPI]
+    public record MessageDeleteBulk
+    (
+        IReadOnlyList<Snowflake> MessageIDs,
+        Snowflake ChannelID,
+        Optional<Snowflake> GuildID
+    ) : IMessageDeleteBulk;
 }

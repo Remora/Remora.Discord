@@ -21,40 +21,20 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a session start limit.
-    /// </summary>
-    public class SessionStartLimit : ISessionStartLimit
-    {
-        /// <inheritdoc/>
-        public int Total { get; }
-
-        /// <inheritdoc/>
-        public int Remaining { get; }
-
-        /// <inheritdoc/>
-        public TimeSpan ResetAfter { get; }
-
-        /// <inheritdoc />
-        public int MaxConcurrency { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SessionStartLimit"/> class.
-        /// </summary>
-        /// <param name="total">The total allowed session starts.</param>
-        /// <param name="remaining">The remaining allowed session starts.</param>
-        /// <param name="resetAfter">The time after which the limit resets.</param>
-        /// <param name="maxConcurrency">The maximum degree of concurrency.</param>
-        public SessionStartLimit(int total, int remaining, TimeSpan resetAfter, int maxConcurrency)
-        {
-            this.Total = total;
-            this.Remaining = remaining;
-            this.ResetAfter = resetAfter;
-            this.MaxConcurrency = maxConcurrency;
-        }
-    }
+    /// <inheritdoc cref="ISessionStartLimit" />
+    [PublicAPI]
+    public record SessionStartLimit
+    (
+        int Total,
+        int Remaining,
+        TimeSpan ResetAfter,
+        int MaxConcurrency
+    ) : ISessionStartLimit;
 }

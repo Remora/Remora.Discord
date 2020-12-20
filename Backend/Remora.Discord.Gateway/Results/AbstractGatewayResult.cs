@@ -33,6 +33,7 @@ namespace Remora.Discord.Gateway.Results
     /// Represents the result of a Discord gateway operation.
     /// </summary>
     /// <typeparam name="TActualResult">The actual result type.</typeparam>
+    [PublicAPI]
     public abstract class AbstractGatewayResult<TActualResult> : ResultBase<TActualResult>
         where TActualResult : AbstractGatewayResult<TActualResult>
     {
@@ -104,7 +105,6 @@ namespace Remora.Discord.Gateway.Results
         /// <param name="errorReason">A more detailed error reason.</param>
         /// <param name="closeStatus">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
-        [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,
@@ -135,7 +135,6 @@ namespace Remora.Discord.Gateway.Results
         /// <param name="errorReason">A more detailed error reason.</param>
         /// <param name="closeStatus">The Discord error that caused the failure, if any.</param>
         /// <returns>A failed result.</returns>
-        [PublicAPI, Pure]
         public static TActualResult FromError
         (
             string errorReason,

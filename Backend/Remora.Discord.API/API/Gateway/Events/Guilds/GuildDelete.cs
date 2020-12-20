@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
@@ -27,7 +28,8 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IGuildDelete"/>
-    public class GuildDelete : UnavailableGuild, IGuildDelete
+    [PublicAPI]
+    public record GuildDelete : UnavailableGuild, IGuildDelete
     {
         /// <inheritdoc cref="UnavailableGuild" />
         public GuildDelete(Snowflake guildID, Optional<bool> isUnavailable)

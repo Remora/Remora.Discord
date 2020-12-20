@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a message reference.
     /// </summary>
+    [PublicAPI]
     public interface IMessageReference
     {
         /// <summary>
@@ -37,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the originating message's channel.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<Snowflake> ChannelID { get; }
 
         /// <summary>
         /// Gets the ID of the originating message's guild.

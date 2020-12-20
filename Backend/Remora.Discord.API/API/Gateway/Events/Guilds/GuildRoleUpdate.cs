@@ -20,30 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildRoleUpdate : IGuildRoleUpdate
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public IRole Role { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildRoleUpdate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="role">The updated role.</param>
-        public GuildRoleUpdate(Snowflake guildID, IRole role)
-        {
-            this.GuildID = guildID;
-            this.Role = role;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleUpdate" />
+    [PublicAPI]
+    public record GuildRoleUpdate(Snowflake GuildID, IRole Role) : IGuildRoleUpdate;
 }

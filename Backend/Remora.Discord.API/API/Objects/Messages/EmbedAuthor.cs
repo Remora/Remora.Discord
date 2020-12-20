@@ -20,45 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class EmbedAuthor : IEmbedAuthor
-    {
-        /// <inheritdoc />
-        public Optional<string> Name { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <inheritdoc />
-        public Optional<string> IconUrl { get; }
-
-        /// <inheritdoc />
-        public Optional<string> ProxyIconUrl { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedAuthor"/> class.
-        /// </summary>
-        /// <param name="name">The name of the author.</param>
-        /// <param name="url">The author's URL.</param>
-        /// <param name="iconUrl">The author's icon URL.</param>
-        /// <param name="proxyIconUrl">The author's proxied icon URL.</param>
-        public EmbedAuthor
-        (
-            Optional<string> name,
-            Optional<string> url,
-            Optional<string> iconUrl,
-            Optional<string> proxyIconUrl
-        )
-        {
-            this.Name = name;
-            this.Url = url;
-            this.IconUrl = iconUrl;
-            this.ProxyIconUrl = proxyIconUrl;
-        }
-    }
+    /// <inheritdoc cref="IEmbedAuthor" />
+    [PublicAPI]
+    public record EmbedAuthor
+    (
+        Optional<string> Name,
+        Optional<string> Url,
+        Optional<string> IconUrl,
+        Optional<string> ProxyIconUrl
+    ) : IEmbedAuthor;
 }

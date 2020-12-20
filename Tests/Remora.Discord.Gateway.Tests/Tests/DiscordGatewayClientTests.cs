@@ -35,6 +35,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Transport;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Results;
@@ -62,12 +63,12 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -79,7 +80,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 "mock-session",
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                 )
@@ -98,6 +100,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
@@ -120,12 +123,12 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -137,18 +140,19 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                         .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
                             r =>
                             {
-                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
                                 return true;
                             }
                         )
@@ -169,6 +173,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
@@ -191,12 +196,12 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     s => s
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -208,18 +213,19 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                         .Send<Reconnect>()
                         .ExpectDisconnect()
                         .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
-                        .Send(new Hello(200))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
                             r =>
                             {
-                                Assert.Equal(Constants.MockSessionID, r.SessionID);
+                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
                                 return true;
                             }
                         )
@@ -228,7 +234,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         (
                             i =>
                             {
-                                Assert.Equal(Constants.MockToken, i.Token);
+                                Assert.Equal(Constants.MockToken, i?.Token);
                                 return true;
                             }
                         )
@@ -240,7 +246,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                 )
@@ -259,6 +266,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .AddDiscordGateway(() => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
                 .BuildServiceProvider();
 
             var client = services.GetRequiredService<DiscordGatewayClient>();

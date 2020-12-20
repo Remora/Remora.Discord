@@ -51,7 +51,7 @@ namespace Remora.Discord.Rest.Tests.Extensions
             return request.With
             (
                 m => m
-                    .Headers.Authorization.Scheme == "Bot" &&
+                    .Headers.Authorization?.Scheme == "Bot" &&
                      !string.IsNullOrWhiteSpace(m.Headers.Authorization.Parameter)
             );
         }

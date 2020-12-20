@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a message.
     /// </summary>
+    [PublicAPI]
     public interface IMessage
     {
         /// <summary>
@@ -161,6 +163,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a set of bitwise flags describing extra features of the message.
         /// </summary>
         Optional<MessageFlags> Flags { get; }
+
+        /// <summary>
+        /// Gets the stickers sent with the message.
+        /// </summary>
+        Optional<IReadOnlyList<IMessageSticker>> Stickers { get; }
 
         /// <summary>
         /// Gets the referenced message, if any. A null value in this context refers to a deleted message.

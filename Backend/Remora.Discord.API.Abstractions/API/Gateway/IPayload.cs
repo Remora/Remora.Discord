@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Gateway
 {
     /// <summary>
     /// Marker interface for payload classes.
     /// </summary>
+    [PublicAPI]
     public interface IPayload
     {
     }

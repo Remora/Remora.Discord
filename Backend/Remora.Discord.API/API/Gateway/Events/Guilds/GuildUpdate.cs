@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -30,7 +31,8 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IGuildUpdate"/>
-    public class GuildUpdate : Guild, IGuildUpdate
+    [PublicAPI]
+    public record GuildUpdate : Guild, IGuildUpdate
     {
         /// <inheritdoc cref="Guild"/>
         public GuildUpdate
@@ -45,7 +47,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IDiscordPermissionSet> permissions,
             string region,
             Snowflake? afkChannelID,
-            int afkTimeout,
+            TimeSpan afkTimeout,
             VerificationLevel verificationLevel,
             MessageNotificationLevel defaultMessageNotifications,
             ExplicitContentFilterLevel explicitContentFilter,

@@ -21,51 +21,22 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PartialPresence : IPartialPresence
-    {
-        /// <inheritdoc />
-        public Optional<IPartialUser> User { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc />
-        public Optional<ClientStatus> Status { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<IActivity>?> Activities { get; }
-
-        /// <inheritdoc />
-        public Optional<IClientStatuses> ClientStatus { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialPresence"/> class.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="status">The user's current status.</param>
-        /// <param name="activities">The user's current activities.</param>
-        /// <param name="clientStatus">The user's platform-dependent status.</param>
-        public PartialPresence
-        (
-            Optional<IPartialUser> user,
-            Optional<Snowflake> guildID,
-            Optional<ClientStatus> status,
-            Optional<IReadOnlyList<IActivity>?> activities,
-            Optional<IClientStatuses> clientStatus
-        )
-        {
-            this.User = user;
-            this.GuildID = guildID;
-            this.Status = status;
-            this.Activities = activities;
-            this.ClientStatus = clientStatus;
-        }
-    }
+    /// <inheritdoc cref="IPartialPresence" />
+    [PublicAPI]
+    public record PartialPresence
+    (
+        Optional<IPartialUser> User,
+        Optional<Snowflake> GuildID,
+        Optional<ClientStatus> Status,
+        Optional<IReadOnlyList<IActivity>?> Activities,
+        Optional<IClientStatuses> ClientStatus
+    ) : IPartialPresence;
 }

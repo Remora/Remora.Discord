@@ -21,30 +21,16 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildEmojisUpdate : IGuildEmojisUpdate
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public IReadOnlyList<IEmoji> Emojis { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildEmojisUpdate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="emojis">The new emojis.</param>
-        public GuildEmojisUpdate(Snowflake guildID, IReadOnlyList<IEmoji> emojis)
-        {
-            this.GuildID = guildID;
-            this.Emojis = emojis;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildEmojisUpdate" />
+    [PublicAPI]
+    public record GuildEmojisUpdate(Snowflake GuildID, IReadOnlyList<IEmoji> Emojis) : IGuildEmojisUpdate;
 }

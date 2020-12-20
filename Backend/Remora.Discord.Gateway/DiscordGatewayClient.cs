@@ -23,10 +23,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Net.Http;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -41,6 +43,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 
 namespace Remora.Discord.Gateway
@@ -48,6 +51,7 @@ namespace Remora.Discord.Gateway
     /// <summary>
     /// Represents a Discord Gateway client.
     /// </summary>
+    [PublicAPI]
     public class DiscordGatewayClient : IDisposable
     {
         private readonly IServiceProvider _services;
@@ -57,6 +61,7 @@ namespace Remora.Discord.Gateway
         private readonly DiscordGatewayClientOptions _gatewayOptions;
         private readonly ITokenStore _tokenStore;
         private readonly Random _random;
+        private readonly IResponderTypeRepository _responderTypeRepository;
 
         /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -134,6 +139,7 @@ namespace Remora.Discord.Gateway
         /// <param name="random">An entropy source.</param>
         /// <param name="log">The logging instance.</param>
         /// <param name="services">The available services.</param>
+        /// <param name="responderTypeRepository">The responder type repository.</param>
         public DiscordGatewayClient
         (
             IDiscordRestGatewayAPI gatewayAPI,
@@ -142,7 +148,8 @@ namespace Remora.Discord.Gateway
             ITokenStore tokenStore,
             Random random,
             ILogger<DiscordGatewayClient> log,
-            IServiceProvider services
+            IServiceProvider services,
+            IResponderTypeRepository responderTypeRepository
         )
         {
             _gatewayAPI = gatewayAPI;
@@ -152,6 +159,7 @@ namespace Remora.Discord.Gateway
             _random = random;
             _log = log;
             _services = services;
+            _responderTypeRepository = responderTypeRepository;
 
             _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
 
@@ -217,11 +225,14 @@ namespace Remora.Discord.Gateway
                     _ = await _sendTask;
                     _ = await _receiveTask;
 
-                    var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
-                    if (!disconnectResult.IsSuccess)
+                    if (_transportService.IsConnected)
                     {
-                        // Couldn't disconnect cleanly :(
-                        return disconnectResult;
+                        var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
+                        if (!disconnectResult.IsSuccess)
+                        {
+                            // Couldn't disconnect cleanly :(
+                            return disconnectResult;
+                        }
                     }
 
                     // Finish up the responders
@@ -233,10 +244,7 @@ namespace Remora.Discord.Gateway
                     if (ct.IsCancellationRequested)
                     {
                         // The user requested a termination, and we don't intend to reconnect.
-                        _sessionID = null;
-                        _connectionStatus = GatewayConnectionStatus.Offline;
-
-                        return GatewayConnectionResult.FromSuccess();
+                        return iterationResult;
                     }
 
                     switch (iterationResult.GatewayCloseStatus)
@@ -267,8 +275,23 @@ namespace Remora.Discord.Gateway
                         }
                     }
 
-                    // Reconnection is not allowed.
-                    return iterationResult;
+                    switch (iterationResult.Exception)
+                    {
+                        case HttpRequestException _:
+                        case WebSocketException _:
+                        {
+                            _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
+
+                            // Reconnection is allowed, since this is probably a transient error
+                            _connectionStatus = GatewayConnectionStatus.Disconnected;
+                            break;
+                        }
+                        default:
+                        {
+                            // Something has gone terribly wrong, and we won't keep trying to connect
+                            return iterationResult;
+                        }
+                    }
                 }
 
                 var userRequestedDisconnect = await _transportService.DisconnectAsync(false, ct);
@@ -286,8 +309,12 @@ namespace Remora.Discord.Gateway
             {
                 return GatewayConnectionResult.FromError(e);
             }
-
-            _connectionStatus = GatewayConnectionStatus.Offline;
+            finally
+            {
+                // Reconnection is not allowed.
+                _sessionID = null;
+                _connectionStatus = GatewayConnectionStatus.Offline;
+            }
 
             return GatewayConnectionResult.FromSuccess();
         }
@@ -336,7 +363,7 @@ namespace Remora.Discord.Gateway
                         return GatewayConnectionResult.FromError(receiveHello);
                     }
 
-                    if (!(receiveHello.Entity is IPayload<IHello> hello))
+                    if (!(receiveHello.Entity is IPayload<IHello> hello) || hello.Data is null)
                     {
                         // Not receiving a hello is a non-recoverable error
                         return GatewayConnectionResult.FromError
@@ -346,7 +373,7 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Set up the send task
-                    var heartbeatInterval = TimeSpan.FromMilliseconds(hello.Data.HeartbeatInterval);
+                    var heartbeatInterval = hello.Data.HeartbeatInterval;
 
                     _sendTask = Task.Factory.StartNew
                     (
@@ -573,20 +600,22 @@ namespace Remora.Discord.Gateway
         )
             where TGatewayEvent : IGatewayEvent
         {
-            using var serviceScope = _services.CreateScope();
-            var responders = serviceScope.ServiceProvider.GetServices<IResponder<TGatewayEvent>>().ToList();
-            if (responders.Count == 0)
+            var responderTypes = _responderTypeRepository.GetResponderTypes<TGatewayEvent>();
+            if (responderTypes.Count == 0)
             {
                 return Array.Empty<EventResponseResult>();
             }
 
             return await Task.WhenAll
             (
-                responders.Select(async r =>
+                responderTypes.Select(async rt =>
                 {
+                    using var serviceScope = _services.CreateScope();
+                    var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider.GetService(rt);
+
                     try
                     {
-                        return await r.RespondAsync(gatewayEvent.Data, ct);
+                        return await responder.RespondAsync(gatewayEvent.Data, ct);
                     }
                     catch (Exception e)
                     {
@@ -594,12 +623,17 @@ namespace Remora.Discord.Gateway
                     }
                     finally
                     {
-                        if (r is IDisposable disposable)
+                        // Suspicious type conversions are disabled here, since the user-defined responders may
+                        // implement IDisposable or IAsyncDisposable.
+
+                        // ReSharper disable once SuspiciousTypeConversion.Global
+                        if (responder is IDisposable disposable)
                         {
                             disposable.Dispose();
                         }
 
-                        if (r is IAsyncDisposable asyncDisposable)
+                        // ReSharper disable once SuspiciousTypeConversion.Global
+                        if (responder is IAsyncDisposable asyncDisposable)
                         {
                             await asyncDisposable.DisposeAsync();
                         }
@@ -644,9 +678,9 @@ namespace Remora.Discord.Gateway
                 (
                     _tokenStore.Token,
                     _gatewayOptions.ConnectionProperties,
-                    intents: _gatewayOptions.Intents,
-                    compress: false,
-                    shard: shardInformation
+                    Intents: _gatewayOptions.Intents,
+                    Compress: false,
+                    Shard: shardInformation
                 )
             );
 
@@ -663,7 +697,7 @@ namespace Remora.Discord.Gateway
                     continue;
                 }
 
-                if (!(receiveReady.Entity is IPayload<IReady> ready))
+                if (!(receiveReady.Entity is IPayload<IReady> ready) || ready.Data is null)
                 {
                     return GatewayConnectionResult.FromError
                     (
@@ -888,7 +922,7 @@ namespace Remora.Discord.Gateway
                         case IPayload<IInvalidSession> invalidSession:
                         {
                             _shouldReconnect = true;
-                            _isSessionResumable = invalidSession.Data.IsResumable;
+                            _isSessionResumable = invalidSession.Data?.IsResumable ?? false;
 
                             break;
                         }

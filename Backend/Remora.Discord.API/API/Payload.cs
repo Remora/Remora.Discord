@@ -20,7 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API
 {
@@ -28,18 +31,6 @@ namespace Remora.Discord.API
     /// Represents a payload from the Discord gateway.
     /// </summary>
     /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    public class Payload<TData> : IPayload<TData> where TData : IGatewayPayloadData
-    {
-        /// <inheritdoc/>
-        public TData Data { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Payload{TData}"/> class.
-        /// </summary>
-        /// <param name="data">The JSON data.</param>
-        public Payload(TData data)
-        {
-            this.Data = data;
-        }
-    }
+    [PublicAPI]
+    public record Payload<TData>(TData? Data) : IPayload<TData> where TData : IGatewayPayloadData;
 }

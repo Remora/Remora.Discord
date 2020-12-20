@@ -21,51 +21,22 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Presence : IPresence
-    {
-        /// <inheritdoc />
-        public IPartialUser User { get; }
-
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public ClientStatus Status { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyList<IActivity>? Activities { get; }
-
-        /// <inheritdoc />
-        public IClientStatuses ClientStatus { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Presence"/> class.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="status">The user's current status.</param>
-        /// <param name="activities">The user's current activities.</param>
-        /// <param name="clientStatus">The user's platform-dependent status.</param>
-        public Presence
-        (
-            IPartialUser user,
-            Snowflake guildID,
-            ClientStatus status,
-            IReadOnlyList<IActivity>? activities,
-            IClientStatuses clientStatus
-        )
-        {
-            this.User = user;
-            this.GuildID = guildID;
-            this.Status = status;
-            this.Activities = activities;
-            this.ClientStatus = clientStatus;
-        }
-    }
+    /// <inheritdoc cref="IPresence" />
+    [PublicAPI]
+    public record Presence
+    (
+        IPartialUser User,
+        Snowflake GuildID,
+        ClientStatus Status,
+        IReadOnlyList<IActivity>? Activities,
+        IClientStatuses ClientStatus
+    ) : IPresence;
 }

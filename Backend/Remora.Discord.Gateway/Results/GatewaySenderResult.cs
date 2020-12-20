@@ -30,6 +30,7 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents the result of the gateway sender task, which handles continuous pushing of payloads to the gateway.
     /// </summary>
+    [PublicAPI]
     public class GatewaySenderResult : AbstractGatewayResult<GatewaySenderResult>
     {
         /// <summary>
@@ -76,7 +77,7 @@ namespace Remora.Discord.Gateway.Results
         /// Creates a new successful result.
         /// </summary>
         /// <returns>A successful result.</returns>
-        [PublicAPI, Pure]
+        [Pure]
         public static GatewaySenderResult FromSuccess()
         {
             return new GatewaySenderResult();

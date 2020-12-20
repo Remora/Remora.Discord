@@ -20,34 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class InviteDelete : IInviteDelete
-    {
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc/>
-        public string Code { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InviteDelete"/> class.
-        /// </summary>
-        /// <param name="channelID">The ID of the channel the invite was for.</param>
-        /// <param name="guildID">The ID of the guild the invite was for.</param>
-        /// <param name="code">The unique code of the invite.</param>
-        public InviteDelete(Snowflake channelID, Optional<Snowflake> guildID, string code)
-        {
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-            this.Code = code;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IInviteDelete" />
+    [PublicAPI]
+    public record InviteDelete(Snowflake ChannelID, Optional<Snowflake> GuildID, string Code) : IInviteDelete;
 }

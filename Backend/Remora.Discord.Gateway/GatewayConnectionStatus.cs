@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Gateway
 {
     /// <summary>
     /// Enumerates the various states the gateway client can be in.
     /// </summary>
+    [PublicAPI]
     public enum GatewayConnectionStatus
     {
         /// <summary>

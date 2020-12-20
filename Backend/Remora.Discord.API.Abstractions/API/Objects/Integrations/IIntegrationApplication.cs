@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents application information for a Discord integration.
     /// </summary>
+    [PublicAPI]
     public interface IIntegrationApplication
     {
         /// <summary>

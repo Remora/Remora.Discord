@@ -20,29 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildRoleDelete : IGuildRoleDelete
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public Snowflake RoleID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildRoleDelete"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="roleID">The ID of the deleted role.</param>
-        public GuildRoleDelete(Snowflake guildID, Snowflake roleID)
-        {
-            this.GuildID = guildID;
-            this.RoleID = roleID;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleDelete" />
+    [PublicAPI]
+    public record GuildRoleDelete(Snowflake GuildID, Snowflake RoleID) : IGuildRoleDelete;
 }

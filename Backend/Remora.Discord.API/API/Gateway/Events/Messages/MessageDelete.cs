@@ -20,34 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class MessageDelete : IMessageDelete
-    {
-        /// <inheritdoc/>
-        public Snowflake ID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageDelete"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the message.</param>
-        /// <param name="channelID">The ID of the channel the message was in.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        public MessageDelete(Snowflake id, Snowflake channelID, Optional<Snowflake> guildID)
-        {
-            this.ID = id;
-            this.ChannelID = channelID;
-            this.GuildID = guildID;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageDelete" />
+    [PublicAPI]
+    public record MessageDelete(Snowflake ID, Snowflake ChannelID, Optional<Snowflake> GuildID) : IMessageDelete;
 }

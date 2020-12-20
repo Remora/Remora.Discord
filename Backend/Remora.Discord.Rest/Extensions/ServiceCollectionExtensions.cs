@@ -26,6 +26,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
@@ -40,6 +41,7 @@ namespace Remora.Discord.Rest.Extensions
     /// <summary>
     /// Defines various extension methods for the <see cref="IServiceCollection"/> interface.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>
@@ -98,7 +100,7 @@ namespace Remora.Discord.Rest.Extensions
                         .WaitAndRetryAsync
                         (
                             1,
-                            (retryCount, response, context) =>
+                            (_, response, _) =>
                             {
                                 if (response.Result == default)
                                 {
@@ -112,7 +114,7 @@ namespace Remora.Discord.Rest.Extensions
 
                                 return response.Result.Headers.RetryAfter.Delta.Value;
                             },
-                            (x, y, z, w) => Task.CompletedTask
+                            (_, _, _, _) => Task.CompletedTask
                         )
                 );
 
@@ -120,7 +122,7 @@ namespace Remora.Discord.Rest.Extensions
             buildClient?.Invoke(clientBuilder);
 
             serviceCollection
-                .AddSingleton<ITokenStore>(s => new TokenStore(token()));
+                .AddSingleton<ITokenStore>(_ => new TokenStore(token()));
 
             serviceCollection
                 .AddScoped<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
@@ -131,7 +133,11 @@ namespace Remora.Discord.Rest.Extensions
                 .AddScoped<IDiscordRestInviteAPI, DiscordRestInviteAPI>()
                 .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
                 .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
-                .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>();
+                .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>()
+                .AddScoped<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>()
+                .AddScoped<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>()
+                .AddScoped<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>()
+                .AddScoped<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
 
             return serviceCollection;
         }

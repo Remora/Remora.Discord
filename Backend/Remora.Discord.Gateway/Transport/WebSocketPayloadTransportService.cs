@@ -27,6 +27,7 @@ using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Gateway.Transport
     /// <summary>
     /// Represents a websocket-based transport service.
     /// </summary>
+    [PublicAPI]
     public class WebSocketPayloadTransportService : IPayloadTransportService, IAsyncDisposable
     {
         private readonly IServiceProvider _services;
@@ -46,6 +48,9 @@ namespace Remora.Discord.Gateway.Transport
         /// Holds the currently available websocket client.
         /// </summary>
         private ClientWebSocket? _clientWebSocket;
+
+        /// <inheritdoc />
+        public bool IsConnected { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSocketPayloadTransportService"/> class.
@@ -65,7 +70,7 @@ namespace Remora.Discord.Gateway.Transport
         /// <inheritdoc />
         public async Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
         {
-            if (!(_clientWebSocket is null))
+            if (_clientWebSocket is not null)
             {
                 return GatewayConnectionResult.FromError("The transport service is already connected.");
             }
@@ -96,6 +101,8 @@ namespace Remora.Discord.Gateway.Transport
             }
 
             _clientWebSocket = socket;
+
+            this.IsConnected = true;
             return GatewayConnectionResult.FromSuccess();
         }
 
@@ -157,7 +164,7 @@ namespace Remora.Discord.Gateway.Transport
             }
             finally
             {
-                if (!(buffer is null))
+                if (buffer is not null)
                 {
                     ArrayPool<byte>.Shared.Return(buffer);
                 }
@@ -216,6 +223,14 @@ namespace Remora.Discord.Gateway.Transport
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
                 var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
+                if (payload is null)
+                {
+                    return ReceivePayloadResult<IPayload>.FromError
+                    (
+                        "The received payload deserialized as a null value."
+                    );
+                }
+
                 return ReceivePayloadResult<IPayload>.FromSuccess(payload);
             }
             finally
@@ -270,6 +285,7 @@ namespace Remora.Discord.Gateway.Transport
             _clientWebSocket.Dispose();
             _clientWebSocket = null;
 
+            this.IsConnected = false;
             return GatewayConnectionResult.FromSuccess();
         }
 

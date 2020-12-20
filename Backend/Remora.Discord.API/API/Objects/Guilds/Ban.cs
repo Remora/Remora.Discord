@@ -20,28 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Ban : IBan
-    {
-        /// <inheritdoc />
-        public string? Reason { get; }
-
-        /// <inheritdoc/>
-        public IUser User { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Ban"/> class.
-        /// </summary>
-        /// <param name="reason">The reason for the ban.</param>
-        /// <param name="user">The banned user.</param>
-        public Ban(string? reason, IUser user)
-        {
-            this.Reason = reason;
-            this.User = user;
-        }
-    }
+    /// <inheritdoc cref="IBan" />
+    [PublicAPI]
+    public record Ban(string? Reason, IUser User) : IBan;
 }

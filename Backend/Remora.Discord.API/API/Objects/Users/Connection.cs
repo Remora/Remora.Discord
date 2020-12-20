@@ -21,75 +21,26 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Connection : IConnection
-    {
-        /// <inheritdoc/>
-        public string ID { get; }
-
-        /// <inheritdoc/>
-        public string Name { get; }
-
-        /// <inheritdoc/>
-        public string Type { get; }
-
-        /// <inheritdoc/>
-        public Optional<bool> IsRevoked { get; }
-
-        /// <inheritdoc/>
-        public Optional<IReadOnlyList<IPartialIntegration>> Integrations { get; }
-
-        /// <inheritdoc/>
-        public bool IsVerified { get; }
-
-        /// <inheritdoc/>
-        public bool IsFriendSyncEnabled { get; }
-
-        /// <inheritdoc/>
-        public bool ShouldShowActivity { get; }
-
-        /// <inheritdoc/>
-        public ConnectionVisibility Visibility { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Connection"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the connection account.</param>
-        /// <param name="name">The username of the connection account.</param>
-        /// <param name="type">The service of the connection.</param>
-        /// <param name="isRevoked">Whether the connection is revoked.</param>
-        /// <param name="integrations">The server integrations for this connection.</param>
-        /// <param name="isVerified">Whether the connection is verified.</param>
-        /// <param name="isFriendSyncEnabled">Whether friend sync is enabled.</param>
-        /// <param name="shouldShowActivity">Whether activities related to this connection should be shown.</param>
-        /// <param name="visibility">The visibility of the connection.</param>
-        public Connection
-        (
-            string id,
-            string name,
-            string type,
-            Optional<bool> isRevoked,
-            Optional<IReadOnlyList<IPartialIntegration>> integrations,
-            bool isVerified,
-            bool isFriendSyncEnabled,
-            bool shouldShowActivity,
-            ConnectionVisibility visibility
-        )
-        {
-            this.ID = id;
-            this.Name = name;
-            this.Type = type;
-            this.IsRevoked = isRevoked;
-            this.Integrations = integrations;
-            this.IsVerified = isVerified;
-            this.IsFriendSyncEnabled = isFriendSyncEnabled;
-            this.ShouldShowActivity = shouldShowActivity;
-            this.Visibility = visibility;
-        }
-    }
+    /// <inheritdoc cref="IConnection" />
+    [PublicAPI]
+    public record Connection
+    (
+        string ID,
+        string Name,
+        string Type,
+        Optional<bool> IsRevoked,
+        Optional<IReadOnlyList<IPartialIntegration>> Integrations,
+        bool IsVerified,
+        bool IsFriendSyncEnabled,
+        bool ShouldShowActivity,
+        ConnectionVisibility Visibility
+    ) : IConnection;
 }

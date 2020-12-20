@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -10,8 +10,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Moq" Version="4.14.6" />
-      <PackageReference Include="OneOf" Version="2.1.155" />
+      <PackageReference Include="Moq" Version="4.15.2" />
+      <PackageReference Include="OneOf" Version="3.0.163" />
     </ItemGroup>
-    
+
 </Project>

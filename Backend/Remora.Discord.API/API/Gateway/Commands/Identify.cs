@@ -20,71 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Core;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
-    public class Identify : IIdentify
-    {
-        /// <inheritdoc />
-        public string Token { get; }
-
-        /// <inheritdoc />
-        public IConnectionProperties Properties { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> Compress { get; }
-
-        /// <inheritdoc />
-        public Optional<byte> LargeThreshold { get; }
-
-        /// <inheritdoc />
-        public Optional<IShardIdentification> Shard { get; }
-
-        /// <inheritdoc />
-        public Optional<IUpdateStatus> Presence { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> DispatchGuildSubscriptions { get; }
-
-        /// <inheritdoc />
-        public Optional<GatewayIntents> Intents { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Identify"/> class.
-        /// </summary>
-        /// <param name="token">The authentication token.</param>
-        /// <param name="properties">The connection properties.</param>
-        /// <param name="compress">Whether compression is supported.</param>
-        /// <param name="largeThreshold">The large guild threshold.</param>
-        /// <param name="shard">The sharding ID.</param>
-        /// <param name="presence">The initial presence.</param>
-        /// <param name="dispatchGuildSubscriptions">Whether to receive subscription events.</param>
-        /// <param name="intents">The gateway intents.</param>
-        public Identify
-        (
-            string token,
-            IConnectionProperties properties,
-            Optional<bool> compress = default,
-            Optional<byte> largeThreshold = default,
-            Optional<IShardIdentification> shard = default,
-            Optional<IUpdateStatus> presence = default,
-            Optional<bool> dispatchGuildSubscriptions = default,
-            Optional<GatewayIntents> intents = default
-        )
-        {
-            this.Token = token;
-            this.Properties = properties;
-            this.Compress = compress;
-            this.LargeThreshold = largeThreshold;
-            this.Shard = shard;
-            this.Presence = presence;
-            this.DispatchGuildSubscriptions = dispatchGuildSubscriptions;
-            this.Intents = intents;
-        }
-    }
+    [PublicAPI]
+    public record Identify
+    (
+        string Token,
+        IConnectionProperties Properties,
+        Optional<bool> Compress = default,
+        Optional<byte> LargeThreshold = default,
+        Optional<IShardIdentification> Shard = default,
+        Optional<IUpdateStatus> Presence = default,
+        GatewayIntents Intents = default
+    ) : IIdentify;
 }

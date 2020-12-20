@@ -52,8 +52,13 @@ namespace Remora.Discord.Samples.HttpCat.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync(IMessageCreate? gatewayEvent, CancellationToken ct = default)
         {
+            if (gatewayEvent is null)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
             if (!gatewayEvent.Content.StartsWith('!'))
             {
                 return EventResponseResult.FromSuccess();
@@ -67,7 +72,7 @@ namespace Remora.Discord.Samples.HttpCat.Responders
             }
 
             var embedImage = new EmbedImage($"https://http.cat/{code}");
-            var embed = new Embed(image: embedImage);
+            var embed = new Embed(Image: embedImage);
 
             var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embed: embed, ct: ct);
             return !reply.IsSuccess

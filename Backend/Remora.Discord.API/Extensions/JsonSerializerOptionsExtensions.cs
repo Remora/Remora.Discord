@@ -22,6 +22,7 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 using Remora.Discord.API.Json;
 
 namespace Remora.Discord.API.Extensions
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="JsonSerializerOptions"/> class.
     /// </summary>
+    [PublicAPI]
     public static class JsonSerializerOptionsExtensions
     {
         /// <summary>

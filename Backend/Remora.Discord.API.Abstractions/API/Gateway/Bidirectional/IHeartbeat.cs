@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional
     /// <summary>
     /// Represents a heartbeat command to or from Discord.
     /// </summary>
+    [PublicAPI]
     public interface IHeartbeat : IGatewayCommand, IGatewayEvent
     {
         /// <summary>

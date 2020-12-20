@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
@@ -30,6 +31,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class DiscordRestInviteAPI : IDiscordRestInviteAPI
     {
         private readonly DiscordHttpClient _discordHttpClient;

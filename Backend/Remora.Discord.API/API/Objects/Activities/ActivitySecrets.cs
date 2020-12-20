@@ -20,41 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a set of secrets used for interacting with the activity.
-    /// </summary>
-    public class ActivitySecrets : IActivitySecrets
-    {
-        /// <inheritdoc />
-        public Optional<string> Join { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Spectate { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Match { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ActivitySecrets"/> class.
-        /// </summary>
-        /// <param name="join">The joining secret.</param>
-        /// <param name="spectate">The spectator secret.</param>
-        /// <param name="match">The match secret.</param>
-        public ActivitySecrets
-        (
-            Optional<string> join = default,
-            Optional<string> spectate = default,
-            Optional<string> match = default
-        )
-        {
-            this.Join = @join;
-            this.Spectate = spectate;
-            this.Match = match;
-        }
-    }
+    /// <inheritdoc cref="IActivitySecrets" />
+    [PublicAPI]
+    public record ActivitySecrets
+    (
+        Optional<string> Join = default,
+        Optional<string> Spectate = default,
+        Optional<string> Match = default
+    ) : IActivitySecrets;
 }

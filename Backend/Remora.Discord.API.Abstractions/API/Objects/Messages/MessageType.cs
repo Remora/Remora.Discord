@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Enumerates message types.
     /// </summary>
+    [PublicAPI]
     public enum MessageType
     {
         /// <summary>
@@ -101,6 +104,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// The server has qualified for inclusion into guild discovery.
         /// </summary>
         GuildDiscoveryQualified = 15,
+
+        /// <summary>
+        /// The server is going to disqualify from guild discovery soon.
+        /// </summary>
+        GuildDiscoveryGracePeriodInitialWarning = 16,
+
+        /// <summary>
+        /// The server is going to disqualify from guild discovery very soon.
+        /// </summary>
+        GuildDiscoveryGracePeriodFinalWarning = 17,
 
         /// <summary>
         /// A reply to another message.

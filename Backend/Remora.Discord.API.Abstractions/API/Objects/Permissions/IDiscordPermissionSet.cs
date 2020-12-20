@@ -21,12 +21,14 @@
 //
 
 using System.Numerics;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a Discord permission set.
     /// </summary>
+    [PublicAPI]
     public interface IDiscordPermissionSet
     {
         /// <summary>

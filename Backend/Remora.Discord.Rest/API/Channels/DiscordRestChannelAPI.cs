@@ -28,6 +28,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -41,6 +42,7 @@ namespace Remora.Discord.Rest.API
     /// <summary>
     /// Implements the Discord REST channel API.
     /// </summary>
+    [PublicAPI]
     public class DiscordRestChannelAPI : IDiscordRestChannelAPI
     {
         private readonly DiscordHttpClient _discordHttpClient;
@@ -93,12 +95,12 @@ namespace Remora.Discord.Rest.API
                 return ModifyRestEntityResult<IChannel>.FromError("The name must be between 2 and 100 characters.");
             }
 
-            if (topic.HasValue && !(topic.Value is null) && (topic.Value.Length > 1024 || topic.Value.Length < 0))
+            if (topic.HasValue && topic.Value is not null && (topic.Value.Length > 1024 || topic.Value.Length < 0))
             {
                 return ModifyRestEntityResult<IChannel>.FromError("The topic must be between 0 and 1024 characters.");
             }
 
-            if (userLimit.HasValue && !(userLimit.Value is null) && (userLimit.Value > 99 || userLimit.Value < 0))
+            if (userLimit.HasValue && userLimit.Value is not null && (userLimit.Value > 99 || userLimit.Value < 0))
             {
                 return ModifyRestEntityResult<IChannel>.FromError("The user limit must be between 0 and 99.");
             }
@@ -383,6 +385,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> content = default,
             Optional<IEmbed?> embed = default,
             Optional<MessageFlags?> flags = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
             CancellationToken ct = default
         )
         {
@@ -396,6 +399,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("content", content, _jsonOptions);
                         json.Write("embed", embed, _jsonOptions);
                         json.WriteEnum("flags", flags, jsonOptions: _jsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                     }
                 ),
                 ct: ct

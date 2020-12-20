@@ -32,7 +32,7 @@ namespace Remora.Discord.Rest.API
     /// <summary>
     /// Represents a rate limit bucket for an endpoint.
     /// </summary>
-    public class RateLimitBucket
+    internal class RateLimitBucket
     {
         private readonly SemaphoreSlim _semaphore;
 

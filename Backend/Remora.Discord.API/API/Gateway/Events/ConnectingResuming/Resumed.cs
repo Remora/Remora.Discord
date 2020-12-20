@@ -20,12 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class Resumed : IResumed
-    {
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IResumed" />
+    [PublicAPI]
+    public record Resumed : IResumed;
 }

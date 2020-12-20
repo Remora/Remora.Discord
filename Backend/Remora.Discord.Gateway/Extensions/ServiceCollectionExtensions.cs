@@ -23,8 +23,11 @@
 using System;
 using System.Linq;
 using System.Net.WebSockets;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
 using Remora.Discord.Rest.Extensions;
 
@@ -33,6 +36,7 @@ namespace Remora.Discord.Gateway.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="IServiceCollection"/> class.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>
@@ -52,7 +56,8 @@ namespace Remora.Discord.Gateway.Extensions
                 .AddSingleton<Random>()
                 .AddTransient<ClientWebSocket>()
                 .AddSingleton<IPayloadTransportService, WebSocketPayloadTransportService>()
-                .AddSingleton<DiscordGatewayClient>();
+                .AddSingleton<DiscordGatewayClient>()
+                .AddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
 
             return serviceCollection;
         }
@@ -70,7 +75,27 @@ namespace Remora.Discord.Gateway.Extensions
         )
             where TResponder : IResponder
         {
-            var responderTypeInterfaces = typeof(TResponder).GetInterfaces();
+            return serviceCollection.AddResponder(typeof(TResponder));
+        }
+
+        /// <summary>
+        /// Adds a responder to the service collection. This method registers the responder as being available for all
+        /// <see cref="IResponder{T}"/> implementations it supports.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="responderType">The type implementing <see cref="IResponder"/>.</param>
+        /// <returns>The service collection, with the responder added.</returns>
+        /// <exception cref="ArgumentException">Throws if responderType does not implement <see cref="IResponder"/>.</exception>
+        public static IServiceCollection AddResponder(this IServiceCollection serviceCollection, Type responderType)
+        {
+            if (!responderType.IsResponder())
+            {
+                throw new ArgumentException(
+                    $"{nameof(responderType)} should implement {nameof(IResponder)}.",
+                    nameof(responderType));
+            }
+
+            var responderTypeInterfaces = responderType.GetInterfaces();
             var responderInterfaces = responderTypeInterfaces.Where
             (
                 r => r.IsGenericType && r.GetGenericTypeDefinition() == typeof(IResponder<>)
@@ -78,8 +103,15 @@ namespace Remora.Discord.Gateway.Extensions
 
             foreach (var responderInterface in responderInterfaces)
             {
-                serviceCollection.AddScoped(responderInterface, typeof(TResponder));
+                serviceCollection.AddScoped(responderInterface, responderType);
             }
+
+            serviceCollection.AddScoped(responderType);
+
+            serviceCollection.Configure<ResponderService>
+            (
+                responderService => responderService.RegisterResponderType(responderType)
+            );
 
             return serviceCollection;
         }

@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -39,6 +40,7 @@ using Remora.Discord.Rest.Utility;
 namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI
     {
         private readonly DiscordHttpClient _discordHttpClient;
@@ -75,7 +77,7 @@ namespace Remora.Discord.Rest.API
             }
 
             string? avatarDataString = null;
-            if (!(avatar is null))
+            if (avatar is not null)
             {
                 var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
                 if (!packAvatar.IsSuccess)
@@ -316,6 +318,207 @@ namespace Remora.Discord.Rest.API
                         }
                     );
                 },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public async Task<IModifyRestEntityResult<IMessage>> EditWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        )
+        {
+            if (content.HasValue && content.Value?.Length > 2000)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+            }
+
+            if (embeds.HasValue && embeds.Value?.Count > 10)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+            }
+
+            return await _discordHttpClient.PatchAsync<IMessage>
+            (
+                $"webhooks/{webhookID}/{token}/messages/{messageID}",
+                b =>
+                {
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public async Task<IModifyRestEntityResult<IMessage>> EditOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        )
+        {
+            if (content.HasValue && content.Value?.Length > 2000)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+            }
+
+            if (embeds.HasValue && embeds.Value?.Count > 10)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+            }
+
+            return await _discordHttpClient.PatchAsync<IMessage>
+            (
+                $"webhooks/{applicationID}/{token}/messages/@original",
+                b =>
+                {
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<IDeleteRestEntityResult> DeleteOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            CancellationToken ct
+        )
+        {
+            return _discordHttpClient.DeleteAsync
+            (
+                $"webhooks/{applicationID}/{token}/messages/@original",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<ICreateRestEntityResult<IMessage>> CreateFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<bool> shouldWait = default,
+            Optional<string> content = default,
+            Optional<string> username = default,
+            Optional<string> avatarUrl = default,
+            Optional<bool> isTTS = default,
+            Optional<Stream> file = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
+            Optional<IAllowedMentions> allowedMentions = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PostAsync<IMessage>
+            (
+                $"webhooks/{applicationID}/{token}",
+                b =>
+                {
+                    if (shouldWait.HasValue)
+                    {
+                        b.AddQueryParameter("wait", shouldWait.Value.ToString());
+                    }
+
+                    if (file.HasValue)
+                    {
+                        b.AddContent(new StreamContent(file.Value), "file");
+                    }
+
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("username", username, _jsonOptions);
+                            json.Write("avatar_url", avatarUrl, _jsonOptions);
+                            json.Write("tts", isTTS, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public async Task<IModifyRestEntityResult<IMessage>> EditFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        )
+        {
+            if (content.HasValue && content.Value?.Length > 2000)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+            }
+
+            if (embeds.HasValue && embeds.Value?.Count > 10)
+            {
+                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+            }
+
+            return await _discordHttpClient.PatchAsync<IMessage>
+            (
+                $"webhooks/{applicationID}/{token}/messages/{messageID}",
+                b =>
+                {
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<IDeleteRestEntityResult> DeleteFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.DeleteAsync
+            (
+                $"webhooks/{applicationID}/{token}/messages/{messageID}",
                 ct: ct
             );
         }

@@ -20,23 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IInvalidSession"/>
-    public class InvalidSession : IInvalidSession
-    {
-        /// <inheritdoc />
-        public bool IsResumable { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InvalidSession"/> class.
-        /// </summary>
-        /// <param name="isResumable">Whether the session is resumable.</param>
-        public InvalidSession(bool isResumable)
-        {
-            this.IsResumable = isResumable;
-        }
-    }
+    [PublicAPI]
+    public record InvalidSession(bool IsResumable) : IInvalidSession;
 }

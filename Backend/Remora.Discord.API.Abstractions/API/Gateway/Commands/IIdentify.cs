@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
     /// <summary>
     /// Represents an identification command sent to the Discord gateway.
     /// </summary>
+    [PublicAPI]
     public interface IIdentify : IGatewayCommand
     {
         /// <summary>
@@ -62,14 +64,8 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         Optional<IUpdateStatus> Presence { get; }
 
         /// <summary>
-        /// Gets an optional field, containing a value that indicates whether guild subscription events (such as
-        /// presence and typing) should be sent.
-        /// </summary>
-        Optional<bool> DispatchGuildSubscriptions { get; }
-
-        /// <summary>
         /// Gets an optional field, containing the gateway intents the connection wants to receive.
         /// </summary>
-        Optional<GatewayIntents> Intents { get; }
+        GatewayIntents Intents { get; }
     }
 }

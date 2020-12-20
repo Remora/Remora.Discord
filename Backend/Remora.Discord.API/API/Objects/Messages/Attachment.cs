@@ -20,54 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Attachment : IAttachment
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public string Filename { get; }
-
-        /// <inheritdoc />
-        public int Size { get; }
-
-        /// <inheritdoc />
-        public string Url { get; }
-
-        /// <inheritdoc />
-        public string ProxyUrl { get; }
-
-        /// <inheritdoc />
-        public int? Height { get; }
-
-        /// <inheritdoc />
-        public int? Width { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Attachment"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the attachment.</param>
-        /// <param name="filename">The filename of the attachment.</param>
-        /// <param name="size">The size of the attachment.</param>
-        /// <param name="url">The URL of the attachment.</param>
-        /// <param name="proxyUrl">The proxied URL of the attachment.</param>
-        /// <param name="height">The height of the attachment, if it is an image.</param>
-        /// <param name="width">The width of the attachment, if it is an image.</param>
-        public Attachment(Snowflake id, string filename, int size, string url, string proxyUrl, int? height, int? width)
-        {
-            this.ID = id;
-            this.Filename = filename;
-            this.Size = size;
-            this.Url = url;
-            this.ProxyUrl = proxyUrl;
-            this.Height = height;
-            this.Width = width;
-        }
-    }
+    /// <inheritdoc cref="IAttachment" />
+    [PublicAPI]
+    public record Attachment
+    (
+        Snowflake ID,
+        string Filename,
+        int Size,
+        string Url,
+        string ProxyUrl,
+        int? Height,
+        int? Width
+    ) : IAttachment;
 }

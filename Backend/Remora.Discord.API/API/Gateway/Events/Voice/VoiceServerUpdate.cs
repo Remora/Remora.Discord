@@ -20,34 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class VoiceServerUpdate : IVoiceServerUpdate
-    {
-        /// <inheritdoc/>
-        public string Token { get; }
-
-        /// <inheritdoc/>
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public string Endpoint { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VoiceServerUpdate"/> class.
-        /// </summary>
-        /// <param name="token">The voice connection token.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="endpoint">The voice server host.</param>
-        public VoiceServerUpdate(string token, Snowflake guildID, string endpoint)
-        {
-            this.Token = token;
-            this.GuildID = guildID;
-            this.Endpoint = endpoint;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IVoiceServerUpdate" />
+    [PublicAPI]
+    public record VoiceServerUpdate(string Token, Snowflake GuildID, string Endpoint) : IVoiceServerUpdate;
 }

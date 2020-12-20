@@ -21,68 +21,57 @@
 //
 
 using System.Runtime.InteropServices;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents a set of connection properties sent to the Discord gateway.
     /// </summary>
-    public class ConnectionProperties : IConnectionProperties
+    [PublicAPI]
+    public record ConnectionProperties(string OperatingSystem, string Browser, string Device) : IConnectionProperties
     {
-        /// <inheritdoc />
-        public string OperatingSystem { get; }
-
-        /// <inheritdoc />
-        public string Browser { get; }
-
-        /// <inheritdoc />
-        public string Device { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionProperties"/> class.
-        /// </summary>
-        /// <param name="operatingSystem">The operating system.</param>
-        /// <param name="browser">The browser.</param>
-        /// <param name="device">The device.</param>
-        public ConnectionProperties(string operatingSystem, string browser, string device)
-        {
-            this.OperatingSystem = operatingSystem;
-            this.Browser = browser;
-            this.Device = device;
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionProperties"/> class.
         /// </summary>
         /// <param name="libraryName">The name of the library.</param>
         public ConnectionProperties(string libraryName)
+            : this(GetCurrentOSPlatformName(), libraryName, libraryName)
+        {
+        }
+
+        /// <summary>
+        /// Gets the name of the current operating system.
+        /// </summary>
+        /// <returns>The name of the current operating system.</returns>
+        private static string GetCurrentOSPlatformName()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                this.OperatingSystem = "linux";
-            }
-        #if NETCOREAPP3_1
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
-            {
-                this.OperatingSystem = "freebsd";
-            }
-        #endif
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                this.OperatingSystem = "osx";
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                this.OperatingSystem = "windows";
-            }
-            else
-            {
-                this.OperatingSystem = "unknown";
+                return "linux";
             }
 
-            this.Browser = libraryName;
-            this.Device = libraryName;
+            #if NETCOREAPP3_1
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
+            {
+                return "freebsd";
+            }
+            #endif
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return "osx";
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "windows";
+            }
+
+            return "unknown";
         }
     }
 }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a Discord Guild.
     /// </summary>
+    [PublicAPI]
     public interface IGuild
     {
         /// <summary>
@@ -84,7 +86,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the AFK timeout (in seconds).
         /// </summary>
-        int AFKTimeout { get; }
+        TimeSpan AFKTimeout { get; }
 
         /// <summary>
         /// Gets the verification level required for the guild.

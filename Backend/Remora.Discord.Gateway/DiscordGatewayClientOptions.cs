@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.Gateway
     /// <summary>
     /// Holds various client options for use in the gateway client.
     /// </summary>
+    [PublicAPI]
     public class DiscordGatewayClientOptions
     {
         /// <summary>
@@ -47,7 +49,7 @@ namespace Remora.Discord.Gateway
         /// Gets or sets the shard identification information. This is used to connect the client as a sharded
         /// connection, where events are distributed over a set of active connections.
         /// </summary>
-        public IShardIdentification? ShardIdentification { get; set; } = null;
+        public IShardIdentification? ShardIdentification { get; set; }
 
         /// <summary>
         /// Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and

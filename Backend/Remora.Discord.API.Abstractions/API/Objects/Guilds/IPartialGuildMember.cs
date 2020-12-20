@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents partial information about a guild member.
     /// </summary>
+    [PublicAPI]
     public interface IPartialGuildMember
     {
         /// <summary>
@@ -65,5 +67,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the user is muted in voice channels.
         /// </summary>
         Optional<bool> IsMuted { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user has passed the guild membership screening requirements.
+        /// </summary>
+        Optional<bool?> IsPending { get; }
     }
 }

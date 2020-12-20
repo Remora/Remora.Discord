@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
@@ -29,11 +30,12 @@ namespace Remora.Discord.API
     /// Represents a Discord event payload.
     /// </summary>
     /// <typeparam name="TEventData">The event data.</typeparam>
-    public class EventPayload<TEventData> : Payload<TEventData>, IEventPayload
+    [PublicAPI]
+    public record EventPayload<TEventData> : Payload<TEventData>, IEventPayload
         where TEventData : IGatewayEvent
     {
         /// <inheritdoc />
-        public string EventName { get; }
+        public string? EventName { get; }
 
         /// <inheritdoc />
         public int SequenceNumber { get; }
@@ -48,7 +50,7 @@ namespace Remora.Discord.API
         /// <param name="sequenceNumber">The sequence number.</param>
         /// <param name="operationCode">The operation code for the event.</param>
         /// <param name="data">The event data.</param>
-        public EventPayload(string eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
+        public EventPayload(string? eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
             : base(data)
         {
             this.EventName = eventName;

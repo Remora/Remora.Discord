@@ -20,75 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class Webhook : IWebhook
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public WebhookType Type { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc />
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> User { get; }
-
-        /// <inheritdoc />
-        public string? Name { get; }
-
-        /// <inheritdoc />
-        public string? Avatar { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Token { get; }
-
-        /// <inheritdoc />
-        public Optional<Snowflake> ApplicationID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Webhook"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the webhook.</param>
-        /// <param name="type">The type of the webhook.</param>
-        /// <param name="guildID">The ID of the guild the webhook is for.</param>
-        /// <param name="channelID">The ID of the channel the webhook is for.</param>
-        /// <param name="user">The user that created the webhook.</param>
-        /// <param name="name">The default name of the webhook.</param>
-        /// <param name="avatar">The default avatar of the webhook.</param>
-        /// <param name="token">The secure token of the webhook.</param>
-        /// <param name="applicationID">The application ID, if any.</param>
-        public Webhook
-        (
-            Snowflake id,
-            WebhookType type,
-            Optional<Snowflake> guildID,
-            Snowflake channelID,
-            Optional<IUser> user,
-            string? name,
-            string? avatar,
-            Optional<string> token,
-            Optional<Snowflake> applicationID
-        )
-        {
-            this.ID = id;
-            this.Type = type;
-            this.GuildID = guildID;
-            this.ChannelID = channelID;
-            this.User = user;
-            this.Name = name;
-            this.Avatar = avatar;
-            this.Token = token;
-            this.ApplicationID = applicationID;
-        }
-    }
+    /// <inheritdoc cref="IWebhook" />
+    [PublicAPI]
+    public record Webhook
+    (
+        Snowflake ID,
+        WebhookType Type,
+        Optional<Snowflake> GuildID,
+        Snowflake ChannelID,
+        Optional<IUser> User,
+        string? Name,
+        string? Avatar,
+        Optional<string> Token,
+        Optional<Snowflake> ApplicationID
+    ) : IWebhook;
 }

@@ -35,7 +35,7 @@ namespace Remora.Discord.Rest.Polly
     /// <summary>
     /// Represents a Discord rate limiting policy.
     /// </summary>
-    public class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
+    internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
     {
         private readonly ConcurrentDictionary<string, RateLimitBucket> _rateLimitBuckets;
         private RateLimitBucket _globalRateLimitBucket;
@@ -43,7 +43,7 @@ namespace Remora.Discord.Rest.Polly
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRateLimitPolicy"/> class.
         /// </summary>
-        protected DiscordRateLimitPolicy()
+        private DiscordRateLimitPolicy()
         {
             _globalRateLimitBucket = new RateLimitBucket
             (
@@ -111,7 +111,7 @@ namespace Remora.Discord.Rest.Polly
             (
                 endpoint,
                 newLimits,
-                (s, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
+                (_, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
             );
 
             return response;

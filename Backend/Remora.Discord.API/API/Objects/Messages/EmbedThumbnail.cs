@@ -20,45 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class EmbedThumbnail : IEmbedThumbnail
-    {
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <inheritdoc />
-        public Optional<string> ProxyUrl { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Height { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Width { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedThumbnail"/> class.
-        /// </summary>
-        /// <param name="url">The thumbnail URL.</param>
-        /// <param name="proxyUrl">The proxied thumbnail URL.</param>
-        /// <param name="height">The height of the thumbnail.</param>
-        /// <param name="width">The width of the thumbnail.</param>
-        public EmbedThumbnail
-        (
-            Optional<string> url,
-            Optional<string> proxyUrl,
-            Optional<int> height,
-            Optional<int> width
-        )
-        {
-            this.Url = url;
-            this.ProxyUrl = proxyUrl;
-            this.Height = height;
-            this.Width = width;
-        }
-    }
+    /// <inheritdoc cref="IEmbedThumbnail" />
+    [PublicAPI]
+    public record EmbedThumbnail
+    (
+        Optional<string> Url,
+        Optional<string> ProxyUrl,
+        Optional<int> Height,
+        Optional<int> Width
+    ) : IEmbedThumbnail;
 }

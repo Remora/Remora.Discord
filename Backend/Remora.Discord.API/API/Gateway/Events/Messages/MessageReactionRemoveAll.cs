@@ -20,34 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class MessageReactionRemoveAll : IMessageReactionRemoveAll
-    {
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake MessageID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageReactionRemoveAll"/> class.
-        /// </summary>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="messageID">The ID of the message.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        public MessageReactionRemoveAll(Snowflake channelID, Snowflake messageID, Optional<Snowflake> guildID)
-        {
-            this.ChannelID = channelID;
-            this.MessageID = messageID;
-            this.GuildID = guildID;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll" />
+    [PublicAPI]
+    public record MessageReactionRemoveAll
+    (
+        Snowflake ChannelID,
+        Snowflake MessageID,
+        Optional<Snowflake> GuildID
+    ) : IMessageReactionRemoveAll;
 }

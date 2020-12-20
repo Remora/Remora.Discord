@@ -20,25 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents the greeting event sent by the gateway after connection.
-    /// </summary>
-    public class Hello : IHello
-    {
-        /// <inheritdoc />
-        public ulong HeartbeatInterval { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Hello"/> class.
-        /// </summary>
-        /// <param name="heartbeatInterval">The heartbeat interval.</param>
-        public Hello(ulong heartbeatInterval)
-        {
-            this.HeartbeatInterval = heartbeatInterval;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IHello" />
+    [PublicAPI]
+    public record Hello(TimeSpan HeartbeatInterval) : IHello;
 }

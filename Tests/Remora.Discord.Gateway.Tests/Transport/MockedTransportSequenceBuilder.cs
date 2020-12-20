@@ -36,7 +36,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
     /// </summary>
     public class MockedTransportSequenceBuilder
     {
-        private readonly List<IEvent> _sequence = new List<IEvent>();
+        private readonly List<IEvent> _sequence = new();
 
         /// <summary>
         /// Expects a connection to the following URI.
@@ -86,7 +86,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// <param name="expectation">A predicate that matches the expected payload.</param>
         /// <typeparam name="TExpected">The expected type.</typeparam>
         /// <returns>The action builder, with the expectation.</returns>
-        public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected, bool>? expectation = null)
+        public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected?, bool>? expectation = null)
             where TExpected : IGatewayCommand
         {
             _sequence.Add

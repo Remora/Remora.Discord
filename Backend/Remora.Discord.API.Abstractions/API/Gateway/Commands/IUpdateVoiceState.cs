@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
     /// <summary>
     /// Represents a command to update the voice state of the client.
     /// </summary>
+    [PublicAPI]
     public interface IUpdateVoiceState : IGatewayCommand
     {
         /// <summary>

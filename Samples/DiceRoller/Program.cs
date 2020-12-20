@@ -25,9 +25,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Remora.Commands.Extensions;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Samples.DiceRoller.Responders;
+using Remora.Discord.Samples.DiceRoller.Commands;
 
 namespace Remora.Discord.Samples.DiceRoller
 {
@@ -45,7 +47,7 @@ namespace Remora.Discord.Samples.DiceRoller
         {
             var cancellationSource = new CancellationTokenSource();
 
-            Console.CancelKeyPress += (sender, eventArgs) =>
+            Console.CancelKeyPress += (_, eventArgs) =>
             {
                 eventArgs.Cancel = true;
                 cancellationSource.Cancel();
@@ -67,7 +69,9 @@ namespace Remora.Discord.Samples.DiceRoller
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
-                .AddResponder<DiceRollResponder>();
+                .AddCommands()
+                .AddCommandResponder()
+                .AddCommandGroup<DiceRollCommands>();
 
             serviceCollection.AddHttpClient();
 

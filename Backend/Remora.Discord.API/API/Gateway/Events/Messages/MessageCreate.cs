@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -30,7 +31,8 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageCreate"/>
-    public class MessageCreate : Message, IMessageCreate
+    [PublicAPI]
+    public record MessageCreate : Message, IMessageCreate
     {
         /// <inheritdoc cref="Message"/>
         public MessageCreate
@@ -59,6 +61,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IMessageApplication> application,
             Optional<IMessageReference> messageReference,
             Optional<MessageFlags> flags,
+            Optional<IReadOnlyList<IMessageSticker>> stickers,
             Optional<IMessage?> referencedMessage
         )
             : base
@@ -87,6 +90,7 @@ namespace Remora.Discord.API.Gateway.Events
                 application,
                 messageReference,
                 flags,
+                stickers,
                 referencedMessage
             )
         {

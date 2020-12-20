@@ -20,28 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class ErrorDetails : IErrorDetails
-    {
-        /// <inheritdoc />
-        public string Code { get; }
-
-        /// <inheritdoc />
-        public string Message { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorDetails"/> class.
-        /// </summary>
-        /// <param name="code">The detailed error code.</param>
-        /// <param name="message">The detailed error message.</param>
-        public ErrorDetails(string code, string message)
-        {
-            this.Code = code;
-            this.Message = message;
-        }
-    }
+    /// <inheritdoc cref="IErrorDetails" />
+    [PublicAPI]
+    public record ErrorDetails(string Code, string Message) : IErrorDetails;
 }

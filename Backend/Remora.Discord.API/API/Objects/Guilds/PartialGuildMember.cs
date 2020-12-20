@@ -22,63 +22,25 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PartialGuildMember : IPartialGuildMember
-    {
-        /// <inheritdoc />
-        public Optional<IUser> User { get; }
-
-        /// <inheritdoc />
-        public Optional<string?> Nickname { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<Snowflake>> Roles { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset> JoinedAt { get; }
-
-        /// <inheritdoc />
-        public Optional<DateTimeOffset?> PremiumSince { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsDeafened { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> IsMuted { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialGuildMember"/> class.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="nickname">The user's set nickname.</param>
-        /// <param name="roles">The user's assigned roles.</param>
-        /// <param name="joinedAt">When the user joined the server.</param>
-        /// <param name="premiumSince">When the user started boosting the guild.</param>
-        /// <param name="isDeafened">Whether the user is deafened in voice channels.</param>
-        /// <param name="isMuted">Whether the user is muted in voice channels.</param>
-        public PartialGuildMember
-        (
-            Optional<IUser> user,
-            Optional<string?> nickname,
-            Optional<IReadOnlyList<Snowflake>> roles,
-            Optional<DateTimeOffset> joinedAt,
-            Optional<DateTimeOffset?> premiumSince,
-            Optional<bool> isDeafened,
-            Optional<bool> isMuted
-        )
-        {
-            this.User = user;
-            this.Nickname = nickname;
-            this.Roles = roles;
-            this.JoinedAt = joinedAt;
-            this.PremiumSince = premiumSince;
-            this.IsDeafened = isDeafened;
-            this.IsMuted = isMuted;
-        }
-    }
+    /// <inheritdoc cref="IPartialGuildMember" />
+    [PublicAPI]
+    public record PartialGuildMember
+    (
+        Optional<IUser> User,
+        Optional<string?> Nickname,
+        Optional<IReadOnlyList<Snowflake>> Roles,
+        Optional<DateTimeOffset> JoinedAt,
+        Optional<DateTimeOffset?> PremiumSince,
+        Optional<bool> IsDeafened,
+        Optional<bool> IsMuted,
+        Optional<bool?> IsPending
+    ) : IPartialGuildMember;
 }

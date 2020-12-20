@@ -20,52 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class MessageReactionRemove : IMessageReactionRemove
-    {
-        /// <inheritdoc/>
-        public Snowflake UserID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake MessageID { get; }
-
-        /// <inheritdoc/>
-        public Optional<Snowflake> GuildID { get; }
-
-        /// <inheritdoc/>
-        public IPartialEmoji Emoji { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageReactionRemove"/> class.
-        /// </summary>
-        /// <param name="userID">The ID of the user that had reacted.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="messageID">The ID of the message.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="emoji">The emoji.</param>
-        public MessageReactionRemove
-        (
-            Snowflake userID,
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<Snowflake> guildID,
-            IPartialEmoji emoji
-        )
-        {
-            this.UserID = userID;
-            this.ChannelID = channelID;
-            this.MessageID = messageID;
-            this.GuildID = guildID;
-            this.Emoji = emoji;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemove" />
+    [PublicAPI]
+    public record MessageReactionRemove
+    (
+        Snowflake UserID,
+        Snowflake ChannelID,
+        Snowflake MessageID,
+        Optional<Snowflake> GuildID,
+        IPartialEmoji Emoji
+    ) : IMessageReactionRemove;
 }

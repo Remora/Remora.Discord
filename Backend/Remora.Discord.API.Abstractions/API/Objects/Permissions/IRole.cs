@@ -21,6 +21,7 @@
 //
 
 using System.Drawing;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a Discord role.
     /// </summary>
+    [PublicAPI]
     public interface IRole
     {
         /// <summary>
@@ -69,5 +71,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether this role is mentionable.
         /// </summary>
         bool IsMentionable { get; }
+
+        /// <summary>
+        /// Gets the tags the role has.
+        /// </summary>
+        Optional<IRoleTags> Tags { get; }
     }
 }

@@ -20,29 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class WebhooksUpdate : IWebhooksUpdate
-    {
-        /// <inheritdoc/>
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public Snowflake ChannelID { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebhooksUpdate"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        public WebhooksUpdate(Snowflake guildID, Snowflake channelID)
-        {
-            this.GuildID = guildID;
-            this.ChannelID = channelID;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IWebhooksUpdate" />
+    [PublicAPI]
+    public record WebhooksUpdate(Snowflake GuildID, Snowflake ChannelID) : IWebhooksUpdate;
 }

@@ -20,45 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class EmbedImage : IEmbedImage
-    {
-        /// <inheritdoc />
-        public Optional<string> Url { get; }
-
-        /// <inheritdoc />
-        public Optional<string> ProxyUrl { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Height { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Width { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedImage"/> class.
-        /// </summary>
-        /// <param name="url">The image URL.</param>
-        /// <param name="proxyUrl">The proxied image URL.</param>
-        /// <param name="height">The height of the image.</param>
-        /// <param name="width">The width of the image.</param>
-        public EmbedImage
-        (
-            Optional<string> url = default,
-            Optional<string> proxyUrl = default,
-            Optional<int> height = default,
-            Optional<int> width = default
-        )
-        {
-            this.Url = url;
-            this.ProxyUrl = proxyUrl;
-            this.Height = height;
-            this.Width = width;
-        }
-    }
+    /// <inheritdoc cref="IEmbedImage" />
+    [PublicAPI]
+    public record EmbedImage
+    (
+        Optional<string> Url = default,
+        Optional<string> ProxyUrl = default,
+        Optional<int> Height = default,
+        Optional<int> Width = default
+    ) : IEmbedImage;
 }

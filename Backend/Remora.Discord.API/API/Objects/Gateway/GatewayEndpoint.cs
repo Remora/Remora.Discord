@@ -20,36 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a gateway endpoint.
-    /// </summary>
-    public class GatewayEndpoint : IGatewayEndpoint
-    {
-        /// <inheritdoc />
-        public string Url { get; }
-
-        /// <inheritdoc />
-        public Optional<int> Shards { get; }
-
-        /// <inheritdoc />
-        public Optional<ISessionStartLimit> SessionStartLimit { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GatewayEndpoint"/> class.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <param name="shards">The suggested. shard count.</param>
-        /// <param name="sessionStartLimit">The session start limit.</param>
-        public GatewayEndpoint(string url, Optional<int> shards, Optional<ISessionStartLimit> sessionStartLimit)
-        {
-            this.Url = url;
-            this.Shards = shards;
-            this.SessionStartLimit = sessionStartLimit;
-        }
-    }
+    /// <inheritdoc cref="IGatewayEndpoint" />
+    [PublicAPI]
+    public record GatewayEndpoint
+    (
+        string Url,
+        Optional<int> Shards,
+        Optional<ISessionStartLimit> SessionStartLimit
+    ) : IGatewayEndpoint;
 }

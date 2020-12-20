@@ -201,5 +201,144 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default
         );
+
+        /// <summary>
+        /// Edits a messages posted by a webhook.
+        /// </summary>
+        /// <param name="webhookID">The ID of the webhook.</param>
+        /// <param name="token">The token for the webhook.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="content">The new content, if any.</param>
+        /// <param name="embeds">The new embeds, if any.</param>
+        /// <param name="allowedMentions">The new allowed mentions, if any.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<IModifyRestEntityResult<IMessage>> EditWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// TODO: Is the interaction ID not involved here?
+        /// Edits the initial interaction response.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="content">The new content, if any.</param>
+        /// <param name="embeds">The new embeds, if any.</param>
+        /// <param name="allowedMentions">The new allowed mentions, if any.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<IModifyRestEntityResult<IMessage>> EditOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Deletes the original interaction response.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A deletion result which may or may not have succeeded.</returns>
+        Task<IDeleteRestEntityResult> DeleteOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// TODO: Is the interaction ID not involved here?
+        /// Creates a followup message.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="shouldWait">
+        /// Whether the call should block until the server has confirmed that the message was sent.
+        /// </param>
+        /// <param name="content">
+        /// The content of the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
+        /// <paramref name="embeds"/> is required.
+        /// </param>
+        /// <param name="username">The username to use for this message.</param>
+        /// <param name="avatarUrl">The avatar to use for this message.</param>
+        /// <param name="isTTS">Whether this message is a TTS message.</param>
+        /// <param name="file">
+        /// The file attached to message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
+        /// <paramref name="embeds"/> is required.
+        /// </param>
+        /// <param name="embeds">
+        /// The embeds in the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
+        /// <paramref name="embeds"/> is required.
+        /// </param>
+        /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<ICreateRestEntityResult<IMessage>> CreateFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<bool> shouldWait = default,
+            Optional<string> content = default,
+            Optional<string> username = default,
+            Optional<string> avatarUrl = default,
+            Optional<bool> isTTS = default,
+            Optional<Stream> file = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
+            Optional<IAllowedMentions> allowedMentions = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// TODO: Is the interaction ID not involved here?
+        /// Edits an interaction followup message.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="content">The new content, if any.</param>
+        /// <param name="embeds">The new embeds, if any.</param>
+        /// <param name="allowedMentions">The new allowed mentions, if any.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<IModifyRestEntityResult<IMessage>> EditFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// TODO: Is the interaction ID not involved here?
+        /// Deletes an interaction followup message.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<IDeleteRestEntityResult> DeleteFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        );
     }
 }

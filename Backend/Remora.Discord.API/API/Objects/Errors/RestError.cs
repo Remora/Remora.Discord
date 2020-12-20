@@ -21,36 +21,20 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents an error from the REST API.
-    /// </summary>
-    public class RestError : IRestError
-    {
-        /// <inheritdoc />
-        public DiscordError Code { get; }
-
-        /// <inheritdoc />
-        public IReadOnlyDictionary<string, IPropertyErrorDetails> Errors { get; }
-
-        /// <inheritdoc />
-        public string Message { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestError"/> class.
-        /// </summary>
-        /// <param name="code">The numerical error code.</param>
-        /// <param name="errors">The detailed errors.</param>
-        /// <param name="message">The generic error message.</param>
-        public RestError(DiscordError code, IReadOnlyDictionary<string, IPropertyErrorDetails> errors, string message)
-        {
-            this.Code = code;
-            this.Errors = errors;
-            this.Message = message;
-        }
-    }
+    /// <inheritdoc cref="IRestError" />
+    [PublicAPI]
+    public record RestError
+    (
+        DiscordError Code,
+        IReadOnlyDictionary<string, IPropertyErrorDetails> Errors,
+        string Message
+    ) : IRestError;
 }

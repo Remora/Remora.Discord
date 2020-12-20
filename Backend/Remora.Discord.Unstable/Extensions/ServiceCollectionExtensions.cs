@@ -20,13 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Text.Json;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Extensions;
-using Remora.Discord.API.Objects;
-using Remora.Discord.API.Rest;
 
 // ReSharper disable once CheckNamespace
 namespace Remora.Discord.Unstable.Extensions
@@ -34,6 +29,7 @@ namespace Remora.Discord.Unstable.Extensions
     /// <summary>
     /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>
@@ -46,42 +42,7 @@ namespace Remora.Discord.Unstable.Extensions
             this IServiceCollection serviceCollection
         )
         {
-            serviceCollection
-                .Configure<JsonSerializerOptions>
-                (
-                    options =>
-                    {
-                        options
-                            .AddTemplateObjectConverters();
-                    }
-                );
-
-            serviceCollection
-                .AddScoped<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>();
-
             return serviceCollection;
-        }
-
-        /// <summary>
-        /// Adds the JSON converters that handle template objects.
-        /// </summary>
-        /// <param name="options">The serializer options.</param>
-        /// <returns>The options, with the converters added.</returns>
-        private static JsonSerializerOptions AddTemplateObjectConverters(this JsonSerializerOptions options)
-        {
-            options.AddDataObjectConverter<ITemplate, Template>();
-            options.AddDataObjectConverter<IGuildTemplate, GuildTemplate>();
-            options.AddDataObjectConverter<IRoleTemplate, RoleTemplate>()
-                .WithPropertyName(r => r.Colour, "color")
-                .WithPropertyName(r => r.IsHoisted, "hoist")
-                .WithPropertyName(r => r.IsMentionable, "mentionable");
-
-            options.AddDataObjectConverter<IChannelTemplate, ChannelTemplate>()
-                .WithPropertyName(c => c.IsNsfw, "nsfw");
-
-            options.AddDataObjectConverter<IPermissionOverwriteTemplate, PermissionOverwriteTemplate>();
-
-            return options;
         }
     }
 }

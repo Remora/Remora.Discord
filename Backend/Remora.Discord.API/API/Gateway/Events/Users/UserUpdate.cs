@@ -29,7 +29,8 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate" />
-    public class UserUpdate : User, IUserUpdate
+    [PublicAPI]
+    public record UserUpdate : User, IUserUpdate
     {
         /// <inheritdoc cref="User" />
         public UserUpdate
@@ -37,7 +38,7 @@ namespace Remora.Discord.API.Gateway.Events
             Snowflake id,
             string username,
             string discriminator,
-            [CanBeNull] IImageHash? avatar,
+            IImageHash? avatar,
             Optional<bool> isBot,
             Optional<bool> isSystem,
             Optional<bool> isMFAEnabled,

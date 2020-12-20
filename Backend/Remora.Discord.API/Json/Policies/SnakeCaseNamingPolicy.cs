@@ -23,12 +23,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
     /// Represents a snake_case naming policy.
     /// </summary>
+    [PublicAPI]
     public class SnakeCaseNamingPolicy : JsonNamingPolicy
     {
         private readonly bool _upperCase;

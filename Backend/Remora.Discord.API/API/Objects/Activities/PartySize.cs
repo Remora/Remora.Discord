@@ -20,30 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Represents a party size object.
-    /// </summary>
-    public class PartySize : IPartySize
-    {
-        /// <inheritdoc />
-        public int CurrentSize { get; }
-
-        /// <inheritdoc />
-        public int MaxSize { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartySize"/> class.
-        /// </summary>
-        /// <param name="currentSize">The current number of people in the party.</param>
-        /// <param name="maxSize">The maximum size of the party.</param>
-        public PartySize(int currentSize, int maxSize)
-        {
-            this.CurrentSize = currentSize;
-            this.MaxSize = maxSize;
-        }
-    }
+    /// <inheritdoc cref="IPartySize" />
+    [PublicAPI]
+    public record PartySize(int CurrentSize, int MaxSize) : IPartySize;
 }

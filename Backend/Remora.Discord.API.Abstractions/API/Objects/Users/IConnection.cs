@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a connection between a user account and an external service.
     /// </summary>
+    [PublicAPI]
     public interface IConnection
     {
         /// <summary>

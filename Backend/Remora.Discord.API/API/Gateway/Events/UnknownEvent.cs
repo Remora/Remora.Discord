@@ -20,25 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents an unknown event from the Discord gateway.
-    /// </summary>
-    public class UnknownEvent : IUnknownEvent
-    {
-        /// <inheritdoc />
-        public string Data { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnknownEvent"/> class.
-        /// </summary>
-        /// <param name="data">The JSON data that represents the payload.</param>
-        public UnknownEvent(string data)
-        {
-            this.Data = data;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUnknownEvent" />
+    [PublicAPI]
+    public record UnknownEvent(string Data) : IUnknownEvent;
 }

@@ -32,7 +32,7 @@ namespace Remora.Discord.Rest.Tests.TestBases
     /// Serves as a base class for REST API tests.
     /// </summary>
     /// <typeparam name="TAPI">The API type.</typeparam>
-    public abstract class RestAPITestBase<TAPI>
+    public abstract class RestAPITestBase<TAPI> where TAPI : notnull
     {
         /// <summary>
         /// Creates a configured, mocked API instance.
@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.Tests.TestBases
                 () => "TEST_TOKEN",
                 b => b.ConfigurePrimaryHttpMessageHandler
                 (
-                    services =>
+                    _ =>
                     {
                         var mockHandler = new MockHttpMessageHandler();
                         builder(mockHandler);

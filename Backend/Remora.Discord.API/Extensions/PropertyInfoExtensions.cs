@@ -24,12 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Extensions
 {
     /// <summary>
     /// Defines extension methods for the <see cref="PropertyInfo"/> class.
     /// </summary>
+    [PublicAPI]
     public static class PropertyInfoExtensions
     {
         /// <summary>
@@ -71,7 +73,7 @@ namespace Remora.Discord.API.Extensions
 
             var topLevelNullability = Nullability.Oblivious;
 
-            if (!(nullableAttribute is null))
+            if (nullableAttribute is not null)
             {
                 var nullableArgument = nullableAttribute.ConstructorArguments.Single();
                 if (nullableArgument.Value is byte singleArg)

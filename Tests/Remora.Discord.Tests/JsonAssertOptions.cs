@@ -54,14 +54,14 @@ namespace Remora.Discord.Tests
         )
         {
             this.AllowMissing = allowMissing ?? new List<string>();
-            this.AllowMissingBy = allowMissingBy ?? (p => false);
+            this.AllowMissingBy = allowMissingBy ?? (_ => false);
         }
 
         /// <summary>
         /// Gets a default instance of the assertion options. This default option set allows underscore-prefixed fields
         /// to be missing.
         /// </summary>
-        public static JsonAssertOptions Default { get; } = new JsonAssertOptions
+        public static JsonAssertOptions Default { get; } = new
         (
             allowMissingBy: p => p.Name.StartsWith("_")
         );

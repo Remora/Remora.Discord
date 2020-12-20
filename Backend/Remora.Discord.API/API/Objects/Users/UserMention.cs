@@ -20,13 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IUserMention"/>
-    public class UserMention : User, IUserMention
+    [PublicAPI]
+    public record UserMention : User, IUserMention
     {
         /// <inheritdoc />
         public Optional<IPartialGuildMember> Member { get; }

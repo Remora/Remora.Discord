@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -30,6 +31,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents initial gateway state information.
     /// </summary>
+    [PublicAPI]
     public interface IReady : IGatewayEvent
     {
         /// <summary>
@@ -56,5 +58,10 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// Gets the shard information associated with this session.
         /// </summary>
         Optional<IShardIdentification> Shard { get; }
+
+        /// <summary>
+        /// Gets the OAuth2 application associated with this session.
+        /// </summary>
+        IPartialApplication Application { get; }
     }
 }

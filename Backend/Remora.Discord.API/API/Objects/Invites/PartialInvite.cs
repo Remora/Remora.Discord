@@ -20,69 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class PartialInvite : IPartialInvite
-    {
-        /// <inheritdoc />
-        public Optional<string> Code { get; }
-
-        /// <inheritdoc />
-        public Optional<IPartialGuild> Guild { get; }
-
-        /// <inheritdoc />
-        public Optional<IPartialChannel> Channel { get; }
-
-        /// <inheritdoc />
-        public Optional<IUser> Inviter { get; }
-
-        /// <inheritdoc />
-        public Optional<IPartialUser> TargetUser { get; }
-
-        /// <inheritdoc />
-        public Optional<TargetUserType> TargetUserType { get; }
-
-        /// <inheritdoc />
-        public Optional<int> ApproximatePresenceCount { get; }
-
-        /// <inheritdoc />
-        public Optional<int> ApproximateMemberCount { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PartialInvite"/> class.
-        /// </summary>
-        /// <param name="code">The invite code.</param>
-        /// <param name="guild">The guild the invite is for.</param>
-        /// <param name="channel">The channel the invite is for.</param>
-        /// <param name="inviter">The user who created the invite.</param>
-        /// <param name="targetUser">The target user for this invite.</param>
-        /// <param name="targetUserType">The type of user target for this invite.</param>
-        /// <param name="approximatePresenceCount">The approximate count of online members.</param>
-        /// <param name="approximateMemberCount">The approximate total member count.</param>
-        public PartialInvite
-        (
-            Optional<string> code,
-            Optional<IPartialGuild> guild,
-            Optional<IPartialChannel> channel,
-            Optional<IUser> inviter,
-            Optional<IPartialUser> targetUser,
-            Optional<TargetUserType> targetUserType,
-            Optional<int> approximatePresenceCount,
-            Optional<int> approximateMemberCount
-        )
-        {
-            this.Code = code;
-            this.Guild = guild;
-            this.Channel = channel;
-            this.Inviter = inviter;
-            this.TargetUser = targetUser;
-            this.TargetUserType = targetUserType;
-            this.ApproximatePresenceCount = approximatePresenceCount;
-            this.ApproximateMemberCount = approximateMemberCount;
-        }
-    }
+    /// <inheritdoc cref="IPartialInvite" />
+    [PublicAPI]
+    public record PartialInvite
+    (
+        Optional<string> Code,
+        Optional<IPartialGuild> Guild,
+        Optional<IPartialChannel> Channel,
+        Optional<IUser> Inviter,
+        Optional<IPartialUser> TargetUser,
+        Optional<TargetUserType> TargetUserType,
+        Optional<int> ApproximatePresenceCount,
+        Optional<int> ApproximateMemberCount
+    ) : IPartialInvite;
 }

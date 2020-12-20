@@ -75,7 +75,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the grace period (in days) before expiring subscribers.
         /// </summary>
-        Optional<int> ExpireGracePeriod { get; }
+        Optional<TimeSpan> ExpireGracePeriod { get; }
 
         /// <summary>
         /// Gets the user for this integration.

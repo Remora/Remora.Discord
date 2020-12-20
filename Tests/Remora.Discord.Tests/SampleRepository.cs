@@ -59,19 +59,19 @@ namespace Remora.Discord.Tests
 
             var interfaceTypes = typeof(IGuild).Assembly
                 .GetTypes()
-                .Where(t => !(t.Namespace is null))
+                .Where(t => t.Namespace is not null)
                 .Where(t => t.Namespace!.Contains(".API."))
                 .ToList();
 
             var concreteTypes = typeof(Guild).Assembly
                 .GetTypes()
-                .Where(t => !(t.Namespace is null))
+                .Where(t => t.Namespace is not null)
                 .Where(t => t.Namespace!.Contains(".API."))
                 .ToList();
 
             var experimentalTypes = typeof(Unstable.Extensions.ServiceCollectionExtensions).Assembly
                 .GetTypes()
-                .Where(t => !(t.Namespace is null))
+                .Where(t => t.Namespace is not null)
                 .Where
                 (
                     t =>

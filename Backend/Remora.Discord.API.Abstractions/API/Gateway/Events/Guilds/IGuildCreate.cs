@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
@@ -31,6 +32,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     ///     2. When a guild becomes available again to the client.
     ///     3. When the current user joins a new guild.
     /// </summary>
+    [PublicAPI]
     public interface IGuildCreate : IGatewayEvent, IGuild
     {
     }

@@ -20,30 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents an identification set for a sharded connection.
     /// </summary>
-    public class ShardIdentification : IShardIdentification
-    {
-        /// <inheritdoc />
-        public int ShardID { get; }
-
-        /// <inheritdoc />
-        public int ShardCount { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShardIdentification"/> class.
-        /// </summary>
-        /// <param name="shardID">The shard ID.</param>
-        /// <param name="shardCount">The shard count.</param>
-        public ShardIdentification(int shardID, int shardCount)
-        {
-            this.ShardID = shardID;
-            this.ShardCount = shardCount;
-        }
-    }
+    [PublicAPI]
+    public record ShardIdentification(int ShardID, int ShardCount) : IShardIdentification;
 }

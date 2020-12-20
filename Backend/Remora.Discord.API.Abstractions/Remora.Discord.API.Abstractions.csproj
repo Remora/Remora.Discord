@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta3</Version>
+        <Version>1.0.0-beta10</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Implement better support for partial types.
+            Implement OAuth2 and Teams support.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -23,7 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Remora.Results.Abstractions" Version="1.0.4" />
+      <PackageReference Include="OneOf" Version="3.0.163" />
+      <PackageReference Include="Remora.Results.Abstractions" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>

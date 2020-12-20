@@ -20,30 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <inheritdoc />
-    public class GuildBanAdd : IGuildBanAdd
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc/>
-        public IUser User { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildBanAdd"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="user">The banned user.</param>
-        public GuildBanAdd(Snowflake guildID, IUser user)
-        {
-            this.GuildID = guildID;
-            this.User = user;
-        }
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildBanAdd" />
+    [PublicAPI]
+    public record GuildBanAdd(Snowflake GuildID, IUser User) : IGuildBanAdd;
 }

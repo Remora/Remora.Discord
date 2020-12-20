@@ -21,13 +21,16 @@
 //
 
 using System;
+using JetBrains.Annotations;
+
+#pragma warning disable SA1629
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
     /// Enumerates the gateway intents that can be specified.
     /// </summary>
-    [Flags]
+    [Flags, PublicAPI]
     public enum GatewayIntents
     {
         /// <summary>

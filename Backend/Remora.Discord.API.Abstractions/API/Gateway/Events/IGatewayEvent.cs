@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
     /// Acts as a marker interface for gateway events.
     /// </summary>
+    [PublicAPI]
     public interface IGatewayEvent : IGatewayPayloadData
     {
     }

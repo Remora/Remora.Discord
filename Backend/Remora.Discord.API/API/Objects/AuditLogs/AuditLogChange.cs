@@ -20,34 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class AuditLogChange : IAuditLogChange
-    {
-        /// <inheritdoc />
-        public Optional<object> NewValue { get; }
-
-        /// <inheritdoc />
-        public Optional<object> OldValue { get; }
-
-        /// <inheritdoc/>
-        public string Key { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuditLogChange"/> class.
-        /// </summary>
-        /// <param name="newValue">The new value.</param>
-        /// <param name="oldValue">The old value.</param>
-        /// <param name="key">The name of the audit log change key.</param>
-        public AuditLogChange(Optional<object> newValue, Optional<object> oldValue, string key)
-        {
-            this.NewValue = newValue;
-            this.OldValue = oldValue;
-            this.Key = key;
-        }
-    }
+    /// <inheritdoc cref="IAuditLogChange" />
+    [PublicAPI]
+    public record AuditLogChange(Optional<object> NewValue, Optional<object> OldValue, string Key) : IAuditLogChange;
 }

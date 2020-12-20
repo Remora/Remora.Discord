@@ -20,14 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.API.Gateway.Events
 {
-    /// <summary>
-    /// Represents a reconnection request.
-    /// </summary>
-    public class Reconnect : IReconnect
-    {
-    }
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IReconnect" />
+    [PublicAPI]
+    public record Reconnect : IReconnect;
 }

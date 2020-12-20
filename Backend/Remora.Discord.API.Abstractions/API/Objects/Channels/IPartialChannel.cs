@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a partial channel.
     /// </summary>
+    [PublicAPI]
     public interface IPartialChannel
     {
         /// <summary>
@@ -91,7 +93,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
         /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
         /// </summary>
-        Optional<int> RateLimitPerUser { get; }
+        Optional<TimeSpan> RateLimitPerUser { get; }
 
         /// <summary>
         /// Gets the recipients of the DM.

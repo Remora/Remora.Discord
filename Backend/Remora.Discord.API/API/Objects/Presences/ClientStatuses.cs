@@ -20,39 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class ClientStatuses : IClientStatuses
-    {
-        /// <inheritdoc />
-        public Optional<ClientStatus> Desktop { get; }
-
-        /// <inheritdoc />
-        public Optional<ClientStatus> Mobile { get; }
-
-        /// <inheritdoc />
-        public Optional<ClientStatus> Web { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClientStatuses"/> class.
-        /// </summary>
-        /// <param name="desktop">The desktop status.</param>
-        /// <param name="mobile">The mobile status.</param>
-        /// <param name="web">The web status.</param>
-        public ClientStatuses
-        (
-            Optional<ClientStatus> desktop,
-            Optional<ClientStatus> mobile,
-            Optional<ClientStatus> web
-        )
-        {
-            this.Desktop = desktop;
-            this.Mobile = mobile;
-            this.Web = web;
-        }
-    }
+    /// <inheritdoc cref="IClientStatuses" />
+    [PublicAPI]
+    public record ClientStatuses
+    (
+        Optional<ClientStatus> Desktop,
+        Optional<ClientStatus> Mobile,
+        Optional<ClientStatus> Web
+    ) : IClientStatuses;
 }

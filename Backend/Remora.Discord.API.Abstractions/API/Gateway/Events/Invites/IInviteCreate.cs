@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     /// <summary>
     /// Represents the creation of an invite.
     /// </summary>
+    [PublicAPI]
     public interface IInviteCreate : IGatewayEvent
     {
         /// <summary>
@@ -59,7 +61,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the time (in seconds) the invite is valid for.
         /// </summary>
-        int MaxAge { get; }
+        TimeSpan MaxAge { get; }
 
         /// <summary>
         /// Gets the maximum number of times the invite can be used.

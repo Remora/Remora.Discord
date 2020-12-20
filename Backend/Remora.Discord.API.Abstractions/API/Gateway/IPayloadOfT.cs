@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 #pragma warning disable SA1649
 
 namespace Remora.Discord.API.Abstractions.Gateway
@@ -28,11 +30,12 @@ namespace Remora.Discord.API.Abstractions.Gateway
     /// Marker interface for payload classes.
     /// </summary>
     /// <typeparam name="TData">The data contained in the payload.</typeparam>
+    [PublicAPI]
     public interface IPayload<out TData> : IPayload
     {
         /// <summary>
         /// Gets the data contained in the payload.
         /// </summary>
-        TData Data { get; }
+        TData? Data { get; }
     }
 }

@@ -156,6 +156,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownRedistributable = 10036,
 
         /// <summary>
+        /// Unknown guild template.
+        /// </summary>
+        UnknownGuildTemplate = 100057,
+
+        /// <summary>
         /// Bots cannot use this endpoint.
         /// </summary>
         NoBotsAllowed = 20001,
@@ -169,6 +174,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// This message cannot be edited due to announcement rate limits.
         /// </summary>
         EditingNotAllowedDueToAnnouncementRateLimits = 20022,
+
+        /// <summary>
+        /// The channel you are writing to has hit the write rate limit.
+        /// </summary>
+        WriteRateLimitHit = 20028,
 
         /// <summary>
         /// Maximum number of guilds reached (100).
@@ -214,6 +224,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Maximum number of invites reached (1000).
         /// </summary>
         MaxGuildInvitesReached = 30016,
+
+        /// <summary>
+        /// The guild already has a template.
+        /// </summary>
+        GuildAlreadyHasATemplate = 30031,
 
         /// <summary>
         /// Unauthorized. Provide a valid token and try again.
@@ -357,8 +372,8 @@ namespace Remora.Discord.API.Abstractions.Results
         MessageTooOldToBulkDelete = 50034,
 
         /// <summary>
-        /// Invalid form body (returned for both <code>application/json</code> and <code>multipart/form-data</code>
-        /// bodies), or invalid <code>Content-Type</code> provided.
+        /// Invalid form body (returned for both application/json and multipart/form-data bodies), or invalid
+        /// Content-Type provided.
         /// </summary>
         InvalidFormBody = 50035,
 
@@ -371,6 +386,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Invalid API version provided.
         /// </summary>
         InvalidAPIVersion = 50041,
+
+        /// <summary>
+        /// Invalid sticker sent.
+        /// </summary>
+        InvalidSticker = 50081,
 
         /// <summary>
         /// Reaction was blocked.

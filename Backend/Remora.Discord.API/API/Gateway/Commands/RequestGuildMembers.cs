@@ -21,58 +21,25 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Core;
+
+#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
     /// Represents a command used to request guild members.
     /// </summary>
-    public class RequestGuildMembers : IRequestGuildMembers
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Query { get; }
-
-        /// <inheritdoc />
-        public int Limit { get; }
-
-        /// <inheritdoc />
-        public Optional<bool> Presences { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyCollection<Snowflake>> UserIDs { get; }
-
-        /// <inheritdoc />
-        public Optional<string> Nonce { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestGuildMembers"/> class.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild to request from.</param>
-        /// <param name="limit">The maximum number of users to return.</param>
-        /// <param name="presences">Whether the user presences should be included.</param>
-        /// <param name="query">The query string.</param>
-        /// <param name="userIDs">The query IDs.</param>
-        /// <param name="nonce">The identifying nonce.</param>
-        public RequestGuildMembers
-        (
-            Snowflake guildID,
-            int limit,
-            Optional<bool> presences = default,
-            Optional<string> query = default,
-            Optional<IReadOnlyCollection<Snowflake>> userIDs = default,
-            Optional<string> nonce = default)
-        {
-            this.GuildID = guildID;
-            this.Query = query;
-            this.Limit = limit;
-            this.Presences = presences;
-            this.UserIDs = userIDs;
-            this.Nonce = nonce;
-        }
-    }
+    [PublicAPI]
+    public record RequestGuildMembers
+    (
+        Snowflake GuildID,
+        int Limit,
+        Optional<bool> Presences = default,
+        Optional<string> Query = default,
+        Optional<IReadOnlyCollection<Snowflake>> UserIDs = default,
+        Optional<string> Nonce = default
+    ) : IRequestGuildMembers;
 }
