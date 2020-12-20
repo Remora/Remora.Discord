@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageReference" />
+    /// <inheritdoc cref="IMessageReference" />
     [PublicAPI]
     public record MessageReference
     (

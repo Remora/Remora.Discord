@@ -29,7 +29,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmoji" />
+    /// <inheritdoc cref="IEmoji" />
     [PublicAPI]
     public record Emoji
     (

@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbedFooter" />
+    /// <inheritdoc cref="IEmbedFooter" />
     [PublicAPI]
     public record EmbedFooter(string Text, Optional<string> IconUrl, Optional<string> ProxyIconUrl) : IEmbedFooter;
 }

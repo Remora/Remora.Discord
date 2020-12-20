@@ -80,7 +80,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 "mock-session",
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                 )
@@ -139,7 +140,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                         .Send<Reconnect>()
@@ -211,7 +213,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                         .Send<Reconnect>()
@@ -243,7 +246,8 @@ namespace Remora.Discord.Gateway.Tests.Tests
                                 Constants.BotUser,
                                 new List<IUnavailableGuild>(),
                                 Constants.MockSessionID,
-                                default
+                                default,
+                                new PartialApplication()
                             )
                         )
                 )

@@ -31,7 +31,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IEmbed" />
+    /// <inheritdoc cref="IEmbed" />
     [PublicAPI]
     public record Embed
     (

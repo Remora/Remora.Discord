@@ -29,12 +29,13 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAllowedMentions" />
+    /// <inheritdoc cref="IAllowedMentions" />
     [PublicAPI]
     public record AllowedMentions
     (
         Optional<IReadOnlyList<MentionType>> Parse,
         Optional<IReadOnlyList<Snowflake>> Roles,
-        Optional<IReadOnlyList<Snowflake>> Users
+        Optional<IReadOnlyList<Snowflake>> Users,
+        Optional<bool> MentionRepliedUser
     ) : IAllowedMentions;
 }

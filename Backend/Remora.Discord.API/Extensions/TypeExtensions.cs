@@ -37,6 +37,35 @@ namespace Remora.Discord.API.Extensions
     public static class TypeExtensions
     {
         /// <summary>
+        /// Determines whether the given type is a collection.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a collection; otherwise, false.</returns>
+        public static bool IsCollection(this Type type)
+        {
+            if (!type.IsGenericType)
+            {
+                return false;
+            }
+
+            switch (type.GetGenericTypeDefinition())
+            {
+                case var _ when type == typeof(IReadOnlyList<>):
+                case var _ when type == typeof(IReadOnlyCollection<>):
+                case var _ when type == typeof(IList<>):
+                case var _ when type == typeof(ICollection<>):
+                case var _ when type == typeof(List<>):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Determines whether the given type is unsigned.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -66,6 +95,95 @@ namespace Remora.Discord.API.Extensions
             }
 
             throw new InvalidOperationException($"{nameof(type)} was not a numeric type.");
+        }
+
+        /// <summary>
+        /// Checks whether the type is one of C#'s builtin types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a builtin type; otherwise, false.</returns>
+        public static bool IsBuiltin(this Type type)
+        {
+            switch (type)
+            {
+                case var _ when type == typeof(sbyte):
+                case var _ when type == typeof(short):
+                case var _ when type == typeof(int):
+                case var _ when type == typeof(long):
+                case var _ when type == typeof(float):
+                case var _ when type == typeof(double):
+                case var _ when type == typeof(decimal):
+                case var _ when type == typeof(byte):
+                case var _ when type == typeof(ushort):
+                case var _ when type == typeof(uint):
+                case var _ when type == typeof(ulong):
+                case var _ when type == typeof(string):
+                case var _ when type == typeof(bool):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the type is one of C#'s builtin numeric types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a builtin numeric type; otherwise, false.</returns>
+        public static bool IsNumeric(this Type type)
+        {
+            switch (type)
+            {
+                case var _ when type == typeof(sbyte):
+                case var _ when type == typeof(short):
+                case var _ when type == typeof(int):
+                case var _ when type == typeof(long):
+                case var _ when type == typeof(float):
+                case var _ when type == typeof(double):
+                case var _ when type == typeof(decimal):
+                case var _ when type == typeof(byte):
+                case var _ when type == typeof(ushort):
+                case var _ when type == typeof(uint):
+                case var _ when type == typeof(ulong):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the type is one of C#'s builtin integer types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a builtin integer type; otherwise, false.</returns>
+        public static bool IsInteger(this Type type)
+        {
+            switch (type)
+            {
+                case var _ when type == typeof(sbyte):
+                case var _ when type == typeof(short):
+                case var _ when type == typeof(int):
+                case var _ when type == typeof(long):
+                case var _ when type == typeof(byte):
+                case var _ when type == typeof(ushort):
+                case var _ when type == typeof(uint):
+                case var _ when type == typeof(ulong):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuditLogChange" />
+    /// <inheritdoc cref="IAuditLogChange" />
     [PublicAPI]
     public record AuditLogChange(Optional<object> NewValue, Optional<object> OldValue, string Key) : IAuditLogChange;
 }

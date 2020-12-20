@@ -84,7 +84,10 @@ namespace Remora.Discord.API.Extensions
                             .AddVoiceObjectConverters()
                             .AddWebhookObjectConverters()
                             .AddErrorObjectConverters()
-                            .AddTemplateObjectConverters();
+                            .AddTemplateObjectConverters()
+                            .AddInteractionObjectConverters()
+                            .AddOAuth2ObjectConverters()
+                            .AddTeamObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -94,7 +97,8 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<NullableConverterFactory>()
                             .AddConverter<SnowflakeConverter>()
                             .AddConverter<ColorConverter>()
-                            .AddConverter<PropertyErrorDetailsConverter>();
+                            .AddConverter<PropertyErrorDetailsConverter>()
+                            .AddConverter<OneOfConverterFactory>();
 
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;
@@ -227,7 +231,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildMemberAdd, GuildMemberAdd>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
             options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
@@ -297,6 +302,9 @@ namespace Remora.Discord.API.Extensions
             // Webhooks
             options.AddDataObjectConverter<IWebhooksUpdate, WebhooksUpdate>();
 
+            // Interactions
+            options.AddDataObjectConverter<IInteractionCreate, InteractionCreate>();
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -361,6 +369,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
+                .WithPropertyName(a => a.MentionRepliedUser, "replied_user")
                 .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
             options.AddDataObjectConverter<IFollowedChannel, FollowedChannel>();
@@ -438,12 +447,14 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IPartialGuildMember, PartialGuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute");
+                .WithPropertyName(m => m.IsMuted, "mute")
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
                 .WithPropertyName(u => u.GuildID, "id")
@@ -738,6 +749,70 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(c => c.IsNsfw, "nsfw");
 
             options.AddDataObjectConverter<IPermissionOverwriteTemplate, PermissionOverwriteTemplate>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle interaction objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddInteractionObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>();
+            options.AddDataObjectConverter
+            <
+                IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
+            >();
+
+            options.AddDataObjectConverter<IInteraction, Interaction>();
+            options.AddDataObjectConverter
+            <
+                IInteractionApplicationCommandCallbackData, InteractionApplicationCommandCallbackData
+            >()
+            .WithPropertyName(d => d.IsTTS, "tts");
+
+            options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
+
+            options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
+            options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
+                .WithPropertyName(o => o.IsDefault, "default")
+                .WithPropertyName(o => o.IsRequired, "required");
+            options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle OAuth2 objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddOAuth2ObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IApplication, Application>()
+                .WithPropertyName(a => a.IsBotPublic, "bot_public")
+                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+            options.AddDataObjectConverter<IPartialApplication, PartialApplication>()
+                .WithPropertyName(a => a.IsBotPublic, "bot_public")
+                .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
+                .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle team objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddTeamObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ITeam, Team>();
+            options.AddDataObjectConverter<ITeamMember, TeamMember>();
 
             return options;
         }

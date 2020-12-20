@@ -61,7 +61,8 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<IMessageApplication> application,
             Optional<IMessageReference> messageReference,
             Optional<MessageFlags> flags,
-            Optional<IReadOnlyList<IMessageSticker>> stickers
+            Optional<IReadOnlyList<IMessageSticker>> stickers,
+            Optional<IMessage?> referencedMessage
         )
             : base
             (
@@ -89,7 +90,8 @@ namespace Remora.Discord.API.Gateway.Events
                 application,
                 messageReference,
                 flags,
-                stickers
+                stickers,
+                referencedMessage
             )
         {
         }

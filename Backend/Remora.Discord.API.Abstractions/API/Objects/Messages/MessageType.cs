@@ -113,6 +113,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The server is going to disqualify from guild discovery very soon.
         /// </summary>
-        GuildDiscoveryGracePeriodFinalWarning = 17
+        GuildDiscoveryGracePeriodFinalWarning = 17,
+
+        /// <summary>
+        /// A reply to another message.
+        /// </summary>
+        InlineReply = 19
     }
 }

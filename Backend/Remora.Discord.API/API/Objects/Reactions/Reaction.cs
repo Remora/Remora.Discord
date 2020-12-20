@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IReaction" />
+    /// <inheritdoc cref="IReaction" />
     [PublicAPI]
     public record Reaction(int Count, bool HasCurrentUserReacted, IPartialEmoji Emoji) : IReaction;
 }

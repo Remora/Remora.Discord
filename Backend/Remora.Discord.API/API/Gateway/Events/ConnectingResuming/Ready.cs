@@ -39,6 +39,7 @@ namespace Remora.Discord.API.Gateway.Events
         IUser User,
         IReadOnlyList<IUnavailableGuild> Guilds,
         string SessionID,
-        Optional<IShardIdentification> Shard
+        Optional<IShardIdentification> Shard,
+        IPartialApplication Application
     ) : IReady;
 }

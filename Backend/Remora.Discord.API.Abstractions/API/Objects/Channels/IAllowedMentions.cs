@@ -48,5 +48,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a list of allowed users to mention.
         /// </summary>
         Optional<IReadOnlyList<Snowflake>> Users { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the replied-to user should be mentioned.
+        /// </summary>
+        Optional<bool> MentionRepliedUser { get; }
     }
 }

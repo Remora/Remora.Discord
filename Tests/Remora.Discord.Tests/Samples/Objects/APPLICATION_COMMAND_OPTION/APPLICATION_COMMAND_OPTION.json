@@ -1,0 +1,9 @@
+{
+    "type": 1,
+    "name": "aaa",
+    "description": "wewww",
+    "default": false,
+    "required": true,
+    "choices": [],
+    "options": []
+}

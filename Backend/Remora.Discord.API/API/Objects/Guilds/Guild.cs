@@ -30,7 +30,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuild" />
+    /// <inheritdoc cref="IGuild" />
     [PublicAPI]
     public record Guild
     (

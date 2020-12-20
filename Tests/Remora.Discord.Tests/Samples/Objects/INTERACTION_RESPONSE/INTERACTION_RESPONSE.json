@@ -1,0 +1,13 @@
+{
+    "type": 2,
+    "data": {
+        "tts": false,
+        "content": "aaa",
+        "embeds": [],
+        "allowed_mentions": {
+            "parse": [ "roles", "users" ],
+            "roles": [ "748969255210450984" ],
+            "users": [ "748969255210450984" ]
+        }
+    }
+}

@@ -29,7 +29,7 @@ using Remora.Discord.API.Abstractions.Results;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IRestError" />
+    /// <inheritdoc cref="IRestError" />
     [PublicAPI]
     public record RestError
     (

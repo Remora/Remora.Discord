@@ -30,7 +30,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildMember" />
+    /// <inheritdoc cref="IGuildMember" />
     [PublicAPI]
     public record GuildMember
     (
@@ -40,6 +40,7 @@ namespace Remora.Discord.API.Objects
         DateTimeOffset JoinedAt,
         Optional<DateTimeOffset?> PremiumSince,
         bool IsDeafened,
-        bool IsMuted
+        bool IsMuted,
+        Optional<bool?> IsPending
     ) : IGuildMember;
 }

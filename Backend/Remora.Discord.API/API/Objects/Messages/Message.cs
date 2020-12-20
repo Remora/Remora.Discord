@@ -30,7 +30,7 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessage" />
+    /// <inheritdoc cref="IMessage" />
     [PublicAPI]
     public record Message
     (
@@ -58,6 +58,7 @@ namespace Remora.Discord.API.Objects
         Optional<IMessageApplication> Application,
         Optional<IMessageReference> MessageReference,
         Optional<MessageFlags> Flags,
-        Optional<IReadOnlyList<IMessageSticker>> Stickers
+        Optional<IReadOnlyList<IMessageSticker>> Stickers,
+        Optional<IMessage?> ReferencedMessage
     ) : IMessage;
 }

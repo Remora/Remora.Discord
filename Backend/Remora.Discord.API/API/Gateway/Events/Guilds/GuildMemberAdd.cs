@@ -48,6 +48,7 @@ namespace Remora.Discord.API.Gateway.Events
         /// <param name="isDeafened">Whether the user is deafened in voice channels.</param>
         /// <param name="isMuted">Whether the user is muted in voice channels.</param>
         /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="isPending">Whether the user has passed the screening requirements.</param>
         public GuildMemberAdd
         (
             Optional<IUser> user,
@@ -57,6 +58,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<DateTimeOffset?> premiumSince,
             bool isDeafened,
             bool isMuted,
+            Optional<bool?> isPending,
             Snowflake guildID
         )
             : base
@@ -67,7 +69,8 @@ namespace Remora.Discord.API.Gateway.Events
                 joinedAt,
                 premiumSince,
                 isDeafened,
-                isMuted
+                isMuted,
+                isPending
             )
         {
             this.GuildID = guildID;
