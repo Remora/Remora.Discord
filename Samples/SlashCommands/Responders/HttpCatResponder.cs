@@ -120,7 +120,13 @@ namespace Remora.Discord.Samples.SlashCommands.Responders
                 return EventResponseResult.FromError("The option name was invalid.");
             }
 
-            if (!codeOption.Value.TryPickT2(out var code, out _))
+            if (!codeOption.Value.HasValue)
+            {
+                return EventResponseResult.FromError("The option value was invalid.");
+            }
+
+            var optionValue = codeOption.Value.Value!;
+            if (!optionValue.TryPickT2(out var code, out _))
             {
                 return EventResponseResult.FromError("The value wasn't an integer.");
             }
