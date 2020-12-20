@@ -29,8 +29,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Generators\Remora.Discord.Generators.Support\Remora.Discord.Generators.Support.csproj" />
-      <ProjectReference Include="..\..\Generators\Remora.Discord.Generators\Remora.Discord.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
       <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
     </ItemGroup>
 
