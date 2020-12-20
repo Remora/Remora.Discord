@@ -708,6 +708,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
 
                 await using var file = new MemoryStream();
+                var fileName = "file.bin";
                 var nonce = "aasda";
                 var tts = false;
 
@@ -724,7 +725,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     return false;
                                 }
 
-                                if (!multipart.Any(c => c is StreamContent))
+                                var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
+                                if (streamContent is null || streamContent.Headers.ContentDisposition is null)
+                                {
+                                    return false;
+                                }
+
+                                if (streamContent.Headers.ContentDisposition.FileName != fileName)
                                 {
                                     return false;
                                 }
@@ -745,7 +752,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     nonce: nonce,
                     isTTS: tts,
-                    file: file
+                    file: new FileData(fileName, file)
                 );
 
                 ResultAssert.Successful(result);
