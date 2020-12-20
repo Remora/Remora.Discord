@@ -1,5 +1,5 @@
 //
-//  IFile.cs
+//  FileData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,22 +23,33 @@
 using System.IO;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.Core
 {
     /// <summary>
     /// Represents a file.
     /// </summary>
     [PublicAPI]
-    public interface IFile
+    public class FileData
     {
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
-        string Name { get; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the content of the file.
         /// </summary>
-        Stream Content { get; }
+        public Stream Content { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileData"/> class.
+        /// </summary>
+        /// <param name="name">The file name.</param>
+        /// <param name="content">The file content.</param>
+        public FileData(string name, Stream content)
+        {
+            Name = name;
+            Content = content;
+        }
     }
 }

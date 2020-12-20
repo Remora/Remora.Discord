@@ -787,7 +787,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     shouldWait,
                     isTTS: tts,
-                    file: new Discord.API.Objects.File(fileName, file)
+                    file: new FileData(fileName, file)
                 );
 
                 ResultAssert.Successful(result);
@@ -1105,7 +1105,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     shouldWait,
                     isTTS: tts,
-                    file: new Discord.API.Objects.File(fileName, file)
+                    file: new FileData(fileName, file)
                 );
 
                 ResultAssert.Successful(result);

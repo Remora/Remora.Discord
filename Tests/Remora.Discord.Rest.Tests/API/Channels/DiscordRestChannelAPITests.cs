@@ -752,7 +752,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     nonce: nonce,
                     isTTS: tts,
-                    file: new Discord.API.Objects.File(fileName, file)
+                    file: new FileData(fileName, file)
                 );
 
                 ResultAssert.Successful(result);

@@ -196,7 +196,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<IFile> file = default,
+            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default
@@ -295,7 +295,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<IFile> file = default,
+            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default

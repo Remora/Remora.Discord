@@ -221,7 +221,7 @@ namespace Remora.Discord.Rest.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<IFile> file = default,
+            Optional<FileData> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
             CancellationToken ct = default
