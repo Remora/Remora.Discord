@@ -66,6 +66,8 @@ namespace Remora.Discord.Commands.Services
         /// <returns>true if slash commands are supported; otherwise, false.</returns>
         public bool SupportsSlashCommands()
         {
+            // TODO: Improve
+            // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
             return _commandTree.CreateApplicationCommands(out _).IsSuccess;
         }
 
