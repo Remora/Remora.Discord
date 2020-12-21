@@ -105,42 +105,10 @@ namespace Remora.Discord.Commands.Extensions
             {
                 case CommandNode command:
                 {
-                    var parameterOptions = new List<IApplicationCommandOption>();
-
-                    // Create a set of parameter options
-                    foreach (var parameter in command.Shape.Parameters)
+                    var createParameterOptions = CreateCommandParameterOptions(command, out var parameterOptions);
+                    if (!createParameterOptions.IsSuccess)
                     {
-                        if (parameter is SwitchParameterShape)
-                        {
-                            return CreateCommandResult.FromError("Switch parameters are not supported.", command);
-                        }
-
-                        if (parameter is NamedCollectionParameterShape or PositionalCollectionParameterShape)
-                        {
-                            return CreateCommandResult.FromError("Collection parameters are not supported.", command);
-                        }
-
-                        var parameterType = parameter.Parameter.ParameterType;
-                        var discordType = ToApplicationCommandOptionType(parameterType);
-                        var choices = CreateApplicationCommandOptionChoices(parameterType);
-
-                        var parameterOption = new ApplicationCommandOption
-                        (
-                            discordType,
-                            parameter.HintName,
-                            parameter.Description,
-                            default,
-                            !parameter.IsOmissible(),
-                            choices,
-                            default
-                        );
-
-                        parameterOptions.Add(parameterOption);
-                    }
-
-                    if (parameterOptions.Count > MaxCommandParameters)
-                    {
-                        return CreateCommandResult.FromError("Too many parameters in a command.", command);
+                        return createParameterOptions;
                     }
 
                     option = new ApplicationCommandOption
@@ -151,7 +119,7 @@ namespace Remora.Discord.Commands.Extensions
                         default,
                         default,
                         default,
-                        parameterOptions
+                        new Optional<IReadOnlyList<IApplicationCommandOption>>(parameterOptions)
                     );
 
                     return CreateCommandResult.FromSuccess();
@@ -203,6 +171,55 @@ namespace Remora.Discord.Commands.Extensions
                     );
                 }
             }
+        }
+
+        private static CreateCommandResult CreateCommandParameterOptions
+        (
+            CommandNode command,
+            [NotNullWhen(true)] out IReadOnlyList<IApplicationCommandOption>? parameters
+        )
+        {
+            parameters = null;
+            var parameterOptions = new List<IApplicationCommandOption>();
+
+            // Create a set of parameter options
+            foreach (var parameter in command.Shape.Parameters)
+            {
+                if (parameter is SwitchParameterShape)
+                {
+                    return CreateCommandResult.FromError("Switch parameters are not supported.", command);
+                }
+
+                if (parameter is NamedCollectionParameterShape or PositionalCollectionParameterShape)
+                {
+                    return CreateCommandResult.FromError("Collection parameters are not supported.", command);
+                }
+
+                var parameterType = parameter.Parameter.ParameterType;
+                var discordType = ToApplicationCommandOptionType(parameterType);
+                var choices = CreateApplicationCommandOptionChoices(parameterType);
+
+                var parameterOption = new ApplicationCommandOption
+                (
+                    discordType,
+                    parameter.HintName,
+                    parameter.Description,
+                    default,
+                    !parameter.IsOmissible(),
+                    choices,
+                    default
+                );
+
+                parameterOptions.Add(parameterOption);
+            }
+
+            if (parameterOptions.Count > MaxCommandParameters)
+            {
+                return CreateCommandResult.FromError("Too many parameters in a command.", command);
+            }
+
+            parameters = parameterOptions;
+            return CreateCommandResult.FromSuccess();
         }
 
         private static Optional<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
