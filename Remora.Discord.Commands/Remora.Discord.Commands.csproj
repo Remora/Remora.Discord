@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="1.0.0-beta8" />
+        <PackageReference Include="Remora.Commands" Version="1.0.1" />
     </ItemGroup>
 
 </Project>
