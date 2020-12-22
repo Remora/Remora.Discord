@@ -22,11 +22,14 @@
 
 using System.Linq;
 using Remora.Commands.Trees;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Tests.Data.DiscordLimits;
 using Remora.Discord.Commands.Tests.Data.InternalLimits;
+using Remora.Discord.Commands.Tests.Data.Valid;
 using Remora.Discord.Tests;
 using Xunit;
+using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
 namespace Remora.Discord.Commands.Tests.Extensions
 {
@@ -182,6 +185,158 @@ namespace Remora.Discord.Commands.Tests.Extensions
             /// </summary>
             public class Successes
             {
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void ReturnsSuccessForValidTree()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ValidCommandGroup>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out _);
+                    ResultAssert.Successful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesValidTreeCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ValidCommandGroup>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out var commands);
+                    ResultAssert.Successful(result);
+
+                    Assert.NotNull(commands);
+                    Assert.Equal(2, commands!.Count);
+
+                    var topLevelCommand = commands.FirstOrDefault(c => c.Type == SubCommand);
+                    Assert.NotNull(topLevelCommand);
+
+                    var topLevelGroup = commands.FirstOrDefault(c => c.Type == SubCommandGroup);
+                    Assert.NotNull(topLevelGroup);
+
+                    Assert.True(topLevelGroup!.Options.HasValue);
+                    Assert.Equal(2, topLevelGroup.Options.Value!.Count);
+
+                    var firstNestedCommand = topLevelGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommand);
+                    Assert.NotNull(firstNestedCommand);
+
+                    var nestedGroup = topLevelGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommandGroup);
+                    Assert.NotNull(nestedGroup);
+
+                    Assert.True(nestedGroup!.Options.HasValue);
+                    Assert.Single(nestedGroup.Options.Value!);
+
+                    var secondNestedCommand = nestedGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommand);
+                    Assert.NotNull(secondNestedCommand);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesTypedOptionsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<TypedCommands>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out var commands);
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
+                    {
+                        var command = commands!.FirstOrDefault(c => c.Name == commandName);
+                        Assert.NotNull(command);
+
+                        var parameter = command!.Options.Value!.First();
+                        Assert.Equal(type, parameter.Type);
+                    }
+
+                    AssertExistsWithType("sbyte-value", Integer);
+                    AssertExistsWithType("byte-value", Integer);
+                    AssertExistsWithType("short-value", Integer);
+                    AssertExistsWithType("ushort-value", Integer);
+                    AssertExistsWithType("int-value", Integer);
+                    AssertExistsWithType("uint-value", Integer);
+                    AssertExistsWithType("long-value", Integer);
+                    AssertExistsWithType("ulong-value", Integer);
+
+                    AssertExistsWithType("float-value", String);
+                    AssertExistsWithType("double-value", String);
+                    AssertExistsWithType("decimal-value", String);
+
+                    AssertExistsWithType("string-value", String);
+
+                    AssertExistsWithType("bool-value", Boolean);
+
+                    AssertExistsWithType("role-value", Role);
+                    AssertExistsWithType("user-value", User);
+                    AssertExistsWithType("channel-value", Channel);
+                    AssertExistsWithType("member-value", User);
+
+                    AssertExistsWithType("enum-value", String);
+                    var enumCommand = commands!.First(c => c.Name == "enum-value");
+                    var enumParameter = enumCommand.Options.Value!.First();
+                    Assert.True(enumParameter.Choices.HasValue);
+
+                    var enumChoices = enumParameter.Choices.Value!;
+                    Assert.Equal(2, enumChoices.Count);
+                    Assert.Collection
+                    (
+                        enumChoices,
+                        choice =>
+                        {
+                            Assert.Equal(nameof(TestEnum.Value1), choice.Name);
+                            Assert.True(choice.Value.IsT0);
+                            Assert.Equal(nameof(TestEnum.Value1), choice.Value.AsT0);
+                        },
+                        choice =>
+                        {
+                            Assert.Equal(nameof(TestEnum.Value2), choice.Name);
+                            Assert.True(choice.Value.IsT0);
+                            Assert.Equal(nameof(TestEnum.Value2), choice.Value.AsT0);
+                        }
+                    );
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesRequiredOptionsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<CommandsWithRequiredOrOptionalParameters>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out var commands);
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    var requiredCommand = commands!.First(c => c.Name == "required");
+                    var requiredParameter = requiredCommand.Options.Value!.First();
+                    Assert.True(requiredParameter.IsRequired.HasValue);
+                    Assert.True(requiredParameter.IsRequired.Value);
+
+                    var optionalCommand = commands.First(c => c.Name == "optional");
+                    var optionalParameter = optionalCommand.Options.Value!.First();
+                    if (optionalParameter.IsRequired.HasValue)
+                    {
+                        Assert.False(optionalParameter.IsRequired.Value);
+                    }
+                }
             }
         }
     }
