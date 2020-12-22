@@ -138,12 +138,16 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Class Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI">Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI">Discord<wbr>Rest<wbr>Audit<wbr>Log<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI">Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
@@ -250,7 +254,7 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/696E2E03">AddContent<wbr>(HttpContent, <wbr>string)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/F9CA0BD9">AddContent<wbr>(HttpContent, <wbr>string, <wbr>string?)<wbr></a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
 								<td>
 									<div>
@@ -287,26 +291,26 @@ class Type type-node
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/BB7A9075">WithJson<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/AA17839A">WithJson<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>, <wbr>bool)<wbr></a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
 								<td>
 									<div>
      Adds an arbitrary section inside the request body. This implicitly sets the request body to be a JSON
      object.
     
-     This method is mutually exclusive with <code class="cs">Remora.Discord.Rest.API.RestRequestBuilder.WithJsonArray(System.Action{Utf8JsonWriter})</code>.
+     This method is mutually exclusive with <code class="cs">Remora.Discord.Rest.API.RestRequestBuilder.WithJsonArray(System.Action{Utf8JsonWriter},System.Boolean)</code>.
      </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/E70AC2CC">WithJsonArray<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/7608113B">WithJsonArray<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>, <wbr>bool)<wbr></a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
 								<td>
 									<div>
      Adds a set of arbitrary elements to the request body. This implicitly sets the request body to be a JSON
      array.
     
-     This method is mutually exclusive with <code class="cs">Remora.Discord.Rest.API.RestRequestBuilder.WithJson(System.Action{Utf8JsonWriter})</code>.
+     This method is mutually exclusive with <code class="cs">Remora.Discord.Rest.API.RestRequestBuilder.WithJson(System.Action{Utf8JsonWriter},System.Boolean)</code>.
      </div>
 								</td>
 							</tr>
