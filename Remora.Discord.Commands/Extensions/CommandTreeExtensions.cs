@@ -45,8 +45,7 @@ namespace Remora.Discord.Commands.Extensions
          * Various Discord-imposed limits.
          */
 
-        private const int MaxRootCommands = 50;
-        private const int MaxRootGroups = 10;
+        private const int MaxRootCommandsOrGroups = 50;
         private const int MaxGroupCommands = 10;
         private const int MaxChoiceValues = 10;
         private const int MaxCommandParameters = 10;
@@ -78,14 +77,9 @@ namespace Remora.Discord.Commands.Extensions
                 createdCommands.Add(option!);
             }
 
-            if (createdCommands.Count(c => c.Type == SubCommand) > MaxRootCommands)
+            if (createdCommands.Count > MaxRootCommandsOrGroups)
             {
-                return CreateCommandResult.FromError("Too many root-level commands.");
-            }
-
-            if (createdCommands.Count(c => c.Type == SubCommandGroup) > MaxRootGroups)
-            {
-                return CreateCommandResult.FromError("Too many root-level groups.");
+                return CreateCommandResult.FromError("Too many root-level commands or groups.");
             }
 
             commands = createdCommands;
