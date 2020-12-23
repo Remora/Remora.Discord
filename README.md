@@ -85,8 +85,12 @@ Please refer to the [Samples](Samples) for community-created example bots.
 ## 5. Contributing
 See [Contributing][2].
 
+## Thanks
+Icon by [Twemoji][6], licensed under CC-BY 4.0.
+
 [1]: https://nihlus.github.io/Remora.Discord/
 [2]: .github/CONTRIBUTING.md
 [3]: https://www.nuget.org/packages/Remora.Discord/
 [4]: https://discord.gg/tRJbg8HNdt
 [5]: https://img.shields.io/static/v1?label=Chat&message=on%20Discord&color=7289da&logo=discord
+[6]: https://twemoji.twitter.com/

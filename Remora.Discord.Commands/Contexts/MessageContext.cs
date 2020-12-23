@@ -28,34 +28,12 @@ namespace Remora.Discord.Commands.Contexts
     /// <summary>
     /// Represents contextual information about a message.
     /// </summary>
-    public class MessageContext
-    {
-        /// <summary>
-        /// Gets the ID of the message.
-        /// </summary>
-        public Snowflake MessageID { get; }
-
-        /// <summary>
-        /// Gets the ID of the channel the message was sent in.
-        /// </summary>
-        public Snowflake ChannelID { get; }
-
-        /// <summary>
-        /// Gets the full partial message that the event received.
-        /// </summary>
-        public IPartialMessage Message { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageContext"/> class.
-        /// </summary>
-        /// <param name="messageID">The ID of the message.</param>
-        /// <param name="channelID">The ID of the channel.</param>
-        /// <param name="message">The partial message.</param>
-        public MessageContext(Snowflake messageID, Snowflake channelID, IPartialMessage message)
-        {
-            this.MessageID = messageID;
-            this.ChannelID = channelID;
-            this.Message = message;
-        }
-    }
+    public record MessageContext
+    (
+        Snowflake ChannelID,
+        IUser User,
+        Snowflake MessageID,
+        IPartialMessage Message
+    )
+    : CommandContext(ChannelID, User);
 }

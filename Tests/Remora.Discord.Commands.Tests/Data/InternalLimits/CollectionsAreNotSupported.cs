@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataOption.cs
+//  CollectionsAreNotSupported.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
+using Remora.Results;
 
-#pragma warning disable CS1591
+#pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
-    public record ApplicationCommandInteractionDataOption
-    (
-        string Name,
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options
-    )
-    : IApplicationCommandInteractionDataOption;
+    public class CollectionsAreNotSupported : CommandGroup
+    {
+        [Command("a")]
+        public Task<IResult> A(IReadOnlyList<int> collection)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  IApplicationCommandInteractionDataOption.cs
+//  UpdateCommandsResult.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,32 +20,43 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using System;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.Core;
+using Remora.Discord.Rest.Results;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.Commands.Results
 {
     /// <summary>
-    /// Represents a named option and its value.
+    /// Represents an attempt to create a Slash command from a Remora.Commands command.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandInteractionDataOption
+    public class UpdateCommandsResult : ResultBase<UpdateCommandsResult>
     {
         /// <summary>
-        /// Gets the name of the parameter.
+        /// Initializes a new instance of the <see cref="UpdateCommandsResult"/> class.
         /// </summary>
-        string Name { get; }
+        private UpdateCommandsResult()
+        {
+        }
+
+        /// <inheritdoc cref="CreateRestEntityResult{TEntity}"/>
+        [UsedImplicitly]
+        private UpdateCommandsResult
+        (
+            string? errorReason,
+            Exception? exception = null
+        )
+            : base(errorReason, exception)
+        {
+        }
 
         /// <summary>
-        /// Gets the value of the pair.
+        /// Creates a successful result.
         /// </summary>
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value { get; }
-
-        /// <summary>
-        /// Gets the options supplied to the subcommand or subgroup.
-        /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+        /// <returns>A successful result.</returns>
+        public static UpdateCommandsResult FromSuccess()
+        {
+            return new();
+        }
     }
 }

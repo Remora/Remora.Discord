@@ -92,8 +92,9 @@ namespace Remora.Discord.Commands.Responders
 
             var context = new MessageContext
             (
-                gatewayEvent.ID,
                 gatewayEvent.ChannelID,
+                author,
+                gatewayEvent.ID,
                 new PartialMessage
                 (
                     gatewayEvent.ID,
@@ -147,24 +148,27 @@ namespace Remora.Discord.Commands.Responders
                 }
             }
 
-            if (gatewayEvent.Author.HasValue)
+            if (!gatewayEvent.Author.HasValue)
             {
-                var author = gatewayEvent.Author.Value!;
-                if (author.IsBot.HasValue && author.IsBot.Value)
-                {
-                    return EventResponseResult.FromSuccess();
-                }
+                return EventResponseResult.FromSuccess();
+            }
 
-                if (author.IsSystem.HasValue && author.IsSystem.Value)
-                {
-                    return EventResponseResult.FromSuccess();
-                }
+            var author = gatewayEvent.Author.Value!;
+            if (author.IsBot.HasValue && author.IsBot.Value)
+            {
+                return EventResponseResult.FromSuccess();
+            }
+
+            if (author.IsSystem.HasValue && author.IsSystem.Value)
+            {
+                return EventResponseResult.FromSuccess();
             }
 
             var context = new MessageContext
             (
-                gatewayEvent.ID.Value,
                 gatewayEvent.ChannelID.Value,
+                author,
+                gatewayEvent.ID.Value,
                 gatewayEvent
             );
 
@@ -194,7 +198,7 @@ namespace Remora.Discord.Commands.Responders
                 content,
                 _services,
                 additionalParameters,
-                ct
+                ct: ct
             );
 
             return executeResult.IsSuccess

@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataOption.cs
+//  TooManyCommandParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using System;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
+using Remora.Results;
 
-#pragma warning disable CS1591
+#pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
-    public record ApplicationCommandInteractionDataOption
-    (
-        string Name,
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options
-    )
-    : IApplicationCommandInteractionDataOption;
+    public class TooManyCommandParameters : CommandGroup
+    {
+        [Command("a")]
+        public Task<IResult> A
+        (
+            int p1,
+            int p2,
+            int p3,
+            int p4,
+            int p5,
+            int p6,
+            int p7,
+            int p8,
+            int p9,
+            int p10,
+            int p11
+        )
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

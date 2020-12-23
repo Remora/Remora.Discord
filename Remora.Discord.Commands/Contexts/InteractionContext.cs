@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataOption.cs
+//  InteractionContext.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Contexts
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
-    public record ApplicationCommandInteractionDataOption
+    /// <summary>
+    /// Represents contextual information about an interaction.
+    /// </summary>
+    public record InteractionContext
     (
-        string Name,
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options
+        Snowflake ChannelID,
+        IUser User,
+        IGuildMember Member,
+        string Token,
+        Snowflake ID,
+        Snowflake GuildID
     )
-    : IApplicationCommandInteractionDataOption;
+    : CommandContext(ChannelID, User);
 }

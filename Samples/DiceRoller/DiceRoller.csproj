@@ -15,8 +15,4 @@
         <ProjectReference Include="..\..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Responders" />
-    </ItemGroup>
-
 </Project>
