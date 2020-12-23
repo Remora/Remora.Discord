@@ -62,7 +62,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("cat")]
         [Description("Posts a cat image that represents the given error code.")]
-        public async Task<IResult> PostHttpCatAsync(int httpCode)
+        public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Image: embedImage);
