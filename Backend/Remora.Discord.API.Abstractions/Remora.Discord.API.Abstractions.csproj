@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta10</Version>
+        <Version>1.0.0-beta11</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Implement OAuth2 and Teams support.
+            Fix field type in slash commands.
         </PackageReleaseNotes>
     </PropertyGroup>
 
