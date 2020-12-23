@@ -107,7 +107,7 @@ bots and use cases.</p>
 environments - primarily, a system with <code>bash</code> is assumed, but the commands
 should be easily transferable to any shell language.</p>
 <h2 id="creating-your-project">Creating your project</h2>
-<p>First of all, ensure that you have version 3.1 of the .NET Core SDK installed.
+<p>First of all, ensure that you have version 5.0 of the .NET Core SDK installed.
 If you don't have it yet, you can follow the instructions on <a href="https://docs.microsoft.com/en-us/dotnet/core/install/">this</a> page for
 your system.</p>
 <p>Next up, we'll create a simple console program that'll serve as the host for our
@@ -148,8 +148,8 @@ command line, and terminate the gateway client if it catches that keypress.</p>
 }
 </code></pre>
 <p>After this, we'll set up a service provider. Remora.Discord uses <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1">dependency
-injection</a> throughout its codebase, and it's through these systems we register
-and access various types and services from the library.</p>
+injection</a> throughout its codebase, and it's through these systems we
+register and access various types and services from the library.</p>
 <pre><code class="language-csharp">var botToken = "YOUR_TOKEN_HERE";
 
 var services = new ServiceCollection()
@@ -194,12 +194,18 @@ running.</p>
 
     if (runResult.GatewayCloseStatus.HasValue)
     {
-        Console.WriteLine($"Gateway close status: {runResult.GatewayCloseStatus}");
+        Console.WriteLine
+        (
+            $"Gateway close status: {runResult.GatewayCloseStatus}"
+        );
     }
 
     if (runResult.WebSocketCloseStatus.HasValue)
     {
-        Console.WriteLine($"Websocket close status: {runResult.WebSocketCloseStatus}");
+        Console.WriteLine
+        (
+            $"Websocket close status: {runResult.WebSocketCloseStatus}"
+        );
     }
 }
 
