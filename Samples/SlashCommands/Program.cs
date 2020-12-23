@@ -25,13 +25,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Services;
+using Remora.Discord.Core;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Samples.SlashCommands.Responders;
+using Remora.Discord.Samples.SlashCommands.Commands;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.SlashCommands
@@ -72,21 +77,44 @@ namespace Remora.Discord.Samples.SlashCommands
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
-                .AddResponder<HttpCatResponder>();
+                .AddCommands()
+                .AddInteractionResponder()
+                .AddCommandResponder()
+                .AddCommandGroup<HttpCatCommands>();
 
             serviceCollection.AddHttpClient();
+
+            serviceCollection
+                .TryAddSingleton<SlashService>();
 
             var services = serviceCollection.BuildServiceProvider();
             var log = services.GetRequiredService<ILogger<Program>>();
 
-            var oauth2 = services.GetRequiredService<IDiscordRestOAuth2API>();
-            var applications = services.GetRequiredService<IDiscordRestApplicationAPI>();
-
-            var configureCommands = await ConfigureSlashCommands(oauth2, applications, cancellationSource.Token);
-            if (!configureCommands.IsSuccess)
+            Snowflake? debugServer = null;
+#if DEBUG
+            var debugServerString = Environment.GetEnvironmentVariable("REMORA_DEBUG_SERVER");
+            if (debugServerString is not null)
             {
-                log.LogError("Failed to initialize slash commands.");
-                return;
+                if (!Snowflake.TryParse(debugServerString, out debugServer))
+                {
+                    log.LogWarning("Failed to parse debug server from environment.");
+                }
+            }
+#endif
+
+            var slashService = services.GetRequiredService<SlashService>();
+
+            if (!slashService.SupportsSlashCommands())
+            {
+                log.LogWarning("The registered commands of the bot don't support slash commands.");
+            }
+            else
+            {
+                var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer, cancellationSource.Token);
+                if (!updateSlash.IsSuccess)
+                {
+                    log.LogWarning($"Failed to update slash commands: {updateSlash.ErrorReason}");
+                }
             }
 
             var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
@@ -108,63 +136,6 @@ namespace Remora.Discord.Samples.SlashCommands
             }
 
             log.LogInformation("Bye bye");
-        }
-
-        private static async Task<OperationResult> ConfigureSlashCommands
-        (
-            IDiscordRestOAuth2API oauth2,
-            IDiscordRestApplicationAPI applications,
-            CancellationToken ct = default
-        )
-        {
-            var getApplication = await oauth2.GetCurrentApplicationInformationAsync(ct);
-            if (!getApplication.IsSuccess)
-            {
-                return OperationResult.FromError(getApplication);
-            }
-
-            var application = getApplication.Entity;
-
-            var getCommands = await applications.GetGlobalApplicationCommandsAsync(application.ID, ct);
-            if (!getCommands.IsSuccess)
-            {
-                return OperationResult.FromError(getCommands);
-            }
-
-            var commands = getCommands.Entity;
-            var catCommand = commands.FirstOrDefault(c => c.Name == "cat");
-
-            var commandOption = new ApplicationCommandOption
-            (
-                ApplicationCommandOptionType.Integer,
-                "code",
-                "The HTTP error code",
-                false,
-                true,
-                default,
-                default
-            );
-
-            if (catCommand is not null)
-            {
-                var needsUpdate = !catCommand.Options.HasValue ||
-                                  (ApplicationCommandOption)catCommand.Options.Value!.Single() != commandOption;
-                if (!needsUpdate)
-                {
-                    return OperationResult.FromSuccess();
-                }
-            }
-
-            var createCommand = await applications.CreateGlobalApplicationCommandAsync
-            (
-                application.ID,
-                "cat",
-                "Posts a cat image with an HTTP error code",
-                new[] { commandOption },
-                ct
-            );
-
-            return !createCommand.IsSuccess ? OperationResult.FromError(createCommand) : OperationResult.FromSuccess();
         }
     }
 }

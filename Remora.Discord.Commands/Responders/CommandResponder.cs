@@ -198,7 +198,7 @@ namespace Remora.Discord.Commands.Responders
                 content,
                 _services,
                 additionalParameters,
-                ct
+                ct: ct
             );
 
             return executeResult.IsSuccess

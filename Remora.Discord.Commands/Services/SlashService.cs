@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Trees;
@@ -96,9 +98,65 @@ namespace Remora.Discord.Commands.Services
                 return UpdateCommandsResult.FromError(createCommands);
             }
 
-            Func<IApplicationCommandOption, Task<ICreateRestEntityResult<IApplicationCommand>>> updateMethod;
+            CreateInteractionMethods
+            (
+                guildID,
+                ct,
+                application,
+                out var deleteMethod,
+                out var getMethod,
+                out var updateMethod
+            );
+
+            // Upsert the current valid command set
+            var currentValidCommands = new List<string>();
+            foreach (var command in commands!)
+            {
+                var updateResult = await updateMethod(command);
+                if (!updateResult.IsSuccess)
+                {
+                    return UpdateCommandsResult.FromError(updateResult);
+                }
+
+                currentValidCommands.Add(command.Name);
+            }
+
+            // Clear out old and invalid commands
+            var getCurrentCommands = await getMethod();
+            if (!getCurrentCommands.IsSuccess)
+            {
+                return UpdateCommandsResult.FromError(getCurrentCommands);
+            }
+
+            var currentCommands = getCurrentCommands.Entity;
+            var invalidCommands = currentCommands.Where(c => currentValidCommands.All(n => c.Name != n));
+
+            foreach (var invalidCommand in invalidCommands)
+            {
+                var deleteResult = await deleteMethod(invalidCommand.ID);
+                if (!deleteResult.IsSuccess)
+                {
+                    return UpdateCommandsResult.FromError(deleteResult);
+                }
+            }
+
+            return UpdateCommandsResult.FromSuccess();
+        }
+
+        private void CreateInteractionMethods
+        (
+            Snowflake? guildID,
+            CancellationToken ct,
+            IApplication application,
+            out Func<Snowflake, Task<IDeleteRestEntityResult>> deleteMethod,
+            out Func<Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>>> getMethod,
+            out Func<IApplicationCommandOption, Task<ICreateRestEntityResult<IApplicationCommand>>> updateMethod
+        )
+        {
             if (guildID is null)
             {
+                deleteMethod = s => _applicationAPI.DeleteGlobalApplicationCommandAsync(application.ID, s, ct);
+                getMethod = () => _applicationAPI.GetGlobalApplicationCommandsAsync(application.ID, ct);
                 updateMethod = c => _applicationAPI.CreateGlobalApplicationCommandAsync
                 (
                     application.ID,
@@ -107,30 +165,28 @@ namespace Remora.Discord.Commands.Services
                     c.Options,
                     ct
                 );
-            }
-            else
-            {
-                updateMethod = c => _applicationAPI.CreateGuildApplicationCommandAsync
-                (
-                    application.ID,
-                    guildID.Value,
-                    c.Name,
-                    c.Description,
-                    c.Options,
-                    ct
-                );
+
+                return;
             }
 
-            foreach (var command in commands!)
-            {
-                var updateResult = await updateMethod(command);
-                if (!updateResult.IsSuccess)
-                {
-                    return UpdateCommandsResult.FromError(updateResult);
-                }
-            }
+            deleteMethod = s => _applicationAPI.DeleteGuildApplicationCommandAsync
+            (
+                application.ID,
+                guildID.Value,
+                s,
+                ct
+            );
 
-            return UpdateCommandsResult.FromSuccess();
+            getMethod = () => _applicationAPI.GetGuildApplicationCommandsAsync(application.ID, guildID.Value, ct);
+            updateMethod = c => _applicationAPI.CreateGuildApplicationCommandAsync
+            (
+                application.ID,
+                guildID.Value,
+                c.Name,
+                c.Description,
+                c.Options,
+                ct
+            );
         }
     }
 }

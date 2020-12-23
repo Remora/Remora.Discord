@@ -28,6 +28,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Services;
+using Remora.Commands.Trees;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Gateway.Events;
@@ -41,7 +43,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Responds to interactions.
     /// </summary>
-    public class InteractionResponder : IResponder<InteractionCreate>
+    public class InteractionResponder : IResponder<IInteractionCreate>
     {
         private readonly CommandService _commandService;
         private readonly IDiscordRestInteractionAPI _interactionAPI;
@@ -68,7 +70,7 @@ namespace Remora.Discord.Commands.Responders
         /// <inheritdoc />
         public async Task<EventResponseResult> RespondAsync
         (
-            InteractionCreate? gatewayEvent,
+            IInteractionCreate? gatewayEvent,
             CancellationToken ct = default
         )
         {
@@ -115,12 +117,15 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.GuildID
             );
 
+            var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
+
             var executeResult = await _commandService.TryExecuteAsync
             (
                 command,
                 parameters,
                 _services,
                 new object[] { context },
+                searchOptions,
                 ct
             );
 
@@ -140,7 +145,7 @@ namespace Remora.Discord.Commands.Responders
             }
 
             var commandStringBuilder = new StringBuilder();
-            commandStringBuilder.Append(commandData);
+            commandStringBuilder.Append(commandData.Name);
 
             var (command, parameters) = UnpackInteractionOptions(commandData.Options.Value!);
             commandStringBuilder.Append(" ");
