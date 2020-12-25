@@ -277,14 +277,15 @@ namespace Remora.Discord.Gateway
 
                     switch (iterationResult.Exception)
                     {
-                        case HttpRequestException _:
-                        case WebSocketException _:
+                        case HttpRequestException:
+                        case WebSocketException:
                         {
                             _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
 
                             // Reconnection is allowed, since this is probably a transient error
                             _connectionStatus = GatewayConnectionStatus.Disconnected;
-                            break;
+
+                            continue;
                         }
                         default:
                         {
@@ -311,10 +312,13 @@ namespace Remora.Discord.Gateway
             }
             finally
             {
-                // Reconnection is not allowed.
                 _sessionID = null;
                 _connectionStatus = GatewayConnectionStatus.Offline;
             }
+
+            // Reconnection is not allowed at this point.
+            _sessionID = null;
+            _connectionStatus = GatewayConnectionStatus.Offline;
 
             return GatewayConnectionResult.FromSuccess();
         }
