@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Tests.Data.InternalLimits
     public class SwitchesAreNotSupported : CommandGroup
     {
         [Command("a")]
-        public Task<IResult> A([Option("switch")] bool value = false)
+        public Task<IResult> A([Switch("switch")] bool value = false)
         {
             throw new NotImplementedException();
         }
