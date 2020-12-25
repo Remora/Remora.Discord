@@ -106,62 +106,72 @@
 <p>Remora.Discord is a C# library for interfacing with the Discord API. It is built
 to fulfill a need for robust, feature-complete, highly available and concurrent
 bots.</p>
-<p>The library is currently in early development.</p>
 <p>Want to chat with users and developers? Come join us!</p>
 <p><a href="https://discord.gg/tRJbg8HNdt"><img src="https://img.shields.io/static/v1?label=Chat&amp;message=on%20Discord&amp;color=7289da&amp;logo=discord" class="img-fluid" alt="Discord Server"></a></p>
 <h1 id="table-of-contents">Table of Contents</h1>
 <ol>
-<li><a href="#1-goals">Goals</a>
+<li><a href="#1-features">Features</a></li>
+<li><a href="#2-goals">Goals</a>
 <ol>
-<li><a href="#11-correctness">Correctness</a></li>
-<li><a href="#12-robustness">Robustness</a></li>
-<li><a href="#13-true-asynchronicity-and-concurrency">True Asynchronicity and Concurrency</a></li>
+<li><a href="#21-correctness">Correctness</a></li>
+<li><a href="#22-robustness">Robustness</a></li>
+<li><a href="#23-true-asynchronicity-and-concurrency">True Asynchronicity and Concurrency</a></li>
 </ol>
 </li>
-<li><a href="#2-status">Status</a>
+<li><a href="#3-status">Status</a>
 <ol>
-<li><a href="#21-gateway">Gateway</a></li>
-<li><a href="#22-rest">REST</a></li>
+<li><a href="#31-gateway">Gateway</a></li>
+<li><a href="#32-rest">REST</a></li>
 </ol>
 </li>
-<li><a href="#3-installation">Installation</a></li>
-<li><a href="#4-usage">Usage</a></li>
+<li><a href="#4-installation">Installation</a></li>
+<li><a href="#5-usage">Usage</a></li>
 <li><a href=".github/CONTRIBUTING.md">Contributing</a></li>
 </ol>
-<h2 id="goals">1. Goals</h2>
+<h2 id="features">1. Features</h2>
+<ul>
+<li>Extensive API coverage - does anything and everything you need</li>
+<li>Modern and active - uses contemporary technologies and usage patterns</li>
+<li>Fully asynchronous - do many things at once at scale</li>
+<li>Modular - swap parts of the library with your own implementations at will</li>
+<li>Integrated - slash commands, traditional interfaces, or stateless bots</li>
+</ul>
+<h2 id="goals">2. Goals</h2>
 <p>Remora.Discord originates from the original author's frustration with many
 inconsistencies in various APIs in the C#/Discord ecosystem, both in relation to
 the Discord API itself and the language usage within existing solutions.</p>
 <p>Therefore, Remora.Discord defines the following three goals that guides its
 development. These are shorter summaries - to read the full goal definitions and
 see examples, please refer to the <a href=".github/CONTRIBUTING.md">Contributing Guidelines</a>.</p>
-<h3 id="correctness">1.1 Correctness</h3>
+<h3 id="correctness">2.1 Correctness</h3>
 <p>Correctness, in the context of Remora.Discord, means that the API available to
 the end user should as faithfully and accurately represent the actual reality of
 data presented to or from an API; that is, no data or structure of data should
 meaningfully change between the library receiving it and the user accessing it.</p>
-<h3 id="robustness">1.2 Robustness</h3>
+<h3 id="robustness">2.2 Robustness</h3>
 <p>Robustness refers to a focus on never allowing problems originating from user
 data or real-life runtime conditions to bring down or otherwise corrupt the end
 user's application. The end user should be confident that, should an error
 arise, they will be aware of the fault potential before even compiling the
 application.</p>
-<h3 id="true-asynchronicity-and-concurrency">1.3 True Asynchronicity and Concurrency</h3>
+<h3 id="true-asynchronicity-and-concurrency">2.3 True Asynchronicity and Concurrency</h3>
 <p>Remora.Discord aims to be truly asynchronous from the ground up, respecting and
 utilizing established best practices for C# and the TPL. Furthermore, it aims to
 be concurrent, allowing end users to react to and perform actions upon many
 incoming events at once.</p>
-<h2 id="status">2. Status</h2>
-<p>Remora.Discord is currently in early development. It has not been released in a
-stable state onto any common platforms, such as nuget.</p>
-<h3 id="gateway">2.1 Gateway</h3>
+<h2 id="status">3. Status</h2>
+<p>Remora.Discord is currently fully usable, and has been released for public
+consumption.</p>
+<h3 id="gateway">3.1 Gateway</h3>
 <p>The Discord Gateway API (v8) is fully implemented. The gateway client can
 connect, heartbeat, reconnect, resume, receive events, and send commands.</p>
-<h3 id="rest">2.2 REST</h3>
+<h3 id="rest">3.2 REST</h3>
 <p>The Discord REST API (v8) is fully implemented.</p>
-<h2 id="installation">3. Installation</h2>
-<p>Remora.Discord has a prerelease, early alpha version up on
-<a href="https://www.nuget.org/packages/Remora.Discord/">nuget</a> - get it there!</p>
+<h3 id="voice">3.3 Voice</h3>
+<p>The Discord Voice API is not implemented. If you'd like to contribute to the
+library, this would be an excellent start.</p>
+<h2 id="installation">4. Installation</h2>
+<p>Remora.Discord's primary distribution format is via <a href="https://www.nuget.org/packages/Remora.Discord/">nuget</a> - get it there!</p>
 <p>If you wish to use or develop the library further, you will need to compile it
 from source.</p>
 <pre><code class="language-bash">git clone git@github.com:Nihlus/Remora.Discord.git
@@ -169,11 +179,41 @@ cd Remora.Discord
 dotnet build
 dotnet pack -c Release
 </code></pre>
-<h2 id="usage">4. Usage</h2>
+<h2 id="usage">5. Usage</h2>
 <p>Up-to-date documentation for the API, as well as a quickstart guide, is
 available online at <a href="https://nihlus.github.io/Remora.Discord/">the repository pages</a>.</p>
 <p>Please refer to the <a href="Samples">Samples</a> for community-created example bots.</p>
-<h2 id="contributing">5. Contributing</h2>
+<h3 id="versioning">5.1 Versioning</h3>
+<p>A note on versioning - Remora.Discord uses SEMVER 2.0.0, which, in short, means</p>
+<p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
+<ol>
+<li>MAJOR version when you make incompatible API changes,</li>
+<li>MINOR version when you add functionality in a backwards compatible manner,
+and</li>
+<li>PATCH version when you make backwards compatible bug fixes.</li>
+</ol>
+<p>Due to the rapidly- and often-changing nature of Discord's API, this means that
+changes to the MAJOR component of the version in components of the library may
+change almost every new release. Typically, new functionality in Discord's API
+means that new fields are added, types of fields change, or parameters sent to
+endpoints change.</p>
+<p>Generally, these changes only affect the API and API.Abstractions packages -
+these will often increment their MAJOR versions. Dependant packages - such as
+Gateway or Rest - will update together with these packages, but unless their
+public API changes as a result, it will be considered a MINOR upgrade.</p>
+<p>The consequences of this is that you <em>may</em> see source-level breakages when
+upgrading from one minor version to the next. While undesirable, it is an effect
+of Discord's uneven and inaccurate update cycle. Because of the way C# handles
+dependencies, however, it's unlikely that this would affect anything outside of
+normal development - as such, it's been deemed an acceptable degradation.</p>
+<h3 id="releases">5.2 Releases</h3>
+<p>Remora.Discord does not follow a set release cycle, and releases new versions
+on a rolling basis as new features of the Discord API are implemented or
+documented.</p>
+<p>As a bot developer, you should check in every now and then to see what's
+changed - changelogs are released along with tags here on Github, as well as in
+the individual package descriptions.</p>
+<h2 id="contributing">6. Contributing</h2>
 <p>See <a href=".github/CONTRIBUTING.md">Contributing</a>.</p>
 <h2 id="thanks">Thanks</h2>
 <p>Icon by <a href="https://twemoji.twitter.com/">Twemoji</a>, licensed under CC-BY 4.0.</p>
