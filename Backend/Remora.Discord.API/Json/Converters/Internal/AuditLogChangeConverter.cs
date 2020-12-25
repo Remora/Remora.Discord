@@ -138,6 +138,7 @@ namespace Remora.Discord.API.Json
                 oldValue = value;
             }
 
+            // ReSharper disable once InvertIf
             if (jsonDocument.RootElement.TryGetProperty("new_value", out var newValueProperty))
             {
                 var value = JsonSerializer.Deserialize(newValueProperty.GetRawText(), valueType, options);
