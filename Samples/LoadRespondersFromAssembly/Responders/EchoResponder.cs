@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
-namespace Remora.Discord.Samples.LoadResolversFromAssembly.Responders
+namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
 {
     /// <summary>
     /// A Responder that sends all messages received back to where they were received.

@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRoller", "Samples\DiceR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpCat", "Samples\HttpCat\HttpCat.csproj", "{EAC9250C-545D-4A31-81AC-F0236F849770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadResolversFromAssembly", "Samples\LoadResolversFromAssembly\LoadResolversFromAssembly.csproj", "{DBC5EC20-B1A9-44F9-BC32-BC3A21551D87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadRespondersFromAssembly", "Samples\LoadRespondersFromAssembly\LoadRespondersFromAssembly.csproj", "{DBC5EC20-B1A9-44F9-BC32-BC3A21551D87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3C878ED1-AF23-4D1E-B072-12D01EA3A175}"
 ProjectSection(SolutionItems) = preProject

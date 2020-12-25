@@ -29,7 +29,7 @@ using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
 
-namespace Remora.Discord.Samples.LoadResolversFromAssembly
+namespace Remora.Discord.Samples.LoadRespondersFromAssembly
 {
     /// <summary>
     /// Represents the main class of the program.

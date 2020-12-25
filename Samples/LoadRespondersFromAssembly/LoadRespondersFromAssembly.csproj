@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <OutputType>Exe</OutputType>
-        <RootNamespace>Remora.Discord.Samples.LoadResolversFromAssembly</RootNamespace>
+        <RootNamespace>Remora.Discord.Samples.LoadRespondersFromAssembly</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
