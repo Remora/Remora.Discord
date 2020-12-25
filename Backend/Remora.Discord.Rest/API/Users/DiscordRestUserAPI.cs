@@ -83,24 +83,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            Optional<string?> avatarData = default;
-            if (avatar.HasValue)
+            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+            if (!packAvatar.IsSuccess)
             {
-                if (avatar.Value is null)
-                {
-                    avatarData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(avatar.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return ModifyRestEntityResult<IUser>.FromError(packImage);
-                    }
-
-                    avatarData = packImage.Entity;
-                }
+                return ModifyRestEntityResult<IUser>.FromError(packAvatar);
             }
+
+            var avatarData = packAvatar.Entity;
 
             return await _discordHttpClient.PatchAsync<IUser>
             (

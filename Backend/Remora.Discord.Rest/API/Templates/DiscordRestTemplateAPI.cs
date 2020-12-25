@@ -78,17 +78,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            string? iconDataString = null;
-            if (icon.HasValue)
+            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
+            if (!packIcon.IsSuccess)
             {
-                var packIcon = await ImagePacker.PackImageAsync(icon.Value!, ct);
-                if (!packIcon.IsSuccess)
-                {
-                    return CreateRestEntityResult<IGuild>.FromError(packIcon);
-                }
-
-                iconDataString = packIcon.Entity;
+                return CreateRestEntityResult<IGuild>.FromError(packIcon);
             }
+
+            var iconData = packIcon.Entity;
 
             return await _discordHttpClient.PostAsync<IGuild>
             (
@@ -98,11 +94,7 @@ namespace Remora.Discord.Rest.API
                     j =>
                     {
                         j.WriteString("name", name);
-
-                        if (iconDataString is not null)
-                        {
-                            j.WriteString("icon", iconDataString);
-                        }
+                        j.Write("icon", iconData);
                     }
                 ),
                 ct: ct

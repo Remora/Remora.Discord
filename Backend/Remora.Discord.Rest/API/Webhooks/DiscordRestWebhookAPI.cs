@@ -76,17 +76,13 @@ namespace Remora.Discord.Rest.API
                 return CreateRestEntityResult<IWebhook>.FromError("Names cannot be \"clyde\".");
             }
 
-            string? avatarDataString = null;
-            if (avatar is not null)
+            var packAvatar = await ImagePacker.PackImageAsync(new Optional<Stream?>(avatar), ct);
+            if (!packAvatar.IsSuccess)
             {
-                var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
-                if (!packAvatar.IsSuccess)
-                {
-                    return CreateRestEntityResult<IWebhook>.FromError(packAvatar);
-                }
-
-                avatarDataString = packAvatar.Entity;
+                return CreateRestEntityResult<IWebhook>.FromError(packAvatar);
             }
+
+            var avatarData = packAvatar.Entity;
 
             return await _discordHttpClient.PostAsync<IWebhook>
             (
@@ -96,7 +92,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.WriteString("avatar", avatarDataString);
+                        json.WriteString("avatar", avatarData.Value);
                     }
                 ),
                 ct: ct
@@ -170,24 +166,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            Optional<string?> avatarData = default;
-            if (avatar.HasValue)
+            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+            if (!packAvatar.IsSuccess)
             {
-                if (avatar.Value is null)
-                {
-                    avatarData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(avatar.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return ModifyRestEntityResult<IWebhook>.FromError(packImage);
-                    }
-
-                    avatarData = packImage.Entity;
-                }
+                return ModifyRestEntityResult<IWebhook>.FromError(packAvatar);
             }
+
+            var avatarData = packAvatar.Entity;
 
             return await _discordHttpClient.PatchAsync<IWebhook>
             (
@@ -215,24 +200,13 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            Optional<string?> avatarData = default;
-            if (avatar.HasValue)
+            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+            if (!packAvatar.IsSuccess)
             {
-                if (avatar.Value is null)
-                {
-                    avatarData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(avatar.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return ModifyRestEntityResult<IWebhook>.FromError(packImage);
-                    }
-
-                    avatarData = packImage.Entity;
-                }
+                return ModifyRestEntityResult<IWebhook>.FromError(packAvatar);
             }
+
+            var avatarData = packAvatar.Entity;
 
             return await _discordHttpClient.PatchAsync<IWebhook>
             (

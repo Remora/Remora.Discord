@@ -82,17 +82,13 @@ namespace Remora.Discord.Rest.API
 
             await using var memoryStream = new MemoryStream();
 
-            Optional<string?> iconData = default;
-            if (icon.HasValue)
+            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
+            if (!packIcon.IsSuccess)
             {
-                var packImage = await ImagePacker.PackImageAsync(icon.Value!, ct);
-                if (!packImage.IsSuccess)
-                {
-                    return CreateRestEntityResult<IGuild>.FromError(packImage);
-                }
-
-                iconData = packImage.Entity;
+                return CreateRestEntityResult<IGuild>.FromError(packIcon);
             }
+
+            var iconData = packIcon.Entity;
 
             return await _discordHttpClient.PostAsync<IGuild>
             (
@@ -221,24 +217,13 @@ namespace Remora.Discord.Rest.API
                 }
             }
 
-            Optional<string?> bannerData = default;
-            if (banner.HasValue)
+            var packBanner = await ImagePacker.PackImageAsync(banner, ct);
+            if (!packBanner.IsSuccess)
             {
-                if (banner.Value is null)
-                {
-                    bannerData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(banner.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return ModifyRestEntityResult<IGuild>.FromError(packImage);
-                    }
-
-                    bannerData = packImage.Entity;
-                }
+                return ModifyRestEntityResult<IGuild>.FromError(packBanner);
             }
+
+            var bannerData = packBanner.Entity;
 
             return await _discordHttpClient.PatchAsync<IGuild>
             (
