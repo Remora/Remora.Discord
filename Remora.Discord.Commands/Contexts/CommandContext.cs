@@ -23,6 +23,8 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.Commands.Contexts
 {
     /// <inheritdoc cref="Remora.Discord.Commands.Contexts.ICommandContext" />

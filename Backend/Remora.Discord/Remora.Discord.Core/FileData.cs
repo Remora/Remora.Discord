@@ -48,8 +48,8 @@ namespace Remora.Discord.Core
         /// <param name="content">The file content.</param>
         public FileData(string name, Stream content)
         {
-            Name = name;
-            Content = content;
+            this.Name = name;
+            this.Content = content;
         }
     }
 }
