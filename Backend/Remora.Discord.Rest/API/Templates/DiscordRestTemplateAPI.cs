@@ -81,13 +81,13 @@ namespace Remora.Discord.Rest.API
             string? iconDataString = null;
             if (icon.HasValue)
             {
-                var packicon = await ImagePacker.PackImageAsync(icon.Value!, ct);
-                if (!packicon.IsSuccess)
+                var packIcon = await ImagePacker.PackImageAsync(icon.Value!, ct);
+                if (!packIcon.IsSuccess)
                 {
-                    return CreateRestEntityResult<IGuild>.FromError(packicon);
+                    return CreateRestEntityResult<IGuild>.FromError(packIcon);
                 }
 
-                iconDataString = packicon.Entity;
+                iconDataString = packIcon.Entity;
             }
 
             return await _discordHttpClient.PostAsync<IGuild>
