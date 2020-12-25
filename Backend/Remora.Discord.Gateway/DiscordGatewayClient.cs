@@ -317,13 +317,13 @@ namespace Remora.Discord.Gateway
                     return true;
                 }
                 case GatewayCloseStatus.NotAuthenticated:
-                case GatewayCloseStatus.AuthenticationFailed:
                 case GatewayCloseStatus.InvalidSequence:
                 case GatewayCloseStatus.SessionTimedOut:
                 {
                     withNewSession = true;
                     return true;
                 }
+                case GatewayCloseStatus.AuthenticationFailed:
                 case GatewayCloseStatus.InvalidShard:
                 case GatewayCloseStatus.ShardingRequired:
                 case GatewayCloseStatus.InvalidAPIVersion:
