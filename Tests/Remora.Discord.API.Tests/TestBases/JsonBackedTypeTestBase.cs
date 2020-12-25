@@ -72,6 +72,7 @@ namespace Remora.Discord.API.Tests.TestBases
         /// </summary>
         protected JsonBackedTypeTestBase()
         {
+            // ReSharper disable once VirtualMemberCallInConstructor
             var services = new ServiceCollection()
                 .AddDiscordApi(this.AllowUnknownEvents)
                 .AddSingleton<SampleDataService>()

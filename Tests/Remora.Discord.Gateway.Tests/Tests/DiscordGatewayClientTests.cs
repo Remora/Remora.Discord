@@ -42,6 +42,7 @@ using Remora.Discord.Rest.Results;
 using Remora.Discord.Tests;
 using Xunit;
 
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 namespace Remora.Discord.Gateway.Tests.Tests
 {
     /// <summary>

@@ -31,6 +31,7 @@ using Remora.Discord.Tests;
 using Xunit;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
+// ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 namespace Remora.Discord.Commands.Tests.Extensions
 {
     /// <summary>
