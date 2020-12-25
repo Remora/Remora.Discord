@@ -82,6 +82,42 @@ available online at [the repository pages][1].
 
 Please refer to the [Samples](Samples) for community-created example bots.
 
+### 4.1 Versioning
+A note on versioning - Remora.Discord uses SEMVER 2.0.0, which, in short, means
+
+Given a version number MAJOR.MINOR.PATCH, increment the:
+
+  1. MAJOR version when you make incompatible API changes,
+  2. MINOR version when you add functionality in a backwards compatible manner,
+     and
+  3. PATCH version when you make backwards compatible bug fixes.
+
+Due to the rapidly- and often-changing nature of Discord's API, this means that 
+changes to the MAJOR component of the version in components of the library may
+change almost every new release. Typically, new functionality in Discord's API
+means that new fields are added, types of fields change, or parameters sent to 
+endpoints change.
+
+Generally, these changes only affect the API and API.Abstractions packages - 
+these will often increment their MAJOR versions. Dependant packages - such as 
+Gateway or Rest - will update together with these packages, but unless their 
+public API changes as a result, it will be considered a MINOR upgrade.
+
+The consequences of this is that you *may* see source-level breakages when 
+upgrading from one minor version to the next. While undesirable, it is an effect
+of Discord's uneven and inaccurate update cycle. Because of the way C# handles
+dependencies, however, it's unlikely that this would affect anything outside of 
+normal development - as such, it's been deemed an acceptable degradation.
+
+### 4.2 Releases
+Remora.Discord does not follow a set release cycle, and releases new versions 
+on a rolling basis as new features of the Discord API are implemented or 
+documented.
+
+As a bot developer, you should check in every now and then to see what's 
+changed - changelogs are released along with tags here on Github, as well as in
+the individual package descriptions.
+
 ## 5. Contributing
 See [Contributing][2].
 
