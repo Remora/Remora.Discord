@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
@@ -77,6 +78,19 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             return !reply.IsSuccess
                 ? EventResponseResult.FromError(reply)
                 : EventResponseResult.FromSuccess();
+        }
+
+        /// <summary>
+        /// Posts a HTTP error code cat.
+        /// </summary>
+        /// <param name="catUser">The user to cattify.</param>
+        /// <returns>The result of the command.</returns>
+        [Command("user-cat")]
+        [Description("Posts a cat image that matches the user.")]
+        public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
+        {
+            var modulo = (int)(catUser.User.Value!.ID.Value % 999);
+            return PostHttpCatAsync(modulo);
         }
     }
 }

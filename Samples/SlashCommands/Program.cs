@@ -27,7 +27,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway;
@@ -72,15 +74,10 @@ namespace Remora.Discord.Samples.SlashCommands
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(() => botToken)
-                .AddCommands()
-                .AddInteractionResponder()
-                .AddCommandResponder()
+                .AddDiscordCommands(true)
                 .AddCommandGroup<HttpCatCommands>();
 
             serviceCollection.AddHttpClient();
-
-            serviceCollection
-                .TryAddSingleton<SlashService>();
 
             var services = serviceCollection.BuildServiceProvider();
             var log = services.GetRequiredService<ILogger<Program>>();

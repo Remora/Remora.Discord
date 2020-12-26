@@ -22,7 +22,13 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Remora.Commands.Extensions;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Conditions;
+using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Extensions;
 
 namespace Remora.Discord.Commands.Extensions
@@ -32,6 +38,40 @@ namespace Remora.Discord.Commands.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds all services required for Discord-integrated commands.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="enableSlash">Whether to enable slash commands.</param>
+        /// <returns>The service collection, with slash commands.</returns>
+        public static IServiceCollection AddDiscordCommands
+        (
+            this IServiceCollection serviceCollection,
+            bool enableSlash = false
+        )
+        {
+            serviceCollection.AddCommands();
+            serviceCollection.AddCommandResponder();
+
+            serviceCollection.AddCondition<RequireContextCondition>();
+
+            serviceCollection
+                .AddParser<IChannel, ChannelParser>()
+                .AddParser<IGuildMember, GuildMemberParser>()
+                .AddParser<IRole, RoleParser>()
+                .AddParser<IUser, UserParser>();
+
+            if (!enableSlash)
+            {
+                return serviceCollection;
+            }
+
+            serviceCollection.TryAddSingleton<SlashService>();
+            serviceCollection.AddInteractionResponder();
+
+            return serviceCollection;
+        }
+
         /// <summary>
         /// Adds the command responder to the system.
         /// </summary>
