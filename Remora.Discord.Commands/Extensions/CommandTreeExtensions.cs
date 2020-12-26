@@ -82,6 +82,11 @@ namespace Remora.Discord.Commands.Extensions
                 return CreateCommandResult.FromError("Too many root-level commands or groups.");
             }
 
+            if (createdCommands.GroupBy(c => c.Name).Any(g => g.Count() > 1))
+            {
+                return CreateCommandResult.FromError("Overloads are not supported.");
+            }
+
             commands = createdCommands;
             return CreateCommandResult.FromSuccess();
         }
@@ -141,6 +146,11 @@ namespace Remora.Discord.Commands.Extensions
                         if (groupOptions.Count(o => o.Type == SubCommand) > MaxGroupCommands)
                         {
                             return CreateCommandResult.FromError("Too many commands under a group.");
+                        }
+
+                        if (groupOptions.GroupBy(c => c.Name).Any(g => g.Count() > 1))
+                        {
+                            return CreateCommandResult.FromError("Overloads are not supported.");
                         }
                     }
 

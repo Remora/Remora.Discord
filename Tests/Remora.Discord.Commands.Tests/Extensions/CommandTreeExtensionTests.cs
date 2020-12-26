@@ -138,6 +138,36 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands(out _);
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfThereAreOverloadsAtTheRootLevel()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<OverloadsAreNotSupportedInRoot>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out _);
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfThereAreOverloadsInAGroup()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<OverloadsAreNotSupportedInGroups>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands(out _);
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
