@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.1.1</Version>
+        <Version>1.1.2</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Check for overloads, which are unsupported by slash commands.
+            Fix inability to parse parameterless commands.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -176,6 +176,7 @@ namespace Remora.Discord.Commands.Responders
             {
                 if (singleOption.Value.HasValue)
                 {
+                    // A single parameter
                     UnpackInteractionParameter(parameters, singleOption);
                 }
                 else if (singleOption.Options.HasValue)
@@ -187,6 +188,12 @@ namespace Remora.Discord.Commands.Responders
                     commandStringBuilder.Append(singleOption.Name);
 
                     UnpackInteractionOptions(nestedOptions, commandStringBuilder, parameters);
+                }
+                else
+                {
+                    // A parameterless command
+                    commandStringBuilder.Append(" ");
+                    commandStringBuilder.Append(singleOption.Name);
                 }
             }
 
