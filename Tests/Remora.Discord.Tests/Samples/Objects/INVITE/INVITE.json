@@ -16,7 +16,7 @@
             "DISCOVERABLE",
             "INVITE_SPLASH",
             "BANNER",
-            "PUBLIC"
+            "COMMUNITY"
         ],
         "emojis": [],
         "banner": "9b6439a7de04f1d26af92f84ac9e1e4a",
@@ -26,8 +26,6 @@
         "afk_channel_id": null,
         "afk_timeout": 300,
         "system_channel_id": null,
-        "widget_enabled": true,
-        "widget_channel_id": null,
         "verification_level": 3,
         "roles": [],
         "default_message_notifications": 1,

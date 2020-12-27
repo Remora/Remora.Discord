@@ -67,7 +67,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         ExplicitContentFilterLevel ExplicitContentFilter { get; }
 
         /// <summary>
-        /// Gets the preferred locale of a guild with the "PUBLIC" feature.
+        /// Gets the preferred locale of a community-enabled guild.
         /// </summary>
         string PreferredLocale { get; }
 
