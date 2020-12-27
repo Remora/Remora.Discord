@@ -382,5 +382,16 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IReadOnlyList<IWebhook>), CreateGuildCacheKey(guildID));
         }
+
+        /// <summary>
+        /// Creates a cache key for a <see cref="IPresence"/> instance.
+        /// </summary>
+        /// <param name="guildID">The guild ID.</param>
+        /// <param name="userID">The user ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreatePresenceCacheKey(in Snowflake guildID, in Snowflake userID)
+        {
+            return (typeof(IPresence), CreateGuildCacheKey(guildID), CreateUserCacheKey(userID));
+        }
     }
 }
