@@ -269,6 +269,43 @@ namespace Remora.Discord.Caching
         }
 
         /// <summary>
+        /// Creates a cache key for the current <see cref="IUser"/> instance.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateCurrentUserCacheKey()
+        {
+            return (typeof(IUser), "@me");
+        }
+
+        /// <summary>
+        /// Creates a cache key for the <see cref="IConnection"/> objects of the current <see cref="IUser"/> instance.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateCurrentUserConnectionsCacheKey()
+        {
+            return (typeof(IReadOnlyList<IConnection>), CreateCurrentUserCacheKey());
+        }
+
+        /// <summary>
+        /// Creates a cache key for the <see cref="IChannel"/> DM objects of the current <see cref="IUser"/> instance.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateCurrentUserDMsCacheKey()
+        {
+            return (typeof(IReadOnlyList<IChannel>), CreateCurrentUserCacheKey());
+        }
+
+        /// <summary>
+        /// Creates a cache key for an <see cref="IConnection"/> instance.
+        /// </summary>
+        /// <param name="connectionID">The ID of the connection.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateConnectionCacheKey(string connectionID)
+        {
+            return (typeof(IConnection), connectionID);
+        }
+
+        /// <summary>
         /// Creates a cache key for the current <see cref="IApplication"/> instance.
         /// </summary>
         /// <returns>The cache key.</returns>
