@@ -276,5 +276,25 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IApplication), "@me");
         }
+
+        /// <summary>
+        /// Creates a cache key for an <see cref="ITemplate"/> instance.
+        /// </summary>
+        /// <param name="templateCode">The template code.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateTemplateCacheKey(string templateCode)
+        {
+            return (typeof(ITemplate), templateCode);
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of <see cref="ITemplate"/> instances belonging to a guild.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild..</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateGuildTemplatesCacheKey(in Snowflake guildID)
+        {
+            return (typeof(IReadOnlyList<ITemplate>), CreateGuildCacheKey(guildID));
+        }
     }
 }
