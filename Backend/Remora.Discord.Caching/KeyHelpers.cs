@@ -352,5 +352,35 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IVoiceRegion), voiceRegionID);
         }
+
+        /// <summary>
+        /// Creates a cache key for an <see cref="IWebhook"/> instance.
+        /// </summary>
+        /// <param name="webhookID">The webhook ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateWebhookCacheKey(in Snowflake webhookID)
+        {
+            return (typeof(IWebhook), webhookID);
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of <see cref="IWebhook"/> instances belonging to a channel.
+        /// </summary>
+        /// <param name="channelID">The channel ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateChannelWebhooksCacheKey(in Snowflake channelID)
+        {
+            return (typeof(IReadOnlyList<IWebhook>), CreateChannelCacheKey(channelID));
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of <see cref="IWebhook"/> instances belonging to a guild.
+        /// </summary>
+        /// <param name="guildID">The guild ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateGuildWebhooksCacheKey(in Snowflake guildID)
+        {
+            return (typeof(IReadOnlyList<IWebhook>), CreateGuildCacheKey(guildID));
+        }
     }
 }
