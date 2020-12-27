@@ -414,6 +414,26 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
+        public override async Task<IDeleteRestEntityResult> RemoveGuildMemberAsync
+        (
+            Snowflake guildID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            var removeMember = await base.RemoveGuildMemberAsync(guildID, userID, ct);
+            if (!removeMember.IsSuccess)
+            {
+                return removeMember;
+            }
+
+            var memberKey = KeyHelpers.CreateGuildMemberKey(guildID, userID);
+            _cacheService.Evict(memberKey);
+
+            return removeMember;
+        }
+
+        /// <inheritdoc />
         public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IBan>>> GetGuildBansAsync
         (
             Snowflake guildID,
