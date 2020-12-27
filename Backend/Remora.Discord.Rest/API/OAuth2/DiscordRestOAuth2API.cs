@@ -20,11 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Abstractions.Results;
@@ -36,17 +34,14 @@ namespace Remora.Discord.Rest.API
     public class DiscordRestOAuth2API : IDiscordRestOAuth2API
     {
         private readonly DiscordHttpClient _discordHttpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+        public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient)
         {
             _discordHttpClient = discordHttpClient;
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />

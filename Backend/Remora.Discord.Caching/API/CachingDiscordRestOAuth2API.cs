@@ -20,10 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
@@ -38,14 +36,13 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestOAuth2API(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestOAuth2API(DiscordHttpClient)" />
         public CachingDiscordRestOAuth2API
         (
             DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(discordHttpClient)
         {
             _cacheService = cacheService;
         }

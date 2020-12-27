@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta1</Version>
+        <Version>1.0.0-beta2</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Initial release.
+            Remove unused field from OAuth2 service.
         </PackageReleaseNotes>
     </PropertyGroup>
 
