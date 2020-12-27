@@ -33,227 +33,136 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialGuild
     {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Name" />
         Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the guild's icon.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Icon" />
         Optional<IImageHash?> Icon { get; }
 
-        /// <summary>
-        /// Gets the guild's splash banner.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Splash" />
         Optional<IImageHash?> Splash { get; }
 
-        /// <summary>
-        /// Gets the guild's Discovery splash banner.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.DiscoverySplash" />
         Optional<IImageHash?> DiscoverySplash { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the current user is the guild's owner.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.IsOwner" />
         Optional<bool> IsOwner { get; }
 
-        /// <summary>
-        /// Gets the ID of the owner.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.OwnerID" />
         Optional<Snowflake> OwnerID { get; }
 
-        /// <summary>
-        /// Gets the permissions for the current user in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
 
-        /// <summary>
-        /// Gets the unique ID of the voice region.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Region" />
         Optional<string> Region { get; }
 
-        /// <summary>
-        /// Gets the ID of the AFK channel.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.AFKChannelID" />
         Optional<Snowflake?> AFKChannelID { get; }
 
-        /// <summary>
-        /// Gets the AFK timeout (in seconds).
-        /// </summary>
+        /// <inheritdoc cref="IGuild.AFKTimeout" />
         Optional<TimeSpan> AFKTimeout { get; }
 
-        /// <summary>
-        /// Gets the verification level required for the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.VerificationLevel" />
         Optional<VerificationLevel> VerificationLevel { get; }
 
-        /// <summary>
-        /// Gets the default notification level for the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.DefaultMessageNotifications" />
         Optional<MessageNotificationLevel> DefaultMessageNotifications { get; }
 
-        /// <summary>
-        /// Gets the explicit content level.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.ExplicitContentFilter" />
         Optional<ExplicitContentFilterLevel> ExplicitContentFilter { get; }
 
-        /// <summary>
-        /// Gets a list of the roles in the server.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Roles" />
         Optional<IReadOnlyList<IRole>> Roles { get; }
 
-        /// <summary>
-        /// Gets a list of emojis in the server.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Emojis" />
         Optional<IReadOnlyList<IEmoji>> Emojis { get; }
 
-        /// <summary>
-        /// Gets a list of guild features.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.GuildFeatures" />
         Optional<IReadOnlyList<GuildFeature>> GuildFeatures { get; }
 
-        /// <summary>
-        /// Gets the required MFA level for the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.MFALevel" />
         Optional<MultiFactorAuthenticationLevel> MFALevel { get; }
 
-        /// <summary>
-        /// Gets the application ID of the guild creator if it is bot-created.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.ApplicationID" />
         Optional<Snowflake?> ApplicationID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the server widget is enabled.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.IsWidgetEnabled" />
         Optional<bool> IsWidgetEnabled { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel the widget generates invites to.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.WidgetChannelID" />
         Optional<Snowflake?> WidgetChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel that system messages are sent to.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.SystemChannelID" />
         Optional<Snowflake?> SystemChannelID { get; }
 
-        /// <summary>
-        /// Gets the flags on the system channel.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.SystemChannelFlags" />
         Optional<SystemChannelFlags> SystemChannelFlags { get; }
 
-        /// <summary>
-        /// Gets the ID of the rules channel, if any. This is the channel where guilds with
-        /// <see cref="GuildFeature.Public"/> can display rules and/or guidelines.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.RulesChannelID" />
         Optional<Snowflake?> RulesChannelID { get; }
 
-        /// <summary>
-        /// Gets the time when the current user joined the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.JoinedAt" />
         Optional<DateTimeOffset> JoinedAt { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this is considered a large guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.IsLarge" />
         Optional<bool> IsLarge { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the guild is unavailable due to an outage.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.IsUnavailable" />
         Optional<bool> IsUnavailable { get; }
 
-        /// <summary>
-        /// Gets the number of members in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.MemberCount" />
         Optional<int> MemberCount { get; }
 
-        /// <summary>
-        /// Gets the states of members currently in voice channels.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.VoiceStates" />
         Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates { get; }
 
-        /// <summary>
-        /// Gets the members in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Members" />
         Optional<IReadOnlyList<IGuildMember>> Members { get; }
 
-        /// <summary>
-        /// Gets the channels in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Channels" />
         Optional<IReadOnlyList<IChannel>> Channels { get; }
 
-        /// <summary>
-        /// Gets the presences of the members in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Presences" />
         Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
 
-        /// <summary>
-        /// Gets the maximum number of presences for the guild. The default value (currently 25000) is in effect when
-        /// null is returned.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.MaxPresences" />
         Optional<int?> MaxPresences { get; }
 
-        /// <summary>
-        /// Gets the maximum number of members for the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.MaxMembers" />
         Optional<int> MaxMembers { get; }
 
-        /// <summary>
-        /// Gets the vanity url code for the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.VanityUrlCode" />
         Optional<string?> VanityUrlCode { get; }
 
-        /// <summary>
-        /// Gets the description of the guild, if the guild is discoverable.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Description" />
         Optional<string?> Description { get; }
 
-        /// <summary>
-        /// Gets the hash of the guild banner.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.Banner" />
         Optional<IImageHash?> Banner { get; }
 
-        /// <summary>
-        /// Gets the boost level of the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.PremiumTier" />
         Optional<PremiumTier> PremiumTier { get; }
 
-        /// <summary>
-        /// Gets the number of boosts the guild currently has.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.PremiumSubscriptionCount" />
         Optional<int> PremiumSubscriptionCount { get; }
 
-        /// <summary>
-        /// Gets the preferred locale of a guild with the "PUBLIC" feature.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.PreferredLocale" />
         Optional<string> PreferredLocale { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel where admins and moderators of guilds with the public feature receive notices
-        /// from Discord.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.PublicUpdatesChannelID" />
         Optional<Snowflake?> PublicUpdatesChannelID { get; }
 
-        /// <summary>
-        /// Gets the maximum number of users in a video channel.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.MaxVideoChannelUsers" />
         Optional<int> MaxVideoChannelUsers { get; }
 
-        /// <summary>
-        /// Gets the approximate number of members in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.ApproximateMemberCount" />
         Optional<int> ApproximateMemberCount { get; }
 
-        /// <summary>
-        /// Gets the approximate number of non-offline members in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuild.ApproximatePresenceCount" />
         Optional<int> ApproximatePresenceCount { get; }
     }
 }

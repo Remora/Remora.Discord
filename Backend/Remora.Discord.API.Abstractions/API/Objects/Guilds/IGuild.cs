@@ -149,8 +149,8 @@ namespace Remora.Discord.API.Abstractions.Objects
         SystemChannelFlags SystemChannelFlags { get; }
 
         /// <summary>
-        /// Gets the ID of the rules channel, if any. This is the channel where guilds with
-        /// <see cref="GuildFeature.Public"/> can display rules and/or guidelines.
+        /// Gets the ID of the rules channel, if any. This is the channel where community-enabled guilds can display
+        /// rules and/or guidelines.
         /// </summary>
         Snowflake? RulesChannelID { get; }
 
@@ -231,13 +231,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<int> PremiumSubscriptionCount { get; }
 
         /// <summary>
-        /// Gets the preferred locale of a guild with the "PUBLIC" feature.
+        /// Gets the preferred locale of a public-enabled guild.
         /// </summary>
         string PreferredLocale { get; }
 
         /// <summary>
-        /// Gets the ID of the channel where admins and moderators of guilds with the public feature receive notices
-        /// from Discord.
+        /// Gets the ID of the channel where admins and moderators of community-enabled guilds receive notices from
+        /// Discord.
         /// </summary>
         Snowflake? PublicUpdatesChannelID { get; }
 

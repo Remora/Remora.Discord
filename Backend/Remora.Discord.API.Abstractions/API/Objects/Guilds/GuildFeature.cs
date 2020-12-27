@@ -56,9 +56,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         Partnered,
 
         /// <summary>
-        /// The guild is public.
+        /// The guild has community features enabled.
         /// </summary>
-        Public,
+        Community,
 
         /// <summary>
         /// The guild has access to use commerce features (i.e, create store channels).
@@ -89,11 +89,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// The guild has access to set a guild banner image.
         /// </summary>
         Banner,
-
-        /// <summary>
-        /// The guild cannot be public.
-        /// </summary>
-        PublicDisabled,
 
         /// <summary>
         /// The guild has enabled a welcome screen.
