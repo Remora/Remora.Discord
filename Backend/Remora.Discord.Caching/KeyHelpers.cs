@@ -73,6 +73,16 @@ namespace Remora.Discord.Caching
         }
 
         /// <summary>
+        /// Creates a cache key for a list of pinned <see cref="IMessage"/> instances.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreatePinnedMessagesCacheKey(in Snowflake channelID)
+        {
+            return ("Pinned", typeof(IReadOnlyList<IMessage>), CreateChannelCacheKey(channelID));
+        }
+
+        /// <summary>
         /// Creates a cache key for an <see cref="IMessage"/> instance.
         /// </summary>
         /// <param name="channelID">The ID of the channel the message is in.</param>
@@ -246,6 +256,16 @@ namespace Remora.Discord.Caching
         public static object CreateGuildWidgetSettingsCacheKey(in Snowflake guildID)
         {
             return (typeof(IGuildWidget), guildID);
+        }
+
+        /// <summary>
+        /// Creates a cache key for an <see cref="IUser"/> instance.
+        /// </summary>
+        /// <param name="userID">The ID of the user.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateUserCacheKey(in Snowflake userID)
+        {
+            return (typeof(IUser), userID);
         }
     }
 }

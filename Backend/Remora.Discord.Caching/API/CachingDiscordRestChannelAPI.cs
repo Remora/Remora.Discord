@@ -22,11 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
@@ -34,6 +32,7 @@ using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Discord.Rest.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -42,47 +41,43 @@ namespace Remora.Discord.Caching.API
     /// </summary>
     public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     {
-        private readonly IMemoryCache _memoryCache;
-        private readonly CacheSettings _cacheSettings;
+        private readonly CacheService _cacheService;
 
         /// <inheritdoc cref="DiscordRestChannelAPI" />
         public CachingDiscordRestChannelAPI
         (
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions,
-            IMemoryCache memoryCache,
-            CacheSettings cacheSettings
+            CacheService cacheService
         )
             : base(discordHttpClient, jsonOptions)
         {
-            _memoryCache = memoryCache;
-            _cacheSettings = cacheSettings;
+            _cacheService = cacheService;
         }
 
         /// <inheritdoc />
-        public override Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
+        public override async Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
         )
         {
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
+            if (_cacheService.TryGetValue<IChannel>(key, out var cachedInstance))
+            {
+                return RetrieveRestEntityResult<IChannel>.FromSuccess(cachedInstance);
+            }
 
-            return _memoryCache
-            .GetOrCreateAsync
-            (
-                key,
-                entry =>
-                {
-                    entry.SlidingExpiration = _cacheSettings
-                        .GetSlidingExpirationOrDefault<IChannel>();
+            var getChannel = await base.GetChannelAsync(channelID, ct);
+            if (!getChannel.IsSuccess)
+            {
+                return getChannel;
+            }
 
-                    entry.AbsoluteExpirationRelativeToNow = _cacheSettings
-                        .GetAbsoluteExpirationOrDefault<IChannel>();
+            var channel = getChannel.Entity;
+            _cacheService.Cache(key, channel);
 
-                    return base.GetChannelAsync(channelID, ct);
-                }
-            );
+            return getChannel;
         }
 
         /// <inheritdoc />
@@ -125,7 +120,7 @@ namespace Remora.Discord.Caching.API
 
             var channel = modificationResult.Entity;
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
-            _memoryCache.Set(key, channel);
+            _cacheService.Cache(key, channel);
 
             return modificationResult;
         }
@@ -138,20 +133,19 @@ namespace Remora.Discord.Caching.API
         )
         {
             var deleteResult = await base.DeleteChannelAsync(channelID, ct);
-
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
             }
 
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
-            _memoryCache.Remove(key);
+            _cacheService.Evict(key);
 
             return deleteResult;
         }
 
         /// <inheritdoc />
-        public override Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
+        public override async Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -159,22 +153,21 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
+            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
+            {
+                return RetrieveRestEntityResult<IMessage>.FromSuccess(cachedInstance);
+            }
 
-            return _memoryCache
-            .GetOrCreateAsync
-            (
-                key,
-                entry =>
-                {
-                    entry.SlidingExpiration = _cacheSettings
-                        .GetSlidingExpirationOrDefault<IMessage>();
+            var getMessage = await base.GetChannelMessageAsync(channelID, messageID, ct);
+            if (!getMessage.IsSuccess)
+            {
+                return getMessage;
+            }
 
-                    entry.AbsoluteExpirationRelativeToNow = _cacheSettings
-                        .GetAbsoluteExpirationOrDefault<IMessage>();
+            var message = getMessage.Entity;
+            _cacheService.Cache(key, message);
 
-                    return base.GetChannelMessageAsync(channelID, messageID, ct);
-                }
-            );
+            return getMessage;
         }
 
         /// <inheritdoc />
@@ -211,7 +204,7 @@ namespace Remora.Discord.Caching.API
 
             var message = createResult.Entity;
             var key = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
-            _memoryCache.Set(key, message);
+            _cacheService.Cache(key, message);
 
             return createResult;
         }
@@ -246,7 +239,7 @@ namespace Remora.Discord.Caching.API
 
             var message = editResult.Entity;
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _memoryCache.Set(key, message);
+            _cacheService.Cache(key, message);
 
             return editResult;
         }
@@ -260,14 +253,13 @@ namespace Remora.Discord.Caching.API
         )
         {
             var deleteResult = await base.DeleteMessageAsync(channelID, messageID, ct);
-
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
             }
 
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _memoryCache.Remove(key);
+            _cacheService.Evict(key);
 
             return deleteResult;
         }
@@ -281,7 +273,6 @@ namespace Remora.Discord.Caching.API
         )
         {
             var deleteResult = await base.BulkDeleteMessagesAsync(channelID, messageIDs, ct);
-
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -290,7 +281,7 @@ namespace Remora.Discord.Caching.API
             foreach (var messageID in messageIDs)
             {
                 var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-                _memoryCache.Remove(key);
+                _cacheService.Evict(key);
             }
 
             return deleteResult;
@@ -328,7 +319,7 @@ namespace Remora.Discord.Caching.API
 
             var invite = createResult.Entity;
             var key = KeyHelpers.CreateInviteCacheKey(invite.Code);
-            _memoryCache.Set(key, invite);
+            _cacheService.Cache(key, invite);
 
             return createResult;
         }
@@ -342,14 +333,13 @@ namespace Remora.Discord.Caching.API
         )
         {
             var deleteResult = await base.DeleteChannelPermissionAsync(channelID, overwriteID, ct);
-
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
             }
 
             var key = KeyHelpers.CreateChannelPermissionCacheKey(channelID, overwriteID);
-            _memoryCache.Remove(key);
+            _cacheService.Evict(key);
 
             return deleteResult;
         }
@@ -361,18 +351,25 @@ namespace Remora.Discord.Caching.API
             CancellationToken ct = default
         )
         {
-            var getResult = await base.GetPinnedMessagesAsync(channelID, ct);
+            var key = KeyHelpers.CreatePinnedMessagesCacheKey(channelID);
+            if (_cacheService.TryGetValue<IReadOnlyList<IMessage>>(key, out var cachedInstance))
+            {
+                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromSuccess(cachedInstance);
+            }
 
+            var getResult = await base.GetPinnedMessagesAsync(channelID, ct);
             if (!getResult.IsSuccess)
             {
                 return getResult;
             }
 
             var messages = getResult.Entity;
+            _cacheService.Cache(key, messages);
+
             foreach (var message in messages)
             {
-                var key = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
-                _memoryCache.Set(key, message);
+                var messageKey = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
+                _cacheService.Cache(messageKey, message);
             }
 
             return getResult;
@@ -387,14 +384,13 @@ namespace Remora.Discord.Caching.API
         )
         {
             var deleteResult = await base.DeletePinnedChannelMessageAsync(channelID, messageID, ct);
-
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
             }
 
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _memoryCache.Remove(key);
+            _cacheService.Evict(key);
 
             return deleteResult;
         }

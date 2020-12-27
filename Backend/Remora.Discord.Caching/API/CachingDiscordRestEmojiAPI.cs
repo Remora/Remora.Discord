@@ -25,7 +25,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
@@ -42,21 +41,18 @@ namespace Remora.Discord.Caching.API
     /// </summary>
     public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
     {
-        private readonly IMemoryCache _memoryCache;
-        private readonly CacheSettings _cacheSettings;
+        private readonly CacheService _cacheService;
 
         /// <inheritdoc cref="DiscordRestEmojiAPI" />
         public CachingDiscordRestEmojiAPI
         (
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions,
-            IMemoryCache memoryCache,
-            CacheSettings cacheSettings
+            CacheService cacheService
         )
             : base(discordHttpClient, jsonOptions)
         {
-            _memoryCache = memoryCache;
-            _cacheSettings = cacheSettings;
+            _cacheService = cacheService;
         }
 
         /// <inheritdoc />
@@ -68,7 +64,7 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-            if (_memoryCache.TryGetValue<IEmoji>(key, out var cachedInstance))
+            if (_cacheService.TryGetValue<IEmoji>(key, out var cachedInstance))
             {
                 return RetrieveRestEntityResult<IEmoji>.FromSuccess(cachedInstance);
             }
@@ -80,7 +76,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var emoji = getResult.Entity;
-            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
+            _cacheService.Cache(key, emoji);
 
             return getResult;
         }
@@ -109,7 +105,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
-            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
+            _cacheService.Cache(key, emoji);
 
             return createResult;
         }
@@ -132,7 +128,7 @@ namespace Remora.Discord.Caching.API
 
             var emoji = modifyResult.Entity;
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-            _memoryCache.Set(key, emoji, _cacheSettings.GetEntryOptions<IEmoji>());
+            _cacheService.Cache(key, emoji);
 
             return modifyResult;
         }
@@ -152,7 +148,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-            _memoryCache.Remove(key);
+            _cacheService.Evict(key);
 
             return deleteResult;
         }
