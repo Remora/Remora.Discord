@@ -184,7 +184,7 @@ namespace Remora.Discord.Caching.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<Stream> file = default,
+            Optional<FileData> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
