@@ -36,26 +36,79 @@ namespace Remora.Discord.Caching.Services
         /// <summary>
         /// Holds absolute cache expiration values for various types.
         /// </summary>
-        private readonly IReadOnlyDictionary<Type, TimeSpan> _absoluteCacheExpirations;
+        private readonly Dictionary<Type, TimeSpan> _absoluteCacheExpirations = new();
 
         /// <summary>
         /// Holds sliding cache expiration values for various types.
         /// </summary>
-        private readonly IReadOnlyDictionary<Type, TimeSpan> _slidingCacheExpirations;
+        private readonly Dictionary<Type, TimeSpan> _slidingCacheExpirations = new();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CacheSettings"/> class.
+        /// Holds the default absolute expiration value.
         /// </summary>
-        /// <param name="absoluteCacheExpirations">The absolute cache expirations.</param>
-        /// <param name="slidingCacheExpirations">The sliding cache expirations.</param>
-        public CacheSettings
-        (
-            IReadOnlyDictionary<Type, TimeSpan> absoluteCacheExpirations,
-            IReadOnlyDictionary<Type, TimeSpan> slidingCacheExpirations
-        )
+        private TimeSpan _defaultAbsoluteExpiration = TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        /// Holds the default sliding expiration value.
+        /// </summary>
+        private TimeSpan _defaultSlidingExpiration = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        /// Sets the default absolute expiration value for types.
+        /// </summary>
+        /// <param name="defaultAbsoluteExpiration">The default value.</param>
+        /// <returns>The settings.</returns>
+        public CacheSettings SetDefaultAbsoluteExpiration(TimeSpan defaultAbsoluteExpiration)
         {
-            _absoluteCacheExpirations = absoluteCacheExpirations;
-            _slidingCacheExpirations = slidingCacheExpirations;
+            _defaultAbsoluteExpiration = defaultAbsoluteExpiration;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the default sliding expiration value for types.
+        /// </summary>
+        /// <param name="defaultSlidingExpiration">The default value.</param>
+        /// <returns>The settings.</returns>
+        public CacheSettings SetDefaultSlidingExpiration(TimeSpan defaultSlidingExpiration)
+        {
+            _defaultSlidingExpiration = defaultSlidingExpiration;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the absolute cache expiration for the given type.
+        /// </summary>
+        /// <param name="absoluteExpiration">The absolute expiration value.</param>
+        /// <typeparam name="TCachedType">The cached type.</typeparam>
+        /// <returns>The settings.</returns>
+        public CacheSettings SetAbsoluteExpiration<TCachedType>(TimeSpan absoluteExpiration)
+        {
+            if (!_absoluteCacheExpirations.ContainsKey(typeof(TCachedType)))
+            {
+                _absoluteCacheExpirations.Add(typeof(TCachedType), absoluteExpiration);
+                return this;
+            }
+
+            _absoluteCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the sliding cache expiration for the given type.
+        /// </summary>
+        /// <param name="slidingExpiration">The sliding expiration value.</param>
+        /// <typeparam name="TCachedType">The cached type.</typeparam>
+        /// <returns>The settings.</returns>
+        public CacheSettings SetSlidingExpiration<TCachedType>(TimeSpan slidingExpiration)
+        {
+            if (!_slidingCacheExpirations.ContainsKey(typeof(TCachedType)))
+            {
+                _slidingCacheExpirations.Add(typeof(TCachedType), slidingExpiration);
+                return this;
+            }
+
+            _slidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
+            return this;
         }
 
         /// <summary>
@@ -66,7 +119,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The absolute expiration time.</returns>
         public TimeSpan GetAbsoluteExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
         {
-            defaultExpiration ??= TimeSpan.FromSeconds(30);
+            defaultExpiration ??= _defaultAbsoluteExpiration;
             return GetAbsoluteExpirationOrDefault(typeof(T), defaultExpiration);
         }
 
@@ -78,7 +131,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The absolute expiration time.</returns>
         public TimeSpan GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
         {
-            defaultExpiration ??= TimeSpan.FromSeconds(30);
+            defaultExpiration ??= _defaultAbsoluteExpiration;
             if (_absoluteCacheExpirations.TryGetValue(cachedType, out var absoluteExpiration))
             {
                 return absoluteExpiration;
@@ -95,7 +148,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The sliding expiration time.</returns>
         public TimeSpan GetSlidingExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
         {
-            defaultExpiration ??= TimeSpan.FromSeconds(10);
+            defaultExpiration ??= _defaultSlidingExpiration;
             return GetSlidingExpirationOrDefault(typeof(T), defaultExpiration);
         }
 
@@ -107,7 +160,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The sliding expiration time.</returns>
         public TimeSpan GetSlidingExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
         {
-            defaultExpiration ??= TimeSpan.FromSeconds(10);
+            defaultExpiration ??= _defaultSlidingExpiration;
             if (_slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration))
             {
                 return slidingExpiration;
