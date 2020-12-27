@@ -24,12 +24,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
-using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway;
@@ -75,7 +73,8 @@ namespace Remora.Discord.Samples.SlashCommands
                 )
                 .AddDiscordGateway(() => botToken)
                 .AddDiscordCommands(true)
-                .AddCommandGroup<HttpCatCommands>();
+                .AddCommandGroup<HttpCatCommands>()
+                .AddDiscordCaching();
 
             serviceCollection.AddHttpClient();
 
