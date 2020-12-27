@@ -23,6 +23,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Caching.Services
@@ -40,10 +41,10 @@ namespace Remora.Discord.Caching.Services
         /// </summary>
         /// <param name="memoryCache">The memory cache.</param>
         /// <param name="cacheSettings">The cache settings.</param>
-        public CacheService(IMemoryCache memoryCache, CacheSettings cacheSettings)
+        public CacheService(IMemoryCache memoryCache, IOptions<CacheSettings> cacheSettings)
         {
             _memoryCache = memoryCache;
-            _cacheSettings = cacheSettings;
+            _cacheSettings = cacheSettings.Value;
         }
 
         /// <summary>
