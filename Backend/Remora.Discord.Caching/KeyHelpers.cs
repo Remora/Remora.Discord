@@ -333,5 +333,24 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IReadOnlyList<ITemplate>), CreateGuildCacheKey(guildID));
         }
+
+        /// <summary>
+        /// Creates a cache key for a set of available <see cref="IVoiceRegion"/> instances.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateVoiceRegionsCacheKey()
+        {
+            return typeof(IReadOnlyList<IVoiceRegion>);
+        }
+
+        /// <summary>
+        /// Creates a cache key for an <see cref="IVoiceRegion"/> instance.
+        /// </summary>
+        /// <param name="voiceRegionID">The voice region ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateVoiceRegionCacheKey(string voiceRegionID)
+        {
+            return (typeof(IVoiceRegion), voiceRegionID);
+        }
     }
 }
