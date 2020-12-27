@@ -27,6 +27,7 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.API;
 using Remora.Discord.Caching.Responders;
+using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Extensions;
 
 namespace Remora.Discord.Caching.Extensions
@@ -49,6 +50,10 @@ namespace Remora.Discord.Caching.Extensions
         {
             services
                 .AddMemoryCache();
+
+            services
+                .AddScoped<CacheService>()
+                .AddOptions<CacheSettings>();
 
             services
                 .Replace(ServiceDescriptor.Scoped<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())
