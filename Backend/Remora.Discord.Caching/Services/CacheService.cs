@@ -58,6 +58,8 @@ namespace Remora.Discord.Caching.Services
         {
             Action cacheAction = instance switch
             {
+                IWebhook webhook => () => CacheWebhook(key, webhook),
+                ITemplate template => () => CacheTemplate(key, template),
                 IIntegration integration => () => CacheIntegration(key, integration),
                 IBan ban => () => CacheBan(key, ban),
                 IGuildMember member => () => CacheGuildMember(key, member),
@@ -93,6 +95,28 @@ namespace Remora.Discord.Caching.Services
         public void Evict(object key)
         {
             _memoryCache.Remove(key);
+        }
+
+        private void CacheWebhook(object key, IWebhook webhook)
+        {
+            CacheInstance(key, webhook);
+
+            if (!webhook.User.HasValue)
+            {
+                return;
+            }
+
+            var user = webhook.User.Value;
+            var userKey = KeyHelpers.CreateUserCacheKey(user!.ID);
+            Cache(userKey, user);
+        }
+
+        private void CacheTemplate(object key, ITemplate template)
+        {
+            CacheInstance(key, template);
+
+            var creatorKey = KeyHelpers.CreateUserCacheKey(template.Creator.ID);
+            Cache(creatorKey, template.Creator);
         }
 
         private void CacheIntegration(object key, IIntegration integration)
