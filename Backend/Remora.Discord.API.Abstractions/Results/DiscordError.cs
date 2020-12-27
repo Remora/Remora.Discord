@@ -388,6 +388,11 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidAPIVersion = 50041,
 
         /// <summary>
+        /// A channel required for community guilds cannot be deleted.
+        /// </summary>
+        CannotDeleteCommunityRequiredChannel = 50074,
+
+        /// <summary>
         /// Invalid sticker sent.
         /// </summary>
         InvalidSticker = 50081,
