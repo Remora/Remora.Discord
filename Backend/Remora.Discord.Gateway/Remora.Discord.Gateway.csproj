@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta10</Version>
+        <Version>1.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Make invalid authentications terminate the client.
         </PackageReleaseNotes>
     </PropertyGroup>
 

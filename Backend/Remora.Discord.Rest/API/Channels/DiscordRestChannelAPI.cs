@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -222,7 +221,7 @@ namespace Remora.Discord.Rest.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<Stream> file = default,
+            Optional<FileData> file = default,
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
@@ -236,7 +235,7 @@ namespace Remora.Discord.Rest.API
                 {
                     if (file.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value), "file");
+                        b.AddContent(new StreamContent(file.Value!.Content), "file", file.Value!.Name);
                     }
 
                     b.WithJson

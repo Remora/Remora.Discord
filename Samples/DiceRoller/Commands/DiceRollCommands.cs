@@ -46,7 +46,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
     {
         private readonly HttpClient _httpClient;
         private readonly IDiscordRestChannelAPI _channelAPI;
-        private readonly MessageContext _context;
+        private readonly ICommandContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
@@ -58,7 +58,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         (
             IHttpClientFactory httpClientFactory,
             IDiscordRestChannelAPI channelAPI,
-            MessageContext context
+            ICommandContext context
         )
         {
             _httpClient = httpClientFactory.CreateClient();

@@ -247,50 +247,21 @@ namespace Remora.Discord.Gateway
                         return iterationResult;
                     }
 
-                    switch (iterationResult.GatewayCloseStatus)
+                    if (ShouldReconnect(iterationResult, out var shouldTerminate, out var withNewSession))
                     {
-                        case GatewayCloseStatus.SessionTimedOut:
-                        case GatewayCloseStatus.RateLimited:
-                        case GatewayCloseStatus.InvalidSequence:
-                        case GatewayCloseStatus.UnknownError:
+                        if (withNewSession)
                         {
-                            // Reconnection is allowed, using a completely new session
                             _sessionID = null;
                             _connectionStatus = GatewayConnectionStatus.Disconnected;
-
-                            continue;
+                        }
+                        else
+                        {
+                            _connectionStatus = GatewayConnectionStatus.Disconnected;
                         }
                     }
-
-                    switch (iterationResult.WebSocketCloseStatus)
+                    else if (shouldTerminate)
                     {
-                        case WebSocketCloseStatus.InternalServerError:
-                        case WebSocketCloseStatus.EndpointUnavailable:
-                        {
-                            // Reconnection is allowed, using a completely new session
-                            _sessionID = null;
-                            _connectionStatus = GatewayConnectionStatus.Disconnected;
-
-                            continue;
-                        }
-                    }
-
-                    switch (iterationResult.Exception)
-                    {
-                        case HttpRequestException _:
-                        case WebSocketException _:
-                        {
-                            _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
-
-                            // Reconnection is allowed, since this is probably a transient error
-                            _connectionStatus = GatewayConnectionStatus.Disconnected;
-                            break;
-                        }
-                        default:
-                        {
-                            // Something has gone terribly wrong, and we won't keep trying to connect
-                            return iterationResult;
-                        }
+                        return iterationResult;
                     }
                 }
 
@@ -311,12 +282,89 @@ namespace Remora.Discord.Gateway
             }
             finally
             {
-                // Reconnection is not allowed.
                 _sessionID = null;
                 _connectionStatus = GatewayConnectionStatus.Offline;
             }
 
+            // Reconnection is not allowed at this point.
+            _sessionID = null;
+            _connectionStatus = GatewayConnectionStatus.Offline;
+
             return GatewayConnectionResult.FromSuccess();
+        }
+
+        // ReSharper disable once CyclomaticComplexity
+        // Complexity level is unavoidable in this case; many different cases to handle.
+        private bool ShouldReconnect
+        (
+            GatewayConnectionResult iterationResult,
+            out bool shouldTerminate,
+            out bool withNewSession
+        )
+        {
+            shouldTerminate = false;
+            withNewSession = false;
+
+            // Did the gateway close?
+            switch (iterationResult.GatewayCloseStatus)
+            {
+                case GatewayCloseStatus.UnknownError:
+                case GatewayCloseStatus.UnknownOpcode:
+                case GatewayCloseStatus.DecodeError:
+                case GatewayCloseStatus.AlreadyAuthenticated:
+                case GatewayCloseStatus.RateLimited:
+                {
+                    return true;
+                }
+                case GatewayCloseStatus.NotAuthenticated:
+                case GatewayCloseStatus.InvalidSequence:
+                case GatewayCloseStatus.SessionTimedOut:
+                {
+                    withNewSession = true;
+                    return true;
+                }
+                case GatewayCloseStatus.AuthenticationFailed:
+                case GatewayCloseStatus.InvalidShard:
+                case GatewayCloseStatus.ShardingRequired:
+                case GatewayCloseStatus.InvalidAPIVersion:
+                case GatewayCloseStatus.InvalidIntents:
+                case GatewayCloseStatus.DisallowedIntent:
+                {
+                    shouldTerminate = true;
+                    return false;
+                }
+            }
+
+            // Did the websocket close?
+            switch (iterationResult.WebSocketCloseStatus)
+            {
+                case WebSocketCloseStatus.InternalServerError:
+                case WebSocketCloseStatus.EndpointUnavailable:
+                {
+                    withNewSession = true;
+                    return true;
+                }
+            }
+
+            // Did something go wrong clientside?
+            switch (iterationResult.Exception)
+            {
+                case null:
+                {
+                    // We don't know what happened.. try reconnecting?
+                    return true;
+                }
+                case HttpRequestException or WebSocketException:
+                {
+                    _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
+                    return true;
+                }
+                default:
+                {
+                    shouldTerminate = true;
+                    return false;
+                }
+            }
         }
 
         /// <summary>

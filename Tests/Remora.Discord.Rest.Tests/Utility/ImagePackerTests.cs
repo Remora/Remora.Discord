@@ -21,6 +21,7 @@
 //
 
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.Rest.Utility;
 using Remora.Discord.Tests;
@@ -34,7 +35,7 @@ namespace Remora.Discord.Rest.Tests.Utility
     public class ImagePackerTests
     {
         /// <summary>
-        /// Tests the <see cref="ImagePacker.PackImageAsync"/> method.
+        /// Tests the <see cref="ImagePacker.PackImageAsync(Stream, CancellationToken)"/> method.
         /// </summary>
         public class PackImageAsync
         {

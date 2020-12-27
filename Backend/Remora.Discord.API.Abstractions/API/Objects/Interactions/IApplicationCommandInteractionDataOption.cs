@@ -41,7 +41,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the value of the pair.
         /// </summary>
-        OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake> Value { get; }
+        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value { get; }
 
         /// <summary>
         /// Gets the options supplied to the subcommand or subgroup.

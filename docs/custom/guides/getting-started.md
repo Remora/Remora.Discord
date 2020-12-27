@@ -11,7 +11,7 @@ environments - primarily, a system with `bash` is assumed, but the commands
 should be easily transferable to any shell language.
 
 ## Creating your project
-First of all, ensure that you have version 3.1 of the .NET Core SDK installed.
+First of all, ensure that you have version 5.0 of the .NET Core SDK installed.
 If you don't have it yet, you can follow the instructions on [this][1] page for
 your system.
 
@@ -64,8 +64,8 @@ static async Task Main(string[] args)
 ```
 
 After this, we'll set up a service provider. Remora.Discord uses [dependency
-injection][4] throughout its codebase, and it's through these systems we register
-and access various types and services from the library.
+injection][4] throughout its codebase, and it's through these systems we
+register and access various types and services from the library.
 
 ```csharp
 var botToken = "YOUR_TOKEN_HERE";
@@ -125,12 +125,18 @@ if (!runResult.IsSuccess)
 
     if (runResult.GatewayCloseStatus.HasValue)
     {
-        Console.WriteLine($"Gateway close status: {runResult.GatewayCloseStatus}");
+        Console.WriteLine
+        (
+            $"Gateway close status: {runResult.GatewayCloseStatus}"
+        );
     }
 
     if (runResult.WebSocketCloseStatus.HasValue)
     {
-        Console.WriteLine($"Websocket close status: {runResult.WebSocketCloseStatus}");
+        Console.WriteLine
+        (
+            $"Websocket close status: {runResult.WebSocketCloseStatus}"
+        );
     }
 }
 

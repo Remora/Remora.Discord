@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Results;
 
@@ -34,6 +35,42 @@ namespace Remora.Discord.Rest.Utility
     /// </summary>
     public class ImagePacker
     {
+        /// <summary>
+        /// Packs the given stream into a base64-encoded string, type-prefixed string.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A creation result which may or may not have succeeded.</returns>
+        public static async Task<CreateEntityResult<Optional<string?>>> PackImageAsync
+        (
+            Optional<Stream?> stream,
+            CancellationToken ct = default
+        )
+        {
+            Optional<string?> imageData = default;
+            if (!stream.HasValue)
+            {
+                return imageData;
+            }
+
+            if (stream.Value is null)
+            {
+                imageData = new Optional<string?>(null);
+            }
+            else
+            {
+                var packImage = await PackImageAsync(stream.Value, ct);
+                if (!packImage.IsSuccess)
+                {
+                    return CreateEntityResult<Optional<string?>>.FromError(packImage);
+                }
+
+                imageData = packImage.Entity;
+            }
+
+            return imageData;
+        }
+
         /// <summary>
         /// Packs the given stream into a base64-encoded string, type-prefixed string.
         /// </summary>
