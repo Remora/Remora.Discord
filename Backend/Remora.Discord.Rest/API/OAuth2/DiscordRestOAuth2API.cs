@@ -50,7 +50,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IApplication>> GetCurrentApplicationInformationAsync
+        public virtual Task<IRetrieveRestEntityResult<IApplication>> GetCurrentApplicationInformationAsync
         (
             CancellationToken ct = default
         )

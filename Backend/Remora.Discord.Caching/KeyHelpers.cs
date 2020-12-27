@@ -267,5 +267,14 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IUser), userID);
         }
+
+        /// <summary>
+        /// Creates a cache key for the current <see cref="IApplication"/> instance.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateCurrentApplicationCacheKey()
+        {
+            return (typeof(IApplication), "@me");
+        }
     }
 }
