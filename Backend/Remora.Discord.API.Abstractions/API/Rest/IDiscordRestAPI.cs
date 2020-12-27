@@ -29,12 +29,16 @@ namespace Remora.Discord.API.Abstractions.Rest
     /// </summary>
     [PublicAPI]
     public interface IDiscordRestAPI :
+        IDiscordRestApplicationAPI,
         IDiscordRestAuditLogAPI,
         IDiscordRestChannelAPI,
         IDiscordRestEmojiAPI,
         IDiscordRestGatewayAPI,
         IDiscordRestGuildAPI,
+        IDiscordRestInteractionAPI,
         IDiscordRestInviteAPI,
+        IDiscordRestOAuth2API,
+        IDiscordRestTemplateAPI,
         IDiscordRestUserAPI,
         IDiscordRestVoiceAPI,
         IDiscordRestWebhookAPI
