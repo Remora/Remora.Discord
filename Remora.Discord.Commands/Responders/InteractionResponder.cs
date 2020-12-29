@@ -163,8 +163,7 @@ namespace Remora.Discord.Commands.Responders
             commandStringBuilder ??= new StringBuilder();
             parameters ??= new Dictionary<string, IReadOnlyList<string>>();
 
-            var singleOption = options.SingleOrDefault();
-            if (singleOption is null)
+            if (options.Count > 1)
             {
                 // multiple parameters
                 foreach (var option in options)
@@ -174,6 +173,7 @@ namespace Remora.Discord.Commands.Responders
             }
             else
             {
+                var singleOption = options.Single();
                 if (singleOption.Value.HasValue)
                 {
                     // A single parameter
