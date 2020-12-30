@@ -435,7 +435,11 @@ namespace Remora.Discord.API.Json
                     }
 
                     // No matching property - we'll skip it
-                    reader.Skip();
+                    if (!reader.TrySkip())
+                    {
+                        throw new JsonException("Couldn't skip elements.");
+                    }
+
                     if (!reader.Read())
                     {
                         throw new JsonException
@@ -485,12 +489,6 @@ namespace Remora.Discord.API.Json
                 {
                     throw new JsonException();
                 }
-            }
-
-            // Eat the end object token.
-            if (!reader.IsFinalBlock && !reader.Read())
-            {
-                throw new JsonException();
             }
 
             // Reorder and polyfill the read properties
