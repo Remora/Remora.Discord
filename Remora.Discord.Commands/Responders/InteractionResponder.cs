@@ -34,6 +34,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
@@ -104,7 +105,7 @@ namespace Remora.Discord.Commands.Responders
             }
 
             var interactionData = gatewayEvent.Data.Value!;
-            var (command, parameters) = UnpackInteraction(interactionData);
+            interactionData.UnpackInteraction(out var command, out var parameters);
 
             var context = new InteractionContext
             (
@@ -131,98 +132,6 @@ namespace Remora.Discord.Commands.Responders
             return executeResult.IsSuccess
                 ? EventResponseResult.FromSuccess()
                 : EventResponseResult.FromError(executeResult);
-        }
-
-        private (string Command, IReadOnlyDictionary<string, IReadOnlyList<string>> Parameters) UnpackInteraction
-        (
-            IApplicationCommandInteractionData commandData
-        )
-        {
-            if (!commandData.Options.HasValue)
-            {
-                return (commandData.Name, new Dictionary<string, IReadOnlyList<string>>());
-            }
-
-            var commandStringBuilder = new StringBuilder();
-            commandStringBuilder.Append(commandData.Name);
-
-            var (command, parameters) = UnpackInteractionOptions(commandData.Options.Value!);
-            commandStringBuilder.Append(" ");
-            commandStringBuilder.Append(command);
-
-            return (commandStringBuilder.ToString(), parameters);
-        }
-
-        private (string Command, IReadOnlyDictionary<string, IReadOnlyList<string>> Parameters) UnpackInteractionOptions
-        (
-            IReadOnlyList<IApplicationCommandInteractionDataOption> options,
-            StringBuilder? commandStringBuilder = null,
-            Dictionary<string, IReadOnlyList<string>>? parameters = null
-        )
-        {
-            commandStringBuilder ??= new StringBuilder();
-            parameters ??= new Dictionary<string, IReadOnlyList<string>>();
-
-            if (options.Count > 1)
-            {
-                // multiple parameters
-                foreach (var option in options)
-                {
-                    UnpackInteractionParameter(parameters, option);
-                }
-            }
-            else if (options.Count == 1)
-            {
-                var singleOption = options.Single();
-                if (singleOption.Value.HasValue)
-                {
-                    // A single parameter
-                    UnpackInteractionParameter(parameters, singleOption);
-                }
-                else if (singleOption.Options.HasValue)
-                {
-                    // A nested group
-                    var nestedOptions = singleOption.Options.Value!;
-
-                    commandStringBuilder.Append(" ");
-                    commandStringBuilder.Append(singleOption.Name);
-
-                    UnpackInteractionOptions(nestedOptions, commandStringBuilder, parameters);
-                }
-                else
-                {
-                    // A parameterless command
-                    commandStringBuilder.Append(" ");
-                    commandStringBuilder.Append(singleOption.Name);
-                }
-            }
-
-            return (commandStringBuilder.ToString().Trim(), parameters);
-        }
-
-        private static void UnpackInteractionParameter
-        (
-            IDictionary<string, IReadOnlyList<string>> parameters,
-            IApplicationCommandInteractionDataOption option
-        )
-        {
-            if (!option.Value.HasValue)
-            {
-                throw new InvalidOperationException();
-            }
-
-            var values = new List<string>();
-            var optionValue = option.Value.Value!;
-            if (optionValue.Value is ICollection collection)
-            {
-                values.AddRange(collection.Cast<object>().Select(o => o.ToString()));
-            }
-            else
-            {
-                values.Add(optionValue.Value.ToString());
-            }
-
-            parameters.Add(option.Name, values);
         }
     }
 }
