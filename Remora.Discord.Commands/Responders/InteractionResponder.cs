@@ -171,7 +171,7 @@ namespace Remora.Discord.Commands.Responders
                     UnpackInteractionParameter(parameters, option);
                 }
             }
-            else
+            else if (options.Count == 1)
             {
                 var singleOption = options.Single();
                 if (singleOption.Value.HasValue)
