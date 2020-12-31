@@ -12,7 +12,7 @@
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Fix inability to parse multi-parameter commands.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
