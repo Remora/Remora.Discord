@@ -129,6 +129,7 @@ namespace Remora.Discord.Commands.Responders
                 return EventResponseResult.FromError(preExecution);
             }
 
+            // Run the actual command
             var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
             var executeResult = await _commandService.TryExecuteAsync
             (
