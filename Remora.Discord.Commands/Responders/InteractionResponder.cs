@@ -35,6 +35,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 
@@ -47,6 +48,7 @@ namespace Remora.Discord.Commands.Responders
     {
         private readonly CommandService _commandService;
         private readonly IDiscordRestInteractionAPI _interactionAPI;
+        private readonly ExecutionEventCollectorService _eventCollector;
         private readonly IServiceProvider _services;
 
         /// <summary>
@@ -54,15 +56,18 @@ namespace Remora.Discord.Commands.Responders
         /// </summary>
         /// <param name="commandService">The command service.</param>
         /// <param name="interactionAPI">The interaction API.</param>
+        /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
         public InteractionResponder
         (
             CommandService commandService,
             IDiscordRestInteractionAPI interactionAPI,
+            ExecutionEventCollectorService eventCollector,
             IServiceProvider services
         )
         {
             _commandService = commandService;
+            _eventCollector = eventCollector;
             _services = services;
             _interactionAPI = interactionAPI;
         }
@@ -117,8 +122,14 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.GuildID
             );
 
-            var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
+            // Run any user-provided pre execution events
+            var preExecution = await _eventCollector.RunPreExecutionEvents(context, ct);
+            if (!preExecution.IsSuccess)
+            {
+                return EventResponseResult.FromError(preExecution);
+            }
 
+            var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
             var executeResult = await _commandService.TryExecuteAsync
             (
                 command,
@@ -129,9 +140,25 @@ namespace Remora.Discord.Commands.Responders
                 ct
             );
 
-            return executeResult.IsSuccess
-                ? EventResponseResult.FromSuccess()
-                : EventResponseResult.FromError(executeResult);
+            if (!executeResult.IsSuccess)
+            {
+                return EventResponseResult.FromError(executeResult);
+            }
+
+            // Run any user-provided post execution events
+            var postExecution = await _eventCollector.RunPostExecutionEvents
+            (
+                context,
+                executeResult.InnerResult!,
+                ct
+            );
+
+            if (!postExecution.IsSuccess)
+            {
+                return EventResponseResult.FromError(postExecution);
+            }
+
+            return EventResponseResult.FromSuccess();
         }
     }
 }

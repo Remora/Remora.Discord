@@ -24,8 +24,4 @@
         <PackageReference Include="Remora.Commands" Version="1.2.2" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Helpers" />
-    </ItemGroup>
-
 </Project>

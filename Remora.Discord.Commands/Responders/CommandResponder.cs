@@ -22,17 +22,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders
 {
@@ -43,6 +47,7 @@ namespace Remora.Discord.Commands.Responders
     {
         private readonly CommandService _commandService;
         private readonly ICommandResponderOptions _options;
+        private readonly ExecutionEventCollectorService _eventCollector;
         private readonly IServiceProvider _services;
 
         /// <summary>
@@ -50,21 +55,28 @@ namespace Remora.Discord.Commands.Responders
         /// </summary>
         /// <param name="commandService">The command service.</param>
         /// <param name="options">The command responder options.</param>
+        /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
         public CommandResponder
         (
             CommandService commandService,
             IOptions<CommandResponderOptions> options,
+            ExecutionEventCollectorService eventCollector,
             IServiceProvider services
         )
         {
             _commandService = commandService;
             _services = services;
+            _eventCollector = eventCollector;
             _options = options.Value;
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate? gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync
+        (
+            IMessageCreate? gatewayEvent,
+            CancellationToken ct = default
+        )
         {
             if (gatewayEvent is null)
             {
@@ -128,7 +140,11 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageUpdate? gatewayEvent, CancellationToken ct = default)
+        public async Task<EventResponseResult> RespondAsync
+        (
+            IMessageUpdate? gatewayEvent,
+            CancellationToken ct = default
+        )
         {
             if (gatewayEvent is null)
             {
@@ -178,7 +194,7 @@ namespace Remora.Discord.Commands.Responders
         private async Task<EventResponseResult> ExecuteCommandAsync
         (
             string content,
-            MessageContext messageContext,
+            ICommandContext commandContext,
             CancellationToken ct = default
         )
         {
@@ -191,8 +207,16 @@ namespace Remora.Discord.Commands.Responders
                 );
             }
 
-            var additionalParameters = new object[] { messageContext };
+            var additionalParameters = new object[] { commandContext };
 
+            // Run any user-provided pre execution events
+            var preExecution = await _eventCollector.RunPreExecutionEvents(commandContext, ct);
+            if (!preExecution.IsSuccess)
+            {
+                return EventResponseResult.FromError(preExecution);
+            }
+
+            // Run the actual command
             var executeResult = await _commandService.TryExecuteAsync
             (
                 content,
@@ -201,9 +225,25 @@ namespace Remora.Discord.Commands.Responders
                 ct: ct
             );
 
-            return executeResult.IsSuccess
-                ? EventResponseResult.FromSuccess()
-                : EventResponseResult.FromError(executeResult);
+            if (!executeResult.IsSuccess)
+            {
+                return EventResponseResult.FromError(executeResult);
+            }
+
+            // Run any user-provided post execution events
+            var postExecution = await _eventCollector.RunPostExecutionEvents
+            (
+                commandContext,
+                executeResult.InnerResult!,
+                ct
+            );
+
+            if (!postExecution.IsSuccess)
+            {
+                return EventResponseResult.FromError(postExecution);
+            }
+
+            return EventResponseResult.FromSuccess();
         }
     }
 }
