@@ -125,19 +125,19 @@ namespace Remora.Discord.Rest.Extensions
                 .AddSingleton<ITokenStore>(_ => new TokenStore(token()));
 
             serviceCollection
-                .AddScoped<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
-                .AddScoped<IDiscordRestChannelAPI, DiscordRestChannelAPI>()
-                .AddScoped<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>()
-                .AddScoped<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>()
-                .AddScoped<IDiscordRestGuildAPI, DiscordRestGuildAPI>()
-                .AddScoped<IDiscordRestInviteAPI, DiscordRestInviteAPI>()
-                .AddScoped<IDiscordRestUserAPI, DiscordRestUserAPI>()
-                .AddScoped<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
-                .AddScoped<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>()
-                .AddScoped<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>()
-                .AddScoped<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>()
-                .AddScoped<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>()
-                .AddScoped<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
+                .AddSingleton<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
+                .AddSingleton<IDiscordRestChannelAPI, DiscordRestChannelAPI>()
+                .AddSingleton<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>()
+                .AddSingleton<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>()
+                .AddSingleton<IDiscordRestGuildAPI, DiscordRestGuildAPI>()
+                .AddSingleton<IDiscordRestInviteAPI, DiscordRestInviteAPI>()
+                .AddSingleton<IDiscordRestUserAPI, DiscordRestUserAPI>()
+                .AddSingleton<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
+                .AddSingleton<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>()
+                .AddSingleton<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>()
+                .AddSingleton<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>()
+                .AddSingleton<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>()
+                .AddSingleton<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
 
             return serviceCollection;
         }
