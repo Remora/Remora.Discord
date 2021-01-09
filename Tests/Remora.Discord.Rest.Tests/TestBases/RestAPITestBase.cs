@@ -68,7 +68,7 @@ namespace Remora.Discord.Rest.Tests.TestBases
                 )
             )
             .AddExperimentalDiscordApi()
-            .BuildServiceProvider();
+            .BuildServiceProvider(true);
 
             return serviceContainer;
         }

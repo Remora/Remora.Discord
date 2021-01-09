@@ -77,7 +77,7 @@ namespace Remora.Discord.API.Tests.TestBases
                 .AddDiscordApi(this.AllowUnknownEvents)
                 .AddSingleton<SampleDataService>()
                 .AddExperimentalDiscordApi()
-                .BuildServiceProvider();
+                .BuildServiceProvider(true);
 
             this.SampleData = services.GetRequiredService<SampleDataService>();
             this.Options = services.GetRequiredService<IOptions<JsonSerializerOptions>>().Value;

@@ -75,7 +75,7 @@ namespace Remora.Discord.Samples.DiceRoller
 
             serviceCollection.AddHttpClient();
 
-            var services = serviceCollection.BuildServiceProvider();
+            var services = serviceCollection.BuildServiceProvider(true);
 
             var log = services.GetRequiredService<ILogger<Program>>();
 

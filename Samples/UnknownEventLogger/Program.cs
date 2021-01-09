@@ -67,7 +67,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
                 )
                 .AddDiscordGateway(() => botToken)
                 .AddResponder<UnknownEventResponder>()
-                .BuildServiceProvider();
+                .BuildServiceProvider(true);
 
             var log = services.GetRequiredService<ILogger<Program>>();
 

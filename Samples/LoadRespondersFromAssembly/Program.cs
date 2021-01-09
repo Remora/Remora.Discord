@@ -79,7 +79,7 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly
                 serviceCollection.AddResponder(responderType);
             }
 
-            var services = serviceCollection.BuildServiceProvider();
+            var services = serviceCollection.BuildServiceProvider(true);
 
             var log = services.GetRequiredService<ILogger<Program>>();
 

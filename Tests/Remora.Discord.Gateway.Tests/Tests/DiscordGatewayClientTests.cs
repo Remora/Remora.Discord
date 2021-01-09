@@ -102,7 +102,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider();
+                .BuildServiceProvider(true);
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
@@ -175,7 +175,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider();
+                .BuildServiceProvider(true);
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
@@ -268,7 +268,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider();
+                .BuildServiceProvider(true);
 
             var client = services.GetRequiredService<DiscordGatewayClient>();
             var runResult = await client.RunAsync(tokenSource.Token);
