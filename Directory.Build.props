@@ -1,6 +1,6 @@
 <!--
-    This file contains common properties for all DIGOS.Ambassador projects. It is divided into multiple sections,
-    depending on the use case for the properties.
+    This file contains common properties for all projects. It is divided into multiple sections, depending on the use
+    case for the properties.
 -->
 
 <Project>
@@ -50,7 +50,6 @@
 
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-        <RunCodeAnalysis>true</RunCodeAnalysis>
         <CodeAnalysisRuleSet>$(StyleCopRuleset)</CodeAnalysisRuleSet>
         <WarningsAsErrors>
             CS8600;
