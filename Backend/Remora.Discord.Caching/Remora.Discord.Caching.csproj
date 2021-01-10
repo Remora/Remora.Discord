@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta5</Version>
+        <Version>1.0.0-beta6</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Fix API instances being registred with an incorrect scope type.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

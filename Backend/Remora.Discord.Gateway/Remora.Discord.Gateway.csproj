@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.1.2</Version>
+        <Version>2.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Provide the service collection when resolving the token.
         </PackageReleaseNotes>
     </PropertyGroup>
 
