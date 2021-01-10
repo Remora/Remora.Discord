@@ -61,13 +61,14 @@ namespace Remora.Discord.Commands.Extensions
                 .AddParser<IRole, RoleParser>()
                 .AddParser<IUser, UserParser>();
 
+            serviceCollection.TryAddScoped<ExecutionEventCollectorService>();
+
             if (!enableSlash)
             {
                 return serviceCollection;
             }
 
             serviceCollection.TryAddSingleton<SlashService>();
-            serviceCollection.TryAddScoped<ExecutionEventCollectorService>();
             serviceCollection.AddInteractionResponder();
 
             return serviceCollection;
