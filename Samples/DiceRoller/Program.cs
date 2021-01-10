@@ -69,8 +69,7 @@ namespace Remora.Discord.Samples.DiceRoller
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
                 .AddDiscordGateway(_ => botToken)
-                .AddCommands()
-                .AddCommandResponder()
+                .AddDiscordCommands()
                 .AddCommandGroup<DiceRollCommands>();
 
             serviceCollection.AddHttpClient();
