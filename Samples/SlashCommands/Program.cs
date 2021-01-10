@@ -71,7 +71,7 @@ namespace Remora.Discord.Samples.SlashCommands
                         .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
-                .AddDiscordGateway(() => botToken)
+                .AddDiscordGateway(_ => botToken)
                 .AddDiscordCommands(true)
                 .AddCommandGroup<HttpCatCommands>()
                 .AddDiscordCaching();

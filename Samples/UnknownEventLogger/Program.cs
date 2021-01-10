@@ -65,7 +65,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
                         .AddFilter("System.Net.Http.HttpClient.Discord.LogicalHandler", LogLevel.Warning)
                         .AddFilter("System.Net.Http.HttpClient.Discord.ClientHandler", LogLevel.Warning)
                 )
-                .AddDiscordGateway(() => botToken)
+                .AddDiscordGateway(_ => botToken)
                 .AddResponder<UnknownEventResponder>()
                 .BuildServiceProvider(true);
 

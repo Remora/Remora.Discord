@@ -48,13 +48,13 @@ namespace Remora.Discord.Rest.Extensions
         /// Adds the services required for Discord's REST API.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="token">A function that creates or retrieves the authorization token.</param>
+        /// <param name="tokenFactory">A function that creates or retrieves the authorization token.</param>
         /// <param name="buildClient">Extra client building operations.</param>
         /// <returns>The service collection, with the services added.</returns>
         public static IServiceCollection AddDiscordRest
         (
             this IServiceCollection serviceCollection,
-            Func<string> token,
+            Func<IServiceProvider, string> tokenFactory,
             Action<IHttpClientBuilder>? buildClient = null
         )
         {
@@ -122,7 +122,7 @@ namespace Remora.Discord.Rest.Extensions
             buildClient?.Invoke(clientBuilder);
 
             serviceCollection
-                .AddSingleton<ITokenStore>(_ => new TokenStore(token()));
+                .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
 
             serviceCollection
                 .AddSingleton<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
