@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.3.4</Version>
+        <Version>1.3.5</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
         </PackageReleaseNotes>
     </PropertyGroup>
 

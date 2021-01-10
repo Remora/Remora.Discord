@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.0</Version>
+        <Version>2.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             started.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
         </PackageReleaseNotes>
     </PropertyGroup>
 

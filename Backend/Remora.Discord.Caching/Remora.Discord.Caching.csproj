@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.0-beta6</Version>
+        <Version>1.0.0-beta7</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
         </PackageReleaseNotes>
     </PropertyGroup>
 
