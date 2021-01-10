@@ -13,7 +13,8 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Fix data object reader reading too many tokens.
+            Fix IsExternalInit not being a pure development dependency.
+            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
         </PackageReleaseNotes>
     </PropertyGroup>
 
