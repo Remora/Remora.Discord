@@ -129,7 +129,7 @@ namespace Remora.Discord.API.Json
                 // It worked!
                 var method = FromValueMethods[type];
 
-                oneOf = (TOneOf)method.Invoke(null, new[] { value });
+                oneOf = (TOneOf)method.Invoke(null, new[] { value })!;
                 return true;
             }
 
