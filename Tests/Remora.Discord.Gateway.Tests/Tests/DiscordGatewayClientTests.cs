@@ -98,7 +98,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
             var services = new ServiceCollection()
-                .AddDiscordGateway(() => Constants.MockToken)
+                .AddDiscordGateway(_ => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()
@@ -171,7 +171,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
             var services = new ServiceCollection()
-                .AddDiscordGateway(() => Constants.MockToken)
+                .AddDiscordGateway(_ => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()
@@ -264,7 +264,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
             var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
             var services = new ServiceCollection()
-                .AddDiscordGateway(() => Constants.MockToken)
+                .AddDiscordGateway(_ => Constants.MockToken)
                 .Replace(transportMockDescriptor)
                 .Replace(CreateMockedGatewayAPI())
                 .AddSingleton<IResponderTypeRepository, ResponderService>()

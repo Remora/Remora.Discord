@@ -66,7 +66,7 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly
                         .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
                         .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
                 )
-                .AddDiscordGateway(() => botToken);
+                .AddDiscordGateway(_ => botToken);
 
             serviceCollection.AddHttpClient();
 

@@ -43,16 +43,16 @@ namespace Remora.Discord.Gateway.Extensions
         /// Adds services required by the Discord Gateway system.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="token">A function that retrieves the bot token.</param>
+        /// <param name="tokenFactory">A function that retrieves the bot token.</param>
         /// <returns>The service collection, with the services added.</returns>
         public static IServiceCollection AddDiscordGateway
         (
             this IServiceCollection serviceCollection,
-            Func<string> token
+            Func<IServiceProvider, string> tokenFactory
         )
         {
             serviceCollection
-                .AddDiscordRest(token)
+                .AddDiscordRest(tokenFactory)
                 .AddSingleton<Random>()
                 .AddTransient<ClientWebSocket>()
                 .AddSingleton<IPayloadTransportService, WebSocketPayloadTransportService>()

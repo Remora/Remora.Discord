@@ -55,7 +55,7 @@ namespace Remora.Discord.Rest.Tests.TestBases
             var serviceContainer = new ServiceCollection()
             .AddDiscordRest
             (
-                () => "TEST_TOKEN",
+                _ => "TEST_TOKEN",
                 b => b.ConfigurePrimaryHttpMessageHandler
                 (
                     _ =>

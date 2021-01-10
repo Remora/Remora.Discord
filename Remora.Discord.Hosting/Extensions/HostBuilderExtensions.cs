@@ -39,14 +39,14 @@ namespace Remora.Discord.Hosting.Extensions
         /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation.
         /// </summary>
         /// <param name="hostBuilder">The host builder.</param>
-        /// <param name="token">A function that retrieves the bot token.</param>
+        /// <param name="tokenFactory">A function that retrieves the bot token.</param>
         /// <returns>The service collection, with the services added.</returns>
-        public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<string> token)
+        public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory)
         {
             hostBuilder.ConfigureServices((_, serviceCollection) =>
             {
                 serviceCollection
-                    .AddDiscordGateway(token)
+                    .AddDiscordGateway(tokenFactory)
                     .AddSingleton<DiscordService>()
                     .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
                         serviceProvider.GetRequiredService<DiscordService>());
