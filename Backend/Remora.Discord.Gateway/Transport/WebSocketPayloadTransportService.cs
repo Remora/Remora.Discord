@@ -157,7 +157,7 @@ namespace Remora.Discord.Gateway.Transport
 
                     return SendPayloadResult.FromError
                     (
-                        _clientWebSocket.CloseStatusDescription,
+                        _clientWebSocket.CloseStatusDescription ?? "Unknown close reason.",
                         _clientWebSocket.CloseStatus.Value
                     );
                 }
@@ -211,7 +211,7 @@ namespace Remora.Discord.Gateway.Transport
 
                         return ReceivePayloadResult<IPayload>.FromError
                         (
-                            result.CloseStatusDescription,
+                            result.CloseStatusDescription ?? "Unknown close reason.",
                             result.CloseStatus.Value
                         );
                     }

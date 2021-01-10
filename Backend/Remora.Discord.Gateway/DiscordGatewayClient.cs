@@ -659,7 +659,7 @@ namespace Remora.Discord.Gateway
                 responderTypes.Select(async rt =>
                 {
                     using var serviceScope = _services.CreateScope();
-                    var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider.GetService(rt);
+                    var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider.GetRequiredService(rt);
 
                     try
                     {

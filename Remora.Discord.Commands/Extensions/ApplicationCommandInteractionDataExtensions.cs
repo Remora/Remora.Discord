@@ -134,11 +134,11 @@ namespace Remora.Discord.Commands.Extensions
             var optionValue = option.Value.Value!;
             if (optionValue.Value is ICollection collection)
             {
-                values.AddRange(collection.Cast<object>().Select(o => o.ToString()));
+                values.AddRange(collection.Cast<object>().Select(o => o.ToString() ?? string.Empty));
             }
             else
             {
-                values.Add(optionValue.Value.ToString());
+                values.Add(optionValue.Value.ToString() ?? string.Empty);
             }
 
             return (option.Name, values);

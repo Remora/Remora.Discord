@@ -514,20 +514,12 @@ namespace Remora.Discord.Rest
             }
 
             // See if we have a JSON error to get some more details from
-            if (response.Content is null)
-            {
-                return RestRequestResult.FromError
-                (
-                    response.ReasonPhrase,
-                    response.StatusCode
-                );
-            }
-
+            var reasonPhrase = response.ReasonPhrase ?? "Unknown error.";
             if (response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength <= 0)
             {
                 return RestRequestResult.FromError
                 (
-                    response.ReasonPhrase,
+                    reasonPhrase,
                     response.StatusCode
                 );
             }
@@ -545,7 +537,7 @@ namespace Remora.Discord.Rest
                 {
                     return RestRequestResult.FromError
                     (
-                        response.ReasonPhrase,
+                        reasonPhrase,
                         response.StatusCode
                     );
                 }
@@ -560,7 +552,7 @@ namespace Remora.Discord.Rest
             {
                 return RestRequestResult.FromError
                 (
-                    response.ReasonPhrase,
+                    reasonPhrase,
                     response.StatusCode
                 );
             }
@@ -584,7 +576,7 @@ namespace Remora.Discord.Rest
         {
             if (response.IsSuccessStatusCode)
             {
-                if (response.Content is null || response.Content.Headers.ContentLength == 0)
+                if (response.Content.Headers.ContentLength == 0)
                 {
                     if (!allowNullReturn)
                     {
@@ -617,20 +609,12 @@ namespace Remora.Discord.Rest
             }
 
             // See if we have a JSON error to get some more details from
-            if (response.Content is null)
-            {
-                return RetrieveRestEntityResult<TEntity>.FromError
-                (
-                    response.ReasonPhrase,
-                    response.StatusCode
-                );
-            }
-
+            var reasonPhrase = response.ReasonPhrase ?? "Unknown error.";
             if (!response.Content.Headers.ContentLength.HasValue || !(response.Content.Headers.ContentLength > 0))
             {
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (
-                    response.ReasonPhrase,
+                    reasonPhrase,
                     response.StatusCode
                 );
             }
@@ -648,7 +632,7 @@ namespace Remora.Discord.Rest
                 {
                     return RetrieveRestEntityResult<TEntity>.FromError
                     (
-                        response.ReasonPhrase,
+                        reasonPhrase,
                         response.StatusCode
                     );
                 }
@@ -663,7 +647,7 @@ namespace Remora.Discord.Rest
             {
                 return RetrieveRestEntityResult<TEntity>.FromError
                 (
-                    response.ReasonPhrase,
+                    reasonPhrase,
                     response.StatusCode
                 );
             }

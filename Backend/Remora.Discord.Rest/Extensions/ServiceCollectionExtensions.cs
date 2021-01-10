@@ -70,7 +70,7 @@ namespace Remora.Discord.Rest.Extensions
                     (services, client) =>
                     {
                         var assemblyName = Assembly.GetExecutingAssembly().GetName();
-                        var name = assemblyName.Name;
+                        var name = assemblyName.Name ?? "Remora.Discord";
                         var version = assemblyName.Version ?? new Version(1, 0, 0);
 
                         var tokenStore = services.GetRequiredService<ITokenStore>();
@@ -107,7 +107,7 @@ namespace Remora.Discord.Rest.Extensions
                                     return TimeSpan.FromSeconds(1);
                                 }
 
-                                if (!response.Result.Headers.RetryAfter.Delta.HasValue)
+                                if (response.Result.Headers.RetryAfter is null or { Delta: null })
                                 {
                                     return TimeSpan.FromSeconds(1);
                                 }

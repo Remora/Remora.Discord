@@ -52,7 +52,7 @@ namespace Remora.Discord.Commands.Extensions
             var regexMatches = UnmentionRegex.Match(value);
             return !regexMatches.Success
                 ? value
-                : regexMatches.Groups.First().Value;
+                : regexMatches.Groups.First<Group>().Value;
         }
     }
 }
