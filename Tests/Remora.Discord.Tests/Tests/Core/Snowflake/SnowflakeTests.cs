@@ -155,12 +155,12 @@ namespace Remora.Discord.Tests.Tests.Core
 
                 // Some allowance is made here because of clock inaccuracies and the potential for scheduler differences
                 // between the two above time measurements.
-                var isWithinFiveMilliseconds = Math.Abs
+                var isWithinFiveSeconds = Math.Abs
                 (
-                    now.ToUnixTimeMilliseconds() - snowflake.Timestamp.ToUnixTimeMilliseconds()
+                    now.ToUnixTimeSeconds() - snowflake.Timestamp.ToUnixTimeSeconds()
                 ) <= 5;
 
-                Assert.True(isWithinFiveMilliseconds);
+                Assert.True(isWithinFiveSeconds);
             }
 
             [Fact]
