@@ -422,11 +422,17 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// </summary>
         private void CheckTimeout()
         {
+            if (_finisher.IsCancellationRequested)
+            {
+                // We're fine; the sequence is finished (and probably just took some time to process)
+                return;
+            }
+
             var timeout = _serviceOptions.Timeout;
             if (Debugger.IsAttached)
             {
                 // Extend the timeout
-                timeout += TimeSpan.FromMinutes(10);
+                //timeout += TimeSpan.FromMinutes(10);
             }
 
             if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
