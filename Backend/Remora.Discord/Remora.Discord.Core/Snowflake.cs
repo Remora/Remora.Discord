@@ -140,6 +140,24 @@ namespace Remora.Discord.Core
         }
 
         /// <summary>
+        /// Compares two snowflakes, for equality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>true if the operands are equal, false otherwise.</returns>
+        public static bool operator ==(Snowflake left, Snowflake right)
+            => left.Equals(right);
+
+        /// <summary>
+        /// Compares two snowflakes, for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>false if the operands are equal, true otherwise.</returns>
+        public static bool operator !=(Snowflake left, Snowflake right)
+            => !left.Equals(right);
+
+        /// <summary>
         /// Compares two snowflakes, determining whether the left operand is considered less than the right operand.
         /// This is generally based on time. An earlier snowflake will compare as less than another, and a snowflake
         /// with a higher increment will compare as more than another (provided they are from the same worker and same
