@@ -263,6 +263,48 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
+        /// Tests the == operator.
+        /// </summary>
+        public class EqualOperator
+        {
+            [Theory]
+            [InlineData(ulong.MinValue, ulong.MinValue)]
+            [InlineData(ulong.MaxValue, ulong.MaxValue)]
+            [InlineData(143867839282020352U, 143867839282020352U)]
+            [InlineData(143867839282020352U, 169780104564572169U)]
+            [InlineData(169780104564572169U, 143867839282020352U)]
+            [InlineData(169780104564572169U, 169780104564572169U)]
+            public void EquatesSameAsValue(ulong first, ulong second)
+            {
+                var firstSnowflake = new Snowflake(first);
+                var secondSnowflake = new Snowflake(second);
+
+                Assert.Equal(first == second, firstSnowflake == secondSnowflake);
+            }
+        }
+
+        /// <summary>
+        /// Tests the != operator.
+        /// </summary>
+        public class NotEqualOperator
+        {
+            [Theory]
+            [InlineData(ulong.MinValue, ulong.MinValue)]
+            [InlineData(ulong.MaxValue, ulong.MaxValue)]
+            [InlineData(143867839282020352U, 143867839282020352U)]
+            [InlineData(143867839282020352U, 169780104564572169U)]
+            [InlineData(169780104564572169U, 143867839282020352U)]
+            [InlineData(169780104564572169U, 169780104564572169U)]
+            public void EquatesSameAsValue(ulong first, ulong second)
+            {
+                var firstSnowflake = new Snowflake(first);
+                var secondSnowflake = new Snowflake(second);
+
+                Assert.Equal(first != second, firstSnowflake != secondSnowflake);
+            }
+        }
+
+        /// <summary>
         /// Tests the &lt; operator.
         /// </summary>
         public class LessThan
