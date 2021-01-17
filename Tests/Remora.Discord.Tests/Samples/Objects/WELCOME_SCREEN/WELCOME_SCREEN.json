@@ -1,0 +1,35 @@
+{
+    "description": "Discord Developers is a place to learn about Discord's API, bots, and SDKs and integrations. This is NOT a general Discord support server.",
+    "welcome_channels": [
+        {
+            "channel_id": "697138785317814292",
+            "description": "Follow for official Discord API updates",
+            "emoji_id": null,
+            "emoji_name": "📡"
+        },
+        {
+            "channel_id": "697236247739105340",
+            "description": "Get help with Bot Verifications",
+            "emoji_id": null,
+            "emoji_name": "📸"
+        },
+        {
+            "channel_id": "697489244649816084",
+            "description": "Create amazing things with Discord's API",
+            "emoji_id": null,
+            "emoji_name": "🔬"
+        },
+        {
+            "channel_id": "613425918748131338",
+            "description": "Integrate Discord into your game",
+            "emoji_id": null,
+            "emoji_name": "🎮"
+        },
+        {
+            "channel_id": "646517734150242346",
+            "description": "Find more places to help you on your quest",
+            "emoji_id": null,
+            "emoji_name": "🔦"
+        }
+    ]
+}

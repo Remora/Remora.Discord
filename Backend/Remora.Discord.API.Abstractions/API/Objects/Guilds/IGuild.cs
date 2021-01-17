@@ -255,5 +255,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the approximate number of non-offline members in the guild.
         /// </summary>
         Optional<int> ApproximatePresenceCount { get; }
+
+        /// <summary>
+        /// Gets the welcome screen shown to new members.
+        /// </summary>
+        Optional<IWelcomeScreen> WelcomeScreen { get; }
     }
 }

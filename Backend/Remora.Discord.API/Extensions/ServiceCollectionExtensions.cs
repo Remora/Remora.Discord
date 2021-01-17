@@ -471,6 +471,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
                 .WithPropertyName(w => w.IsEnabled, "enabled");
 
+            options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
+            options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
+
             return options;
         }
 

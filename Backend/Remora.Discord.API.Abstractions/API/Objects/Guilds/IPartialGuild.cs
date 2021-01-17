@@ -164,5 +164,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.ApproximatePresenceCount" />
         Optional<int> ApproximatePresenceCount { get; }
+
+        /// <inheritdoc cref="IGuild.WelcomeScreen" />
+        Optional<IWelcomeScreen> WelcomeScreen { get; }
     }
 }

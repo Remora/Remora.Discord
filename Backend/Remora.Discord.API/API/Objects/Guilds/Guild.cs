@@ -77,6 +77,7 @@ namespace Remora.Discord.API.Objects
         Snowflake? PublicUpdatesChannelID,
         Optional<int> MaxVideoChannelUsers,
         Optional<int> ApproximateMemberCount,
-        Optional<int> ApproximatePresenceCount
+        Optional<int> ApproximatePresenceCount,
+        Optional<IWelcomeScreen> WelcomeScreen
     ) : IGuild;
 }
