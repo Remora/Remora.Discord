@@ -203,6 +203,79 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildMembershipScreeningFormAsync"/> method.
+        /// </summary>
+        public class GetGuildMembershipScreeningFormAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/member-verification")
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMembershipScreening)])
+                );
+
+                var result = await api.GetGuildMembershipScreeningFormAsync(guildId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildMembershipScreeningFormAsync"/> method.
+        /// </summary>
+        public class ModifyGuildMembershipScreeningFormAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var isEnabled = true;
+                var formFields = new List<IMembershipScreeningField>();
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/member-verification")
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("enabled", p => p.Is(isEnabled))
+                                    .WithProperty("form_fields", p => p.IsString())
+                                    .WithProperty("description", p => p.Is(description))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMembershipScreening)])
+                );
+
+                var result = await api.ModifyGuildMembershipScreeningFormAsync
+                (
+                    guildId,
+                    isEnabled,
+                    formFields,
+                    description
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestGuildAPI.GetGuildAsync"/> method.
         /// </summary>
         public class GetGuildAsync : RestAPITestBase<IDiscordRestGuildAPI>

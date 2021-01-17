@@ -93,6 +93,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The guild has enabled a welcome screen.
         /// </summary>
-        WelcomeScreenEnabled
+        WelcomeScreenEnabled,
+
+        /// <summary>
+        /// The guild has enabled membership screening.
+        /// </summary>
+        MemberVerificationGateEnabled,
+
+        /// <summary>
+        /// The guild can be previewed before joining.
+        /// </summary>
+        PreviewEnabled
     }
 }

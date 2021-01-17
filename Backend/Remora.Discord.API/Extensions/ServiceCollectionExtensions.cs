@@ -475,6 +475,15 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
             options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
 
+            options.AddDataObjectConverter<IMembershipScreening, MembershipScreening>();
+            options.AddDataObjectConverter<IMembershipScreeningField, MembershipScreeningField>()
+                .WithPropertyConverter
+                (
+                    f => f.FieldType,
+                    new StringEnumConverter<MembershipScreeningFieldType>(new SnakeCaseNamingPolicy())
+                )
+                .WithPropertyName(f => f.IsRequired, "required");
+
             return options;
         }
 
