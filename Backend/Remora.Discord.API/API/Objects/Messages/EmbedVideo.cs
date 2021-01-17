@@ -30,5 +30,11 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IEmbedVideo" />
     [PublicAPI]
-    public record EmbedVideo(Optional<string> Url, Optional<int> Height, Optional<int> Width) : IEmbedVideo;
+    public record EmbedVideo
+    (
+        Optional<string> Url,
+        Optional<string> ProxyUrl,
+        Optional<int> Height,
+        Optional<int> Width
+    ) : IEmbedVideo;
 }

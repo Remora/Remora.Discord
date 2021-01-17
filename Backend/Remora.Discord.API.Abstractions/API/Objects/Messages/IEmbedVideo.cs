@@ -37,6 +37,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<string> Url { get; }
 
         /// <summary>
+        /// Gets the proxied URL of the video.
+        /// </summary>
+        Optional<string> ProxyUrl { get; }
+
+        /// <summary>
         /// Gets the height of the video.
         /// </summary>
         Optional<int> Height { get; }
