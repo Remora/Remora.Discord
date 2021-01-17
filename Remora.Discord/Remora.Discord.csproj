@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.1</Version>
+        <Version>2.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             started.
         </Description>
         <PackageReleaseNotes>
-            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

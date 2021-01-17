@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.1</Version>
+        <Version>3.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,8 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Multitarget to .NET 5.0 for better language integration and smaller dependency graphs.
+            Update dependencies.
+            Implement support for welcome screens.
         </PackageReleaseNotes>
     </PropertyGroup>
 
