@@ -282,6 +282,7 @@ namespace Remora.Discord.Caching.Responders
                     gatewayEvent.PremiumSince,
                     false,
                     false,
+                    default,
                     default
                 );
             }
@@ -296,7 +297,8 @@ namespace Remora.Discord.Caching.Responders
                     gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince : cachedInstance.PremiumSince,
                     cachedInstance.IsDeafened,
                     cachedInstance.IsMuted,
-                    cachedInstance.IsPending
+                    cachedInstance.IsPending,
+                    cachedInstance.Permissions
                 );
             }
 

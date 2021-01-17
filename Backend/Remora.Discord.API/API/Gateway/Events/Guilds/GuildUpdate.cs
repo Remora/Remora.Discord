@@ -80,7 +80,8 @@ namespace Remora.Discord.API.Gateway.Events
             Snowflake? publicUpdatesChannelID,
             Optional<int> maxVideoChannelUsers,
             Optional<int> approximateMemberCount,
-            Optional<int> approximatePresenceCount
+            Optional<int> approximatePresenceCount,
+            Optional<IWelcomeScreen> welcomeScreen
         )
             : base
             (
@@ -127,7 +128,8 @@ namespace Remora.Discord.API.Gateway.Events
                 publicUpdatesChannelID,
                 maxVideoChannelUsers,
                 approximateMemberCount,
-                approximatePresenceCount
+                approximatePresenceCount,
+                welcomeScreen
             )
         {
         }

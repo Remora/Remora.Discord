@@ -37,18 +37,7 @@ namespace Remora.Discord.API.Gateway.Events
         /// <inheritdoc />
         public Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildMemberAdd"/> class.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <param name="nickname">The user's set nickname.</param>
-        /// <param name="roles">The user's assigned roles.</param>
-        /// <param name="joinedAt">When the user joined the server.</param>
-        /// <param name="premiumSince">When the user started boosting the guild.</param>
-        /// <param name="isDeafened">Whether the user is deafened in voice channels.</param>
-        /// <param name="isMuted">Whether the user is muted in voice channels.</param>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="isPending">Whether the user has passed the screening requirements.</param>
+        /// <inheritdoc cref="GuildMember"/>
         public GuildMemberAdd
         (
             Optional<IUser> user,
@@ -59,7 +48,8 @@ namespace Remora.Discord.API.Gateway.Events
             bool isDeafened,
             bool isMuted,
             Optional<bool?> isPending,
-            Snowflake guildID
+            Snowflake guildID,
+            Optional<IDiscordPermissionSet> permissions
         )
             : base
             (
@@ -70,7 +60,8 @@ namespace Remora.Discord.API.Gateway.Events
                 premiumSince,
                 isDeafened,
                 isMuted,
-                isPending
+                isPending,
+                permissions
             )
         {
             this.GuildID = guildID;
