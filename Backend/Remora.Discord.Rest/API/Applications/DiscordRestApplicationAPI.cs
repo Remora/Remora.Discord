@@ -118,7 +118,7 @@ namespace Remora.Discord.Rest.API
             Snowflake commandID,
             Optional<string> name,
             Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
             CancellationToken ct
         )
         {
@@ -231,7 +231,7 @@ namespace Remora.Discord.Rest.API
             Snowflake commandID,
             Optional<string> name,
             Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
             CancellationToken ct
         )
         {
