@@ -72,5 +72,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the user has passed the guild membership screening requirements.
         /// </summary>
         Optional<bool?> IsPending { get; }
+
+        /// <summary>
+        /// Gets the total permissions of the member in a channel, including overrides.
+        /// </summary>
+        Optional<IDiscordPermissionSet> Permissions { get; }
     }
 }
