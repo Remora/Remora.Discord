@@ -432,7 +432,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
             if (Debugger.IsAttached)
             {
                 // Extend the timeout
-                //timeout += TimeSpan.FromMinutes(10);
+                timeout += TimeSpan.FromMinutes(10);
             }
 
             if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
