@@ -236,7 +236,8 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
             options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
-                .WithPropertyName(u => u.Nickname, "nick");
+                .WithPropertyName(u => u.Nickname, "nick")
+                .WithPropertyName(u => u.IsPending, "pending");
 
             options.AddDataObjectConverter<IGuildMembersChunk, GuildMembersChunk>();
 

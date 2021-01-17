@@ -63,5 +63,10 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// Gets the date when the user started boosting the guild.
         /// </summary>
         Optional<DateTimeOffset?> PremiumSince { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user has not yet passed the screening requirements.
+        /// </summary>
+        Optional<bool> IsPending { get; }
     }
 }

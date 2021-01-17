@@ -40,6 +40,7 @@ namespace Remora.Discord.API.Gateway.Events
         IUser User,
         Optional<string?> Nickname,
         DateTimeOffset JoinedAt,
-        Optional<DateTimeOffset?> PremiumSince
+        Optional<DateTimeOffset?> PremiumSince,
+        Optional<bool> IsPending
     ) : IGuildMemberUpdate;
 }
