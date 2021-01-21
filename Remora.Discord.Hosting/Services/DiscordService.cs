@@ -57,16 +57,32 @@ namespace Remora.Discord.Hosting.Services
 
                 if (!runResult.IsSuccess)
                 {
-                    _logger.LogError(runResult.Exception, runResult.ErrorReason);
+                    if (runResult.Exception is not null)
+                    {
+                        _logger.LogError
+                        (
+                            runResult.Exception,
+                            "Exception during gateway connection: {Exception}",
+                            runResult.ErrorReason
+                        );
+                    }
 
                     if (runResult.GatewayCloseStatus.HasValue)
                     {
-                        _logger.LogError("Gateway close status: {gatewayClosedStatus}", runResult.GatewayCloseStatus.Value);
+                        _logger.LogError
+                        (
+                            "Gateway close status: {GatewayCloseStatus}",
+                            runResult.GatewayCloseStatus.Value
+                        );
                     }
 
                     if (runResult.WebSocketCloseStatus.HasValue)
                     {
-                        _logger.LogError("Websocket close status: {websocketCloseStatus}", runResult.WebSocketCloseStatus.Value);
+                        _logger.LogError
+                        (
+                            "Websocket close status: {WebsocketCloseStatus}",
+                            runResult.WebSocketCloseStatus.Value
+                        );
                     }
                 }
 
