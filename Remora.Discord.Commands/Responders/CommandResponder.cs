@@ -22,10 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -36,7 +34,6 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
-using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders
 {
