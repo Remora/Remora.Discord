@@ -39,23 +39,20 @@ namespace Remora.Discord.Core
     [PublicAPI, DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<TValue> : IOptional
     {
-        [MaybeNull, AllowNull]
-        private readonly TValue _value;
+        private readonly TValue? _value;
 
         /// <summary>
         /// Gets the value contained in the optional.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the optional does not contain a value.</exception>
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        [MaybeNull]
-        public TValue Value
+        public TValue? Value
         {
             get
             {
                 if (this.HasValue)
                 {
-                    // We want to explicitly allow returning null here. ! is technically a lie, but it works.
-                    return _value!;
+                    return _value;
                 }
 
                 throw new InvalidOperationException("The optional did not contain a valid value.");
@@ -83,7 +80,7 @@ namespace Remora.Discord.Core
         /// Initializes a new instance of the <see cref="Optional{TValue}"/> struct.
         /// </summary>
         /// <param name="value">The contained value.</param>
-        public Optional([AllowNull] TValue value)
+        public Optional(TValue? value)
         {
             _value = value;
             this.HasValue = true;
@@ -94,9 +91,9 @@ namespace Remora.Discord.Core
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The created optional.</returns>
-        public static implicit operator Optional<TValue>([AllowNull] TValue value)
+        public static implicit operator Optional<TValue>(TValue? value)
         {
-            return new Optional<TValue>(value);
+            return new(value);
         }
     }
 }
