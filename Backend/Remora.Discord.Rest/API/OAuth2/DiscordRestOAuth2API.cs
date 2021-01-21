@@ -56,5 +56,18 @@ namespace Remora.Discord.Rest.API
                 ct: ct
             );
         }
+
+        /// <inheritdoc />
+        public Task<IRetrieveRestEntityResult<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+        (
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IAuthorizationInformation>
+            (
+                "oauth2/@me",
+                ct: ct
+            );
+        }
     }
 }

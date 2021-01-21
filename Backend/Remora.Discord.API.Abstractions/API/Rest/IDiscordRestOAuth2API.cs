@@ -43,5 +43,15 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             CancellationToken ct = default
         );
+
+        /// <summary>
+        /// Gets information about the bot's current authorizations.
+        /// </summary>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+        (
+            CancellationToken ct = default
+        );
     }
 }

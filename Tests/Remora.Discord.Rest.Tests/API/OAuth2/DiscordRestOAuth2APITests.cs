@@ -62,5 +62,30 @@ namespace Remora.Discord.Rest.Tests.API.OAuth2
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentAuthorizationInformationAsync"/> method.
+        /// </summary>
+        public class GetCurrentAuthorizationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
+                        .WithNoContent()
+                        .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
+                );
+
+                var result = await api.GetCurrentAuthorizationInformationAsync();
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }

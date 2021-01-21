@@ -814,6 +814,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
                 .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
 
+            options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
+
             return options;
         }
 
