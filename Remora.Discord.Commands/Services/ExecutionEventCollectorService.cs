@@ -36,7 +36,7 @@ namespace Remora.Discord.Commands.Services
     /// </summary>
     public class ExecutionEventCollectorService
     {
-        private IReadOnlyList<IExecutionEventService> _executionEventServices;
+        private readonly IReadOnlyList<IExecutionEventService> _executionEventServices;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExecutionEventCollectorService"/> class.
