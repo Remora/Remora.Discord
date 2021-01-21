@@ -112,6 +112,21 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGlobalApplicationCommandAsync
+        (
+            Snowflake applicationID,
+            Snowflake commandID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IApplicationCommand>
+            (
+                $"applications/{applicationID}/commands/{commandID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public async Task<IModifyRestEntityResult<IApplicationCommand>> EditGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
@@ -219,6 +234,22 @@ namespace Remora.Discord.Rest.API
                         json.Write("options", options, _jsonOptions);
                     }
                 ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGuildApplicationCommandAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IApplicationCommand>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
                 ct: ct
             );
         }

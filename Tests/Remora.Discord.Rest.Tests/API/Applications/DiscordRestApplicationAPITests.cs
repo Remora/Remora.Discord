@@ -280,6 +280,39 @@ namespace Remora.Discord.Rest.Tests.API.Applications
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.GetGlobalApplicationCommandAsync"/> method.
+        /// </summary>
+        public class GetGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var commandID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.GetGlobalApplicationCommandAsync
+                (
+                    applicationID,
+                    commandID
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestApplicationAPI.EditGlobalApplicationCommandAsync"/> method.
         /// </summary>
         public class EditGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
@@ -806,6 +839,45 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 );
 
                 ResultAssert.Unsuccessful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandAsync"/> method.
+        /// </summary>
+        public class GetGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+                var commandID = new Snowflake(2);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.GetGuildApplicationCommandAsync
+                (
+                    applicationID,
+                    guildID,
+                    commandID
+                );
+
+                ResultAssert.Successful(result);
             }
         }
 

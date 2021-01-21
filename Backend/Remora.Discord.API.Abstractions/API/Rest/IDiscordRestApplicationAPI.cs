@@ -70,6 +70,20 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a global command.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="commandID">The ID of the command.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGlobalApplicationCommandAsync
+        (
+            Snowflake applicationID,
+            Snowflake commandID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Edits a new global command.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
@@ -137,6 +151,22 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets a global command.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="commandID">The ID of the command.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGuildApplicationCommandAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
             CancellationToken ct = default
         );
 

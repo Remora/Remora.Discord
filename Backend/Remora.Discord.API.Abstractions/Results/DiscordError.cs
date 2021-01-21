@@ -161,6 +161,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownGuildTemplate = 100057,
 
         /// <summary>
+        /// Unknown application command.
+        /// </summary>
+        UnknownApplicationCommand = 10063,
+
+        /// <summary>
         /// Bots cannot use this endpoint.
         /// </summary>
         NoBotsAllowed = 20001,
