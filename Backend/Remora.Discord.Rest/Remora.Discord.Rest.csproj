@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.0</Version>
+        <Version>4.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,9 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Implement support for welcome screens.
+            Add clientside range check for prune days.
+            Implement individual application command getters.
+            Implement OAuth2 authorization information getter.
         </PackageReleaseNotes>
     </PropertyGroup>
 
