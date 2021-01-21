@@ -24,7 +24,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Remora.Discord\Remora.Discord.Core\Remora.Discord.Core.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Core\Remora.Discord.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
