@@ -773,7 +773,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
+        public virtual async Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -781,7 +781,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IPruneCount>
+            if (days.HasValue && days.Value is < 1 or > 30)
+            {
+                return RetrieveRestEntityResult<IPruneCount>.FromError
+                (
+                    "The requested number of days must be between 1 and 30."
+                );
+            }
+
+            return await _discordHttpClient.GetAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b =>
@@ -805,7 +813,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
+        public virtual async Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -814,7 +822,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IPruneCount>
+            if (days.HasValue && days.Value is < 1 or > 30)
+            {
+                return CreateRestEntityResult<IPruneCount>.FromError
+                (
+                    "The requested number of days must be between 1 and 30."
+                );
+            }
+
+            return await _discordHttpClient.PostAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b => b.WithJson
