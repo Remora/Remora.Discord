@@ -88,16 +88,32 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
             {
-                log.LogError(runResult.Exception, runResult.ErrorReason);
+                if (runResult.Exception is not null)
+                {
+                    log.LogError
+                    (
+                        runResult.Exception,
+                        "Exception during gateway connection: {Exception}",
+                        runResult.ErrorReason
+                    );
+                }
 
                 if (runResult.GatewayCloseStatus.HasValue)
                 {
-                    log.LogError($"Gateway close status: {runResult.GatewayCloseStatus}");
+                    log.LogError
+                    (
+                        "Gateway close status: {GatewayCloseStatus}",
+                        runResult.GatewayCloseStatus.Value
+                    );
                 }
 
                 if (runResult.WebSocketCloseStatus.HasValue)
                 {
-                    log.LogError($"Websocket close status: {runResult.WebSocketCloseStatus}");
+                    log.LogError
+                    (
+                        "Websocket close status: {WebsocketCloseStatus}",
+                        runResult.WebSocketCloseStatus.Value
+                    );
                 }
             }
 

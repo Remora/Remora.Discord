@@ -63,13 +63,13 @@ namespace Remora.Discord.Samples.UnknownEventLogger
             using var jsonDocument = JsonDocument.Parse(gatewayEvent.Data);
             if (!jsonDocument.RootElement.TryGetProperty("t", out var eventTypeElement))
             {
-                _log.LogWarning("Failed to find an event type on the given unknown event.");
+                _log.LogWarning("Failed to find an event type on the given unknown event");
                 return EventResponseResult.FromSuccess();
             }
 
             if (!jsonDocument.RootElement.TryGetProperty("s", out var eventSequenceElement))
             {
-                _log.LogWarning("Failed to find an event sequence on the given unknown event.");
+                _log.LogWarning("Failed to find an event sequence on the given unknown event");
                 return EventResponseResult.FromSuccess();
             }
 
@@ -82,7 +82,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
             var sequenceNumber = eventSequenceElement.GetInt64();
             var logTime = $"{DateTime.UtcNow:u}";
 
-            _log.LogInformation($"Received an event of type \"{eventType}\" at {logTime}.");
+            _log.LogInformation("Received an event of type \"{EventType}\"", eventType);
 
             var eventDirectory = Path.GetFullPath(eventType.ToUpperInvariant());
             if (!Directory.Exists(eventDirectory))

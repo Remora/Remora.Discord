@@ -88,7 +88,7 @@ namespace Remora.Discord.Samples.SlashCommands
             {
                 if (!Snowflake.TryParse(debugServerString, out debugServer))
                 {
-                    log.LogWarning("Failed to parse debug server from environment.");
+                    log.LogWarning("Failed to parse debug server from environment");
                 }
             }
 #endif
@@ -97,14 +97,14 @@ namespace Remora.Discord.Samples.SlashCommands
 
             if (!slashService.SupportsSlashCommands())
             {
-                log.LogWarning("The registered commands of the bot don't support slash commands.");
+                log.LogWarning("The registered commands of the bot don't support slash commands");
             }
             else
             {
                 var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer, cancellationSource.Token);
                 if (!updateSlash.IsSuccess)
                 {
-                    log.LogWarning($"Failed to update slash commands: {updateSlash.ErrorReason}");
+                    log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.ErrorReason);
                 }
             }
 
@@ -113,16 +113,32 @@ namespace Remora.Discord.Samples.SlashCommands
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
             {
-                log.LogError(runResult.Exception, runResult.ErrorReason);
+                if (runResult.Exception is not null)
+                {
+                    log.LogError
+                    (
+                        runResult.Exception,
+                        "Exception during gateway connection: {Exception}",
+                        runResult.ErrorReason
+                    );
+                }
 
                 if (runResult.GatewayCloseStatus.HasValue)
                 {
-                    log.LogError($"Gateway close status: {runResult.GatewayCloseStatus}");
+                    log.LogError
+                    (
+                        "Gateway close status: {GatewayCloseStatus}",
+                        runResult.GatewayCloseStatus.Value
+                    );
                 }
 
                 if (runResult.WebSocketCloseStatus.HasValue)
                 {
-                    log.LogError($"Websocket close status: {runResult.WebSocketCloseStatus}");
+                    log.LogError
+                    (
+                        "Websocket close status: {WebsocketCloseStatus}",
+                        runResult.WebSocketCloseStatus.Value
+                    );
                 }
             }
 
