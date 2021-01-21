@@ -356,7 +356,7 @@ namespace Remora.Discord.Gateway
                 }
                 case HttpRequestException or WebSocketException:
                 {
-                    _log.LogWarning(iterationResult.Exception, "Transient error in gateway client.");
+                    _log.LogWarning(iterationResult.Exception, "Transient error in gateway client");
                     return true;
                 }
                 default:
@@ -443,7 +443,7 @@ namespace Remora.Discord.Gateway
                         TaskCreationOptions.LongRunning
                     ).Unwrap();
 
-                    _log.LogInformation("Connected.");
+                    _log.LogInformation("Connected");
 
                     _shouldReconnect = false;
                     _isSessionResumable = false;
@@ -547,14 +547,16 @@ namespace Remora.Discord.Gateway
                     {
                         _log.LogWarning
                         (
-                            $"Error in gateway event responder: {responderResult.ErrorReason}"
+                            "Error in gateway event responder: {Reason}",
+                            responderResult.ErrorReason
                         );
                     }
                     else
                     {
                         _log.LogWarning
                         (
-                            $"Error in gateway event responder.\n{responderResult.Exception}"
+                            "Error in gateway event responder.\n{Exception}",
+                            responderResult.Exception
                         );
                     }
                 }
@@ -572,12 +574,12 @@ namespace Remora.Discord.Gateway
                         continue;
                     }
 
-                    _log.LogWarning($"Error in gateway event responder.\n{e}");
+                    _log.LogWarning("Error in gateway event responder.\n{Exception}", e);
                 }
             }
             catch (Exception e)
             {
-                _log.LogWarning($"Error in gateway event responder.\n{e}");
+                _log.LogWarning("Error in gateway event responder.\n{Exception}", e);
             }
         }
 
@@ -604,7 +606,8 @@ namespace Remora.Discord.Gateway
             {
                 _log.LogWarning
                 (
-                    $"The given payload of type {payloadType} was not compatible with the event dispatcher."
+                    "The given payload of type {PayloadType} was not compatible with the event dispatcher",
+                    payloadType
                 );
 
                 return;
@@ -619,7 +622,8 @@ namespace Remora.Discord.Gateway
             {
                 _log.LogWarning
                 (
-                    $"The given payload of type {payloadType} was not compatible with the event dispatcher."
+                    "The given payload of type {PayloadType} was not compatible with the event dispatcher",
+                    payloadType
                 );
 
                 return;
@@ -805,7 +809,7 @@ namespace Remora.Discord.Gateway
 
                 if (receiveEvent.Entity is IPayload<IInvalidSession>)
                 {
-                    _log.LogInformation($"Resume rejected by the gateway.");
+                    _log.LogInformation("Resume rejected by the gateway");
 
                     await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
                     return await CreateNewSessionAsync(ct);
