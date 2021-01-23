@@ -423,11 +423,7 @@ namespace Remora.Discord.Gateway
                     // Set up the send task
                     var heartbeatInterval = hello.Data.HeartbeatInterval;
 
-                    _sendTask = Task.Factory.StartNew
-                    (
-                        () => GatewaySenderAsync(heartbeatInterval, _tokenSource.Token),
-                        TaskCreationOptions.LongRunning
-                    ).Unwrap();
+                    _sendTask = Task.Run(() => GatewaySenderAsync(heartbeatInterval, _tokenSource.Token));
 
                     // Attempt to connect or resume
                     var connectResult = await AttemptConnectionAsync(ct);
@@ -437,11 +433,7 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Now, set up the receive task and start receiving events normally
-                    _receiveTask = Task.Factory.StartNew
-                    (
-                        () => GatewayReceiverAsync(_tokenSource.Token),
-                        TaskCreationOptions.LongRunning
-                    ).Unwrap();
+                    _receiveTask = Task.Run(() => GatewayReceiverAsync(_tokenSource.Token));
 
                     _log.LogInformation("Connected");
 
