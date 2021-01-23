@@ -420,6 +420,8 @@ namespace Remora.Discord.Gateway
                         );
                     }
 
+                    UnwrapAndDispatchEvent(receiveHello.Entity, _tokenSource.Token);
+
                     // Set up the send task
                     var heartbeatInterval = hello.Data.HeartbeatInterval;
 
