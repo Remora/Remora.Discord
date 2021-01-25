@@ -361,7 +361,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     Assert.True(requiredParameter.IsRequired.HasValue);
                     Assert.True(requiredParameter.IsRequired.Value);
 
-                    var optionalCommand = commands.First(c => c.Name == "optional");
+                    var optionalCommand = commands!.First(c => c.Name == "optional");
                     var optionalParameter = optionalCommand.Options.Value!.First();
                     if (optionalParameter.IsRequired.HasValue)
                     {
