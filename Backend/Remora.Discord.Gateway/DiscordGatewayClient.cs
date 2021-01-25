@@ -107,7 +107,7 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds the cancellation token source for internal operations.
         /// </summary>
-        private CancellationTokenSource _tokenSource;
+        private CancellationTokenSource _disconnectRequestedSource;
 
         /// <summary>
         /// Holds the task responsible for sending payloads to the gateway.
@@ -168,7 +168,7 @@ namespace Remora.Discord.Gateway
 
             _connectionStatus = GatewayConnectionStatus.Offline;
 
-            _tokenSource = new CancellationTokenSource();
+            _disconnectRequestedSource = new();
             _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
             _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
         }
@@ -194,9 +194,9 @@ namespace Remora.Discord.Gateway
         /// failed result. If a shutdown is requested, it will gracefully terminate the connection and return a
         /// successful result.
         /// </remarks>
-        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <param name="stopRequested">A token by which the caller can request this method to stop.</param>
         /// <returns>A gateway connection result which may or may not have succeeded.</returns>
-        public async Task<GatewayConnectionResult> RunAsync(CancellationToken ct)
+        public async Task<GatewayConnectionResult> RunAsync(CancellationToken stopRequested)
         {
             try
             {
@@ -206,11 +206,12 @@ namespace Remora.Discord.Gateway
                 }
 
                 // Until cancellation has been requested or we hit a fatal error, reconnections should be attempted.
-                _tokenSource = new CancellationTokenSource();
+                _disconnectRequestedSource.Dispose();
+                _disconnectRequestedSource = new CancellationTokenSource();
 
-                while (!ct.IsCancellationRequested)
+                while (!stopRequested.IsCancellationRequested)
                 {
-                    var iterationResult = await RunConnectionIterationAsync(ct);
+                    var iterationResult = await RunConnectionIterationAsync(stopRequested);
                     if (iterationResult.IsSuccess)
                     {
                         continue;
@@ -218,7 +219,7 @@ namespace Remora.Discord.Gateway
 
                     // Something has gone wrong. Close the socket, and handle it
                     // Terminate the send and receive tasks
-                    _tokenSource.Cancel();
+                    _disconnectRequestedSource.Cancel();
 
                     // The results of the send and receive tasks are discarded here, because the iteration result will
                     // contain whichever of them failed if any of them did
@@ -227,7 +228,7 @@ namespace Remora.Discord.Gateway
 
                     if (_transportService.IsConnected)
                     {
-                        var disconnectResult = await _transportService.DisconnectAsync(ct.IsCancellationRequested, ct);
+                        var disconnectResult = await _transportService.DisconnectAsync(stopRequested.IsCancellationRequested, stopRequested);
                         if (!disconnectResult.IsSuccess)
                         {
                             // Couldn't disconnect cleanly :(
@@ -241,7 +242,7 @@ namespace Remora.Discord.Gateway
                         await FinalizeResponderDispatchAsync(runningResponder);
                     }
 
-                    if (ct.IsCancellationRequested)
+                    if (stopRequested.IsCancellationRequested)
                     {
                         // The user requested a termination, and we don't intend to reconnect.
                         return iterationResult;
@@ -263,9 +264,13 @@ namespace Remora.Discord.Gateway
                     {
                         return iterationResult;
                     }
+
+                    // This token's been cancelled, we'll need a new one to reconnect.
+                    _disconnectRequestedSource.Dispose();
+                    _disconnectRequestedSource = new();
                 }
 
-                var userRequestedDisconnect = await _transportService.DisconnectAsync(false, ct);
+                var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
                 if (!userRequestedDisconnect.IsSuccess)
                 {
                     // Couldn't disconnect cleanly :(
@@ -370,9 +375,9 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Runs a single iteration of the connection loop.
         /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <param name="stopRequested">A token for requests to stop the outer run loop.</param>
         /// <returns>A connection result, based on the results of the iteration.</returns>
-        private async Task<GatewayConnectionResult> RunConnectionIterationAsync(CancellationToken ct = default)
+        private async Task<GatewayConnectionResult> RunConnectionIterationAsync(CancellationToken stopRequested)
         {
             switch (_connectionStatus)
             {
@@ -382,7 +387,7 @@ namespace Remora.Discord.Gateway
                     _log.LogInformation("Retrieving gateway endpoint...");
 
                     // Start connecting
-                    var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(ct);
+                    var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(stopRequested);
                     if (!getGatewayEndpoint.IsSuccess)
                     {
                         return GatewayConnectionResult.FromError(getGatewayEndpoint);
@@ -399,13 +404,13 @@ namespace Remora.Discord.Gateway
 
                     _log.LogInformation("Connecting to the gateway...");
 
-                    var transportConnectResult = await _transportService.ConnectAsync(gatewayUri, ct);
+                    var transportConnectResult = await _transportService.ConnectAsync(gatewayUri, stopRequested);
                     if (!transportConnectResult.IsSuccess)
                     {
                         return transportConnectResult;
                     }
 
-                    var receiveHello = await _transportService.ReceivePayloadAsync(ct);
+                    var receiveHello = await _transportService.ReceivePayloadAsync(stopRequested);
                     if (!receiveHello.IsSuccess)
                     {
                         return GatewayConnectionResult.FromError(receiveHello);
@@ -420,22 +425,22 @@ namespace Remora.Discord.Gateway
                         );
                     }
 
-                    UnwrapAndDispatchEvent(receiveHello.Entity, _tokenSource.Token);
+                    UnwrapAndDispatchEvent(receiveHello.Entity, _disconnectRequestedSource.Token);
 
                     // Set up the send task
                     var heartbeatInterval = hello.Data.HeartbeatInterval;
 
-                    _sendTask = Task.Run(() => GatewaySenderAsync(heartbeatInterval, _tokenSource.Token));
+                    _sendTask = Task.Run(() => GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token));
 
                     // Attempt to connect or resume
-                    var connectResult = await AttemptConnectionAsync(ct);
+                    var connectResult = await AttemptConnectionAsync(stopRequested);
                     if (!connectResult.IsSuccess)
                     {
                         return connectResult;
                     }
 
                     // Now, set up the receive task and start receiving events normally
-                    _receiveTask = Task.Run(() => GatewayReceiverAsync(_tokenSource.Token));
+                    _receiveTask = Task.Run(() => GatewayReceiverAsync(_disconnectRequestedSource.Token));
 
                     _log.LogInformation("Connected");
 
@@ -452,7 +457,7 @@ namespace Remora.Discord.Gateway
                     // Process received events and dispatch them to the application
                     if (_receivedPayloads.TryDequeue(out var payload))
                     {
-                        UnwrapAndDispatchEvent(payload, _tokenSource.Token);
+                        UnwrapAndDispatchEvent(payload, _disconnectRequestedSource.Token);
                     }
 
                     // Unpack one of the running responders, if any are pending
@@ -487,7 +492,7 @@ namespace Remora.Discord.Gateway
                         }
                     }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
+                    await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
                     break;
                 }
             }
@@ -500,21 +505,22 @@ namespace Remora.Discord.Gateway
             _log.LogInformation("Reconnection requested by the gateway; terminating session...");
 
             // Terminate the send and receive tasks
-            _tokenSource.Cancel();
+            _disconnectRequestedSource.Cancel();
 
             // The results of the send and receive tasks are discarded here, because we know that it's going to be a
             // cancellation
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            var disconnectResult = await _transportService.DisconnectAsync(true, ct);
+            var disconnectResult = await _transportService.DisconnectAsync(true, stopRequested);
             if (!disconnectResult.IsSuccess)
             {
                 return disconnectResult;
             }
 
             // Set up the state for the new connection
-            _tokenSource = new CancellationTokenSource();
+            _disconnectRequestedSource.Dispose();
+            _disconnectRequestedSource = new();
             _connectionStatus = GatewayConnectionStatus.Disconnected;
 
             return GatewayConnectionResult.FromSuccess();
@@ -825,20 +831,20 @@ namespace Remora.Discord.Gateway
         /// submitted by the application to the gateway, sending them to it.
         /// </summary>
         /// <param name="heartbeatInterval">The interval at which heartbeats should be sent.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <param name="disconnectRequested">A token for requests to disconnect the socket..</param>
         /// <returns>A sender result which may or may not have been successful. A failed result indicates that something
         /// has gone wrong when sending a payload, and that the connection has been deemed nonviable. A nonviable
         /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
         private async Task<GatewaySenderResult> GatewaySenderAsync
         (
             TimeSpan heartbeatInterval,
-            CancellationToken ct = default
+            CancellationToken disconnectRequested
         )
         {
             try
             {
                 DateTime? lastHeartbeat = null;
-                while (!ct.IsCancellationRequested)
+                while (!disconnectRequested.IsCancellationRequested)
                 {
                     var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
                     var lastHeartbeatAck = lastReceivedHeartbeatAck > 0
@@ -871,7 +877,7 @@ namespace Remora.Discord.Gateway
                             )
                         );
 
-                        var sendHeartbeat = await _transportService.SendPayloadAsync(heartbeatPayload, ct);
+                        var sendHeartbeat = await _transportService.SendPayloadAsync(heartbeatPayload, disconnectRequested);
 
                         if (!sendHeartbeat.IsSuccess)
                         {
@@ -888,11 +894,11 @@ namespace Remora.Discord.Gateway
                         var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval - safetyMargin) - now;
                         var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
 
-                        await Task.Delay(sleepTime, ct);
+                        await Task.Delay(sleepTime, disconnectRequested);
                         continue;
                     }
 
-                    var sendResult = await _transportService.SendPayloadAsync(payload, ct);
+                    var sendResult = await _transportService.SendPayloadAsync(payload, disconnectRequested);
                     if (sendResult.IsSuccess)
                     {
                         continue;
@@ -921,17 +927,17 @@ namespace Remora.Discord.Gateway
         /// This method acts as the main entrypoint for the gateway receiver task. It processes payloads that are
         /// sent from the gateway to the application, submitting them to it.
         /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <param name="disconnectRequested">A token for requests to disconnect the socket.</param>
         /// <returns>A receiver result which may or may not have been successful. A failed result indicates that
         /// something has gone wrong when receiving a payload, and that the connection has been deemed nonviable. A
         /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
-        private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken ct = default)
+        private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken disconnectRequested)
         {
             try
             {
-                while (!ct.IsCancellationRequested)
+                while (!disconnectRequested.IsCancellationRequested)
                 {
-                    var receivedPayload = await _transportService.ReceivePayloadAsync(ct);
+                    var receivedPayload = await _transportService.ReceivePayloadAsync(disconnectRequested);
                     if (!receivedPayload.IsSuccess)
                     {
                         // Normal closures are okay
@@ -1002,7 +1008,7 @@ namespace Remora.Discord.Gateway
         /// <inheritdoc />
         public void Dispose()
         {
-            _tokenSource.Dispose();
+            _disconnectRequestedSource.Dispose();
         }
     }
 }

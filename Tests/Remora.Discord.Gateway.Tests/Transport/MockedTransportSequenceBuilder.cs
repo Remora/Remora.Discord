@@ -150,6 +150,17 @@ namespace Remora.Discord.Gateway.Tests.Transport
         }
 
         /// <summary>
+        /// Adds an instruction to throw an exception in the server-to-client transport stream.
+        /// </summary>
+        /// <param name="exceptionFactory">A factory function for the exception to be thrown.</param>
+        /// <returns>The action builder, with the exception.</returns>
+        public MockedTransportSequenceBuilder SendException(Func<Exception> exceptionFactory)
+        {
+            _sequence.Add(new SendExceptionEvent(exceptionFactory));
+            return this;
+        }
+
+        /// <summary>
         /// Builds the transport sequence.
         /// </summary>
         /// <returns>The transport sequence.</returns>

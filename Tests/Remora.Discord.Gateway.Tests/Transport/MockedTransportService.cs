@@ -270,20 +270,32 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                     foreach (var sequence in _sequences.Except(_finishedSequences))
                     {
-                        if (!(sequence.Current is SendEvent s))
+                        switch (sequence.Current)
                         {
-                            continue;
+                            case SendEvent s:
+                            {
+                                var payload = s.CreatePayload();
+                                if (!sequence.MoveNext())
+                                {
+                                    _finishedSequences.Add(sequence);
+                                }
+
+                                _lastAdvance = DateTimeOffset.UtcNow;
+
+                                return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                            }
+
+                            case SendExceptionEvent se:
+                            {
+                                if (!sequence.MoveNext())
+                                {
+                                    _finishedSequences.Add(sequence);
+                                }
+
+                                IsConnected = false;
+                                throw se.CreateException();
+                            }
                         }
-
-                        var payload = s.CreatePayload();
-                        if (!sequence.MoveNext())
-                        {
-                            _finishedSequences.Add(sequence);
-                        }
-
-                        _lastAdvance = DateTimeOffset.UtcNow;
-
-                        return ReceivePayloadResult<IPayload>.FromSuccess(payload);
                     }
 
                     foreach (var continuousSequence in _continuousSequences)
