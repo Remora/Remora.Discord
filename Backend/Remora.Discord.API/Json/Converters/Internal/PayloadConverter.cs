@@ -28,6 +28,7 @@ using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Results;
 
@@ -91,9 +92,9 @@ namespace Remora.Discord.API.Json
 
                 // Events
                 OperationCode.Hello => DeserializePayload<IHello>(dataElement, options),
-                OperationCode.Reconnect => DeserializePayload<IReconnect>(dataElement, options),
+                OperationCode.Reconnect => DeserializeEmptyPayload<Reconnect>(dataElement),
                 OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(dataElement, options),
-                OperationCode.HeartbeatAcknowledge => DeserializePayload<IHeartbeatAcknowledge>(dataElement, options),
+                OperationCode.HeartbeatAcknowledge => DeserializeEmptyPayload<HeartbeatAcknowledge>(dataElement),
                 OperationCode.Dispatch => DeserializeDispatch(realDocument, dataElement, options),
 
                 // Other
@@ -252,11 +253,28 @@ namespace Remora.Discord.API.Json
             };
         }
 
-        private IPayload DeserializePayload<TData>(JsonElement dataProperty, JsonSerializerOptions options)
+        private static IPayload DeserializePayload<TData>(JsonElement dataProperty, JsonSerializerOptions options)
             where TData : IGatewayPayloadData
         {
             var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
+
+            if (data is null)
+            {
+                throw new JsonException();
+            }
+
             return new Payload<TData>(data);
+        }
+
+        private static IPayload DeserializeEmptyPayload<TData>(JsonElement dataProperty)
+            where TData : IGatewayPayloadData, new()
+        {
+            if (dataProperty.ValueKind is not JsonValueKind.Undefined or JsonValueKind.Null)
+            {
+                throw new JsonException();
+            }
+
+            return new Payload<TData>(new TData());
         }
 
         private IPayload DeserializeDispatch

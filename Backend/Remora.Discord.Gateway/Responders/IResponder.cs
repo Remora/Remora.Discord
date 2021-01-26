@@ -53,6 +53,6 @@ namespace Remora.Discord.Gateway.Responders
         /// <param name="gatewayEvent">The event to respond to.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A response result which may or may not have succeeded.</returns>
-        Task<EventResponseResult> RespondAsync(TGatewayEvent? gatewayEvent, CancellationToken ct = default);
+        Task<EventResponseResult> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default);
     }
 }
