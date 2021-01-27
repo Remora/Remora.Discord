@@ -292,7 +292,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                                     _finishedSequences.Add(sequence);
                                 }
 
-                                IsConnected = false;
+                                this.IsConnected = false;
                                 throw se.CreateException();
                             }
                         }
