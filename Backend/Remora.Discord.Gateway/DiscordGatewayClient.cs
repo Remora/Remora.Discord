@@ -416,7 +416,7 @@ namespace Remora.Discord.Gateway
                         return GatewayConnectionResult.FromError(receiveHello);
                     }
 
-                    if (!(receiveHello.Entity is IPayload<IHello> hello) || hello.Data is null)
+                    if (!(receiveHello.Entity is IPayload<IHello> hello))
                     {
                         // Not receiving a hello is a non-recoverable error
                         return GatewayConnectionResult.FromError
@@ -430,7 +430,7 @@ namespace Remora.Discord.Gateway
                     // Set up the send task
                     var heartbeatInterval = hello.Data.HeartbeatInterval;
 
-                    _sendTask = Task.Run(() => GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token));
+                    _sendTask = GatewaySenderAsync(heartbeatInterval, _disconnectRequestedSource.Token);
 
                     // Attempt to connect or resume
                     var connectResult = await AttemptConnectionAsync(stopRequested);
@@ -440,7 +440,7 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Now, set up the receive task and start receiving events normally
-                    _receiveTask = Task.Run(() => GatewayReceiverAsync(_disconnectRequestedSource.Token));
+                    _receiveTask = GatewayReceiverAsync(_disconnectRequestedSource.Token);
 
                     _log.LogInformation("Connected");
 
@@ -749,7 +749,7 @@ namespace Remora.Discord.Gateway
                     continue;
                 }
 
-                if (!(receiveReady.Entity is IPayload<IReady> ready) || ready.Data is null)
+                if (!(receiveReady.Entity is IPayload<IReady> ready))
                 {
                     return GatewayConnectionResult.FromError
                     (
@@ -841,6 +841,8 @@ namespace Remora.Discord.Gateway
             CancellationToken disconnectRequested
         )
         {
+            await Task.Yield();
+
             try
             {
                 DateTime? lastHeartbeat = null;
@@ -933,6 +935,8 @@ namespace Remora.Discord.Gateway
         /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
         private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken disconnectRequested)
         {
+            await Task.Yield();
+
             try
             {
                 while (!disconnectRequested.IsCancellationRequested)
@@ -974,7 +978,7 @@ namespace Remora.Discord.Gateway
                         case IPayload<IInvalidSession> invalidSession:
                         {
                             _shouldReconnect = true;
-                            _isSessionResumable = invalidSession.Data?.IsResumable ?? false;
+                            _isSessionResumable = invalidSession.Data.IsResumable;
 
                             break;
                         }
