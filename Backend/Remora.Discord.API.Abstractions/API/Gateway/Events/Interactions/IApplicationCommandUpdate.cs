@@ -1,5 +1,5 @@
 //
-//  SampleEventDataSource.cs
+//  IApplicationCommandUpdate.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,34 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Xunit;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Abstractions.Gateway.Events
 {
     /// <summary>
-    /// Represents a source of sample data for an xUnit test.
+    /// Represents an update of a slash command.
     /// </summary>
-    /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleEventDataSource<TData> : TheoryData<string> where TData : IGatewayEvent
+    public interface IApplicationCommandUpdate : IApplicationCommand, IGatewayEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SampleEventDataSource{TData}"/> class.
+        /// Gets the ID of the guild that the command was updated in.
         /// </summary>
-        public SampleEventDataSource()
-        {
-            var sampleData = new SampleDataService();
-
-            var getSamples = sampleData.GetSampleEventDataSet<TData>();
-            if (!getSamples.IsSuccess)
-            {
-                throw new SkipException(getSamples.ErrorReason);
-            }
-
-            foreach (var sample in getSamples.Entity)
-            {
-                Add(sample);
-            }
-        }
+        Optional<Snowflake> GuildID { get; }
     }
 }

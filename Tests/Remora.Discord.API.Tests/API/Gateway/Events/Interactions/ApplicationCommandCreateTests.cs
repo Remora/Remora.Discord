@@ -1,5 +1,5 @@
 //
-//  SampleEventDataSource.cs
+//  ApplicationCommandCreateTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,33 +21,14 @@
 //
 
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Xunit;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <summary>
-    /// Represents a source of sample data for an xUnit test.
+    /// Tests the Hello event.
     /// </summary>
-    /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleEventDataSource<TData> : TheoryData<string> where TData : IGatewayEvent
+    public class ApplicationCommandCreateTests : GatewayEventTestBase<IApplicationCommandCreate>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleEventDataSource{TData}"/> class.
-        /// </summary>
-        public SampleEventDataSource()
-        {
-            var sampleData = new SampleDataService();
-
-            var getSamples = sampleData.GetSampleEventDataSet<TData>();
-            if (!getSamples.IsSuccess)
-            {
-                throw new SkipException(getSamples.ErrorReason);
-            }
-
-            foreach (var sample in getSamples.Entity)
-            {
-                Add(sample);
-            }
-        }
     }
 }
