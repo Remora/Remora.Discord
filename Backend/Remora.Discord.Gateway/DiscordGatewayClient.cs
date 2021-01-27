@@ -859,7 +859,7 @@ namespace Remora.Discord.Gateway
 
                     if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
                     {
-                        if (lastHeartbeatAck.HasValue && lastHeartbeatAck < lastHeartbeat)
+                        if (lastHeartbeatAck < lastHeartbeat)
                         {
                             return GatewaySenderResult.FromError
                             (
