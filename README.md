@@ -127,6 +127,10 @@ As a bot developer, you should check in every now and then to see what's
 changed - changelogs are released along with tags here on Github, as well as in
 the individual package descriptions.
 
+Whenever a new set of packages are released, the commit the releases were built 
+from is tagged with the year and an incremental release number - for example,
+`2021.1`.
+
 ## 6. Contributing
 See [Contributing][2].
 
