@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.2.0</Version>
+        <Version>2.2.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,10 +13,6 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Improve nullability of responders.
-            Fix IHello not being dispatched to responders.
-            Fix misuse of TaskCreationOptions.LongRunning.
-            Fix reconnection issue in the event of a network exception.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>

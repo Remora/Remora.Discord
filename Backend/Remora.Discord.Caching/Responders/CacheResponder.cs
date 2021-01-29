@@ -211,7 +211,22 @@ namespace Remora.Discord.Caching.Responders
             var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
 
             // Since this event isn't playing nice, we'll have to update by creating an object of our own.
-            if (!_cacheService.TryGetValue<IGuildMember>(key, out var cachedInstance))
+            if (_cacheService.TryGetValue<IGuildMember>(key, out var cachedInstance))
+            {
+                cachedInstance = new GuildMember
+                (
+                    new Optional<IUser>(gatewayEvent.User),
+                    gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cachedInstance.Nickname,
+                    gatewayEvent.Roles,
+                    gatewayEvent.JoinedAt,
+                    gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince.Value : cachedInstance.PremiumSince,
+                    cachedInstance.IsDeafened,
+                    cachedInstance.IsMuted,
+                    cachedInstance.IsPending,
+                    cachedInstance.Permissions
+                );
+            }
+            else if (gatewayEvent.PremiumSince.HasValue)
             {
                 cachedInstance = new GuildMember
                 (
@@ -219,7 +234,7 @@ namespace Remora.Discord.Caching.Responders
                     gatewayEvent.Nickname,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt,
-                    gatewayEvent.PremiumSince,
+                    gatewayEvent.PremiumSince.Value,
                     false,
                     false,
                     default,
@@ -228,18 +243,7 @@ namespace Remora.Discord.Caching.Responders
             }
             else
             {
-                cachedInstance = new GuildMember
-                (
-                    new Optional<IUser>(gatewayEvent.User),
-                    gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cachedInstance.Nickname,
-                    gatewayEvent.Roles,
-                    gatewayEvent.JoinedAt,
-                    gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince : cachedInstance.PremiumSince,
-                    cachedInstance.IsDeafened,
-                    cachedInstance.IsMuted,
-                    cachedInstance.IsPending,
-                    cachedInstance.Permissions
-                );
+                return Task.FromResult(EventResponseResult.FromSuccess());
             }
 
             _cacheService.Cache(key, cachedInstance);

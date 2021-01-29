@@ -56,7 +56,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets when the user started boosting the guild.
         /// </summary>
-        Optional<DateTimeOffset?> PremiumSince { get; }
+        DateTimeOffset? PremiumSince { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is deafened in voice channels.

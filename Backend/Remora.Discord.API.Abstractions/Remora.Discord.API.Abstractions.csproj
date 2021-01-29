@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.0</Version>
+        <Version>4.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Add support for application command events.
+            Fix optionality of PremiumSince.
         </PackageReleaseNotes>
     </PropertyGroup>
 

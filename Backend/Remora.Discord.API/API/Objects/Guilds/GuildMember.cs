@@ -38,7 +38,7 @@ namespace Remora.Discord.API.Objects
         Optional<string?> Nickname,
         IReadOnlyList<Snowflake> Roles,
         DateTimeOffset JoinedAt,
-        Optional<DateTimeOffset?> PremiumSince,
+        DateTimeOffset? PremiumSince,
         bool IsDeafened,
         bool IsMuted,
         Optional<bool?> IsPending,
