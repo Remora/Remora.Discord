@@ -367,6 +367,11 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidOAuth2Token = 50025,
 
         /// <summary>
+        /// Invalid webhook token provided.
+        /// </summary>
+        InvalidWebhookToken = 50027,
+
+        /// <summary>
         /// One or more recipients were invalid.
         /// </summary>
         InvalidRecipients = 50033,
