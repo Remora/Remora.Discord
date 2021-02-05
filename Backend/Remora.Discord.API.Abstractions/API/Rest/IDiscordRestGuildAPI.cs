@@ -72,36 +72,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// Gets the membership screening form of the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IMembershipScreening>> GetGuildMembershipScreeningFormAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        );
-
-        /// <summary>
-        /// Modifies the membership screening form of the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="isEnabled">Whether membership screening is enabled.</param>
-        /// <param name="formFields">The fields of the screening form.</param>
-        /// <param name="description">The server description to show in the form.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IMembershipScreening>> ModifyGuildMembershipScreeningFormAsync
-        (
-            Snowflake guildID,
-            Optional<bool> isEnabled = default,
-            Optional<IReadOnlyList<IMembershipScreeningField>> formFields = default,
-            Optional<string> description = default,
-            CancellationToken ct = default
-        );
-
-        /// <summary>
         /// Gets the guild with the given ID.
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>

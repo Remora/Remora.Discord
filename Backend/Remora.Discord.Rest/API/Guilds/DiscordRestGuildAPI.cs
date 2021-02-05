@@ -120,55 +120,6 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IMembershipScreening>> GetGuildMembershipScreeningFormAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return _discordHttpClient.GetAsync<IMembershipScreening>
-            (
-                $"guilds/{guildID}/member-verification",
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public Task<IModifyRestEntityResult<IMembershipScreening>> ModifyGuildMembershipScreeningFormAsync
-        (
-            Snowflake guildID,
-            Optional<bool> isEnabled = default,
-            Optional<IReadOnlyList<IMembershipScreeningField>> formFields = default,
-            Optional<string> description = default,
-            CancellationToken ct = default
-        )
-        {
-            return _discordHttpClient.PatchAsync<IMembershipScreening>
-            (
-                $"guilds/{guildID}/member-verification",
-                b =>
-                {
-                    Optional<string> formFieldsString = default;
-                    if (formFields.HasValue)
-                    {
-                        formFieldsString = JsonSerializer.Serialize(formFields.Value, _jsonOptions);
-                    }
-
-                    b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("enabled", isEnabled, _jsonOptions);
-                            json.Write("form_fields", formFieldsString, _jsonOptions);
-                            json.Write("description", description, _jsonOptions);
-                        }
-                    );
-                },
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
         public virtual Task<IRetrieveRestEntityResult<IGuild>> GetGuildAsync
         (
             Snowflake guildID,
