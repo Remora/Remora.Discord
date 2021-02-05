@@ -74,31 +74,26 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            if (!realDocument.RootElement.TryGetProperty("d", out var dataElement))
-            {
-                throw new JsonException();
-            }
-
             var operationCode = JsonSerializer.Deserialize<OperationCode>(operationCodeProperty.GetRawText(), options);
             var obj = operationCode switch
             {
                 // Commands
-                OperationCode.Heartbeat => DeserializePayload<IHeartbeat>(dataElement, options),
-                OperationCode.Identify => DeserializePayload<IIdentify>(dataElement, options),
-                OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(dataElement, options),
-                OperationCode.Resume => DeserializePayload<IResume>(dataElement, options),
-                OperationCode.PresenceUpdate => DeserializePayload<IUpdateStatus>(dataElement, options),
-                OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(dataElement, options),
+                OperationCode.Heartbeat => DeserializePayload<IHeartbeat>(realDocument, options),
+                OperationCode.Identify => DeserializePayload<IIdentify>(realDocument, options),
+                OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(realDocument, options),
+                OperationCode.Resume => DeserializePayload<IResume>(realDocument, options),
+                OperationCode.PresenceUpdate => DeserializePayload<IUpdateStatus>(realDocument, options),
+                OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(realDocument, options),
 
                 // Events
-                OperationCode.Hello => DeserializePayload<IHello>(dataElement, options),
-                OperationCode.Reconnect => DeserializeEmptyPayload<Reconnect>(dataElement),
-                OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(dataElement, options),
-                OperationCode.HeartbeatAcknowledge => DeserializeEmptyPayload<HeartbeatAcknowledge>(dataElement),
-                OperationCode.Dispatch => DeserializeDispatch(realDocument, dataElement, options),
+                OperationCode.Hello => DeserializePayload<IHello>(realDocument, options),
+                OperationCode.Reconnect => new Payload<Reconnect>(new Reconnect()),
+                OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(realDocument, options),
+                OperationCode.HeartbeatAcknowledge => new Payload<HeartbeatAcknowledge>(new HeartbeatAcknowledge()),
+                OperationCode.Dispatch => DeserializeDispatch(realDocument, options),
 
                 // Other
-                OperationCode.Unknown => DeserializePayload<IUnknownEvent>(dataElement, options),
+                OperationCode.Unknown => DeserializePayload<IUnknownEvent>(realDocument, options),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -177,8 +172,8 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            var payloadData = payloadDataPropertyGetter.Invoke(value, new object?[] { });
-            if (payloadData is null)
+            var payloadData = payloadDataPropertyGetter.Invoke(value, null);
+            if (payloadData is Reconnect or HeartbeatAcknowledge)
             {
                 writer.WriteNullValue();
             }
@@ -253,9 +248,14 @@ namespace Remora.Discord.API.Json
             };
         }
 
-        private static IPayload DeserializePayload<TData>(JsonElement dataProperty, JsonSerializerOptions options)
+        private static IPayload DeserializePayload<TData>(JsonDocument document, JsonSerializerOptions options)
             where TData : IGatewayPayloadData
         {
+            if (!document.RootElement.TryGetProperty("d", out var dataProperty))
+            {
+                throw new JsonException();
+            }
+
             var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
 
             if (data is null)
@@ -266,24 +266,17 @@ namespace Remora.Discord.API.Json
             return new Payload<TData>(data);
         }
 
-        private static IPayload DeserializeEmptyPayload<TData>(JsonElement dataProperty)
-            where TData : IGatewayPayloadData, new()
+        private IPayload DeserializeDispatch
+        (
+            JsonDocument document,
+            JsonSerializerOptions options
+        )
         {
-            if (dataProperty.ValueKind is not JsonValueKind.Undefined or JsonValueKind.Null)
+            if (!document.RootElement.TryGetProperty("d", out var dataProperty))
             {
                 throw new JsonException();
             }
 
-            return new Payload<TData>(new TData());
-        }
-
-        private IPayload DeserializeDispatch
-        (
-            JsonDocument document,
-            JsonElement dataElement,
-            JsonSerializerOptions options
-        )
-        {
             if (!document.RootElement.TryGetProperty("t", out var eventNameProperty))
             {
                 throw new JsonException();
@@ -328,7 +321,7 @@ namespace Remora.Discord.API.Json
             {
                 eventData = JsonSerializer.Deserialize
                 (
-                    dataElement.GetRawText(), eventType, options
+                    dataProperty.GetRawText(), eventType, options
                 );
             }
             catch
