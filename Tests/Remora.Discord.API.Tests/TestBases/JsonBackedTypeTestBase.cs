@@ -86,13 +86,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <summary>
         /// Tests whether the type can be deserialized from a JSON object.
         /// </summary>
-        /// <param name="sampleDataPath">The sample data.</param>
+        /// <param name="sampleDataFile">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
         [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task CanDeserialize(string sampleDataPath)
+        public async Task CanDeserialize(SampleDataDescriptor sampleDataFile)
         {
-            await using var sampleData = File.OpenRead(sampleDataPath);
+            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
             var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
             Assert.NotNull(payload);
         }
@@ -100,13 +100,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <summary>
         /// Tests whether the type can be serialized to a JSON object.
         /// </summary>
-        /// <param name="sampleDataPath">The sample data.</param>
+        /// <param name="sampleDataFile">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
         [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task CanSerialize(string sampleDataPath)
+        public async Task CanSerialize(SampleDataDescriptor sampleDataFile)
         {
-            await using var sampleData = File.OpenRead(sampleDataPath);
+            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
             var payload = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
             Assert.NotNull(payload);
@@ -119,13 +119,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// Tests whether data survives being round-tripped by the type - that is, it can be deserialized and then
         /// serialized again without data loss.
         /// </summary>
-        /// <param name="sampleDataPath">The sample data.</param>
+        /// <param name="sampleDataFile">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
         [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task SurvivesRoundTrip(string sampleDataPath)
+        public async Task SurvivesRoundTrip(SampleDataDescriptor sampleDataFile)
         {
-            await using var sampleData = File.OpenRead(sampleDataPath);
+            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
             var deserialized = await JsonSerializer.DeserializeAsync<TType>(sampleData, this.Options);
 
             Assert.NotNull(deserialized);

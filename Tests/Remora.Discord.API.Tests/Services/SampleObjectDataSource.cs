@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Tests.Services
     /// Represents a source of sample data for an xUnit test.
     /// </summary>
     /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleObjectDataSource<TData> : TheoryData<string>
+    public class SampleObjectDataSource<TData> : TheoryData<SampleDataDescriptor>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleObjectDataSource{TData}"/> class.
