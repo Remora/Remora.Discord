@@ -953,7 +953,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var applicationID = new Snowflake(0);
                 var token = "aa";
 
-                var shouldWait = true;
                 var content = "brr";
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
@@ -964,7 +963,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
-                        .WithQueryString("wait", shouldWait.ToString())
                         .WithJson
                         (
                             j => j.IsObject
@@ -984,7 +982,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     applicationID,
                     token,
-                    shouldWait,
                     content,
                     username,
                     avatarUrl,
@@ -1005,7 +1002,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var applicationID = new Snowflake(0);
                 var token = "aa";
 
-                var shouldWait = true;
                 var embeds = new List<Embed>();
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
@@ -1016,7 +1012,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
-                        .WithQueryString("wait", shouldWait.ToString())
                         .WithJson
                         (
                             j => j.IsObject
@@ -1036,7 +1031,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     applicationID,
                     token,
-                    shouldWait,
                     username: username,
                     avatarUrl: avatarUrl,
                     isTTS: tts,
@@ -1057,7 +1051,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var applicationID = new Snowflake(0);
                 var token = "aa";
 
-                var shouldWait = true;
                 var tts = false;
 
                 await using var file = new MemoryStream();
@@ -1067,7 +1060,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
-                        .WithQueryString("wait", shouldWait.ToString())
                         .With
                         (
                             m =>
@@ -1103,7 +1095,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     applicationID,
                     token,
-                    shouldWait,
                     isTTS: tts,
                     file: new FileData(fileName, file)
                 );

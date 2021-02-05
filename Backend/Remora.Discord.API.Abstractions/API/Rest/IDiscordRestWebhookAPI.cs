@@ -260,14 +260,10 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// TODO: Is the interaction ID not involved here?
         /// Creates a followup message.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
         /// <param name="token">The interaction token.</param>
-        /// <param name="shouldWait">
-        /// Whether the call should block until the server has confirmed that the message was sent.
-        /// </param>
         /// <param name="content">
         /// The content of the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
         /// <paramref name="embeds"/> is required.
@@ -290,7 +286,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             string token,
-            Optional<bool> shouldWait = default,
             Optional<string> content = default,
             Optional<string> username = default,
             Optional<string> avatarUrl = default,

@@ -397,7 +397,6 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake applicationID,
             string token,
-            Optional<bool> shouldWait = default,
             Optional<string> content = default,
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
@@ -413,11 +412,6 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{applicationID}/{token}",
                 b =>
                 {
-                    if (shouldWait.HasValue)
-                    {
-                        b.AddQueryParameter("wait", shouldWait.Value.ToString());
-                    }
-
                     if (file.HasValue)
                     {
                         b.AddContent(new StreamContent(file.Value!.Content), "file", file.Value!.Name);
