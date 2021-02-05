@@ -24,6 +24,8 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway;
+using Remora.Discord.API.Tests.Services;
+
 using Xunit;
 
 namespace Remora.Discord.API.Tests.TestBases
@@ -35,13 +37,13 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <summary>
         /// Tests whether the type can be deserialized from a JSON object.
         /// </summary>
-        /// <param name="sampleDataPath">The sample data.</param>
+        /// <param name="sampleDataFile">The sample data.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [SkippableTheory]
         [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task DeserializedCorrectType(string sampleDataPath)
+        public async Task DeserializedCorrectType(SampleDataDescriptor sampleDataFile)
         {
-            await using var sampleData = File.OpenRead(sampleDataPath);
+            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
             var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
 
             Assert.IsAssignableFrom<IPayload<TType>>(payload);
