@@ -269,7 +269,7 @@ namespace Remora.Discord.API.Json
         private static IPayload DeserializeEmptyPayload<TData>(JsonElement dataProperty)
             where TData : IGatewayPayloadData, new()
         {
-            if (dataProperty.ValueKind is not JsonValueKind.Undefined or JsonValueKind.Null)
+            if (dataProperty.ValueKind is not JsonValueKind.Undefined and not JsonValueKind.Null)
             {
                 throw new JsonException();
             }
