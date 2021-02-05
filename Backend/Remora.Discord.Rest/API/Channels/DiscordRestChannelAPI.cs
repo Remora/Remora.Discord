@@ -490,7 +490,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
+        public virtual async Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
             Optional<TimeSpan> maxAge = default,
@@ -502,7 +502,23 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IInvite>
+            if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
+            {
+                return CreateRestEntityResult<IInvite>.FromError
+                (
+                    $"{nameof(maxAge)} must be between 0 and 604800 seconds."
+                );
+            }
+
+            if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
+            {
+                return CreateRestEntityResult<IInvite>.FromError
+                (
+                    $"{nameof(maxAge)} must be between 0 and 100 seconds."
+                );
+            }
+
+            return await _discordHttpClient.PostAsync<IInvite>
             (
                 $"channels/{channelID}/invites",
                 b => b.WithJson
