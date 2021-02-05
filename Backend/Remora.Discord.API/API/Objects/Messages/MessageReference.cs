@@ -34,6 +34,7 @@ namespace Remora.Discord.API.Objects
     (
         Optional<Snowflake> MessageID,
         Optional<Snowflake> ChannelID,
-        Optional<Snowflake> GuildID
+        Optional<Snowflake> GuildID,
+        Optional<bool> FailIfNotExists
     ) : IMessageReference;
 }

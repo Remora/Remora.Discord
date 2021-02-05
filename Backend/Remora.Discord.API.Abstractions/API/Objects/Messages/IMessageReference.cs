@@ -45,5 +45,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the ID of the originating message's guild.
         /// </summary>
         Optional<Snowflake> GuildID { get; }
+
+        /// <summary>
+        /// Gets a value that indicates whether sending should fail if the referenced message doesn't exist
+        /// (the default), or if it should be sent as a normal message.
+        /// </summary>
+        Optional<bool> FailIfNotExists { get; }
     }
 }
