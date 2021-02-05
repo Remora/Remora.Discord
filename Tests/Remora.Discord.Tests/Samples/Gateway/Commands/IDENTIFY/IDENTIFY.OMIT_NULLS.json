@@ -1,0 +1,29 @@
+{
+    "op": 2,
+    "d": {
+        "token": "my_token",
+        "properties": {
+            "$os": "linux",
+            "$browser": "disco",
+            "$device": "disco"
+        },
+        "compress": true,
+        "large_threshold": 250,
+        "shard": [
+            0,
+            1
+        ],
+        "presence": {
+            "since": 91879201,
+            "activities": [
+                {
+                    "name": "Cards Against Humanity",
+                    "type": 0
+                }
+            ],
+            "status": "dnd",
+            "afk": false
+        },
+        "intents": 7
+    }
+}
