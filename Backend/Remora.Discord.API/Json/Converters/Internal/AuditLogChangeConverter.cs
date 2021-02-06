@@ -40,12 +40,18 @@ namespace Remora.Discord.API.Json
         private static readonly IReadOnlyDictionary<string, Type> KeyTypes = new Dictionary<string, Type>
         {
             { "name", typeof(string) },
+            { "description", typeof(string) },
             { "icon_hash", typeof(IImageHash) },
-            { "splash_has", typeof(IImageHash) },
+            { "splash_hash", typeof(IImageHash) },
+            { "discovery_splash_hash", typeof(IImageHash) },
+            { "banner_hash", typeof(IImageHash) },
             { "owner_id", typeof(Snowflake) },
             { "region", typeof(string) },
+            { "preferred_locale", typeof(string) },
             { "afk_channel_id", typeof(Snowflake) },
             { "afk_timeout", typeof(int) },
+            { "rules_channel_id", typeof(Snowflake) },
+            { "public_updates_channel_id", typeof(Snowflake) },
             { "mfa_level", typeof(MultiFactorAuthenticationLevel) },
             { "verification_level", typeof(VerificationLevel) },
             { "explicit_content_filter", typeof(ExplicitContentFilterLevel) },
@@ -86,6 +92,7 @@ namespace Remora.Discord.API.Json
             { "enable_emoticons", typeof(bool) },
             { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
             { "expire_grace_period", typeof(TimeSpan) },
+            { "user_limit", typeof(int) },
         };
 
         private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =
