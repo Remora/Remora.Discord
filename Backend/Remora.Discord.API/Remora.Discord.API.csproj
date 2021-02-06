@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.0.0</Version>
+        <Version>6.1.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,11 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Remove "shouldWait" from followup endpoint.
-            Implement fallback option for message references.
-            Add new documented error code.
-            Remove support for membership screening.
-            Update dependencies.
+            Add missing audit log change keys.
         </PackageReleaseNotes>
     </PropertyGroup>
 
