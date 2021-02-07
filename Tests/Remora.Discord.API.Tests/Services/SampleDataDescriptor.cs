@@ -38,8 +38,8 @@ namespace Remora.Discord.API.Tests.Services
             string basePath,
             string relativePath)
         {
-            BasePath = basePath;
-            RelativePath = relativePath;
+            this.BasePath = basePath;
+            this.RelativePath = relativePath;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Remora.Discord.API.Tests.Services
         /// Gets the full filesystem path of the sample data file.
         /// </summary>
         public string FullPath
-            => Path.Combine(BasePath, RelativePath);
+            => Path.Combine(this.BasePath, this.RelativePath);
 
         /// <summary>
         /// Gets the path to the sample data file, relative to other sample data files.
@@ -59,7 +59,6 @@ namespace Remora.Discord.API.Tests.Services
         public string RelativePath { get; }
 
         /// <inheritdoc/>
-        public override string? ToString()
-            => RelativePath;
+        public override string? ToString() => this.RelativePath;
     }
 }
