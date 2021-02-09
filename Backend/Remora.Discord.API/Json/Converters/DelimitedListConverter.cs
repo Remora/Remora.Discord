@@ -93,18 +93,7 @@ namespace Remora.Discord.API.Json
             var completeValue = string.Join
             (
                 _separator,
-                value.Select
-                (
-                    v =>
-                    {
-                        if (v is null)
-                        {
-                            return "null";
-                        }
-
-                        return v.ToString();
-                    }
-                )
+                value.Select(v => v is null ? "null" : v.ToString())
             );
 
             writer.WriteStringValue(completeValue);

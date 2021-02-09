@@ -34,21 +34,12 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override IHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            switch (reader.TokenType)
+            return reader.TokenType switch
             {
-                case JsonTokenType.Number:
-                {
-                    return new Heartbeat(reader.GetInt64());
-                }
-                case JsonTokenType.Null:
-                {
-                    return new Heartbeat(null);
-                }
-                default:
-                {
-                    throw new JsonException();
-                }
-            }
+                JsonTokenType.Number => new Heartbeat(reader.GetInt64()),
+                JsonTokenType.Null => new Heartbeat(null),
+                _ => throw new JsonException()
+            };
         }
 
         /// <inheritdoc />

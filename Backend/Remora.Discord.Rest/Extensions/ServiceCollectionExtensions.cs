@@ -107,12 +107,9 @@ namespace Remora.Discord.Rest.Extensions
                                     return TimeSpan.FromSeconds(1);
                                 }
 
-                                if (response.Result.Headers.RetryAfter is null or { Delta: null })
-                                {
-                                    return TimeSpan.FromSeconds(1);
-                                }
-
-                                return response.Result.Headers.RetryAfter.Delta.Value;
+                                return response.Result.Headers.RetryAfter is null or { Delta: null }
+                                    ? TimeSpan.FromSeconds(1)
+                                    : response.Result.Headers.RetryAfter.Delta.Value;
                             },
                             (_, _, _, _) => Task.CompletedTask
                         )

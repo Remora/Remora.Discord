@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override Optional<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return new Optional<TValue>(JsonSerializer.Deserialize<TValue>(ref reader, options));
+            return new(JsonSerializer.Deserialize<TValue>(ref reader, options));
         }
 
         /// <inheritdoc />

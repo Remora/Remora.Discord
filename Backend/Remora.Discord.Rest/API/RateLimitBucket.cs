@@ -26,12 +26,14 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest.API
 {
     /// <summary>
     /// Represents a rate limit bucket for an endpoint.
     /// </summary>
+    [PublicAPI]
     internal class RateLimitBucket
     {
         private readonly SemaphoreSlim _semaphore;

@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Web;
+using JetBrains.Annotations;
 using Polly;
 
 namespace Remora.Discord.Rest.API
@@ -34,6 +35,7 @@ namespace Remora.Discord.Rest.API
     /// <summary>
     /// Represents a common way to define various parameters for a REST call.
     /// </summary>
+    [PublicAPI]
     public class RestRequestBuilder
     {
         /// <summary>

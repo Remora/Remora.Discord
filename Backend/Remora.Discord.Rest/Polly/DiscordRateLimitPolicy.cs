@@ -121,6 +121,6 @@ namespace Remora.Discord.Rest.Polly
         /// Creates a new instance of the policy.
         /// </summary>
         /// <returns>The policy.</returns>
-        public static DiscordRateLimitPolicy Create() => new DiscordRateLimitPolicy();
+        public static DiscordRateLimitPolicy Create() => new();
     }
 }

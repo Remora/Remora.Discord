@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
@@ -34,6 +35,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Checks required contexts before allowing execution.
     /// </summary>
+    [UsedImplicitly]
     public class RequireContextCondition : ICondition<RequireContextAttribute>
     {
         private readonly ICommandContext _context;
@@ -65,31 +67,20 @@ namespace Remora.Discord.Commands.Conditions
 
             var channel = getChannel.Entity;
 
-            switch (attribute.Context)
+            return attribute.Context switch
             {
-                case ChannelContext.DM:
-                {
-                    return channel.Type is DM
+                ChannelContext.DM => channel.Type is DM
+                    ? Result.FromSuccess()
+                    : new GenericError("This command can only be used in a DM."),
+                ChannelContext.GroupDM => channel.Type is GroupDM
+                    ? Result.FromSuccess()
+                    : new GenericError("This command can only be used in a group DM."),
+                ChannelContext.Guild =>
+                    channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore
                         ? Result.FromSuccess()
-                        : new GenericError("This command can only be used in a DM.");
-                }
-                case ChannelContext.GroupDM:
-                {
-                    return channel.Type is GroupDM
-                        ? Result.FromSuccess()
-                        : new GenericError("This command can only be used in a group DM.");
-                }
-                case ChannelContext.Guild:
-                {
-                    return channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore
-                        ? Result.FromSuccess()
-                        : new GenericError("This command can only be used in a guild.");
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-            }
+                        : new GenericError("This command can only be used in a guild."),
+                _ => throw new ArgumentOutOfRangeException(nameof(attribute))
+            };
         }
     }
 }

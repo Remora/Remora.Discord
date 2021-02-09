@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 
 namespace Remora.Discord.Commands.Conditions
@@ -27,6 +28,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Marks a command as requiring execution within a particular context.
     /// </summary>
+    [PublicAPI]
     public class RequireContextAttribute : ConditionAttribute
     {
         /// <summary>

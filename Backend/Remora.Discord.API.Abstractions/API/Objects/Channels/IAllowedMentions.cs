@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     public interface IAllowedMentions
     {
         /// <summary>
-        /// Gets a list of mention types to parse. The contents of this field has a mutally exclusive relationship with
+        /// Gets a list of mention types to parse. The contents of this field has a mutually exclusive relationship with
         /// the <see cref="Roles"/> and <see cref="Users"/> fields - that is, if that type is contained in this field,
         /// the corresponding field in the type may not appear.
         /// </summary>

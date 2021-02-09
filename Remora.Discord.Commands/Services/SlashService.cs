@@ -100,11 +100,11 @@ namespace Remora.Discord.Commands.Services
             CreateInteractionMethods
             (
                 guildID,
-                ct,
                 application,
                 out var deleteMethod,
                 out var getMethod,
-                out var updateMethod
+                out var updateMethod,
+                ct
             );
 
             // Upsert the current valid command set
@@ -145,12 +145,11 @@ namespace Remora.Discord.Commands.Services
         private void CreateInteractionMethods
         (
             Snowflake? guildID,
-            CancellationToken ct,
             IApplication application,
             out Func<Snowflake, Task<Result>> deleteMethod,
             out Func<Task<Result<IReadOnlyList<IApplicationCommand>>>> getMethod,
-            out Func<IApplicationCommandOption, Task<Result<IApplicationCommand>>> updateMethod
-        )
+            out Func<IApplicationCommandOption, Task<Result<IApplicationCommand>>> updateMethod,
+            CancellationToken ct)
         {
             if (guildID is null)
             {

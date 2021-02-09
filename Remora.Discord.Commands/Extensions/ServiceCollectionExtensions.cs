@@ -29,6 +29,7 @@ using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
+using Remora.Discord.Core;
 using Remora.Discord.Gateway.Extensions;
 
 namespace Remora.Discord.Commands.Extensions
@@ -59,7 +60,8 @@ namespace Remora.Discord.Commands.Extensions
                 .AddParser<IChannel, ChannelParser>()
                 .AddParser<IGuildMember, GuildMemberParser>()
                 .AddParser<IRole, RoleParser>()
-                .AddParser<IUser, UserParser>();
+                .AddParser<IUser, UserParser>()
+                .AddParser<Snowflake, SnowflakeParser>();
 
             serviceCollection.TryAddScoped<ExecutionEventCollectorService>();
 

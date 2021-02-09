@@ -48,7 +48,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// An animated gif embed.
         /// </summary>
-        Gifv,
+        GIFV,
 
         /// <summary>
         /// An article embed.

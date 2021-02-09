@@ -146,6 +146,6 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// Subscribes to the following events:
         ///     - TYPING_START
         /// </summary>
-        DirectMessageTyping = 1 << 14,
+        DirectMessageTyping = 1 << 14
     }
 }

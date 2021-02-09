@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Gateway.Tests.Transport.Events
 {
     /// <summary>
     /// Represents a marker interface for events.
     /// </summary>
+    [PublicAPI]
     public interface IEvent
     {
     }

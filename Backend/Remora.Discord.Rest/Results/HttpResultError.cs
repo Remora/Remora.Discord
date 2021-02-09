@@ -21,6 +21,7 @@
 //
 
 using System.Net;
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.Results
@@ -28,6 +29,7 @@ namespace Remora.Discord.Rest.Results
     /// <summary>
     /// Represents a HTTP error returned by an endpoint.
     /// </summary>
+    [PublicAPI]
     public record HttpResultError : ResultError
     {
         /// <summary>

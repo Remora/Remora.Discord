@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Services;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -40,6 +41,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Responds to interactions.
     /// </summary>
+    [UsedImplicitly]
     public class InteractionResponder : IResponder<IInteractionCreate>
     {
         private readonly CommandService _commandService;
@@ -143,19 +145,12 @@ namespace Remora.Discord.Commands.Responders
             }
 
             // Run any user-provided post execution events
-            var postExecution = await _eventCollector.RunPostExecutionEvents
+            return await _eventCollector.RunPostExecutionEvents
             (
                 context,
                 executeResult.Entity,
                 ct
             );
-
-            if (!postExecution.IsSuccess)
-            {
-                return postExecution;
-            }
-
-            return Result.FromSuccess();
         }
     }
 }

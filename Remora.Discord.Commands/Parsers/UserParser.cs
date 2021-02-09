@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
@@ -35,6 +36,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="IUser"/> from command-line inputs.
     /// </summary>
+    [UsedImplicitly]
     public class UserParser : AbstractTypeParser<IUser>
     {
         private readonly IDiscordRestUserAPI _userAPI;

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -40,6 +41,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Responds to commands.
     /// </summary>
+    [UsedImplicitly]
     public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageUpdate>
     {
         private readonly CommandService _commandService;
@@ -198,10 +200,10 @@ namespace Remora.Discord.Commands.Responders
             // Strip off the prefix
             if (_options.Prefix is not null)
             {
-                content = content.Substring
-                (
-                    content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length
-                );
+                content = content
+                [
+                    (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
+                ];
             }
 
             var additionalParameters = new object[] { commandContext };

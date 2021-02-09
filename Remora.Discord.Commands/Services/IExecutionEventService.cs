@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.Commands.Services
     /// <summary>
     /// Defines the public API for a service that performs actions related to command execution.
     /// </summary>
+    [PublicAPI]
     public interface IExecutionEventService
     {
         /// <summary>

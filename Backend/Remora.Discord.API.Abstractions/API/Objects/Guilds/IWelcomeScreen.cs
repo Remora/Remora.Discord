@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents the welcome screen in a community-enabled server.
     /// </summary>
+    [PublicAPI]
     public interface IWelcomeScreen
     {
         /// <summary>

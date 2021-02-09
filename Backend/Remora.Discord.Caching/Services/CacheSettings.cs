@@ -132,12 +132,9 @@ namespace Remora.Discord.Caching.Services
         public TimeSpan GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
         {
             defaultExpiration ??= _defaultAbsoluteExpiration;
-            if (_absoluteCacheExpirations.TryGetValue(cachedType, out var absoluteExpiration))
-            {
-                return absoluteExpiration;
-            }
-
-            return defaultExpiration.Value;
+            return _absoluteCacheExpirations.TryGetValue(cachedType, out var absoluteExpiration)
+                ? absoluteExpiration
+                : defaultExpiration.Value;
         }
 
         /// <summary>
@@ -161,12 +158,9 @@ namespace Remora.Discord.Caching.Services
         public TimeSpan GetSlidingExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
         {
             defaultExpiration ??= _defaultSlidingExpiration;
-            if (_slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration))
-            {
-                return slidingExpiration;
-            }
-
-            return defaultExpiration.Value;
+            return _slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration)
+                ? slidingExpiration
+                : defaultExpiration.Value;
         }
 
         /// <summary>

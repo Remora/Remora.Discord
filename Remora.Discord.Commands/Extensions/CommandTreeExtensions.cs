@@ -203,24 +203,26 @@ namespace Remora.Discord.Commands.Extensions
             // Create a set of parameter options
             foreach (var parameter in command.Shape.Parameters)
             {
-                if (parameter is SwitchParameterShape)
+                switch (parameter)
                 {
-                    return new UnsupportedParameterFeatureError
-                    (
-                        "Switch parameters are not supported.",
-                        command,
-                        parameter
-                    );
-                }
-
-                if (parameter is NamedCollectionParameterShape or PositionalCollectionParameterShape)
-                {
-                    return new UnsupportedParameterFeatureError
-                    (
-                        "Collection parameters are not supported.",
-                        command,
-                        parameter
-                    );
+                    case SwitchParameterShape:
+                    {
+                        return new UnsupportedParameterFeatureError
+                        (
+                            "Switch parameters are not supported.",
+                            command,
+                            parameter
+                        );
+                    }
+                    case NamedCollectionParameterShape or PositionalCollectionParameterShape:
+                    {
+                        return new UnsupportedParameterFeatureError
+                        (
+                            "Collection parameters are not supported.",
+                            command,
+                            parameter
+                        );
+                    }
                 }
 
                 var parameterType = parameter.Parameter.ParameterType;

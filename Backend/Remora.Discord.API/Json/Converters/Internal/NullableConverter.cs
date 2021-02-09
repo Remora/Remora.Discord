@@ -36,17 +36,11 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override TValue? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            switch (reader.TokenType)
+            return reader.TokenType switch
             {
-                case JsonTokenType.Null:
-                {
-                    return null;
-                }
-                default:
-                {
-                    return JsonSerializer.Deserialize<TValue>(ref reader, options);
-                }
-            }
+                JsonTokenType.Null => null,
+                _ => JsonSerializer.Deserialize<TValue>(ref reader, options)
+            };
         }
 
         /// <inheritdoc />

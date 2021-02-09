@@ -140,7 +140,7 @@ namespace Remora.Discord.API.Json
                 if (value is IEventPayload eventPayload)
                 {
                     var dataType = genericArguments[0];
-                    var dataName = _snakeCase.ConvertName(dataType.Name.Substring(1)).ToUpperInvariant();
+                    var dataName = _snakeCase.ConvertName(dataType.Name[1..]).ToUpperInvariant();
 
                     var nameToWrite = eventPayload.EventName != dataName
                         ? eventPayload.EventName
@@ -173,29 +173,32 @@ namespace Remora.Discord.API.Json
             }
 
             var payloadData = payloadDataPropertyGetter.Invoke(value, null);
-            if (payloadData is Reconnect or HeartbeatAcknowledge)
+            switch (payloadData)
             {
-                writer.WriteNullValue();
-            }
-            else
-            {
-                if (payloadData is UnknownEvent unknownEvent)
+                case Reconnect or HeartbeatAcknowledge:
+                {
+                    writer.WriteNullValue();
+                    break;
+                }
+                case UnknownEvent unknownEvent:
                 {
                     using var eventData = JsonDocument.Parse(unknownEvent.Data);
                     var innerData = eventData.RootElement.GetProperty("d");
 
                     innerData.WriteTo(writer);
+                    break;
                 }
-                else
+                default:
                 {
                     JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                    break;
                 }
             }
 
             writer.WriteEndObject();
         }
 
-        private Result<OperationCode> GetOperationCode(Type objectType)
+        private static Result<OperationCode> GetOperationCode(Type objectType)
         {
             if (!objectType.IsGenericType)
             {
@@ -297,7 +300,7 @@ namespace Remora.Discord.API.Json
 
             var eventType = eventTypes.FirstOrDefault
             (
-                t => _snakeCase.ConvertName(t.Name.Substring(1)).ToUpperInvariant() == eventName
+                t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
             );
 
             if (eventType is null)
@@ -342,7 +345,7 @@ namespace Remora.Discord.API.Json
 
             var payloadConstructor = typeof(EventPayload<>)
                 .MakeGenericType(eventType)
-                .GetConstructor(new[] { typeof(string), typeof(int), typeof(OperationCode), eventType, });
+                .GetConstructor(new[] { typeof(string), typeof(int), typeof(OperationCode), eventType });
 
             if (payloadConstructor is null)
             {

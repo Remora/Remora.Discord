@@ -35,13 +35,24 @@ namespace Remora.Discord.API.Json
     internal class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionSet>
     {
         /// <inheritdoc />
-        public override IDiscordPermissionSet Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IDiscordPermissionSet Read
+        (
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
         {
             switch (reader.TokenType)
             {
                 case JsonTokenType.String:
                 {
-                    if (!BigInteger.TryParse(reader.GetString(), out var value))
+                    var rawString = reader.GetString();
+                    if (rawString is null)
+                    {
+                        throw new JsonException();
+                    }
+
+                    if (!BigInteger.TryParse(rawString, out var value))
                     {
                         throw new JsonException();
                     }

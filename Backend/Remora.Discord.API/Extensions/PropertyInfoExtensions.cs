@@ -76,22 +76,27 @@ namespace Remora.Discord.API.Extensions
             if (nullableAttribute is not null)
             {
                 var nullableArgument = nullableAttribute.ConstructorArguments.Single();
-                if (nullableArgument.Value is byte singleArg)
+                switch (nullableArgument.Value)
                 {
-                    topLevelNullability = (Nullability)singleArg;
-                }
-                else if (nullableArgument.Value is IReadOnlyCollection<CustomAttributeTypedArgument> multiArg)
-                {
-                    if (!(multiArg.First().Value is byte firstArg))
+                    case byte singleArg:
+                    {
+                        topLevelNullability = (Nullability)singleArg;
+                        break;
+                    }
+                    case IReadOnlyCollection<CustomAttributeTypedArgument> multiArg:
+                    {
+                        if (!(multiArg.First().Value is byte firstArg))
+                        {
+                            throw new InvalidOperationException();
+                        }
+
+                        topLevelNullability = (Nullability)firstArg;
+                        break;
+                    }
+                    default:
                     {
                         throw new InvalidOperationException();
                     }
-
-                    topLevelNullability = (Nullability)firstArg;
-                }
-                else
-                {
-                    throw new InvalidOperationException();
                 }
             }
 

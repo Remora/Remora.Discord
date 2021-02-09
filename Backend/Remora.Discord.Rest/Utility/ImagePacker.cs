@@ -33,7 +33,7 @@ namespace Remora.Discord.Rest.Utility
     /// <summary>
     /// Packs images into a base64 representation.
     /// </summary>
-    public class ImagePacker
+    public static class ImagePacker
     {
         /// <summary>
         /// Packs the given stream into a base64-encoded string, type-prefixed string.
@@ -103,12 +103,9 @@ namespace Remora.Discord.Rest.Utility
                 mediaType = "gif";
             }
 
-            if (mediaType is null)
-            {
-                return new GenericError("Unknown or unsupported image format.");
-            }
-
-            return $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
+            return mediaType is null
+                ? new GenericError("Unknown or unsupported image format.")
+                : $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
         }
     }
 }

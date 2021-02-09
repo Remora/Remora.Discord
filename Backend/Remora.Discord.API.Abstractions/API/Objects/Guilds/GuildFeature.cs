@@ -108,6 +108,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The guild was discoverable before the "Discovery Checklist" feature was launched.
         /// </summary>
-        EnabledDiscoverableBefore,
+        EnabledDiscoverableBefore
     }
 }

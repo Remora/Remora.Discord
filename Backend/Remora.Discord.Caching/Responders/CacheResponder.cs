@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -35,6 +36,7 @@ namespace Remora.Discord.Caching.Responders
     /// <summary>
     /// Caches incoming data from the gateway.
     /// </summary>
+    [UsedImplicitly]
     public class CacheResponder :
         IResponder<IChannelCreate>,
         IResponder<IChannelDelete>,

@@ -443,7 +443,7 @@ namespace Remora.Discord.Rest.API
                         JsonSerializer.Serialize(json, messageIDs, _jsonOptions);
                     }
                 ),
-                ct: ct
+                ct
             );
         }
 

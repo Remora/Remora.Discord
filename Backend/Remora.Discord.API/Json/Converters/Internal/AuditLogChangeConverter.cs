@@ -92,7 +92,7 @@ namespace Remora.Discord.API.Json
             { "enable_emoticons", typeof(bool) },
             { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
             { "expire_grace_period", typeof(TimeSpan) },
-            { "user_limit", typeof(int) },
+            { "user_limit", typeof(int) }
         };
 
         private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =
@@ -102,7 +102,7 @@ namespace Remora.Discord.API.Json
             { "prune_delete_days", new UnitTimeSpanConverter(TimeUnit.Days) },
             { "rate_limit_per_user", new UnitTimeSpanConverter(TimeUnit.Days) },
             { "max_age", new UnitTimeSpanConverter(TimeUnit.Seconds) },
-            { "expire_grace_period", new UnitTimeSpanConverter(TimeUnit.Days) },
+            { "expire_grace_period", new UnitTimeSpanConverter(TimeUnit.Days) }
         };
 
         /// <inheritdoc />

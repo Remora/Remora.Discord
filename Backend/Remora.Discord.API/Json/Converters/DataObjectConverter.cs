@@ -59,12 +59,7 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override bool CanConvert(Type typeToConvert)
         {
-            if (typeToConvert == typeof(TImplementation))
-            {
-                return true;
-            }
-
-            return base.CanConvert(typeToConvert);
+            return typeToConvert == typeof(TImplementation) || base.CanConvert(typeToConvert);
         }
 
         /// <summary>
@@ -262,14 +257,12 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
-            if (fallbacks.Length == 0)
-            {
-                _readNameOverrides.Add(property, new[] { name });
-            }
-            else
-            {
-                _readNameOverrides.Add(property, new[] { name }.Concat(fallbacks).ToArray());
-            }
+            var overrides =
+                fallbacks.Length == 0
+                    ? new[] { name }
+                    : new[] { name }.Concat(fallbacks).ToArray();
+
+            _readNameOverrides.Add(property, overrides);
 
             return this;
         }
@@ -537,7 +530,7 @@ namespace Remora.Discord.API.Json
 
                 var propertyValue = propertyGetter.Invoke(value, new object?[] { });
 
-                if (propertyValue is IOptional optional && !optional.HasValue)
+                if (propertyValue is IOptional { HasValue: false })
                 {
                     continue;
                 }
@@ -567,12 +560,9 @@ namespace Remora.Discord.API.Json
 
         private string[] GetReadJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)
         {
-            if (_readNameOverrides.TryGetValue(dtoProperty, out var overriddenName))
-            {
-                return overriddenName;
-            }
-
-            return new[] { options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name };
+            return _readNameOverrides.TryGetValue(dtoProperty, out var overriddenName)
+                ? overriddenName
+                : new[] { options.PropertyNamingPolicy?.ConvertName(dtoProperty.Name) ?? dtoProperty.Name };
         }
 
         private string GetWriteJsonPropertyName(PropertyInfo dtoProperty, JsonSerializerOptions options)

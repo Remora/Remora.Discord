@@ -54,7 +54,7 @@ namespace Remora.Discord.API.Gateway.Commands
                 return "linux";
             }
 
-            #if NETCOREAPP3_1
+            #if NET5_0
             if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
             {
                 return "freebsd";
@@ -66,12 +66,9 @@ namespace Remora.Discord.API.Gateway.Commands
                 return "osx";
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return "windows";
-            }
-
-            return "unknown";
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? "windows"
+                : "unknown";
         }
     }
 }

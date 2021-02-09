@@ -72,7 +72,7 @@ namespace Remora.Discord.Rest.API
                     },
                     false
                 ),
-                ct: ct
+                ct
             );
         }
     }

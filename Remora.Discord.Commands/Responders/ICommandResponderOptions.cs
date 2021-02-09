@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Commands.Responders
 {
     /// <summary>
     /// Represents a read-only view of command responder options.
     /// </summary>
+    [PublicAPI]
     public interface ICommandResponderOptions
     {
         /// <summary>

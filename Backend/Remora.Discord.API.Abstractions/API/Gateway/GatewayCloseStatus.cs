@@ -98,6 +98,6 @@ namespace Remora.Discord.API.Abstractions.Gateway
         /// <summary>
         /// A disallowed set of gateway intents were sent.
         /// </summary>
-        DisallowedIntent = 4014,
+        DisallowedIntent = 4014
     }
 }

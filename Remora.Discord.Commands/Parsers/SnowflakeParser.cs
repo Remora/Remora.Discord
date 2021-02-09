@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Discord.Core;
@@ -32,6 +33,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="Snowflake"/>s.
     /// </summary>
+    [UsedImplicitly]
     public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         /// <inheritdoc />
