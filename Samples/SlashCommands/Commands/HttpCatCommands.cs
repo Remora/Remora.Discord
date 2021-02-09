@@ -28,7 +28,6 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Gateway.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.SlashCommands.Commands
@@ -63,7 +62,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("cat")]
         [Description("Posts a cat image that represents the given error code.")]
-        public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
+        public async Task<Result> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Image: embedImage);
@@ -76,8 +75,8 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             );
 
             return !reply.IsSuccess
-                ? EventResponseResult.FromError(reply)
-                : EventResponseResult.FromSuccess();
+                ? Result.FromError(reply)
+                : Result.FromSuccess();
         }
 
         /// <summary>
@@ -87,7 +86,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("user-cat")]
         [Description("Posts a cat image that matches the user.")]
-        public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
+        public Task<Result> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
         {
             var modulo = (int)(catUser.User.Value!.ID.Value % 999);
             return PostHttpCatAsync(modulo);

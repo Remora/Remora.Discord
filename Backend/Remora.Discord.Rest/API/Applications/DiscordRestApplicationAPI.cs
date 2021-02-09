@@ -27,10 +27,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
+        public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
             CancellationToken ct
@@ -70,7 +69,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<ICreateRestEntityResult<IApplicationCommand>> CreateGlobalApplicationCommandAsync
+        public virtual async Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             string name,
@@ -81,7 +80,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 3 or > 32)
             {
-                return CreateRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The name must be between 3 and 32 characters."
                 );
@@ -89,7 +88,7 @@ namespace Remora.Discord.Rest.API
 
             if (description.Length is < 1 or > 100)
             {
-                return CreateRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The description must be between 1 and 100 characters."
                 );
@@ -112,7 +111,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGlobalApplicationCommandAsync
+        public virtual Task<Result<IApplicationCommand>> GetGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -127,7 +126,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IApplicationCommand>> EditGlobalApplicationCommandAsync
+        public virtual async Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -139,7 +138,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && name.Value!.Length is < 3 or > 32)
             {
-                return ModifyRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The name must be between 3 and 32 characters."
                 );
@@ -147,7 +146,7 @@ namespace Remora.Discord.Rest.API
 
             if (description.HasValue && description.Value!.Length is < 1 or > 100)
             {
-                return ModifyRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The description must be between 1 and 100 characters."
                 );
@@ -170,7 +169,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteGlobalApplicationCommandAsync
+        public virtual Task<Result> DeleteGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -181,7 +180,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
+        public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -196,7 +195,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<ICreateRestEntityResult<IApplicationCommand>> CreateGuildApplicationCommandAsync
+        public virtual async Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -208,7 +207,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 3 or > 32)
             {
-                return CreateRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The name must be between 3 and 32 characters."
                 );
@@ -216,7 +215,7 @@ namespace Remora.Discord.Rest.API
 
             if (description.Length is < 1 or > 100)
             {
-                return CreateRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The description must be between 1 and 100 characters."
                 );
@@ -239,7 +238,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGuildApplicationCommandAsync
+        public virtual Task<Result<IApplicationCommand>> GetGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -255,7 +254,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IApplicationCommand>> EditGuildApplicationCommandAsync
+        public virtual async Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -268,7 +267,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && name.Value!.Length is < 3 or > 32)
             {
-                return ModifyRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The name must be between 3 and 32 characters."
                 );
@@ -276,7 +275,7 @@ namespace Remora.Discord.Rest.API
 
             if (description.HasValue && description.Value!.Length is < 1 or > 100)
             {
-                return ModifyRestEntityResult<IApplicationCommand>.FromError
+                return new GenericError
                 (
                     "The description must be between 1 and 100 characters."
                 );
@@ -299,7 +298,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteGuildApplicationCommandAsync
+        public virtual Task<Result> DeleteGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,

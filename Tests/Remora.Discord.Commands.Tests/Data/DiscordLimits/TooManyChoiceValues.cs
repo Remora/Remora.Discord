@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
     public class TooManyChoiceValues : CommandGroup
     {
         [Command("a")]
-        public Task<IResult> A(Choices choices)
+        public Task<Result> A(Choices choices)
         {
             throw new NotImplementedException();
         }

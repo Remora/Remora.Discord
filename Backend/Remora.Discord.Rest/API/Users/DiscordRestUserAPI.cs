@@ -29,11 +29,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+        public virtual Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
         {
             return _discordHttpClient.GetAsync<IUser>
             (
@@ -66,7 +65,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IUser>> GetUserAsync
+        public virtual Task<Result<IUser>> GetUserAsync
         (
             Snowflake userID,
             CancellationToken ct = default
@@ -80,7 +79,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
+        public virtual async Task<Result<IUser>> ModifyCurrentUserAsync
         (
             Optional<string> username,
             Optional<Stream?> avatar = default,
@@ -90,7 +89,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return ModifyRestEntityResult<IUser>.FromError(packAvatar);
+                return Result<IUser>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -111,7 +110,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
+        public virtual async Task<Result<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
         (
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
@@ -121,7 +120,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && (limit.Value < 1 || limit.Value > 100))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>.FromError
+                return new GenericError
                 (
                     "The limit must be between 1 and 100."
                 );
@@ -152,7 +151,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
+        public virtual Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
             return _discordHttpClient.DeleteAsync
             (
@@ -162,7 +161,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync
+        public virtual Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
         (
             CancellationToken ct = default
         )
@@ -175,7 +174,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
+        public virtual Task<Result<IChannel>> CreateDMAsync
         (
             Snowflake recipientID,
             CancellationToken ct = default
@@ -196,7 +195,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+        public virtual Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
         (
             CancellationToken ct = default
         )

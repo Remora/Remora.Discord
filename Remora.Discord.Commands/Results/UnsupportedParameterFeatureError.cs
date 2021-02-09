@@ -1,5 +1,5 @@
 //
-//  IRestResult.cs
+//  UnsupportedParameterFeatureError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Net;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
+using Remora.Commands.Signatures;
+using Remora.Commands.Trees.Nodes;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.Commands.Results
 {
     /// <summary>
-    /// Represents a generic REST API result.
+    /// Represents a failure to create a slash command based on an unsupported feature, specifically related to a
+    /// parameter.
     /// </summary>
-    [PublicAPI]
-    public interface IRestResult : IResult
-    {
-        /// <summary>
-        /// Gets the HTTP error code, if any.
-        /// </summary>
-        HttpStatusCode? HttpError { get; }
-
-        /// <summary>
-        /// Gets the Discord error, if any.
-        /// </summary>
-        IRestError? DiscordError { get; }
-    }
+    public record UnsupportedParameterFeatureError(string Message, CommandNode Command, IParameterShape Parameter)
+        : UnsupportedFeatureError(Message, Command);
 }

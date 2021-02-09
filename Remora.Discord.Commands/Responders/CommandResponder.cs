@@ -33,7 +33,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders
 {
@@ -69,7 +69,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync
+        public async Task<Result> RespondAsync
         (
             IMessageCreate? gatewayEvent,
             CancellationToken ct = default
@@ -77,26 +77,26 @@ namespace Remora.Discord.Commands.Responders
         {
             if (gatewayEvent is null)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (_options.Prefix is not null)
             {
                 if (!gatewayEvent.Content.StartsWith(_options.Prefix))
                 {
-                    return EventResponseResult.FromSuccess();
+                    return Result.FromSuccess();
                 }
             }
 
             var author = gatewayEvent.Author;
             if (author.IsBot.HasValue && author.IsBot.Value)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (author.IsSystem.HasValue && author.IsSystem.Value)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var context = new MessageContext
@@ -137,7 +137,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync
+        public async Task<Result> RespondAsync
         (
             IMessageUpdate? gatewayEvent,
             CancellationToken ct = default
@@ -145,36 +145,36 @@ namespace Remora.Discord.Commands.Responders
         {
             if (gatewayEvent is null)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (!gatewayEvent.Content.HasValue)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (_options.Prefix is not null)
             {
                 if (!gatewayEvent.Content.Value!.StartsWith(_options.Prefix))
                 {
-                    return EventResponseResult.FromSuccess();
+                    return Result.FromSuccess();
                 }
             }
 
             if (!gatewayEvent.Author.HasValue)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var author = gatewayEvent.Author.Value!;
             if (author.IsBot.HasValue && author.IsBot.Value)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (author.IsSystem.HasValue && author.IsSystem.Value)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var context = new MessageContext
@@ -188,7 +188,7 @@ namespace Remora.Discord.Commands.Responders
             return await ExecuteCommandAsync(gatewayEvent.Content.Value!, context, ct);
         }
 
-        private async Task<EventResponseResult> ExecuteCommandAsync
+        private async Task<Result> ExecuteCommandAsync
         (
             string content,
             ICommandContext commandContext,
@@ -210,7 +210,7 @@ namespace Remora.Discord.Commands.Responders
             var preExecution = await _eventCollector.RunPreExecutionEvents(commandContext, ct);
             if (!preExecution.IsSuccess)
             {
-                return EventResponseResult.FromError(preExecution);
+                return preExecution;
             }
 
             // Run the actual command
@@ -224,23 +224,20 @@ namespace Remora.Discord.Commands.Responders
 
             if (!executeResult.IsSuccess)
             {
-                return EventResponseResult.FromError(executeResult);
+                return Result.FromError(executeResult);
             }
 
             // Run any user-provided post execution events
             var postExecution = await _eventCollector.RunPostExecutionEvents
             (
                 commandContext,
-                executeResult.InnerResult!,
+                executeResult.Entity,
                 ct
             );
 
-            if (!postExecution.IsSuccess)
-            {
-                return EventResponseResult.FromError(postExecution);
-            }
-
-            return EventResponseResult.FromSuccess();
+            return postExecution.IsSuccess
+                ? Result.FromSuccess()
+                : postExecution;
         }
     }
 }

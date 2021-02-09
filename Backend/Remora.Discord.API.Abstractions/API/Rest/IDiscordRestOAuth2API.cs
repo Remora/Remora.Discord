@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IApplication>> GetCurrentApplicationInformationAsync
+        Task<Result<IApplication>> GetCurrentApplicationInformationAsync
         (
             CancellationToken ct = default
         );
@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+        Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
         (
             CancellationToken ct = default
         );

@@ -1,5 +1,5 @@
 //
-//  ICreateRestEntityResult.cs
+//  GatewayWebSocketError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Net.WebSockets;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents a REST API result that creates an entity.
+    /// Represents an unexpected closing of the gateway on the websocket layer.
     /// </summary>
-    /// <typeparam name="TEntity">The created entity type.</typeparam>
-    [PublicAPI]
-    public interface ICreateRestEntityResult<out TEntity> : IRestResult
-    {
-        /// <summary>
-        /// Gets the created entity.
-        /// </summary>
-        public TEntity Entity { get; }
-    }
+    public record GatewayWebSocketError(WebSocketCloseStatus CloseStatus)
+        : ResultError($"The gateway closed with WebSocket close status \"{CloseStatus}\".");
 }

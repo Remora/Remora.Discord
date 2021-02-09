@@ -29,11 +29,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
+        public virtual Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -70,7 +69,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
+        public virtual Task<Result<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -85,7 +84,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
+        public virtual async Task<Result<IEmoji>> CreateGuildEmojiAsync
         (
             Snowflake guildID,
             string name,
@@ -96,13 +95,13 @@ namespace Remora.Discord.Rest.API
         {
             if (image.Length > 256000)
             {
-                return CreateRestEntityResult<IEmoji>.FromError("Image too large.");
+                return new GenericError("Image too large.");
             }
 
             var packImage = await ImagePacker.PackImageAsync(image, ct);
             if (!packImage.IsSuccess)
             {
-                return CreateRestEntityResult<IEmoji>.FromError(packImage);
+                return Result<IEmoji>.FromError(new GenericError("Failed to pack emoji."), packImage);
             }
 
             var emojiData = packImage.Entity;
@@ -126,7 +125,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
+        public virtual Task<Result<IEmoji>> ModifyGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -151,7 +150,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
+        public virtual Task<Result> DeleteGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,

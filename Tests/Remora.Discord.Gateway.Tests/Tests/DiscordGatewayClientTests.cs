@@ -40,8 +40,8 @@ using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Tests.Transport;
 using Remora.Discord.Gateway.Transport;
-using Remora.Discord.Rest.Results;
 using Remora.Discord.Tests;
+using Remora.Results;
 using Xunit;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
@@ -392,7 +392,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 a => a.GetGatewayBotAsync(It.IsAny<CancellationToken>())
             ).ReturnsAsync
             (
-                RetrieveRestEntityResult<IGatewayEndpoint>.FromSuccess
+                Result<IGatewayEndpoint>.FromSuccess
                 (
                     new GatewayEndpoint
                     (

@@ -25,9 +25,8 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -47,7 +46,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IRetrieveRestEntityResult<IAuditLog>> GetAuditLogAsync
+        public virtual async Task<Result<IAuditLog>> GetAuditLogAsync
         (
             Snowflake guildID,
             Optional<Snowflake> userID = default,
@@ -59,7 +58,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && (limit.Value > 100 || limit.Value == 0))
             {
-                return RetrieveRestEntityResult<IAuditLog>.FromError
+                return new GenericError
                 (
                     $"Invalid value for {nameof(limit)}; only values between 1 and 100 are allowed."
                 );

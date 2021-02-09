@@ -55,12 +55,12 @@ namespace Remora.Discord.Commands.Conditions
         }
 
         /// <inheritdoc />
-        public async ValueTask<DetermineConditionResult> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
+        public async ValueTask<Result> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
         {
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
-                return DetermineConditionResult.FromError(getChannel);
+                return Result.FromError(getChannel);
             }
 
             var channel = getChannel.Entity;
@@ -70,20 +70,20 @@ namespace Remora.Discord.Commands.Conditions
                 case ChannelContext.DM:
                 {
                     return channel.Type is DM
-                        ? DetermineConditionResult.FromSuccess()
-                        : DetermineConditionResult.FromError("This command can only be used in a DM.");
+                        ? Result.FromSuccess()
+                        : new GenericError("This command can only be used in a DM.");
                 }
                 case ChannelContext.GroupDM:
                 {
                     return channel.Type is GroupDM
-                        ? DetermineConditionResult.FromSuccess()
-                        : DetermineConditionResult.FromError("This command can only be used in a group DM.");
+                        ? Result.FromSuccess()
+                        : new GenericError("This command can only be used in a group DM.");
                 }
                 case ChannelContext.Guild:
                 {
                     return channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore
-                        ? DetermineConditionResult.FromSuccess()
-                        : DetermineConditionResult.FromError("This command can only be used in a guild.");
+                        ? Result.FromSuccess()
+                        : new GenericError("This command can only be used in a guild.");
                 }
                 default:
                 {

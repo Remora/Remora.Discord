@@ -40,7 +40,7 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
             public class Level3 : CommandGroup
             {
                 [Command("d")]
-                public Task<IResult> D()
+                public Task<Result> D()
                 {
                     throw new NotImplementedException();
                 }

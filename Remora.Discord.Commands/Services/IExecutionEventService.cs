@@ -38,7 +38,7 @@ namespace Remora.Discord.Commands.Services
         /// <param name="context">The command context.</param>
         /// <param name="ct">The cancellation token of the current operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<OperationResult> BeforeExecutionAsync(ICommandContext context, CancellationToken ct = default);
+        Task<Result> BeforeExecutionAsync(ICommandContext context, CancellationToken ct = default);
 
         /// <summary>
         /// Runs after a command has been successfully executed.
@@ -47,7 +47,7 @@ namespace Remora.Discord.Commands.Services
         /// <param name="executionResult">The result of the execution.</param>
         /// <param name="ct">The cancellation token of the current operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<OperationResult> AfterExecutionAsync
+        Task<Result> AfterExecutionAsync
         (
             ICommandContext context,
             IResult executionResult,

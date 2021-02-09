@@ -24,8 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="response">The response.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<IRestResult> CreateInteractionResponseAsync
+        Task<Result> CreateInteractionResponseAsync
         (
             Snowflake interactionID,
             string interactionToken,

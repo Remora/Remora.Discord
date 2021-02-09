@@ -32,6 +32,7 @@ using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
 namespace Remora.Discord.Commands.Extensions
@@ -57,7 +58,7 @@ namespace Remora.Discord.Commands.Extensions
         /// <param name="tree">The command tree.</param>
         /// <param name="commands">The created commands, if any.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static CreateCommandResult CreateApplicationCommands
+        public static Result CreateApplicationCommands
         (
             this CommandTree tree,
             [NotNullWhen(true)] out IReadOnlyList<IApplicationCommandOption>? commands
@@ -79,19 +80,23 @@ namespace Remora.Discord.Commands.Extensions
 
             if (createdCommands.Count > MaxRootCommandsOrGroups)
             {
-                return CreateCommandResult.FromError("Too many root-level commands or groups.");
+                return new UnsupportedFeatureError
+                (
+                    $"Too many root-level commands or groups (had {createdCommands.Count}, max " +
+                    $"{MaxRootCommandsOrGroups})."
+                );
             }
 
             if (createdCommands.GroupBy(c => c.Name).Any(g => g.Count() > 1))
             {
-                return CreateCommandResult.FromError("Overloads are not supported.");
+                return new UnsupportedFeatureError("Overloads are not supported.");
             }
 
             commands = createdCommands;
-            return CreateCommandResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
-        private static CreateCommandResult ToOption
+        private static Result ToOption
         (
             IChildNode child,
             [NotNullWhen(true)] out IApplicationCommandOption? option,
@@ -121,13 +126,17 @@ namespace Remora.Discord.Commands.Extensions
                         new Optional<IReadOnlyList<IApplicationCommandOption>>(parameterOptions)
                     );
 
-                    return CreateCommandResult.FromSuccess();
+                    return Result.FromSuccess();
                 }
                 case GroupNode group:
                 {
                     if (depth >= MaxGroupDepth)
                     {
-                        return CreateCommandResult.FromError("A group was nested too deeply.");
+                        return new UnsupportedFeatureError
+                        (
+                            $"A group was nested too deeply (depth {depth}, max {MaxGroupDepth}.",
+                            group
+                        );
                     }
 
                     var groupOptions = new List<IApplicationCommandOption>();
@@ -143,14 +152,19 @@ namespace Remora.Discord.Commands.Extensions
 
                         groupOptions.Add(nestedOptions!);
 
-                        if (groupOptions.Count(o => o.Type == SubCommand) > MaxGroupCommands)
+                        var subcommandCount = groupOptions.Count(o => o.Type == SubCommand);
+                        if (subcommandCount > MaxGroupCommands)
                         {
-                            return CreateCommandResult.FromError("Too many commands under a group.");
+                            return new UnsupportedFeatureError
+                            (
+                                $"Too many commands under a group ({subcommandCount}, max {MaxGroupCommands}).",
+                                group
+                            );
                         }
 
                         if (groupOptions.GroupBy(c => c.Name).Any(g => g.Count() > 1))
                         {
-                            return CreateCommandResult.FromError("Overloads are not supported.");
+                            return new UnsupportedFeatureError("Overloads are not supported.", group);
                         }
                     }
 
@@ -165,7 +179,7 @@ namespace Remora.Discord.Commands.Extensions
                         groupOptions
                     );
 
-                    return CreateCommandResult.FromSuccess();
+                    return Result.FromSuccess();
                 }
                 default:
                 {
@@ -177,7 +191,7 @@ namespace Remora.Discord.Commands.Extensions
             }
         }
 
-        private static CreateCommandResult CreateCommandParameterOptions
+        private static Result CreateCommandParameterOptions
         (
             CommandNode command,
             [NotNullWhen(true)] out IReadOnlyList<IApplicationCommandOption>? parameters
@@ -191,12 +205,22 @@ namespace Remora.Discord.Commands.Extensions
             {
                 if (parameter is SwitchParameterShape)
                 {
-                    return CreateCommandResult.FromError("Switch parameters are not supported.", command);
+                    return new UnsupportedParameterFeatureError
+                    (
+                        "Switch parameters are not supported.",
+                        command,
+                        parameter
+                    );
                 }
 
                 if (parameter is NamedCollectionParameterShape or PositionalCollectionParameterShape)
                 {
-                    return CreateCommandResult.FromError("Collection parameters are not supported.", command);
+                    return new UnsupportedParameterFeatureError
+                    (
+                        "Collection parameters are not supported.",
+                        command,
+                        parameter
+                    );
                 }
 
                 var parameterType = parameter.Parameter.ParameterType;
@@ -219,11 +243,15 @@ namespace Remora.Discord.Commands.Extensions
 
             if (parameterOptions.Count > MaxCommandParameters)
             {
-                return CreateCommandResult.FromError("Too many parameters in a command.", command);
+                return new UnsupportedFeatureError
+                (
+                    $"Too many parameters in a command (had {parameterOptions.Count}, max {MaxCommandParameters}).",
+                    command
+                );
             }
 
             parameters = parameterOptions;
-            return CreateCommandResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         private static Optional<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices

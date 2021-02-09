@@ -23,12 +23,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -49,7 +48,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IInvite>> GetInviteAsync
+        public override async Task<Result<IInvite>> GetInviteAsync
         (
             string inviteCode,
             Optional<bool> withCounts = default,
@@ -59,7 +58,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
             if (_cacheService.TryGetValue<IInvite>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IInvite>.FromSuccess(cachedInstance);
+                return Result<IInvite>.FromSuccess(cachedInstance);
             }
 
             var getInvite = await base.GetInviteAsync(inviteCode, withCounts, ct);
@@ -75,7 +74,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync
+        public override async Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
             CancellationToken ct = default

@@ -24,11 +24,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -49,7 +48,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+        public override async Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
         (
             CancellationToken ct = default
         )
@@ -57,7 +56,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateVoiceRegionsCacheKey();
             if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
             }
 
             var listRegions = await base.ListVoiceRegionsAsync(ct);

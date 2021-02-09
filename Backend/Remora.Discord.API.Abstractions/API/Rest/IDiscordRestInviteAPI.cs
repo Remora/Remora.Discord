@@ -24,8 +24,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="withCounts">Whether the invite should contain approximate member counts.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IInvite>> GetInviteAsync
+        Task<Result<IInvite>> GetInviteAsync
         (
             string inviteCode,
             Optional<bool> withCounts = default,
@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="inviteCode">The invite code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync
+        Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
             CancellationToken ct = default

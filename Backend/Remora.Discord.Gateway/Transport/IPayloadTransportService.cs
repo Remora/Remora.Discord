@@ -25,7 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Gateway.Transport
 {
@@ -55,7 +55,7 @@ namespace Remora.Discord.Gateway.Transport
         /// <param name="endpoint">The endpoint to connect to.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default);
+        Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default);
 
         /// <summary>
         /// Asynchronously sends a payload.
@@ -66,7 +66,7 @@ namespace Remora.Discord.Gateway.Transport
         /// <param name="payload">The payload.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A send result which may or may not have succeeded.</returns>
-        Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default);
+        Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default);
 
         /// <summary>
         /// Asynchronously receives a payload.
@@ -76,7 +76,7 @@ namespace Remora.Discord.Gateway.Transport
         /// </remarks>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A receive result which may or may not have succeeded.</returns>
-        Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default);
+        Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Disconnects from the transport endpoint.
@@ -84,6 +84,6 @@ namespace Remora.Discord.Gateway.Transport
         /// <param name="reconnectionIntended">Whether reconnection is intended.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        Task<GatewayConnectionResult> DisconnectAsync(bool reconnectionIntended, CancellationToken ct = default);
+        Task<Result> DisconnectAsync(bool reconnectionIntended, CancellationToken ct = default);
     }
 }

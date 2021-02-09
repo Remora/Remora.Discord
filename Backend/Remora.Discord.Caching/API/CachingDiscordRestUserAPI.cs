@@ -27,12 +27,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -54,7 +53,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IUser>> GetUserAsync
+        public override async Task<Result<IUser>> GetUserAsync
         (
             Snowflake userID,
             CancellationToken ct = default
@@ -63,7 +62,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateUserCacheKey(userID);
             if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IUser>.FromSuccess(cachedInstance);
+                return Result<IUser>.FromSuccess(cachedInstance);
             }
 
             var getUser = await base.GetUserAsync(userID, ct);
@@ -79,7 +78,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
+        public override async Task<Result<IChannel>> CreateDMAsync
         (
             Snowflake recipientID,
             CancellationToken ct = default)
@@ -99,12 +98,12 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+        public override async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateCurrentUserCacheKey();
             if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IUser>.FromSuccess(cachedInstance);
+                return Result<IUser>.FromSuccess(cachedInstance);
             }
 
             var getUser = await base.GetCurrentUserAsync(ct);
@@ -124,7 +123,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+        public override async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
         (
             CancellationToken ct = default
         )
@@ -132,7 +131,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
             if (_cacheService.TryGetValue<IReadOnlyList<IConnection>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IConnection>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IConnection>>.FromSuccess(cachedInstance);
             }
 
             var getUserConnections = await base.GetUserConnectionsAsync(ct);
@@ -154,7 +153,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
+        public override async Task<Result<IUser>> ModifyCurrentUserAsync
         (
             Optional<string> username,
             Optional<Stream?> avatar = default,
@@ -178,7 +177,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync
+        public override async Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
         (
             CancellationToken ct = default
         )
@@ -186,7 +185,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
             if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
             }
 
             var getUserDMs = await base.GetUserDMsAsync(ct);

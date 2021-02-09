@@ -23,6 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
+using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
@@ -48,22 +49,14 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<RetrieveEntityResult<IUser>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IUser>> TryParse(string value, CancellationToken ct)
         {
             if (!Snowflake.TryParse(value.Unmention(), out var userID))
             {
-                return RetrieveEntityResult<IUser>.FromError($"Failed to parse \"{value}\" as a user ID.");
+                return new ParsingError<IUser>(value.Unmention());
             }
 
-            var getUser = await _userAPI.GetUserAsync(userID.Value, ct);
-            if (!getUser.IsSuccess)
-            {
-                return RetrieveEntityResult<IUser>.FromError(getUser);
-            }
-
-            return getUser.IsSuccess
-                ? RetrieveEntityResult<IUser>.FromSuccess(getUser.Entity)
-                : RetrieveEntityResult<IUser>.FromError("No user with that ID could be found.");
+            return await _userAPI.GetUserAsync(userID.Value, ct);
         }
     }
 }

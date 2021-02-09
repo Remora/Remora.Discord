@@ -23,11 +23,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -48,7 +47,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IApplication>> GetCurrentApplicationInformationAsync
+        public override async Task<Result<IApplication>> GetCurrentApplicationInformationAsync
         (
             CancellationToken ct = default
         )
@@ -56,7 +55,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateCurrentApplicationCacheKey();
             if (_cacheService.TryGetValue<IApplication>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IApplication>.FromSuccess(cachedInstance);
+                return Result<IApplication>.FromSuccess(cachedInstance);
             }
 
             var getCurrent = await base.GetCurrentApplicationInformationAsync(ct);

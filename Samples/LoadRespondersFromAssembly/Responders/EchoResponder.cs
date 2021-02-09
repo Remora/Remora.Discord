@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
 {
@@ -47,12 +47,12 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
         }
 
         /// <inheritdoc />
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
             if ((gatewayEvent.Author.IsBot.HasValue && gatewayEvent.Author.IsBot.Value) ||
                 (gatewayEvent.Author.IsSystem.HasValue && gatewayEvent.Author.IsSystem.Value))
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var replyResult = await _channelAPI.CreateMessageAsync
@@ -63,8 +63,8 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
             );
 
             return replyResult.IsSuccess
-                ? EventResponseResult.FromSuccess()
-                : EventResponseResult.FromError(replyResult);
+                ? Result.FromSuccess()
+                : Result.FromError(replyResult);
         }
     }
 }

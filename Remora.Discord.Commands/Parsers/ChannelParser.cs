@@ -23,6 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
+using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
@@ -48,18 +49,14 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<RetrieveEntityResult<IChannel>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IChannel>> TryParse(string value, CancellationToken ct)
         {
             if (!Snowflake.TryParse(value.Unmention(), out var channelID))
             {
-                return RetrieveEntityResult<IChannel>.FromError($"Failed to parse \"{value}\" as a channel ID.");
+                return new ParsingError<IChannel>(value.Unmention());
             }
 
-            var getEntity = await _channelAPI.GetChannelAsync(channelID.Value, ct);
-
-            return !getEntity.IsSuccess
-                ? RetrieveEntityResult<IChannel>.FromError(getEntity)
-                : RetrieveEntityResult<IChannel>.FromSuccess(getEntity.Entity);
+            return await _channelAPI.GetChannelAsync(channelID.Value, ct);
         }
     }
 }

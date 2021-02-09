@@ -33,7 +33,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders
 {
@@ -69,7 +69,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc />
-        public async Task<EventResponseResult> RespondAsync
+        public async Task<Result> RespondAsync
         (
             IInteractionCreate? gatewayEvent,
             CancellationToken ct = default
@@ -77,17 +77,17 @@ namespace Remora.Discord.Commands.Responders
         {
             if (gatewayEvent is null)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (!gatewayEvent.Data.HasValue)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (!gatewayEvent.Member.User.HasValue)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             // Signal Discord that we'll be handling this one asynchronously
@@ -102,7 +102,7 @@ namespace Remora.Discord.Commands.Responders
 
             if (!interactionResponse.IsSuccess)
             {
-                return EventResponseResult.FromError(interactionResponse);
+                return interactionResponse;
             }
 
             var interactionData = gatewayEvent.Data.Value!;
@@ -122,7 +122,7 @@ namespace Remora.Discord.Commands.Responders
             var preExecution = await _eventCollector.RunPreExecutionEvents(context, ct);
             if (!preExecution.IsSuccess)
             {
-                return EventResponseResult.FromError(preExecution);
+                return preExecution;
             }
 
             // Run the actual command
@@ -139,23 +139,23 @@ namespace Remora.Discord.Commands.Responders
 
             if (!executeResult.IsSuccess)
             {
-                return EventResponseResult.FromError(executeResult);
+                return Result.FromError(executeResult);
             }
 
             // Run any user-provided post execution events
             var postExecution = await _eventCollector.RunPostExecutionEvents
             (
                 context,
-                executeResult.InnerResult!,
+                executeResult.Entity,
                 ct
             );
 
             if (!postExecution.IsSuccess)
             {
-                return EventResponseResult.FromError(postExecution);
+                return postExecution;
             }
 
-            return EventResponseResult.FromSuccess();
+            return Result.FromSuccess();
         }
     }
 }

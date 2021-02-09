@@ -23,6 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
+using Remora.Commands.Results;
 using Remora.Discord.Core;
 using Remora.Results;
 
@@ -34,13 +35,13 @@ namespace Remora.Discord.Commands.Parsers
     public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         /// <inheritdoc />
-        public override ValueTask<RetrieveEntityResult<Snowflake>> TryParse(string value, CancellationToken ct)
+        public override ValueTask<Result<Snowflake>> TryParse(string value, CancellationToken ct)
         {
-            return new ValueTask<RetrieveEntityResult<Snowflake>>
+            return new
             (
                 !Snowflake.TryParse(value, out var snowflake)
-                    ? RetrieveEntityResult<Snowflake>.FromError($"Failed to parse \"{value}\" as a Snowflake.")
-                    : RetrieveEntityResult<Snowflake>.FromSuccess(snowflake.Value)
+                    ? new ParsingError<Snowflake>(value)
+                    : snowflake.Value
             );
         }
     }

@@ -29,12 +29,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -58,7 +57,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IGuild>> CreateGuildAsync
+        public override async Task<Result<IGuild>> CreateGuildAsync
         (
             string name,
             Optional<string> region = default,
@@ -103,7 +102,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IGuild>> GetGuildAsync
+        public override async Task<Result<IGuild>> GetGuildAsync
         (
             Snowflake guildID,
             Optional<bool> withCounts = default,
@@ -113,7 +112,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildCacheKey(guildID);
             if (_cacheService.TryGetValue<IGuild>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IGuild>.FromSuccess(cachedInstance);
+                return Result<IGuild>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildAsync(guildID, withCounts, ct);
@@ -129,7 +128,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IGuildPreview>> GetGuildPreviewAsync
+        public override async Task<Result<IGuildPreview>> GetGuildPreviewAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -138,7 +137,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildPreviewCacheKey(guildID);
             if (_cacheService.TryGetValue<IGuildPreview>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IGuildPreview>.FromSuccess(cachedInstance);
+                return Result<IGuildPreview>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildPreviewAsync(guildID, ct);
@@ -154,7 +153,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IGuild>> ModifyGuildAsync
+        public override async Task<Result<IGuild>> ModifyGuildAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -209,7 +208,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteGuildAsync
+        public override async Task<Result> DeleteGuildAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -229,7 +228,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+        public override async Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -238,7 +237,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildChannelsCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildChannelsAsync(guildID, ct);
@@ -260,7 +259,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IChannel>> CreateGuildChannelAsync
+        public override async Task<Result<IChannel>> CreateGuildChannelAsync
         (
             Snowflake guildID,
             string name,
@@ -305,7 +304,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IGuildMember>> GetGuildMemberAsync
+        public override async Task<Result<IGuildMember>> GetGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -315,7 +314,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
             if (_cacheService.TryGetValue<IGuildMember>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IGuildMember>.FromSuccess(cachedInstance);
+                return Result<IGuildMember>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildMemberAsync(guildID, userID, ct);
@@ -335,7 +334,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+        public override async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
         (
             Snowflake guildID,
             Optional<int> limit = default,
@@ -346,7 +345,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildMembersKey(guildID, limit, after);
             if (_cacheService.TryGetValue<IReadOnlyList<IGuildMember>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IGuildMember>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IGuildMember>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.ListGuildMembersAsync(guildID, limit, after, ct);
@@ -373,7 +372,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IGuildMember?>> AddGuildMemberAsync
+        public override async Task<Result<IGuildMember?>> AddGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -414,7 +413,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> RemoveGuildMemberAsync
+        public override async Task<Result> RemoveGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -434,7 +433,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IBan>>> GetGuildBansAsync
+        public override async Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -443,7 +442,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildBansCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IBan>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IBan>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IBan>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildBansAsync(guildID, ct);
@@ -465,7 +464,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IBan>> GetGuildBanAsync
+        public override async Task<Result<IBan>> GetGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -475,7 +474,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
             if (_cacheService.TryGetValue<IBan>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IBan>.FromSuccess(cachedInstance);
+                return Result<IBan>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildBanAsync(guildID, userID, ct);
@@ -491,7 +490,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> RemoveGuildBanAsync
+        public override async Task<Result> RemoveGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -511,7 +510,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IRole>>> GetGuildRolesAsync
+        public override async Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -520,7 +519,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildRolesCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IRole>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IRole>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IRole>>.FromSuccess(cachedInstance);
             }
 
             var getRoles = await base.GetGuildRolesAsync(guildID, ct);
@@ -542,7 +541,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IRole>> CreateGuildRoleAsync
+        public override async Task<Result<IRole>> CreateGuildRoleAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -577,7 +576,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+        public override async Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
@@ -605,7 +604,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IRole>> ModifyGuildRoleAsync
+        public override async Task<Result<IRole>> ModifyGuildRoleAsync
         (
             Snowflake guildID,
             Snowflake roleID,
@@ -642,7 +641,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteGuildRoleAsync
+        public override async Task<Result> DeleteGuildRoleAsync
         (
             Snowflake guildId,
             Snowflake roleID,
@@ -662,7 +661,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+        public override async Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -671,7 +670,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildVoiceRegionsCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildVoiceRegionsAsync(guildID, ct);
@@ -694,7 +693,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+        public override async Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -703,7 +702,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildInvitesCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IInvite>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IInvite>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IInvite>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildInvitesAsync(guildID, ct);
@@ -726,7 +725,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+        public override async Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
         (
             Snowflake guildID,
             Optional<bool> includeApplications = default,
@@ -736,7 +735,7 @@ namespace Remora.Discord.Caching.API
             var collectionKey = KeyHelpers.CreateGuildIntegrationsCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IIntegration>>(collectionKey, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IIntegration>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IIntegration>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildIntegrationsAsync(guildID, includeApplications, ct);
@@ -759,7 +758,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetSettingsAsync
+        public override async Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -768,7 +767,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
             if (_cacheService.TryGetValue<IGuildWidget>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IGuildWidget>.FromSuccess(cachedInstance);
+                return Result<IGuildWidget>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildWidgetSettingsAsync(guildID, ct);
@@ -784,7 +783,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IGuildWidget>> ModifyGuildWidgetAsync
+        public override async Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
         (
             Snowflake guildID,
             Optional<bool> isEnabled = default,

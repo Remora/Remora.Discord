@@ -31,10 +31,9 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -59,7 +58,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
+        public virtual Task<Result<IChannel>> GetChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -73,7 +72,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
+        public virtual async Task<Result<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -91,17 +90,17 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && (name.Value!.Length > 100 || name.Value!.Length < 2))
             {
-                return ModifyRestEntityResult<IChannel>.FromError("The name must be between 2 and 100 characters.");
+                return new GenericError("The name must be between 2 and 100 characters.");
             }
 
             if (topic.HasValue && topic.Value is not null && (topic.Value.Length > 1024 || topic.Value.Length < 0))
             {
-                return ModifyRestEntityResult<IChannel>.FromError("The topic must be between 0 and 1024 characters.");
+                return new GenericError("The topic must be between 0 and 1024 characters.");
             }
 
             if (userLimit.HasValue && userLimit.Value is not null && (userLimit.Value > 99 || userLimit.Value < 0))
             {
-                return ModifyRestEntityResult<IChannel>.FromError("The user limit must be between 0 and 99.");
+                return new GenericError("The user limit must be between 0 and 99.");
             }
 
             return await _discordHttpClient.PatchAsync<IChannel>
@@ -128,7 +127,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteChannelAsync
+        public virtual Task<Result> DeleteChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -142,7 +141,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+        public virtual async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
         (
             Snowflake channelID,
             Optional<Snowflake> around = default,
@@ -156,7 +155,7 @@ namespace Remora.Discord.Rest.API
             var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue;
             if (hasAny && !hasStrictlyOne)
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromError
+                return new GenericError
                 (
                     $"{nameof(around)}, {nameof(before)}, and {nameof(after)} are mutually exclusive."
                 );
@@ -164,7 +163,7 @@ namespace Remora.Discord.Rest.API
 
             if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromError
+                return new GenericError
                 (
                     "The message limit must be between 1 and 100."
                 );
@@ -200,7 +199,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
+        public virtual Task<Result<IMessage>> GetChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -215,7 +214,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
+        public virtual Task<Result<IMessage>> CreateMessageAsync
         (
             Snowflake channelID,
             Optional<string> content = default,
@@ -256,7 +255,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRestResult> CreateReactionAsync
+        public virtual Task<Result> CreateReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -272,7 +271,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteOwnReactionAsync
+        public virtual Task<Result> DeleteOwnReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -288,7 +287,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteUserReactionAsync
+        public virtual Task<Result> DeleteUserReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -305,7 +304,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
+        public virtual async Task<Result<IReadOnlyList<IUser>>> GetReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -318,7 +317,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IUser>>.FromError("The limit must be between 1 and 100.");
+                return new GenericError("The limit must be between 1 and 100.");
             }
 
             return await _discordHttpClient.GetAsync<IReadOnlyList<IUser>>
@@ -346,7 +345,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteAllReactionsAsync
+        public virtual Task<Result> DeleteAllReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -361,7 +360,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteAllReactionsForEmojiAsync
+        public virtual Task<Result> DeleteAllReactionsForEmojiAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -377,7 +376,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IModifyRestEntityResult<IMessage>> EditMessageAsync
+        public virtual Task<Result<IMessage>> EditMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -406,7 +405,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteMessageAsync
+        public virtual Task<Result> DeleteMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -421,7 +420,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
+        public virtual async Task<Result> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
@@ -430,7 +429,7 @@ namespace Remora.Discord.Rest.API
         {
             if (messageIDs.Count > 100 || messageIDs.Count < 2)
             {
-                return DeleteRestEntityResult.FromError("The number of messages to delete must be between 2 and 100.");
+                return new GenericError("The number of messages to delete must be between 2 and 100.");
             }
 
             return await _discordHttpClient.DeleteAsync
@@ -449,7 +448,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRestResult> EditChannelPermissionsAsync
+        public virtual Task<Result> EditChannelPermissionsAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -476,7 +475,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+        public virtual Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -490,7 +489,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
+        public virtual async Task<Result<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
             Optional<TimeSpan> maxAge = default,
@@ -504,7 +503,7 @@ namespace Remora.Discord.Rest.API
         {
             if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
             {
-                return CreateRestEntityResult<IInvite>.FromError
+                return new GenericError
                 (
                     $"{nameof(maxAge)} must be between 0 and 604800 seconds."
                 );
@@ -512,7 +511,7 @@ namespace Remora.Discord.Rest.API
 
             if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
             {
-                return CreateRestEntityResult<IInvite>.FromError
+                return new GenericError
                 (
                     $"{nameof(maxAge)} must be between 0 and 100 seconds."
                 );
@@ -542,7 +541,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteChannelPermissionAsync
+        public virtual Task<Result> DeleteChannelPermissionAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -557,7 +556,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
+        public virtual Task<Result<IFollowedChannel>> FollowNewsChannelAsync
         (
             Snowflake channelID,
             Snowflake webhookChannelID,
@@ -579,7 +578,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRestResult> TriggerTypingIndicatorAsync
+        public virtual Task<Result> TriggerTypingIndicatorAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -593,7 +592,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+        public virtual Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -607,7 +606,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRestResult> AddPinnedChannelMessageAsync
+        public virtual Task<Result> AddPinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -622,7 +621,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeletePinnedChannelMessageAsync
+        public virtual Task<Result> DeletePinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -637,7 +636,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRestResult> GroupDMAddRecipientAsync
+        public virtual Task<Result> GroupDMAddRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,
@@ -662,7 +661,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> GroupDMRemoveRecipientAsync
+        public virtual Task<Result> GroupDMRemoveRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,

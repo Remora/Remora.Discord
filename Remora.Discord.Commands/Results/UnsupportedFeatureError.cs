@@ -1,5 +1,5 @@
 //
-//  OverloadsAreNotSupportedInGroups.cs
+//  UnsupportedFeatureError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Threading.Tasks;
-using Remora.Commands.Attributes;
-using Remora.Commands.Groups;
+using Remora.Commands.Trees.Nodes;
 using Remora.Results;
 
-#pragma warning disable CS1591, SA1600
-
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
+namespace Remora.Discord.Commands.Results
 {
-    [Group("a")]
-    public class OverloadsAreNotSupportedInGroups : CommandGroup
-    {
-        [Command("b")]
-        public Task<Result> B()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Command("b")]
-        public Task<Result> B(int value)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    /// <summary>
+    /// Represents a failure to create a slash command based on an unsupported feature.
+    /// </summary>
+    public record UnsupportedFeatureError(string Message, IChildNode? Node = default) : ResultError(Message);
 }

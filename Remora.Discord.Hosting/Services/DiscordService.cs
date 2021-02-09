@@ -21,11 +21,14 @@
 //
 
 using System;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
+using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Hosting.Services
 {
@@ -57,32 +60,34 @@ namespace Remora.Discord.Hosting.Services
 
                 if (!runResult.IsSuccess)
                 {
-                    if (runResult.Exception is not null)
+                    switch (runResult.Error)
                     {
-                        _logger.LogError
-                        (
-                            runResult.Exception,
-                            "Exception during gateway connection: {Exception}",
-                            runResult.ErrorReason
-                        );
-                    }
+                        case ExceptionError exe:
+                        {
+                            _logger.LogError
+                            (
+                                exe.Exception,
+                                "Exception during gateway connection: {ExceptionMessage}",
+                                exe.Message
+                            );
 
-                    if (runResult.GatewayCloseStatus.HasValue)
-                    {
-                        _logger.LogError
-                        (
-                            "Gateway close status: {GatewayCloseStatus}",
-                            runResult.GatewayCloseStatus.Value
-                        );
-                    }
-
-                    if (runResult.WebSocketCloseStatus.HasValue)
-                    {
-                        _logger.LogError
-                        (
-                            "Websocket close status: {WebsocketCloseStatus}",
-                            runResult.WebSocketCloseStatus.Value
-                        );
+                            break;
+                        }
+                        case GatewayWebSocketError:
+                        case GatewayDiscordError:
+                        {
+                            _logger.LogError(runResult.Error.Message);
+                            break;
+                        }
+                        default:
+                        {
+                            _logger.LogError
+                            (
+                                "Unknown error: {Message}",
+                                runResult.Error.Message
+                            );
+                            break;
+                        }
                     }
                 }
 

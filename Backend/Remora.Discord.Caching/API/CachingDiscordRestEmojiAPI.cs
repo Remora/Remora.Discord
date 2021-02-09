@@ -27,12 +27,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
+        public override async Task<Result<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -66,7 +65,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
             if (_cacheService.TryGetValue<IEmoji>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IEmoji>.FromSuccess(cachedInstance);
+                return Result<IEmoji>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetGuildEmojiAsync(guildID, emojiID, ct);
@@ -82,7 +81,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
+        public override async Task<Result<IEmoji>> CreateGuildEmojiAsync
         (
             Snowflake guildID,
             string name,
@@ -111,7 +110,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
+        public override async Task<Result<IEmoji>> ModifyGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -134,7 +133,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
+        public override async Task<Result> DeleteGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,

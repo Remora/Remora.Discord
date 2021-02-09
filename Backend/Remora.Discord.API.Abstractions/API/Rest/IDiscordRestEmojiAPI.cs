@@ -26,8 +26,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
+        Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -56,7 +56,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emojiID">The ID of the emoji.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IEmoji>> GetGuildEmojiAsync
+        Task<Result<IEmoji>> GetGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -72,7 +72,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="roles">The roles that the emoji will be restricted to.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IEmoji>> CreateGuildEmojiAsync
+        Task<Result<IEmoji>> CreateGuildEmojiAsync
         (
             Snowflake guildID,
             string name,
@@ -90,7 +90,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="roles">The new restricted roles.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IEmoji>> ModifyGuildEmojiAsync
+        Task<Result<IEmoji>> ModifyGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
@@ -106,7 +106,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emojiID">The ID of the emoji.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteGuildEmojiAsync
+        Task<Result> DeleteGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,

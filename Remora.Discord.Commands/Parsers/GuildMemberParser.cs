@@ -23,6 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
+using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
@@ -55,40 +56,26 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<RetrieveEntityResult<IGuildMember>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IGuildMember>> TryParse(string value, CancellationToken ct)
         {
             if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
             {
-                return RetrieveEntityResult<IGuildMember>.FromError
-                (
-                    $"Failed to parse \"{value}\" as a guild member ID."
-                );
+                return new ParsingError<IGuildMember>(value);
             }
 
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
-                return RetrieveEntityResult<IGuildMember>.FromError(getChannel);
+                return Result<IGuildMember>.FromError(new GenericError("Failed to get a valid channel."), getChannel);
             }
 
             var channel = getChannel.Entity;
             if (!channel.GuildID.HasValue)
             {
-                return RetrieveEntityResult<IGuildMember>.FromError
-                (
-                    "You're not in a guild channel, so I can't get any guild members."
-                );
+                return new GenericError("You're not in a guild channel, so I can't get any guild members.");
             }
 
-            var getGuildMember = await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);
-            if (!getGuildMember.IsSuccess)
-            {
-                return RetrieveEntityResult<IGuildMember>.FromError(getGuildMember);
-            }
-
-            return getGuildMember.IsSuccess
-                ? RetrieveEntityResult<IGuildMember>.FromSuccess(getGuildMember.Entity)
-                : RetrieveEntityResult<IGuildMember>.FromError("No guild member with that ID could be found.");
+            return await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);
         }
     }
 }

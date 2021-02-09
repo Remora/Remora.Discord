@@ -34,7 +34,7 @@ namespace Remora.Discord.Commands.Tests.Data.InternalLimits
     public class CollectionsAreNotSupported : CommandGroup
     {
         [Command("a")]
-        public Task<IResult> A(IReadOnlyList<int> collection)
+        public Task<Result> A(IReadOnlyList<int> collection)
         {
             throw new NotImplementedException();
         }

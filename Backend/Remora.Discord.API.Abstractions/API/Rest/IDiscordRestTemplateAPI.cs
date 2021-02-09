@@ -26,8 +26,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="templateCode">The template code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<ITemplate>> GetTemplateAsync
+        Task<Result<ITemplate>> GetTemplateAsync
         (
             string templateCode,
             CancellationToken ct = default
@@ -57,7 +57,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="icon">The icon of the new guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IGuild>> CreateGuildFromTemplateAsync
+        Task<Result<IGuild>> CreateGuildFromTemplateAsync
         (
             string templateCode,
             string name,
@@ -71,7 +71,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+        Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -85,7 +85,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="description">The description of the template.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<ITemplate>> CreateGuildTemplateAsync
+        Task<Result<ITemplate>> CreateGuildTemplateAsync
         (
             Snowflake guildID,
             string name,
@@ -100,7 +100,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="templateCode">The template code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<ITemplate>> SyncGuildTemplateAsync
+        Task<Result<ITemplate>> SyncGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -116,7 +116,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="description">The new description of the template.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<ITemplate>> ModifyGuildTemplateAsync
+        Task<Result<ITemplate>> ModifyGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -132,7 +132,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="templateCode">The template code.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded. This contains the deleted template.</returns>
-        Task<IDeleteRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
+        Task<Result<ITemplate>> DeleteGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,

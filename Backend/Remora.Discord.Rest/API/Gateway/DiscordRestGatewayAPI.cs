@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -47,13 +47,13 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
+        public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
         {
             return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IGatewayEndpoint>> GetGatewayBotAsync
+        public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync
         (
             CancellationToken ct = default
         )

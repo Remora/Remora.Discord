@@ -28,8 +28,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="systemChannelID">The ID of the system message channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IGuild>> CreateGuildAsync
+        Task<Result<IGuild>> CreateGuildAsync
         (
             string name,
             Optional<string> region = default,
@@ -78,7 +78,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="withCounts">Whether member and presence counts should be included.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IGuild>> GetGuildAsync
+        Task<Result<IGuild>> GetGuildAsync
         (
             Snowflake guildID,
             Optional<bool> withCounts = default,
@@ -94,7 +94,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IGuildPreview>> GetGuildPreviewAsync
+        Task<Result<IGuildPreview>> GetGuildPreviewAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -121,7 +121,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="preferredLocale">The new preferred locale.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IGuild>> ModifyGuildAsync
+        Task<Result<IGuild>> ModifyGuildAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -148,7 +148,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default);
+        Task<Result> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default);
 
         /// <summary>
         /// Gets the channels of the given guild.
@@ -156,7 +156,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+        Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -178,7 +178,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isNsfw">Whether the new channel is NSFW.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IChannel>> CreateGuildChannelAsync
+        Task<Result<IChannel>> CreateGuildChannelAsync
         (
             Snowflake guildID,
             string name,
@@ -201,7 +201,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="positionModifications">The new positions of the modified channels.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> ModifyGuildChannelPositionsAsync
+        Task<Result> ModifyGuildChannelPositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake ChannelID, int? Position)> positionModifications,
@@ -215,7 +215,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IGuildMember>> GetGuildMemberAsync
+        Task<Result<IGuildMember>> GetGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -230,7 +230,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="after">The highest user ID in the previously retrieved page.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+        Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
         (
             Snowflake guildID,
             Optional<int> limit = default,
@@ -253,7 +253,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isDeafened">Whether the user should be deafened in voice channels.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result that may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IGuildMember?>> AddGuildMemberAsync
+        Task<Result<IGuildMember?>> AddGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -277,7 +277,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The new voice channel of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A rest result which may or may not have succeeded.</returns>
-        Task<IRestResult> ModifyGuildMemberAsync
+        Task<Result> ModifyGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -296,7 +296,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="nickname">The new nickname.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<string>> ModifyCurrentUserNickAsync
+        Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
@@ -311,7 +311,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="roleID">The ID of the role.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> AddGuildMemberRoleAsync
+        Task<Result> AddGuildMemberRoleAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -327,7 +327,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="roleID">The ID of the role.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> RemoveGuildMemberRoleAsync
+        Task<Result> RemoveGuildMemberRoleAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -342,7 +342,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> RemoveGuildMemberAsync
+        Task<Result> RemoveGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -355,7 +355,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IBan>>> GetGuildBansAsync
+        Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -368,7 +368,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IBan>> GetGuildBanAsync
+        Task<Result<IBan>> GetGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -384,7 +384,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="reason">The reason for the ban.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> CreateGuildBanAsync
+        Task<Result> CreateGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -400,7 +400,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> RemoveGuildBanAsync
+        Task<Result> RemoveGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
@@ -413,7 +413,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IRole>>> GetGuildRolesAsync
+        Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -430,7 +430,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isMentionable">Whether the new role is mentionable.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IRole>> CreateGuildRoleAsync
+        Task<Result<IRole>> CreateGuildRoleAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
@@ -448,7 +448,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="modifiedPositions">The modified role positions.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+        Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
@@ -467,7 +467,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isMentionable">Whether the role is mentionable.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IRole>> ModifyGuildRoleAsync
+        Task<Result<IRole>> ModifyGuildRoleAsync
         (
             Snowflake guildID,
             Snowflake roleID,
@@ -486,7 +486,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="roleID">The ID of the role.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteGuildRoleAsync
+        Task<Result> DeleteGuildRoleAsync
         (
             Snowflake guildId,
             Snowflake roleID,
@@ -501,7 +501,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IPruneCount>> GetGuildPruneCountAsync
+        Task<Result<IPruneCount>> GetGuildPruneCountAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -518,7 +518,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IPruneCount>> BeginGuildPruneAsync
+        Task<Result<IPruneCount>> BeginGuildPruneAsync
         (
             Snowflake guildID,
             Optional<int> days = default,
@@ -533,7 +533,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+        Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -545,7 +545,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+        Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -558,7 +558,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="includeApplications">Whether bot and OAuth2 webhook integrations should be included.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+        Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
         (
             Snowflake guildID,
             Optional<bool> includeApplications = default,
@@ -571,7 +571,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IGuildWidget>> GetGuildWidgetSettingsAsync
+        Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -585,7 +585,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel invites will be generated for.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IGuildWidget>> ModifyGuildWidgetAsync
+        Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
         (
             Snowflake guildID,
             Optional<bool> isEnabled = default,
@@ -599,7 +599,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IPartialInvite>> GetGuildVanityUrlAsync
+        Task<Result<IPartialInvite>> GetGuildVanityUrlAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -612,7 +612,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="style">The image style.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<Stream>> GetGuildWidgetImageAsync
+        Task<Result<Stream>> GetGuildWidgetImageAsync
         (
             Snowflake guildID,
             Optional<WidgetImageStyle> style = default,

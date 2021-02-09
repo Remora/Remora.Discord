@@ -29,11 +29,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<ITemplate>> GetTemplateAsync
+        public virtual Task<Result<ITemplate>> GetTemplateAsync
         (
             string templateCode,
             CancellationToken ct = default
@@ -70,7 +69,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<ICreateRestEntityResult<IGuild>> CreateGuildFromTemplateAsync
+        public virtual async Task<Result<IGuild>> CreateGuildFromTemplateAsync
         (
             string templateCode,
             string name,
@@ -81,7 +80,7 @@ namespace Remora.Discord.Rest.API
             var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
             if (!packIcon.IsSuccess)
             {
-                return CreateRestEntityResult<IGuild>.FromError(packIcon);
+                return Result<IGuild>.FromError(new GenericError("Failed to pack icon."), packIcon);
             }
 
             var iconData = packIcon.Entity;
@@ -102,7 +101,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+        public virtual Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -116,7 +115,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<ITemplate>> CreateGuildTemplateAsync
+        public virtual Task<Result<ITemplate>> CreateGuildTemplateAsync
         (
             Snowflake guildID,
             string name,
@@ -140,26 +139,22 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IRetrieveRestEntityResult<ITemplate>> SyncGuildTemplateAsync
+        public virtual Task<Result<ITemplate>> SyncGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
             CancellationToken ct = default
         )
         {
-            var createResult = await _discordHttpClient.PutAsync<ITemplate>
+            return _discordHttpClient.PutAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
                 ct: ct
             );
-
-            return createResult.IsSuccess
-                ? RetrieveRestEntityResult<ITemplate>.FromSuccess(createResult.Entity)
-                : RetrieveRestEntityResult<ITemplate>.FromError(createResult);
         }
 
         /// <inheritdoc />
-        public virtual Task<IModifyRestEntityResult<ITemplate>> ModifyGuildTemplateAsync
+        public virtual Task<Result<ITemplate>> ModifyGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -184,7 +179,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
+        public virtual Task<Result<ITemplate>> DeleteGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,

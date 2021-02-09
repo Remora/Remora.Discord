@@ -26,8 +26,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -43,7 +43,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync(Snowflake channelID, CancellationToken ct = default);
+        Task<Result<IChannel>> GetChannelAsync(Snowflake channelID, CancellationToken ct = default);
 
         /// <summary>
         /// Modifies the given channel.
@@ -64,7 +64,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="parentId">The new parent category ID.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
+        Task<Result<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteChannelAsync(Snowflake channelID, CancellationToken ct = default);
+        Task<Result> DeleteChannelAsync(Snowflake channelID, CancellationToken ct = default);
 
         /// <summary>
         /// Gets the messages for a channel.
@@ -107,7 +107,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="limit">The maximum number of messages to retrieve. Ranges between 1 and 100.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+        Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
         (
             Snowflake channelID,
             Optional<Snowflake> around = default,
@@ -124,7 +124,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The message ID.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
+        Task<Result<IMessage>> GetChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -147,7 +147,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageReference">A reference to another message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
+        Task<Result<IMessage>> CreateMessageAsync
         (
             Snowflake channelID,
             Optional<string> content = default,
@@ -168,7 +168,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emoji">The emoji to react with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<IRestResult> CreateReactionAsync
+        Task<Result> CreateReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -184,7 +184,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emoji">The emoji to remove.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteOwnReactionAsync
+        Task<Result> DeleteOwnReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -201,7 +201,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="user">The user that has reacted with the emoji.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteUserReactionAsync
+        Task<Result> DeleteUserReactionAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -221,7 +221,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="limit">The maximum page size.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IUser>>> GetReactionsAsync
+        Task<Result<IReadOnlyList<IUser>>> GetReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -239,7 +239,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteAllReactionsAsync
+        Task<Result> DeleteAllReactionsAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -254,7 +254,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emoji">The emoji to delete.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteAllReactionsForEmojiAsync
+        Task<Result> DeleteAllReactionsForEmojiAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -273,7 +273,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="allowedMentions">The allowed mentions for the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IMessage>> EditMessageAsync
+        Task<Result<IMessage>> EditMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -291,7 +291,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteMessageAsync
+        Task<Result> DeleteMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -309,7 +309,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
+        Task<Result> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
@@ -326,7 +326,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="type">The new type of the overwrite.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IRestResult> EditChannelPermissionsAsync
+        Task<Result> EditChannelPermissionsAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -342,7 +342,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+        Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -360,7 +360,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="targetUserType">The target user type for this invite.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
+        Task<Result<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
             Optional<TimeSpan> maxAge = default,
@@ -379,7 +379,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="overwriteID">The ID of the permission overwrite.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteChannelPermissionAsync
+        Task<Result> DeleteChannelPermissionAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -393,7 +393,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="webhookChannelID">The ID of the channel to send news to.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IFollowedChannel>> FollowNewsChannelAsync
+        Task<Result<IFollowedChannel>> FollowNewsChannelAsync
         (
             Snowflake channelID,
             Snowflake webhookChannelID,
@@ -406,7 +406,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> TriggerTypingIndicatorAsync
+        Task<Result> TriggerTypingIndicatorAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -418,7 +418,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+        Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -431,7 +431,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> AddPinnedChannelMessageAsync
+        Task<Result> AddPinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -445,7 +445,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeletePinnedChannelMessageAsync
+        Task<Result> DeletePinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -461,7 +461,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="nickname">The nickname of the user to use in the group DM.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<IRestResult> GroupDMAddRecipientAsync
+        Task<Result> GroupDMAddRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,
@@ -477,7 +477,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> GroupDMRemoveRecipientAsync
+        Task<Result> GroupDMRemoveRecipientAsync
         (
             Snowflake channelID,
             Snowflake userID,

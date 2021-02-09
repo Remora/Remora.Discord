@@ -28,7 +28,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Samples.HttpCat.Responders
 {
@@ -52,18 +52,18 @@ namespace Remora.Discord.Samples.HttpCat.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
             if (!gatewayEvent.Content.StartsWith('!'))
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var statusCode = gatewayEvent.Content[1..];
 
             if (!int.TryParse(statusCode, out var code))
             {
-                return EventResponseResult.FromError("Could not parse an integer.");
+                return new GenericError("Could not parse an integer.");
             }
 
             var embedImage = new EmbedImage($"https://http.cat/{code}");
@@ -71,8 +71,8 @@ namespace Remora.Discord.Samples.HttpCat.Responders
 
             var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embed: embed, ct: ct);
             return !reply.IsSuccess
-                ? EventResponseResult.FromError(reply)
-                : EventResponseResult.FromSuccess();
+                ? Result.FromError(reply)
+                : Result.FromSuccess();
         }
 
         /// <inheritdoc />

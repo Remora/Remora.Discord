@@ -27,12 +27,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -56,7 +55,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IChannel>> GetChannelAsync
+        public override async Task<Result<IChannel>> GetChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -65,7 +64,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
             if (_cacheService.TryGetValue<IChannel>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IChannel>.FromSuccess(cachedInstance);
+                return Result<IChannel>.FromSuccess(cachedInstance);
             }
 
             var getChannel = await base.GetChannelAsync(channelID, ct);
@@ -81,7 +80,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IChannel>> ModifyChannelAsync
+        public override async Task<Result<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -126,7 +125,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteChannelAsync
+        public override async Task<Result> DeleteChannelAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -145,7 +144,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IMessage>> GetChannelMessageAsync
+        public override async Task<Result<IMessage>> GetChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -155,7 +154,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
             if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IMessage>.FromSuccess(cachedInstance);
+                return Result<IMessage>.FromSuccess(cachedInstance);
             }
 
             var getMessage = await base.GetChannelMessageAsync(channelID, messageID, ct);
@@ -171,7 +170,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IMessage>> CreateMessageAsync
+        public override async Task<Result<IMessage>> CreateMessageAsync
         (
             Snowflake channelID,
             Optional<string> content = default,
@@ -210,7 +209,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IMessage>> EditMessageAsync
+        public override async Task<Result<IMessage>> EditMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -245,7 +244,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteMessageAsync
+        public override async Task<Result> DeleteMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -265,7 +264,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> BulkDeleteMessagesAsync
+        public override async Task<Result> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
@@ -288,7 +287,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IInvite>> CreateChannelInviteAsync
+        public override async Task<Result<IInvite>> CreateChannelInviteAsync
         (
             Snowflake channelID,
             Optional<TimeSpan> maxAge = default,
@@ -325,7 +324,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteChannelPermissionAsync
+        public override async Task<Result> DeleteChannelPermissionAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
@@ -345,7 +344,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+        public override async Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -354,7 +353,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreatePinnedMessagesCacheKey(channelID);
             if (_cacheService.TryGetValue<IReadOnlyList<IMessage>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IMessage>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IMessage>>.FromSuccess(cachedInstance);
             }
 
             var getResult = await base.GetPinnedMessagesAsync(channelID, ct);
@@ -376,7 +375,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeletePinnedChannelMessageAsync
+        public override async Task<Result> DeletePinnedChannelMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,

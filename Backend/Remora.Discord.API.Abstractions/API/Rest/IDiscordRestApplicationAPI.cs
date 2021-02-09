@@ -25,8 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="applicationID">The ID of the bot application.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
+        Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
             CancellationToken ct = default
@@ -60,7 +60,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="options">The parameters for the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IApplicationCommand>> CreateGlobalApplicationCommandAsync
+        Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             string name,
@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commandID">The ID of the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGlobalApplicationCommandAsync
+        Task<Result<IApplicationCommand>> GetGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -93,7 +93,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="options">The parameters for the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IApplicationCommand>> EditGlobalApplicationCommandAsync
+        Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -110,7 +110,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commandID">The ID of the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteGlobalApplicationCommandAsync
+        Task<Result> DeleteGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
@@ -124,7 +124,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
+        Task<Result<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -144,7 +144,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="options">The parameters for the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IApplicationCommand>> CreateGuildApplicationCommandAsync
+        Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -162,7 +162,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commandID">The ID of the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IApplicationCommand>> GetGuildApplicationCommandAsync
+        Task<Result<IApplicationCommand>> GetGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -181,7 +181,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="options">The parameters for the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IApplicationCommand>> EditGuildApplicationCommandAsync
+        Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -200,7 +200,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commandID">The ID of the command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> DeleteGuildApplicationCommandAsync
+        Task<Result> DeleteGuildApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake guildID,

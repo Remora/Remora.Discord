@@ -41,7 +41,7 @@ namespace Remora.Discord.API.Tests.Services
         /// </summary>
         /// <typeparam name="TType">The API type.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>> GetSampleEventDataSet<TType>()
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleEventDataSet<TType>()
             where TType : IGatewayEvent
             => GetSampleDataSet<TType>(Path.Combine("Gateway", "Events"));
 
@@ -50,7 +50,7 @@ namespace Remora.Discord.API.Tests.Services
         /// </summary>
         /// <typeparam name="TType">The API type.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>> GetSampleCommandDataSet<TType>()
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleCommandDataSet<TType>()
             where TType : IGatewayCommand
             => GetSampleDataSet<TType>(Path.Combine("Gateway", "Commands"));
 
@@ -59,7 +59,7 @@ namespace Remora.Discord.API.Tests.Services
         /// </summary>
         /// <typeparam name="TType">The API type.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>> GetSampleBidirectionalDataSet<TType>()
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleBidirectionalDataSet<TType>()
             where TType : IGatewayEvent, IGatewayCommand
             => GetSampleDataSet<TType>(Path.Combine("Gateway", "Bidirectional"));
 
@@ -68,26 +68,26 @@ namespace Remora.Discord.API.Tests.Services
         /// </summary>
         /// <typeparam name="TType">The API type.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>> GetSampleObjectDataSet<TType>()
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleObjectDataSet<TType>()
             => GetSampleDataSet<TType>("Objects");
 
-        private RetrieveEntityResult<string> GetBaseSampleDataPath()
+        private Result<string> GetBaseSampleDataPath()
         {
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (basePath is null)
             {
-                return RetrieveEntityResult<string>.FromError("Failed to retrieve the base path of the assembly.");
+                return new GenericError("Failed to retrieve the base path of the assembly.");
             }
 
             return Path.Combine(basePath, "Samples");
         }
 
-        private RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>> GetSampleDataSet<TType>(string subfolder)
+        private Result<IReadOnlyList<SampleDataDescriptor>> GetSampleDataSet<TType>(string subfolder)
         {
             var getBasePath = GetBaseSampleDataPath();
             if (!getBasePath.IsSuccess)
             {
-                return RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>>.FromError(getBasePath);
+                return Result<IReadOnlyList<SampleDataDescriptor>>.FromError(getBasePath);
             }
 
             var basePath = Path.Combine(getBasePath.Entity, subfolder);
@@ -101,7 +101,7 @@ namespace Remora.Discord.API.Tests.Services
             var samplesPath = Path.Combine(basePath, samplesDirectoryName);
             if (!Directory.Exists(samplesPath))
             {
-                return RetrieveEntityResult<IReadOnlyList<SampleDataDescriptor>>.FromError("No valid sample data found.");
+                return new GenericError("No valid sample data found.");
             }
 
             return Directory.EnumerateFiles(samplesPath, "*.json", SearchOption.AllDirectories)

@@ -1,5 +1,5 @@
 //
-//  IModifyRestEntityResult.cs
+//  GatewayDiscordError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Gateway;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents a REST API result that modifies an entity.
+    /// Represents an unexpected closing of the gateway by Discord.
     /// </summary>
-    /// <typeparam name="TEntity">The modified entity type.</typeparam>
-    [PublicAPI]
-    public interface IModifyRestEntityResult<out TEntity> : IRestResult
-    {
-        /// <summary>
-        /// Gets the modified entity.
-        /// </summary>
-        public TEntity Entity { get; }
-    }
+    public record GatewayDiscordError(GatewayCloseStatus CloseStatus)
+        : ResultError($"The gateway closed with Discord close status \"{CloseStatus}\".");
 }

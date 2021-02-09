@@ -31,11 +31,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
-using Remora.Discord.Rest.Results;
 using Remora.Discord.Rest.Utility;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -58,7 +57,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<ICreateRestEntityResult<IWebhook>> CreateWebhookAsync
+        public virtual async Task<Result<IWebhook>> CreateWebhookAsync
         (
             Snowflake channelID,
             string name,
@@ -68,18 +67,18 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length < 1 || name.Length > 80)
             {
-                return CreateRestEntityResult<IWebhook>.FromError("Names must be between 1 and 80 characters");
+                return new GenericError("Names must be between 1 and 80 characters");
             }
 
             if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
             {
-                return CreateRestEntityResult<IWebhook>.FromError("Names cannot be \"clyde\".");
+                return new GenericError("Names cannot be \"clyde\".");
             }
 
             var packAvatar = await ImagePacker.PackImageAsync(new Optional<Stream?>(avatar), ct);
             if (!packAvatar.IsSuccess)
             {
-                return CreateRestEntityResult<IWebhook>.FromError(packAvatar);
+                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -100,7 +99,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+        public virtual Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -114,7 +113,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
+        public virtual Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -128,7 +127,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookAsync
+        public virtual Task<Result<IWebhook>> GetWebhookAsync
         (
             Snowflake webhookID,
             CancellationToken ct = default
@@ -142,7 +141,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookWithTokenAsync
+        public virtual Task<Result<IWebhook>> GetWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -157,7 +156,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookAsync
+        public virtual async Task<Result<IWebhook>> ModifyWebhookAsync
         (
             Snowflake webhookID,
             Optional<string> name = default,
@@ -169,7 +168,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return ModifyRestEntityResult<IWebhook>.FromError(packAvatar);
+                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -191,7 +190,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookWithTokenAsync
+        public virtual async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -203,7 +202,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return ModifyRestEntityResult<IWebhook>.FromError(packAvatar);
+                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -224,7 +223,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
+        public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
         {
             return _discordHttpClient.DeleteAsync
             (
@@ -234,7 +233,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult> DeleteWebhookWithTokenAsync
+        public virtual Task<Result> DeleteWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -249,7 +248,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<ICreateRestEntityResult<IMessage>> ExecuteWebhookAsync
+        public virtual Task<Result<IMessage>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,
@@ -297,7 +296,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IMessage>> EditWebhookMessageAsync
+        public virtual async Task<Result<IMessage>> EditWebhookMessageAsync
         (
             Snowflake webhookID,
             string token,
@@ -310,12 +309,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+                return new GenericError("Message content is too long.");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+                return new GenericError("Too many embeds.");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>
@@ -338,7 +337,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IMessage>> EditOriginalInteractionResponseAsync
+        public virtual async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
         (
             Snowflake applicationID,
             string token,
@@ -350,12 +349,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+                return new GenericError("Message content is too long.");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+                return new GenericError("Too many embeds.");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>
@@ -378,7 +377,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteOriginalInteractionResponseAsync
+        public virtual Task<Result> DeleteOriginalInteractionResponseAsync
         (
             Snowflake applicationID,
             string token,
@@ -393,7 +392,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<ICreateRestEntityResult<IMessage>> CreateFollowupMessageAsync
+        public virtual Task<Result<IMessage>> CreateFollowupMessageAsync
         (
             Snowflake applicationID,
             string token,
@@ -435,7 +434,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<IModifyRestEntityResult<IMessage>> EditFollowupMessageAsync
+        public virtual async Task<Result<IMessage>> EditFollowupMessageAsync
         (
             Snowflake applicationID,
             string token,
@@ -448,12 +447,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Message content is too long.");
+                return new GenericError("Message content is too long.");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return ModifyRestEntityResult<IMessage>.FromError("Too many embeds.");
+                return new GenericError("Too many embeds.");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>
@@ -476,7 +475,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<IDeleteRestEntityResult> DeleteFollowupMessageAsync
+        public virtual Task<Result> DeleteFollowupMessageAsync
         (
             Snowflake applicationID,
             string token,

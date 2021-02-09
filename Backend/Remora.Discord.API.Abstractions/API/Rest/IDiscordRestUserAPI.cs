@@ -26,8 +26,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest
 {
@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IUser>> GetCurrentUserAsync(CancellationToken ct = default);
+        Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Gets the user with the given ID.
@@ -50,7 +50,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The ID of the user.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default);
+        Task<Result<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default);
 
         /// <summary>
         /// Modifies the current user.
@@ -59,7 +59,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="avatar">The new avatar.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<IModifyRestEntityResult<IUser>> ModifyCurrentUserAsync
+        Task<Result<IUser>> ModifyCurrentUserAsync
         (
             Optional<string> username,
             Optional<Stream?> avatar = default,
@@ -74,7 +74,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="limit">The maximum number of guilds to get.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
+        Task<Result<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
         (
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
@@ -88,14 +88,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<IDeleteRestEntityResult> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default);
+        Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default);
 
         /// <summary>
         /// Gets a list of DM channels the user has. This always returns an empty array for bots.
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IChannel>>> GetUserDMsAsync
+        Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
         (
             CancellationToken ct = default
         );
@@ -106,7 +106,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="recipientID">The ID of the recipient.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<ICreateRestEntityResult<IChannel>> CreateDMAsync
+        Task<Result<IChannel>> CreateDMAsync
         (
             Snowflake recipientID,
             CancellationToken ct = default
@@ -117,7 +117,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<IRetrieveRestEntityResult<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+        Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
         (
             CancellationToken ct = default
         );

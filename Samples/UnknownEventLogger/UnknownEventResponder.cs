@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Samples.UnknownEventLogger
 {
@@ -49,7 +49,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
         }
 
         /// <inheritdoc/>
-        public async Task<EventResponseResult> RespondAsync
+        public async Task<Result> RespondAsync
         (
             IUnknownEvent? gatewayEvent,
             CancellationToken ct = default
@@ -57,26 +57,26 @@ namespace Remora.Discord.Samples.UnknownEventLogger
         {
             if (gatewayEvent is null)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             using var jsonDocument = JsonDocument.Parse(gatewayEvent.Data);
             if (!jsonDocument.RootElement.TryGetProperty("t", out var eventTypeElement))
             {
                 _log.LogWarning("Failed to find an event type on the given unknown event");
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             if (!jsonDocument.RootElement.TryGetProperty("s", out var eventSequenceElement))
             {
                 _log.LogWarning("Failed to find an event sequence on the given unknown event");
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var eventType = eventTypeElement.GetString();
             if (eventType is null)
             {
-                return EventResponseResult.FromError("The event type was null.");
+                return new GenericError("The event type was null.");
             }
 
             var sequenceNumber = eventSequenceElement.GetInt64();
@@ -101,7 +101,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
 
             jsonDocument.WriteTo(jsonWriter);
 
-            return EventResponseResult.FromSuccess();
+            return Result.FromSuccess();
         }
     }
 }

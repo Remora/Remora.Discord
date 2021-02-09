@@ -45,6 +45,8 @@ using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
+using Remora.Results;
+using static System.Net.WebSockets.WebSocketCloseStatus;
 
 namespace Remora.Discord.Gateway
 {
@@ -76,7 +78,7 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds the currently running responders.
         /// </summary>
-        private readonly ConcurrentQueue<Task<EventResponseResult[]>> _runningResponderDispatches;
+        private readonly ConcurrentQueue<Task<Result[]>> _runningResponderDispatches;
 
         /// <summary>
         /// Holds the websocket.
@@ -112,12 +114,12 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds the task responsible for sending payloads to the gateway.
         /// </summary>
-        private Task<GatewaySenderResult> _sendTask;
+        private Task<Result> _sendTask;
 
         /// <summary>
         /// Holds the task responsible for receiving payloads from the gateway.
         /// </summary>
-        private Task<GatewayReceiverResult> _receiveTask;
+        private Task<Result> _receiveTask;
 
         /// <summary>
         /// Holds a value indicating that the client should reconnect and resume at its earliest convenience.
@@ -161,7 +163,7 @@ namespace Remora.Discord.Gateway
             _services = services;
             _responderTypeRepository = responderTypeRepository;
 
-            _runningResponderDispatches = new ConcurrentQueue<Task<EventResponseResult[]>>();
+            _runningResponderDispatches = new ConcurrentQueue<Task<Result[]>>();
 
             _payloadsToSend = new ConcurrentQueue<IPayload>();
             _receivedPayloads = new ConcurrentQueue<IPayload>();
@@ -169,8 +171,8 @@ namespace Remora.Discord.Gateway
             _connectionStatus = GatewayConnectionStatus.Offline;
 
             _disconnectRequestedSource = new();
-            _sendTask = Task.FromResult(GatewaySenderResult.FromSuccess());
-            _receiveTask = Task.FromResult(GatewayReceiverResult.FromSuccess());
+            _sendTask = Task.FromResult(Result.FromSuccess());
+            _receiveTask = Task.FromResult(Result.FromSuccess());
         }
 
         /// <summary>
@@ -196,13 +198,13 @@ namespace Remora.Discord.Gateway
         /// </remarks>
         /// <param name="stopRequested">A token by which the caller can request this method to stop.</param>
         /// <returns>A gateway connection result which may or may not have succeeded.</returns>
-        public async Task<GatewayConnectionResult> RunAsync(CancellationToken stopRequested)
+        public async Task<Result> RunAsync(CancellationToken stopRequested)
         {
             try
             {
                 if (_connectionStatus != GatewayConnectionStatus.Offline)
                 {
-                    return GatewayConnectionResult.FromError("Already connected.");
+                    return new GenericError("Already connected.");
                 }
 
                 // Until cancellation has been requested or we hit a fatal error, reconnections should be attempted.
@@ -283,7 +285,7 @@ namespace Remora.Discord.Gateway
             }
             catch (Exception e)
             {
-                return GatewayConnectionResult.FromError(e);
+                return e;
             }
             finally
             {
@@ -295,14 +297,14 @@ namespace Remora.Discord.Gateway
             _sessionID = null;
             _connectionStatus = GatewayConnectionStatus.Offline;
 
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         // ReSharper disable once CyclomaticComplexity
         // Complexity level is unavoidable in this case; many different cases to handle.
         private bool ShouldReconnect
         (
-            GatewayConnectionResult iterationResult,
+            Result iterationResult,
             out bool shouldTerminate,
             out bool withNewSession
         )
@@ -310,66 +312,81 @@ namespace Remora.Discord.Gateway
             shouldTerminate = false;
             withNewSession = false;
 
-            // Did the gateway close?
-            switch (iterationResult.GatewayCloseStatus)
+            switch (iterationResult.Error)
             {
-                case GatewayCloseStatus.UnknownError:
-                case GatewayCloseStatus.UnknownOpcode:
-                case GatewayCloseStatus.DecodeError:
-                case GatewayCloseStatus.AlreadyAuthenticated:
-                case GatewayCloseStatus.RateLimited:
+                case GatewayDiscordError gde:
                 {
-                    return true;
+                    switch (gde.CloseStatus)
+                    {
+                        case GatewayCloseStatus.UnknownError:
+                        case GatewayCloseStatus.UnknownOpcode:
+                        case GatewayCloseStatus.DecodeError:
+                        case GatewayCloseStatus.AlreadyAuthenticated:
+                        case GatewayCloseStatus.RateLimited:
+                        {
+                            return true;
+                        }
+                        case GatewayCloseStatus.NotAuthenticated:
+                        case GatewayCloseStatus.InvalidSequence:
+                        case GatewayCloseStatus.SessionTimedOut:
+                        {
+                            withNewSession = true;
+                            return true;
+                        }
+                        case GatewayCloseStatus.AuthenticationFailed:
+                        case GatewayCloseStatus.InvalidShard:
+                        case GatewayCloseStatus.ShardingRequired:
+                        case GatewayCloseStatus.InvalidAPIVersion:
+                        case GatewayCloseStatus.InvalidIntents:
+                        case GatewayCloseStatus.DisallowedIntent:
+                        {
+                            shouldTerminate = true;
+                            return false;
+                        }
+                    }
+
+                    break;
                 }
-                case GatewayCloseStatus.NotAuthenticated:
-                case GatewayCloseStatus.InvalidSequence:
-                case GatewayCloseStatus.SessionTimedOut:
+                case GatewayWebSocketError gwe:
                 {
-                    withNewSession = true;
-                    return true;
+                    switch (gwe.CloseStatus)
+                    {
+                        case InternalServerError:
+                        case EndpointUnavailable:
+                        {
+                            withNewSession = true;
+                            return true;
+                        }
+                    }
+
+                    break;
                 }
-                case GatewayCloseStatus.AuthenticationFailed:
-                case GatewayCloseStatus.InvalidShard:
-                case GatewayCloseStatus.ShardingRequired:
-                case GatewayCloseStatus.InvalidAPIVersion:
-                case GatewayCloseStatus.InvalidIntents:
-                case GatewayCloseStatus.DisallowedIntent:
+                case ExceptionError exe:
                 {
-                    shouldTerminate = true;
-                    return false;
+                    switch (exe.Exception)
+                    {
+                        case HttpRequestException or WebSocketException:
+                        {
+                            _log.LogWarning
+                            (
+                                exe.Exception,
+                                "Transient error in gateway client: {Exception}",
+                                exe.Message
+                            );
+
+                            return true;
+                        }
+                        default:
+                        {
+                            shouldTerminate = true;
+                            return false;
+                        }
+                    }
                 }
             }
 
-            // Did the websocket close?
-            switch (iterationResult.WebSocketCloseStatus)
-            {
-                case WebSocketCloseStatus.InternalServerError:
-                case WebSocketCloseStatus.EndpointUnavailable:
-                {
-                    withNewSession = true;
-                    return true;
-                }
-            }
-
-            // Did something go wrong clientside?
-            switch (iterationResult.Exception)
-            {
-                case null:
-                {
-                    // We don't know what happened.. try reconnecting?
-                    return true;
-                }
-                case HttpRequestException or WebSocketException:
-                {
-                    _log.LogWarning(iterationResult.Exception, "Transient error in gateway client");
-                    return true;
-                }
-                default:
-                {
-                    shouldTerminate = true;
-                    return false;
-                }
-            }
+            // We don't know what happened... try reconnecting?
+            return true;
         }
 
         /// <summary>
@@ -377,7 +394,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="stopRequested">A token for requests to stop the outer run loop.</param>
         /// <returns>A connection result, based on the results of the iteration.</returns>
-        private async Task<GatewayConnectionResult> RunConnectionIterationAsync(CancellationToken stopRequested)
+        private async Task<Result> RunConnectionIterationAsync(CancellationToken stopRequested)
         {
             switch (_connectionStatus)
             {
@@ -390,13 +407,17 @@ namespace Remora.Discord.Gateway
                     var getGatewayEndpoint = await _gatewayAPI.GetGatewayBotAsync(stopRequested);
                     if (!getGatewayEndpoint.IsSuccess)
                     {
-                        return GatewayConnectionResult.FromError(getGatewayEndpoint);
+                        return Result.FromError
+                        (
+                            new GenericError("Failed to get the gateway endpoint."),
+                            getGatewayEndpoint
+                        );
                     }
 
                     var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=8&encoding=json";
                     if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                     {
-                        return GatewayConnectionResult.FromError
+                        return new GenericError
                         (
                             "Failed to parse the received gateway endpoint."
                         );
@@ -413,13 +434,13 @@ namespace Remora.Discord.Gateway
                     var receiveHello = await _transportService.ReceivePayloadAsync(stopRequested);
                     if (!receiveHello.IsSuccess)
                     {
-                        return GatewayConnectionResult.FromError(receiveHello);
+                        return Result.FromError(new GenericError("Failed to receive the Hello payload."), receiveHello);
                     }
 
                     if (!(receiveHello.Entity is IPayload<IHello> hello))
                     {
                         // Not receiving a hello is a non-recoverable error
-                        return GatewayConnectionResult.FromError
+                        return new GenericError
                         (
                             "The first payload from the gateway was not a hello. Rude!"
                         );
@@ -479,7 +500,7 @@ namespace Remora.Discord.Gateway
                         var sendResult = await _sendTask;
                         if (!sendResult.IsSuccess)
                         {
-                            return GatewayConnectionResult.FromError(sendResult);
+                            return sendResult;
                         }
                     }
 
@@ -488,7 +509,7 @@ namespace Remora.Discord.Gateway
                         var receiveResult = await _receiveTask;
                         if (!receiveResult.IsSuccess)
                         {
-                            return GatewayConnectionResult.FromError(receiveResult);
+                            return receiveResult;
                         }
                     }
 
@@ -499,7 +520,7 @@ namespace Remora.Discord.Gateway
 
             if (!_shouldReconnect)
             {
-                return GatewayConnectionResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             _log.LogInformation("Reconnection requested by the gateway; terminating session...");
@@ -523,7 +544,7 @@ namespace Remora.Discord.Gateway
             _disconnectRequestedSource = new();
             _connectionStatus = GatewayConnectionStatus.Disconnected;
 
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <summary>
@@ -531,7 +552,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="runningResponderDispatch">The running responder dispatch.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        private async Task FinalizeResponderDispatchAsync(Task<EventResponseResult[]> runningResponderDispatch)
+        private async Task FinalizeResponderDispatchAsync(Task<Result[]> runningResponderDispatch)
         {
             try
             {
@@ -543,21 +564,29 @@ namespace Remora.Discord.Gateway
                         continue;
                     }
 
-                    if (responderResult.Exception is null)
+                    switch (responderResult.Error)
                     {
-                        _log.LogWarning
-                        (
-                            "Error in gateway event responder: {Reason}",
-                            responderResult.ErrorReason
-                        );
-                    }
-                    else
-                    {
-                        _log.LogWarning
-                        (
-                            "Error in gateway event responder.\n{Exception}",
-                            responderResult.Exception
-                        );
+                        case ExceptionError exe:
+                        {
+                            _log.LogWarning
+                            (
+                                exe.Exception,
+                                "Error in gateway event responder: {Exception}",
+                                exe.Message
+                            );
+
+                            break;
+                        }
+                        default:
+                        {
+                            _log.LogWarning
+                            (
+                                "Error in gateway event responder.\n{Reason}",
+                                responderResult.Error.Message
+                            );
+
+                            break;
+                        }
                     }
                 }
             }
@@ -636,7 +665,7 @@ namespace Remora.Discord.Gateway
                 throw new InvalidOperationException();
             }
 
-            _runningResponderDispatches.Enqueue((Task<EventResponseResult[]>)dispatchTask);
+            _runningResponderDispatches.Enqueue((Task<Result[]>)dispatchTask);
         }
 
         /// <summary>
@@ -645,7 +674,7 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayEvent">The event to dispatch.</param>
         /// <param name="ct">The cancellation token to use.</param>
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-        private async Task<EventResponseResult[]> DispatchEventAsync<TGatewayEvent>
+        private async Task<Result[]> DispatchEventAsync<TGatewayEvent>
         (
             IPayload<TGatewayEvent> gatewayEvent,
             CancellationToken ct = default
@@ -655,7 +684,7 @@ namespace Remora.Discord.Gateway
             var responderTypes = _responderTypeRepository.GetResponderTypes<TGatewayEvent>();
             if (responderTypes.Count == 0)
             {
-                return Array.Empty<EventResponseResult>();
+                return Array.Empty<Result>();
             }
 
             return await Task.WhenAll
@@ -671,7 +700,7 @@ namespace Remora.Discord.Gateway
                     }
                     catch (Exception e)
                     {
-                        return EventResponseResult.FromError(e);
+                        return e;
                     }
                     finally
                     {
@@ -700,7 +729,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        private Task<GatewayConnectionResult> AttemptConnectionAsync(CancellationToken ct = default)
+        private Task<Result> AttemptConnectionAsync(CancellationToken ct = default)
         {
             if (_sessionID is null || !_isSessionResumable)
             {
@@ -716,7 +745,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        private async Task<GatewayConnectionResult> CreateNewSessionAsync(CancellationToken ct = default)
+        private async Task<Result> CreateNewSessionAsync(CancellationToken ct = default)
         {
             _log.LogInformation("Creating a new session...");
 
@@ -741,7 +770,7 @@ namespace Remora.Discord.Gateway
                 var receiveReady = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveReady.IsSuccess)
                 {
-                    return GatewayConnectionResult.FromError(receiveReady);
+                    return Result.FromError(new GenericError("Failed to receive the Ready payload."), receiveReady);
                 }
 
                 if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
@@ -751,7 +780,7 @@ namespace Remora.Discord.Gateway
 
                 if (!(receiveReady.Entity is IPayload<IReady> ready))
                 {
-                    return GatewayConnectionResult.FromError
+                    return new GenericError
                     (
                         "The payload after identification was not a Ready payload."
                     );
@@ -761,7 +790,7 @@ namespace Remora.Discord.Gateway
                 break;
             }
 
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <summary>
@@ -769,11 +798,11 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A connection result which may or may not have succeeded.</returns>
-        private async Task<GatewayConnectionResult> ResumeExistingSessionAsync(CancellationToken ct = default)
+        private async Task<Result> ResumeExistingSessionAsync(CancellationToken ct = default)
         {
             if (_sessionID is null)
             {
-                return GatewayConnectionResult.FromError("There's no previous session to resume.");
+                return new GenericError("There's no previous session to resume.");
             }
 
             _log.LogInformation("Resuming existing session...");
@@ -793,13 +822,13 @@ namespace Remora.Discord.Gateway
             {
                 if (ct.IsCancellationRequested)
                 {
-                    return GatewayConnectionResult.FromError("Operation was cancelled.");
+                    return new GenericError("Operation was cancelled.");
                 }
 
                 var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveEvent.IsSuccess)
                 {
-                    return GatewayConnectionResult.FromError(receiveEvent);
+                    return Result.FromError(new GenericError("Failed to receive a payload."), receiveEvent);
                 }
 
                 if (receiveEvent.Entity is IPayload<IHeartbeatAcknowledge>)
@@ -823,7 +852,7 @@ namespace Remora.Discord.Gateway
                 _receivedPayloads.Enqueue(receiveEvent.Entity);
             }
 
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <summary>
@@ -835,7 +864,7 @@ namespace Remora.Discord.Gateway
         /// <returns>A sender result which may or may not have been successful. A failed result indicates that something
         /// has gone wrong when sending a payload, and that the connection has been deemed nonviable. A nonviable
         /// connection should be either terminated, reestablished, or resumed as appropriate.</returns>
-        private async Task<GatewaySenderResult> GatewaySenderAsync
+        private async Task<Result> GatewaySenderAsync
         (
             TimeSpan heartbeatInterval,
             CancellationToken disconnectRequested
@@ -861,10 +890,9 @@ namespace Remora.Discord.Gateway
                     {
                         if (lastHeartbeatAck < lastHeartbeat)
                         {
-                            return GatewaySenderResult.FromError
+                            return new GatewayError
                             (
-                                "The server did not respond in time with a heartbeat acknowledgement.",
-                                GatewayCloseStatus.SessionTimedOut
+                                "The server did not respond in time with a heartbeat acknowledgement."
                             );
                         }
 
@@ -883,7 +911,7 @@ namespace Remora.Discord.Gateway
 
                         if (!sendHeartbeat.IsSuccess)
                         {
-                            return GatewaySenderResult.FromError(sendHeartbeat);
+                            return Result.FromError(new GenericError("Failed to send a heartbeat."), sendHeartbeat);
                         }
 
                         lastHeartbeat = DateTime.UtcNow;
@@ -907,21 +935,21 @@ namespace Remora.Discord.Gateway
                     }
 
                     // Normal closures are okay
-                    return sendResult.WebSocketCloseStatus == WebSocketCloseStatus.NormalClosure
-                        ? GatewaySenderResult.FromSuccess()
-                        : GatewaySenderResult.FromError(sendResult);
+                    return sendResult.Error is GatewayWebSocketError { CloseStatus: NormalClosure }
+                        ? Result.FromSuccess()
+                        : Result.FromError(sendResult);
                 }
 
-                return GatewaySenderResult.FromSuccess();
+                return Result.FromSuccess();
             }
             catch (OperationCanceledException)
             {
                 // Cancellation is a success
-                return GatewaySenderResult.FromSuccess();
+                return Result.FromSuccess();
             }
             catch (Exception ex)
             {
-                return GatewaySenderResult.FromError(ex);
+                return ex;
             }
         }
 
@@ -933,7 +961,7 @@ namespace Remora.Discord.Gateway
         /// <returns>A receiver result which may or may not have been successful. A failed result indicates that
         /// something has gone wrong when receiving a payload, and that the connection has been deemed nonviable. A
         /// nonviable connection should be either terminated, reestablished, or resumed as appropriate.</returns>
-        private async Task<GatewayReceiverResult> GatewayReceiverAsync(CancellationToken disconnectRequested)
+        private async Task<Result> GatewayReceiverAsync(CancellationToken disconnectRequested)
         {
             await Task.Yield();
 
@@ -945,9 +973,12 @@ namespace Remora.Discord.Gateway
                     if (!receivedPayload.IsSuccess)
                     {
                         // Normal closures are okay
-                        return receivedPayload.WebSocketCloseStatus == WebSocketCloseStatus.NormalClosure
-                            ? GatewayReceiverResult.FromSuccess()
-                            : GatewayReceiverResult.FromError(receivedPayload);
+                        if (receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure })
+                        {
+                            return Result.FromSuccess();
+                        }
+
+                        return Result.FromError(receivedPayload);
                     }
 
                     // Update the sequence number
@@ -996,16 +1027,16 @@ namespace Remora.Discord.Gateway
                     break;
                 }
 
-                return GatewayReceiverResult.FromSuccess();
+                return Result.FromSuccess();
             }
             catch (OperationCanceledException)
             {
                 // Cancellation is a success
-                return GatewayReceiverResult.FromSuccess();
+                return Result.FromSuccess();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return GatewayReceiverResult.FromError(ex);
+                return e;
             }
         }
 

@@ -1,5 +1,5 @@
 //
-//  EventResponseResult.cs
+//  HttpResultError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,44 +20,37 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using JetBrains.Annotations;
+using System.Net;
 using Remora.Results;
 
-namespace Remora.Discord.Gateway.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
-    /// Represents the result of a user-defined event response.
+    /// Represents a HTTP error returned by an endpoint.
     /// </summary>
-    [PublicAPI]
-    public class EventResponseResult : ResultBase<EventResponseResult>
+    public record HttpResultError : ResultError
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventResponseResult"/> class.
+        /// Gets the status code.
         /// </summary>
-        private EventResponseResult()
-        {
-        }
+        public HttpStatusCode StatusCode { get; }
 
-        /// <inheritdoc cref="EventResponseResult"/>
-        [UsedImplicitly]
-        private EventResponseResult
-        (
-            string? errorReason,
-            Exception? exception = null
-        )
-            : base(errorReason, exception)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpResultError"/> class.
+        /// </summary>
+        /// <param name="statusCode">The HTTP status code.</param>
+        /// <param name="message">The human-readable error message.</param>
+        public HttpResultError(HttpStatusCode statusCode, string? message = null)
+            : base(message ?? "An HTTP error occurred.")
         {
+            this.StatusCode = statusCode;
         }
 
         /// <summary>
-        /// Creates a new successful result.
+        /// Creates an error from a status code.
         /// </summary>
-        /// <returns>A successful result.</returns>
-        [Pure]
-        public static EventResponseResult FromSuccess()
-        {
-            return new EventResponseResult();
-        }
+        /// <param name="statusCode">The status code.</param>
+        /// <returns>The error.</returns>
+        public static implicit operator HttpResultError(HttpStatusCode statusCode) => new(statusCode);
     }
 }

@@ -27,7 +27,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Results;
 using Remora.Discord.Samples.HttpCat.Responders;
+using Remora.Results;
 
 namespace Remora.Discord.Samples.HttpCat
 {
@@ -80,32 +82,34 @@ namespace Remora.Discord.Samples.HttpCat
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
             {
-                if (runResult.Exception is not null)
+                switch (runResult.Error)
                 {
-                    log.LogError
-                    (
-                        runResult.Exception,
-                        "Exception during gateway connection: {Exception}",
-                        runResult.ErrorReason
-                    );
-                }
+                    case ExceptionError exe:
+                    {
+                        log.LogError
+                        (
+                            exe.Exception,
+                            "Exception during gateway connection: {ExceptionMessage}",
+                            exe.Message
+                        );
 
-                if (runResult.GatewayCloseStatus.HasValue)
-                {
-                    log.LogError
-                    (
-                        "Gateway close status: {GatewayCloseStatus}",
-                        runResult.GatewayCloseStatus.Value
-                    );
-                }
-
-                if (runResult.WebSocketCloseStatus.HasValue)
-                {
-                    log.LogError
-                    (
-                        "Websocket close status: {WebsocketCloseStatus}",
-                        runResult.WebSocketCloseStatus.Value
-                    );
+                        break;
+                    }
+                    case GatewayWebSocketError:
+                    case GatewayDiscordError:
+                    {
+                        log.LogError(runResult.Error.Message);
+                        break;
+                    }
+                    default:
+                    {
+                        log.LogError
+                        (
+                            "Unknown error: {Message}",
+                            runResult.Error.Message
+                        );
+                        break;
+                    }
                 }
             }
 

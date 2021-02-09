@@ -1,5 +1,5 @@
 //
-//  IRetrieveRestEntityResult.cs
+//  DiscordRestResultError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.Rest.Results
 {
     /// <summary>
-    /// Represents a REST API result that retrieves an entity.
+    /// Represents an error returned by the Discord API.
     /// </summary>
-    /// <typeparam name="TEntity">The retrieved entity type.</typeparam>
-    [PublicAPI]
-    public interface IRetrieveRestEntityResult<out TEntity> : IRestResult
-    {
-        /// <summary>
-        /// Gets the retrieved entity.
-        /// </summary>
-        TEntity Entity { get; }
-    }
+    public record DiscordRestResultError(IRestError DiscordError) : ResultError(DiscordError.Message);
 }

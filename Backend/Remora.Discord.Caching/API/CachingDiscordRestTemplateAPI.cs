@@ -27,12 +27,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -54,7 +53,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<ITemplate>> GetTemplateAsync
+        public override async Task<Result<ITemplate>> GetTemplateAsync
         (
             string templateCode,
             CancellationToken ct = default
@@ -63,7 +62,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
             if (_cacheService.TryGetValue<ITemplate>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<ITemplate>.FromSuccess(cachedInstance);
+                return Result<ITemplate>.FromSuccess(cachedInstance);
             }
 
             var getTemplate = await base.GetTemplateAsync(templateCode, ct);
@@ -79,7 +78,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<ITemplate>> CreateGuildTemplateAsync
+        public override async Task<Result<ITemplate>> CreateGuildTemplateAsync
         (
             Snowflake guildID,
             string name,
@@ -102,7 +101,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult<ITemplate>> DeleteGuildTemplateAsync
+        public override async Task<Result<ITemplate>> DeleteGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -122,7 +121,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+        public override async Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
         (
             Snowflake guildID,
             CancellationToken ct = default
@@ -131,7 +130,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildTemplatesCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<ITemplate>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<ITemplate>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<ITemplate>>.FromSuccess(cachedInstance);
             }
 
             var getTemplates = await base.GetGuildTemplatesAsync(guildID, ct);
@@ -153,7 +152,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<ITemplate>> ModifyGuildTemplateAsync
+        public override async Task<Result<ITemplate>> ModifyGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -177,7 +176,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<ITemplate>> SyncGuildTemplateAsync
+        public override async Task<Result<ITemplate>> SyncGuildTemplateAsync
         (
             Snowflake guildID,
             string templateCode,
@@ -199,7 +198,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IGuild>> CreateGuildFromTemplateAsync
+        public override async Task<Result<IGuild>> CreateGuildFromTemplateAsync
         (
             string templateCode,
             string name,

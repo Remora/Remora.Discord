@@ -28,10 +28,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest
 {
@@ -68,7 +68,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to retrieve.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public async Task<IRetrieveRestEntityResult<TEntity>> GetAsync<TEntity>
+        public async Task<Result<TEntity>> GetAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -97,7 +97,7 @@ namespace Remora.Discord.Rest
             }
             catch (Exception e)
             {
-                return RetrieveRestEntityResult<TEntity>.FromError(e);
+                return e;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Remora.Discord.Rest
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        public async Task<IRetrieveRestEntityResult<Stream>> GetContentAsync
+        public async Task<Result<Stream>> GetContentAsync
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -135,15 +135,15 @@ namespace Remora.Discord.Rest
                 var unpackedResponse = await UnpackResponseAsync(response, ct);
                 if (!unpackedResponse.IsSuccess)
                 {
-                    return RetrieveRestEntityResult<Stream>.FromError(unpackedResponse);
+                    return Result<Stream>.FromError(new GenericError("Failed to unpack response."), unpackedResponse);
                 }
 
                 var responseContent = await response.Content.ReadAsStreamAsync();
-                return RetrieveRestEntityResult<Stream>.FromSuccess(responseContent);
+                return Result<Stream>.FromSuccess(responseContent);
             }
             catch (Exception e)
             {
-                return RetrieveRestEntityResult<Stream>.FromError(e);
+                return e;
             }
         }
 
@@ -156,7 +156,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to create.</typeparam>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public async Task<ICreateRestEntityResult<TEntity>> PostAsync<TEntity>
+        public async Task<Result<TEntity>> PostAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -181,14 +181,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
-                return !entityResult.IsSuccess
-                    ? CreateRestEntityResult<TEntity>.FromError(entityResult)
-                    : CreateRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+                return await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
             }
             catch (Exception e)
             {
-                return CreateRestEntityResult<TEntity>.FromError(e);
+                return e;
             }
         }
 
@@ -199,7 +196,7 @@ namespace Remora.Discord.Rest
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A post result which may or may not have succeeded.</returns>
-        public async Task<IRestResult> PostAsync
+        public async Task<Result> PostAsync
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -223,14 +220,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync(response, ct);
-                return !entityResult.IsSuccess
-                    ? RestRequestResult.FromError(entityResult)
-                    : RestRequestResult.FromSuccess();
+                return await UnpackResponseAsync(response, ct);
             }
             catch (Exception e)
             {
-                return RestRequestResult.FromError(e);
+                return e;
             }
         }
 
@@ -243,7 +237,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to modify.</typeparam>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        public async Task<IModifyRestEntityResult<TEntity>> PatchAsync<TEntity>
+        public async Task<Result<TEntity>> PatchAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -268,14 +262,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
-                return !entityResult.IsSuccess
-                    ? ModifyRestEntityResult<TEntity>.FromError(entityResult)
-                    : ModifyRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+                return await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
             }
             catch (Exception e)
             {
-                return ModifyRestEntityResult<TEntity>.FromError(e);
+                return e;
             }
         }
 
@@ -286,7 +277,7 @@ namespace Remora.Discord.Rest
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        public async Task<IRestResult> PatchAsync
+        public async Task<Result> PatchAsync
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -310,14 +301,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync(response, ct);
-                return !entityResult.IsSuccess
-                    ? RestRequestResult.FromError(entityResult)
-                    : RestRequestResult.FromSuccess();
+                return await UnpackResponseAsync(response, ct);
             }
             catch (Exception e)
             {
-                return RestRequestResult.FromError(e);
+                return e;
             }
         }
 
@@ -328,7 +316,7 @@ namespace Remora.Discord.Rest
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
-        public async Task<IDeleteRestEntityResult> DeleteAsync
+        public async Task<Result> DeleteAsync
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -352,14 +340,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync(response, ct);
-                return !entityResult.IsSuccess
-                    ? DeleteRestEntityResult.FromError(entityResult)
-                    : DeleteRestEntityResult.FromSuccess();
+                return await UnpackResponseAsync(response, ct);
             }
             catch (Exception e)
             {
-                return DeleteRestEntityResult.FromError(e);
+                return e;
             }
         }
 
@@ -372,7 +357,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The type of entity to create.</typeparam>
         /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<IDeleteRestEntityResult<TEntity>> DeleteAsync<TEntity>
+        public async Task<Result<TEntity>> DeleteAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -397,14 +382,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
-                return !entityResult.IsSuccess
-                    ? DeleteRestEntityResult<TEntity>.FromError(entityResult)
-                    : DeleteRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+                return await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
             }
             catch (Exception e)
             {
-                return DeleteRestEntityResult<TEntity>.FromError(e);
+                return e;
             }
         }
 
@@ -417,7 +399,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The type of entity to create.</typeparam>
         /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<ICreateRestEntityResult<TEntity>> PutAsync<TEntity>
+        public async Task<Result<TEntity>> PutAsync<TEntity>
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -442,14 +424,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
-                return !entityResult.IsSuccess
-                    ? CreateRestEntityResult<TEntity>.FromError(entityResult)
-                    : CreateRestEntityResult<TEntity>.FromSuccess(entityResult.Entity);
+                return await UnpackResponseAsync<TEntity>(response, allowNullReturn, ct);
             }
             catch (Exception e)
             {
-                return CreateRestEntityResult<TEntity>.FromError(e);
+                return e;
             }
         }
 
@@ -460,7 +439,7 @@ namespace Remora.Discord.Rest
         /// <param name="configureRequestBuilder">The request builder for the request.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<IRestResult> PutAsync
+        public async Task<Result> PutAsync
         (
             string endpoint,
             Action<RestRequestBuilder>? configureRequestBuilder = null,
@@ -484,14 +463,11 @@ namespace Remora.Discord.Rest
                     ct
                 );
 
-                var entityResult = await UnpackResponseAsync(response, ct);
-                return !entityResult.IsSuccess
-                    ? RestRequestResult.FromError(entityResult)
-                    : RestRequestResult.FromSuccess();
+                return await UnpackResponseAsync(response, ct);
             }
             catch (Exception e)
             {
-                return RestRequestResult.FromError(e);
+                return e;
             }
         }
 
@@ -502,7 +478,7 @@ namespace Remora.Discord.Rest
         /// <param name="response">The response to unpack.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        private async Task<IRestResult> UnpackResponseAsync
+        private async Task<Result> UnpackResponseAsync
         (
             HttpResponseMessage response,
             CancellationToken ct = default
@@ -510,18 +486,13 @@ namespace Remora.Discord.Rest
         {
             if (response.IsSuccessStatusCode)
             {
-                return RestRequestResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             // See if we have a JSON error to get some more details from
-            var reasonPhrase = response.ReasonPhrase ?? "Unknown error.";
             if (response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength <= 0)
             {
-                return RestRequestResult.FromError
-                (
-                    reasonPhrase,
-                    response.StatusCode
-                );
+                return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
 
             try
@@ -535,26 +506,14 @@ namespace Remora.Discord.Rest
 
                 if (jsonError is null)
                 {
-                    return RestRequestResult.FromError
-                    (
-                        reasonPhrase,
-                        response.StatusCode
-                    );
+                    return new HttpResultError(response.StatusCode, response.ReasonPhrase);
                 }
 
-                return RestRequestResult.FromError
-                (
-                    jsonError.Message,
-                    jsonError
-                );
+                return new DiscordRestResultError(jsonError);
             }
             catch
             {
-                return RestRequestResult.FromError
-                (
-                    reasonPhrase,
-                    response.StatusCode
-                );
+                return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
         }
 
@@ -567,7 +526,7 @@ namespace Remora.Discord.Rest
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <typeparam name="TEntity">The entity type to unpack.</typeparam>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        private async Task<IRetrieveRestEntityResult<TEntity>> UnpackResponseAsync<TEntity>
+        private async Task<Result<TEntity>> UnpackResponseAsync<TEntity>
         (
             HttpResponseMessage response,
             bool allowNullReturn = false,
@@ -584,7 +543,7 @@ namespace Remora.Discord.Rest
                     }
 
                     // Null is okay as a default here, since TEntity might be TEntity?
-                    return RetrieveRestEntityResult<TEntity>.FromSuccess(default!);
+                    return Result<TEntity>.FromSuccess(default!);
                 }
 
                 var entity = await JsonSerializer.DeserializeAsync<TEntity>
@@ -596,7 +555,7 @@ namespace Remora.Discord.Rest
 
                 if (entity is not null)
                 {
-                    return RetrieveRestEntityResult<TEntity>.FromSuccess(entity);
+                    return Result<TEntity>.FromSuccess(entity);
                 }
 
                 if (!allowNullReturn)
@@ -605,18 +564,13 @@ namespace Remora.Discord.Rest
                 }
 
                 // Null is okay as a default here, since TEntity might be TEntity?
-                return RetrieveRestEntityResult<TEntity>.FromSuccess(default!);
+                return Result<TEntity>.FromSuccess(default!);
             }
 
             // See if we have a JSON error to get some more details from
-            var reasonPhrase = response.ReasonPhrase ?? "Unknown error.";
             if (!response.Content.Headers.ContentLength.HasValue || !(response.Content.Headers.ContentLength > 0))
             {
-                return RetrieveRestEntityResult<TEntity>.FromError
-                (
-                    reasonPhrase,
-                    response.StatusCode
-                );
+                return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
 
             try
@@ -630,26 +584,14 @@ namespace Remora.Discord.Rest
 
                 if (jsonError is null)
                 {
-                    return RetrieveRestEntityResult<TEntity>.FromError
-                    (
-                        reasonPhrase,
-                        response.StatusCode
-                    );
+                    return new HttpResultError(response.StatusCode, response.ReasonPhrase);
                 }
 
-                return RetrieveRestEntityResult<TEntity>.FromError
-                (
-                    jsonError.Message,
-                    jsonError
-                );
+                return new DiscordRestResultError(jsonError);
             }
             catch
             {
-                return RetrieveRestEntityResult<TEntity>.FromError
-                (
-                    reasonPhrase,
-                    response.StatusCode
-                );
+                return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
         }
     }

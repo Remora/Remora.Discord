@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 // ReSharper disable SA1402 - we allow two types in this file, because one is a marker interface of the other
 #pragma warning disable SA1402
@@ -53,6 +53,6 @@ namespace Remora.Discord.Gateway.Responders
         /// <param name="gatewayEvent">The event to respond to.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A response result which may or may not have succeeded.</returns>
-        Task<EventResponseResult> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default);
+        Task<Result> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default);
     }
 }

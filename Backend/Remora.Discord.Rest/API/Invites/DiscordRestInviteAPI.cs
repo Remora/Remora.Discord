@@ -25,8 +25,8 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IInvite>> GetInviteAsync
+        public virtual Task<Result<IInvite>> GetInviteAsync
         (
             string inviteCode,
             Optional<bool> withCounts = default,
@@ -68,7 +68,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IDeleteRestEntityResult<IInvite>> DeleteInviteAsync
+        public virtual Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
             CancellationToken ct = default

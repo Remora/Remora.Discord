@@ -27,9 +27,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway;
-using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Tests.Transport.Events;
 using Remora.Discord.Gateway.Transport;
+using Remora.Results;
 using Xunit.Sdk;
 
 namespace Remora.Discord.Gateway.Tests.Transport
@@ -77,7 +77,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         }
 
         /// <inheritdoc />
-        public async Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
+        public async Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default)
         {
             try
             {
@@ -160,7 +160,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                 CheckTimeout();
 
                 this.IsConnected = true;
-                return GatewayConnectionResult.FromSuccess();
+                return Result.FromSuccess();
             }
             finally
             {
@@ -169,7 +169,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         }
 
         /// <inheritdoc />
-        public async Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+        public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
         {
             try
             {
@@ -251,7 +251,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
-                return SendPayloadResult.FromSuccess();
+                return Result.FromSuccess();
             }
             finally
             {
@@ -260,7 +260,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
         }
 
         /// <inheritdoc />
-        public async Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+        public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
         {
             while (!ct.IsCancellationRequested)
             {
@@ -282,7 +282,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                                 _lastAdvance = DateTimeOffset.UtcNow;
 
-                                return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                                return Result<IPayload>.FromSuccess(payload);
                             }
 
                             case SendExceptionEvent se:
@@ -311,7 +311,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                             continuousSequence.Reset();
                         }
 
-                        return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                        return Result<IPayload>.FromSuccess(payload);
                     }
 
                     var remainingSequences = _sequences.Except(_finishedSequences).ToList();
@@ -330,11 +330,11 @@ namespace Remora.Discord.Gateway.Tests.Transport
                 }
             }
 
-            return await Task.FromCanceled<ReceivePayloadResult<IPayload>>(ct);
+            return await Task.FromCanceled<Result<IPayload>>(ct);
         }
 
         /// <inheritdoc />
-        public async Task<GatewayConnectionResult> DisconnectAsync
+        public async Task<Result> DisconnectAsync
         (
             bool reconnectionIntended,
             CancellationToken ct = default
@@ -421,7 +421,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                 CheckTimeout();
 
                 this.IsConnected = false;
-                return GatewayConnectionResult.FromSuccess();
+                return Result.FromSuccess();
             }
             finally
             {

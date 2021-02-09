@@ -41,7 +41,7 @@ namespace Remora.Discord.Rest.Utility
         /// <param name="stream">The stream.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static async Task<CreateEntityResult<Optional<string?>>> PackImageAsync
+        public static async Task<Result<Optional<string?>>> PackImageAsync
         (
             Optional<Stream?> stream,
             CancellationToken ct = default
@@ -62,7 +62,7 @@ namespace Remora.Discord.Rest.Utility
                 var packImage = await PackImageAsync(stream.Value, ct);
                 if (!packImage.IsSuccess)
                 {
-                    return CreateEntityResult<Optional<string?>>.FromError(packImage);
+                    return Result<Optional<string?>>.FromError(packImage.Error);
                 }
 
                 imageData = packImage.Entity;
@@ -77,7 +77,7 @@ namespace Remora.Discord.Rest.Utility
         /// <param name="stream">The stream.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static async Task<CreateEntityResult<string>> PackImageAsync
+        public static async Task<Result<string>> PackImageAsync
         (
             Stream stream,
             CancellationToken ct = default
@@ -105,7 +105,7 @@ namespace Remora.Discord.Rest.Utility
 
             if (mediaType is null)
             {
-                return CreateEntityResult<string>.FromError("Unknown or unsupported image format.");
+                return new GenericError("Unknown or unsupported image format.");
             }
 
             return $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";

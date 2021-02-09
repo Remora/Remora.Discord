@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Gateway.Tests.Responders
 {
@@ -34,9 +34,9 @@ namespace Remora.Discord.Gateway.Tests.Responders
     public class MockedResponder : IResponder<IMessageCreate>
     {
         /// <inheritdoc />
-        public Task<EventResponseResult> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+        public Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
-            return Task.FromResult(EventResponseResult.FromSuccess());
+            return Task.FromResult(Result.FromSuccess());
         }
     }
 }

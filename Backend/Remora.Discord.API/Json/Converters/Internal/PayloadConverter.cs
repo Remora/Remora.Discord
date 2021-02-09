@@ -195,11 +195,11 @@ namespace Remora.Discord.API.Json
             writer.WriteEndObject();
         }
 
-        private RetrieveEntityResult<OperationCode> GetOperationCode(Type objectType)
+        private Result<OperationCode> GetOperationCode(Type objectType)
         {
             if (!objectType.IsGenericType)
             {
-                return RetrieveEntityResult<OperationCode>.FromError("Unable to determine operation code.");
+                return new GenericError("Unable to determine operation code.");
             }
 
             if (objectType.GetGenericTypeDefinition() == typeof(EventPayload<>))
@@ -244,7 +244,7 @@ namespace Remora.Discord.API.Json
                 => OperationCode.Reconnect,
 
                 // Other
-                _ => RetrieveEntityResult<OperationCode>.FromError("Unknown operation code.")
+                _ => new GenericError("Unknown operation code.")
             };
         }
 

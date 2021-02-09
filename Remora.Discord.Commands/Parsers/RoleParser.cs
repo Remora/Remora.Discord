@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Parsers;
+using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
@@ -56,40 +57,37 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<RetrieveEntityResult<IRole>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IRole>> TryParse(string value, CancellationToken ct)
         {
             if (!Snowflake.TryParse(value.Unmention(), out var roleID))
             {
-                return RetrieveEntityResult<IRole>.FromError($"Failed to parse \"{value}\" as a role ID.");
+                return new ParsingError<IRole>(value.Unmention());
             }
 
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
-                return RetrieveEntityResult<IRole>.FromError(getChannel);
+                return Result<IRole>.FromError(new GenericError("Failed to get a valid channel."), getChannel);
             }
 
             var channel = getChannel.Entity;
             if (!channel.GuildID.HasValue)
             {
-                return RetrieveEntityResult<IRole>.FromError
-                (
-                    "You're not in a guild channel, so I can't get any roles."
-                );
+                return new GenericError("You're not in a guild channel, so I can't get any roles.");
             }
 
             var getRoles = await _guildAPI.GetGuildRolesAsync(channel.GuildID.Value, ct);
             if (!getRoles.IsSuccess)
             {
-                return RetrieveEntityResult<IRole>.FromError(getRoles);
+                return Result<IRole>.FromError(new GenericError("Failed to get the guild's roles."), getRoles);
             }
 
             var roles = getRoles.Entity;
             var role = roles.FirstOrDefault(r => r.ID.Equals(roleID));
 
             return role is not null
-                ? RetrieveEntityResult<IRole>.FromSuccess(role)
-                : RetrieveEntityResult<IRole>.FromError("No role with that ID could be found.");
+                ? Result<IRole>.FromSuccess(role)
+                : new GenericError("No role with that ID could be found.");
         }
     }
 }

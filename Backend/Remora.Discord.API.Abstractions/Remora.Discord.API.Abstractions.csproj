@@ -26,8 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.163" />
-      <PackageReference Include="Remora.Results.Abstractions" Version="2.0.0" />
+      <PackageReference Include="OneOf" Version="3.0.174" />
+      <PackageReference Include="Remora.Results" Version="2.1.2" />
     </ItemGroup>
 
     <ItemGroup>

@@ -39,7 +39,7 @@ namespace Remora.Discord.Tests
             Assert.True
             (
                 result.IsSuccess,
-                result.IsSuccess ? string.Empty : result.ErrorReason
+                result.IsSuccess ? string.Empty : result.Error?.Message ?? "Unknown error."
             );
         }
 

@@ -33,13 +33,13 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
     public class CommandsWithRequiredOrOptionalParameters : CommandGroup
     {
         [Command("required")]
-        public Task<IResult> Required(int required)
+        public Task<Result> Required(int required)
         {
             throw new NotImplementedException();
         }
 
         [Command("optional")]
-        public Task<IResult> Optional(int optional = 0)
+        public Task<Result> Optional(int optional = 0)
         {
             throw new NotImplementedException();
         }

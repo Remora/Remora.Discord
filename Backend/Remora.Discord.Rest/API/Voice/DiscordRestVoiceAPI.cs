@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
@@ -46,7 +46,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<IRetrieveRestEntityResult<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
+        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
         (
             CancellationToken ct = default
         )

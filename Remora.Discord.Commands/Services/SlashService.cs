@@ -28,10 +28,9 @@ using System.Threading.Tasks;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Services
 {
@@ -79,7 +78,7 @@ namespace Remora.Discord.Commands.Services
         /// <param name="guildID">The ID of the guild to update slash commands in, if any.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<UpdateCommandsResult> UpdateSlashCommandsAsync
+        public async Task<Result> UpdateSlashCommandsAsync
         (
             Snowflake? guildID = null,
             CancellationToken ct = default
@@ -88,14 +87,14 @@ namespace Remora.Discord.Commands.Services
             var getApplication = await _oauth2API.GetCurrentApplicationInformationAsync(ct);
             if (!getApplication.IsSuccess)
             {
-                return UpdateCommandsResult.FromError(getApplication);
+                return Result.FromError(getApplication);
             }
 
             var application = getApplication.Entity;
             var createCommands = _commandTree.CreateApplicationCommands(out var commands);
             if (!createCommands.IsSuccess)
             {
-                return UpdateCommandsResult.FromError(createCommands);
+                return createCommands;
             }
 
             CreateInteractionMethods
@@ -115,7 +114,7 @@ namespace Remora.Discord.Commands.Services
                 var updateResult = await updateMethod(command);
                 if (!updateResult.IsSuccess)
                 {
-                    return UpdateCommandsResult.FromError(updateResult);
+                    return Result.FromError(updateResult);
                 }
 
                 currentValidCommands.Add(command.Name);
@@ -125,7 +124,7 @@ namespace Remora.Discord.Commands.Services
             var getCurrentCommands = await getMethod();
             if (!getCurrentCommands.IsSuccess)
             {
-                return UpdateCommandsResult.FromError(getCurrentCommands);
+                return Result.FromError(getCurrentCommands);
             }
 
             var currentCommands = getCurrentCommands.Entity;
@@ -136,11 +135,11 @@ namespace Remora.Discord.Commands.Services
                 var deleteResult = await deleteMethod(invalidCommand.ID);
                 if (!deleteResult.IsSuccess)
                 {
-                    return UpdateCommandsResult.FromError(deleteResult);
+                    return Result.FromError(deleteResult);
                 }
             }
 
-            return UpdateCommandsResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         private void CreateInteractionMethods
@@ -148,9 +147,9 @@ namespace Remora.Discord.Commands.Services
             Snowflake? guildID,
             CancellationToken ct,
             IApplication application,
-            out Func<Snowflake, Task<IDeleteRestEntityResult>> deleteMethod,
-            out Func<Task<IRetrieveRestEntityResult<IReadOnlyList<IApplicationCommand>>>> getMethod,
-            out Func<IApplicationCommandOption, Task<ICreateRestEntityResult<IApplicationCommand>>> updateMethod
+            out Func<Snowflake, Task<Result>> deleteMethod,
+            out Func<Task<Result<IReadOnlyList<IApplicationCommand>>>> getMethod,
+            out Func<IApplicationCommandOption, Task<Result<IApplicationCommand>>> updateMethod
         )
         {
             if (guildID is null)

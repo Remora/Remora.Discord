@@ -32,6 +32,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Gateway.Transport
 {
@@ -68,11 +69,11 @@ namespace Remora.Discord.Gateway.Transport
         }
 
         /// <inheritdoc />
-        public async Task<GatewayConnectionResult> ConnectAsync(Uri endpoint, CancellationToken ct = default)
+        public async Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default)
         {
             if (_clientWebSocket is not null)
             {
-                return GatewayConnectionResult.FromError("The transport service is already connected.");
+                return new GenericError("The transport service is already connected.");
             }
 
             var socket = _services.GetRequiredService<ClientWebSocket>();
@@ -90,33 +91,33 @@ namespace Remora.Discord.Gateway.Transport
                     default:
                     {
                         socket.Dispose();
-                        return GatewayConnectionResult.FromError("Failed to connect to the endpoint.");
+                        return new GenericError("Failed to connect to the endpoint.");
                     }
                 }
             }
             catch (Exception e)
             {
                 socket.Dispose();
-                return GatewayConnectionResult.FromError(e);
+                return e;
             }
 
             _clientWebSocket = socket;
 
             this.IsConnected = true;
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <inheritdoc />
-        public async Task<SendPayloadResult> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+        public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
         {
             if (_clientWebSocket is null)
             {
-                return SendPayloadResult.FromError("The transport service is not connected.");
+                return new GenericError("The transport service is not connected.");
             }
 
             if (_clientWebSocket.State != WebSocketState.Open)
             {
-                return SendPayloadResult.FromError("The socket was not open.");
+                return new GenericError("The socket was not open.");
             }
 
             await using var memoryStream = new MemoryStream();
@@ -128,7 +129,7 @@ namespace Remora.Discord.Gateway.Transport
 
                 if (memoryStream.Length > 4096)
                 {
-                    return SendPayloadResult.FromError
+                    return new GenericError
                     (
                         "The payload was too large to be accepted by the gateway."
                     );
@@ -148,18 +149,10 @@ namespace Remora.Discord.Gateway.Transport
                 {
                     if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
                     {
-                        return SendPayloadResult.FromError
-                        (
-                            "The gateway closed the connection.",
-                            (GatewayCloseStatus)_clientWebSocket.CloseStatus
-                        );
+                        return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
                     }
 
-                    return SendPayloadResult.FromError
-                    (
-                        _clientWebSocket.CloseStatusDescription ?? "Unknown close reason.",
-                        _clientWebSocket.CloseStatus.Value
-                    );
+                    return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
                 }
             }
             finally
@@ -170,20 +163,20 @@ namespace Remora.Discord.Gateway.Transport
                 }
             }
 
-            return SendPayloadResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <inheritdoc />
-        public async Task<ReceivePayloadResult<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+        public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
         {
             if (_clientWebSocket is null)
             {
-                return ReceivePayloadResult<IPayload>.FromError("The transport service is not connected.");
+                return new GenericError("The transport service is not connected.");
             }
 
             if (_clientWebSocket.State != WebSocketState.Open)
             {
-                return ReceivePayloadResult<IPayload>.FromError("The socket was not open.");
+                return new GenericError("The socket was not open.");
             }
 
             await using var memoryStream = new MemoryStream();
@@ -202,18 +195,10 @@ namespace Remora.Discord.Gateway.Transport
                     {
                         if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
                         {
-                            return ReceivePayloadResult<IPayload>.FromError
-                            (
-                                "The gateway closed the connection.",
-                                (GatewayCloseStatus)result.CloseStatus
-                            );
+                            return new GatewayDiscordError((GatewayCloseStatus)result.CloseStatus);
                         }
 
-                        return ReceivePayloadResult<IPayload>.FromError
-                        (
-                            result.CloseStatusDescription ?? "Unknown close reason.",
-                            result.CloseStatus.Value
-                        );
+                        return new GatewayWebSocketError(result.CloseStatus.Value);
                     }
 
                     await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
@@ -225,13 +210,13 @@ namespace Remora.Discord.Gateway.Transport
                 var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
                 if (payload is null)
                 {
-                    return ReceivePayloadResult<IPayload>.FromError
+                    return new GenericError
                     (
                         "The received payload deserialized as a null value."
                     );
                 }
 
-                return ReceivePayloadResult<IPayload>.FromSuccess(payload);
+                return Result<IPayload>.FromSuccess(payload);
             }
             finally
             {
@@ -240,7 +225,7 @@ namespace Remora.Discord.Gateway.Transport
         }
 
         /// <inheritdoc/>
-        public async Task<GatewayConnectionResult> DisconnectAsync
+        public async Task<Result> DisconnectAsync
         (
             bool reconnectionIntended,
             CancellationToken ct = default
@@ -248,7 +233,7 @@ namespace Remora.Discord.Gateway.Transport
         {
             if (_clientWebSocket is null)
             {
-                return GatewayConnectionResult.FromError("The transport service is not connected.");
+                return new GenericError("The transport service is not connected.");
             }
 
             switch (_clientWebSocket.State)
@@ -286,7 +271,7 @@ namespace Remora.Discord.Gateway.Transport
             _clientWebSocket = null;
 
             this.IsConnected = false;
-            return GatewayConnectionResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <inheritdoc />

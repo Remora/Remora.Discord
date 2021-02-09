@@ -33,7 +33,6 @@ using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Core;
-using Remora.Discord.Gateway.Results;
 using Remora.Discord.Samples.DiceRoller.API;
 using Remora.Results;
 
@@ -72,12 +71,12 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         /// <param name="value">The command to send to the online service.</param>
         /// <returns>The result of the operation.</returns>
         [Command("roll")]
-        public async Task<IResult> RollDiceAsync(string value)
+        public async Task<Result> RollDiceAsync(string value)
         {
             var rollRequests = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (rollRequests.Length == 0)
             {
-                return EventResponseResult.FromSuccess();
+                return Result.FromSuccess();
             }
 
             var getRolls = await GetRollsAsync(rollRequests);
@@ -86,7 +85,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
                 var replyWithFailure = await ReplyWithFailureAsync(_context.ChannelID);
 
                 return replyWithFailure.IsSuccess
-                    ? EventResponseResult.FromError(getRolls)
+                    ? Result.FromError(getRolls)
                     : replyWithFailure;
             }
 
@@ -95,14 +94,14 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             return await ReplyWithRollsAsync(_context.ChannelID, rollResponse);
         }
 
-        private async Task<RetrieveEntityResult<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
+        private async Task<Result<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
         {
             var requestUrl = $"http://roll.diceapi.com/json/{string.Join('/', parsedRollRequests)}";
 
             using var response = await _httpClient.GetAsync(requestUrl);
             if (!response.IsSuccessStatusCode)
             {
-                return RetrieveEntityResult<RollResponse>.FromError(response.ReasonPhrase ?? "No reason given.");
+                return new GenericError(response.ReasonPhrase ?? "No reason given.");
             }
 
             await using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -112,26 +111,26 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
 
             if (rollResponse is null)
             {
-                return RetrieveEntityResult<RollResponse>.FromError("The roll response was null.");
+                return new GenericError("The roll response was null.");
             }
 
             return !rollResponse.Success
-                ? RetrieveEntityResult<RollResponse>.FromError("Dice rolling failed :(")
+                ? new GenericError("Dice rolling failed :(")
                 : rollResponse;
         }
 
-        private async Task<EventResponseResult> ReplyWithFailureAsync(Snowflake channel)
+        private async Task<Result> ReplyWithFailureAsync(Snowflake channel)
         {
             var failEmbed = new Embed(Description: "Dice rolling failed :(", Colour: Color.OrangeRed);
 
             var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
 
             return !replyFail.IsSuccess
-                ? EventResponseResult.FromError(replyFail)
-                : EventResponseResult.FromSuccess();
+                ? Result.FromError(replyFail)
+                : Result.FromSuccess();
         }
 
-        private async Task<EventResponseResult> ReplyWithRollsAsync(Snowflake channel, RollResponse rollResponse)
+        private async Task<Result> ReplyWithRollsAsync(Snowflake channel, RollResponse rollResponse)
         {
             var rolls = rollResponse.Dice
                 .GroupBy(d => d.Type)
@@ -147,8 +146,8 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             var replyRolls = await _channelAPI.CreateMessageAsync(channel, embed: embed);
 
             return !replyRolls.IsSuccess
-                ? EventResponseResult.FromError(replyRolls)
-                : EventResponseResult.FromSuccess();
+                ? Result.FromError(replyRolls)
+                : Result.FromSuccess();
         }
 
         /// <inheritdoc />

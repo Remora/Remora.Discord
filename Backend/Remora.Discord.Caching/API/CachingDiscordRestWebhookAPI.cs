@@ -27,12 +27,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Results;
+using Remora.Results;
 
 namespace Remora.Discord.Caching.API
 {
@@ -54,7 +53,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IWebhook>> CreateWebhookAsync
+        public override async Task<Result<IWebhook>> CreateWebhookAsync
         (
             Snowflake channelID,
             string name,
@@ -77,7 +76,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteWebhookAsync
+        public override async Task<Result> DeleteWebhookAsync
         (
             Snowflake webhookID,
             CancellationToken ct = default
@@ -96,7 +95,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<ICreateRestEntityResult<IMessage>> ExecuteWebhookAsync
+        public override async Task<Result<IMessage>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,
@@ -139,7 +138,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookAsync
+        public override async Task<Result<IWebhook>> GetWebhookAsync
         (
             Snowflake webhookID,
             CancellationToken ct = default
@@ -148,7 +147,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IWebhook>.FromSuccess(cachedInstance);
+                return Result<IWebhook>.FromSuccess(cachedInstance);
             }
 
             var getWebhook = await base.GetWebhookAsync(webhookID, ct);
@@ -164,7 +163,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookAsync
+        public override async Task<Result<IWebhook>> ModifyWebhookAsync
         (
             Snowflake webhookID,
             Optional<string> name = default,
@@ -188,7 +187,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+        public override async Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
         (
             Snowflake channelID,
             CancellationToken ct = default
@@ -197,7 +196,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
             if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
             }
 
             var getWebhooks = await base.GetChannelWebhooksAsync(channelID, ct);
@@ -219,7 +218,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
+        public override async Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
         (
             Snowflake guildID, CancellationToken ct = default
         )
@@ -227,7 +226,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
             if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
             }
 
             var getWebhooks = await base.GetGuildWebhooksAsync(guildID, ct);
@@ -249,7 +248,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IDeleteRestEntityResult> DeleteWebhookWithTokenAsync
+        public override async Task<Result> DeleteWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -269,7 +268,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IRetrieveRestEntityResult<IWebhook>> GetWebhookWithTokenAsync
+        public override async Task<Result<IWebhook>> GetWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,
@@ -279,7 +278,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
             {
-                return RetrieveRestEntityResult<IWebhook>.FromSuccess(cachedInstance);
+                return Result<IWebhook>.FromSuccess(cachedInstance);
             }
 
             var getWebhook = await base.GetWebhookWithTokenAsync(webhookID, token, ct);
@@ -295,7 +294,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<IModifyRestEntityResult<IWebhook>> ModifyWebhookWithTokenAsync
+        public override async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
         (
             Snowflake webhookID,
             string token,

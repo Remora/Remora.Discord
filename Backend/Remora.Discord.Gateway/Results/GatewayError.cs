@@ -1,5 +1,5 @@
 //
-//  IDeleteRestEntityResult.cs
+//  GatewayError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using Remora.Results;
 
-// ReSharper disable SA1402
-#pragma warning disable SA1402
-
-namespace Remora.Discord.API.Abstractions.Results
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents a REST API result that deletes an entity.
+    /// Represents a clientside gateway error.
     /// </summary>
-    [PublicAPI]
-    public interface IDeleteRestEntityResult : IRestResult
-    {
-    }
-
-    /// <summary>
-    /// Represents a REST API result that deletes an entity.
-    /// </summary>
-    /// <typeparam name="TEntity">The modified entity type.</typeparam>
-    [PublicAPI]
-    public interface IDeleteRestEntityResult<out TEntity> : IRestResult
-    {
-        /// <summary>
-        /// Gets the modified entity.
-        /// </summary>
-        public TEntity Entity { get; }
-    }
+    public record GatewayError(string Message) : ResultError(Message);
 }

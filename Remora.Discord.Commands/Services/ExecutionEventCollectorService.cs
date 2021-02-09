@@ -55,7 +55,7 @@ namespace Remora.Discord.Commands.Services
         /// <param name="commandContext">The command context.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task<OperationResult> RunPreExecutionEvents
+        public async Task<Result> RunPreExecutionEvents
         (
             ICommandContext commandContext,
             CancellationToken ct
@@ -66,13 +66,15 @@ namespace Remora.Discord.Commands.Services
                 _executionEventServices.Select(e => e.BeforeExecutionAsync(commandContext, ct))
             );
 
-            var failedResult = results.FirstOrDefault(e => !e.IsSuccess);
-            if (failedResult is not null)
+            foreach (var result in results)
             {
-                return failedResult;
+                if (!result.IsSuccess)
+                {
+                    return result;
+                }
             }
 
-            return OperationResult.FromSuccess();
+            return Result.FromSuccess();
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace Remora.Discord.Commands.Services
         /// <param name="commandResult">The result of the executed command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task<OperationResult> RunPostExecutionEvents
+        public async Task<Result> RunPostExecutionEvents
         (
             ICommandContext commandContext,
             IResult commandResult,
@@ -94,13 +96,15 @@ namespace Remora.Discord.Commands.Services
                 _executionEventServices.Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
             );
 
-            var failedResult = results.FirstOrDefault(e => !e.IsSuccess);
-            if (failedResult is not null)
+            foreach (var result in results)
             {
-                return failedResult;
+                if (!result.IsSuccess)
+                {
+                    return result;
+                }
             }
 
-            return OperationResult.FromSuccess();
+            return Result.FromSuccess();
         }
     }
 }
