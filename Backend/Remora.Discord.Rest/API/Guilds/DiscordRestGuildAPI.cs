@@ -754,7 +754,7 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter
                         (
                             "include_roles",
-                            string.Join(',', includeRoles.Value!.Select(s => s.ToString()))
+                            string.Join(',', includeRoles.Value.Select(s => s.ToString()))
                         );
                     }
                 },

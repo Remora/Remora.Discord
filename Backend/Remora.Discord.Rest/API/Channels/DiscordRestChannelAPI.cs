@@ -88,7 +88,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.HasValue && (name.Value!.Length > 100 || name.Value!.Length < 2))
+            if (name.HasValue && (name.Value.Length > 100 || name.Value.Length < 2))
             {
                 return new GenericError("The name must be between 2 and 100 characters.");
             }
@@ -234,7 +234,7 @@ namespace Remora.Discord.Rest.API
                 {
                     if (file.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value!.Content), "file", file.Value!.Name);
+                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
                     }
 
                     b.WithJson

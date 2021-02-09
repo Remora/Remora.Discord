@@ -157,7 +157,7 @@ namespace Remora.Discord.Caching.Responders
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.Value!.ID);
+            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.Value.ID);
             _cacheService.Cache<IGuildMember>(key, gatewayEvent);
 
             return Task.FromResult(Result.FromSuccess());
@@ -182,7 +182,7 @@ namespace Remora.Discord.Caching.Responders
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, member.User.Value!.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, member.User.Value.ID);
                 _cacheService.Cache(key, member);
             }
 
@@ -331,12 +331,12 @@ namespace Remora.Discord.Caching.Responders
             }
 
             var member = gatewayEvent.Member.Value;
-            if (!member!.User.HasValue)
+            if (!member.User.HasValue)
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID.Value, member.User.Value!.ID);
+            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID.Value, member.User.Value.ID);
             _cacheService.Cache(key, member);
 
             return Task.FromResult(Result.FromSuccess());

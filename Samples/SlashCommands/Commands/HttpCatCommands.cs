@@ -88,7 +88,12 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         [Description("Posts a cat image that matches the user.")]
         public Task<Result> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
         {
-            var modulo = (int)(catUser.User.Value!.ID.Value % 999);
+            if (!catUser.User.HasValue)
+            {
+                return Task.FromResult<Result>(new GenericError("No user field in the guild member??"));
+            }
+
+            var modulo = (int)(catUser.User.Value.ID.Value % 999);
             return PostHttpCatAsync(modulo);
         }
     }

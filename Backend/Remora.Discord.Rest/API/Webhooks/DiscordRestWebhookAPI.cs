@@ -275,7 +275,7 @@ namespace Remora.Discord.Rest.API
 
                     if (file.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value!.Content), "file", file.Value!.Name);
+                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
                     }
 
                     b.WithJson
@@ -413,7 +413,7 @@ namespace Remora.Discord.Rest.API
                 {
                     if (file.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value!.Content), "file", file.Value!.Name);
+                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
                     }
 
                     b.WithJson

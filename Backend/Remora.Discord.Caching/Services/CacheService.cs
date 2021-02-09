@@ -108,7 +108,7 @@ namespace Remora.Discord.Caching.Services
             }
 
             var user = webhook.User.Value;
-            var userKey = KeyHelpers.CreateUserCacheKey(user!.ID);
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
 
@@ -130,7 +130,7 @@ namespace Remora.Discord.Caching.Services
             }
 
             var user = integration.User.Value;
-            var userKey = KeyHelpers.CreateUserCacheKey(user!.ID);
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
 
@@ -152,7 +152,7 @@ namespace Remora.Discord.Caching.Services
             }
 
             var user = member.User.Value;
-            var userKey = KeyHelpers.CreateUserCacheKey(user!.ID);
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
 
@@ -208,7 +208,7 @@ namespace Remora.Discord.Caching.Services
                         continue;
                     }
 
-                    var memberKey = KeyHelpers.CreateGuildMemberKey(guild.ID, guildMember.User.Value!.ID);
+                    var memberKey = KeyHelpers.CreateGuildMemberKey(guild.ID, guildMember.User.Value.ID);
                     Cache(memberKey, guildMember);
                 }
             }
@@ -233,7 +233,7 @@ namespace Remora.Discord.Caching.Services
             }
 
             var creator = emoji.User.Value;
-            var creatorKey = KeyHelpers.CreateUserCacheKey(creator!.ID);
+            var creatorKey = KeyHelpers.CreateUserCacheKey(creator.ID);
             Cache(creatorKey, creator);
         }
 
@@ -247,7 +247,7 @@ namespace Remora.Discord.Caching.Services
             }
 
             var inviter = invite.Inviter.Value;
-            var inviterKey = KeyHelpers.CreateUserCacheKey(inviter!.ID);
+            var inviterKey = KeyHelpers.CreateUserCacheKey(inviter.ID);
             Cache(inviterKey, inviter);
         }
 

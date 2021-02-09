@@ -96,7 +96,7 @@ namespace Remora.Discord.Rest.Extensions
                 return;
             }
 
-            json.WriteEnum(name, new Optional<T>(value.Value!.Value), asInteger, jsonOptions);
+            json.WriteEnum(name, new Optional<T>(value.Value.Value), asInteger, jsonOptions);
         }
 
         /// <summary>

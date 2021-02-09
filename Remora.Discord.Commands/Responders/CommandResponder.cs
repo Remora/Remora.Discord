@@ -155,7 +155,7 @@ namespace Remora.Discord.Commands.Responders
 
             if (_options.Prefix is not null)
             {
-                if (!gatewayEvent.Content.Value!.StartsWith(_options.Prefix))
+                if (!gatewayEvent.Content.Value.StartsWith(_options.Prefix))
                 {
                     return Result.FromSuccess();
                 }

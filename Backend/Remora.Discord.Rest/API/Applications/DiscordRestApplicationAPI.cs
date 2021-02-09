@@ -136,7 +136,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.HasValue && name.Value!.Length is < 3 or > 32)
+            if (name.HasValue && name.Value.Length is < 3 or > 32)
             {
                 return new GenericError
                 (
@@ -144,7 +144,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.HasValue && description.Value!.Length is < 1 or > 100)
+            if (description.HasValue && description.Value.Length is < 1 or > 100)
             {
                 return new GenericError
                 (
@@ -265,7 +265,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.HasValue && name.Value!.Length is < 3 or > 32)
+            if (name.HasValue && name.Value.Length is < 3 or > 32)
             {
                 return new GenericError
                 (
@@ -273,7 +273,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.HasValue && description.Value!.Length is < 1 or > 100)
+            if (description.HasValue && description.Value.Length is < 1 or > 100)
             {
                 return new GenericError
                 (

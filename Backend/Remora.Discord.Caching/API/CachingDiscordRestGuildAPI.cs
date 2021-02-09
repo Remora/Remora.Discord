@@ -364,7 +364,7 @@ namespace Remora.Discord.Caching.API
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(guildID, member.User.Value!.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, member.User.Value.ID);
                 _cacheService.Cache(key, member);
             }
 
