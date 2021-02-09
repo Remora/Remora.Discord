@@ -50,7 +50,7 @@ namespace Remora.Discord.API.Objects
         Optional<ExplicitContentFilterLevel> ExplicitContentFilter,
         Optional<IReadOnlyList<IRole>> Roles,
         Optional<IReadOnlyList<IEmoji>> Emojis,
-        Optional<IReadOnlyList<GuildFeature>> GuildFeatures,
+        Optional<IReadOnlyList<string>> GuildFeatures,
         Optional<MultiFactorAuthenticationLevel> MFALevel,
         Optional<Snowflake?> ApplicationID,
         Optional<bool> IsWidgetEnabled,

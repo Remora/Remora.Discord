@@ -116,7 +116,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets a list of guild features.
         /// </summary>
-        IReadOnlyList<GuildFeature> GuildFeatures { get; }
+        IReadOnlyList<string> GuildFeatures { get; }
 
         /// <summary>
         /// Gets the required MFA level for the guild.

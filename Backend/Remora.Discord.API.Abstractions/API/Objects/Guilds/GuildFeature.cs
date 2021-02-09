@@ -28,86 +28,102 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Enumerates various guild features.
     /// </summary>
     [PublicAPI]
-    public enum GuildFeature
+    public static class GuildFeature
     {
         /// <summary>
         /// The guild has access to set an invite splash background.
         /// </summary>
-        InviteSplash,
+        public const string InviteSplash
+            = "INVITE_SPLASH";
 
         /// <summary>
         /// The guild has access to set 384kbps bitrate in voice (previously VIP voice servers).
         /// </summary>
-        VIPRegions,
+        public const string VIPRegions
+            = "VIP_REGIONS";
 
         /// <summary>
         /// The server has access to set a vanity URL.
         /// </summary>
-        VanityURL,
+        public const string VanityURL
+            = "VANITY_URL";
 
         /// <summary>
         /// The guild is verified.
         /// </summary>
-        Verified,
+        public const string Verified
+            = "VERIFIED";
 
         /// <summary>
         /// The guild is partnered.
         /// </summary>
-        Partnered,
+        public const string Partnered
+            = "PARTNERED";
 
         /// <summary>
         /// The guild has community features enabled.
         /// </summary>
-        Community,
+        public const string Community
+            = "COMMUNITY";
 
         /// <summary>
         /// The guild has access to use commerce features (i.e, create store channels).
         /// </summary>
-        Commerce,
+        public const string Commerce
+            = "COMMERCE";
 
         /// <summary>
         /// The guild has access to creating news channels.
         /// </summary>
-        News,
+        public const string News
+            = "NEWS";
 
         /// <summary>
         /// The guild is able to be discovered in the guild directory.
         /// </summary>
-        Discoverable,
+        public const string Discoverable
+            = "DISCOVERABLE";
 
         /// <summary>
         /// The guild is able to be featured in the guild directory.
         /// </summary>
-        Featurable,
+        public const string Featurable
+            = "FEATURABLE";
 
         /// <summary>
         /// The guild has access to set an animated icon.
         /// </summary>
-        AnimatedIcon,
+        public const string AnimatedIcon
+            = "ANIMATED_ICON";
 
         /// <summary>
         /// The guild has access to set a guild banner image.
         /// </summary>
-        Banner,
+        public const string Banner
+            = "BANNER";
 
         /// <summary>
         /// The guild has enabled a welcome screen.
         /// </summary>
-        WelcomeScreenEnabled,
+        public const string WelcomeScreenEnabled
+            = "WELCOME_SCREEN_ENABLED";
 
         /// <summary>
         /// The guild has enabled membership screening.
         /// </summary>
-        MemberVerificationGateEnabled,
+        public const string MemberVerificationGateEnabled
+            = "MEMBER_VERIFICATION_GATE_ENABLED";
 
         /// <summary>
         /// The guild can be previewed before joining.
         /// </summary>
-        PreviewEnabled,
+        public const string PreviewEnabled
+            = "PREVIEW_ENABLED";
 
         /// <summary>
         /// The guild was discoverable before the "Discovery Checklist" feature was launched.
         /// </summary>
-        EnabledDiscoverableBefore,
+        public const string EnabledDiscoverableBefore
+            = "ENABLED_DISCOVERABLE_BEFORE";
     }
 }

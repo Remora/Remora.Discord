@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Objects
         IImageHash? Splash,
         IImageHash? DiscoverySplash,
         IReadOnlyList<IEmoji> Emojis,
-        IReadOnlyList<GuildFeature> Features,
+        IReadOnlyList<string> Features,
         Optional<int> ApproximatePresenceCount,
         Optional<int> ApproximateMemberCount,
         string? Description

@@ -82,7 +82,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IReadOnlyList<IEmoji>> Emojis { get; }
 
         /// <inheritdoc cref="IGuild.GuildFeatures" />
-        Optional<IReadOnlyList<GuildFeature>> GuildFeatures { get; }
+        Optional<IReadOnlyList<string>> GuildFeatures { get; }
 
         /// <inheritdoc cref="IGuild.MFALevel" />
         Optional<MultiFactorAuthenticationLevel> MFALevel { get; }

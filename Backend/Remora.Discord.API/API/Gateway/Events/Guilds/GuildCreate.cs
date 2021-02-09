@@ -53,7 +53,7 @@ namespace Remora.Discord.API.Gateway.Events
             ExplicitContentFilterLevel explicitContentFilter,
             IReadOnlyList<IRole> roles,
             IReadOnlyList<IEmoji> emojis,
-            IReadOnlyList<GuildFeature> guildFeatures,
+            IReadOnlyList<string> guildFeatures,
             MultiFactorAuthenticationLevel mfaLevel,
             Snowflake? applicationID,
             Optional<bool> isWidgetEnabled,

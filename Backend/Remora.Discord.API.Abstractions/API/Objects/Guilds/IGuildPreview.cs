@@ -65,7 +65,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets a list of guild features.
         /// </summary>
-        IReadOnlyList<GuildFeature> Features { get; }
+        IReadOnlyList<string> Features { get; }
 
         /// <summary>
         /// Gets the approximate count of online members.
