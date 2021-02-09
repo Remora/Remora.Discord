@@ -103,6 +103,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The guild can be previewed before joining.
         /// </summary>
-        PreviewEnabled
+        PreviewEnabled,
+
+        /// <summary>
+        /// The guild was discoverable before the "Discovery Checklist" feature was launched.
+        /// </summary>
+        EnabledDiscoverableBefore,
     }
 }
