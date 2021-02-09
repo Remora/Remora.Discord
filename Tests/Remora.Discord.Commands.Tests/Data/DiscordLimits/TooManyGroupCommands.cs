@@ -34,67 +34,67 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
     public class TooManyGroupCommands : CommandGroup
     {
         [Command("c01")]
-        public Task<Result> C01()
+        public Task<IResult> C01()
         {
             throw new NotImplementedException();
         }
 
         [Command("c02")]
-        public Task<Result> C02()
+        public Task<IResult> C02()
         {
             throw new NotImplementedException();
         }
 
         [Command("c03")]
-        public Task<Result> C03()
+        public Task<IResult> C03()
         {
             throw new NotImplementedException();
         }
 
         [Command("c04")]
-        public Task<Result> C04()
+        public Task<IResult> C04()
         {
             throw new NotImplementedException();
         }
 
         [Command("c05")]
-        public Task<Result> C05()
+        public Task<IResult> C05()
         {
             throw new NotImplementedException();
         }
 
         [Command("c06")]
-        public Task<Result> C06()
+        public Task<IResult> C06()
         {
             throw new NotImplementedException();
         }
 
         [Command("c07")]
-        public Task<Result> C07()
+        public Task<IResult> C07()
         {
             throw new NotImplementedException();
         }
 
         [Command("c08")]
-        public Task<Result> C08()
+        public Task<IResult> C08()
         {
             throw new NotImplementedException();
         }
 
         [Command("c09")]
-        public Task<Result> C09()
+        public Task<IResult> C09()
         {
             throw new NotImplementedException();
         }
 
         [Command("c10")]
-        public Task<Result> C10()
+        public Task<IResult> C10()
         {
             throw new NotImplementedException();
         }
 
         [Command("c11")]
-        public Task<Result> C11()
+        public Task<IResult> C11()
         {
             throw new NotImplementedException();
         }

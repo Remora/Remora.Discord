@@ -34,109 +34,109 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
     public class TypedCommands : CommandGroup
     {
         [Command("sbyte-value")]
-        public Task<Result> CommandWithIntValue(sbyte value)
+        public Task<IResult> CommandWithIntValue(sbyte value)
         {
             throw new NotImplementedException();
         }
 
         [Command("byte-value")]
-        public Task<Result> CommandWithByteValue(byte value)
+        public Task<IResult> CommandWithByteValue(byte value)
         {
             throw new NotImplementedException();
         }
 
         [Command("short-value")]
-        public Task<Result> CommandWithShortValue(short value)
+        public Task<IResult> CommandWithShortValue(short value)
         {
             throw new NotImplementedException();
         }
 
         [Command("ushort-value")]
-        public Task<Result> CommandWithUShortValue(ushort value)
+        public Task<IResult> CommandWithUShortValue(ushort value)
         {
             throw new NotImplementedException();
         }
 
         [Command("int-value")]
-        public Task<Result> CommandWithIntValue(int value)
+        public Task<IResult> CommandWithIntValue(int value)
         {
             throw new NotImplementedException();
         }
 
         [Command("uint-value")]
-        public Task<Result> CommandWithUIntValue(uint value)
+        public Task<IResult> CommandWithUIntValue(uint value)
         {
             throw new NotImplementedException();
         }
 
         [Command("long-value")]
-        public Task<Result> CommandWithLongValue(long value)
+        public Task<IResult> CommandWithLongValue(long value)
         {
             throw new NotImplementedException();
         }
 
         [Command("ulong-value")]
-        public Task<Result> CommandWithULongValue(ulong value)
+        public Task<IResult> CommandWithULongValue(ulong value)
         {
             throw new NotImplementedException();
         }
 
         [Command("float-value")]
-        public Task<Result> CommandWithFloatValue(float value)
+        public Task<IResult> CommandWithFloatValue(float value)
         {
             throw new NotImplementedException();
         }
 
         [Command("double-value")]
-        public Task<Result> CommandWithDoubleValue(double value)
+        public Task<IResult> CommandWithDoubleValue(double value)
         {
             throw new NotImplementedException();
         }
 
         [Command("decimal-value")]
-        public Task<Result> CommandWithDecimalValue(decimal value)
+        public Task<IResult> CommandWithDecimalValue(decimal value)
         {
             throw new NotImplementedException();
         }
 
         [Command("string-value")]
-        public Task<Result> CommandWithStringValue(string value)
+        public Task<IResult> CommandWithStringValue(string value)
         {
             throw new NotImplementedException();
         }
 
         [Command("bool-value")]
-        public Task<Result> CommandWithBoolValue(bool value)
+        public Task<IResult> CommandWithBoolValue(bool value)
         {
             throw new NotImplementedException();
         }
 
         [Command("role-value")]
-        public Task<Result> CommandWithRoleValue(IRole role)
+        public Task<IResult> CommandWithRoleValue(IRole role)
         {
             throw new NotImplementedException();
         }
 
         [Command("user-value")]
-        public Task<Result> CommandWithUserValue(IUser value)
+        public Task<IResult> CommandWithUserValue(IUser value)
         {
             throw new NotImplementedException();
         }
 
         [Command("channel-value")]
-        public Task<Result> CommandWithChannelValue(IChannel value)
+        public Task<IResult> CommandWithChannelValue(IChannel value)
         {
             throw new NotImplementedException();
         }
 
         [Command("member-value")]
-        public Task<Result> CommandWithMemberValue(IGuildMember value)
+        public Task<IResult> CommandWithMemberValue(IGuildMember value)
         {
             throw new NotImplementedException();
         }
 
         [Command("enum-value")]
-        public Task<Result> CommandWithEnumValue(TestEnum value)
+        public Task<IResult> CommandWithEnumValue(TestEnum value)
         {
             throw new NotImplementedException();
         }

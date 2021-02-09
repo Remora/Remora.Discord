@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
     public class ValidCommandGroup : CommandGroup
     {
         [Command("top-level-command")]
-        public Task<Result> TopLevelCommand()
+        public Task<IResult> TopLevelCommand()
         {
             throw new NotImplementedException();
         }
@@ -42,7 +42,7 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
         public class TopLevelGroup : CommandGroup
         {
             [Command("first-level-nested")]
-            public Task<Result> FirstLevelNestedCommand()
+            public Task<IResult> FirstLevelNestedCommand()
             {
                 throw new NotImplementedException();
             }
@@ -51,7 +51,7 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
             public class NestedGroup : CommandGroup
             {
                 [Command("second-level-nested")]
-                public Task<Result> SecondLevelNestedCommand()
+                public Task<IResult> SecondLevelNestedCommand()
                 {
                     throw new NotImplementedException();
                 }

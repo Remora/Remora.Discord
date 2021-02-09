@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
     public class TooManyCommandParameters : CommandGroup
     {
         [Command("a")]
-        public Task<Result> A
+        public Task<IResult> A
         (
             int p1,
             int p2,

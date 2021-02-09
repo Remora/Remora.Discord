@@ -33,13 +33,13 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
     public class OverloadsAreNotSupportedInRoot : CommandGroup
     {
         [Command("a")]
-        public Task<Result> A()
+        public Task<IResult> A()
         {
             throw new NotImplementedException();
         }
 
         [Command("a")]
-        public Task<Result> A(int value)
+        public Task<IResult> A(int value)
         {
             throw new NotImplementedException();
         }
