@@ -1,0 +1,392 @@
+{
+  "t": "GUILD_CREATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "channels": [
+      {
+        "type": 0,
+        "topic": "",
+        "rate_limit_per_user": 0,
+        "position": 0,
+        "permission_overwrites": [],
+        "parent_id": "728303464207220816",
+        "name": "general",
+        "last_pin_timestamp": null,
+        "last_message_id": "741260432941121568",
+        "id": "452526315288133646"
+      },
+      {
+        "type": 4,
+        "position": 1,
+        "permission_overwrites": [],
+        "name": "Testing",
+        "id": "728303416350343208"
+      },
+      {
+        "type": 4,
+        "position": 0,
+        "permission_overwrites": [],
+        "name": "Persistent",
+        "id": "728303464207220816"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 1,
+        "permission_overwrites": [],
+        "parent_id": "728303464207220816",
+        "name": "qa",
+        "last_pin_timestamp": "2020-07-03T17:13:38.958000\u002B00:00",
+        "last_message_id": "739485065855107114",
+        "id": "728303704234524744"
+      },
+      {
+        "type": 0,
+        "topic": "",
+        "rate_limit_per_user": 0,
+        "position": 3,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "roleplay-plugin",
+        "last_message_id": "740971319121674341",
+        "id": "728308533665464502"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 2,
+        "permission_overwrites": [],
+        "parent_id": "728303464207220816",
+        "name": "github",
+        "last_message_id": "741205178119880784",
+        "id": "728322710375235594"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 4,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "character-stuff",
+        "last_message_id": "730869792898023424",
+        "id": "728340293941854329"
+      },
+      {
+        "type": 0,
+        "topic": "",
+        "rate_limit_per_user": 0,
+        "position": 5,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "nsfw": true,
+        "name": "mod-and-autorole",
+        "last_message_id": "739486764078727180",
+        "id": "728362711821320302"
+      },
+      {
+        "type": 4,
+        "position": 2,
+        "permission_overwrites": [
+          {
+            "type": 1,
+            "id": "452506031143125003",
+            "deny": "0",
+            "allow": "268435456"
+          }
+        ],
+        "name": "Roleplay test",
+        "id": "728621448943632416"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 10,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "quotes",
+        "last_message_id": "729416011400478740",
+        "id": "728681870010876015"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 11,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "core-plugin",
+        "last_message_id": "730406658676752444",
+        "id": "728698861509541929"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 12,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "kinks-plugin",
+        "last_message_id": "728974449855955024",
+        "id": "728701999486599249"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 13,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "jumbo-emotes",
+        "last_message_id": "728704832726368337",
+        "id": "728703505057054720"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 9,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "mod-log-test",
+        "last_message_id": "731422721715732521",
+        "id": "728719816311046217"
+      },
+      {
+        "type": 0,
+        "topic": "Dedicated roleplay channel for nya. No summary set.",
+        "rate_limit_per_user": 0,
+        "position": 11,
+        "permission_overwrites": [
+          {
+            "type": 1,
+            "id": "108253912766631936",
+            "deny": "68672",
+            "allow": "0"
+          },
+          {
+            "type": 1,
+            "id": "452506031143125003",
+            "deny": "0",
+            "allow": "805829713"
+          },
+          {
+            "type": 0,
+            "id": "452526315288133644",
+            "deny": "68672",
+            "allow": "0"
+          }
+        ],
+        "parent_id": "728621448943632416",
+        "name": "nya-rp",
+        "last_message_id": null,
+        "id": "729395867446149304"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 7,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "autorole-log",
+        "last_message_id": "739490527333974076",
+        "id": "729614843623112765"
+      },
+      {
+        "type": 0,
+        "topic": null,
+        "rate_limit_per_user": 0,
+        "position": 6,
+        "permission_overwrites": [],
+        "parent_id": "728303416350343208",
+        "name": "reaction-room-for-autoroles",
+        "last_message_id": "739485723782283307",
+        "id": "729616555100602428"
+      }
+    ],
+    "premium_subscription_count": 0,
+    "splash": null,
+    "afk_timeout": 300,
+    "explicit_content_filter": 0,
+    "emojis": [
+      {
+        "roles": [],
+        "require_colons": true,
+        "name": "adb",
+        "managed": false,
+        "id": "548554203027734528",
+        "available": true,
+        "animated": false
+      }
+    ],
+    "banner": null,
+    "premium_tier": 0,
+    "members": [
+      {
+        "user": {
+          "username": "Remora",
+          "id": "714902836760019017",
+          "discriminator": "9821",
+          "bot": true,
+          "avatar": null
+        },
+        "roles": [],
+        "premium_since": null,
+        "nick": null,
+        "mute": false,
+        "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
+        "hoisted_role": null,
+        "deaf": false
+      }
+    ],
+    "voice_states": [],
+    "presences": [],
+    "verification_level": 0,
+    "system_channel_flags": 0,
+    "afk_channel_id": null,
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "omitted": false,
+        "hash": "GLnpcR2C2RA"
+      },
+      "metadata": {
+        "omitted": false,
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "omitted": false,
+        "hash": "5rZZdKiPRGI"
+      }
+    },
+    "lazy": true,
+    "application_id": null,
+    "mfa_level": 0,
+    "preferred_locale": "en-US",
+    "name": "Bot Dev",
+    "member_count": 8,
+    "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
+    "unavailable": false,
+    "discovery_splash": null,
+    "icon": null,
+    "large": false,
+    "owner_id": "135347310845624320",
+    "features": [
+      "ANIMATED_ICON",
+      "VERIFIED",
+      "NEWS",
+      "VANITY_URL",
+      "DISCOVERABLE",
+      "ENABLED_DISCOVERABLE_BEFORE",
+      "INVITE_SPLASH",
+      "BANNER",
+      "COMMUNITY"
+    ],
+    "max_video_channel_users": 25,
+    "public_updates_channel_id": null,
+    "default_message_notifications": 0,
+    "system_channel_id": "452526315288133646",
+    "vanity_url_code": null,
+    "description": null,
+    "rules_channel_id": null,
+    "region": "eu-central",
+    "id": "452526315288133644",
+    "roles": [
+      {
+        "position": 0,
+        "permissions": "372624976",
+        "name": "@everyone",
+        "mentionable": false,
+        "managed": false,
+        "id": "452526315288133644",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 9,
+        "permissions": "506985685",
+        "name": "Bot",
+        "mentionable": false,
+        "managed": false,
+        "id": "546251621081022486",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 8,
+        "permissions": "372624976",
+        "name": "Bot Permission Manager",
+        "mentionable": false,
+        "managed": false,
+        "id": "728362120059682948",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 7,
+        "permissions": "372624976",
+        "name": "Bass-test-role",
+        "mentionable": true,
+        "managed": false,
+        "id": "728678096634511412",
+        "hoist": false,
+        "color": 15844367
+      },
+      {
+        "position": 6,
+        "permissions": "372624976",
+        "name": "Cat",
+        "mentionable": true,
+        "managed": false,
+        "id": "729384999236927540",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 5,
+        "permissions": "372624976",
+        "name": "NotCat",
+        "mentionable": true,
+        "managed": false,
+        "id": "729385082359644212",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 2,
+        "permissions": "372624976",
+        "name": "AT-red",
+        "mentionable": false,
+        "managed": false,
+        "id": "731882893961592992",
+        "hoist": false,
+        "color": 16713222
+      },
+      {
+        "position": 3,
+        "permissions": "372624976",
+        "name": "AT-blue",
+        "mentionable": false,
+        "managed": false,
+        "id": "739485104744824903",
+        "hoist": false,
+        "color": 2123412
+      },
+      {
+        "position": 4,
+        "permissions": "372624976",
+        "name": "AT-green",
+        "mentionable": false,
+        "managed": false,
+        "id": "739485235732807762",
+        "hoist": false,
+        "color": 2067276
+      }
+    ]
+  }
+}

@@ -12,6 +12,7 @@
         "NEWS",
         "VANITY_URL",
         "DISCOVERABLE",
+        "ENABLED_DISCOVERABLE_BEFORE",
         "INVITE_SPLASH",
         "BANNER",
         "COMMUNITY"
