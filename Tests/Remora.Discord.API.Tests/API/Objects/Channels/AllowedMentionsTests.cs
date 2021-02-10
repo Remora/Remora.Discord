@@ -20,13 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
     public class AllowedMentionsTests : ObjectTestBase<IAllowedMentions>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions => new
+        (
+            default,
+            default,
+            e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_MENTION_TYPE"
+        );
     }
 }

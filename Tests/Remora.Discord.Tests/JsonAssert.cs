@@ -105,7 +105,9 @@ namespace Remora.Discord.Tests
                 case JsonValueKind.Array:
                 {
                     var actualElements = actual.EnumerateArray().ToList();
-                    var expectedElements = expected.EnumerateArray().ToList();
+                    var expectedElements = expected.EnumerateArray()
+                        .Where(e => !assertOptions.AllowSkip(e))
+                        .ToList();
 
                     for (var i = 0; i < expectedElements.Count; ++i)
                     {

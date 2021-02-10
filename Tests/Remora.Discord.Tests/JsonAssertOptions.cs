@@ -43,18 +43,26 @@ namespace Remora.Discord.Tests
         public Func<JsonProperty, bool> AllowMissingBy { get; }
 
         /// <summary>
+        /// Gets a function that inspects an element and determines if validation of it should be skipped.
+        /// </summary>
+        public Func<JsonElement, bool> AllowSkip { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="JsonAssertOptions"/> class.
         /// </summary>
         /// <param name="allowMissing">The names that are allowed to be missing.</param>
         /// <param name="allowMissingBy">A function that determines if a property is allowed to be missing.</param>
+        /// <param name="allowSkip">A function that determines if validation of an element should be skipped.</param>
         public JsonAssertOptions
         (
             IReadOnlyCollection<string>? allowMissing = default,
-            Func<JsonProperty, bool>? allowMissingBy = default
+            Func<JsonProperty, bool>? allowMissingBy = default,
+            Func<JsonElement, bool>? allowSkip = default
         )
         {
             this.AllowMissing = allowMissing ?? new List<string>();
             this.AllowMissingBy = allowMissingBy ?? (_ => false);
+            this.AllowSkip = allowSkip ?? (_ => false);
         }
 
         /// <summary>

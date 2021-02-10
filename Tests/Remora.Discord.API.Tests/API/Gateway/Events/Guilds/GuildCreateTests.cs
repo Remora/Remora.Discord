@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Tests;
@@ -39,7 +40,9 @@ namespace Remora.Discord.API.Tests.Gateway.Events
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
                 "lazy" // undocumented value
-            }
+            },
+            default,
+            e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
         );
     }
 }
