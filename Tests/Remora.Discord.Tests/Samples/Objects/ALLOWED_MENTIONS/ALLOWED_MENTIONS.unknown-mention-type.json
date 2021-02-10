@@ -1,5 +1,5 @@
 {
-    "parse": [ "roles", "foobar", "users" ],
+    "parse": [ "roles", "REMORA_UNKNOWN_MENTION_TYPE", "users" ],
     "roles": [ "748969255210450984" ],
     "users": [ "748969255210450984" ],
     "replied_user": false
