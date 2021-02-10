@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -51,6 +52,15 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxChoiceValues = 10;
         private const int MaxCommandParameters = 10;
         private const int MaxGroupDepth = 2;
+
+        /// <summary>
+        /// Holds a regular expression that matches valid command names.
+        /// </summary>
+        private static readonly Regex NameRegex = new
+        (
+            "^[\\w-]{1,32}$",
+            RegexOptions.Compiled
+        );
 
         /// <summary>
         /// Converts the command tree to a set of Discord application commands.
@@ -115,6 +125,16 @@ namespace Remora.Discord.Commands.Extensions
                         return createParameterOptions;
                     }
 
+                    if (!NameRegex.IsMatch(command.Key))
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            $"\"{command.Key}\" is not a valid slash command name. " +
+                            "Names must match the regex \"^[\\w-]{{1,32}}$\"",
+                            command
+                        );
+                    }
+
                     option = new ApplicationCommandOption
                     (
                         SubCommand,
@@ -135,6 +155,16 @@ namespace Remora.Discord.Commands.Extensions
                         return new UnsupportedFeatureError
                         (
                             $"A group was nested too deeply (depth {depth}, max {MaxGroupDepth}.",
+                            group
+                        );
+                    }
+
+                    if (!NameRegex.IsMatch(group.Key))
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            $"\"{group.Key}\" is not a valid slash command group name. " +
+                            "Names must match the regex \"^[\\w-]{{1,32}}$\"",
                             group
                         );
                     }

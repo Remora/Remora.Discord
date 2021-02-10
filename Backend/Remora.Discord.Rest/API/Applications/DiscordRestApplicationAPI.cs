@@ -78,11 +78,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.Length is < 3 or > 32)
+            if (name.Length is < 1 or > 32)
             {
                 return new GenericError
                 (
-                    "The name must be between 3 and 32 characters."
+                    "The name must be between 1 and 32 characters."
                 );
             }
 
@@ -136,11 +136,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.HasValue && name.Value.Length is < 3 or > 32)
+            if (name.HasValue && name.Value.Length is < 1 or > 32)
             {
                 return new GenericError
                 (
-                    "The name must be between 3 and 32 characters."
+                    "The name must be between 1 and 32 characters."
                 );
             }
 
@@ -205,11 +205,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.Length is < 3 or > 32)
+            if (name.Length is < 1 or > 32)
             {
                 return new GenericError
                 (
-                    "The name must be between 3 and 32 characters."
+                    "The name must be between 1 and 32 characters."
                 );
             }
 
@@ -265,11 +265,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            if (name.HasValue && name.Value.Length is < 3 or > 32)
+            if (name.HasValue && name.Value.Length is < 1 or > 32)
             {
                 return new GenericError
                 (
-                    "The name must be between 3 and 32 characters."
+                    "The name must be between 1 and 32 characters."
                 );
             }
 
