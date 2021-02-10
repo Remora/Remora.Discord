@@ -49,17 +49,22 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the guild the interaction was sent from.
         /// </summary>
-        Snowflake GuildID { get; }
+        Optional<Snowflake> GuildID { get; }
 
         /// <summary>
         /// Gets the ID of the channel the interaction was sent from.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Optional<Snowflake> ChannelID { get; }
 
         /// <summary>
         /// Gets the guild member that invoked the command.
         /// </summary>
-        IGuildMember Member { get; }
+        Optional<IGuildMember> Member { get; }
+
+        /// <summary>
+        /// Gets the user that invoked the command.
+        /// </summary>
+        Optional<IUser> User { get; }
 
         /// <summary>
         /// Gets a continuation token for responding to the interaction.

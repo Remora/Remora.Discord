@@ -34,10 +34,10 @@ namespace Remora.Discord.Commands.Contexts
     (
         Snowflake ChannelID,
         IUser User,
-        IGuildMember Member,
+        Optional<IGuildMember> Member,
         string Token,
         Snowflake ID,
-        Snowflake GuildID
+        Optional<Snowflake> GuildID
     )
     : CommandContext(ChannelID, User);
 }

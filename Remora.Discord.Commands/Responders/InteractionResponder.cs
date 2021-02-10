@@ -87,7 +87,20 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.Member.User.HasValue)
+            if (!gatewayEvent.ChannelID.HasValue)
+            {
+                return Result.FromSuccess();
+            }
+
+            var user = gatewayEvent.User.HasValue
+                ? gatewayEvent.User.Value
+                : gatewayEvent.Member.HasValue
+                    ? gatewayEvent.Member.Value.User.HasValue
+                        ? gatewayEvent.Member.Value.User.Value
+                        : null
+                    : null;
+
+            if (user is null)
             {
                 return Result.FromSuccess();
             }
@@ -112,8 +125,8 @@ namespace Remora.Discord.Commands.Responders
 
             var context = new InteractionContext
             (
-                gatewayEvent.ChannelID,
-                gatewayEvent.Member.User.Value!,
+                gatewayEvent.ChannelID.Value,
+                user,
                 gatewayEvent.Member,
                 gatewayEvent.Token,
                 gatewayEvent.ID,
