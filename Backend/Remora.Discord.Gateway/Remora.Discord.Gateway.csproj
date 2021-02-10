@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.2.3</Version>
+        <Version>3.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,6 +13,9 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
+            Replace the result types used, porting the library to Remora.Results 2.0.
+            Update slash command name limitations.
+            Implement support for DM slash commands.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
