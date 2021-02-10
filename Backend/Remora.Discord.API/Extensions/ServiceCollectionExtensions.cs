@@ -196,11 +196,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
-                .WithPropertyConverter
-                (
-                    g => g.GuildFeatures,
-                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
-                )
+                .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -209,11 +205,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
-                .WithPropertyConverter
-                (
-                    g => g.GuildFeatures,
-                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
-                )
+                .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -374,7 +366,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
                 .WithPropertyName(a => a.MentionRepliedUser, "replied_user")
-                .WithPropertyConverter(m => m.Parse, new StringEnumConverter<MentionType>(new SnakeCaseNamingPolicy()));
+                .WithPropertyConverter(m => m.Parse, new StringEnumListConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
             options.AddDataObjectConverter<IFollowedChannel, FollowedChannel>();
 
@@ -425,11 +417,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IGuild, Guild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
-                .WithPropertyConverter
-                (
-                    g => g.GuildFeatures,
-                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
-                )
+                .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -438,11 +426,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
                 .WithPropertyName(g => g.GuildFeatures, "features")
-                .WithPropertyConverter
-                (
-                    g => g.GuildFeatures,
-                    new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
-                )
+                .WithPropertyConverter(g => g.GuildFeatures, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)))
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
@@ -467,10 +451,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IPruneCount, PruneCount>();
             options.AddDataObjectConverter<IBan, Ban>();
             options.AddDataObjectConverter<IGuildPreview, GuildPreview>()
-                .WithPropertyConverter
-                (
-                    p => p.Features, new StringEnumConverter<GuildFeature>(new SnakeCaseNamingPolicy(true))
-                );
+                .WithPropertyConverter(p => p.Features, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)));
 
             options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
                 .WithPropertyName(w => w.IsEnabled, "enabled");

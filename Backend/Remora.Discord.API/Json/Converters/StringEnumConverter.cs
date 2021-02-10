@@ -41,26 +41,22 @@ namespace Remora.Discord.API.Json
         private readonly Dictionary<TEnum, string> _enumsToNames;
         private readonly Dictionary<string, TEnum> _namesToEnums;
 
-        private readonly bool _caseSensitive;
         private readonly bool _asInteger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringEnumConverter{TEnum}"/> class.
         /// </summary>
         /// <param name="namingPolicy">The naming policy to use.</param>
-        /// <param name="caseSensitive">Whether parsing should be case sensitive.</param>
         /// <param name="asInteger">Whether to convert the value as a string-serialized integer.</param>
         public StringEnumConverter
         (
             JsonNamingPolicy? namingPolicy = null,
-            bool caseSensitive = false,
             bool asInteger = false
         )
         {
             _enumsToNames = new Dictionary<TEnum, string>();
             _namesToEnums = new Dictionary<string, TEnum>();
 
-            _caseSensitive = caseSensitive;
             _asInteger = asInteger;
 
             foreach (var value in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
@@ -94,11 +90,6 @@ namespace Remora.Discord.API.Json
 
                     if (!_namesToEnums.TryGetValue(value, out result))
                     {
-                        if (_caseSensitive)
-                        {
-                            throw new JsonException("Failed to deserialize an enumeration value.");
-                        }
-
                         var caseInsensitiveKey = _namesToEnums.Keys.FirstOrDefault
                         (
                             s => s.Equals(value, StringComparison.OrdinalIgnoreCase)
