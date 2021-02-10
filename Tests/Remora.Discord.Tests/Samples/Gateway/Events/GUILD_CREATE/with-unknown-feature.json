@@ -285,7 +285,7 @@
       "ENABLED_DISCOVERABLE_BEFORE",
       "INVITE_SPLASH",
       "BANNER",
-      "UNKNOWN_FEATURE",
+      "REMORA_UNKNOWN_FEATURE",
       "COMMUNITY"
     ],
     "max_video_channel_users": 25,
