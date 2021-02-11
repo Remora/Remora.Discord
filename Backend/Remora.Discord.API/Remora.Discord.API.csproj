@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>7.0.0</Version>
+        <Version>8.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,9 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Replace the result types used, porting the library to Remora.Results 2.0.
-            Update slash command name limitations.
-            Implement support for DM slash commands.
+            Fix optionality of PremiumSince (again).
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
