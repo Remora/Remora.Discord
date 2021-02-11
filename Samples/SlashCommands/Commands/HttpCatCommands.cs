@@ -62,7 +62,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("cat")]
         [Description("Posts a cat image that represents the given error code.")]
-        public async Task<Result> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
+        public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Image: embedImage);
@@ -86,11 +86,14 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("user-cat")]
         [Description("Posts a cat image that matches the user.")]
-        public Task<Result> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
+        public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
         {
             if (!catUser.User.HasValue)
             {
-                return Task.FromResult<Result>(new GenericError("No user field in the guild member??"));
+                return Task.FromResult<IResult>
+                (
+                    Result.FromError(new GenericError("No user field in the guild member??"))
+                );
             }
 
             var modulo = (int)(catUser.User.Value.ID.Value % 999);

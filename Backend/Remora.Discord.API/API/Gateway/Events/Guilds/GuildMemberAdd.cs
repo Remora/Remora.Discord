@@ -44,7 +44,7 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<string?> nickname,
             IReadOnlyList<Snowflake> roles,
             DateTimeOffset joinedAt,
-            DateTimeOffset? premiumSince,
+            Optional<DateTimeOffset?> premiumSince,
             bool isDeafened,
             bool isMuted,
             Optional<bool?> isPending,

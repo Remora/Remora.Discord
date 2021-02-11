@@ -71,7 +71,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         /// <param name="value">The command to send to the online service.</param>
         /// <returns>The result of the operation.</returns>
         [Command("roll")]
-        public async Task<Result> RollDiceAsync(string value)
+        public async Task<IResult> RollDiceAsync(string value)
         {
             var rollRequests = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (rollRequests.Length == 0)
