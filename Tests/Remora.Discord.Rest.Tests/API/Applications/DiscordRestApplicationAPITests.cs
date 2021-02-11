@@ -126,7 +126,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
                 var applicationID = new Snowflake(0);
-                var name = new string('a', 2);
+                var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
 
@@ -370,7 +370,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commandID = new Snowflake(1);
 
-                var name = new string('a', 2);
+                var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
 
@@ -663,7 +663,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
 
-                var name = new string('a', 2);
+                var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
 
@@ -946,7 +946,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commandID = new Snowflake(2);
 
-                var name = new string('a', 2);
+                var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
 
