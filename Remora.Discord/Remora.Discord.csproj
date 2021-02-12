@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.1</Version>
+        <Version>3.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -19,6 +19,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Hosting\Remora.Discord.Hosting.csproj" />
     </ItemGroup>
 
 </Project>
