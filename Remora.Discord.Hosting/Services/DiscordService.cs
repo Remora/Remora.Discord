@@ -75,16 +75,12 @@ namespace Remora.Discord.Hosting.Services
                         case GatewayWebSocketError:
                         case GatewayDiscordError:
                         {
-                            _logger.LogError(runResult.Error.Message);
+                            _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
                             break;
                         }
                         default:
                         {
-                            _logger.LogError
-                            (
-                                "Unknown error: {Message}",
-                                runResult.Error.Message
-                            );
+                            _logger.LogError("Unknown error: {Message}", runResult.Error.Message);
                             break;
                         }
                     }
