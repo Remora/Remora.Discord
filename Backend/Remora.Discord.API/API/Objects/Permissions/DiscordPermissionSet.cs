@@ -21,10 +21,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
@@ -120,10 +122,107 @@ namespace Remora.Discord.API.Objects
             return isBitSet;
         }
 
+        /// <summary>
+        /// Computes a full permission set, taking roles and overwrites into account.
+        /// </summary>
+        /// <param name="memberID">The ID of the member.</param>
+        /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
+        /// <param name="memberRoles">The roles that the user has, if any.</param>
+        /// <param name="overwrites">The channel overwrites currently in effect, if any.</param>
+        /// <returns>The true permission set.</returns>
+        public static IDiscordPermissionSet ComputePermissions
+        (
+            Snowflake memberID,
+            IRole everyoneRole,
+            IReadOnlyList<IRole> memberRoles,
+            IReadOnlyList<IPermissionOverwrite>? overwrites = default
+        )
+        {
+            overwrites ??= Array.Empty<IPermissionOverwrite>();
+
+            // Start calculations with the everyone role
+            var basePermissions = everyoneRole.Permissions.Value;
+            foreach (var memberRole in memberRoles)
+            {
+                basePermissions |= memberRole.Permissions.Value;
+            }
+
+            // Apply the everyone role overwrites, if applicable
+            var everyoneOverwrite = overwrites.FirstOrDefault(o => o.ID == everyoneRole.ID);
+            if (everyoneOverwrite is not null)
+            {
+                basePermissions &= ~everyoneOverwrite.Deny.Value;
+                basePermissions |= everyoneOverwrite.Allow.Value;
+            }
+
+            // Apply role overwrites, if applicable
+            var rolesAllow = BigInteger.Zero;
+            var rolesDeny = BigInteger.Zero;
+
+            foreach (var roleOverwrite in overwrites.Where(o => memberRoles.Any(r => r.ID == o.ID)))
+            {
+                rolesAllow |= roleOverwrite.Allow.Value;
+                rolesDeny |= roleOverwrite.Deny.Value;
+            }
+
+            basePermissions &= ~rolesDeny;
+            basePermissions |= rolesAllow;
+
+            // Apply member overwrites, if applicable
+            var memberOverwrite = overwrites.FirstOrDefault(o => o.ID == memberID);
+
+            // ReSharper disable once InvertIf
+            if (memberOverwrite is not null)
+            {
+                basePermissions &= ~memberOverwrite.Deny.Value;
+                basePermissions |= memberOverwrite.Allow.Value;
+            }
+
+            return new DiscordPermissionSet(basePermissions);
+        }
+
         /// <inheritdoc />
         public bool HasPermission(DiscordTextPermission permission) => HasPermission((DiscordPermission)permission);
 
         /// <inheritdoc />
         public bool HasPermission(DiscordVoicePermission permission) => HasPermission((DiscordPermission)permission);
+
+        /// <summary>Determines whether the specified object is equal to the current object.</summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns>
+        /// <see langword="true" /> if the specified object  is equal to the current object; otherwise,
+        /// <see langword="false" />.
+        /// </returns>
+        protected bool Equals(DiscordPermissionSet other)
+        {
+            return this.Value.Equals(other.Value);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((DiscordPermissionSet)obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
+        }
     }
 }
