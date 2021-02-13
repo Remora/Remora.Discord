@@ -20,10 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Numerics;
+using Moq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Core;
 using Xunit;
 
 #pragma warning disable CS1591, SA1600
@@ -94,6 +97,216 @@ namespace Remora.Discord.API.Tests.Objects
             var permission = DiscordVoicePermission.ManageChannels;
 
             Assert.False(permissions.HasPermission(permission));
+        }
+
+        [Fact]
+        public void CanComputeMemberPermissions()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneRoleMock = new Mock<IRole>();
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneRoleMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions
+            (
+                memberID,
+                everyoneRole,
+                Array.Empty<IRole>()
+            );
+
+            var expected = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanComputeMemberPermissionsWithMemberAllowOverwrites()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneRoleMock = new Mock<IRole>();
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneRoleMock.Object;
+
+            var memberAllow = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
+            var memberOverwriteMock = new Mock<IPermissionOverwrite>();
+            memberOverwriteMock.SetupGet(o => o.ID).Returns(memberID);
+            memberOverwriteMock.SetupGet(o => o.Allow).Returns(memberAllow);
+            memberOverwriteMock.SetupGet(o => o.Deny).Returns(new DiscordPermissionSet(BigInteger.Zero));
+
+            var memberOverwrite = memberOverwriteMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions
+            (
+                memberID,
+                everyoneRole,
+                Array.Empty<IRole>(),
+                new[] { memberOverwrite }
+            );
+
+            var expected = new DiscordPermissionSet
+            (
+                DiscordTextPermission.SendMessages,
+                DiscordTextPermission.MentionEveryone
+            );
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanComputeMemberPermissionsWithMemberDenyOverwrites()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneRoleMock = new Mock<IRole>();
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneRoleMock.Object;
+
+            var memberDeny = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var memberOverwriteMock = new Mock<IPermissionOverwrite>();
+            memberOverwriteMock.SetupGet(o => o.ID).Returns(memberID);
+            memberOverwriteMock.SetupGet(o => o.Allow).Returns(new DiscordPermissionSet(BigInteger.Zero));
+            memberOverwriteMock.SetupGet(o => o.Deny).Returns(memberDeny);
+
+            var memberOverwrite = memberOverwriteMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions
+            (
+                memberID,
+                everyoneRole,
+                Array.Empty<IRole>(),
+                new[] { memberOverwrite }
+            );
+
+            var expected = new DiscordPermissionSet(BigInteger.Zero);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanComputeMemberWithRolePermissions()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneRoleMock = new Mock<IRole>();
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneRoleMock.Object;
+
+            var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
+            var roleMock = new Mock<IRole>();
+            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
+
+            var role = roleMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions(memberID, everyoneRole, new[] { role });
+
+            var expected = new DiscordPermissionSet
+            (
+                DiscordTextPermission.SendMessages,
+                DiscordTextPermission.MentionEveryone
+            );
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanComputeMemberPermissionsWithRoleAllowOverwrites()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneMock = new Mock<IRole>();
+            everyoneMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneMock.Object;
+
+            var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
+            var roleMock = new Mock<IRole>();
+            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
+
+            var role = roleMock.Object;
+
+            var roleAllow = new DiscordPermissionSet(DiscordTextPermission.AddReactions);
+            var roleOverwriteMock = new Mock<IPermissionOverwrite>();
+            roleOverwriteMock.SetupGet(o => o.ID).Returns(role.ID);
+            roleOverwriteMock.SetupGet(o => o.Allow).Returns(roleAllow);
+            roleOverwriteMock.SetupGet(o => o.Deny).Returns(new DiscordPermissionSet(BigInteger.Zero));
+
+            var roleOverwrite = roleOverwriteMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions
+            (
+                memberID,
+                everyoneRole,
+                new[] { role },
+                new[] { roleOverwrite }
+            );
+
+            var expected = new DiscordPermissionSet
+            (
+                DiscordTextPermission.SendMessages,
+                DiscordTextPermission.MentionEveryone,
+                DiscordTextPermission.AddReactions
+            );
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanComputeMemberPermissionsWithRoleDenyOverwrites()
+        {
+            var memberID = new Snowflake(0);
+
+            var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
+            var everyoneRoleMock = new Mock<IRole>();
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
+
+            var everyoneRole = everyoneRoleMock.Object;
+
+            var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
+            var roleMock = new Mock<IRole>();
+            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
+
+            var role = roleMock.Object;
+
+            var roleDeny = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
+            var roleOverwriteMock = new Mock<IPermissionOverwrite>();
+            roleOverwriteMock.SetupGet(o => o.ID).Returns(role.ID);
+            roleOverwriteMock.SetupGet(o => o.Allow).Returns(new DiscordPermissionSet(BigInteger.Zero));
+            roleOverwriteMock.SetupGet(o => o.Deny).Returns(roleDeny);
+
+            var roleOverwrite = roleOverwriteMock.Object;
+
+            var actual = DiscordPermissionSet.ComputePermissions
+            (
+                memberID,
+                everyoneRole,
+                new[] { role },
+                new[] { roleOverwrite }
+            );
+
+            var expected = new DiscordPermissionSet
+            (
+                DiscordTextPermission.SendMessages
+            );
+
+            Assert.Equal(expected, actual);
         }
     }
 }
