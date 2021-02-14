@@ -113,7 +113,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(endpoint));
                         }
                     }
                 }
@@ -146,7 +146,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(endpoint));
                         }
                     }
                 }
@@ -205,7 +205,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(payload));
                         }
                     }
                 }
@@ -238,7 +238,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(payload));
                         }
                     }
                 }
@@ -374,7 +374,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(d));
                         }
                     }
                 }
@@ -407,7 +407,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                         }
                         default:
                         {
-                            throw new ArgumentOutOfRangeException();
+                            throw new ArgumentOutOfRangeException(nameof(d));
                         }
                     }
                 }

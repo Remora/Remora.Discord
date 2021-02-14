@@ -139,7 +139,7 @@ namespace Remora.Discord.Tests
                 }
                 default:
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(expected));
                 }
             }
         }
