@@ -37,7 +37,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
         (
             new[]
             {
-                "hoisted_role", // internal discord value
+                "hoisted_role" // internal discord value
             }
         );
     }

@@ -395,7 +395,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             new[]
                             {
                                 new KeyValuePair<string, string>("limit", limit.ToString()),
-                                new KeyValuePair<string, string>("before", before.ToString()),
+                                new KeyValuePair<string, string>("before", before.ToString())
                             }
                         )
                         .Respond("application/json", "[ ]")
@@ -425,7 +425,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             new[]
                             {
                                 new KeyValuePair<string, string>("limit", limit.ToString()),
-                                new KeyValuePair<string, string>("after", after.ToString()),
+                                new KeyValuePair<string, string>("after", after.ToString())
                             }
                         )
                         .Respond("application/json", "[ ]")
@@ -455,7 +455,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             new[]
                             {
                                 new KeyValuePair<string, string>("limit", limit.ToString()),
-                                new KeyValuePair<string, string>("around", around.ToString()),
+                                new KeyValuePair<string, string>("around", around.ToString())
                             }
                         )
                         .Respond("application/json", "[ ]")

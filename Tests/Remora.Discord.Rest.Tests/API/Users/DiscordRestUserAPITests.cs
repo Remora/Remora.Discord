@@ -214,7 +214,7 @@ namespace Remora.Discord.Rest.Tests.API.Users
                             {
                                 new KeyValuePair<string, string>("before", before.ToString()),
                                 new KeyValuePair<string, string>("after", after.ToString()),
-                                new KeyValuePair<string, string>("limit", limit.ToString()),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
                             }
                         )
                         .Respond("application/json", "[]")

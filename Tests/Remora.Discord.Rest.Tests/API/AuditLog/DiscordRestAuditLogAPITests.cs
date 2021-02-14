@@ -74,7 +74,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                                     new KeyValuePair<string, string>("user_id", userID.ToString()),
                                     new KeyValuePair<string, string>("action_type", ((int)actionType).ToString()),
                                     new KeyValuePair<string, string>("before", before.ToString()),
-                                    new KeyValuePair<string, string>("limit", limit.ToString()),
+                                    new KeyValuePair<string, string>("limit", limit.ToString())
                                 }
                             )
                             .Respond("application/json", response)

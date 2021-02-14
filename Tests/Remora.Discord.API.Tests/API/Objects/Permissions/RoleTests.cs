@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Tests.Objects
         (
             new[]
             {
-                "permissions_new", // aliased and collapsed to just "permissions"
+                "permissions_new" // aliased and collapsed to just "permissions"
             }
         );
     }

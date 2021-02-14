@@ -669,7 +669,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     (new Snowflake(1), 1),
                     (new Snowflake(2), 2),
                     (new Snowflake(3), 3),
-                    (new Snowflake(4), 4),
+                    (new Snowflake(4), 4)
                 };
 
                 var api = CreateAPI
@@ -745,7 +745,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     (new Snowflake(1), null),
                     (new Snowflake(2), null),
                     (new Snowflake(3), null),
-                    (new Snowflake(4), null),
+                    (new Snowflake(4), null)
                 };
 
                 var api = CreateAPI
@@ -1411,7 +1411,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     (new Snowflake(1), 1),
                     (new Snowflake(2), 2),
                     (new Snowflake(3), 3),
-                    (new Snowflake(4), 4),
+                    (new Snowflake(4), 4)
                 };
 
                 var api = CreateAPI
@@ -1595,7 +1595,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             new[]
                             {
                                 new KeyValuePair<string, string>("days", days.ToString()),
-                                new KeyValuePair<string, string>("include_roles", string.Join(',', includeRoles)),
+                                new KeyValuePair<string, string>("include_roles", string.Join(',', includeRoles))
                             }
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IPruneCount)])

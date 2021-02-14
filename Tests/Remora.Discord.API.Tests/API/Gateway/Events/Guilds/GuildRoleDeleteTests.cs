@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
         (
             new[]
             {
-                "guild_hashes", // internal discord value
+                "guild_hashes" // internal discord value
             }
         );
     }
