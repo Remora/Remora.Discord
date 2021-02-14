@@ -818,7 +818,8 @@ namespace Remora.Discord.Gateway
             );
 
             // Push resumed events onto the queue
-            while (true)
+            var resuming = true;
+            while (resuming)
             {
                 if (ct.IsCancellationRequested)
                 {
@@ -831,22 +832,24 @@ namespace Remora.Discord.Gateway
                     return Result.FromError(new GenericError("Failed to receive a payload."), receiveEvent);
                 }
 
-                if (receiveEvent.Entity is IPayload<IHeartbeatAcknowledge>)
+                switch (receiveEvent.Entity)
                 {
-                    continue;
-                }
+                    case IPayload<IHeartbeatAcknowledge>:
+                    {
+                        continue;
+                    }
+                    case IPayload<IInvalidSession>:
+                    {
+                        _log.LogInformation("Resume rejected by the gateway");
 
-                if (receiveEvent.Entity is IPayload<IInvalidSession>)
-                {
-                    _log.LogInformation("Resume rejected by the gateway");
-
-                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
-                    return await CreateNewSessionAsync(ct);
-                }
-
-                if (receiveEvent.Entity is IPayload<IResumed>)
-                {
-                    break;
+                        await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                        return await CreateNewSessionAsync(ct);
+                    }
+                    case IPayload<IResumed>:
+                    {
+                        resuming = false;
+                        break;
+                    }
                 }
 
                 _receivedPayloads.Enqueue(receiveEvent.Entity);
