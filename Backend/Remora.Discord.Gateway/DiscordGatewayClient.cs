@@ -1002,7 +1002,7 @@ namespace Remora.Discord.Gateway
                     // Signal the governor task that a reconnection is requested, if necessary.
                     switch (receivedPayload.Entity)
                     {
-                        case IPayload<IReconnect> _:
+                        case IPayload<IReconnect>:
                         {
                             _shouldReconnect = true;
                             _isSessionResumable = true;
@@ -1016,7 +1016,7 @@ namespace Remora.Discord.Gateway
 
                             break;
                         }
-                        case IPayload<IHeartbeat> _:
+                        case IPayload<IHeartbeat>:
                         {
                             SubmitCommandAsync(new HeartbeatAcknowledge());
                             continue;
