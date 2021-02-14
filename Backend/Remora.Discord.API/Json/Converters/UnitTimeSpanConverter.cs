@@ -55,33 +55,15 @@ namespace Remora.Discord.API.Json
                 throw new JsonException();
             }
 
-            switch (_unit)
+            return _unit switch
             {
-                case TimeUnit.Days:
-                {
-                    return TimeSpan.FromDays(value);
-                }
-                case TimeUnit.Hours:
-                {
-                    return TimeSpan.FromHours(value);
-                }
-                case TimeUnit.Minutes:
-                {
-                    return TimeSpan.FromMinutes(value);
-                }
-                case TimeUnit.Seconds:
-                {
-                    return TimeSpan.FromSeconds(value);
-                }
-                case TimeUnit.Milliseconds:
-                {
-                    return TimeSpan.FromMilliseconds(value);
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-            }
+                TimeUnit.Days => TimeSpan.FromDays(value),
+                TimeUnit.Hours => TimeSpan.FromHours(value),
+                TimeUnit.Minutes => TimeSpan.FromMinutes(value),
+                TimeUnit.Seconds => TimeSpan.FromSeconds(value),
+                TimeUnit.Milliseconds => TimeSpan.FromMilliseconds(value),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         /// <inheritdoc />
