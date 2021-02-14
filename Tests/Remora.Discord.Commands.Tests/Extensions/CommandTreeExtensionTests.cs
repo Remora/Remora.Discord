@@ -290,7 +290,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         var command = commands!.FirstOrDefault(c => c.Name == commandName);
                         Assert.NotNull(command);
 
-                        var parameter = command!.Options.Value!.First();
+                        var parameter = command!.Options.Value![0];
                         Assert.Equal(type, parameter.Type);
                     }
 
@@ -318,7 +318,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     AssertExistsWithType("enum-value", String);
                     var enumCommand = commands!.First(c => c.Name == "enum-value");
-                    var enumParameter = enumCommand.Options.Value!.First();
+                    var enumParameter = enumCommand.Options.Value![0];
                     Assert.True(enumParameter.Choices.HasValue);
 
                     var enumChoices = enumParameter.Choices.Value!;
@@ -357,12 +357,12 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     Assert.NotNull(commands);
 
                     var requiredCommand = commands!.First(c => c.Name == "required");
-                    var requiredParameter = requiredCommand.Options.Value!.First();
+                    var requiredParameter = requiredCommand.Options.Value![0];
                     Assert.True(requiredParameter.IsRequired.HasValue);
                     Assert.True(requiredParameter.IsRequired.Value);
 
                     var optionalCommand = commands!.First(c => c.Name == "optional");
-                    var optionalParameter = optionalCommand.Options.Value!.First();
+                    var optionalParameter = optionalCommand.Options.Value![0];
                     if (optionalParameter.IsRequired.HasValue)
                     {
                         Assert.False(optionalParameter.IsRequired.Value);

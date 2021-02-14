@@ -153,6 +153,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         /// <inheritdoc />
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             _httpClient.Dispose();
         }
     }

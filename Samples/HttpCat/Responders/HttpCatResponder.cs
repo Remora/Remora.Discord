@@ -78,6 +78,7 @@ namespace Remora.Discord.Samples.HttpCat.Responders
         /// <inheritdoc />
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             _httpClient.Dispose();
         }
     }
