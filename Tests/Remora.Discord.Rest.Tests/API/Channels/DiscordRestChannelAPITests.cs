@@ -519,7 +519,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
 
                 var expectedQueryStringParameters = new List<KeyValuePair<string, string>>
                 {
-                    new KeyValuePair<string, string>("limit", limit.ToString())
+                    new("limit", limit.ToString())
                 };
 
                 if (around.HasValue)

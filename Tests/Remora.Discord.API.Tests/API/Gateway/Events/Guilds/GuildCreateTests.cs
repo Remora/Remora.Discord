@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class GuildCreateTests : GatewayEventTestBase<IGuildCreate>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        protected override JsonAssertOptions AssertOptions { get; } = new
         (
             new[]
             {

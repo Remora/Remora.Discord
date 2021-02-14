@@ -32,8 +32,7 @@ namespace Remora.Discord.Rest.Tests.Json
     /// </summary>
     public class JsonElementMatcherBuilder
     {
-        private readonly List<Func<JsonElement, bool>> _matchers
-            = new List<Func<JsonElement, bool>>();
+        private readonly List<Func<JsonElement, bool>> _matchers = new();
 
         /// <summary>
         /// Adds a requirement that the element should be an object, with optional additional requirements.
@@ -435,7 +434,7 @@ namespace Remora.Discord.Rest.Tests.Json
         /// <returns>The built element matcher.</returns>
         public JsonElementMatcher Build()
         {
-            return new JsonElementMatcher(_matchers);
+            return new(_matchers);
         }
     }
 }

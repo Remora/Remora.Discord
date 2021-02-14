@@ -43,8 +43,8 @@ namespace Remora.Discord.API.Json
         /// <param name="namingPolicy">The naming policy to be used to translate JSON values into enum values, and vice-versa.</param>
         public StringEnumListConverter(JsonNamingPolicy namingPolicy)
         {
-            _enumValuesByJsonValue = new();
-            _jsonValuesByEnumValue = new();
+            _enumValuesByJsonValue = new Dictionary<string, TEnum>();
+            _jsonValuesByEnumValue = new Dictionary<TEnum, string>();
 
             foreach (var enumValue in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
             {

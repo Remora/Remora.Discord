@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class MessageReactionRemoveTests : GatewayEventTestBase<IMessageReactionRemove>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new JsonAssertOptions
+        protected override JsonAssertOptions AssertOptions { get; } = new
         (
             new[]
             {

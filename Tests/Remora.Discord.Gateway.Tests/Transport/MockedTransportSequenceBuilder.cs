@@ -164,6 +164,6 @@ namespace Remora.Discord.Gateway.Tests.Transport
         /// Builds the transport sequence.
         /// </summary>
         /// <returns>The transport sequence.</returns>
-        public MockedTransportSequence Build() => new MockedTransportSequence(_sequence);
+        public MockedTransportSequence Build() => new(_sequence);
     }
 }

@@ -32,8 +32,7 @@ namespace Remora.Discord.Rest.Tests.Json
     /// </summary>
     public class JsonArrayMatcherBuilder
     {
-        private readonly List<Func<JsonElement.ArrayEnumerator, bool>> _matchers
-            = new List<Func<JsonElement.ArrayEnumerator, bool>>();
+        private readonly List<Func<JsonElement.ArrayEnumerator, bool>> _matchers = new();
 
         /// <summary>
         /// Adds a requirement that the array is of an exact length.
@@ -127,7 +126,7 @@ namespace Remora.Discord.Rest.Tests.Json
         /// <returns>The built array matcher.</returns>
         public JsonArrayMatcher Build()
         {
-            return new JsonArrayMatcher(_matchers);
+            return new(_matchers);
         }
     }
 }

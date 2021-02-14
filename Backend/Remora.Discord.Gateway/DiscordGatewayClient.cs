@@ -170,7 +170,7 @@ namespace Remora.Discord.Gateway
 
             _connectionStatus = GatewayConnectionStatus.Offline;
 
-            _disconnectRequestedSource = new();
+            _disconnectRequestedSource = new CancellationTokenSource();
             _sendTask = Task.FromResult(Result.FromSuccess());
             _receiveTask = Task.FromResult(Result.FromSuccess());
         }
@@ -269,7 +269,7 @@ namespace Remora.Discord.Gateway
 
                     // This token's been cancelled, we'll need a new one to reconnect.
                     _disconnectRequestedSource.Dispose();
-                    _disconnectRequestedSource = new();
+                    _disconnectRequestedSource = new CancellationTokenSource();
                 }
 
                 var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
@@ -541,7 +541,7 @@ namespace Remora.Discord.Gateway
 
             // Set up the state for the new connection
             _disconnectRequestedSource.Dispose();
-            _disconnectRequestedSource = new();
+            _disconnectRequestedSource = new CancellationTokenSource();
             _connectionStatus = GatewayConnectionStatus.Disconnected;
 
             return Result.FromSuccess();

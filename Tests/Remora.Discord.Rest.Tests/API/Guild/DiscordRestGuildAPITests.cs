@@ -1581,9 +1581,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var days = 2;
                 var includeRoles = new List<Snowflake>
                 {
-                    new Snowflake(1),
-                    new Snowflake(2),
-                    new Snowflake(3)
+                    new(1),
+                    new(2),
+                    new(3)
                 };
 
                 var api = CreateAPI
