@@ -760,7 +760,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                 }
 
                                 var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
-                                if (streamContent is null || streamContent.Headers.ContentDisposition is null)
+                                if (streamContent?.Headers.ContentDisposition is null)
                                 {
                                     return false;
                                 }
@@ -1070,7 +1070,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                 }
 
                                 var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
-                                if (streamContent is null || streamContent.Headers.ContentDisposition is null)
+                                if (streamContent?.Headers.ContentDisposition is null)
                                 {
                                     return false;
                                 }
