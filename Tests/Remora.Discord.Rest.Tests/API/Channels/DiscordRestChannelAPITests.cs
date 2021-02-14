@@ -461,7 +461,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", "[ ]")
                 );
 
-                var result = await api.GetChannelMessagesAsync(channelId, around: around, limit: limit);
+                var result = await api.GetChannelMessagesAsync(channelId, around, limit: limit);
                 ResultAssert.Successful(result);
             }
 
