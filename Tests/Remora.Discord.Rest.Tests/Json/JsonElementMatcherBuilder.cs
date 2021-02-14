@@ -24,12 +24,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Rest.Tests.Json
 {
     /// <summary>
     /// Builds instances of the <see cref="JsonElementMatcher"/> class.
     /// </summary>
+    [PublicAPI]
     public class JsonElementMatcherBuilder
     {
         private readonly List<Func<JsonElement, bool>> _matchers = new();

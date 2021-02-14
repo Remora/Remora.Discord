@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
@@ -37,6 +38,7 @@ namespace Remora.Discord.Commands.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="IServiceCollection"/> interface.
     /// </summary>
+    [PublicAPI]
     public static class ServiceCollectionExtensions
     {
         /// <summary>

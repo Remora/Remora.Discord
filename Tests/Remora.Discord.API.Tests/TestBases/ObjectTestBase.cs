@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Tests.Services;
 
 namespace Remora.Discord.API.Tests.TestBases
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Tests.TestBases
     /// Tests the <typeparamref name="TType"/> type.
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
+    [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
     public abstract class ObjectTestBase<TType>
         : JsonBackedTypeTestBase<TType, SampleObjectDataSource<TType>>
     {

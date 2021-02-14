@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using JetBrains.Annotations;
 using Remora.Discord.Gateway.Transport;
 
 namespace Remora.Discord.Gateway.Tests.Transport
@@ -30,6 +31,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
     /// <summary>
     /// Builds a mocked transport service.
     /// </summary>
+    [PublicAPI]
     public class MockedTransportServiceBuilder
     {
         private readonly MockedTransportServiceOptions _serviceOptions = new();
