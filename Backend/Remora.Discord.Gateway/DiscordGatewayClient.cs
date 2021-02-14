@@ -921,7 +921,7 @@ namespace Remora.Discord.Gateway
                     if (!_payloadsToSend.TryDequeue(out var payload))
                     {
                         // Let's sleep for a little while
-                        var maxSleepTime = (lastHeartbeat.Value + heartbeatInterval - safetyMargin) - now;
+                        var maxSleepTime = lastHeartbeat.Value + heartbeatInterval - safetyMargin - now;
                         var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
 
                         await Task.Delay(sleepTime, disconnectRequested);
