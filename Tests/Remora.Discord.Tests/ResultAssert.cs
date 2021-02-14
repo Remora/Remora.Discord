@@ -33,8 +33,9 @@ namespace Remora.Discord.Tests
         /// <summary>
         /// Asserts that the given result is successful.
         /// </summary>
+        /// <typeparam name="TResult">The result type to inspect.</typeparam>
         /// <param name="result">The result.</param>
-        public static void Successful(IResult result)
+        public static void Successful<TResult>(TResult result) where TResult : struct, IResult
         {
             Assert.True
             (
@@ -46,8 +47,9 @@ namespace Remora.Discord.Tests
         /// <summary>
         /// Asserts that a given result is unsuccessful.
         /// </summary>
+        /// <typeparam name="TResult">The result type to inspect.</typeparam>
         /// <param name="result">The result.</param>
-        public static void Unsuccessful(IResult result)
+        public static void Unsuccessful<TResult>(TResult result) where TResult : struct, IResult
         {
             Assert.False(result.IsSuccess, "The result was successful.");
         }
