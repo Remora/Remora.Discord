@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.0.2</Version>
+        <Version>6.0.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,6 +13,7 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
+            Fix a number of double service registrations.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
