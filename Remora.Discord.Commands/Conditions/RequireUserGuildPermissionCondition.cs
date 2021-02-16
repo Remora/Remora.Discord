@@ -104,6 +104,8 @@ namespace Remora.Discord.Commands.Conditions
                 return Result.FromError(getGuild);
             }
             var guildOwnerId = getGuild.Entity.OwnerID;
+
+            // succeed if the user is the Owner of the guild
             if (guildOwnerId.Equals(_context.User.ID))
             {
                 return Result.FromSuccess();
@@ -124,6 +126,7 @@ namespace Remora.Discord.Commands.Conditions
                 );
             }
 
+            // succeed if the user is an Administrator of the guild
             if (computedPermissions.HasPermission(DiscordPermission.Administrator))
             {
                 return Result.FromSuccess();
