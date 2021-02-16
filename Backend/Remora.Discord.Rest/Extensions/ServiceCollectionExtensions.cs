@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions.Rest;
@@ -121,20 +122,19 @@ namespace Remora.Discord.Rest.Extensions
             serviceCollection
                 .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
 
-            serviceCollection
-                .AddSingleton<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>()
-                .AddSingleton<IDiscordRestChannelAPI, DiscordRestChannelAPI>()
-                .AddSingleton<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>()
-                .AddSingleton<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>()
-                .AddSingleton<IDiscordRestGuildAPI, DiscordRestGuildAPI>()
-                .AddSingleton<IDiscordRestInviteAPI, DiscordRestInviteAPI>()
-                .AddSingleton<IDiscordRestUserAPI, DiscordRestUserAPI>()
-                .AddSingleton<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>()
-                .AddSingleton<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>()
-                .AddSingleton<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>()
-                .AddSingleton<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>()
-                .AddSingleton<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>()
-                .AddSingleton<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
+            serviceCollection.TryAddSingleton<IDiscordRestAuditLogAPI, DiscordRestAuditLogAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestChannelAPI, DiscordRestChannelAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestGuildAPI, DiscordRestGuildAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestInviteAPI, DiscordRestInviteAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestUserAPI, DiscordRestUserAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestWebhookAPI, DiscordRestWebhookAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestTemplateAPI, DiscordRestTemplateAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>();
+            serviceCollection.TryAddSingleton<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
 
             return serviceCollection;
         }

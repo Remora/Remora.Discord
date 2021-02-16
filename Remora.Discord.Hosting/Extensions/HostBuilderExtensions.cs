@@ -23,6 +23,7 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Hosting.Services;
@@ -46,8 +47,12 @@ namespace Remora.Discord.Hosting.Extensions
             hostBuilder.ConfigureServices((_, serviceCollection) =>
             {
                 serviceCollection
-                    .AddDiscordGateway(tokenFactory)
-                    .AddSingleton<DiscordService>()
+                    .AddDiscordGateway(tokenFactory);
+
+                serviceCollection
+                    .TryAddSingleton<DiscordService>();
+
+                serviceCollection
                     .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
                         serviceProvider.GetRequiredService<DiscordService>());
             });

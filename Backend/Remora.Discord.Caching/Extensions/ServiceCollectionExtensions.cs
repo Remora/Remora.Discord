@@ -51,9 +51,8 @@ namespace Remora.Discord.Caching.Extensions
             services
                 .AddMemoryCache();
 
-            services
-                .AddSingleton<CacheService>()
-                .AddOptions<CacheSettings>();
+            services.AddOptions<CacheSettings>();
+            services.TryAddSingleton<CacheService>();
 
             services
                 .Replace(ServiceDescriptor.Singleton<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())
