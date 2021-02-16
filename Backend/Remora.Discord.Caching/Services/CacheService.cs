@@ -25,6 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 
 namespace Remora.Discord.Caching.Services
 {
@@ -181,7 +182,20 @@ namespace Remora.Discord.Caching.Services
                 foreach (var channel in guild.Channels.Value!)
                 {
                     var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
-                    Cache(channelKey, channel);
+
+                    if (!channel.GuildID.HasValue && channel.Type is not ChannelType.DM or ChannelType.GroupDM)
+                    {
+                        if (channel is Channel record)
+                        {
+                            // Polyfill the instance with contextual data - bit of a cheat, but it's okay in this
+                            // instance
+                            Cache(key, record with { GuildID = guild.ID });
+                        }
+                    }
+                    else
+                    {
+                        Cache(channelKey, channel);
+                    }
                 }
             }
 
