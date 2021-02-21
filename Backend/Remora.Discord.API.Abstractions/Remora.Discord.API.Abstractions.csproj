@@ -23,8 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.174" />
-      <PackageReference Include="Remora.Results" Version="3.0.0" />
+      <PackageReference Include="OneOf" Version="3.0.178" />
+      <PackageReference Include="Remora.Results" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
