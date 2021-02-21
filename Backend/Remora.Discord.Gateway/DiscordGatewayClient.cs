@@ -906,7 +906,7 @@ namespace Remora.Discord.Gateway
                         (
                             new Heartbeat
                             (
-                                lastSequenceNumber == 0 ? (long?)null : lastSequenceNumber
+                                lastSequenceNumber == 0 ? null : lastSequenceNumber
                             )
                         );
 
