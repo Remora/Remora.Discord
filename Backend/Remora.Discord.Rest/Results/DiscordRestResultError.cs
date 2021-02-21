@@ -23,6 +23,8 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.Rest.Results
 {
     /// <summary>

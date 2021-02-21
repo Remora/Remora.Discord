@@ -23,6 +23,8 @@
 using System.Net.WebSockets;
 using Remora.Results;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.Gateway.Results
 {
     /// <summary>

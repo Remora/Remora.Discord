@@ -23,6 +23,8 @@
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees.Nodes;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.Commands.Results
 {
     /// <summary>
