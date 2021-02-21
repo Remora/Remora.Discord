@@ -30,5 +30,10 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageDelete" />
     [PublicAPI]
-    public record MessageDelete(Snowflake ID, Snowflake ChannelID, Optional<Snowflake> GuildID) : IMessageDelete;
+    public record MessageDelete
+    (
+        Snowflake ID,
+        Snowflake ChannelID,
+        Optional<Snowflake> GuildID = default
+    ) : IMessageDelete;
 }

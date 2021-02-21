@@ -38,8 +38,8 @@ namespace Remora.Discord.API.Gateway.Events
         IReadOnlyList<IGuildMember> Members,
         int ChunkIndex,
         int ChunkCount,
-        Optional<IReadOnlyList<Snowflake>> NotFound,
-        Optional<IReadOnlyList<IPresence>> Presences,
-        Optional<string> Nonce
+        Optional<IReadOnlyList<Snowflake>> NotFound = default,
+        Optional<IReadOnlyList<IPresence>> Presences = default,
+        Optional<string> Nonce = default
     ) : IGuildMembersChunk;
 }

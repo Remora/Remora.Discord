@@ -38,9 +38,9 @@ namespace Remora.Discord.API.Gateway.Events
         Snowflake GuildID,
         IReadOnlyList<Snowflake> Roles,
         IUser User,
-        Optional<string?> Nickname,
-        DateTimeOffset JoinedAt,
-        Optional<DateTimeOffset?> PremiumSince,
-        Optional<bool> IsPending
+        Optional<string?> Nickname = default,
+        DateTimeOffset JoinedAt = default,
+        Optional<DateTimeOffset?> PremiumSince = default,
+        Optional<bool> IsPending = default
     ) : IGuildMemberUpdate;
 }

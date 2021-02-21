@@ -35,6 +35,6 @@ namespace Remora.Discord.API.Gateway.Events
     (
         IReadOnlyList<Snowflake> MessageIDs,
         Snowflake ChannelID,
-        Optional<Snowflake> GuildID
+        Optional<Snowflake> GuildID = default
     ) : IMessageDeleteBulk;
 }

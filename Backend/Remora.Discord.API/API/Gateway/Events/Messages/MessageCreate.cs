@@ -57,12 +57,12 @@ namespace Remora.Discord.API.Gateway.Events
             bool isPinned,
             Optional<Snowflake> webhookID,
             MessageType type,
-            Optional<IMessageActivity> activity,
-            Optional<IMessageApplication> application,
-            Optional<IMessageReference> messageReference,
-            Optional<MessageFlags> flags,
-            Optional<IReadOnlyList<IMessageSticker>> stickers,
-            Optional<IMessage?> referencedMessage
+            Optional<IMessageActivity> activity = default,
+            Optional<IMessageApplication> application = default,
+            Optional<IMessageReference> messageReference = default,
+            Optional<MessageFlags> flags = default,
+            Optional<IReadOnlyList<IMessageSticker>> stickers = default,
+            Optional<IMessage?> referencedMessage = default
         )
             : base
             (

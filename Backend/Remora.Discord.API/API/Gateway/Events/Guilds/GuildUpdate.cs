@@ -78,10 +78,10 @@ namespace Remora.Discord.API.Gateway.Events
             Optional<int> premiumSubscriptionCount,
             string preferredLocale,
             Snowflake? publicUpdatesChannelID,
-            Optional<int> maxVideoChannelUsers,
-            Optional<int> approximateMemberCount,
-            Optional<int> approximatePresenceCount,
-            Optional<IWelcomeScreen> welcomeScreen
+            Optional<int> maxVideoChannelUsers = default,
+            Optional<int> approximateMemberCount = default,
+            Optional<int> approximatePresenceCount = default,
+            Optional<IWelcomeScreen> welcomeScreen = default
         )
             : base
             (

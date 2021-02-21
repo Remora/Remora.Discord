@@ -39,22 +39,22 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         (
             Snowflake id,
             ChannelType type,
-            Optional<Snowflake> guildID,
-            Optional<int> position,
-            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites,
-            Optional<string> name,
-            Optional<string?> topic,
-            Optional<bool> isNsfw,
-            Optional<Snowflake?> lastMessageID,
-            Optional<int> bitrate,
-            Optional<int> userLimit,
-            Optional<TimeSpan> rateLimitPerUser,
-            Optional<IReadOnlyList<IUser>> recipients,
-            Optional<IImageHash?> icon,
-            Optional<Snowflake> ownerID,
-            Optional<Snowflake> applicationID,
-            Optional<Snowflake?> parentID,
-            Optional<DateTimeOffset?> lastPinTimestamp
+            Optional<Snowflake> guildID = default,
+            Optional<int> position = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
+            Optional<string> name = default,
+            Optional<string?> topic = default,
+            Optional<bool> isNsfw = default,
+            Optional<Snowflake?> lastMessageID = default,
+            Optional<int> bitrate = default,
+            Optional<int> userLimit = default,
+            Optional<TimeSpan> rateLimitPerUser = default,
+            Optional<IReadOnlyList<IUser>> recipients = default,
+            Optional<IImageHash?> icon = default,
+            Optional<Snowflake> ownerID = default,
+            Optional<Snowflake> applicationID = default,
+            Optional<Snowflake?> parentID = default,
+            Optional<DateTimeOffset?> lastPinTimestamp = default
         )
             : base
             (

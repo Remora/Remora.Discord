@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Gateway.Events
             bool isMuted,
             Optional<bool?> isPending,
             Snowflake guildID,
-            Optional<IDiscordPermissionSet> permissions
+            Optional<IDiscordPermissionSet> permissions = default
         )
             : base
             (

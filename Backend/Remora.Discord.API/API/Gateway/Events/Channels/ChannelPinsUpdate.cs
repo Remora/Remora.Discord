@@ -35,6 +35,6 @@ namespace Remora.Discord.API.Gateway.Events.Channels
     (
         Optional<Snowflake> GuildID,
         Snowflake ChannelID,
-        Optional<DateTimeOffset> LastPinTimestamp
+        Optional<DateTimeOffset> LastPinTimestamp = default
     ) : IChannelPinsUpdate;
 }

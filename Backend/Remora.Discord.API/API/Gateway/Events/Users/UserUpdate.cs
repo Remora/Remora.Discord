@@ -39,15 +39,15 @@ namespace Remora.Discord.API.Gateway.Events
             string username,
             string discriminator,
             IImageHash? avatar,
-            Optional<bool> isBot,
-            Optional<bool> isSystem,
-            Optional<bool> isMFAEnabled,
-            Optional<string> locale,
-            Optional<bool> isVerified,
-            Optional<string?> email,
-            Optional<UserFlags> flags,
-            Optional<PremiumType> premiumType,
-            Optional<UserFlags> publicFlags
+            Optional<bool> isBot = default,
+            Optional<bool> isSystem = default,
+            Optional<bool> isMFAEnabled = default,
+            Optional<string> locale = default,
+            Optional<bool> isVerified = default,
+            Optional<string?> email = default,
+            Optional<UserFlags> flags = default,
+            Optional<PremiumType> premiumType = default,
+            Optional<UserFlags> publicFlags = default
         )
             : base
             (

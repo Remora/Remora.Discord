@@ -37,6 +37,6 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<Snowflake> GuildID,
         Snowflake UserID,
         int Timestamp,
-        Optional<IGuildMember> Member
+        Optional<IGuildMember> Member = default
     ) : ITypingStart;
 }

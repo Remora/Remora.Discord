@@ -34,6 +34,6 @@ namespace Remora.Discord.API.Gateway.Events
     (
         Snowflake ChannelID,
         Snowflake MessageID,
-        Optional<Snowflake> GuildID
+        Optional<Snowflake> GuildID = default
     ) : IMessageReactionRemoveAll;
 }
