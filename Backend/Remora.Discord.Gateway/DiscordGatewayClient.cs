@@ -940,7 +940,7 @@ namespace Remora.Discord.Gateway
                     // Normal closures are okay
                     return sendResult.Error is GatewayWebSocketError { CloseStatus: NormalClosure }
                         ? Result.FromSuccess()
-                        : Result.FromError(sendResult);
+                        : sendResult;
                 }
 
                 return Result.FromSuccess();

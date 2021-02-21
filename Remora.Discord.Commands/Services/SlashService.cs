@@ -135,7 +135,7 @@ namespace Remora.Discord.Commands.Services
                 var deleteResult = await deleteMethod(invalidCommand.ID);
                 if (!deleteResult.IsSuccess)
                 {
-                    return Result.FromError(deleteResult);
+                    return deleteResult;
                 }
             }
 
