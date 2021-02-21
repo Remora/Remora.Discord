@@ -38,7 +38,7 @@ namespace Remora.Discord.API.Objects
         Snowflake UserID,
         Snowflake ID,
         AuditLogEvent ActionType,
-        Optional<IOptionalAuditEntryInfo> Options,
-        Optional<string> Reason
+        Optional<IOptionalAuditEntryInfo> Options = default,
+        Optional<string> Reason = default
     ) : IAuditLogEntry;
 }

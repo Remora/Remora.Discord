@@ -35,6 +35,6 @@ namespace Remora.Discord.API.Objects
         IPartialApplication Application,
         IReadOnlyList<string> Scopes,
         DateTimeOffset Expires,
-        Optional<IUser> User
+        Optional<IUser> User = default
     ) : IAuthorizationInformation;
 }

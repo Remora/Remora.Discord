@@ -33,13 +33,13 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialEmoji
     (
-        Optional<Snowflake?> ID,
-        Optional<string?> Name,
-        Optional<IReadOnlyList<Snowflake>> Roles,
-        Optional<IUser> User,
-        Optional<bool> RequireColons,
-        Optional<bool> IsManaged,
-        Optional<bool> IsAnimated,
-        Optional<bool> IsAvailable
+        Optional<Snowflake?> ID = default,
+        Optional<string?> Name = default,
+        Optional<IReadOnlyList<Snowflake>> Roles = default,
+        Optional<IUser> User = default,
+        Optional<bool> RequireColons = default,
+        Optional<bool> IsManaged = default,
+        Optional<bool> IsAnimated = default,
+        Optional<bool> IsAvailable = default
     ) : IPartialEmoji;
 }

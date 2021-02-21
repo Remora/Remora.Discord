@@ -33,20 +33,20 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialIntegration
     (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<string> Type,
-        Optional<bool> IsEnabled,
-        Optional<bool> IsSyncing,
-        Optional<Snowflake> RoleID,
-        Optional<bool> EnableEmoticons,
-        Optional<IntegrationExpireBehaviour> ExpireBehaviour,
-        Optional<TimeSpan> ExpireGracePeriod,
-        Optional<IUser> User,
-        Optional<IAccount> Account,
-        Optional<DateTimeOffset> SyncedAt,
-        Optional<int> SubscriberCount,
-        Optional<bool> IsRevoked,
-        Optional<IIntegrationApplication> Application
+        Optional<Snowflake> ID = default,
+        Optional<string> Name = default,
+        Optional<string> Type = default,
+        Optional<bool> IsEnabled = default,
+        Optional<bool> IsSyncing = default,
+        Optional<Snowflake> RoleID = default,
+        Optional<bool> EnableEmoticons = default,
+        Optional<IntegrationExpireBehaviour> ExpireBehaviour = default,
+        Optional<TimeSpan> ExpireGracePeriod = default,
+        Optional<IUser> User = default,
+        Optional<IAccount> Account = default,
+        Optional<DateTimeOffset> SyncedAt = default,
+        Optional<int> SubscriberCount = default,
+        Optional<bool> IsRevoked = default,
+        Optional<IIntegrationApplication> Application = default
     ) : IPartialIntegration;
 }

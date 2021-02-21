@@ -33,14 +33,14 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialRole
     (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<Color> Colour,
-        Optional<bool> IsHoisted,
-        Optional<int> Position,
-        Optional<IDiscordPermissionSet> Permissions,
-        Optional<bool> IsManaged,
-        Optional<bool> IsMentionable,
-        Optional<IRoleTags> Tags
+        Optional<Snowflake> ID = default,
+        Optional<string> Name = default,
+        Optional<Color> Colour = default,
+        Optional<bool> IsHoisted = default,
+        Optional<int> Position = default,
+        Optional<IDiscordPermissionSet> Permissions = default,
+        Optional<bool> IsManaged = default,
+        Optional<bool> IsMentionable = default,
+        Optional<IRoleTags> Tags = default
     ) : IPartialRole;
 }

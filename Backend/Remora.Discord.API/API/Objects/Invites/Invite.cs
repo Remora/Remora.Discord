@@ -35,10 +35,10 @@ namespace Remora.Discord.API.Objects
         string Code,
         Optional<IPartialGuild> Guild,
         IPartialChannel Channel,
-        Optional<IUser> Inviter,
-        Optional<IPartialUser> TargetUser,
-        Optional<TargetUserType> TargetUserType,
-        Optional<int> ApproximatePresenceCount,
-        Optional<int> ApproximateMemberCount
+        Optional<IUser> Inviter = default,
+        Optional<IPartialUser> TargetUser = default,
+        Optional<TargetUserType> TargetUserType = default,
+        Optional<int> ApproximatePresenceCount = default,
+        Optional<int> ApproximateMemberCount = default
     ) : IInvite;
 }

@@ -30,5 +30,5 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IEmbedProvider" />
     [PublicAPI]
-    public record EmbedProvider(Optional<string> Name, Optional<string> Url) : IEmbedProvider;
+    public record EmbedProvider(Optional<string> Name = default, Optional<string> Url = default) : IEmbedProvider;
 }

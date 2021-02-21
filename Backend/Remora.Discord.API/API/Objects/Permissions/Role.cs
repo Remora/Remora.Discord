@@ -41,6 +41,6 @@ namespace Remora.Discord.API.Objects
         IDiscordPermissionSet Permissions,
         bool IsManaged,
         bool IsMentionable,
-        Optional<IRoleTags> Tags
+        Optional<IRoleTags> Tags = default
     ) : IRole;
 }

@@ -34,14 +34,14 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialGuildMember
     (
-        Optional<IUser> User,
-        Optional<string?> Nickname,
-        Optional<IReadOnlyList<Snowflake>> Roles,
-        Optional<DateTimeOffset> JoinedAt,
-        Optional<DateTimeOffset?> PremiumSince,
-        Optional<bool> IsDeafened,
-        Optional<bool> IsMuted,
-        Optional<bool?> IsPending,
-        Optional<IDiscordPermissionSet> Permissions
+        Optional<IUser> User = default,
+        Optional<string?> Nickname = default,
+        Optional<IReadOnlyList<Snowflake>> Roles = default,
+        Optional<DateTimeOffset> JoinedAt = default,
+        Optional<DateTimeOffset?> PremiumSince = default,
+        Optional<bool> IsDeafened = default,
+        Optional<bool> IsMuted = default,
+        Optional<bool?> IsPending = default,
+        Optional<IDiscordPermissionSet> Permissions = default
     ) : IPartialGuildMember;
 }

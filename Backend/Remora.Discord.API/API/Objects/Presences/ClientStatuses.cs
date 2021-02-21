@@ -32,8 +32,8 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record ClientStatuses
     (
-        Optional<ClientStatus> Desktop,
-        Optional<ClientStatus> Mobile,
-        Optional<ClientStatus> Web
+        Optional<ClientStatus> Desktop = default,
+        Optional<ClientStatus> Mobile = default,
+        Optional<ClientStatus> Web = default
     ) : IClientStatuses;
 }

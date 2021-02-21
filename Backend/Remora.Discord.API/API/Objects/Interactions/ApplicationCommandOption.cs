@@ -36,10 +36,10 @@ namespace Remora.Discord.API.Objects
         ApplicationCommandOptionType Type,
         string Name,
         string Description,
-        Optional<bool> IsDefault,
-        Optional<bool> IsRequired,
-        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options
+        Optional<bool> IsDefault = default,
+        Optional<bool> IsRequired = default,
+        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default,
+        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default
     )
     : IApplicationCommandOption;
 }

@@ -33,9 +33,9 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record AllowedMentions
     (
-        Optional<IReadOnlyList<MentionType>> Parse,
-        Optional<IReadOnlyList<Snowflake>> Roles,
-        Optional<IReadOnlyList<Snowflake>> Users,
-        Optional<bool> MentionRepliedUser
+        Optional<IReadOnlyList<MentionType>> Parse = default,
+        Optional<IReadOnlyList<Snowflake>> Roles = default,
+        Optional<IReadOnlyList<Snowflake>> Users = default,
+        Optional<bool> MentionRepliedUser = default
     ) : IAllowedMentions;
 }

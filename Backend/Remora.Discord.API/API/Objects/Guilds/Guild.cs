@@ -75,9 +75,9 @@ namespace Remora.Discord.API.Objects
         Optional<int> PremiumSubscriptionCount,
         string PreferredLocale,
         Snowflake? PublicUpdatesChannelID,
-        Optional<int> MaxVideoChannelUsers,
-        Optional<int> ApproximateMemberCount,
-        Optional<int> ApproximatePresenceCount,
-        Optional<IWelcomeScreen> WelcomeScreen
+        Optional<int> MaxVideoChannelUsers = default,
+        Optional<int> ApproximateMemberCount = default,
+        Optional<int> ApproximatePresenceCount = default,
+        Optional<IWelcomeScreen> WelcomeScreen = default
     ) : IGuild;
 }

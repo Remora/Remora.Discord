@@ -54,11 +54,11 @@ namespace Remora.Discord.API.Objects
         bool IsPinned,
         Optional<Snowflake> WebhookID,
         MessageType Type,
-        Optional<IMessageActivity> Activity,
-        Optional<IMessageApplication> Application,
-        Optional<IMessageReference> MessageReference,
-        Optional<MessageFlags> Flags,
-        Optional<IReadOnlyList<IMessageSticker>> Stickers,
-        Optional<IMessage?> ReferencedMessage
+        Optional<IMessageActivity> Activity = default,
+        Optional<IMessageApplication> Application = default,
+        Optional<IMessageReference> MessageReference = default,
+        Optional<MessageFlags> Flags = default,
+        Optional<IReadOnlyList<IMessageSticker>> Stickers = default,
+        Optional<IMessage?> ReferencedMessage = default
     ) : IMessage;
 }

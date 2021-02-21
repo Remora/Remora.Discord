@@ -42,11 +42,11 @@ namespace Remora.Discord.API.Objects
         string Summary,
         string VerifyKey,
         ITeam? Team,
-        Optional<Snowflake> GuildID,
-        Optional<Snowflake> PrimarySKUID,
-        Optional<string> Slug,
-        Optional<IImageHash> CoverImage,
-        Optional<int> Flags
+        Optional<Snowflake> GuildID = default,
+        Optional<Snowflake> PrimarySKUID = default,
+        Optional<string> Slug = default,
+        Optional<IImageHash> CoverImage = default,
+        Optional<int> Flags = default
     )
     : IApplication;
 }

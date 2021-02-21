@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Objects
         Optional<IUser> User,
         string? Name,
         string? Avatar,
-        Optional<string> Token,
-        Optional<Snowflake> ApplicationID
+        Optional<string> Token = default,
+        Optional<Snowflake> ApplicationID = default
     ) : IWebhook;
 }

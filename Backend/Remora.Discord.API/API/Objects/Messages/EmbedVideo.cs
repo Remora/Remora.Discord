@@ -32,9 +32,9 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record EmbedVideo
     (
-        Optional<string> Url,
-        Optional<string> ProxyUrl,
-        Optional<int> Height,
-        Optional<int> Width
+        Optional<string> Url = default,
+        Optional<string> ProxyUrl = default,
+        Optional<int> Height = default,
+        Optional<int> Width = default
     ) : IEmbedVideo;
 }

@@ -33,8 +33,8 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommandInteractionDataOption
     (
         string Name,
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options
+        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value = default,
+        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default
     )
     : IApplicationCommandInteractionDataOption;
 }

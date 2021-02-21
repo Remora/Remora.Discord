@@ -33,10 +33,10 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialPresence
     (
-        Optional<IPartialUser> User,
-        Optional<Snowflake> GuildID,
-        Optional<ClientStatus> Status,
-        Optional<IReadOnlyList<IActivity>?> Activities,
-        Optional<IClientStatuses> ClientStatus
+        Optional<IPartialUser> User = default,
+        Optional<Snowflake> GuildID = default,
+        Optional<ClientStatus> Status = default,
+        Optional<IReadOnlyList<IActivity>?> Activities = default,
+        Optional<IClientStatuses> ClientStatus = default
     ) : IPartialPresence;
 }

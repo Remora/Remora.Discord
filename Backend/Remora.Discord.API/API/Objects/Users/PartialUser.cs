@@ -32,18 +32,18 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialUser
     (
-        Optional<Snowflake> ID,
-        Optional<string> Username,
-        Optional<string> Discriminator,
-        Optional<IImageHash?> Avatar,
-        Optional<bool> IsBot,
-        Optional<bool> IsSystem,
-        Optional<bool> IsMFAEnabled,
-        Optional<string> Locale,
-        Optional<bool> IsVerified,
-        Optional<string?> Email,
-        Optional<UserFlags> Flags,
-        Optional<PremiumType> PremiumType,
-        Optional<UserFlags> PublicFlags
+        Optional<Snowflake> ID = default,
+        Optional<string> Username = default,
+        Optional<string> Discriminator = default,
+        Optional<IImageHash?> Avatar = default,
+        Optional<bool> IsBot = default,
+        Optional<bool> IsSystem = default,
+        Optional<bool> IsMFAEnabled = default,
+        Optional<string> Locale = default,
+        Optional<bool> IsVerified = default,
+        Optional<string?> Email = default,
+        Optional<UserFlags> Flags = default,
+        Optional<PremiumType> PremiumType = default,
+        Optional<UserFlags> PublicFlags = default
     ) : IPartialUser;
 }

@@ -27,65 +27,17 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageSticker" />
     [PublicAPI]
-    public class MessageSticker : IMessageSticker
-    {
-        /// <inheritdoc />
-        public Snowflake ID { get; }
-
-        /// <inheritdoc />
-        public Snowflake PackID { get; }
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <inheritdoc />
-        public string Description { get; }
-
-        /// <inheritdoc />
-        public Optional<IReadOnlyList<string>> Tags { get; }
-
-        /// <inheritdoc />
-        public IImageHash Asset { get; }
-
-        /// <inheritdoc />
-        public IImageHash PreviewAsset { get; }
-
-        /// <inheritdoc />
-        public MessageStickerFormatType FormatType { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MessageSticker"/> class.
-        /// </summary>
-        /// <param name="id">The ID of the sticker.</param>
-        /// <param name="packID">The ID of the sticker pack.</param>
-        /// <param name="name">The name of the sticker.</param>
-        /// <param name="description">The description of the sticker.</param>
-        /// <param name="tags">The tags associated with the sticker.</param>
-        /// <param name="asset">The asset hash of the sticker.</param>
-        /// <param name="previewAsset">The preview asset hash of the sticker.</param>
-        /// <param name="formatType">The format type of the sticker.</param>
-        public MessageSticker
-        (
-            Snowflake id,
-            Snowflake packID,
-            string name,
-            string description,
-            Optional<IReadOnlyList<string>> tags,
-            IImageHash asset,
-            IImageHash previewAsset,
-            MessageStickerFormatType formatType
-        )
-        {
-            this.ID = id;
-            this.PackID = packID;
-            this.Name = name;
-            this.Description = description;
-            this.Tags = tags;
-            this.Asset = asset;
-            this.PreviewAsset = previewAsset;
-            this.FormatType = formatType;
-        }
-    }
+    public record MessageSticker
+    (
+        Snowflake ID,
+        Snowflake PackID,
+        string Name,
+        string Description,
+        Optional<IReadOnlyList<string>> Tags,
+        IImageHash Asset,
+        IImageHash PreviewAsset,
+        MessageStickerFormatType FormatType
+    ) : IMessageSticker;
 }

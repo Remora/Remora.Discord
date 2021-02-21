@@ -32,17 +32,17 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialVoiceState
     (
-        Optional<Snowflake> GuildID,
-        Optional<Snowflake?> ChannelID,
-        Optional<Snowflake> UserID,
-        Optional<IGuildMember> Member,
-        Optional<string> SessionID,
-        Optional<bool> IsDeafened,
-        Optional<bool> IsMuted,
-        Optional<bool> IsSelfDeafened,
-        Optional<bool> IsSelfMuted,
-        Optional<bool> IsStreaming,
-        Optional<bool> IsVideoEnabled,
-        Optional<bool> IsSuppressed
+        Optional<Snowflake> GuildID = default,
+        Optional<Snowflake?> ChannelID = default,
+        Optional<Snowflake> UserID = default,
+        Optional<IGuildMember> Member = default,
+        Optional<string> SessionID = default,
+        Optional<bool> IsDeafened = default,
+        Optional<bool> IsMuted = default,
+        Optional<bool> IsSelfDeafened = default,
+        Optional<bool> IsSelfMuted = default,
+        Optional<bool> IsStreaming = default,
+        Optional<bool> IsVideoEnabled = default,
+        Optional<bool> IsSuppressed = default
     ) : IPartialVoiceState;
 }

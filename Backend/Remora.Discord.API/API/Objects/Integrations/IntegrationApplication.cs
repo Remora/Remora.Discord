@@ -37,6 +37,6 @@ namespace Remora.Discord.API.Objects
         IImageHash? Icon,
         string Description,
         string Summary,
-        Optional<IUser> Bot
+        Optional<IUser> Bot = default
     ) : IIntegrationApplication;
 }

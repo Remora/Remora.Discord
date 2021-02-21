@@ -32,13 +32,13 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record PartialInvite
     (
-        Optional<string> Code,
-        Optional<IPartialGuild> Guild,
-        Optional<IPartialChannel> Channel,
-        Optional<IUser> Inviter,
-        Optional<IPartialUser> TargetUser,
-        Optional<TargetUserType> TargetUserType,
-        Optional<int> ApproximatePresenceCount,
-        Optional<int> ApproximateMemberCount
+        Optional<string> Code = default,
+        Optional<IPartialGuild> Guild = default,
+        Optional<IPartialChannel> Channel = default,
+        Optional<IUser> Inviter = default,
+        Optional<IPartialUser> TargetUser = default,
+        Optional<TargetUserType> TargetUserType = default,
+        Optional<int> ApproximatePresenceCount = default,
+        Optional<int> ApproximateMemberCount = default
     ) : IPartialInvite;
 }

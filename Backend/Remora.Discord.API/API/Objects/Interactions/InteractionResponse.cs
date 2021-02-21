@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Objects
     public record InteractionResponse
     (
         InteractionResponseType Type,
-        Optional<IInteractionApplicationCommandCallbackData> Data
+        Optional<IInteractionApplicationCommandCallbackData> Data = default
     )
     : IInteractionResponse;
 }

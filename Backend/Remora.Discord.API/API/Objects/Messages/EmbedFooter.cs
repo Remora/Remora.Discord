@@ -30,5 +30,10 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IEmbedFooter" />
     [PublicAPI]
-    public record EmbedFooter(string Text, Optional<string> IconUrl, Optional<string> ProxyIconUrl) : IEmbedFooter;
+    public record EmbedFooter
+    (
+        string Text,
+        Optional<string> IconUrl = default,
+        Optional<string> ProxyIconUrl = default
+    ) : IEmbedFooter;
 }

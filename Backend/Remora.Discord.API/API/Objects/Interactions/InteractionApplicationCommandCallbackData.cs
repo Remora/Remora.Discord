@@ -33,8 +33,8 @@ namespace Remora.Discord.API.Objects
     (
         Optional<bool?> IsTTS,
         string Content,
-        Optional<IReadOnlyList<IEmbed>> Embeds,
-        Optional<IAllowedMentions> AllowedMentions
+        Optional<IReadOnlyList<IEmbed>> Embeds = default,
+        Optional<IAllowedMentions> AllowedMentions = default
     )
     : IInteractionApplicationCommandCallbackData;
 }

@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Objects
     public record GatewayEndpoint
     (
         string Url,
-        Optional<int> Shards,
-        Optional<ISessionStartLimit> SessionStartLimit
+        Optional<int> Shards = default,
+        Optional<ISessionStartLimit> SessionStartLimit = default
     ) : IGatewayEndpoint;
 }

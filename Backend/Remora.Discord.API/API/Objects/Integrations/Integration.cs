@@ -47,6 +47,6 @@ namespace Remora.Discord.API.Objects
         DateTimeOffset SyncedAt,
         int SubscriberCount,
         bool IsRevoked,
-        Optional<IIntegrationApplication> Application
+        Optional<IIntegrationApplication> Application = default
     ) : IIntegration;
 }

@@ -30,5 +30,5 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IEmbedField" />
     [PublicAPI]
-    public record EmbedField(string Name, string Value, Optional<bool> IsInline) : IEmbedField;
+    public record EmbedField(string Name, string Value, Optional<bool> IsInline = default) : IEmbedField;
 }

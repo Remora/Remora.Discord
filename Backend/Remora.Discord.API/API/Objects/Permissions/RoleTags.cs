@@ -32,8 +32,8 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record RoleTags
     (
-        Optional<Snowflake> BotID,
-        Optional<Snowflake> IntegrationID,
-        Optional<bool?> IsPremiumSubscriberRole
+        Optional<Snowflake> BotID = default,
+        Optional<Snowflake> IntegrationID = default,
+        Optional<bool?> IsPremiumSubscriberRole = default
     ) : IRoleTags;
 }

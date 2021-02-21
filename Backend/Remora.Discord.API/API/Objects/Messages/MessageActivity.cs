@@ -30,5 +30,5 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IMessageActivity" />
     [PublicAPI]
-    public record MessageActivity(MessageActivityType Type, Optional<string> PartyID) : IMessageActivity;
+    public record MessageActivity(MessageActivityType Type, Optional<string> PartyID = default) : IMessageActivity;
 }
