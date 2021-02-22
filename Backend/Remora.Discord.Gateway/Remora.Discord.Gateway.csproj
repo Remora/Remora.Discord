@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.4</Version>
+        <Version>3.0.5</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Fix a number of double service registrations.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>

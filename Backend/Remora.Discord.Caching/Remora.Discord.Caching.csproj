@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.4</Version>
+        <Version>1.0.5</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Polyfill cached channels from guild objects.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

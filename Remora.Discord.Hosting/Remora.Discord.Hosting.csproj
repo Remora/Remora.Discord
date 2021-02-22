@@ -5,14 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.4</Version>
+        <Version>3.0.5</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            Fix a number of double service registrations.
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
