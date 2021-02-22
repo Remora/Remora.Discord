@@ -50,6 +50,6 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the emoji.
         /// </summary>
-        IEmoji Emoji { get; }
+        IPartialEmoji Emoji { get; }
     }
 }

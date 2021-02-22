@@ -36,6 +36,6 @@ namespace Remora.Discord.API.Gateway.Events
         Snowflake ChannelID,
         Snowflake MessageID,
         Optional<Snowflake> GuildID,
-        IEmoji Emoji
+        IPartialEmoji Emoji
     ) : IMessageReactionRemoveEmoji;
 }
