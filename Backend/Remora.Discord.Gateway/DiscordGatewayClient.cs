@@ -582,7 +582,7 @@ namespace Remora.Discord.Gateway
                             _log.LogWarning
                             (
                                 "Error in gateway event responder.\n{Reason}",
-                                responderResult.Error.Message
+                                responderResult.Unwrap().Message
                             );
 
                             break;

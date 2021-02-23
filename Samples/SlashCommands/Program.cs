@@ -106,7 +106,7 @@ namespace Remora.Discord.Samples.SlashCommands
                 var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer, cancellationSource.Token);
                 if (!updateSlash.IsSuccess)
                 {
-                    log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error.Message);
+                    log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Unwrap().Message);
                 }
             }
 
@@ -131,12 +131,12 @@ namespace Remora.Discord.Samples.SlashCommands
                     case GatewayWebSocketError:
                     case GatewayDiscordError:
                     {
-                        log.LogError("Gateway error: {Message}", runResult.Error.Message);
+                        log.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
                         break;
                     }
                     default:
                     {
-                        log.LogError("Unknown error: {Message}", runResult.Error.Message);
+                        log.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
                         break;
                     }
                 }

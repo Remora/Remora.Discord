@@ -113,12 +113,12 @@ namespace Remora.Discord.Samples.Caching
                     case GatewayWebSocketError:
                     case GatewayDiscordError:
                     {
-                        log.LogError("Gateway error: {Message}", runResult.Error.Message);
+                        log.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
                         break;
                     }
                     default:
                     {
-                        log.LogError("Unknown error: {Message}", runResult.Error.Message);
+                        log.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
                         break;
                     }
                 }
