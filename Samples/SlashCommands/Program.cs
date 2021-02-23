@@ -97,9 +97,14 @@ namespace Remora.Discord.Samples.SlashCommands
 
             var slashService = services.GetRequiredService<SlashService>();
 
-            if (!slashService.SupportsSlashCommands())
+            var checkSlashSupport = slashService.SupportsSlashCommands();
+            if (!checkSlashSupport.IsSuccess)
             {
-                log.LogWarning("The registered commands of the bot don't support slash commands");
+                log.LogWarning
+                (
+                    "The registered commands of the bot don't support slash commands: {Reason}",
+                    checkSlashSupport.Unwrap().Message
+                );
             }
             else
             {

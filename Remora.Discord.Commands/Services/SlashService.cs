@@ -65,11 +65,11 @@ namespace Remora.Discord.Commands.Services
         /// Determines whether the application's commands support being bound to Discord slash commands.
         /// </summary>
         /// <returns>true if slash commands are supported; otherwise, false.</returns>
-        public bool SupportsSlashCommands()
+        public Result SupportsSlashCommands()
         {
             // TODO: Improve
             // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
-            return _commandTree.CreateApplicationCommands(out _).IsSuccess;
+            return _commandTree.CreateApplicationCommands(out _);
         }
 
         /// <summary>
