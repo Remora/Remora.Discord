@@ -41,7 +41,7 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="permission">The permission.</param>
         public RequireUserGuildPermissionAttribute(DiscordPermission permission)
         {
-            Permission = permission;
+           this.Permission = permission;
         }
     }
 }
