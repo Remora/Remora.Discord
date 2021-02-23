@@ -86,7 +86,7 @@ namespace Remora.Discord.Commands.Conditions
             }
 
             var guildRoles = getGuildRoles.Entity;
-            var everyoneRole = guildRoles.FirstOrDefault(r => r.Name.Equals("@everyone"));
+            var everyoneRole = guildRoles.FirstOrDefault(r => r.ID == guildId);
             if (everyoneRole is null)
             {
                 return new GenericError("No @everyone role found.");
