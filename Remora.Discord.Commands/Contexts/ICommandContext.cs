@@ -33,6 +33,11 @@ namespace Remora.Discord.Commands.Contexts
     public interface ICommandContext
     {
         /// <summary>
+        /// Gets the ID of the guild the context refers to, if any.
+        /// </summary>
+        Optional<Snowflake> GuildID { get; }
+
+        /// <summary>
         /// Gets the ID of the channel the context refers to.
         /// </summary>
         Snowflake ChannelID { get; }

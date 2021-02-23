@@ -32,12 +32,12 @@ namespace Remora.Discord.Commands.Contexts
     /// </summary>
     public record InteractionContext
     (
+        Optional<Snowflake> GuildID,
         Snowflake ChannelID,
         IUser User,
         Optional<IGuildMember> Member,
         string Token,
-        Snowflake ID,
-        Optional<Snowflake> GuildID
+        Snowflake ID
     )
-    : CommandContext(ChannelID, User);
+    : CommandContext(GuildID, ChannelID, User);
 }

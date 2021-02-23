@@ -125,12 +125,12 @@ namespace Remora.Discord.Commands.Responders
 
             var context = new InteractionContext
             (
+                gatewayEvent.GuildID,
                 gatewayEvent.ChannelID.Value,
                 user,
                 gatewayEvent.Member,
                 gatewayEvent.Token,
-                gatewayEvent.ID,
-                gatewayEvent.GuildID
+                gatewayEvent.ID
             );
 
             // Run any user-provided pre execution events
