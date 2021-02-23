@@ -27,6 +27,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Results;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ChannelType;
 
@@ -71,14 +72,14 @@ namespace Remora.Discord.Commands.Conditions
             {
                 ChannelContext.DM => channel.Type is DM
                     ? Result.FromSuccess()
-                    : new GenericError("This command can only be used in a DM."),
+                    : new ConditionNotSatisfiedError("This command can only be used in a DM."),
                 ChannelContext.GroupDM => channel.Type is GroupDM
                     ? Result.FromSuccess()
-                    : new GenericError("This command can only be used in a group DM."),
+                    : new ConditionNotSatisfiedError("This command can only be used in a group DM."),
                 ChannelContext.Guild =>
                     channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore
                         ? Result.FromSuccess()
-                        : new GenericError("This command can only be used in a guild."),
+                        : new ConditionNotSatisfiedError("This command can only be used in a guild."),
                 _ => throw new ArgumentOutOfRangeException(nameof(attribute))
             };
         }
