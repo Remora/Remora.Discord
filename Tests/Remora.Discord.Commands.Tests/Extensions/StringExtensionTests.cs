@@ -1,5 +1,5 @@
 //
-//  StringExtensions.cs
+//  StringExtensionTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Linq;
-using System.Text.RegularExpressions;
+using Remora.Discord.Commands.Extensions;
+using Xunit;
 
-namespace Remora.Discord.Commands.Extensions
+namespace Remora.Discord.Commands.Tests.Extensions
 {
     /// <summary>
-    /// Defines extension methods to the <see cref="string"/> type.
+    /// Tests the <see cref="StringExtensions"/> class.
     /// </summary>
-    public static class StringExtensions
+    public static class StringExtensionTests
     {
-        private static readonly Regex UnmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);
-
         /// <summary>
-        /// Removes Discord mention markdown from a string.
+        /// Tests the <see cref="StringExtensions.Unmention"/> method.
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The unmentioned string.</returns>
-        public static string Unmention(this string value)
+        public class Unmention
         {
-            if (value.Length <= 0)
+            /// <summary>
+            /// Tests whether the method correctly unwraps various mention variants.
+            /// </summary>
+            /// <param name="value">The variant under test.</param>
+            [InlineData("<@135347310845624320>")]
+            [InlineData("<@!135347310845624320>")]
+            [InlineData("<#135347310845624320>")]
+            [InlineData("<@&135347310845624320>")]
+            [Theory]
+            public void UnmentionsValueCorrectly(string value)
             {
-                return value;
+                Assert.Equal("135347310845624320", value.Unmention());
             }
-
-            if (char.IsDigit(value[0]))
-            {
-                return value;
-            }
-
-            var regexMatches = UnmentionRegex.Match(value);
-            return !regexMatches.Success
-                ? value
-                : regexMatches.Groups[1].Value;
         }
     }
 }
