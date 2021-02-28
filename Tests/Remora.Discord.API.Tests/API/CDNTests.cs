@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Errors;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Core;
@@ -101,6 +102,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetEmojiUrl(emoji);
 
                 Assert.False(getActual.IsSuccess);
+                Assert.IsType<UnsupportedArgumentError>(getActual.Unwrap());
             }
 
             /// <inheritdoc />
