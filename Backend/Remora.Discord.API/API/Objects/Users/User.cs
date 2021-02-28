@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Objects
     (
         Snowflake ID,
         string Username,
-        string Discriminator,
+        ushort Discriminator,
         IImageHash? Avatar,
         Optional<bool> IsBot = default,
         Optional<bool> IsSystem = default,

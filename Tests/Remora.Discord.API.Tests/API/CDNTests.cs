@@ -423,14 +423,14 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var discriminator = "0";
+                ushort discriminator = 0;
 
                 var mockedUser = new Mock<IUser>();
                 mockedUser.SetupGet(u => u.Discriminator).Returns(discriminator);
 
                 var user = mockedUser.Object;
                 yield return CDN.GetDefaultUserAvatarUrl(user, imageFormat, imageSize);
-                yield return CDN.GetDefaultUserAvatarUrl(0, imageFormat, imageSize);
+                yield return CDN.GetDefaultUserAvatarUrl(discriminator, imageFormat, imageSize);
             }
         }
 

@@ -420,13 +420,7 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (!ushort.TryParse(user.Discriminator, out var parsedDiscriminator))
-            {
-                // TODO: Change this to a better type
-                return new UnsupportedArgumentError("The user doesn't have a valid discriminator.");
-            }
-
-            return GetDefaultUserAvatarUrl(parsedDiscriminator, imageFormat, imageSize);
+            return GetDefaultUserAvatarUrl(user.Discriminator, imageFormat, imageSize);
         }
 
         /// <summary>

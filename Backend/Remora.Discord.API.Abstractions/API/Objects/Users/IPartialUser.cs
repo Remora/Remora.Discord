@@ -44,7 +44,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the user's 4-digit discord tag.
         /// </summary>
-        Optional<string> Discriminator { get; }
+        Optional<ushort> Discriminator { get; }
 
         /// <summary>
         /// Gets the user's avatar hash.

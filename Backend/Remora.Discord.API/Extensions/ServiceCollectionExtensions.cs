@@ -20,7 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
@@ -275,6 +277,7 @@ namespace Remora.Discord.API.Extensions
             // Users
             options.AddDataObjectConverter<ITypingStart, TypingStart>();
             options.AddDataObjectConverter<IUserUpdate, UserUpdate>()
+                .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
@@ -634,18 +637,21 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddUserObjectConverters(this JsonSerializerOptions options)
         {
             options.AddDataObjectConverter<IUser, User>()
+                .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
                 .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
 
             options.AddDataObjectConverter<IPartialUser, PartialUser>()
+                .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
                 .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
 
             options.AddDataObjectConverter<IUserMention, UserMention>()
+                .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(m => m.IsBot, "bot")
                 .WithPropertyName(m => m.IsSystem, "system")
                 .WithPropertyName(m => m.IsVerified, "verified")

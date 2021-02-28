@@ -37,7 +37,7 @@ namespace Remora.Discord.API.Gateway.Events
         (
             Snowflake id,
             string username,
-            string discriminator,
+            ushort discriminator,
             IImageHash? avatar,
             Optional<bool> isBot = default,
             Optional<bool> isSystem = default,
