@@ -57,6 +57,8 @@ namespace Remora.Discord.Commands.Extensions
             serviceCollection.AddCommandResponder();
 
             serviceCollection.AddCondition<RequireContextCondition>();
+            serviceCollection.AddCondition<RequireOwnerCondition>();
+            serviceCollection.AddCondition<RequireUserGuildPermissionCondition>();
 
             serviceCollection
                 .AddParser<IChannel, ChannelParser>()
