@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Errors;
 using Remora.Discord.Core;
 using Remora.Results;
 
@@ -50,18 +51,23 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
+            if (emoji.ID is null)
+            {
+                return new UnsupportedArgumentError("The emoji isn't a custom emoji.");
+            }
+
+            if (imageFormat.HasValue)
+            {
+                return GetEmojiUrl(emoji.ID.Value, imageFormat, imageSize);
+            }
+
             // Prefer the animated version of emojis, if available
             if (emoji.IsAnimated.HasValue && emoji.IsAnimated.Value)
             {
-                if (!imageFormat.HasValue)
-                {
-                    imageFormat = CDNImageFormat.GIF;
-                }
+                imageFormat = CDNImageFormat.GIF;
             }
 
-            return emoji.ID is null
-                ? new GenericError("The emoji isn't a custom emoji.")
-                : GetEmojiUrl(emoji.ID.Value, imageFormat, imageSize);
+            return GetEmojiUrl(emoji.ID.Value, imageFormat, imageSize);
         }
 
         /// <summary>
@@ -121,13 +127,7 @@ namespace Remora.Discord.API
                 return imageFormat;
             }
 
-            var formatNames = acceptedFormats.Select(f => f.ToString());
-
-            return new GenericError
-            (
-                "Unsupported image format. " +
-                $"The endpoint supports the following formats: {string.Join(", ", formatNames)}"
-            );
+            return new UnsupportedImageFormatError(acceptedFormats);
         }
 
         private static Result CheckImageSize(Optional<ushort> imageSize)
@@ -139,13 +139,13 @@ namespace Remora.Discord.API
 
             if (imageSize.Value is < 16 or > 4096)
             {
-                return new GenericError("The image size must be between 16 and 4096.");
+                return new ImageSizeOutOfRangeError();
             }
 
             var isPowerOfTwo = (imageSize.Value & (imageSize.Value - 1)) == 0;
             if (!isPowerOfTwo)
             {
-                return new GenericError("The image size must be a power of two.");
+                return new ImageSizeNotPowerOfTwoError();
             }
 
             return Result.FromSuccess();
