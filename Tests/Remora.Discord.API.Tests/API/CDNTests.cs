@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using Moq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
 using Remora.Discord.API.Objects;
@@ -41,12 +42,12 @@ namespace Remora.Discord.API.Tests
         /// Tests the <see cref="CDN.GetEmojiUrl(IEmoji, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
         /// overloads.
         /// </summary>
-        public class GetEmojiUri : CDNTestBase
+        public class GetEmojiUrl : CDNTestBase
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="GetEmojiUri"/> class.
+            /// Initializes a new instance of the <see cref="GetEmojiUrl"/> class.
             /// </summary>
-            public GetEmojiUri()
+            public GetEmojiUrl()
                 : base
                 (
                     new Uri("https://cdn.discordapp.com/emojis/0"),
@@ -115,6 +116,382 @@ namespace Remora.Discord.API.Tests
                 var emoji = new Emoji(new Snowflake(0), null);
                 yield return CDN.GetEmojiUrl(emoji, imageFormat, imageSize);
                 yield return CDN.GetEmojiUrl(emoji.ID!.Value, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetGuildIconUrl(IGuild, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetGuildIconUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetGuildIconUrl"/> class.
+            /// </summary>
+            public GetGuildIconUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/icons/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP, CDNImageFormat.GIF }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var guildID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedGuild = new Mock<IGuild>();
+                mockedGuild.SetupGet(g => g.Icon).Returns(imageHash);
+                mockedGuild.SetupGet(g => g.ID).Returns(guildID);
+
+                var guild = mockedGuild.Object;
+                yield return CDN.GetGuildIconUrl(guild, imageFormat, imageSize);
+                yield return CDN.GetGuildIconUrl(guildID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetGuildSplashUrl(IGuild, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetGuildSplashUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetGuildSplashUrl"/> class.
+            /// </summary>
+            public GetGuildSplashUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/splashes/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var guildID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedGuild = new Mock<IGuild>();
+                mockedGuild.SetupGet(g => g.Splash).Returns(imageHash);
+                mockedGuild.SetupGet(g => g.ID).Returns(guildID);
+
+                var guild = mockedGuild.Object;
+                yield return CDN.GetGuildSplashUrl(guild, imageFormat, imageSize);
+                yield return CDN.GetGuildSplashUrl(guildID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetGuildDiscoverySplashUrl(IGuild, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetGuildDiscoverySplashUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetGuildDiscoverySplashUrl"/> class.
+            /// </summary>
+            public GetGuildDiscoverySplashUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/discovery-splashes/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var guildID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedGuild = new Mock<IGuild>();
+                mockedGuild.SetupGet(g => g.DiscoverySplash).Returns(imageHash);
+                mockedGuild.SetupGet(g => g.ID).Returns(guildID);
+
+                var guild = mockedGuild.Object;
+                yield return CDN.GetGuildDiscoverySplashUrl(guild, imageFormat, imageSize);
+                yield return CDN.GetGuildDiscoverySplashUrl(guildID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetGuildBannerUrl(IGuild, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetGuildBannerUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetGuildBannerUrl"/> class.
+            /// </summary>
+            public GetGuildBannerUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/banners/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var guildID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedGuild = new Mock<IGuild>();
+                mockedGuild.SetupGet(g => g.Banner).Returns(imageHash);
+                mockedGuild.SetupGet(g => g.ID).Returns(guildID);
+
+                var guild = mockedGuild.Object;
+                yield return CDN.GetGuildBannerUrl(guild, imageFormat, imageSize);
+                yield return CDN.GetGuildBannerUrl(guildID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetDefaultUserAvatarUrl(IUser, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetDefaultUserAvatarUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetDefaultUserAvatarUrl"/> class.
+            /// </summary>
+            public GetDefaultUserAvatarUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/embed/avatars/0"),
+                    new[] { CDNImageFormat.PNG }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var discriminator = "0";
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(u => u.Discriminator).Returns(discriminator);
+
+                var user = mockedUser.Object;
+                yield return CDN.GetDefaultUserAvatarUrl(user, imageFormat, imageSize);
+                yield return CDN.GetDefaultUserAvatarUrl(0, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetUserAvatarUrl(IUser, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetUserAvatarUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetUserAvatarUrl"/> class.
+            /// </summary>
+            public GetUserAvatarUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/avatars/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP, CDNImageFormat.GIF }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var userID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(g => g.Avatar).Returns(imageHash);
+                mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+                var user = mockedUser.Object;
+                yield return CDN.GetUserAvatarUrl(user, imageFormat, imageSize);
+                yield return CDN.GetUserAvatarUrl(userID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetApplicationIconUrl(IApplication, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetApplicationIconUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetApplicationIconUrl"/> class.
+            /// </summary>
+            public GetApplicationIconUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/app-icons/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var applicationID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedApplication = new Mock<IApplication>();
+                mockedApplication.SetupGet(g => g.Icon).Returns(imageHash);
+                mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+                var application = mockedApplication.Object;
+                yield return CDN.GetApplicationIconUrl(application, imageFormat, imageSize);
+                yield return CDN.GetApplicationIconUrl(applicationID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetApplicationAssetUrl(IApplication, string, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetApplicationAssetUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetApplicationAssetUrl"/> class.
+            /// </summary>
+            public GetApplicationAssetUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/app-assets/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var applicationID = new Snowflake(0);
+
+                var mockedApplication = new Mock<IApplication>();
+                mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+                var application = mockedApplication.Object;
+                yield return CDN.GetApplicationAssetUrl(application, "1", imageFormat, imageSize);
+                yield return CDN.GetApplicationAssetUrl(applicationID, "1", imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetAchievementIconUrl(IApplication, Snowflake, IImageHash, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetAchievementIconUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetAchievementIconUrl"/> class.
+            /// </summary>
+            public GetAchievementIconUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/app-assets/0/achievements/1/icons/2"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var applicationID = new Snowflake(0);
+                var achievementID = new Snowflake(1);
+                var imageHash = new ImageHash("2");
+
+                var mockedApplication = new Mock<IApplication>();
+                mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+                var application = mockedApplication.Object;
+                yield return CDN.GetAchievementIconUrl(application, achievementID, imageHash, imageFormat, imageSize);
+                yield return CDN.GetAchievementIconUrl(applicationID, achievementID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetTeamIconUrl(ITeam, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetTeamIconUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetTeamIconUrl"/> class.
+            /// </summary>
+            public GetTeamIconUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/team-icons/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var teamID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedTeam = new Mock<ITeam>();
+                mockedTeam.SetupGet(g => g.Icon).Returns(imageHash);
+                mockedTeam.SetupGet(g => g.ID).Returns(teamID);
+
+                var team = mockedTeam.Object;
+                yield return CDN.GetTeamIconUrl(team, imageFormat, imageSize);
+                yield return CDN.GetTeamIconUrl(teamID, imageHash, imageFormat, imageSize);
             }
         }
     }

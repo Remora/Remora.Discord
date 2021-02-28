@@ -111,6 +111,730 @@ namespace Remora.Discord.API
             return ub.Uri;
         }
 
+        /// <summary>
+        /// Gets the CDN URI of the given guild's icon.
+        /// </summary>
+        /// <param name="guild">The guild.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildIconUrl
+        (
+            IGuild guild,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (guild.Icon is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            // Prefer the animated version, if available
+            if (guild.Icon.HasGif && !imageFormat.HasValue)
+            {
+                imageFormat = CDNImageFormat.GIF;
+            }
+
+            return GetGuildIconUrl(guild.ID, guild.Icon, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's icon.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="iconHash">The image hash of the guild's icon.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildIconUrl
+        (
+            Snowflake guildID,
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"icons/{guildID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's splash.
+        /// </summary>
+        /// <param name="guild">The guild.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildSplashUrl
+        (
+            IGuild guild,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (guild.Splash is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetGuildSplashUrl(guild.ID, guild.Splash, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's splash.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="splashHash">The image hash of the guild's splash.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildSplashUrl
+        (
+            Snowflake guildID,
+            IImageHash splashHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"splashes/{guildID}/{splashHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's discovery splash.
+        /// </summary>
+        /// <param name="guild">The guild.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildDiscoverySplashUrl
+        (
+            IGuild guild,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (guild.DiscoverySplash is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetGuildDiscoverySplashUrl(guild.ID, guild.DiscoverySplash, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's discovery splash.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="discoverySplashHash">The image hash of the guild's discovery splash.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildDiscoverySplashUrl
+        (
+            Snowflake guildID,
+            IImageHash discoverySplashHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's banner.
+        /// </summary>
+        /// <param name="guild">The guild.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildBannerUrl
+        (
+            IGuild guild,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (guild.Banner is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetGuildBannerUrl(guild.ID, guild.Banner, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild's banner.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="bannerHash">The image hash of the guild's banner.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildBannerUrl
+        (
+            Snowflake guildID,
+            IImageHash bannerHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"banners/{guildID}/{bannerHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's default avatar.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetDefaultUserAvatarUrl
+        (
+            IUser user,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!ushort.TryParse(user.Discriminator, out var parsedDiscriminator))
+            {
+                // TODO: Change this to a better type
+                return new UnsupportedArgumentError("The user doesn't have a valid discriminator.");
+            }
+
+            return GetDefaultUserAvatarUrl(parsedDiscriminator, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's default avatar.
+        /// </summary>
+        /// <param name="userDiscriminator">The user's discriminator.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetDefaultUserAvatarUrl
+        (
+            ushort userDiscriminator,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var discriminatorModulus = userDiscriminator % 5;
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"embed/avatars/{discriminatorModulus}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's avatar.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserAvatarUrl
+        (
+            IUser user,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (user.Avatar is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            // Prefer the animated version, if available
+            if (user.Avatar.HasGif && !imageFormat.HasValue)
+            {
+                imageFormat = CDNImageFormat.GIF;
+            }
+
+            return GetUserAvatarUrl(user.ID, user.Avatar, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's avatar.
+        /// </summary>
+        /// <param name="userID">The ID of the team.</param>
+        /// <param name="avatarHash">The image hash of the user's avatar.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserAvatarUrl
+        (
+            Snowflake userID,
+            IImageHash avatarHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"avatars/{userID}/{avatarHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given application's icon.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationIconUrl
+        (
+            IApplication application,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (application.Icon is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetApplicationIconUrl(application.ID, application.Icon, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given application's icon.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="iconHash">The image hash of the application's icon.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationIconUrl
+        (
+            Snowflake applicationID,
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"app-icons/{applicationID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given application's given asset.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        /// <param name="assetID">The asset ID.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationAssetUrl
+        (
+            IApplication application,
+            string assetID,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        ) => GetApplicationAssetUrl(application.ID, assetID, imageFormat, imageSize);
+
+        /// <summary>
+        /// Gets the CDN URI of the given application's given asset.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="assetID">The asset ID.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationAssetUrl
+        (
+            Snowflake applicationID,
+            string assetID,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"app-assets/{applicationID}/{assetID}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given achievement's icon.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        /// <param name="achievementID">The ID of the achievement.</param>
+        /// <param name="iconHash">The image hash of the icon.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetAchievementIconUrl
+        (
+            IApplication application,
+            Snowflake achievementID,
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        ) => GetAchievementIconUrl(application.ID, achievementID, iconHash, imageFormat, imageSize);
+
+        /// <summary>
+        /// Gets the CDN URI of the given achievement's icon.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="achievementID">The ID of the achievement.</param>
+        /// <param name="iconHash">The image hash of the achievement's icon.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetAchievementIconUrl
+        (
+            Snowflake applicationID,
+            Snowflake achievementID,
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given team's icon.
+        /// </summary>
+        /// <param name="team">The team.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetTeamIconUrl
+        (
+            ITeam team,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (team.Icon is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetTeamIconUrl(team.ID, team.Icon, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given team's icon.
+        /// </summary>
+        /// <param name="teamID">The ID of the team.</param>
+        /// <param name="iconHash">The image hash of the team's icon.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetTeamIconUrl
+        (
+            Snowflake teamID,
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"team-icons/{teamID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
         private static Result<Optional<CDNImageFormat>> ValidateOrDefaultImageFormat
         (
             Optional<CDNImageFormat> imageFormat,

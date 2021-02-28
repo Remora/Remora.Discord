@@ -165,7 +165,7 @@ namespace Remora.Discord.API.Tests.TestBases
         /// Tests whether an unsuccessful result is returned if the requested image format is not supported by the
         /// endpoint.
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void ReturnsUnsuccessfulResultIfImageFormatIsNotSupported()
         {
             var unsupportedFormats = _allFormats.Except(_supportedFormats).ToList();
