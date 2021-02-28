@@ -110,7 +110,7 @@ endpoints change.
 Generally, these changes only affect the API and API.Abstractions packages - 
 these will often increment their MAJOR versions. Dependant packages - such as 
 Gateway or Rest - will update together with these packages, but unless their 
-public API changes as a result, it will be considered a MINOR upgrade.
+public API changes as a result, it will be considered a PATCH upgrade.
 
 The consequences of this is that you *may* see source-level breakages when 
 upgrading from one minor version to the next. While undesirable, it is an effect

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.6</Version>
+        <Version>3.0.7</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Improve logging.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
