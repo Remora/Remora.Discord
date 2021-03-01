@@ -29,6 +29,7 @@ using Remora.Discord.Caching.API;
 using Remora.Discord.Caching.Responders;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Responders;
 
 namespace Remora.Discord.Caching.Extensions
 {
@@ -66,7 +67,8 @@ namespace Remora.Discord.Caching.Extensions
                 .Replace(ServiceDescriptor.Singleton<IDiscordRestWebhookAPI, CachingDiscordRestWebhookAPI>());
 
             services
-                .AddResponder<CacheResponder>();
+                .AddResponder<EarlyCacheResponder>(ResponderGroup.Early)
+                .AddResponder<LateCacheResponder>(ResponderGroup.Late);
 
             return services;
         }

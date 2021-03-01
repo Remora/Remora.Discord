@@ -1,5 +1,5 @@
 //
-//  CacheResponder.cs
+//  EarlyCacheResponder.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -37,36 +37,28 @@ namespace Remora.Discord.Caching.Responders
     /// Caches incoming data from the gateway.
     /// </summary>
     [UsedImplicitly]
-    public class CacheResponder :
+    public class EarlyCacheResponder :
         IResponder<IChannelCreate>,
-        IResponder<IChannelDelete>,
         IResponder<IChannelUpdate>,
         IResponder<IGuildBanAdd>,
-        IResponder<IGuildBanRemove>,
         IResponder<IGuildCreate>,
-        IResponder<IGuildDelete>,
         IResponder<IGuildEmojisUpdate>,
         IResponder<IGuildMemberAdd>,
-        IResponder<IGuildMemberRemove>,
         IResponder<IGuildMembersChunk>,
         IResponder<IGuildMemberUpdate>,
         IResponder<IGuildRoleCreate>,
-        IResponder<IGuildRoleDelete>,
         IResponder<IGuildRoleUpdate>,
-        IResponder<IInviteDelete>,
         IResponder<IMessageCreate>,
-        IResponder<IMessageDelete>,
-        IResponder<IMessageDeleteBulk>,
         IResponder<IMessageReactionAdd>,
         IResponder<IUserUpdate>
     {
         private readonly CacheService _cacheService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CacheResponder"/> class.
+        /// Initializes a new instance of the <see cref="EarlyCacheResponder"/> class.
         /// </summary>
         /// <param name="cacheService">The cache service.</param>
-        public CacheResponder(CacheService cacheService)
+        public EarlyCacheResponder(CacheService cacheService)
         {
             _cacheService = cacheService;
         }
@@ -76,15 +68,6 @@ namespace Remora.Discord.Caching.Responders
         {
             var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
             _cacheService.Cache<IChannel>(key, gatewayEvent);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
-        public Task<Result> RespondAsync(IChannelDelete gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
-            _cacheService.Evict(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -108,28 +91,10 @@ namespace Remora.Discord.Caching.Responders
         }
 
         /// <inheritdoc/>
-        public Task<Result> RespondAsync(IGuildBanRemove gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateGuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-            _cacheService.Evict(key);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
         public Task<Result> RespondAsync(IGuildCreate gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.ID);
             _cacheService.Cache<IGuild>(key, gatewayEvent);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
-        public Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.GuildID);
-            _cacheService.Evict(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -161,15 +126,6 @@ namespace Remora.Discord.Caching.Responders
 
             var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.Value.ID);
             _cacheService.Cache<IGuildMember>(key, gatewayEvent);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
-        public Task<Result> RespondAsync(IGuildMemberRemove gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-            _cacheService.Evict(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -263,15 +219,6 @@ namespace Remora.Discord.Caching.Responders
         }
 
         /// <inheritdoc/>
-        public Task<Result> RespondAsync(IGuildRoleDelete gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
-            _cacheService.Evict(key);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
         public Task<Result> RespondAsync(IGuildRoleUpdate gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.Role.ID);
@@ -281,40 +228,10 @@ namespace Remora.Discord.Caching.Responders
         }
 
         /// <inheritdoc/>
-        public Task<Result> RespondAsync(IInviteDelete gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateInviteCacheKey(gatewayEvent.Code);
-            _cacheService.Evict(key);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
         public Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
             _cacheService.Cache<IMessage>(key, gatewayEvent);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
-        public Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
-        {
-            var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
-            _cacheService.Evict(key);
-
-            return Task.FromResult(Result.FromSuccess());
-        }
-
-        /// <inheritdoc/>
-        public Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
-        {
-            foreach (var messageID in gatewayEvent.MessageIDs)
-            {
-                var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, messageID);
-                _cacheService.Evict(key);
-            }
 
             return Task.FromResult(Result.FromSuccess());
         }
