@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.7</Version>
+        <Version>3.1.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Implement a way to order responders in certain logical groups.
         </PackageReleaseNotes>
     </PropertyGroup>
 
