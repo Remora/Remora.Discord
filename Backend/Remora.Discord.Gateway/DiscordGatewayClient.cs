@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
@@ -674,54 +675,68 @@ namespace Remora.Discord.Gateway
         /// <param name="gatewayEvent">The event to dispatch.</param>
         /// <param name="ct">The cancellation token to use.</param>
         /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-        private async Task<Result[]> DispatchEventAsync<TGatewayEvent>
+        private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
         (
             IPayload<TGatewayEvent> gatewayEvent,
             CancellationToken ct = default
         )
             where TGatewayEvent : IGatewayEvent
         {
-            var responderTypes = _responderTypeRepository.GetResponderTypes<TGatewayEvent>();
-            if (responderTypes.Count == 0)
+            // Batch up the responders according to their groups
+            var responderGroups = new[]
             {
-                return Array.Empty<Result>();
+                _responderTypeRepository.GetEarlyResponderTypes<TGatewayEvent>(),
+                _responderTypeRepository.GetResponderTypes<TGatewayEvent>(),
+                _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>(),
+            };
+
+            // Run through the groups in order
+            var results = new List<Result>();
+            foreach (var responderGroup in responderGroups)
+            {
+                var groupResults = await Task.WhenAll
+                (
+                    responderGroup.Select
+                    (
+                        async rt =>
+                        {
+                            using var serviceScope = _services.CreateScope();
+                            var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
+                                .GetRequiredService(rt);
+
+                            try
+                            {
+                                return await responder.RespondAsync(gatewayEvent.Data, ct);
+                            }
+                            catch (Exception e)
+                            {
+                                return e;
+                            }
+                            finally
+                            {
+                                // Suspicious type conversions are disabled here, since the user-defined responders may
+                                // implement IDisposable or IAsyncDisposable.
+
+                                // ReSharper disable once SuspiciousTypeConversion.Global
+                                if (responder is IDisposable disposable)
+                                {
+                                    disposable.Dispose();
+                                }
+
+                                // ReSharper disable once SuspiciousTypeConversion.Global
+                                if (responder is IAsyncDisposable asyncDisposable)
+                                {
+                                    await asyncDisposable.DisposeAsync();
+                                }
+                            }
+                        }
+                    )
+                ).ConfigureAwait(false);
+
+                results.AddRange(groupResults);
             }
 
-            return await Task.WhenAll
-            (
-                responderTypes.Select(async rt =>
-                {
-                    using var serviceScope = _services.CreateScope();
-                    var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider.GetRequiredService(rt);
-
-                    try
-                    {
-                        return await responder.RespondAsync(gatewayEvent.Data, ct);
-                    }
-                    catch (Exception e)
-                    {
-                        return e;
-                    }
-                    finally
-                    {
-                        // Suspicious type conversions are disabled here, since the user-defined responders may
-                        // implement IDisposable or IAsyncDisposable.
-
-                        // ReSharper disable once SuspiciousTypeConversion.Global
-                        if (responder is IDisposable disposable)
-                        {
-                            disposable.Dispose();
-                        }
-
-                        // ReSharper disable once SuspiciousTypeConversion.Global
-                        if (responder is IAsyncDisposable asyncDisposable)
-                        {
-                            await asyncDisposable.DisposeAsync();
-                        }
-                    }
-                }
-            )
-            ).ConfigureAwait(false);
+            return results;
         }
 
         /// <summary>

@@ -32,10 +32,24 @@ namespace Remora.Discord.Gateway.Services
     public interface IResponderTypeRepository
     {
         /// <summary>
+        /// Gets all responder types that are relevant for the given event, and should run before any other responders.
+        /// </summary>
+        /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+        /// <returns>A list of responder types.</returns>
+        IReadOnlyList<Type> GetEarlyResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
+
+        /// <summary>
         /// Gets all responder types that are relevant for the given event.
         /// </summary>
         /// <typeparam name="TGatewayEvent">The event type.</typeparam>
         /// <returns>A list of responder types.</returns>
         IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
+
+        /// <summary>
+        /// Gets all responder types that are relevant for the given event, and should run after any other responders.
+        /// </summary>
+        /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+        /// <returns>A list of responder types.</returns>
+        IReadOnlyList<Type> GetLateResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
     }
 }

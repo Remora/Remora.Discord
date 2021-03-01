@@ -36,22 +36,26 @@ namespace Remora.Discord.Gateway.Services
     [PublicAPI]
     public class ResponderService : IResponderTypeRepository
     {
+        private readonly Dictionary<Type, List<Type>> _registeredEarlyResponderTypes = new();
         private readonly Dictionary<Type, List<Type>> _registeredResponderTypes = new();
+        private readonly Dictionary<Type, List<Type>> _registeredLateResponderTypes = new();
 
         /// <summary>
         /// Adds a responder to the service.
         /// </summary>
         /// <typeparam name="TResponder">The responder type.</typeparam>
-        internal void RegisterResponderType<TResponder>() where TResponder : IResponder
+        /// <param name="group">The group the responder belongs to.</param>
+        internal void RegisterResponderType<TResponder>(ResponderGroup group) where TResponder : IResponder
         {
-            RegisterResponderType(typeof(TResponder));
+            RegisterResponderType(typeof(TResponder), group);
         }
 
         /// <summary>
         /// Adds a responder to the service.
         /// </summary>
         /// <param name="responderType">The responder type.</param>
-        internal void RegisterResponderType(Type responderType)
+        /// <param name="group">The group the responder belongs to.</param>
+        internal void RegisterResponderType(Type responderType, ResponderGroup group)
         {
             if (!responderType.IsResponder())
             {
@@ -71,7 +75,29 @@ namespace Remora.Discord.Gateway.Services
                 if (!_registeredResponderTypes.TryGetValue(responderInterface, out var responderTypeList))
                 {
                     responderTypeList = new List<Type>();
-                    _registeredResponderTypes.Add(responderInterface, responderTypeList);
+
+                    switch (group)
+                    {
+                        case ResponderGroup.Early:
+                        {
+                            _registeredEarlyResponderTypes.Add(responderInterface, responderTypeList);
+                            break;
+                        }
+                        case ResponderGroup.Normal:
+                        {
+                            _registeredResponderTypes.Add(responderInterface, responderTypeList);
+                            break;
+                        }
+                        case ResponderGroup.Late:
+                        {
+                            _registeredLateResponderTypes.Add(responderInterface, responderTypeList);
+                            break;
+                        }
+                        default:
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(@group), @group, null);
+                        }
+                    }
                 }
 
                 if (responderTypeList.Contains(responderType))
@@ -84,10 +110,34 @@ namespace Remora.Discord.Gateway.Services
         }
 
         /// <inheritdoc />
+        public IReadOnlyList<Type> GetEarlyResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
+        {
+            var typeKey = typeof(IResponder<TGatewayEvent>);
+            if (!_registeredEarlyResponderTypes.TryGetValue(typeKey, out var responderTypes))
+            {
+                return Array.Empty<Type>();
+            }
+
+            return responderTypes;
+        }
+
+        /// <inheritdoc />
         public IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
         {
             var typeKey = typeof(IResponder<TGatewayEvent>);
             if (!_registeredResponderTypes.TryGetValue(typeKey, out var responderTypes))
+            {
+                return Array.Empty<Type>();
+            }
+
+            return responderTypes;
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<Type> GetLateResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
+        {
+            var typeKey = typeof(IResponder<TGatewayEvent>);
+            if (!_registeredLateResponderTypes.TryGetValue(typeKey, out var responderTypes))
             {
                 return Array.Empty<Type>();
             }

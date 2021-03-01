@@ -69,15 +69,17 @@ namespace Remora.Discord.Gateway.Extensions
         /// <see cref="IResponder{T}"/> implementations it supports.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="group">The group the responder belongs to.</param>
         /// <typeparam name="TResponder">The concrete responder type.</typeparam>
         /// <returns>The service collection, with the responder added.</returns>
         public static IServiceCollection AddResponder<TResponder>
         (
-            this IServiceCollection serviceCollection
+            this IServiceCollection serviceCollection,
+            ResponderGroup group = ResponderGroup.Normal
         )
             where TResponder : IResponder
         {
-            return serviceCollection.AddResponder(typeof(TResponder));
+            return serviceCollection.AddResponder(typeof(TResponder), group);
         }
 
         /// <summary>
@@ -86,9 +88,15 @@ namespace Remora.Discord.Gateway.Extensions
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
         /// <param name="responderType">The type implementing <see cref="IResponder"/>.</param>
+        /// <param name="group">The group the responder belongs to.</param>
         /// <returns>The service collection, with the responder added.</returns>
         /// <exception cref="ArgumentException">Throws if responderType does not implement <see cref="IResponder"/>.</exception>
-        public static IServiceCollection AddResponder(this IServiceCollection serviceCollection, Type responderType)
+        public static IServiceCollection AddResponder
+        (
+            this IServiceCollection serviceCollection,
+            Type responderType,
+            ResponderGroup group = ResponderGroup.Normal
+        )
         {
             if (!responderType.IsResponder())
             {
@@ -112,7 +120,7 @@ namespace Remora.Discord.Gateway.Extensions
 
             serviceCollection.Configure<ResponderService>
             (
-                responderService => responderService.RegisterResponderType(responderType)
+                responderService => responderService.RegisterResponderType(responderType, group)
             );
 
             return serviceCollection;
