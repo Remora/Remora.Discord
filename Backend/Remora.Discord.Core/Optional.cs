@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
@@ -99,6 +100,46 @@ namespace Remora.Discord.Core
         public static implicit operator Optional<TValue>(TValue? value)
         {
             return new(value);
+        }
+
+        /// <summary>
+        /// Compares two optionals, for equality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>true if the operands are equal, false otherwise.</returns>
+        public static bool operator ==(Optional<TValue> left, Optional<TValue> right)
+            => left.Equals(right);
+
+        /// <summary>
+        /// Compares two optionals, for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>false if the operands are equal, true otherwise.</returns>
+        public static bool operator !=(Optional<TValue> left, Optional<TValue> right)
+            => !left.Equals(right);
+
+        /// <summary>
+        /// Compares this instance for equality with another instance.
+        /// </summary>
+        /// <param name="other">The other instance.</param>
+        /// <returns>true if the instances are considered equal; otherwise, false.</returns>
+        public bool Equals(Optional<TValue> other)
+        {
+            return EqualityComparer<TValue?>.Default.Equals(_value, other._value) && this.HasValue == other.HasValue;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            return obj is Optional<TValue> other && Equals(other);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_value, this.HasValue);
         }
     }
 }
