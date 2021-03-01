@@ -79,7 +79,7 @@ namespace Remora.Discord.Gateway
         /// <summary>
         /// Holds the currently running responders.
         /// </summary>
-        private readonly ConcurrentQueue<Task<Result[]>> _runningResponderDispatches;
+        private readonly ConcurrentQueue<Task<IReadOnlyList<Result>>> _runningResponderDispatches;
 
         /// <summary>
         /// Holds the websocket.
@@ -164,7 +164,7 @@ namespace Remora.Discord.Gateway
             _services = services;
             _responderTypeRepository = responderTypeRepository;
 
-            _runningResponderDispatches = new ConcurrentQueue<Task<Result[]>>();
+            _runningResponderDispatches = new ConcurrentQueue<Task<IReadOnlyList<Result>>>();
 
             _payloadsToSend = new ConcurrentQueue<IPayload>();
             _receivedPayloads = new ConcurrentQueue<IPayload>();
@@ -553,7 +553,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="runningResponderDispatch">The running responder dispatch.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        private async Task FinalizeResponderDispatchAsync(Task<Result[]> runningResponderDispatch)
+        private async Task FinalizeResponderDispatchAsync(Task<IReadOnlyList<Result>> runningResponderDispatch)
         {
             try
             {
@@ -666,7 +666,7 @@ namespace Remora.Discord.Gateway
                 throw new InvalidOperationException();
             }
 
-            _runningResponderDispatches.Enqueue((Task<Result[]>)dispatchTask);
+            _runningResponderDispatches.Enqueue((Task<IReadOnlyList<Result>>)dispatchTask);
         }
 
         /// <summary>
