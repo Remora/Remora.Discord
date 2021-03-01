@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.0</Version>
+        <Version>3.1.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Implement a way to order responders in certain logical groups.
+            Fix a critical bug that broke the gateway client. Doh!
         </PackageReleaseNotes>
     </PropertyGroup>
 
