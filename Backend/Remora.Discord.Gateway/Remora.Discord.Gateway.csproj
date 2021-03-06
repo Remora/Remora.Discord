@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.1</Version>
+        <Version>3.1.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Fix a critical bug that broke the gateway client. Doh!
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
