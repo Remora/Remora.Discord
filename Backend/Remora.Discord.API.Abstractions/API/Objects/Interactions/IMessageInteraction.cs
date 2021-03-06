@@ -1,5 +1,5 @@
 //
-//  IInteractionApplicationCommandCallbackData.cs
+//  IMessageInteraction.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,41 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents return payload data for an interaction response.
+    /// Represents additional data sent on a message that is a response to an interaction.
     /// </summary>
-    [PublicAPI]
-    public interface IInteractionApplicationCommandCallbackData
+    public interface IMessageInteraction
     {
         /// <summary>
-        /// Gets a value indicating whether the message is a TTS message.
+        /// Gets the ID of the interaction.
         /// </summary>
-        Optional<bool?> IsTTS { get; }
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Gets the content of the message.
+        /// Gets the interaction type.
         /// </summary>
-        Optional<string> Content { get; }
-
-        /// <summary>
-        /// Gets the embeds of the message.
-        /// </summary>
-        Optional<IReadOnlyList<IEmbed>> Embeds { get; }
-
-        /// <summary>
-        /// Gets the allowed mentions in the message.
-        /// </summary>
-        Optional<IAllowedMentions> AllowedMentions { get; }
-
-        /// <summary>
-        /// Gets the callback flags.
-        /// </summary>
-        Optional<InteractionCallbackFlags> Flags { get; }
+        InteractionType Type { get; }
     }
 }

@@ -54,7 +54,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             {
                 var interactionID = new Snowflake(0);
                 var token = "aaaa";
-                var interactionResponse = new InteractionResponse(InteractionResponseType.Acknowledge, default);
+                var interactionResponse = new InteractionResponse(InteractionResponseType.DeferredChannelMessageWithSource);
 
                 var api = CreateAPI
                 (
@@ -64,7 +64,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                         (
                             j => j.IsObject
                             (
-                                o => o.WithProperty("type", p => p.Is(2))
+                                o => o.WithProperty("type", p => p.Is(5))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IInteractionResponse)])

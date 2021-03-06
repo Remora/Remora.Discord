@@ -186,47 +186,6 @@ namespace Remora.Discord.Commands.Tests.Extensions
             }
 
             /// <summary>
-            /// Tests various edge cases.
-            /// </summary>
-            public class EdgeCases
-            {
-                /// <summary>
-                /// Tests whether the method responds appropriately to a failure case.
-                /// </summary>
-                [Fact]
-                public void ReturnsSuccessfulIfAnEnumHasTooManyChoices()
-                {
-                    var builder = new CommandTreeBuilder();
-                    builder.RegisterModule<TooManyChoiceValues>();
-
-                    var tree = builder.Build();
-
-                    var result = tree.CreateApplicationCommands(out _);
-                    ResultAssert.Successful(result);
-                }
-
-                /// <summary>
-                /// Tests whether the method responds appropriately to a failure case.
-                /// </summary>
-                [Fact]
-                public void DoesNotCreateChoicesIfAnEnumHasTooManyChoices()
-                {
-                    var builder = new CommandTreeBuilder();
-                    builder.RegisterModule<TooManyChoiceValues>();
-
-                    var tree = builder.Build();
-                    _ = tree.CreateApplicationCommands(out var commands);
-
-                    var command = commands!.Single();
-
-                    if (command.Choices.HasValue)
-                    {
-                        Assert.Empty(command.Choices.Value!);
-                    }
-                }
-            }
-
-            /// <summary>
             /// Tests various successful cases.
             /// </summary>
             public class Successes

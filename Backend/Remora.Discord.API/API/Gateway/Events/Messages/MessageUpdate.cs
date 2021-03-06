@@ -32,64 +32,64 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageUpdate"/>
     [PublicAPI]
-    public record MessageUpdate : PartialMessage, IMessageUpdate
-    {
-        /// <inheritdoc cref="PartialMessage"/>
-        public MessageUpdate
-        (
-            Optional<Snowflake> id = default,
-            Optional<Snowflake> channelID = default,
-            Optional<Snowflake> guildID = default,
-            Optional<IUser> author = default,
-            Optional<IPartialGuildMember> member = default,
-            Optional<string> content = default,
-            Optional<DateTimeOffset> timestamp = default,
-            Optional<DateTimeOffset?> editedTimestamp = default,
-            Optional<bool> isTTS = default,
-            Optional<bool> mentionsEveryone = default,
-            Optional<IReadOnlyList<IUserMention>> mentions = default,
-            Optional<IReadOnlyList<Snowflake>> mentionedRoles = default,
-            Optional<IReadOnlyList<IChannelMention>> mentionedChannels = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IReadOnlyList<IReaction>> reactions = default,
-            Optional<string> nonce = default,
-            Optional<bool> isPinned = default,
-            Optional<Snowflake> webhookID = default,
-            Optional<MessageType> type = default,
-            Optional<IMessageActivity> activity = default,
-            Optional<IMessageApplication> application = default,
-            Optional<IMessageReference> messageReference = default,
-            Optional<MessageFlags> flags = default
-        )
-            : base
-            (
-                id,
-                channelID,
-                guildID,
-                author,
-                member,
-                content,
-                timestamp,
-                editedTimestamp,
-                isTTS,
-                mentionsEveryone,
-                mentions,
-                mentionedRoles,
-                mentionedChannels,
-                attachments,
-                embeds,
-                reactions,
-                nonce,
-                isPinned,
-                webhookID,
-                type,
-                activity,
-                application,
-                messageReference,
-                flags
-            )
-        {
-        }
-    }
+    public record MessageUpdate
+    (
+        Optional<Snowflake> ID = default,
+        Optional<Snowflake> ChannelID = default,
+        Optional<Snowflake> GuildID = default,
+        Optional<IUser> Author = default,
+        Optional<IPartialGuildMember> Member = default,
+        Optional<string> Content = default,
+        Optional<DateTimeOffset> Timestamp = default,
+        Optional<DateTimeOffset?> EditedTimestamp = default,
+        Optional<bool> IsTTS = default,
+        Optional<bool> MentionsEveryone = default,
+        Optional<IReadOnlyList<IUserMention>> Mentions = default,
+        Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
+        Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
+        Optional<IReadOnlyList<IAttachment>> Attachments = default,
+        Optional<IReadOnlyList<IEmbed>> Embeds = default,
+        Optional<IReadOnlyList<IReaction>> Reactions = default,
+        Optional<string> Nonce = default,
+        Optional<bool> IsPinned = default,
+        Optional<Snowflake> WebhookID = default,
+        Optional<MessageType> Type = default,
+        Optional<IMessageActivity> Activity = default,
+        Optional<IMessageApplication> Application = default,
+        Optional<IMessageReference> MessageReference = default,
+        Optional<MessageFlags> Flags = default,
+        Optional<IReadOnlyList<IMessageSticker>> Stickers = default,
+        Optional<IMessage?> ReferencedMessage = default,
+        Optional<IMessageInteraction> Interaction = default
+    )
+    : PartialMessage
+    (
+        ID,
+        ChannelID,
+        GuildID,
+        Author,
+        Member,
+        Content,
+        Timestamp,
+        EditedTimestamp,
+        IsTTS,
+        MentionsEveryone,
+        Mentions,
+        MentionedRoles,
+        MentionedChannels,
+        Attachments,
+        Embeds,
+        Reactions,
+        Nonce,
+        IsPinned,
+        WebhookID,
+        Type,
+        Activity,
+        Application,
+        MessageReference,
+        Flags,
+        Stickers,
+        ReferencedMessage,
+        Interaction
+    ), IMessageUpdate;
 }

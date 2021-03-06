@@ -173,5 +173,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the referenced message, if any. A null value in this context refers to a deleted message.
         /// </summary>
         Optional<IMessage?> ReferencedMessage { get; }
+
+        /// <summary>
+        /// Gets the interaction associated with this message, if any.
+        /// </summary>
+        Optional<IMessageInteraction> Interaction { get; }
     }
 }

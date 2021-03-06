@@ -774,6 +774,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(o => o.IsDefault, "default")
                 .WithPropertyName(o => o.IsRequired, "required");
             options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
+            options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
 
             return options;
         }

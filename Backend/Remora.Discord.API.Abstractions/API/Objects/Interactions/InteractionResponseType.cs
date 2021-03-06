@@ -36,16 +36,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         Pong = 1,
 
         /// <summary>
-        /// Acknowledge a command without sending a message in return.
-        /// </summary>
-        Acknowledge = 2,
-
-        /// <summary>
-        /// Respond with a message, consuming the user input.
-        /// </summary>
-        ChannelMessage = 3,
-
-        /// <summary>
         /// Respond with a message, showing the user input.
         /// </summary>
         ChannelMessageWithSource = 4,
@@ -53,6 +43,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Acknowledge a command without sending a message, showing the user input.
         /// </summary>
-        AcknowledgeWithSource = 5
+        DeferredChannelMessageWithSource = 5
     }
 }

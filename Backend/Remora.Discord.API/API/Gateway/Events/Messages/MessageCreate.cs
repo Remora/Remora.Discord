@@ -32,68 +32,64 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="IMessageCreate"/>
     [PublicAPI]
-    public record MessageCreate : Message, IMessageCreate
-    {
-        /// <inheritdoc cref="Message"/>
-        public MessageCreate
-        (
-            Snowflake id,
-            Snowflake channelID,
-            Optional<Snowflake> guildID,
-            IUser author,
-            Optional<IPartialGuildMember> member,
-            string content,
-            DateTimeOffset timestamp,
-            DateTimeOffset? editedTimestamp,
-            bool isTTS,
-            bool mentionsEveryone,
-            IReadOnlyList<IUserMention> mentions,
-            IReadOnlyList<Snowflake> mentionedRoles,
-            Optional<IReadOnlyList<IChannelMention>> mentionedChannels,
-            IReadOnlyList<IAttachment> attachments,
-            IReadOnlyList<IEmbed> embeds,
-            Optional<IReadOnlyList<IReaction>> reactions,
-            Optional<string> nonce,
-            bool isPinned,
-            Optional<Snowflake> webhookID,
-            MessageType type,
-            Optional<IMessageActivity> activity = default,
-            Optional<IMessageApplication> application = default,
-            Optional<IMessageReference> messageReference = default,
-            Optional<MessageFlags> flags = default,
-            Optional<IReadOnlyList<IMessageSticker>> stickers = default,
-            Optional<IMessage?> referencedMessage = default
-        )
-            : base
-            (
-                id,
-                channelID,
-                guildID,
-                author,
-                member,
-                content,
-                timestamp,
-                editedTimestamp,
-                isTTS,
-                mentionsEveryone,
-                mentions,
-                mentionedRoles,
-                mentionedChannels,
-                attachments,
-                embeds,
-                reactions,
-                nonce,
-                isPinned,
-                webhookID,
-                type,
-                activity,
-                application,
-                messageReference,
-                flags,
-                stickers,
-                referencedMessage
-            )
-        {
-        }
-    }
+    public record MessageCreate
+    (
+        Snowflake ID,
+        Snowflake ChannelID,
+        Optional<Snowflake> GuildID,
+        IUser Author,
+        Optional<IPartialGuildMember> Member,
+        string Content,
+        DateTimeOffset Timestamp,
+        DateTimeOffset? EditedTimestamp,
+        bool IsTTS,
+        bool MentionsEveryone,
+        IReadOnlyList<IUserMention> Mentions,
+        IReadOnlyList<Snowflake> MentionedRoles,
+        Optional<IReadOnlyList<IChannelMention>> MentionedChannels,
+        IReadOnlyList<IAttachment> Attachments,
+        IReadOnlyList<IEmbed> Embeds,
+        Optional<IReadOnlyList<IReaction>> Reactions,
+        Optional<string> Nonce,
+        bool IsPinned,
+        Optional<Snowflake> WebhookID,
+        MessageType Type,
+        Optional<IMessageActivity> Activity = default,
+        Optional<IMessageApplication> Application = default,
+        Optional<IMessageReference> MessageReference = default,
+        Optional<MessageFlags> Flags = default,
+        Optional<IReadOnlyList<IMessageSticker>> Stickers = default,
+        Optional<IMessage?> ReferencedMessage = default,
+        Optional<IMessageInteraction> Interaction = default
+    )
+    : Message
+    (
+        ID,
+        ChannelID,
+        GuildID,
+        Author,
+        Member,
+        Content,
+        Timestamp,
+        EditedTimestamp,
+        IsTTS,
+        MentionsEveryone,
+        Mentions,
+        MentionedRoles,
+        MentionedChannels,
+        Attachments,
+        Embeds,
+        Reactions,
+        Nonce,
+        IsPinned,
+        WebhookID,
+        Type,
+        Activity,
+        Application,
+        MessageReference,
+        Flags,
+        Stickers,
+        ReferencedMessage,
+        Interaction
+    ), IMessageCreate;
 }
