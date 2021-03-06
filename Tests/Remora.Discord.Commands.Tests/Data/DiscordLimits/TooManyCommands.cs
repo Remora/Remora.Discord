@@ -337,5 +337,305 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
         {
             throw new NotImplementedException();
         }
+
+        [Command("c52")]
+        public Task<IResult> C52()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c53")]
+        public Task<IResult> C53()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c54")]
+        public Task<IResult> C54()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c55")]
+        public Task<IResult> C55()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c56")]
+        public Task<IResult> C56()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c57")]
+        public Task<IResult> C57()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c58")]
+        public Task<IResult> C58()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c59")]
+        public Task<IResult> C59()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c60")]
+        public Task<IResult> C60()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c61")]
+        public Task<IResult> C61()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c62")]
+        public Task<IResult> C62()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c63")]
+        public Task<IResult> C63()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c64")]
+        public Task<IResult> C64()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c65")]
+        public Task<IResult> C65()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c66")]
+        public Task<IResult> C66()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c67")]
+        public Task<IResult> C67()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c68")]
+        public Task<IResult> C68()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c69")]
+        public Task<IResult> C69()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c70")]
+        public Task<IResult> C70()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c71")]
+        public Task<IResult> C71()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c72")]
+        public Task<IResult> C72()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c73")]
+        public Task<IResult> C73()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c74")]
+        public Task<IResult> C74()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c75")]
+        public Task<IResult> C75()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c76")]
+        public Task<IResult> C76()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c77")]
+        public Task<IResult> C77()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c78")]
+        public Task<IResult> C78()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c79")]
+        public Task<IResult> C79()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c80")]
+        public Task<IResult> C80()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c81")]
+        public Task<IResult> C81()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c82")]
+        public Task<IResult> C82()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c83")]
+        public Task<IResult> C83()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c84")]
+        public Task<IResult> C84()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c85")]
+        public Task<IResult> C85()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c86")]
+        public Task<IResult> C86()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c87")]
+        public Task<IResult> C87()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c88")]
+        public Task<IResult> C88()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c89")]
+        public Task<IResult> C89()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c90")]
+        public Task<IResult> C90()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c91")]
+        public Task<IResult> C91()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c92")]
+        public Task<IResult> C92()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c93")]
+        public Task<IResult> C93()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c94")]
+        public Task<IResult> C94()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c95")]
+        public Task<IResult> C95()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c96")]
+        public Task<IResult> C96()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c97")]
+        public Task<IResult> C97()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c98")]
+        public Task<IResult> C98()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c99")]
+        public Task<IResult> C99()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c100")]
+        public Task<IResult> C100()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c101")]
+        public Task<IResult> C101()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -47,11 +47,14 @@ namespace Remora.Discord.Commands.Extensions
          * Various Discord-imposed limits.
          */
 
-        private const int MaxRootCommandsOrGroups = 50;
-        private const int MaxGroupCommands = 10;
-        private const int MaxChoiceValues = 10;
-        private const int MaxCommandParameters = 10;
+        private const int MaxRootCommandsOrGroups = 100;
+        private const int MaxGroupCommands = 25;
+        private const int MaxChoiceValues = 25;
+        private const int MaxCommandParameters = 25;
         private const int MaxGroupDepth = 2;
+        private const int MaxCommandStringifiedLength = 4000;
+        private const int MaxChoiceNameLength = 100;
+        private const int MaxChoiceValueLength = 100;
 
         /// <summary>
         /// Holds a regular expression that matches valid command names.
@@ -100,6 +103,15 @@ namespace Remora.Discord.Commands.Extensions
             if (createdCommands.GroupBy(c => c.Name).Any(g => g.Count() > 1))
             {
                 return new UnsupportedFeatureError("Overloads are not supported.");
+            }
+
+            if (createdCommands.Any(c => GetCommandStringifiedLength(c) > MaxCommandStringifiedLength))
+            {
+                return new UnsupportedFeatureError
+                (
+                    "One or more commands is too long (combined length of name, description, and value properties), " +
+                    $"max {MaxCommandStringifiedLength})."
+                );
             }
 
             commands = createdCommands;
@@ -181,21 +193,21 @@ namespace Remora.Discord.Commands.Extensions
                         }
 
                         groupOptions.Add(nestedOptions!);
+                    }
 
-                        var subcommandCount = groupOptions.Count(o => o.Type == SubCommand);
-                        if (subcommandCount > MaxGroupCommands)
-                        {
-                            return new UnsupportedFeatureError
-                            (
-                                $"Too many commands under a group ({subcommandCount}, max {MaxGroupCommands}).",
-                                group
-                            );
-                        }
+                    var subcommandCount = groupOptions.Count(o => o.Type == SubCommand);
+                    if (subcommandCount > MaxGroupCommands)
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            $"Too many commands under a group ({subcommandCount}, max {MaxGroupCommands}).",
+                            group
+                        );
+                    }
 
-                        if (groupOptions.GroupBy(c => c.Name).Any(g => g.Count() > 1))
-                        {
-                            return new UnsupportedFeatureError("Overloads are not supported.", group);
-                        }
+                    if (groupOptions.GroupBy(c => c.Name).Any(g => g.Count() > 1))
+                    {
+                        return new UnsupportedFeatureError("Overloads are not supported.", group);
                     }
 
                     option = new ApplicationCommandOption
@@ -257,7 +269,17 @@ namespace Remora.Discord.Commands.Extensions
 
                 var parameterType = parameter.Parameter.ParameterType;
                 var discordType = ToApplicationCommandOptionType(parameterType);
-                var choices = CreateApplicationCommandOptionChoices(parameterType);
+                Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
+                if (parameterType.IsEnum)
+                {
+                    var createChoices = CreateApplicationCommandOptionChoices(parameterType);
+                    if (!createChoices.IsSuccess)
+                    {
+                        return Result.FromError(createChoices);
+                    }
+
+                    choices = new(createChoices.Entity);
+                }
 
                 var parameterOption = new ApplicationCommandOption
                 (
@@ -286,20 +308,31 @@ namespace Remora.Discord.Commands.Extensions
             return Result.FromSuccess();
         }
 
-        private static Optional<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
+        private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
         (
             Type parameterType
         )
         {
-            if (!parameterType.IsEnum)
+            var enumNames = Enum.GetNames(parameterType);
+            if (enumNames.Any(n => n.Length > MaxChoiceValueLength))
             {
-                return default;
+                return new UnsupportedFeatureError
+                (
+                    $"One or more enumeration members is too long (max {MaxChoiceValueLength})."
+                );
             }
 
-            var enumNames = Enum.GetNames(parameterType);
+            if (enumNames.Any(n => n.Length > MaxChoiceNameLength))
+            {
+                return new UnsupportedFeatureError
+                (
+                    $"One or more enumeration members is too long (max {MaxChoiceNameLength})."
+                );
+            }
+
             return enumNames.Length <= MaxChoiceValues
                 ? enumNames.Select(n => new ApplicationCommandOptionChoice(n, n)).ToList()
-                : default(Optional<IReadOnlyList<IApplicationCommandOptionChoice>>);
+                : new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
         }
 
         private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)
@@ -314,7 +347,37 @@ namespace Remora.Discord.Commands.Extensions
                 var t when t.IsInteger() => Integer,
                 _ => ApplicationCommandOptionType.String
             };
+
             return discordType;
+        }
+
+        private static int GetCommandStringifiedLength(IApplicationCommandOption option)
+        {
+            var length = 0;
+            length += option.Name.Length;
+            length += option.Description.Length;
+
+            if (option.Choices.HasValue)
+            {
+                foreach (var choice in option.Choices.Value)
+                {
+                    length += choice.Name.Length;
+                    if (choice.Value.TryPickT0(out var choiceValue, out _))
+                    {
+                        length += choiceValue.Length;
+                    }
+                }
+            }
+
+            if (option.Options.HasValue)
+            {
+                foreach (var commandOption in option.Options.Value)
+                {
+                    length += GetCommandStringifiedLength(commandOption);
+                }
+            }
+
+            return length;
         }
     }
 }

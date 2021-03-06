@@ -98,5 +98,95 @@ namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
         {
             throw new NotImplementedException();
         }
+
+        [Command("c12")]
+        public Task<IResult> C12()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c13")]
+        public Task<IResult> C13()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c14")]
+        public Task<IResult> C14()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c15")]
+        public Task<IResult> C15()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c16")]
+        public Task<IResult> C16()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c17")]
+        public Task<IResult> C17()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c18")]
+        public Task<IResult> C18()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c19")]
+        public Task<IResult> C19()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c20")]
+        public Task<IResult> C20()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c21")]
+        public Task<IResult> C21()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c22")]
+        public Task<IResult> C22()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c23")]
+        public Task<IResult> C23()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c24")]
+        public Task<IResult> C24()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c25")]
+        public Task<IResult> C25()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("c26")]
+        public Task<IResult> C26()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
