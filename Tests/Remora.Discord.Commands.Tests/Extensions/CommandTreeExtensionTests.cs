@@ -60,7 +60,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -75,7 +75,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -90,7 +90,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -105,7 +105,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -120,7 +120,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -135,7 +135,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -150,7 +150,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -165,7 +165,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
 
@@ -180,7 +180,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
             }
@@ -201,7 +201,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out _);
+                    var result = tree.CreateApplicationCommands();
                     ResultAssert.Successful(result);
                 }
 
@@ -216,7 +216,9 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out var commands);
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
                     ResultAssert.Successful(result);
 
                     Assert.NotNull(commands);
@@ -255,7 +257,9 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out var commands);
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
@@ -326,7 +330,9 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var tree = builder.Build();
 
-                    var result = tree.CreateApplicationCommands(out var commands);
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 

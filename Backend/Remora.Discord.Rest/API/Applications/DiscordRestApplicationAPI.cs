@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -113,6 +114,54 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public async Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGlobalApplicationCommandsAsync
+        (
+            Snowflake applicationID,
+            IReadOnlyList
+            <
+                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
+            >
+            commands,
+            CancellationToken ct = default)
+        {
+            if (commands.Any(c => c.Name.Length is < 1 or > 32))
+            {
+                return new GenericError
+                (
+                    "The name must be between 1 and 32 characters."
+                );
+            }
+
+            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            {
+                return new GenericError
+                (
+                    "The description must be between 1 and 100 characters."
+                );
+            }
+
+            return await _discordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+            (
+                $"applications/{applicationID}/commands",
+                b => b.WithJsonArray
+                (
+                    json =>
+                    {
+                        foreach (var (name, description, options) in commands)
+                        {
+                            json.WriteStartObject();
+                            json.WriteString("name", name);
+                            json.WriteString("description", description);
+                            json.Write("options", options, _jsonOptions);
+                            json.WriteEndObject();
+                        }
+                    }
+                ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual Task<Result<IApplicationCommand>> GetGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
@@ -192,6 +241,56 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public async Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGuildApplicationCommandsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            IReadOnlyList
+            <
+                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
+            >
+            commands,
+            CancellationToken ct = default
+        )
+        {
+            if (commands.Any(c => c.Name.Length is < 1 or > 32))
+            {
+                return new GenericError
+                (
+                    "The name must be between 1 and 32 characters."
+                );
+            }
+
+            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            {
+                return new GenericError
+                (
+                    "The description must be between 1 and 100 characters."
+                );
+            }
+
+            return await _discordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands",
+                b => b.WithJsonArray
+                (
+                    json =>
+                    {
+                        foreach (var (name, description, options) in commands)
+                        {
+                            json.WriteStartObject();
+                            json.WriteString("name", name);
+                            json.WriteString("description", description);
+                            json.Write("options", options, _jsonOptions);
+                            json.WriteEndObject();
+                        }
+                    }
+                ),
                 ct: ct
             );
         }

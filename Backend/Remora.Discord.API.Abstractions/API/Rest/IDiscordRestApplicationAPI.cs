@@ -70,6 +70,23 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Overwrites all global commands with the given command set. Any commands not in the set will be deleted.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="commands">The commands.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A creation result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGlobalApplicationCommandsAsync
+        (
+            Snowflake applicationID,
+            IReadOnlyList
+            <
+                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
+            > commands,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Gets a global command.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
@@ -128,6 +145,25 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             Snowflake guildID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Overwrites all guild commands with the given command set. Any commands not in the set will be deleted.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="commands">The commands.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A creation result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGuildApplicationCommandsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            IReadOnlyList
+            <
+                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
+            > commands,
             CancellationToken ct = default
         );
 

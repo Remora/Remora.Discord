@@ -69,7 +69,11 @@ namespace Remora.Discord.Commands.Services
         {
             // TODO: Improve
             // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
-            return _commandTree.CreateApplicationCommands(out _);
+            var couldCreate = _commandTree.CreateApplicationCommands();
+
+            return couldCreate.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(couldCreate);
         }
 
         /// <summary>
@@ -91,98 +95,53 @@ namespace Remora.Discord.Commands.Services
             }
 
             var application = getApplication.Entity;
-            var createCommands = _commandTree.CreateApplicationCommands(out var commands);
+            var createCommands = _commandTree.CreateApplicationCommands();
             if (!createCommands.IsSuccess)
             {
-                return createCommands;
+                return Result.FromError(createCommands);
             }
 
             CreateInteractionMethods
             (
                 guildID,
                 application,
-                out var deleteMethod,
-                out var getMethod,
                 out var updateMethod,
                 ct
             );
 
+            var commands = createCommands.Entity;
+
             // Upsert the current valid command set
-            var currentValidCommands = new List<string>();
-            foreach (var command in commands!)
-            {
-                var updateResult = await updateMethod(command);
-                if (!updateResult.IsSuccess)
-                {
-                    return Result.FromError(updateResult);
-                }
-
-                currentValidCommands.Add(command.Name);
-            }
-
-            // Clear out old and invalid commands
-            var getCurrentCommands = await getMethod();
-            if (!getCurrentCommands.IsSuccess)
-            {
-                return Result.FromError(getCurrentCommands);
-            }
-
-            var currentCommands = getCurrentCommands.Entity;
-            var invalidCommands = currentCommands.Where(c => currentValidCommands.All(n => c.Name != n));
-
-            foreach (var invalidCommand in invalidCommands)
-            {
-                var deleteResult = await deleteMethod(invalidCommand.ID);
-                if (!deleteResult.IsSuccess)
-                {
-                    return deleteResult;
-                }
-            }
-
-            return Result.FromSuccess();
+            var updateCommands = await updateMethod(commands);
+            return updateCommands.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(updateCommands);
         }
 
         private void CreateInteractionMethods
         (
             Snowflake? guildID,
             IApplication application,
-            out Func<Snowflake, Task<Result>> deleteMethod,
-            out Func<Task<Result<IReadOnlyList<IApplicationCommand>>>> getMethod,
-            out Func<IApplicationCommandOption, Task<Result<IApplicationCommand>>> updateMethod,
+            out Func<IReadOnlyList<IApplicationCommandOption>, Task<Result<IReadOnlyList<IApplicationCommand>>>> updateMethod,
             CancellationToken ct)
         {
             if (guildID is null)
             {
-                deleteMethod = s => _applicationAPI.DeleteGlobalApplicationCommandAsync(application.ID, s, ct);
-                getMethod = () => _applicationAPI.GetGlobalApplicationCommandsAsync(application.ID, ct);
-                updateMethod = c => _applicationAPI.CreateGlobalApplicationCommandAsync
+                updateMethod = cs => _applicationAPI.CreateGlobalApplicationCommandsAsync
                 (
                     application.ID,
-                    c.Name,
-                    c.Description,
-                    c.Options,
+                    cs.Select(c => (c.Name, c.Description, c.Options)).ToList(),
                     ct
                 );
 
                 return;
             }
 
-            deleteMethod = s => _applicationAPI.DeleteGuildApplicationCommandAsync
+            updateMethod = cs => _applicationAPI.CreateGuildApplicationCommandsAsync
             (
                 application.ID,
                 guildID.Value,
-                s,
-                ct
-            );
-
-            getMethod = () => _applicationAPI.GetGuildApplicationCommandsAsync(application.ID, guildID.Value, ct);
-            updateMethod = c => _applicationAPI.CreateGuildApplicationCommandAsync
-            (
-                application.ID,
-                guildID.Value,
-                c.Name,
-                c.Description,
-                c.Options,
+                cs.Select(c => (c.Name, c.Description, c.Options)).ToList(),
                 ct
             );
         }

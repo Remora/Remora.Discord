@@ -69,23 +69,16 @@ namespace Remora.Discord.Commands.Extensions
         /// Converts the command tree to a set of Discord application commands.
         /// </summary>
         /// <param name="tree">The command tree.</param>
-        /// <param name="commands">The created commands, if any.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static Result CreateApplicationCommands
-        (
-            this CommandTree tree,
-            [NotNullWhen(true)] out IReadOnlyList<IApplicationCommandOption>? commands
-        )
+        public static Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
         {
-            commands = null;
-
             var createdCommands = new List<IApplicationCommandOption>();
             foreach (var child in tree.Root.Children)
             {
                 var createOption = ToOption(child, out var option);
                 if (!createOption.IsSuccess)
                 {
-                    return createOption;
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
                 }
 
                 createdCommands.Add(option!);
@@ -114,8 +107,7 @@ namespace Remora.Discord.Commands.Extensions
                 );
             }
 
-            commands = createdCommands;
-            return Result.FromSuccess();
+            return createdCommands;
         }
 
         private static Result ToOption
