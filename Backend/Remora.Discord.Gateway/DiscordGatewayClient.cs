@@ -801,6 +801,8 @@ namespace Remora.Discord.Gateway
                     );
                 }
 
+                UnwrapAndDispatchEvent(receiveReady.Entity, _disconnectRequestedSource.Token);
+
                 _sessionID = ready.Data.SessionID;
                 break;
             }
@@ -862,6 +864,8 @@ namespace Remora.Discord.Gateway
                     }
                     case IPayload<IResumed>:
                     {
+                        UnwrapAndDispatchEvent(receiveEvent.Entity, _disconnectRequestedSource.Token);
+
                         resuming = false;
                         break;
                     }
