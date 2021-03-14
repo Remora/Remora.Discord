@@ -432,7 +432,7 @@ namespace Remora.Discord.Rest.API
                 return new GenericError("The number of messages to delete must be between 2 and 100.");
             }
 
-            return await _discordHttpClient.DeleteAsync
+            return await _discordHttpClient.PostAsync
             (
                 $"channels/{channelID}/messages/bulk-delete",
                 b => b.WithJson

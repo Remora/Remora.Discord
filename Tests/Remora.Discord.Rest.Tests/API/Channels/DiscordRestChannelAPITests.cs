@@ -1150,7 +1150,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     b => b
                         .Expect
                         (
-                            HttpMethod.Delete,
+                            HttpMethod.Post,
                             $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
                         )
                         .WithJson
