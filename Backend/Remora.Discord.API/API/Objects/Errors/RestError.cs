@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
+using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
@@ -34,7 +35,7 @@ namespace Remora.Discord.API.Objects
     public record RestError
     (
         DiscordError Code,
-        IReadOnlyDictionary<string, IPropertyErrorDetails> Errors,
+        Optional<IReadOnlyDictionary<string, IPropertyErrorDetails>> Errors,
         string Message
     ) : IRestError;
 }
