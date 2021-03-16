@@ -51,10 +51,11 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxGroupCommands = 25;
         private const int MaxChoiceValues = 25;
         private const int MaxCommandParameters = 25;
-        private const int MaxGroupDepth = 2;
+        private const int MaxGroupDepth = 1;
         private const int MaxCommandStringifiedLength = 4000;
         private const int MaxChoiceNameLength = 100;
         private const int MaxChoiceValueLength = 100;
+        private const int MaxDescriptionLength = 100;
 
         /// <summary>
         /// Holds a regular expression that matches valid command names.
@@ -139,6 +140,17 @@ namespace Remora.Discord.Commands.Extensions
                         );
                     }
 
+                    var descriptionLength = command.Shape.Description.Length;
+                    if (descriptionLength is > MaxDescriptionLength)
+                    {
+                        return new UnsupportedFeatureError
+                        (
+                            $"A command's description was too long (length {descriptionLength}, max " +
+                            $"{MaxDescriptionLength}).",
+                            command
+                        );
+                    }
+
                     option = new ApplicationCommandOption
                     (
                         SubCommand,
@@ -154,7 +166,7 @@ namespace Remora.Discord.Commands.Extensions
                 }
                 case GroupNode group:
                 {
-                    if (depth >= MaxGroupDepth)
+                    if (depth > MaxGroupDepth)
                     {
                         return new UnsupportedFeatureError
                         (
@@ -237,6 +249,17 @@ namespace Remora.Discord.Commands.Extensions
             // Create a set of parameter options
             foreach (var parameter in command.Shape.Parameters)
             {
+                var descriptionLength = parameter.Description.Length;
+                if (descriptionLength is > MaxDescriptionLength)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        $"A parameter's description was too long (length {descriptionLength}, max " +
+                        $"{MaxDescriptionLength}).",
+                        command
+                    );
+                }
+
                 switch (parameter)
                 {
                     case SwitchParameterShape:

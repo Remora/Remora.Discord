@@ -183,6 +183,36 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfACommandDescriptionIsTooLong()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<TooLongCommandDescription>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfAParameterDescriptionIsTooLong()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<TooLongParameterDescription>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
