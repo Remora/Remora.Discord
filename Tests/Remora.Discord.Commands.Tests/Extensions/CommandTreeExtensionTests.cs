@@ -347,6 +347,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                             Assert.Equal(nameof(TestEnum.Value2), choice.Value.AsT0);
                         }
                     );
+
+                    AssertExistsWithType("hint-value", Role);
                 }
 
                 /// <summary>

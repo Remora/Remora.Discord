@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
@@ -137,6 +138,12 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
 
         [Command("enum-value")]
         public Task<IResult> CommandWithEnumValue(TestEnum value)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("hint-value")]
+        public Task<IResult> CommandWithHintValue([DiscordTypeHint(TypeHint.Role)] string value)
         {
             throw new NotImplementedException();
         }

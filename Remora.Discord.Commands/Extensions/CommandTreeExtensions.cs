@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
@@ -31,6 +32,7 @@ using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
 using Remora.Results;
@@ -283,7 +285,12 @@ namespace Remora.Discord.Commands.Extensions
                 }
 
                 var parameterType = parameter.Parameter.ParameterType;
-                var discordType = ToApplicationCommandOptionType(parameterType);
+
+                var typeHint = parameter.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
+                var discordType = typeHint is null
+                    ? ToApplicationCommandOptionType(parameterType)
+                    : (ApplicationCommandOptionType)typeHint.TypeHint;
+
                 Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
                 if (parameterType.IsEnum)
                 {
