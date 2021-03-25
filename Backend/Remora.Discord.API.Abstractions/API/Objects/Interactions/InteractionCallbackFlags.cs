@@ -33,6 +33,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The callback message will only be visible to the executing user.
         /// </summary>
-        Ephemeral = 1 << 7
+        Ephemeral = 1 << 6
     }
 }
