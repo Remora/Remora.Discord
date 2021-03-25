@@ -313,7 +313,7 @@ namespace Remora.Discord.Gateway
             shouldTerminate = false;
             withNewSession = false;
 
-            switch (iterationResult.Error)
+            switch (iterationResult.Unwrap())
             {
                 case GatewayDiscordError gde:
                 {
@@ -785,7 +785,7 @@ namespace Remora.Discord.Gateway
                 var receiveReady = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveReady.IsSuccess)
                 {
-                    return Result.FromError(new GenericError("Failed to receive the Ready payload."), receiveReady);
+                    return Result.FromError(receiveReady);
                 }
 
                 if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
