@@ -9,7 +9,7 @@ fi
 
 dotnet pack -c Release
 pushd nuget
-    for f in *.symbols.nupkg; do 
+    for f in *.nupkg; do 
         dotnet nuget push --skip-duplicate -k "${NUGET_AUTH_KEY}" "${f}"
     done
 popd

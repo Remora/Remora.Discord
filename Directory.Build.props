@@ -28,6 +28,7 @@
 
         <IncludeSymbols>true</IncludeSymbols>
         <IncludeSource>true</IncludeSource>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
         <RepositoryUrl>https://github.com/Nihlus/Remora.Discord</RepositoryUrl>
         <RepositoryBranch>master</RepositoryBranch>
