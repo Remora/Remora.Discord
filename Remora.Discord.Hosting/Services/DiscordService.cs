@@ -57,7 +57,7 @@ namespace Remora.Discord.Hosting.Services
 
             if (!runResult.IsSuccess)
             {
-                switch (runResult.Error)
+                switch (runResult.Unwrap())
                 {
                     case ExceptionError exe:
                     {

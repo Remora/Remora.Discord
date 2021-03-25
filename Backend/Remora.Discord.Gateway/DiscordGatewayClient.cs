@@ -313,7 +313,7 @@ namespace Remora.Discord.Gateway
             shouldTerminate = false;
             withNewSession = false;
 
-            switch (iterationResult.Error)
+            switch (iterationResult.Unwrap())
             {
                 case GatewayDiscordError gde:
                 {
