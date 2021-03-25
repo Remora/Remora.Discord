@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.6</Version>
+        <Version>3.1.7</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Fixed an issue where an error would be incorrectly wrapped.
         </PackageReleaseNotes>
     </PropertyGroup>
 
