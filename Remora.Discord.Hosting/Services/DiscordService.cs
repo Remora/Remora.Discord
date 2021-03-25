@@ -82,8 +82,6 @@ namespace Remora.Discord.Hosting.Services
                         break;
                     }
                 }
-
-                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
         }
     }
