@@ -53,36 +53,37 @@ namespace Remora.Discord.Hosting.Services
         /// <inheritdoc />
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            IResult runResult = await _gatewayClient.RunAsync(stoppingToken);
+            while (runResult.Inner != null)
             {
-                var runResult = await _gatewayClient.RunAsync(stoppingToken);
+                runResult = runResult.Inner;
+            }
 
-                if (!runResult.IsSuccess)
+            if (!runResult.IsSuccess)
+            {
+                switch (runResult.Error)
                 {
-                    switch (runResult.Error)
+                    case ExceptionError exe:
                     {
-                        case ExceptionError exe:
-                        {
-                            _logger.LogError
-                            (
-                                exe.Exception,
-                                "Exception during gateway connection: {ExceptionMessage}",
-                                exe.Message
-                            );
+                        _logger.LogError
+                        (
+                            exe.Exception,
+                            "Exception during gateway connection: {ExceptionMessage}",
+                            exe.Message
+                        );
 
-                            break;
-                        }
-                        case GatewayWebSocketError:
-                        case GatewayDiscordError:
-                        {
-                            _logger.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
-                            break;
-                        }
-                        default:
-                        {
-                            _logger.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
-                            break;
-                        }
+                        break;
+                    }
+                    case GatewayWebSocketError:
+                    case GatewayDiscordError:
+                    {
+                        _logger.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
+                        break;
+                    }
+                    default:
+                    {
+                        _logger.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
+                        break;
                     }
                 }
 

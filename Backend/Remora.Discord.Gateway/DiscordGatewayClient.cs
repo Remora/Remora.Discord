@@ -305,7 +305,7 @@ namespace Remora.Discord.Gateway
         // Complexity level is unavoidable in this case; many different cases to handle.
         private bool ShouldReconnect
         (
-            Result iterationResult,
+            IResult iterationResult,
             out bool shouldTerminate,
             out bool withNewSession
         )
@@ -387,7 +387,7 @@ namespace Remora.Discord.Gateway
             }
 
             // We don't know what happened... try reconnecting?
-            return true;
+            return iterationResult.Inner == null || ShouldReconnect(iterationResult.Inner, out shouldTerminate, out withNewSession);
         }
 
         /// <summary>
