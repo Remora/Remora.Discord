@@ -53,11 +53,7 @@ namespace Remora.Discord.Hosting.Services
         /// <inheritdoc />
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            IResult runResult = await _gatewayClient.RunAsync(stoppingToken);
-            while (runResult.Inner != null)
-            {
-                runResult = runResult.Inner;
-            }
+            var runResult = await _gatewayClient.RunAsync(stoppingToken);
 
             if (!runResult.IsSuccess)
             {

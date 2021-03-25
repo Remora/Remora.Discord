@@ -305,7 +305,7 @@ namespace Remora.Discord.Gateway
         // Complexity level is unavoidable in this case; many different cases to handle.
         private bool ShouldReconnect
         (
-            IResult iterationResult,
+            Result iterationResult,
             out bool shouldTerminate,
             out bool withNewSession
         )
@@ -387,7 +387,7 @@ namespace Remora.Discord.Gateway
             }
 
             // We don't know what happened... try reconnecting?
-            return iterationResult.Inner == null || ShouldReconnect(iterationResult.Inner, out shouldTerminate, out withNewSession);
+            return true;
         }
 
         /// <summary>
@@ -785,7 +785,7 @@ namespace Remora.Discord.Gateway
                 var receiveReady = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveReady.IsSuccess)
                 {
-                    return Result.FromError(new GenericError("Failed to receive the Ready payload."), receiveReady);
+                    return Result.FromError(receiveReady);
                 }
 
                 if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
