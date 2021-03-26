@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Moq" Version="4.16.1" />
+    </ItemGroup>
+
 </Project>

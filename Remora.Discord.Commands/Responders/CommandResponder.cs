@@ -48,6 +48,7 @@ namespace Remora.Discord.Commands.Responders
         private readonly ICommandResponderOptions _options;
         private readonly ExecutionEventCollectorService _eventCollector;
         private readonly IServiceProvider _services;
+        private readonly ContextInjectionService _contextInjection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandResponder"/> class.
@@ -56,16 +57,19 @@ namespace Remora.Discord.Commands.Responders
         /// <param name="options">The command responder options.</param>
         /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
+        /// <param name="contextInjection">The injection service.</param>
         public CommandResponder
         (
             CommandService commandService,
             IOptions<CommandResponderOptions> options,
             ExecutionEventCollectorService eventCollector,
-            IServiceProvider services
+            IServiceProvider services,
+            ContextInjectionService contextInjection
         )
         {
             _commandService = commandService;
             _services = services;
+            _contextInjection = contextInjection;
             _eventCollector = eventCollector;
             _options = options.Value;
         }
@@ -197,6 +201,9 @@ namespace Remora.Discord.Commands.Responders
             CancellationToken ct = default
         )
         {
+            // Provide the created context to any services inside this scope
+            _contextInjection.Context = commandContext;
+
             // Strip off the prefix
             if (_options.Prefix is not null)
             {
@@ -205,8 +212,6 @@ namespace Remora.Discord.Commands.Responders
                     (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
                 ];
             }
-
-            var additionalParameters = new object[] { commandContext };
 
             // Run any user-provided pre execution events
             var preExecution = await _eventCollector.RunPreExecutionEvents(commandContext, ct);
@@ -220,7 +225,6 @@ namespace Remora.Discord.Commands.Responders
             (
                 content,
                 _services,
-                additionalParameters,
                 ct: ct
             );
 

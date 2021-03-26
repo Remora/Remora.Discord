@@ -48,6 +48,7 @@ namespace Remora.Discord.Commands.Responders
         private readonly IDiscordRestInteractionAPI _interactionAPI;
         private readonly ExecutionEventCollectorService _eventCollector;
         private readonly IServiceProvider _services;
+        private readonly ContextInjectionService _contextInjection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteractionResponder"/> class.
@@ -56,17 +57,20 @@ namespace Remora.Discord.Commands.Responders
         /// <param name="interactionAPI">The interaction API.</param>
         /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
+        /// <param name="contextInjection">The context injection service.</param>
         public InteractionResponder
         (
             CommandService commandService,
             IDiscordRestInteractionAPI interactionAPI,
             ExecutionEventCollectorService eventCollector,
-            IServiceProvider services
+            IServiceProvider services,
+            ContextInjectionService contextInjection
         )
         {
             _commandService = commandService;
             _eventCollector = eventCollector;
             _services = services;
+            _contextInjection = contextInjection;
             _interactionAPI = interactionAPI;
         }
 
@@ -133,6 +137,9 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.ID
             );
 
+            // Provide the created context to any services inside this scope
+            _contextInjection.Context = context;
+
             // Run any user-provided pre execution events
             var preExecution = await _eventCollector.RunPreExecutionEvents(context, ct);
             if (!preExecution.IsSuccess)
@@ -147,9 +154,8 @@ namespace Remora.Discord.Commands.Responders
                 command,
                 parameters,
                 _services,
-                new object[] { context },
-                searchOptions,
-                ct
+                searchOptions: searchOptions,
+                ct: ct
             );
 
             if (!executeResult.IsSuccess)

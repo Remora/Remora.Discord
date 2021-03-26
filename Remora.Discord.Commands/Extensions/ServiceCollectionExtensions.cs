@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
@@ -53,6 +54,49 @@ namespace Remora.Discord.Commands.Extensions
             bool enableSlash = false
         )
         {
+            // Add the helpers used for context injection.
+            serviceCollection
+                .TryAddScoped<ContextInjectionService>();
+
+            serviceCollection
+                .TryAddTransient<ICommandContext>
+                (
+                    s =>
+                    {
+                        var injectionService = s.GetRequiredService<ContextInjectionService>();
+                        return injectionService.Context ?? throw new InvalidOperationException
+                        (
+                            "No context has been set for this scope."
+                        );
+                    }
+                );
+
+            serviceCollection
+                .TryAddTransient
+                (
+                    s =>
+                    {
+                        var injectionService = s.GetRequiredService<ContextInjectionService>();
+                        return injectionService.Context as MessageContext ?? throw new InvalidOperationException
+                        (
+                            "No message context has been set for this scope."
+                        );
+                    }
+                );
+
+            serviceCollection
+                .TryAddTransient
+                (
+                    s =>
+                    {
+                        var injectionService = s.GetRequiredService<ContextInjectionService>();
+                        return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
+                        (
+                            "No interaction context has been set for this scope."
+                        );
+                    }
+                );
+
             serviceCollection.AddCommands();
             serviceCollection.AddCommandResponder();
 
