@@ -134,12 +134,6 @@ namespace Remora.Discord.Commands.Extensions
             {
                 case CommandNode command:
                 {
-                    var createParameterOptions = CreateCommandParameterOptions(command, out var parameterOptions);
-                    if (!createParameterOptions.IsSuccess)
-                    {
-                        return createParameterOptions;
-                    }
-
                     if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
                     {
                         skip = true;
@@ -150,6 +144,12 @@ namespace Remora.Discord.Commands.Extensions
                     {
                         skip = true;
                         return Result.FromSuccess();
+                    }
+
+                    var createParameterOptions = CreateCommandParameterOptions(command, out var parameterOptions);
+                    if (!createParameterOptions.IsSuccess)
+                    {
+                        return createParameterOptions;
                     }
 
                     if (!NameRegex.IsMatch(command.Key))

@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.7.0</Version>
+        <Version>3.7.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Add a way to exclude commands and groups from slash commands.
+            Fix order of checks and exclusions.
         </PackageReleaseNotes>
     </PropertyGroup>
 
