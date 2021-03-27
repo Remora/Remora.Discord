@@ -26,6 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using OneOf.Types;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -73,15 +74,20 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <param name="tree">The command tree.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
+        public static Remora.Results.Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
         {
             var createdCommands = new List<IApplicationCommandOption>();
             foreach (var child in tree.Root.Children)
             {
-                var createOption = ToOption(child, out var option);
+                var createOption = ToOption(child, out var option, out var skip);
                 if (!createOption.IsSuccess)
                 {
-                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
+                    return Remora.Results.Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
+                }
+
+                if (skip)
+                {
+                    continue;
                 }
 
                 createdCommands.Add(option!);
@@ -117,10 +123,12 @@ namespace Remora.Discord.Commands.Extensions
         (
             IChildNode child,
             [NotNullWhen(true)] out IApplicationCommandOption? option,
+            out bool skip,
             ulong depth = 0
         )
         {
             option = null;
+            skip = false;
 
             switch (child)
             {
@@ -130,6 +138,18 @@ namespace Remora.Discord.Commands.Extensions
                     if (!createParameterOptions.IsSuccess)
                     {
                         return createParameterOptions;
+                    }
+
+                    if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                    {
+                        skip = true;
+                        return Result.FromSuccess();
+                    }
+
+                    if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                    {
+                        skip = true;
+                        return Result.FromSuccess();
                     }
 
                     if (!NameRegex.IsMatch(command.Key))
@@ -192,13 +212,31 @@ namespace Remora.Discord.Commands.Extensions
                     // Continue down
                     foreach (var groupChild in group.Children)
                     {
-                        var createNestedOption = ToOption(groupChild, out var nestedOptions, depth + 1);
+                        var createNestedOption = ToOption
+                        (
+                            groupChild,
+                            out var nestedOptions,
+                            out var skipNested,
+                            depth + 1
+                        );
+
                         if (!createNestedOption.IsSuccess)
                         {
                             return createNestedOption;
                         }
 
+                        if (skipNested)
+                        {
+                            continue;
+                        }
+
                         groupOptions.Add(nestedOptions!);
+                    }
+
+                    if (groupOptions.Count == 0)
+                    {
+                        skip = true;
+                        return Result.FromSuccess();
                     }
 
                     var subcommandCount = groupOptions.Count(o => o.Type == SubCommand);
@@ -330,7 +368,7 @@ namespace Remora.Discord.Commands.Extensions
             return Result.FromSuccess();
         }
 
-        private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
+        private static Remora.Results.Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
         (
             Type parameterType
         )

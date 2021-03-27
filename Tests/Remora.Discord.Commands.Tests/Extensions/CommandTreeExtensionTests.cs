@@ -22,9 +22,12 @@
 
 using System.Linq;
 using Remora.Commands.Trees;
+using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Tests.Data.DiscordLimits;
+using Remora.Discord.Commands.Tests.Data.Exclusion;
 using Remora.Discord.Commands.Tests.Data.InternalLimits;
 using Remora.Discord.Commands.Tests.Data.Valid;
 using Remora.Discord.Tests;
@@ -379,6 +382,162 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     {
                         Assert.False(optionalParameter.IsRequired.Value);
                     }
+                }
+            }
+
+            /// <summary>
+            /// Tests various cases where commands are filtered out.
+            /// </summary>
+            public class Filtering
+            {
+                /// <summary>
+                /// Tests whether a single command can be excluded using
+                /// <see cref="ExcludeFromSlashCommandsAttribute"/>.
+                /// </summary>
+                [Fact]
+                public void CanExcludeCommand()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ExcludedCommand>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    var group = commands.Single();
+
+                    Assert.Equal(SubCommandGroup, group.Type);
+                    Assert.Equal("a", group.Name);
+
+                    Assert.Collection
+                    (
+                        group.Options.Value!,
+                        c =>
+                        {
+                            Assert.Equal(SubCommand, c.Type);
+                            Assert.Equal("b", c.Name);
+                        }
+                    );
+                }
+
+                /// <summary>
+                /// Tests whether a single nested command can be excluded using
+                /// <see cref="ExcludeFromSlashCommandsAttribute"/>.
+                /// </summary>
+                [Fact]
+                public void CanExcludeNestedCommand()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ExcludedNestedCommand>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    var group = commands.Single();
+
+                    Assert.Equal(SubCommandGroup, group.Type);
+                    Assert.Equal("a", group.Name);
+
+                    var nestedGroup = group.Options.Value!.Single();
+
+                    Assert.Equal(SubCommandGroup, nestedGroup.Type);
+                    Assert.Equal("b", nestedGroup.Name);
+
+                    Assert.Collection
+                    (
+                        nestedGroup.Options.Value!,
+                        c =>
+                        {
+                            Assert.Equal(SubCommand, c.Type);
+                            Assert.Equal("d", c.Name);
+                        }
+                    );
+                }
+
+                /// <summary>
+                /// Tests whether a complete group can be excluded using
+                /// <see cref="ExcludeFromSlashCommandsAttribute"/>.
+                /// </summary>
+                [Fact]
+                public void CanExcludeGroup()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ExcludedGroup>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    Assert.Empty(commands);
+                }
+
+                /// <summary>
+                /// Tests whether a complete nested group can be excluded using
+                /// <see cref="ExcludeFromSlashCommandsAttribute"/>.
+                /// </summary>
+                [Fact]
+                public void CanExcludeNestedGroup()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ExcludedNestedGroup>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    var group = commands.Single();
+
+                    Assert.Equal(SubCommandGroup, group.Type);
+                    Assert.Equal("a", group.Name);
+
+                    Assert.Collection
+                    (
+                        group.Options.Value!,
+                        c =>
+                        {
+                            Assert.Equal(SubCommand, c.Type);
+                            Assert.Equal("d", c.Name);
+                        }
+                    );
+                }
+
+                /// <summary>
+                /// Tests whether groups that are empty after exclusion filtering are optimized out.
+                /// </summary>
+                [Fact]
+                public void EmptyGroupsAreOptimizedOut()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupThatIsEmptyAfterExclusion>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    Assert.Empty(commands);
+                }
+
+                /// <summary>
+                /// Tests whether nested groups that are empty after exclusion filtering are optimized out.
+                /// </summary>
+                [Fact]
+                public void NestedEmptyGroupsAreOptimizedOut()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<NestedGroupThatIsEmptyAfterExclusion>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity!;
+
+                    Assert.Empty(commands);
                 }
             }
         }
