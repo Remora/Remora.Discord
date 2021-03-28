@@ -28,6 +28,9 @@
 
         <IncludeSymbols>true</IncludeSymbols>
         <IncludeSource>true</IncludeSource>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <EmbedAllSources>true</EmbedAllSources>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
         <RepositoryUrl>https://github.com/Nihlus/Remora.Discord</RepositoryUrl>
@@ -113,5 +116,10 @@
     <!-- JetBrains Annotations -->
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="all" />
+    </ItemGroup>
+
+    <!-- SourceLink -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
     </ItemGroup>
 </Project>
