@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.2.0</Version>
+        <Version>2.2.1</Version>
         <Description>
             $(BaseDescription)
 
             This package contains core supporting types for Remora.Discord, such as snowflakes and optionals.
         </Description>
         <PackageReleaseNotes>
-            Add equality members for optionals.
+            Enable SourceLink.
         </PackageReleaseNotes>
     </PropertyGroup>
 

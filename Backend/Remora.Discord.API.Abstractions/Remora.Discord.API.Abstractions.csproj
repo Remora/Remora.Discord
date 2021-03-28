@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>12.0.1</Version>
+        <Version>12.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,8 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Fix Ephemeral flag value.
+            Update dependencies.
+            Enable SourceLink.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -24,7 +25,7 @@
 
     <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.178" />
-      <PackageReference Include="Remora.Results" Version="4.0.0" />
+      <PackageReference Include="Remora.Results" Version="4.0.1" />
     </ItemGroup>
 
     <ItemGroup>
