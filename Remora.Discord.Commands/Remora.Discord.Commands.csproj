@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.7.2</Version>
+        <Version>3.7.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Enable SourceLink.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -22,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="2.4.1" />
+        <PackageReference Include="Remora.Commands" Version="3.0.0" />
         <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
     </ItemGroup>
 
