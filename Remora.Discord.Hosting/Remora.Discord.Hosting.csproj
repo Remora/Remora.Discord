@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.17</Version>
+        <Version>3.0.18</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Enable SourceLink.
         </PackageReleaseNotes>
     </PropertyGroup>
 

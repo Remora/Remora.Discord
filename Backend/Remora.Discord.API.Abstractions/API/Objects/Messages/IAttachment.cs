@@ -59,11 +59,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the height of the file (if image).
         /// </summary>
-        int? Height { get; }
+        Optional<int?> Height { get; }
 
         /// <summary>
         /// Gets the width of the file (if image).
         /// </summary>
-        int? Width { get; }
+        Optional<int?> Width { get; }
     }
 }

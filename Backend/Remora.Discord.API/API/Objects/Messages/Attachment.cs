@@ -37,7 +37,7 @@ namespace Remora.Discord.API.Objects
         int Size,
         string Url,
         string ProxyUrl,
-        int? Height,
-        int? Width
+        Optional<int?> Height,
+        Optional<int?> Width
     ) : IAttachment;
 }
