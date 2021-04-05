@@ -776,6 +776,16 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
             options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
 
+            options.AddDataObjectConverter
+            <
+                IApplicationCommandInteractionDataResolved,
+                ApplicationCommandInteractionDataResolved
+            >()
+                .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>())
+                .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>())
+                .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>())
+                .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>());
+
             return options;
         }
 

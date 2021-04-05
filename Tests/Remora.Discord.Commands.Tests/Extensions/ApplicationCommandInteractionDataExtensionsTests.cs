@@ -67,6 +67,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 (
                     new Snowflake(0),
                     "a",
+                    default,
                     new[]
                     {
                         new ApplicationCommandInteractionDataOption
@@ -99,6 +100,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 (
                     new Snowflake(0),
                     "a",
+                    default,
                     new[]
                     {
                         new ApplicationCommandInteractionDataOption
@@ -142,6 +144,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 (
                     new Snowflake(0),
                     "a",
+                    default,
                     new[]
                     {
                         new ApplicationCommandInteractionDataOption
@@ -168,6 +171,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 (
                     new Snowflake(0),
                     "a",
+                    default,
                     new[]
                     {
                         new ApplicationCommandInteractionDataOption
@@ -209,6 +213,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 (
                     new Snowflake(0),
                     "a",
+                    default,
                     new[]
                     {
                         new ApplicationCommandInteractionDataOption

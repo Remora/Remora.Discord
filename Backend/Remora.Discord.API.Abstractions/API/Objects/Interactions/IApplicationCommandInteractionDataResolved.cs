@@ -1,5 +1,5 @@
 //
-//  IApplicationCommandInteractionData.cs
+//  IApplicationCommandInteractionDataResolved.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,35 +21,33 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents payload data for a command.
+    /// Represents data that was resolved during serverside execution of the command.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandInteractionData
+    public interface IApplicationCommandInteractionDataResolved
     {
         /// <summary>
-        /// Gets the ID of the invoked command.
+        /// Gets the resolved users, if any.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<IReadOnlyDictionary<Snowflake, IUser>> Users { get; }
 
         /// <summary>
-        /// Gets the name of the invoked command.
+        /// Gets the resolved guild members, if any.
         /// </summary>
-        string Name { get; }
+        Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members { get; }
 
         /// <summary>
-        /// Gets any entities that were resolved while executing the command serverside.
+        /// Gets the resolved roles, if any.
         /// </summary>
-        Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+        Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles { get; }
 
         /// <summary>
-        /// Gets the parameters and values supplied by the user.
+        /// Gets the resolved channels, if any.
         /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels { get; }
     }
 }

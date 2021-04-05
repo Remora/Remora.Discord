@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionData.cs
+//  ApplicationCommandInteractionDataResolved.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,13 +28,13 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionData" />
-    public record ApplicationCommandInteractionData
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved" />
+    public record ApplicationCommandInteractionDataResolved
     (
-        Snowflake ID,
-        string Name,
-        Optional<IApplicationCommandInteractionDataResolved> Resolved,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default
+        Optional<IReadOnlyDictionary<Snowflake, IUser>> Users,
+        Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
+        Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
+        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels
     )
-    : IApplicationCommandInteractionData;
+    : IApplicationCommandInteractionDataResolved;
 }
