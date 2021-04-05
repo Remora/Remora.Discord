@@ -54,6 +54,17 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// This message came from the urgent message system.
         /// </summary>
-        Urgent = 1 << 4
+        Urgent = 1 << 4,
+
+        /// <summary>
+        /// The message will only be visible to the executing user.
+        /// </summary>
+        Ephemeral = 1 << 6,
+
+        /// <summary>
+        /// The message is a loading message, created by an interaction response (typically, this shows that the bot is
+        /// "thinking".)
+        /// </summary>
+        Loading = 1 << 6
     }
 }

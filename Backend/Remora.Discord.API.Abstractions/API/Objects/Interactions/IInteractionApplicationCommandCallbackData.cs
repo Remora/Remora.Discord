@@ -55,6 +55,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the callback flags.
         /// </summary>
-        Optional<InteractionCallbackFlags> Flags { get; }
+        Optional<MessageFlags> Flags { get; }
     }
 }
