@@ -50,7 +50,8 @@ namespace Remora.Discord.Caching.Responders
         IResponder<IGuildRoleUpdate>,
         IResponder<IMessageCreate>,
         IResponder<IMessageReactionAdd>,
-        IResponder<IUserUpdate>
+        IResponder<IUserUpdate>,
+        IResponder<IInteractionCreate>
     {
         private readonly CacheService _cacheService;
 
@@ -266,6 +267,46 @@ namespace Remora.Discord.Caching.Responders
         {
             var key = KeyHelpers.CreateUserCacheKey(gatewayEvent.ID);
             _cacheService.Cache<IUser>(key, gatewayEvent);
+
+            return Task.FromResult(Result.FromSuccess());
+        }
+
+        /// <inheritdoc />
+        public Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
+        {
+            if (!gatewayEvent.Data.HasValue)
+            {
+                return Task.FromResult(Result.FromSuccess());
+            }
+
+            var data = gatewayEvent.Data.Value;
+            if (!data.Resolved.HasValue)
+            {
+                return Task.FromResult(Result.FromSuccess());
+            }
+
+            var resolved = data.Resolved.Value;
+            if (resolved.Users.HasValue)
+            {
+                var users = resolved.Users.Value;
+                foreach (var (key, value) in users)
+                {
+                    var cacheKey = KeyHelpers.CreateUserCacheKey(key);
+                    _cacheService.Cache(cacheKey, value);
+                }
+            }
+
+            if (!resolved.Roles.HasValue || !gatewayEvent.GuildID.HasValue)
+            {
+                return Task.FromResult(Result.FromSuccess());
+            }
+
+            var roles = resolved.Roles.Value;
+            foreach (var (key, value) in roles)
+            {
+                var cacheKey = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID.Value, key);
+                _cacheService.Cache(cacheKey, value);
+            }
 
             return Task.FromResult(Result.FromSuccess());
         }
