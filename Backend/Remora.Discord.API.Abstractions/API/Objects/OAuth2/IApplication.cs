@@ -78,7 +78,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Summary { get; }
 
         /// <summary>
-        /// Gets the base64-encoded key for GameSDK's GetTicket function.
+        /// Gets the hex-encoded key for GameSDK's GetTicket function.
         /// </summary>
         string VerifyKey { get; }
 
