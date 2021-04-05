@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.0.0</Version>
+        <Version>14.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,9 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Fix Attachment signature.
+            Implement support for editing webhook messages with files.
+            Implement support for ApplicationID on interaction.
+            Implement support for resolved objects in interactions.
         </PackageReleaseNotes>
     </PropertyGroup>
 

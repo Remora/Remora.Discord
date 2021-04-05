@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.1.9</Version>
+        <Version>1.2.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,6 +13,7 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Cache resolved data in interactions.
         </PackageReleaseNotes>
     </PropertyGroup>
 
