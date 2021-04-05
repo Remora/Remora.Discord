@@ -37,6 +37,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Snowflake ID { get; }
 
         /// <summary>
+        /// Gets the application ID that the interaction is for.
+        /// </summary>
+        Snowflake ApplicationID { get; }
+
+        /// <summary>
         /// Gets the type of the interaction.
         /// </summary>
         InteractionType Type { get; }
