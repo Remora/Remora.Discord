@@ -80,11 +80,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
         /// </summary>
-        ManageRoles = 28,
-
-        /// <summary>
-        /// Allows management and editing of webhooks.
-        /// </summary>
-        ManageWebhooks = 29
+        ManageRoles = 28
     }
 }
