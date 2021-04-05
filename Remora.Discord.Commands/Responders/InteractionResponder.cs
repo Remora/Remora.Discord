@@ -135,6 +135,7 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.Member,
                 gatewayEvent.Token,
                 gatewayEvent.ID,
+                gatewayEvent.ApplicationID,
                 interactionData.Resolved
             );
 
