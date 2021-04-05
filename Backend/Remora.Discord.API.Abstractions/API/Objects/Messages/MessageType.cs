@@ -118,6 +118,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A reply to another message.
         /// </summary>
-        InlineReply = 19
+        InlineReply = 19,
+
+        /// <summary>
+        /// An application command.
+        /// </summary>
+        ApplicationCommand = 20
     }
 }
