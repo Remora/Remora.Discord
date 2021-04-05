@@ -72,6 +72,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         new ApplicationCommandInteractionDataOption
                         (
                             "b",
+                            ApplicationCommandOptionType.Integer,
                             new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(1),
                             default
                         )
@@ -103,12 +104,14 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         new ApplicationCommandInteractionDataOption
                         (
                             "b",
+                            ApplicationCommandOptionType.Integer,
                             new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(1),
                             default
                         ),
                         new ApplicationCommandInteractionDataOption
                         (
                             "c",
+                            ApplicationCommandOptionType.Integer,
                             new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(2),
                             default
                         )
@@ -170,12 +173,14 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         new ApplicationCommandInteractionDataOption
                         (
                             "b",
+                            ApplicationCommandOptionType.SubCommand,
                             default,
                             new[]
                             {
                                 new ApplicationCommandInteractionDataOption
                                 (
                                     "c",
+                                    ApplicationCommandOptionType.Integer,
                                     new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(1),
                                     default
                                 )
@@ -209,18 +214,21 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         new ApplicationCommandInteractionDataOption
                         (
                             "b",
+                            ApplicationCommandOptionType.SubCommand,
                             default,
                             new[]
                             {
                                 new ApplicationCommandInteractionDataOption
                                 (
                                     "c",
+                                    ApplicationCommandOptionType.Integer,
                                     new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(1),
                                     default
                                 ),
                                 new ApplicationCommandInteractionDataOption
                                 (
                                     "d",
+                                    ApplicationCommandOptionType.Integer,
                                     new Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>>(2),
                                     default
                                 )

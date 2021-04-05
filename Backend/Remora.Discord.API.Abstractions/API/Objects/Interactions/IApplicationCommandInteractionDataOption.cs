@@ -39,6 +39,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Name { get; }
 
         /// <summary>
+        /// Gets the parameter's type.
+        /// </summary>
+        ApplicationCommandOptionType Type { get; }
+
+        /// <summary>
         /// Gets the value of the pair.
         /// </summary>
         Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value { get; }
