@@ -211,6 +211,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="content">The new content, if any.</param>
         /// <param name="embeds">The new embeds, if any.</param>
         /// <param name="allowedMentions">The new allowed mentions, if any.</param>
+        /// <param name="file">The new file, if any.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditWebhookMessageAsync
@@ -221,6 +222,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<FileData?> file = default,
             CancellationToken ct = default
         );
 

@@ -304,6 +304,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<FileData?> file = default,
             CancellationToken ct = default
         )
         {
@@ -322,6 +323,11 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
                 {
+                    if (file.HasValue)
+                    {
+                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
+                    }
+
                     b.WithJson
                     (
                         json =>

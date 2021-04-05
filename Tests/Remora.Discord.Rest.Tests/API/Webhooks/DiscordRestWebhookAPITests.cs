@@ -625,7 +625,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
         /// </summary>
         public class ExecuteWebhookAsync : RestAPITestBase<IDiscordRestWebhookAPI>
         {
-             /// <summary>
+            /// <summary>
             /// Tests whether the API method performs its request correctly.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
@@ -799,12 +799,58 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
         /// </summary>
         public class EditWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
         {
+             /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNormalRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                var content = "booga";
+                var allowedMentions = new AllowedMentions();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID,
+                    content,
+                    allowedMentions: allowedMentions
+                );
+
+                ResultAssert.Successful(result);
+            }
+
             /// <summary>
             /// Tests whether the API method performs its request correctly.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
-            public async Task PerformsRequestCorrectly()
+            public async Task PerformsEmbedRequestCorrectly()
             {
                 var webhookID = new Snowflake(0);
                 var token = "aa";
@@ -812,7 +858,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 var content = "booga";
                 var embeds = new List<IEmbed>();
-                var allowedMentions = new AllowedMentions(default, default, default, default);
 
                 var api = CreateAPI
                 (
@@ -829,7 +874,6 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                 o => o
                                     .WithProperty("content", p => p.Is(content))
                                     .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
-                                    .WithProperty("allowed_mentions", p => p.IsObject())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -841,8 +885,74 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     messageID,
                     content,
-                    embeds,
-                    allowedMentions
+                    embeds
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                var content = "booga";
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (!(m.Content is MultipartFormDataContent multipart))
+                                {
+                                    return false;
+                                }
+
+                                var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
+                                if (streamContent?.Headers.ContentDisposition is null)
+                                {
+                                    return false;
+                                }
+
+                                if (streamContent.Headers.ContentDisposition.FileName != fileName)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.Any(c => c is StringContent))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID,
+                    content,
+                    file: new FileData(fileName, file)
                 );
 
                 ResultAssert.Successful(result);
