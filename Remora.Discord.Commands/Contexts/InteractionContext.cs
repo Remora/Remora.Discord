@@ -37,7 +37,8 @@ namespace Remora.Discord.Commands.Contexts
         IUser User,
         Optional<IGuildMember> Member,
         string Token,
-        Snowflake ID
+        Snowflake ID,
+        Optional<IApplicationCommandInteractionDataResolved> Resolved
     )
     : CommandContext(GuildID, ChannelID, User);
 }

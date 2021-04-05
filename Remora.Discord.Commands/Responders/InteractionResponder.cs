@@ -134,7 +134,8 @@ namespace Remora.Discord.Commands.Responders
                 user,
                 gatewayEvent.Member,
                 gatewayEvent.Token,
-                gatewayEvent.ID
+                gatewayEvent.ID,
+                interactionData.Resolved
             );
 
             // Provide the created context to any services inside this scope
