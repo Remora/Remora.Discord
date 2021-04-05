@@ -127,7 +127,7 @@ namespace Remora.Discord.Commands.Services
         {
             if (guildID is null)
             {
-                updateMethod = cs => _applicationAPI.CreateGlobalApplicationCommandsAsync
+                updateMethod = cs => _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     application.ID,
                     cs.Select(c => (c.Name, c.Description, c.Options)).ToList(),
@@ -137,7 +137,7 @@ namespace Remora.Discord.Commands.Services
                 return;
             }
 
-            updateMethod = cs => _applicationAPI.CreateGuildApplicationCommandsAsync
+            updateMethod = cs => _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
             (
                 application.ID,
                 guildID.Value,

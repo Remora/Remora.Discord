@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commands">The commands.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGlobalApplicationCommandsAsync
+        Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
             IReadOnlyList
@@ -156,7 +156,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="commands">The commands.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGuildApplicationCommandsAsync
+        Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,

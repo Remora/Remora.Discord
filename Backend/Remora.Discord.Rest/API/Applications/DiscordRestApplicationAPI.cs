@@ -114,7 +114,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGlobalApplicationCommandsAsync
+        public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
             IReadOnlyList
@@ -246,7 +246,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<IReadOnlyList<IApplicationCommand>>> CreateGuildApplicationCommandsAsync
+        public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,

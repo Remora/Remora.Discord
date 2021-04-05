@@ -280,9 +280,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.CreateGlobalApplicationCommandsAsync"/> method.
+        /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGlobalApplicationCommandsAsync"/> method.
         /// </summary>
-        public class CreateGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        public class BulkOverwriteGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -321,7 +321,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", "[]")
                 );
 
-                var result = await api.CreateGlobalApplicationCommandsAsync
+                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     applicationID,
                     commands
@@ -351,7 +351,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGlobalApplicationCommandsAsync
+                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     applicationID,
                     commands
@@ -381,7 +381,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGlobalApplicationCommandsAsync
+                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     applicationID,
                     commands
@@ -411,7 +411,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGlobalApplicationCommandsAsync
+                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     applicationID,
                     commands
@@ -441,7 +441,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGlobalApplicationCommandsAsync
+                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     applicationID,
                     commands
@@ -1015,9 +1015,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.CreateGuildApplicationCommandsAsync"/> method.
+        /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGuildApplicationCommandsAsync"/> method.
         /// </summary>
-        public class CreateGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        public class BulkOverwriteGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1057,7 +1057,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", "[]")
                 );
 
-                var result = await api.CreateGuildApplicationCommandsAsync
+                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     applicationID,
                     guildID,
@@ -1089,7 +1089,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGuildApplicationCommandsAsync
+                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     applicationID,
                     guildID,
@@ -1121,7 +1121,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGuildApplicationCommandsAsync
+                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     applicationID,
                     guildID,
@@ -1153,7 +1153,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGuildApplicationCommandsAsync
+                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     applicationID,
                     guildID,
@@ -1185,7 +1185,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
                 );
 
-                var result = await api.CreateGuildApplicationCommandsAsync
+                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
                 (
                     applicationID,
                     guildID,
