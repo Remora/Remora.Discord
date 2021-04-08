@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,11 +62,6 @@ namespace Remora.Discord.Commands.Parsers
         /// <inheritdoc />
         public override async ValueTask<Result<IRole>> TryParse(string value, CancellationToken ct)
         {
-            if (!Snowflake.TryParse(value.Unmention(), out var roleID))
-            {
-                return new ParsingError<IRole>(value.Unmention());
-            }
-
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
@@ -85,6 +81,15 @@ namespace Remora.Discord.Commands.Parsers
             }
 
             var roles = getRoles.Entity;
+            if (!Snowflake.TryParse(value.Unmention(), out var roleID))
+            {
+                // Try a name-based lookup
+                var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));
+                return roleByName is not null
+                    ? Result<IRole>.FromSuccess(roleByName)
+                    : new ParsingError<IRole>(value.Unmention());
+            }
+
             var role = roles.FirstOrDefault(r => r.ID.Equals(roleID));
 
             return role is not null
