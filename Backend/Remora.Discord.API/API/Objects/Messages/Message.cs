@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> WebhookID,
         MessageType Type,
         Optional<IMessageActivity> Activity = default,
-        Optional<IMessageApplication> Application = default,
+        Optional<IPartialApplication> Application = default,
         Optional<IMessageReference> MessageReference = default,
         Optional<MessageFlags> Flags = default,
         Optional<IReadOnlyList<IMessageSticker>> Stickers = default,

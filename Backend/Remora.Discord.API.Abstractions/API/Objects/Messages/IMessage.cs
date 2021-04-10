@@ -152,7 +152,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the application the message belongs to. Sent with rich presence-related chat embeds.
         /// </summary>
-        Optional<IMessageApplication> Application { get; }
+        Optional<IPartialApplication> Application { get; }
 
         /// <summary>
         /// Gets the message reference. Sent with cross-posted messages.

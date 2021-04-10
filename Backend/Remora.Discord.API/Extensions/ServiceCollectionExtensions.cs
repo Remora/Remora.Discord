@@ -555,7 +555,6 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
-            options.AddDataObjectConverter<IMessageApplication, MessageApplication>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
 
             options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
