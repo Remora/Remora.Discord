@@ -1,5 +1,5 @@
 //
-//  ApplicationCommand.cs
+//  ApplicationCommandPermissions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandPermissions" />
+    public record ApplicationCommandPermissions(Snowflake ID, ApplicationCommandPermissionType Type, bool HasPermission)
+        : IApplicationCommandPermissions;
 }

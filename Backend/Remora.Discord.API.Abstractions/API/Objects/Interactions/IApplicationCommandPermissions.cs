@@ -1,5 +1,5 @@
 //
-//  ApplicationCommand.cs
+//  IApplicationCommandPermissions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+    /// <summary>
+    /// Represents a single permission for a command.
+    /// </summary>
+    public interface IApplicationCommandPermissions
+    {
+        /// <summary>
+        /// Gets the ID of the role or user that has been assigned an explicit permission.
+        /// </summary>
+        Snowflake ID { get; }
+
+        /// <summary>
+        /// Gets the type of the entity that has been assigned an explicit permission.
+        /// </summary>
+        ApplicationCommandPermissionType Type { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the referenced entity has permission to use the command.
+        /// </summary>
+        bool HasPermission { get;  }
+    }
 }

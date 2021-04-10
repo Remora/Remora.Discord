@@ -1,5 +1,5 @@
 //
-//  ApplicationCommand.cs
+//  PartialGuildApplicationCommandPermissions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,24 +21,17 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialGuildApplicationCommandPermissions" />
+    public record PartialGuildApplicationCommandPermissions
     (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+        Optional<Snowflake> ID,
+        Optional<Snowflake> ApplicationID,
+        Optional<Snowflake> GuildID,
+        Optional<IReadOnlyList<IApplicationCommandPermissions>> Permissions
+    ) : IPartialGuildApplicationCommandPermissions;
 }

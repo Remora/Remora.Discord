@@ -58,6 +58,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the command. 3-32 characters.</param>
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
+        /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -65,7 +66,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake applicationID,
             string name,
             string description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+            Optional<bool> defaultPermission = default,
             CancellationToken ct = default
         );
 
@@ -108,15 +110,17 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the command. 3-32 characters.</param>
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
+        /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
         (
             Snowflake applicationID,
             Snowflake commandID,
-            Optional<string> name,
-            Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+            Optional<string> name = default,
+            Optional<string> description = default,
+            Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+            Optional<bool> defaultPermission = default,
             CancellationToken ct = default
         );
 
@@ -178,6 +182,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the command. 3-32 characters.</param>
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
+        /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -186,7 +191,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake guildID,
             string name,
             string description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+            Optional<bool> defaultPermission = default,
             CancellationToken ct = default
         );
 
@@ -215,6 +221,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the command. 3-32 characters.</param>
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
+        /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
@@ -222,9 +229,10 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake applicationID,
             Snowflake guildID,
             Snowflake commandID,
-            Optional<string> name,
-            Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+            Optional<string> name = default,
+            Optional<string> description = default,
+            Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+            Optional<bool> defaultPermission = default,
             CancellationToken ct = default
         );
 
@@ -241,6 +249,70 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake applicationID,
             Snowflake guildID,
             Snowflake commandID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets the permissions for all of the application's commands in a guild.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>> GetGuildApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets the permissions for a specific command in a guild.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="commandID">The ID of the command.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Edits command permissions for a specific command in a guild.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="commandID">The ID of the command.</param>
+        /// <param name="permissions">The permissions to overwrite the existing ones with.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>An edit result which may or may not have succeeded.</returns>
+        Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
+            IReadOnlyList<IApplicationCommandPermissions> permissions,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Overwrites the entire permission set in the given guild.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="permissions">The permission set to overwrite the existing one with.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>An edit result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>> BatchEditApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
             CancellationToken ct = default
         );
     }

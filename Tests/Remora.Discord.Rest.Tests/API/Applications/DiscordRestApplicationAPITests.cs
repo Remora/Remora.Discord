@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -1515,6 +1516,156 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 );
 
                 var result = await api.DeleteGuildApplicationCommandAsync(applicationID, guildID, commandID);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandPermissionsAsync"/> method.
+        /// </summary>
+        public class GetGuildApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.GetGuildApplicationCommandPermissionsAsync(applicationID, guildID);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.GetApplicationCommandPermissionsAsync"/> method.
+        /// </summary>
+        public class GetApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+                var commandID = new Snowflake(2);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                        )
+                        .WithNoContent()
+                        .Respond
+                        (
+                            "application/json",
+                            SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)]
+                        )
+                );
+
+                var result = await api.GetApplicationCommandPermissionsAsync(applicationID, guildID, commandID);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.EditApplicationCommandPermissionsAsync"/> method.
+        /// </summary>
+        public class EditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+                var commandID = new Snowflake(2);
+
+                var permissions = Array.Empty<IApplicationCommandPermissions>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o.WithProperty("permissions", p => p.IsArray(a => a.WithCount(0)))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
+                );
+
+                var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestApplicationAPI.BatchEditApplicationCommandPermissionsAsync"/> method.
+        /// </summary>
+        public class BatchEditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+
+                var permissions = Array.Empty<IPartialGuildApplicationCommandPermissions>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsArray
+                            (
+                                a => a.WithCount(0)
+                            )
+                        )
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.BatchEditApplicationCommandPermissionsAsync(applicationID, guildID, permissions);
                 ResultAssert.Successful(result);
             }
         }

@@ -78,6 +78,7 @@ namespace Remora.Discord.Rest.API
             string name,
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<bool> defaultPermission,
             CancellationToken ct
         )
         {
@@ -107,6 +108,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("name", name);
                         json.WriteString("description", description);
                         json.Write("options", options, _jsonOptions);
+                        json.Write("default_permission", defaultPermission, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -184,6 +186,7 @@ namespace Remora.Discord.Rest.API
             Optional<string> name,
             Optional<string> description,
             Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+            Optional<bool> defaultPermission,
             CancellationToken ct
         )
         {
@@ -213,6 +216,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("name", name, _jsonOptions);
                         json.Write("description", description, _jsonOptions);
                         json.Write("options", options, _jsonOptions);
+                        json.Write("default_permission", defaultPermission, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -303,6 +307,7 @@ namespace Remora.Discord.Rest.API
             string name,
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
+            Optional<bool> defaultPermission,
             CancellationToken ct
         )
         {
@@ -332,6 +337,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("name", name);
                         json.WriteString("description", description);
                         json.Write("options", options, _jsonOptions);
+                        json.Write("default_permission", defaultPermission, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -363,6 +369,7 @@ namespace Remora.Discord.Rest.API
             Optional<string> name,
             Optional<string> description,
             Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+            Optional<bool> defaultPermission,
             CancellationToken ct
         )
         {
@@ -392,6 +399,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("name", name, _jsonOptions);
                         json.Write("description", description, _jsonOptions);
                         json.Write("options", options, _jsonOptions);
+                        json.Write("default_permission", defaultPermission, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -410,6 +418,90 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.DeleteAsync
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+        GetGuildApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IGuildApplicationCommandPermissions>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            Snowflake commandID,
+            IReadOnlyList<IApplicationCommandPermissions> permissions,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PutAsync<IGuildApplicationCommandPermissions>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
+                b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.WritePropertyName("permissions");
+                        JsonSerializer.Serialize(json, permissions, _jsonOptions);
+                    }
+                ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+        BatchEditApplicationCommandPermissionsAsync
+        (
+            Snowflake applicationID,
+            Snowflake guildID,
+            IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
+            (
+                $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
+                b => b.WithJsonArray
+                (
+                    json =>
+                    {
+                        foreach (var permission in permissions)
+                        {
+                            JsonSerializer.Serialize(json, permission, _jsonOptions);
+                        }
+                    }
+                ),
                 ct: ct
             );
         }

@@ -803,6 +803,15 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>())
                 .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>());
 
+            options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
+            options.AddDataObjectConverter
+            <
+                IPartialGuildApplicationCommandPermissions,
+                PartialGuildApplicationCommandPermissions
+            >();
+            options.AddDataObjectConverter<IApplicationCommandPermissions, ApplicationCommandPermissions>()
+                .WithPropertyName(p => p.HasPermission, "permission");
+
             return options;
         }
 

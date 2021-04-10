@@ -1,5 +1,5 @@
 //
-//  ApplicationCommand.cs
+//  ApplicationCommandPermissionType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
-
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+    /// <summary>
+    /// Enumerates application permission types.
+    /// </summary>
+    public enum ApplicationCommandPermissionType
+    {
+        /// <summary>
+        /// The permission applies to a role.
+        /// </summary>
+        Role = 1,
+
+        /// <summary>
+        /// The permission applies to a user.
+        /// </summary>
+        User = 2
+    }
 }

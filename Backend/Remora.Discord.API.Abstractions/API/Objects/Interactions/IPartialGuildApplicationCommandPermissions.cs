@@ -1,5 +1,5 @@
 //
-//  IApplicationCommand.cs
+//  IPartialGuildApplicationCommandPermissions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,47 +21,33 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents an application command.
+    /// Represents a set of permissions for a command in a guild.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommand
+    public interface IPartialGuildApplicationCommandPermissions
     {
         /// <summary>
         /// Gets the ID of the command.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
-        /// Gets the ID of the application.
+        /// Gets the ID of the application the command belongs to.
         /// </summary>
-        Snowflake ApplicationID { get; }
+        Optional<Snowflake> ApplicationID { get; }
 
         /// <summary>
-        /// Gets the name of the command.
+        /// Gets the ID of the guild.
         /// </summary>
-        /// <remarks>The length of the name must be between 3 and 32 characters.</remarks>
-        string Name { get; }
+        Optional<Snowflake> GuildID { get; }
 
         /// <summary>
-        /// Gets the description of the command.
+        /// Gets the permissions for the command in the guild.
         /// </summary>
-        /// <remarks>The length of the description must be between 1 and 100 characters.</remarks>
-        string Description { get; }
-
-        /// <summary>
-        /// Gets the parameters of the command.
-        /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the command is enabled by default when added to a guild.
-        /// </summary>
-        Optional<bool> DefaultPermission { get; }
+        Optional<IReadOnlyList<IApplicationCommandPermissions>> Permissions { get; }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ApplicationCommand.cs
+//  IGuildApplicationCommandPermissions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,24 +21,33 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+    /// <summary>
+    /// Represents a set of permissions for a command in a guild.
+    /// </summary>
+    public interface IGuildApplicationCommandPermissions
+    {
+        /// <summary>
+        /// Gets the ID of the command.
+        /// </summary>
+        Snowflake ID { get; }
+
+        /// <summary>
+        /// Gets the ID of the application the command belongs to.
+        /// </summary>
+        Snowflake ApplicationID { get; }
+
+        /// <summary>
+        /// Gets the ID of the guild.
+        /// </summary>
+        Snowflake GuildID { get; }
+
+        /// <summary>
+        /// Gets the permissions for the command in the guild.
+        /// </summary>
+        IReadOnlyList<IApplicationCommandPermissions> Permissions { get; }
+    }
 }
