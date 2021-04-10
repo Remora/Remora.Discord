@@ -124,5 +124,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the time when the last pinned message was pinned.
         /// </summary>
         Optional<DateTimeOffset?> LastPinTimestamp { get; }
+
+        /// <summary>
+        /// Gets the ID of the voice channel region.
+        /// </summary>
+        Optional<string?> RTCRegion { get; }
     }
 }

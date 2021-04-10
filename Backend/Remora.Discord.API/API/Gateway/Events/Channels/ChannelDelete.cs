@@ -32,52 +32,48 @@ namespace Remora.Discord.API.Gateway.Events.Channels
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelDelete" />
     [PublicAPI]
-    public record ChannelDelete : Channel, IChannelDelete
-    {
-        /// <inheritdoc cref="Channel"/>
-        public ChannelDelete
+    public record ChannelDelete
+    (
+        Snowflake ID,
+        ChannelType Type,
+        Optional<Snowflake> GuildID = default,
+        Optional<int> Position = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
+        Optional<string> Name = default,
+        Optional<string?> Topic = default,
+        Optional<bool> IsNsfw = default,
+        Optional<Snowflake?> LastMessageID = default,
+        Optional<int> Bitrate = default,
+        Optional<int> UserLimit = default,
+        Optional<TimeSpan> RateLimitPerUser = default,
+        Optional<IReadOnlyList<IUser>> Recipients = default,
+        Optional<IImageHash?> Icon = default,
+        Optional<Snowflake> OwnerID = default,
+        Optional<Snowflake> ApplicationID = default,
+        Optional<Snowflake?> ParentID = default,
+        Optional<DateTimeOffset?> LastPinTimestamp = default,
+        Optional<string?> RTCRegion = default
+    ) :
+        Channel
         (
-            Snowflake id,
-            ChannelType type,
-            Optional<Snowflake> guildID = default,
-            Optional<int> position = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
-            Optional<string> name = default,
-            Optional<string?> topic = default,
-            Optional<bool> isNsfw = default,
-            Optional<Snowflake?> lastMessageID = default,
-            Optional<int> bitrate = default,
-            Optional<int> userLimit = default,
-            Optional<TimeSpan> rateLimitPerUser = default,
-            Optional<IReadOnlyList<IUser>> recipients = default,
-            Optional<IImageHash?> icon = default,
-            Optional<Snowflake> ownerID = default,
-            Optional<Snowflake> applicationID = default,
-            Optional<Snowflake?> parentID = default,
-            Optional<DateTimeOffset?> lastPinTimestamp = default
-        )
-            : base
-            (
-                id,
-                type,
-                guildID,
-                position,
-                permissionOverwrites,
-                name,
-                topic,
-                isNsfw,
-                lastMessageID,
-                bitrate,
-                userLimit,
-                rateLimitPerUser,
-                recipients,
-                icon,
-                ownerID,
-                applicationID,
-                parentID,
-                lastPinTimestamp
-            )
-        {
-        }
-    }
+            ID,
+            Type,
+            GuildID,
+            Position,
+            PermissionOverwrites,
+            Name,
+            Topic,
+            IsNsfw,
+            LastMessageID,
+            Bitrate,
+            UserLimit,
+            RateLimitPerUser,
+            Recipients,
+            Icon,
+            OwnerID,
+            ApplicationID,
+            ParentID,
+            LastPinTimestamp,
+            RTCRegion
+        ), IChannelDelete;
 }

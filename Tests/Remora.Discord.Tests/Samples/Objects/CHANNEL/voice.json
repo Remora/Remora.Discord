@@ -9,5 +9,6 @@
     "nsfw": false,
     "bitrate": 10,
     "user_limit": 2,
-    "parent_id": "728303464207220816"
+    "parent_id": "728303464207220816",
+    "rtc_region": "aafaf"
 }

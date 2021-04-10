@@ -51,6 +51,7 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> OwnerID = default,
         Optional<Snowflake> ApplicationID = default,
         Optional<Snowflake?> ParentID = default,
-        Optional<DateTimeOffset?> LastPinTimestamp = default
+        Optional<DateTimeOffset?> LastPinTimestamp = default,
+        Optional<string?> RTCRegion = default
     ) : IPartialChannel;
 }
