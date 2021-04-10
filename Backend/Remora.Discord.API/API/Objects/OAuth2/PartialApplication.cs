@@ -38,6 +38,8 @@ namespace Remora.Discord.API.Objects
         Optional<IReadOnlyList<string>> RPCOrigins = default,
         Optional<bool> IsBotPublic = default,
         Optional<bool> DoesBotRequireCodeGrant = default,
+        Optional<string> TermsOfServiceURL = default,
+        Optional<string> PrivacyPolicyURL = default,
         Optional<IPartialUser> Owner = default,
         Optional<string> Summary = default,
         Optional<string> VerifyKey = default,

@@ -68,6 +68,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<bool> DoesBotRequireCodeGrant { get; }
 
         /// <summary>
+        /// Gets the URL to the application's terms of service.
+        /// </summary>
+        Optional<string> TermsOfServiceURL { get; }
+
+        /// <summary>
+        /// Gets the URL to the application's privacy policy.
+        /// </summary>
+        Optional<string> PrivacyPolicyURL { get; }
+
+        /// <summary>
         /// Gets the user information of the application owner.
         /// </summary>
         Optional<IPartialUser> Owner { get; }

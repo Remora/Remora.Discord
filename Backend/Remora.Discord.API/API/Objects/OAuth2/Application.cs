@@ -38,6 +38,8 @@ namespace Remora.Discord.API.Objects
         Optional<IReadOnlyList<string>> RPCOrigins,
         bool IsBotPublic,
         bool DoesBotRequireCodeGrant,
+        Optional<string> TermsOfServiceURL,
+        Optional<string> PrivacyPolicyURL,
         IPartialUser Owner,
         string Summary,
         string VerifyKey,
