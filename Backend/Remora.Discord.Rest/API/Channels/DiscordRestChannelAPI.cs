@@ -214,7 +214,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IMessage>> CreateMessageAsync
+        public virtual async Task<Result<IMessage>> CreateMessageAsync
         (
             Snowflake channelID,
             Optional<string> content = default,
@@ -227,7 +227,12 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IMessage>
+            if (nonce.HasValue && nonce.Value.Length > 25)
+            {
+                return new GenericError("The nonce length must be less than 25 characters.");
+            }
+
+            return await _discordHttpClient.PostAsync<IMessage>
             (
                 $"channels/{channelID}/messages",
                 b =>
