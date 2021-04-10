@@ -214,7 +214,15 @@ namespace Remora.Discord.API.Abstractions.Rest
         Task<Result> ModifyGuildChannelPositionsAsync
         (
             Snowflake guildID,
-            IReadOnlyList<(Snowflake ChannelID, int? Position)> positionModifications,
+            IReadOnlyList
+            <
+                (
+                    Snowflake ChannelID,
+                    int? Position,
+                    bool? LockPermissions,
+                    Snowflake? ParentID
+                )
+            > positionModifications,
             CancellationToken ct = default
         );
 

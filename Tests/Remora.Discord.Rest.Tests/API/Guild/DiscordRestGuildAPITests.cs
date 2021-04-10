@@ -683,12 +683,20 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             public async Task PerformsRequestCorrectly()
             {
                 var guildId = new Snowflake(0);
-                var swaps = new List<(Snowflake Channel, int? Position)>
+                var swaps = new List
+                <
+                    (
+                    Snowflake ChannelID,
+                    int? Position,
+                    bool? LockPermissions,
+                    Snowflake? ParentID
+                    )
+                >
                 {
-                    (new Snowflake(1), 1),
-                    (new Snowflake(2), 2),
-                    (new Snowflake(3), 3),
-                    (new Snowflake(4), 4)
+                    (new Snowflake(1), 1, false, new Snowflake(0)),
+                    (new Snowflake(2), 2, false, new Snowflake(0)),
+                    (new Snowflake(3), 3, false, new Snowflake(0)),
+                    (new Snowflake(4), 4, false, new Snowflake(0))
                 };
 
                 var api = CreateAPI
@@ -709,6 +717,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                             .WithProperty("id", p => p.Is(1.ToString()))
                                             .WithProperty("position", p => p.Is(1))
+                                            .WithProperty("lock_permissions", p => p.Is(false))
+                                            .WithProperty("parent_id", p => p.Is("0"))
                                         )
                                     )
                                     .WithElement
@@ -719,6 +729,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(2.ToString()))
                                                 .WithProperty("position", p => p.Is(2))
+                                                .WithProperty("lock_permissions", p => p.Is(false))
+                                                .WithProperty("parent_id", p => p.Is("0"))
                                         )
                                     )
                                     .WithElement
@@ -729,6 +741,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(3.ToString()))
                                                 .WithProperty("position", p => p.Is(3))
+                                                .WithProperty("lock_permissions", p => p.Is(false))
+                                                .WithProperty("parent_id", p => p.Is("0"))
                                         )
                                     )
                                     .WithElement
@@ -739,6 +753,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(4.ToString()))
                                                 .WithProperty("position", p => p.Is(4))
+                                                .WithProperty("lock_permissions", p => p.Is(false))
+                                                .WithProperty("parent_id", p => p.Is("0"))
                                         )
                                     )
                             )
@@ -759,12 +775,20 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             public async Task PerformsNullableRequestCorrectly()
             {
                 var guildId = new Snowflake(0);
-                var swaps = new List<(Snowflake Channel, int? Position)>
+                var swaps = new List
+                <
+                    (
+                    Snowflake ChannelID,
+                    int? Position,
+                    bool? LockPermissions,
+                    Snowflake? ParentID
+                    )
+                >
                 {
-                    (new Snowflake(1), null),
-                    (new Snowflake(2), null),
-                    (new Snowflake(3), null),
-                    (new Snowflake(4), null)
+                    (new Snowflake(1), null, null, null),
+                    (new Snowflake(2), null, null, null),
+                    (new Snowflake(3), null, null, null),
+                    (new Snowflake(4), null, null, null)
                 };
 
                 var api = CreateAPI
@@ -785,6 +809,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                             .WithProperty("id", p => p.Is(1.ToString()))
                                             .WithProperty("position", p => p.IsNull())
+                                            .WithProperty("lock_permissions", p => p.IsNull())
+                                            .WithProperty("parent_id", p => p.IsNull())
                                         )
                                     )
                                     .WithElement
@@ -795,6 +821,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(2.ToString()))
                                                 .WithProperty("position", p => p.IsNull())
+                                                .WithProperty("lock_permissions", p => p.IsNull())
+                                                .WithProperty("parent_id", p => p.IsNull())
                                         )
                                     )
                                     .WithElement
@@ -805,6 +833,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(3.ToString()))
                                                 .WithProperty("position", p => p.IsNull())
+                                                .WithProperty("lock_permissions", p => p.IsNull())
+                                                .WithProperty("parent_id", p => p.IsNull())
                                         )
                                     )
                                     .WithElement
@@ -815,6 +845,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                             o => o
                                                 .WithProperty("id", p => p.Is(4.ToString()))
                                                 .WithProperty("position", p => p.IsNull())
+                                                .WithProperty("lock_permissions", p => p.IsNull())
+                                                .WithProperty("parent_id", p => p.IsNull())
                                         )
                                     )
                             )

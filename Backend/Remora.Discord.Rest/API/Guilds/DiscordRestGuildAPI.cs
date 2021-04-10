@@ -360,7 +360,15 @@ namespace Remora.Discord.Rest.API
         public virtual Task<Result> ModifyGuildChannelPositionsAsync
         (
             Snowflake guildID,
-            IReadOnlyList<(Snowflake ChannelID, int? Position)> positionModifications,
+            IReadOnlyList
+            <
+                (
+                    Snowflake ChannelID,
+                    int? Position,
+                    bool? LockPermissions,
+                    Snowflake? ParentID
+                )
+            > positionModifications,
             CancellationToken ct = default
         )
         {
@@ -371,7 +379,7 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        foreach (var (channelID, position) in positionModifications)
+                        foreach (var (channelID, position, lockPermissions, parentID) in positionModifications)
                         {
                             json.WriteStartObject();
                             {
@@ -383,6 +391,24 @@ namespace Remora.Discord.Rest.API
                                 else
                                 {
                                     json.WriteNumber("position", position.Value);
+                                }
+
+                                if (lockPermissions is null)
+                                {
+                                    json.WriteNull("lock_permissions");
+                                }
+                                else
+                                {
+                                    json.WriteBoolean("lock_permissions", lockPermissions.Value);
+                                }
+
+                                if (parentID is null)
+                                {
+                                    json.WriteNull("parent_id");
+                                }
+                                else
+                                {
+                                    json.WriteString("parent_id", parentID.Value.ToString());
                                 }
                             }
                             json.WriteEndObject();
