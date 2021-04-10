@@ -44,6 +44,6 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the voice server host.
         /// </summary>
-        string Endpoint { get; }
+        string? Endpoint { get; }
     }
 }
