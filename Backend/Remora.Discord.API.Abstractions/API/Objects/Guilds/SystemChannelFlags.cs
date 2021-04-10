@@ -38,6 +38,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Suppress server boost notifications.
         /// </summary>
-        SuppressPremiumSubscriptions = 1 << 1
+        SuppressPremiumSubscriptions = 1 << 1,
+
+        /// <summary>
+        /// Suppresses server setup tips.
+        /// </summary>
+        SuppressGuildReminderNotifications = 1 << 2
     }
 }

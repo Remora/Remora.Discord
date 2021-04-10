@@ -123,6 +123,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// An application command.
         /// </summary>
-        ApplicationCommand = 20
+        ApplicationCommand = 20,
+
+        /// <summary>
+        /// A reminder message about a guild invite.
+        /// </summary>
+        GuildInviteReminder = 22
     }
 }
