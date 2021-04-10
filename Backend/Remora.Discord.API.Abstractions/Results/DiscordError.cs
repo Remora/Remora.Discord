@@ -408,6 +408,11 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidSticker = 50081,
 
         /// <summary>
+        /// Two factor is required for this operation.
+        /// </summary>
+        TwoFactorRequired = 60003,
+
+        /// <summary>
         /// Reaction was blocked.
         /// </summary>
         ReactionBlocked = 90001,
