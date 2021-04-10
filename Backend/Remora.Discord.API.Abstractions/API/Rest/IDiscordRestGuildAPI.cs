@@ -682,5 +682,41 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string?> description = default,
             CancellationToken ct = default
         );
+
+        /// <summary>
+        /// Updates the voice state of the current user.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="channelID">The ID of the voice channel the user is currently in.</param>
+        /// <param name="suppress">Whether to toggle the user's suppression state.</param>
+        /// <param name="requestToSpeakTimestamp">The time when the user requested to speak.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IVoiceState>> UpdateCurrentUserVoiceStateAsync
+        (
+            Snowflake guildID,
+            Snowflake channelID,
+            Optional<bool> suppress = default,
+            Optional<DateTimeOffset?> requestToSpeakTimestamp = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Updates the voice state of another user.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="userID">The ID of the user.</param>
+        /// <param name="channelID">The ID of the voice channel the user is currently in.</param>
+        /// <param name="suppress">Whether to toggle the user's suppression state.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IVoiceState>> UpdateUserVoiceStateAsync
+        (
+            Snowflake guildID,
+            Snowflake userID,
+            Snowflake channelID,
+            Optional<bool> suppress = default,
+            CancellationToken ct = default
+        );
     }
 }

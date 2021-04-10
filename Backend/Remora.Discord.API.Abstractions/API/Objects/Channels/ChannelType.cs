@@ -63,6 +63,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A channel in which game developers can sell their game on Discord.
         /// </summary>
-        GuildStore = 6
+        GuildStore = 6,
+
+        /// <summary>
+        /// A voice channel for hosting events with an audience.
+        /// </summary>
+        GuildStageVoice = 13
     }
 }

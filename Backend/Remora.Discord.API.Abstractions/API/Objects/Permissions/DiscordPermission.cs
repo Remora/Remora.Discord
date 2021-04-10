@@ -191,6 +191,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows usage of slash commands.
         /// </summary>
-        UseSlashCommands = 31
+        UseSlashCommands = 31,
+
+        /// <summary>
+        /// Allows the user to request to speak in a stage channel.
+        /// </summary>
+        RequestToSpeak = 32
     }
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -46,7 +47,8 @@ namespace Remora.Discord.API.Gateway.Events
             bool isSelfMuted,
             Optional<bool> isStreaming,
             bool isVideoEnabled,
-            bool isSuppressed
+            bool isSuppressed,
+            DateTimeOffset? requestToSpeakTimestamp
         )
             : base
             (
@@ -61,7 +63,8 @@ namespace Remora.Discord.API.Gateway.Events
                 isSelfMuted,
                 isStreaming,
                 isVideoEnabled,
-                isSuppressed
+                isSuppressed,
+                requestToSpeakTimestamp
             )
         {
         }

@@ -2049,5 +2049,96 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.UpdateCurrentUserVoiceStateAsync"/> method.
+        /// </summary>
+        public class UpdateCurrentUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var channelID = new Snowflake(1);
+                var suppress = true;
+                var requestToSpeakTimestamp = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/voice-states/@me")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("channel_id", p => p.Is(channelID.ToString()))
+                                    .WithProperty("suppress", p => p.Is(suppress))
+                                    .WithProperty("request_to_speak_timestamp", p => p.Is("2020-08-28T18:17:25.377506\u002B00:00"))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
+                );
+
+                var result = await api.UpdateCurrentUserVoiceStateAsync
+                (
+                    guildId,
+                    channelID,
+                    suppress,
+                    requestToSpeakTimestamp
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.UpdateCurrentUserVoiceStateAsync"/> method.
+        /// </summary>
+        public class UpdateUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var channelID = new Snowflake(2);
+                var suppress = true;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/voice-states/{userID}")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("channel_id", p => p.Is(channelID.ToString()))
+                                    .WithProperty("suppress", p => p.Is(suppress))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
+                );
+
+                var result = await api.UpdateUserVoiceStateAsync
+                (
+                    guildId,
+                    userID,
+                    channelID,
+                    suppress
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }

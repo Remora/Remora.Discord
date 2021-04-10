@@ -1056,5 +1056,56 @@ namespace Remora.Discord.Rest.API
                 ct: ct
             );
         }
+
+        /// <inheritdoc/>
+        public virtual Task<Result<IVoiceState>> UpdateCurrentUserVoiceStateAsync
+        (
+            Snowflake guildID,
+            Snowflake channelID,
+            Optional<bool> suppress = default,
+            Optional<DateTimeOffset?> requestToSpeakTimestamp = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PatchAsync<IVoiceState>
+            (
+                $"guilds/{guildID}/voice-states/@me",
+                b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("suppress", suppress, _jsonOptions);
+                        json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, _jsonOptions);
+                    }
+                ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IVoiceState>> UpdateUserVoiceStateAsync
+        (
+            Snowflake guildID,
+            Snowflake userID,
+            Snowflake channelID,
+            Optional<bool> suppress = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PatchAsync<IVoiceState>
+            (
+                $"guilds/{guildID}/voice-states/{userID}",
+                b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.WriteString("channel_id", channelID.ToString());
+                        json.Write("suppress", suppress, _jsonOptions);
+                    }
+                ),
+                ct: ct
+            );
+        }
     }
 }

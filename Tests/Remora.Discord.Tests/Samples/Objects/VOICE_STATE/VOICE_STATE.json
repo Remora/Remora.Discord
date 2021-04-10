@@ -32,5 +32,6 @@
     "self_deaf": false,
     "self_mute": true,
     "self_video": false,
-    "suppress": false
+    "suppress": false,
+    "request_to_speak_timestamp": "2020-08-28T18:17:25.377506\u002B00:00"
 }

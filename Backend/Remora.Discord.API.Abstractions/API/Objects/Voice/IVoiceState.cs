@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
@@ -90,5 +91,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the user is muted by the current user.
         /// </summary>
         bool IsSuppressed { get; }
+
+        /// <summary>
+        /// Gets the time at which the user requested to speak.
+        /// </summary>
+        DateTimeOffset? RequestToSpeakTimestamp { get; }
     }
 }
