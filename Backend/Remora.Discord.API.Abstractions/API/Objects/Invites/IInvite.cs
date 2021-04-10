@@ -52,14 +52,19 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IUser> Inviter { get; }
 
         /// <summary>
+        /// Gets the type of target for this invite.
+        /// </summary>
+        Optional<InviteTarget> TargetType { get; }
+
+        /// <summary>
         /// Gets the target user for this invite.
         /// </summary>
         Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
-        /// Gets the type of user target for this invite.
+        /// Gets the ID of the target embedded application.
         /// </summary>
-        Optional<TargetUserType> TargetUserType { get; }
+        Optional<Snowflake> TargetApplication { get; }
 
         /// <summary>
         /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.

@@ -294,8 +294,9 @@ namespace Remora.Discord.Caching.API
             Optional<int> maxUses = default,
             Optional<bool> isTemporary = default,
             Optional<bool> isUnique = default,
+            Optional<InviteTarget> targetType = default,
             Optional<Snowflake> targetUserID = default,
-            Optional<TargetUserType> targetUserType = default,
+            Optional<Snowflake> targetApplicationID = default,
             CancellationToken ct = default
         )
         {
@@ -306,8 +307,9 @@ namespace Remora.Discord.Caching.API
                 maxUses,
                 isTemporary,
                 isUnique,
+                targetType,
                 targetUserID,
-                targetUserType,
+                targetApplicationID,
                 ct
             );
 

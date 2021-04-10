@@ -1,5 +1,5 @@
 //
-//  TargetUserType.cs
+//  InviteTarget.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,11 +28,16 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Enumerates various target user types.
     /// </summary>
     [PublicAPI]
-    public enum TargetUserType
+    public enum InviteTarget
     {
         /// <summary>
         /// The user is invited to a stream.
         /// </summary>
-        Stream = 1
+        Stream = 1,
+
+        /// <summary>
+        /// The user is invited to use an embedded application.
+        /// </summary>
+        EmbeddedApplication = 2
     }
 }

@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the type of user target for this invite.
         /// </summary>
-        Optional<TargetUserType> TargetUserType { get; }
+        Optional<InviteTarget> TargetUserType { get; }
 
         /// <summary>
         /// Gets a value indicating whether the invite is temporary (invited users will be kicked on disconnect unless

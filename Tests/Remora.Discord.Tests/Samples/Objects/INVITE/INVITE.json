@@ -60,5 +60,5 @@
         "avatar": "deadbeef",
         "discriminator": "1234"
     },
-    "target_user_type": 1
+    "target_type": 1
 }

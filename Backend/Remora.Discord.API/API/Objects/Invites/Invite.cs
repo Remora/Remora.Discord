@@ -36,8 +36,9 @@ namespace Remora.Discord.API.Objects
         Optional<IPartialGuild> Guild,
         IPartialChannel Channel,
         Optional<IUser> Inviter = default,
+        Optional<InviteTarget> TargetType = default,
         Optional<IPartialUser> TargetUser = default,
-        Optional<TargetUserType> TargetUserType = default,
+        Optional<Snowflake> TargetApplication = default,
         Optional<int> ApproximatePresenceCount = default,
         Optional<int> ApproximateMemberCount = default
     ) : IInvite;

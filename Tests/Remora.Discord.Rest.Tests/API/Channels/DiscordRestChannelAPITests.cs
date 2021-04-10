@@ -1318,7 +1318,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var temporary = false;
                 var unique = true;
                 var targetUser = new Snowflake(1);
-                var targetUserType = TargetUserType.Stream;
+                var targetType = InviteTarget.Stream;
+                var targetApplication = new Snowflake(2);
 
                 var api = CreateAPI
                 (
@@ -1337,8 +1338,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .WithProperty("max_uses", p => p.Is(maxUses))
                                 .WithProperty("temporary", p => p.Is(temporary))
                                 .WithProperty("unique", p => p.Is(unique))
+                                .WithProperty("target_type", p => p.Is((int)targetType))
                                 .WithProperty("target_user_id", p => p.Is(targetUser.Value.ToString()))
-                                .WithProperty("target_user_type", p => p.Is((int)targetUserType))
+                                .WithProperty("target_application_id", p => p.Is(targetApplication.Value.ToString()))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
@@ -1351,8 +1353,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     maxUses,
                     temporary,
                     unique,
+                    targetType,
                     targetUser,
-                    targetUserType
+                    targetApplication
                 );
 
                 ResultAssert.Successful(result);
