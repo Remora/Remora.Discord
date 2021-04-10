@@ -38,7 +38,7 @@ namespace Remora.Discord.API.Gateway.Commands
     (
         ClientStatus Status,
         bool IsAFK,
-        DateTime? Since = null,
-        IReadOnlyList<IActivity>? Activities = null
+        DateTime? Since,
+        IReadOnlyList<IActivity> Activities
     ) : IUpdatePresence;
 }

@@ -41,7 +41,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// <summary>
         /// Gets the user's new activities.
         /// </summary>
-        IReadOnlyList<IActivity>? Activities { get; }
+        IReadOnlyList<IActivity> Activities { get; }
 
         /// <summary>
         /// Gets the user's status.
