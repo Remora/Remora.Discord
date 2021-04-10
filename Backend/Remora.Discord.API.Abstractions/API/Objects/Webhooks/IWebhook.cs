@@ -85,5 +85,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the channel that the webhook is following.
         /// </summary>
         Optional<IPartialChannel> SourceChannel { get; }
+
+        /// <summary>
+        /// Gets the URL used for executing the webhook.
+        /// </summary>
+        Optional<string> URL { get; }
     }
 }
