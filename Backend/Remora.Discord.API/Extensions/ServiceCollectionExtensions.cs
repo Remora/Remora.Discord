@@ -304,6 +304,21 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IApplicationCommandUpdate, ApplicationCommandUpdate>();
             options.AddDataObjectConverter<IApplicationCommandDelete, ApplicationCommandDelete>();
 
+            // Integrations
+            options.AddDataObjectConverter<IIntegrationCreate, IntegrationCreate>()
+                .WithPropertyName(i => i.IsEnabled, "enabled")
+                .WithPropertyName(i => i.IsSyncing, "syncing")
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
+
+            options.AddDataObjectConverter<IIntegrationUpdate, IntegrationUpdate>()
+                .WithPropertyName(i => i.IsEnabled, "enabled")
+                .WithPropertyName(i => i.IsSyncing, "syncing")
+                .WithPropertyName(i => i.IsRevoked, "revoked")
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
+
+            options.AddDataObjectConverter<IIntegrationDelete, IntegrationDelete>();
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
