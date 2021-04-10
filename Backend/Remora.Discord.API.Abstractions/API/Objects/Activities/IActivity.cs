@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
@@ -96,5 +97,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a set of descriptive flags that detail what the payload includes.
         /// </summary>
         Optional<ActivityFlags> Flags { get; }
+
+        /// <summary>
+        /// Gets the custom buttons show in Rich Presence.
+        /// </summary>
+        Optional<IReadOnlyList<IActivityButton>> Buttons { get; }
     }
 }

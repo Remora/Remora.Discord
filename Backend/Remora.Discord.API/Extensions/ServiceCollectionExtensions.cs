@@ -319,6 +319,7 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IActivity, Activity>();
             options.AddDataObjectConverter<IActivityAssets, ActivityAssets>();
+            options.AddDataObjectConverter<IActivityButton, ActivityButton>();
             options.AddDataObjectConverter<IActivityEmoji, ActivityEmoji>();
             options.AddDataObjectConverter<IActivityParty, ActivityParty>();
             options.AddConverter<PartySizeConverter>();

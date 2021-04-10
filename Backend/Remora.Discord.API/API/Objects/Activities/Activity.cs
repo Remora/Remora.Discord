@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -45,6 +46,7 @@ namespace Remora.Discord.API.Objects
         Optional<IActivityAssets> Assets = default,
         Optional<IActivitySecrets> Secrets = default,
         Optional<bool> Instance = default,
-        Optional<ActivityFlags> Flags = default
+        Optional<ActivityFlags> Flags = default,
+        Optional<IReadOnlyList<IActivityButton>> Buttons = default
     ) : IActivity;
 }

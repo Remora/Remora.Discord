@@ -51,6 +51,9 @@
       <Compile Update="API\Objects\Activities\IPartySize.cs">
         <DependentUpon>IActivityParty.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Objects\Activities\IActivityButton.cs">
+        <DependentUpon>IActivity.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
