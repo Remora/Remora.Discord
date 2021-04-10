@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Objects
     (
         string? TargetID,
         Optional<IReadOnlyList<IAuditLogChange>> Changes,
-        Snowflake UserID,
+        Snowflake? UserID,
         Snowflake ID,
         AuditLogEvent ActionType,
         Optional<IOptionalAuditEntryInfo> Options = default,

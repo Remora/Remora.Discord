@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the user who made the changes.
         /// </summary>
-        Snowflake UserID { get; }
+        Snowflake? UserID { get; }
 
         /// <summary>
         /// Gets the ID of the entry.
