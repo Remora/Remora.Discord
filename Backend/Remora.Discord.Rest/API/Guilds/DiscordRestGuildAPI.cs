@@ -380,7 +380,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+        public virtual async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
         (
             Snowflake guildID,
             Optional<int> limit = default,
@@ -388,7 +388,12 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            if (limit.HasValue && limit.Value is < 1 or > 1000)
+            {
+                return new GenericError("The limit must be between 1 and 1000.");
+            }
+
+            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
             (
                 $"guilds/{guildID}/members",
                 b =>
@@ -401,6 +406,36 @@ namespace Remora.Discord.Rest.API
                     if (after.HasValue)
                     {
                         b.AddQueryParameter("after", after.Value.ToString());
+                    }
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+        (
+            Snowflake guildID,
+            string query,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            if (limit.HasValue && limit.Value is < 1 or > 1000)
+            {
+                return new GenericError("The limit must be between 1 and 1000.");
+            }
+
+            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            (
+                $"guilds/{guildID}/members/search",
+                b =>
+                {
+                    b.AddQueryParameter("query", query);
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
                     }
                 },
                 ct: ct

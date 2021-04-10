@@ -239,6 +239,22 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a list of guild members whose username or nickname start with the query string.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="query">The query string.</param>
+        /// <param name="limit">The maximum number of members to return (1-1000).</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+        (
+            Snowflake guildID,
+            string query,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Adds a user to the guild using their OAuth2 access token.
         /// </summary>
         /// <remarks>
