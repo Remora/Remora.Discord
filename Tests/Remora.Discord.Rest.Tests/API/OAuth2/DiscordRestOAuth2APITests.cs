@@ -39,7 +39,7 @@ namespace Remora.Discord.Rest.Tests.API.OAuth2
     public class DiscordRestOAuth2APITests
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentApplicationInformationAsync"/> method.
+        /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentBotApplicationInformationAsync"/> method.
         /// </summary>
         public class GetCurrentApplicationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
         {
@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.Tests.API.OAuth2
                         .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
                 );
 
-                var result = await api.GetCurrentApplicationInformationAsync();
+                var result = await api.GetCurrentBotApplicationInformationAsync();
                 ResultAssert.Successful(result);
             }
         }

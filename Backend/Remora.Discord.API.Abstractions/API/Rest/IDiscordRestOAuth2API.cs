@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IApplication>> GetCurrentApplicationInformationAsync
+        Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
         (
             CancellationToken ct = default
         );

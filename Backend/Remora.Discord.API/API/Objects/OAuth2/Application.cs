@@ -46,7 +46,7 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> PrimarySKUID = default,
         Optional<string> Slug = default,
         Optional<IImageHash> CoverImage = default,
-        Optional<int> Flags = default
+        Optional<ApplicationFlags> Flags = default
     )
     : IApplication;
 }

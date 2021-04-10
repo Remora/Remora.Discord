@@ -110,6 +110,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the application's public flags.
         /// </summary>
-        Optional<int> Flags { get; }
+        Optional<ApplicationFlags> Flags { get; }
     }
 }

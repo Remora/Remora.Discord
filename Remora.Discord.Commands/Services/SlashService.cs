@@ -88,7 +88,7 @@ namespace Remora.Discord.Commands.Services
             CancellationToken ct = default
         )
         {
-            var getApplication = await _oauth2API.GetCurrentApplicationInformationAsync(ct);
+            var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
             if (!getApplication.IsSuccess)
             {
                 return Result.FromError(getApplication);

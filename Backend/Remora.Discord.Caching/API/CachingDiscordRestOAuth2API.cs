@@ -47,7 +47,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<Result<IApplication>> GetCurrentApplicationInformationAsync
+        public override async Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
         (
             CancellationToken ct = default
         )
@@ -58,7 +58,7 @@ namespace Remora.Discord.Caching.API
                 return Result<IApplication>.FromSuccess(cachedInstance);
             }
 
-            var getCurrent = await base.GetCurrentApplicationInformationAsync(ct);
+            var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
             if (!getCurrent.IsSuccess)
             {
                 return getCurrent;
