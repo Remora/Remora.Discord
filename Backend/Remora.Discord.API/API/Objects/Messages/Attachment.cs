@@ -34,6 +34,7 @@ namespace Remora.Discord.API.Objects
     (
         Snowflake ID,
         string Filename,
+        Optional<string> ContentType,
         int Size,
         string Url,
         string ProxyUrl,

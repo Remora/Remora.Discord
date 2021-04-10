@@ -42,6 +42,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Filename { get; }
 
         /// <summary>
+        /// Gets the attachment's media type (e.g, "application/text" or similar).
+        /// </summary>
+        Optional<string> ContentType { get; }
+
+        /// <summary>
         /// Gets the size of the file in bytes.
         /// </summary>
         int Size { get; }
