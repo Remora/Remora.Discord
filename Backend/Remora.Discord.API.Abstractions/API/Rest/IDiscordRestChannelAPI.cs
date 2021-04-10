@@ -216,7 +216,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel the message is in.</param>
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="emoji">The emoji to filter on.</param>
-        /// <param name="before">The users to get before this user ID.</param>
         /// <param name="after">The users to get after this user ID.</param>
         /// <param name="limit">The maximum page size.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
@@ -226,7 +225,6 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             Snowflake messageID,
             string emoji,
-            Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
             Optional<int> limit = default,
             CancellationToken ct = default

@@ -314,7 +314,6 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             Snowflake messageID,
             string emoji,
-            Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
             Optional<int> limit = default,
             CancellationToken ct = default
@@ -330,11 +329,6 @@ namespace Remora.Discord.Rest.API
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
                 b =>
                 {
-                    if (before.HasValue)
-                    {
-                        b.AddQueryParameter("before", before.Value.ToString());
-                    }
-
                     if (after.HasValue)
                     {
                         b.AddQueryParameter("after", after.Value.ToString());

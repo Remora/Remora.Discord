@@ -871,7 +871,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var messageId = new Snowflake(1);
-                var before = new Snowflake(2);
                 var after = new Snowflake(3);
                 var limit = 10;
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
@@ -888,7 +887,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     (
                         new[]
                         {
-                            new KeyValuePair<string, string>("before", before.ToString()),
                             new KeyValuePair<string, string>("after", after.ToString()),
                             new KeyValuePair<string, string>("limit", limit.ToString())
                         }
@@ -896,7 +894,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     .Respond("application/json", "[]")
                 );
 
-                var result = await api.GetReactionsAsync(channelId, messageId, "🔥", before, after, limit);
+                var result = await api.GetReactionsAsync(channelId, messageId, "🔥", after, limit);
                 ResultAssert.Successful(result);
             }
 
