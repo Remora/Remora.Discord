@@ -393,5 +393,15 @@ namespace Remora.Discord.Caching
         {
             return (typeof(IPresence), CreateGuildCacheKey(guildID), CreateUserCacheKey(userID));
         }
+
+        /// <summary>
+        /// Creates a cache key for a <see cref="IWelcomeScreen"/> instance.
+        /// </summary>
+        /// <param name="guildID">The guild ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateGuildWelcomeScreenCacheKey(Snowflake guildID)
+        {
+            return (typeof(IWelcomeScreen), CreateGuildCacheKey(guildID));
+        }
     }
 }

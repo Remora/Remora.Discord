@@ -652,5 +652,35 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<WidgetImageStyle> style = default,
             CancellationToken ct = default
         );
+
+        /// <summary>
+        /// Gets the guild's welcome screen.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the guild's welcome screen.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="isEnabled">Whether the welcome screen is enabled.</param>
+        /// <param name="welcomeChannels">The channels displayed.</param>
+        /// <param name="description">The guild's description.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IWelcomeScreen>> ModifyGuildWelcomeScreenAsync
+        (
+            Snowflake guildID,
+            Optional<bool?> isEnabled = default,
+            Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
+            Optional<string?> description = default,
+            CancellationToken ct = default
+        );
     }
 }

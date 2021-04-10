@@ -813,5 +813,25 @@ namespace Remora.Discord.Caching.API
 
             return modifyResult;
         }
+
+        /// <inheritdoc />
+        public override async Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.GetGuildWelcomeScreenAsync(guildID, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            var key = KeyHelpers.CreateGuildWelcomeScreenCacheKey(guildID);
+            var welcomeScreen = getResult.Entity;
+            _cacheService.Cache(key, welcomeScreen);
+
+            return getResult;
+        }
     }
 }

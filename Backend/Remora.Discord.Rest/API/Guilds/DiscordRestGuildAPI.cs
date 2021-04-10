@@ -1013,5 +1013,48 @@ namespace Remora.Discord.Rest.API
                 ct
             );
         }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IWelcomeScreen>
+            (
+                $"guilds/{guildID}/welcome-screen",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IWelcomeScreen>> ModifyGuildWelcomeScreenAsync
+        (
+            Snowflake guildID,
+            Optional<bool?> isEnabled = default,
+            Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
+            Optional<string?> description = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.PatchAsync<IWelcomeScreen>
+            (
+                $"guilds/{guildID}/welcome-screen",
+                b =>
+                {
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("enabled", isEnabled, _jsonOptions);
+                            json.Write("welcome_channels", welcomeChannels, _jsonOptions);
+                            json.Write("description", description, _jsonOptions);
+                        }
+                    );
+                },
+                ct: ct
+            );
+        }
     }
 }

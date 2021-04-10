@@ -1973,5 +1973,81 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.GetGuildWelcomeScreenAsync"/> method.
+        /// </summary>
+        public class GetGuildWelcomeScreenAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWelcomeScreen)])
+                );
+
+                var result = await api.GetGuildWelcomeScreenAsync
+                (
+                    guildId
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyGuildWelcomeScreenAsync"/> method.
+        /// </summary>
+        public class ModifyGuildWelcomeScreenAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var isEnabled = true;
+                var welcomeChannels = Array.Empty<IWelcomeScreenChannel>();
+                var description = "aaa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("enabled", p => p.Is(isEnabled))
+                                    .WithProperty("welcome_channels", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("description", p => p.Is(description))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IWelcomeScreen)])
+                );
+
+                var result = await api.ModifyGuildWelcomeScreenAsync
+                (
+                    guildId,
+                    isEnabled,
+                    welcomeChannels,
+                    description
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }
