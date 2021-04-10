@@ -33,21 +33,31 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The user is playing a game.
         /// </summary>
-        Game,
+        Game = 0,
 
         /// <summary>
         /// The user is streaming video.
         /// </summary>
-        Streaming,
+        Streaming = 1,
 
         /// <summary>
         /// The user is listening to music.
         /// </summary>
-        Listening,
+        Listening = 2,
+
+        /// <summary>
+        /// The user is watching a video.
+        /// </summary>
+        Watching = 3,
 
         /// <summary>
         /// The user has a custom status.
         /// </summary>
-        Custom
+        Custom = 4,
+
+        /// <summary>
+        /// The user is competing in something.
+        /// </summary>
+        Competing = 5
     }
 }
