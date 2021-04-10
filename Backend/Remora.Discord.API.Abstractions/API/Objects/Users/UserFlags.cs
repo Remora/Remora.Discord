@@ -82,11 +82,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         TeamUser = 1 << 10,
 
         /// <summary>
-        /// The user is a system user.
-        /// </summary>
-        System = 1 << 12,
-
-        /// <summary>
         /// The user is a hunter (level 2).
         /// </summary>
         BugHunterLevel2 = 1 << 14,
