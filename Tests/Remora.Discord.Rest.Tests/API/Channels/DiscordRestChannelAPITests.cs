@@ -93,6 +93,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var rateLimitPerUser = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
+                var videoQualityMode = VideoQualityMode.Auto;
 
                 var api = CreateAPI
                 (
@@ -112,6 +113,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                         .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
+                                        .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                                 )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -129,7 +131,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     default,
                     default,
                     permissionOverwrites,
-                    parentId
+                    parentId,
+                    videoQualityMode
                 );
 
                 ResultAssert.Successful(result);

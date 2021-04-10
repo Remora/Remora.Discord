@@ -93,6 +93,7 @@ namespace Remora.Discord.Caching.API
             Optional<int?> userLimit = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<VideoQualityMode?> videoQualityMode = default,
             CancellationToken ct = default
         )
         {
@@ -109,6 +110,7 @@ namespace Remora.Discord.Caching.API
                 userLimit,
                 permissionOverwrites,
                 parentId,
+                videoQualityMode,
                 ct
             );
 

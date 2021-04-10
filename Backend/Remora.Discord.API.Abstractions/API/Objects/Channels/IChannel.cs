@@ -129,5 +129,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the ID of the voice channel region.
         /// </summary>
         Optional<string?> RTCRegion { get; }
+
+        /// <summary>
+        /// Gets the video quality mode of the channel.
+        /// </summary>
+        Optional<VideoQualityMode> VideoQualityMode { get; }
     }
 }

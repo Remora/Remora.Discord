@@ -85,6 +85,7 @@ namespace Remora.Discord.Rest.API
             Optional<int?> userLimit = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<VideoQualityMode?> videoQualityMode = default,
             CancellationToken ct = default
         )
         {
@@ -120,6 +121,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("user_limit", userLimit, _jsonOptions);
                         json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
                         json.Write("parent_id", parentId, _jsonOptions);
+                        json.WriteEnum("video_quality_mode", videoQualityMode, jsonOptions: _jsonOptions);
                     }
                 ),
                 ct: ct
