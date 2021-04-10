@@ -101,6 +101,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows management and editing of webhooks.
         /// </summary>
-        ManageWebhooks = 29
+        ManageWebhooks = 29,
+
+        /// <summary>
+        /// Allows usage of slash commands.
+        /// </summary>
+        UseSlashCommands = 31
     }
 }

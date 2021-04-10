@@ -186,6 +186,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows management and editing of emojis.
         /// </summary>
-        ManageEmojis = 30
+        ManageEmojis = 30,
+
+        /// <summary>
+        /// Allows usage of slash commands.
+        /// </summary>
+        UseSlashCommands = 31
     }
 }
