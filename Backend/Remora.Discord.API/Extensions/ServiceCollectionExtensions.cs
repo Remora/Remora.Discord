@@ -144,7 +144,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IResume, Resume>()
                 .WithPropertyName(r => r.SequenceNumber, "seq");
 
-            options.AddDataObjectConverter<IUpdateStatus, UpdateStatus>()
+            options.AddDataObjectConverter<IUpdatePresence, UpdatePresence>()
                 .WithPropertyName(u => u.IsAFK, "afk")
                 .WithPropertyConverter
                 (

@@ -61,7 +61,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// <summary>
         /// Gets an optional field, containing initial presence information.
         /// </summary>
-        Optional<IUpdateStatus> Presence { get; }
+        Optional<IUpdatePresence> Presence { get; }
 
         /// <summary>
         /// Gets an optional field, containing the gateway intents the connection wants to receive.

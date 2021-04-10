@@ -1,5 +1,5 @@
 //
-//  IUpdateStatus.cs
+//  IUpdatePresence.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,10 +28,10 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
     /// <summary>
-    /// Represents a command to update the status of a user.
+    /// Represents a command to update the presence of a user.
     /// </summary>
     [PublicAPI]
-    public interface IUpdateStatus : IGatewayCommand
+    public interface IUpdatePresence : IGatewayCommand
     {
         /// <summary>
         /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.

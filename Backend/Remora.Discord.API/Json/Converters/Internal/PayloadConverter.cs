@@ -82,7 +82,7 @@ namespace Remora.Discord.API.Json
                 OperationCode.Identify => DeserializePayload<IIdentify>(realDocument, options),
                 OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(realDocument, options),
                 OperationCode.Resume => DeserializePayload<IResume>(realDocument, options),
-                OperationCode.PresenceUpdate => DeserializePayload<IUpdateStatus>(realDocument, options),
+                OperationCode.PresenceUpdate => DeserializePayload<IUpdatePresence>(realDocument, options),
                 OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(realDocument, options),
 
                 // Events
@@ -227,7 +227,7 @@ namespace Remora.Discord.API.Json
                 _ when typeof(IResume).IsAssignableFrom(dataType)
                 => OperationCode.Resume,
 
-                _ when typeof(IUpdateStatus).IsAssignableFrom(dataType)
+                _ when typeof(IUpdatePresence).IsAssignableFrom(dataType)
                 => OperationCode.PresenceUpdate,
 
                 _ when typeof(IUpdateVoiceState).IsAssignableFrom(dataType)

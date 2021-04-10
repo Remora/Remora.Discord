@@ -1,5 +1,5 @@
 //
-//  UpdateStatus.cs
+//  UpdatePresence.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -31,14 +31,14 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.API.Gateway.Commands
 {
     /// <summary>
-    /// Represents a command to update the status of a user.
+    /// Represents a command to update the presence of a user.
     /// </summary>
     [PublicAPI]
-    public record UpdateStatus
+    public record UpdatePresence
     (
         ClientStatus Status,
         bool IsAFK,
         DateTime? Since = null,
         IReadOnlyList<IActivity>? Activities = null
-    ) : IUpdateStatus;
+    ) : IUpdatePresence;
 }

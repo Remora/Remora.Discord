@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Gateway.Commands
         Optional<bool> Compress = default,
         Optional<byte> LargeThreshold = default,
         Optional<IShardIdentification> Shard = default,
-        Optional<IUpdateStatus> Presence = default,
+        Optional<IUpdatePresence> Presence = default,
         GatewayIntents Intents = default
     ) : IIdentify;
 }

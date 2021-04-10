@@ -27,9 +27,9 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Gateway.Commands
 {
     /// <summary>
-    /// Tests the <see cref="UpdateStatus"/> command.
+    /// Tests the <see cref="UpdatePresence"/> command.
     /// </summary>
-    public class UpdateStatusTests : GatewayCommandTestBase<IUpdateStatus>
+    public class UpdateStatusTests : GatewayCommandTestBase<IUpdatePresence>
     {
     }
 }
