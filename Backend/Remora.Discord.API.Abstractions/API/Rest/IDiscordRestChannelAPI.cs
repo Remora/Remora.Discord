@@ -356,7 +356,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="maxUses">The max number of uses, or 0 for unlimited.</param>
         /// <param name="isTemporary">Whether this invite grants temporary membership.</param>
         /// <param name="isUnique">If true, don't try to reuse an existing invite with the same settings.</param>
-        /// <param name="targetUser">The target user ID for this invite.</param>
+        /// <param name="targetUserID">The target user ID for this invite.</param>
         /// <param name="targetUserType">The target user type for this invite.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -367,7 +367,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<int> maxUses = default,
             Optional<bool> isTemporary = default,
             Optional<bool> isUnique = default,
-            Optional<Snowflake> targetUser = default,
+            Optional<Snowflake> targetUserID = default,
             Optional<TargetUserType> targetUserType = default,
             CancellationToken ct = default
         );

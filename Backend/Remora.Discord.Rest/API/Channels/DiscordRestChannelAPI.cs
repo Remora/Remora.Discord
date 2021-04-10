@@ -501,7 +501,7 @@ namespace Remora.Discord.Rest.API
             Optional<int> maxUses = default,
             Optional<bool> isTemporary = default,
             Optional<bool> isUnique = default,
-            Optional<Snowflake> targetUser = default,
+            Optional<Snowflake> targetUserID = default,
             Optional<TargetUserType> targetUserType = default,
             CancellationToken ct = default
         )
@@ -537,7 +537,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("max_uses", maxUses, _jsonOptions);
                         json.Write("temporary", isTemporary, _jsonOptions);
                         json.Write("unique", isUnique, _jsonOptions);
-                        json.Write("target_user", targetUser, _jsonOptions);
+                        json.Write("target_user_id", targetUserID, _jsonOptions);
                         json.WriteEnum("target_user_type", targetUserType, jsonOptions: _jsonOptions);
                     }
                 ),
