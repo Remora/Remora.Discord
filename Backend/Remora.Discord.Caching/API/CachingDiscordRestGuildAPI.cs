@@ -70,6 +70,7 @@ namespace Remora.Discord.Caching.API
             Optional<Snowflake> afkChannelID = default,
             Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             CancellationToken ct = default
         )
         {
@@ -86,6 +87,7 @@ namespace Remora.Discord.Caching.API
                 afkChannelID,
                 afkTimeout,
                 systemChannelID,
+                systemChannelFlags,
                 ct
             );
 
@@ -166,11 +168,15 @@ namespace Remora.Discord.Caching.API
             Optional<Stream?> icon = default,
             Optional<Snowflake> ownerID = default,
             Optional<Stream?> splash = default,
+            Optional<Stream?> discoverySplash = default,
             Optional<Stream?> banner = default,
             Optional<Snowflake?> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             Optional<Snowflake?> rulesChannelID = default,
             Optional<Snowflake?> publicUpdatesChannelID = default,
             Optional<string?> preferredLocale = default,
+            Optional<IReadOnlyList<GuildFeature>> features = default,
+            Optional<string?> description = default,
             CancellationToken ct = default
         )
         {
@@ -187,11 +193,15 @@ namespace Remora.Discord.Caching.API
                 icon,
                 ownerID,
                 splash,
+                discoverySplash,
                 banner,
                 systemChannelID,
+                systemChannelFlags,
                 rulesChannelID,
                 publicUpdatesChannelID,
                 preferredLocale,
+                features,
+                description,
                 ct
             );
 

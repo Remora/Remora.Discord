@@ -53,6 +53,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="afkChannelID">The ID of the AFK channel.</param>
         /// <param name="afkTimeout">The number of seconds until AFK timeout.</param>
         /// <param name="systemChannelID">The ID of the system message channel.</param>
+        /// <param name="systemChannelFlags">The channel flags to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IGuild>> CreateGuildAsync
@@ -68,6 +69,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Snowflake> afkChannelID = default,
             Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             CancellationToken ct = default
         );
 
@@ -114,11 +116,15 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="icon">The new icon.</param>
         /// <param name="ownerID">The ID of the new owner.</param>
         /// <param name="splash">The new splash.</param>
+        /// <param name="discoverySplash">The new discovery splash.</param>
         /// <param name="banner">The new banner.</param>
         /// <param name="systemChannelID">The ID of the new channel for system messages.</param>
+        /// <param name="systemChannelFlags">The new system channel flags.</param>
         /// <param name="rulesChannelID">The ID of the new channel for rules.</param>
         /// <param name="publicUpdatesChannelID">The ID of the new channel for public updates.</param>
         /// <param name="preferredLocale">The new preferred locale.</param>
+        /// <param name="features">The new guild features.</param>
+        /// <param name="description">The new discovery description.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IGuild>> ModifyGuildAsync
@@ -134,11 +140,15 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Stream?> icon = default,
             Optional<Snowflake> ownerID = default,
             Optional<Stream?> splash = default,
+            Optional<Stream?> discoverySplash = default,
             Optional<Stream?> banner = default,
             Optional<Snowflake?> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             Optional<Snowflake?> rulesChannelID = default,
             Optional<Snowflake?> publicUpdatesChannelID = default,
             Optional<string?> preferredLocale = default,
+            Optional<IReadOnlyList<GuildFeature>> features = default,
+            Optional<string?> description = default,
             CancellationToken ct = default
         );
 

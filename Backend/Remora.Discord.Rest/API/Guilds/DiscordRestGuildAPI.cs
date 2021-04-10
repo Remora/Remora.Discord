@@ -71,6 +71,7 @@ namespace Remora.Discord.Rest.API
             Optional<Snowflake> afkChannelID = default,
             Optional<TimeSpan> afkTimeout = default,
             Optional<Snowflake> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             CancellationToken ct = default
         )
         {
@@ -112,6 +113,7 @@ namespace Remora.Discord.Rest.API
                         }
 
                         json.Write("system_channel_id", systemChannelID, _jsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -168,11 +170,15 @@ namespace Remora.Discord.Rest.API
             Optional<Stream?> icon = default,
             Optional<Snowflake> ownerID = default,
             Optional<Stream?> splash = default,
+            Optional<Stream?> discoverySplash = default,
             Optional<Stream?> banner = default,
             Optional<Snowflake?> systemChannelID = default,
+            Optional<SystemChannelFlags> systemChannelFlags = default,
             Optional<Snowflake?> rulesChannelID = default,
             Optional<Snowflake?> publicUpdatesChannelID = default,
             Optional<string?> preferredLocale = default,
+            Optional<IReadOnlyList<GuildFeature>> features = default,
+            Optional<string?> description = default,
             CancellationToken ct = default
         )
         {
@@ -216,6 +222,25 @@ namespace Remora.Discord.Rest.API
                 }
             }
 
+            Optional<string?> discoverySplashData = default;
+            if (discoverySplash.HasValue)
+            {
+                if (discoverySplash.Value is null)
+                {
+                    discoverySplashData = new Optional<string?>(null);
+                }
+                else
+                {
+                    var packImage = await ImagePacker.PackImageAsync(discoverySplash.Value, ct);
+                    if (!packImage.IsSuccess)
+                    {
+                        return Result<IGuild>.FromError(new GenericError("Failed to pack discovery splash."), packImage);
+                    }
+
+                    discoverySplashData = packImage.Entity;
+                }
+            }
+
             var packBanner = await ImagePacker.PackImageAsync(banner, ct);
             if (!packBanner.IsSuccess)
             {
@@ -252,11 +277,15 @@ namespace Remora.Discord.Rest.API
                         json.Write("icon", iconData, _jsonOptions);
                         json.Write("owner_id", ownerID, _jsonOptions);
                         json.Write("splash", splashData, _jsonOptions);
+                        json.Write("discovery_splash", discoverySplashData, _jsonOptions);
                         json.Write("banner", bannerData, _jsonOptions);
                         json.Write("system_channel_id", systemChannelID, _jsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
                         json.Write("rules_channel_id", rulesChannelID, _jsonOptions);
                         json.Write("public_updates_channel_id", publicUpdatesChannelID, _jsonOptions);
                         json.Write("preferred_locale", preferredLocale, _jsonOptions);
+                        json.Write("features", features, _jsonOptions);
+                        json.Write("description", description, _jsonOptions);
                     }
                 ),
                 ct: ct

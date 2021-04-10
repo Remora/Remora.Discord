@@ -74,6 +74,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var afkChannelID = new Snowflake(0);
                 var afkTimeout = TimeSpan.FromSeconds(10);
                 var systemChannelID = new Snowflake(1);
+                var systemChannelFlags = SystemChannelFlags.SuppressJoinNotifications;
 
                 var api = CreateAPI
                 (
@@ -99,6 +100,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                 .WithProperty("afk_channel_id", p => p.Is(afkChannelID.ToString()))
                                 .WithProperty("afk_timeout", p => p.Is(afkTimeout.TotalSeconds))
                                 .WithProperty("system_channel_id", p => p.Is(systemChannelID.ToString()))
+                                .WithProperty("system_channel_flags", p => p.Is((int)systemChannelFlags))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
@@ -116,7 +118,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     channels,
                     afkChannelID,
                     afkTimeout,
-                    systemChannelID
+                    systemChannelID,
+                    systemChannelFlags
                 );
 
                 ResultAssert.Successful(result);
@@ -286,12 +289,18 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var afkChannelID = new Snowflake(0);
                 var afkTimeout = TimeSpan.FromSeconds(10);
                 var systemChannelID = new Snowflake(1);
+                var systemChannelFlags = SystemChannelFlags.SuppressJoinNotifications;
                 var ownerId = new Snowflake(2);
 
                 await using var splash = new MemoryStream();
                 await using var splashBinaryWriter = new BinaryWriter(splash);
                 splashBinaryWriter.Write(9894494448401390090);
                 splash.Position = 0;
+
+                await using var discoverySplash = new MemoryStream();
+                await using var discoverySplashBinaryWriter = new BinaryWriter(discoverySplash);
+                discoverySplashBinaryWriter.Write(9894494448401390090);
+                discoverySplash.Position = 0;
 
                 await using var banner = new MemoryStream();
                 await using var bannerBinaryWriter = new BinaryWriter(banner);
@@ -301,6 +310,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var rulesChannelId = new Snowflake(3);
                 var publicUpdatesChannelID = new Snowflake(4);
                 var preferredLocale = "dd";
+                var features = Array.Empty<GuildFeature>();
+                var description = "aaa";
 
                 var api = CreateAPI
                 (
@@ -325,11 +336,15 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             .WithProperty("icon", p => p.IsString())
                             .WithProperty("owner_id", p => p.Is(ownerId.ToString()))
                             .WithProperty("splash", p => p.IsString())
+                            .WithProperty("discovery_splash", p => p.IsString())
                             .WithProperty("banner", p => p.IsString())
                             .WithProperty("system_channel_id", p => p.Is(systemChannelID.ToString()))
+                            .WithProperty("system_channel_flags", p => p.Is((int)systemChannelFlags))
                             .WithProperty("rules_channel_id", p => p.Is(rulesChannelId.ToString()))
                             .WithProperty("public_updates_channel_id", p => p.Is(publicUpdatesChannelID.ToString()))
                             .WithProperty("preferred_locale", p => p.Is(preferredLocale))
+                            .WithProperty("features", p => p.IsArray())
+                            .WithProperty("description", p => p.Is(description))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
@@ -348,11 +363,15 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     icon,
                     ownerId,
                     splash,
+                    discoverySplash,
                     banner,
                     systemChannelID,
+                    systemChannelFlags,
                     rulesChannelId,
                     publicUpdatesChannelID,
-                    preferredLocale
+                    preferredLocale,
+                    features,
+                    description
                 );
 
                 ResultAssert.Successful(result);
