@@ -68,5 +68,15 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// Gets a value indicating whether the user has not yet passed the screening requirements.
         /// </summary>
         Optional<bool> IsPending { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is deafened in voice channels.
+        /// </summary>
+        Optional<bool> IsDeafened { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the user is muted in voice channels.
+        /// </summary>
+        Optional<bool> IsMuted { get; }
     }
 }

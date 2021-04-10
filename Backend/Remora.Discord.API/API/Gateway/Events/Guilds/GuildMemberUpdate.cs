@@ -41,6 +41,8 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<string?> Nickname = default,
         DateTimeOffset JoinedAt = default,
         Optional<DateTimeOffset?> PremiumSince = default,
-        Optional<bool> IsPending = default
+        Optional<bool> IsPending = default,
+        Optional<bool> IsDeafened = default,
+        Optional<bool> IsMuted = default
     ) : IGuildMemberUpdate;
 }
