@@ -5,14 +5,42 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.9.0</Version>
+        <Version>3.10.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
-        <PackageReleaseNotes>
-            Add a name-based lookup for the role parser.
+        <PackageReleaseNotes>Correct field type of Activities.
+            Remove system user flag.
+            Rename UpdateStatus to UpdatePresence.
+            Implement support for slash command permissions.
+            Implement Attachment::ContentType.
+            Implement support for video quality modes.
+            Implement invite reminder flags.
+            Implement support for stage channels.
+            Implement terms of service and privacy policy fields.
+            Update ActivityType.
+            Implement RTCRegion.
+            Implement application invites.
+            Add UseSlashCommands permission.
+            Implement application flags.
+            Implement Webhook::URL.
+            Remove unsupported before pagination.
+            Implement missing fields in guild member update.
+            Implement IntegrationCreate, Update, and Delete.
+            Add welcome screen endpoints.
+            Add Buttons to Activity.
+            Add SourceGuild and SourceChannel on Webhook.
+            Add missing properties in ModifyChannelPositions.
+            Add missing parameters in Create and Modify guild.
+            Fix property name in CreateChannelInviteAsync.
+            Document error code 60003.
+            Fix nullability of UserID on the audit log entry.
+            Add endpoint for searching members.
+            Add clientside limits for nonces.
+            Remove MessageApplication.
+            Update signature of VoiceServerUpdate.
         </PackageReleaseNotes>
     </PropertyGroup>
 
