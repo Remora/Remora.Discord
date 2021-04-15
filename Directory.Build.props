@@ -115,7 +115,7 @@
 
     <!-- JetBrains Annotations -->
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="all" />
+        <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" PrivateAssets="all" />
     </ItemGroup>
 
     <!-- SourceLink -->
