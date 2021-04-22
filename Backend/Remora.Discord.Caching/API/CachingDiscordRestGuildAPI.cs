@@ -309,9 +309,9 @@ namespace Remora.Discord.Caching.API
                 return createResult;
             }
 
-            var guild = createResult.Entity;
-            var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
-            await _cacheService.CacheAsync(key, guild);
+            var channel = createResult.Entity;
+            var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
+            await _cacheService.CacheAsync(key, channel);
 
             return createResult;
         }
