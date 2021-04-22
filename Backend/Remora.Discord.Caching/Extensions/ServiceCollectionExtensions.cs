@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Microsoft.Extensions.Caching.Memory;
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -42,18 +42,17 @@ namespace Remora.Discord.Caching.Extensions
         /// Adds caching implementations of various API types, overriding the normally non-caching versions.
         /// </summary>
         /// <remarks>
-        /// The cache uses a run-of-the-mill <see cref="IMemoryCache"/>. Cache entry options for any cached type can be
-        /// configured using <see cref="IOptions{CacheSettings}"/>.
+        /// Cache entry options for any cached type can be configured using <see cref="IOptions{CacheSettings}"/>.
         /// </remarks>
         /// <param name="services">The services.</param>
+        /// <param name="configure">Action to configure the caching.</param>
         /// <returns>The services, with caching enabled.</returns>
-        public static IServiceCollection AddDiscordCaching(this IServiceCollection services)
+        public static IServiceCollection AddDiscordCaching(this IServiceCollection services, Action<CacheBuilder>? configure = null)
         {
-            services
-                .AddMemoryCache();
+            configure?.Invoke(new CacheBuilder(services));
 
             services.AddOptions<CacheSettings>();
-            services.TryAddSingleton<CacheService>();
+            services.TryAddSingleton<ICacheService, CacheService>();
 
             services
                 .Replace(ServiceDescriptor.Singleton<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())

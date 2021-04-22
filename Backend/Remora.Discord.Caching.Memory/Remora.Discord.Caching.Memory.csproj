@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+        <RootNamespace>Remora.Discord.Caching</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Version>2.0.0</Version>
+        <Description>
+            $(BaseDescription)
+
+            This package contains memory cache functionality for the gateway and REST API.
+        </Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Remora.Discord.Caching\Remora.Discord.Caching.csproj" />
+    </ItemGroup>
+
+</Project>

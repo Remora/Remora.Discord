@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Remora.Discord.Caching.Services
 {
@@ -161,20 +160,6 @@ namespace Remora.Discord.Caching.Services
             return _slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration)
                 ? slidingExpiration
                 : defaultExpiration.Value;
-        }
-
-        /// <summary>
-        /// Gets a set of cache options, with expirations relative to now.
-        /// </summary>
-        /// <typeparam name="T">The cache entry type.</typeparam>
-        /// <returns>The entry options.</returns>
-        public MemoryCacheEntryOptions GetEntryOptions<T>()
-        {
-            var cacheOptions = new MemoryCacheEntryOptions();
-            cacheOptions.SetAbsoluteExpiration(GetAbsoluteExpirationOrDefault<T>());
-            cacheOptions.SetSlidingExpiration(GetSlidingExpirationOrDefault<T>());
-
-            return cacheOptions;
         }
     }
 }

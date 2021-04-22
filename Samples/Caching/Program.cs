@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Caching;
 using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway;
@@ -74,7 +75,7 @@ namespace Remora.Discord.Samples.Caching
 
             serviceCollection.AddHttpClient();
 
-            serviceCollection.AddDiscordCaching();
+            serviceCollection.AddDiscordCaching(b => b.UseMemory());
 
             serviceCollection.Configure<CacheSettings>(settings =>
             {

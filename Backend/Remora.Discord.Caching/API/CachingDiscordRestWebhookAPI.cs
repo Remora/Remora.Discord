@@ -38,14 +38,14 @@ namespace Remora.Discord.Caching.API
     /// <inheritdoc />
     public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     {
-        private readonly CacheService _cacheService;
+        private readonly ICacheService _cacheService;
 
         /// <inheritdoc cref="DiscordRestWebhookAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
         public CachingDiscordRestWebhookAPI
         (
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions,
-            CacheService cacheService
+            ICacheService cacheService
         )
             : base(discordHttpClient, jsonOptions)
         {
@@ -70,7 +70,7 @@ namespace Remora.Discord.Caching.API
             var webhook = createWebhook.Entity;
             var key = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
 
-            _cacheService.Cache(key, webhook);
+            await _cacheService.CacheAsync(key, webhook);
 
             return createWebhook;
         }
@@ -89,7 +89,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
+            await _cacheService.EvictAsync(key);
 
             return deleteWebhook;
         }
@@ -132,7 +132,7 @@ namespace Remora.Discord.Caching.API
 
             var message = execute.Entity;
             var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-            _cacheService.Cache(key, message);
+            await _cacheService.CacheAsync(key, message);
 
             return execute;
         }
@@ -145,9 +145,10 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
+            var cache = await _cacheService.GetValueAsync<IWebhook>(key);
+            if (cache.HasValue)
             {
-                return Result<IWebhook>.FromSuccess(cachedInstance);
+               return Result<IWebhook>.FromSuccess(cache.Value);
             }
 
             var getWebhook = await base.GetWebhookAsync(webhookID, ct);
@@ -157,7 +158,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var webhook = getWebhook.Entity;
-            _cacheService.Cache(key, webhook);
+            await _cacheService.CacheAsync(key, webhook);
 
             return getWebhook;
         }
@@ -181,7 +182,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             var webhook = modifyWebhook.Entity;
 
-            _cacheService.Cache(key, webhook);
+            await _cacheService.CacheAsync(key, webhook);
 
             return modifyWebhook;
         }
@@ -194,9 +195,10 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
-            if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
+            var cache = await _cacheService.GetValueAsync<IReadOnlyList<IWebhook>>(key);
+            if (cache.HasValue)
             {
-                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+               return Result<IReadOnlyList<IWebhook>>.FromSuccess(cache.Value);
             }
 
             var getWebhooks = await base.GetChannelWebhooksAsync(channelID, ct);
@@ -206,12 +208,12 @@ namespace Remora.Discord.Caching.API
             }
 
             var webhooks = getWebhooks.Entity;
-            _cacheService.Cache(key, webhooks);
+            await _cacheService.CacheAsync(key, webhooks);
 
             foreach (var webhook in webhooks)
             {
                 var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-                _cacheService.Cache(webhookKey, webhook);
+                await _cacheService.CacheAsync(webhookKey, webhook);
             }
 
             return getWebhooks;
@@ -224,9 +226,10 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
-            if (_cacheService.TryGetValue<IReadOnlyList<IWebhook>>(key, out var cachedInstance))
+            var cacheResult = await _cacheService.GetValueAsync<IReadOnlyList<IWebhook>>(key);
+            if (cacheResult.HasValue)
             {
-                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cachedInstance);
+                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cacheResult.Value);
             }
 
             var getWebhooks = await base.GetGuildWebhooksAsync(guildID, ct);
@@ -235,13 +238,10 @@ namespace Remora.Discord.Caching.API
                 return getWebhooks;
             }
 
-            var webhooks = getWebhooks.Entity;
-            _cacheService.Cache(key, webhooks);
-
-            foreach (var webhook in webhooks)
+            foreach (var webhook in getWebhooks.Entity)
             {
                 var webhookKey = KeyHelpers.CreateWebhookCacheKey(webhook.ID);
-                _cacheService.Cache(webhookKey, webhook);
+                await _cacheService.CacheAsync(webhookKey, webhook);
             }
 
             return getWebhooks;
@@ -262,7 +262,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
+            await _cacheService.EvictAsync(key);
 
             return deleteWebhook;
         }
@@ -276,9 +276,10 @@ namespace Remora.Discord.Caching.API
         )
         {
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            if (_cacheService.TryGetValue<IWebhook>(key, out var cachedInstance))
+            var cache = await _cacheService.GetValueAsync<IWebhook>(key);
+            if (cache.HasValue)
             {
-                return Result<IWebhook>.FromSuccess(cachedInstance);
+               return Result<IWebhook>.FromSuccess(cache.Value);
             }
 
             var getWebhook = await base.GetWebhookWithTokenAsync(webhookID, token, ct);
@@ -288,7 +289,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var webhook = getWebhook.Entity;
-            _cacheService.Cache(key, webhook);
+            await _cacheService.CacheAsync(key, webhook);
 
             return getWebhook;
         }
@@ -312,7 +313,7 @@ namespace Remora.Discord.Caching.API
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             var webhook = modifyWebhook.Entity;
 
-            _cacheService.Cache(key, webhook);
+            await _cacheService.CacheAsync(key, webhook);
 
             return modifyWebhook;
         }

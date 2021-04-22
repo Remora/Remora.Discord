@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
+using Remora.Discord.Caching;
 using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
@@ -76,7 +77,7 @@ namespace Remora.Discord.Samples.SlashCommands
                 .AddDiscordGateway(_ => botToken)
                 .AddDiscordCommands(true)
                 .AddCommandGroup<HttpCatCommands>()
-                .AddDiscordCaching();
+                .AddDiscordCaching(b => b.UseMemory());
 
             serviceCollection.AddHttpClient();
 
