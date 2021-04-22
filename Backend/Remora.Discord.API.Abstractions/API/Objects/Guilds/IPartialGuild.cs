@@ -167,5 +167,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.WelcomeScreen" />
         Optional<IWelcomeScreen> WelcomeScreen { get; }
+
+        /// <inheritdoc cref="IGuild.IsNSFW" />
+        Optional<bool> IsNSFW { get; }
     }
 }

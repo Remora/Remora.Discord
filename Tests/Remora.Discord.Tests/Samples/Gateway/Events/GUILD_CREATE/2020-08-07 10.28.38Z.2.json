@@ -377,6 +377,7 @@
     "description": null,
     "public_updates_channel_id": null,
     "rules_channel_id": null,
-    "id": "452526315288133644"
+    "id": "452526315288133644",
+    "nsfw": false
   }
 }
