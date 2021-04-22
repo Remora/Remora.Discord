@@ -53,6 +53,42 @@ namespace Remora.Discord.Caching.Services
         private TimeSpan _defaultSlidingExpiration = TimeSpan.FromSeconds(10);
 
         /// <summary>
+        /// Gets a value indicating whether the messages should be cached.
+        /// </summary>
+        public bool ShouldCacheMessages { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the presences should be cached.
+        /// </summary>
+        public bool ShouldCachePresences { get; private set; }
+
+        /// <summary>
+        /// Enables message cache.
+        /// </summary>
+        /// <remarks>
+        /// Since large bots will receive a lot of messages this should not be enabled unless necessary.
+        /// </remarks>
+        /// <returns>The settings.</returns>
+        public CacheSettings EnableMessageCache()
+        {
+            ShouldCacheMessages = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Enables presence cache.
+        /// </summary>
+        /// <remarks>
+        /// Since large bots will receive a lot of presence this should not be enabled unless necessary.
+        /// </remarks>
+        /// <returns>The settings.</returns>
+        public CacheSettings EnablePresenceCache()
+        {
+            ShouldCacheMessages = true;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the default absolute expiration value for types.
         /// </summary>
         /// <param name="defaultAbsoluteExpiration">The default value.</param>

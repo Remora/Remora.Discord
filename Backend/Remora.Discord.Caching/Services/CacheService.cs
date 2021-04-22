@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
@@ -32,13 +33,16 @@ namespace Remora.Discord.Caching.Services
     public class CacheService : ICacheService
     {
         private readonly ICacheClient _cacheClient;
+        private readonly CacheSettings _cacheSettings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheService"/> class.
         /// </summary>
         /// <param name="cacheClient">The cache manager.</param>
-        public CacheService(ICacheClient? cacheClient = null)
+        /// <param name="cacheSettings">The cache settings.</param>
+        public CacheService(IOptions<CacheSettings> cacheSettings, ICacheClient? cacheClient = null)
         {
+            _cacheSettings = cacheSettings.Value;
             _cacheClient = cacheClient ?? throw new InvalidOperationException("No cache client was provided in the service collection.\nInstall the client you want to use (e.g. Remora.Discord.Caching.Memory) and configure it through Services.AddDiscordCaching(b => b.UseXXX()).");
         }
 
@@ -273,6 +277,11 @@ namespace Remora.Discord.Caching.Services
         /// <inheritdoc />
         public async Task CacheAsync(CacheKey key, IMessage message)
         {
+            if (!_cacheSettings.ShouldCacheMessages)
+            {
+                return;
+            }
+
             await _cacheClient.StoreAsync(key, message);
 
             var authorKey = KeyHelpers.CreateUserCacheKey(message.Author.ID);
@@ -310,9 +319,15 @@ namespace Remora.Discord.Caching.Services
         }
 
         /// <inheritdoc />
-        public Task CacheAsync(CacheKey key, IUser user) => _cacheClient.StoreAsync(key, user);
+        public Task CacheAsync(CacheKey key, IUser user)
+        {
+            return _cacheClient.StoreAsync(key, user);
+        }
 
         /// <inheritdoc />
-        public Task CacheAsync(CacheKey key, IPresence presence) => _cacheClient.StoreAsync(key, presence);
+        public Task CacheAsync(CacheKey key, IPresence presence)
+        {
+            return _cacheSettings.ShouldCachePresences ? _cacheClient.StoreAsync(key, presence) : Task.CompletedTask;
+        }
     }
 }

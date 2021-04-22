@@ -145,7 +145,7 @@ namespace Remora.Discord.Caching
         }
 
         /// <summary>
-        /// Compares two snowflakes, for equality.
+        /// Compares two cache keys, for equality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -156,7 +156,7 @@ namespace Remora.Discord.Caching
         }
 
         /// <summary>
-        /// Compares two snowflakes, for inequality.
+        /// Compares two cache keys, for inequality.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
