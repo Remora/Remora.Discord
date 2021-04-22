@@ -76,8 +76,19 @@ namespace Remora.Discord.Samples.SlashCommands
                 )
                 .AddDiscordGateway(_ => botToken)
                 .AddDiscordCommands(true)
-                .AddCommandGroup<HttpCatCommands>()
-                .AddDiscordCaching(b => b.UseMemory());
+                .AddCommandGroup<HttpCatCommands>();
+
+            serviceCollection.AddDiscordCaching(b =>
+            {
+                if (Environment.GetEnvironmentVariable("REMORA_REDIS") is { Length: > 0 } connectionString)
+                {
+                    b.UseRedis(connectionString);
+                }
+                else
+                {
+                    b.UseMemory();
+                }
+            });
 
             serviceCollection.AddHttpClient();
 
