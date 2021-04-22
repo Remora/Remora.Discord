@@ -39,7 +39,6 @@ namespace Remora.Discord.API.Objects
         string Description,
         Optional<IReadOnlyList<string>> Tags,
         IImageHash Asset,
-        IImageHash PreviewAsset,
         MessageStickerFormatType FormatType
     ) : IMessageSticker;
 }

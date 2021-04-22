@@ -63,11 +63,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         IImageHash Asset { get; }
 
         /// <summary>
-        /// Gets the sticker preview asset hash.
-        /// </summary>
-        IImageHash PreviewAsset { get; }
-
-        /// <summary>
         /// Gets the format of the sticker.
         /// </summary>
         MessageStickerFormatType FormatType { get; }
