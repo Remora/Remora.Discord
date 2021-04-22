@@ -296,6 +296,22 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public Task<Result<IMessage>> GetWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string webhookToken,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IMessage>
+            (
+                $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual async Task<Result<IMessage>> EditWebhookMessageAsync
         (
             Snowflake webhookID,
@@ -338,6 +354,21 @@ namespace Remora.Discord.Rest.API
                         }
                     );
                 },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string interactionToken,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IMessage>
+            (
+                $"webhooks/{applicationID}/{interactionToken}/messages/@original",
                 ct: ct
             );
         }

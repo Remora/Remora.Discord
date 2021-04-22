@@ -1305,5 +1305,81 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.GetWebhookMessageAsync"/> method.
+        /// </summary>
+        public class GetWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "aaa";
+                var messageID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.GetWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.GetOriginalInteractionResponseAsync"/> method.
+        /// </summary>
+        public class GetOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var interactionID = new Snowflake(0);
+                var token = "aaa";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}webhooks/{interactionID}/{token}/messages/@original"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.GetOriginalInteractionResponseAsync
+                (
+                    interactionID,
+                    token
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }

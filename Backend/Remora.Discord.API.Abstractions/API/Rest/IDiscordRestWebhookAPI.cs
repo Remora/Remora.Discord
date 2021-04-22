@@ -203,6 +203,22 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a previously-sent webhook message.
+        /// </summary>
+        /// <param name="webhookID">The ID of the webhook.</param>
+        /// <param name="webhookToken">The webhook token.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IMessage>> GetWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string webhookToken,
+            Snowflake messageID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Edits a messages posted by a webhook.
         /// </summary>
         /// <param name="webhookID">The ID of the webhook.</param>
@@ -223,6 +239,20 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<FileData?> file = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Gets the message object of the original interaction response.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="interactionToken">The interaction token.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string interactionToken,
             CancellationToken ct = default
         );
 
