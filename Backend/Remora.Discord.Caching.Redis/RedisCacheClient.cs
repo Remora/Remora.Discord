@@ -57,10 +57,29 @@ namespace Remora.Discord.Caching
         /// <inheritdoc />
         public async Task StoreAsync<TInstance>(CacheKey key, TInstance value)
         {
-            var expiration = _cacheSettings.GetAbsoluteExpirationOrDefault<TInstance>();
-            var sliding = _cacheSettings.GetSlidingExpirationOrDefault<TInstance>();
-            var startSlidingAt = DateTimeOffset.Now.Add(expiration).Subtract(sliding);
-            var cachedValue = new CachedValue<TInstance>(value, startSlidingAt, (int)sliding.TotalSeconds);
+            var expirationSetting = _cacheSettings.GetAbsoluteExpirationOrDefault<TInstance>();
+            var slidingSetting = _cacheSettings.GetSlidingExpirationOrDefault<TInstance>();
+
+            if (expirationSetting <= TimeSpan.Zero)
+            {
+                return;
+            }
+
+            TimeSpan? expiration;
+            DateTimeOffset? startSlidingAt;
+
+            if (expirationSetting != TimeSpan.MaxValue)
+            {
+                expiration = expirationSetting;
+                startSlidingAt = DateTimeOffset.Now.Add(expirationSetting).Subtract(slidingSetting);
+            }
+            else
+            {
+                expiration = null;
+                startSlidingAt = null;
+            }
+
+            var cachedValue = new CachedValue<TInstance>(value, startSlidingAt, (int)slidingSetting.TotalSeconds);
             var bytes = JsonSerializer.SerializeToUtf8Bytes(cachedValue, _jsonOptions);
             var database = await GetDatabaseAsync();
 
@@ -81,7 +100,7 @@ namespace Remora.Discord.Caching
             var data = (ReadOnlyMemory<byte>)cacheValue;
             var (instance, startSlidingAt, slidingExpiration) = JsonSerializer.Deserialize<CachedValue<TInstance>>(data.Span, _jsonOptions)!;
 
-            if (DateTime.UtcNow >= startSlidingAt)
+            if (startSlidingAt.HasValue && DateTime.UtcNow >= startSlidingAt)
             {
                 await database.KeyExpireAsync(key.Key, TimeSpan.FromSeconds(slidingExpiration));
             }

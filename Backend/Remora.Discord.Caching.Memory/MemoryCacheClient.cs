@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -49,9 +50,21 @@ namespace Remora.Discord.Caching
         /// <inheritdoc />
         public Task StoreAsync<TInstance>(CacheKey key, TInstance value)
         {
+            var expirationSetting = _cacheSettings.GetAbsoluteExpirationOrDefault<TInstance>();
+
+            if (expirationSetting <= TimeSpan.Zero)
+            {
+                return Task.CompletedTask;
+            }
+
             var cacheOptions = new MemoryCacheEntryOptions();
-            cacheOptions.SetAbsoluteExpiration(_cacheSettings.GetAbsoluteExpirationOrDefault<TInstance>());
-            cacheOptions.SetSlidingExpiration(_cacheSettings.GetSlidingExpirationOrDefault<TInstance>());
+
+            if (expirationSetting != TimeSpan.MaxValue)
+            {
+                cacheOptions.SetAbsoluteExpiration(expirationSetting);
+                cacheOptions.SetSlidingExpiration(_cacheSettings.GetSlidingExpirationOrDefault<TInstance>());
+            }
+
             _memoryCache.Set(key, value, cacheOptions);
             return Task.CompletedTask;
         }

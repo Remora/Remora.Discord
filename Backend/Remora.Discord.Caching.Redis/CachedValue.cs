@@ -33,5 +33,5 @@ namespace Remora.Discord.Caching
     /// is later than the sliding expiry.
     /// </remarks>
     /// <typeparam name="T">Type of the value.</typeparam>
-    internal record CachedValue<T>(T Value, DateTimeOffset StartSlidingAt, int SlidingExpiration);
+    internal record CachedValue<T>(T Value, DateTimeOffset? StartSlidingAt, int SlidingExpiration);
 }
