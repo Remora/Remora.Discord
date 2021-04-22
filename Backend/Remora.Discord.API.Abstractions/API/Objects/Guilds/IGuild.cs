@@ -260,5 +260,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the welcome screen shown to new members.
         /// </summary>
         Optional<IWelcomeScreen> WelcomeScreen { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this guild is designated as an NSFW server.
+        /// </summary>
+        bool IsNSFW { get; }
     }
 }

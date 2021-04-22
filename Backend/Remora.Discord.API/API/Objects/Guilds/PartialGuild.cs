@@ -78,6 +78,7 @@ namespace Remora.Discord.API.Objects
         Optional<int> MaxVideoChannelUsers = default,
         Optional<int> ApproximateMemberCount = default,
         Optional<int> ApproximatePresenceCount = default,
-        Optional<IWelcomeScreen> WelcomeScreen = default
+        Optional<IWelcomeScreen> WelcomeScreen = default,
+        Optional<bool> IsNSFW = default
     ) : IPartialGuild;
 }

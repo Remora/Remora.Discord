@@ -158,6 +158,7 @@
     "mfa_level": 0,
     "afk_channel_id": null,
     "guild_id": "452526315288133644",
-    "max_presences": null
+    "max_presences": null,
+    "nsfw": false
   }
 }
