@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>15.0.1</Version>
+        <Version>16.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,11 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Remove preview_asset from stickers.
+            Implement new endpoints.
+            Add support for NSFW guilds.
+            Correct error code of "Unknown guild template".
+            Document unknown interaction error code.
         </PackageReleaseNotes>
     </PropertyGroup>
 
