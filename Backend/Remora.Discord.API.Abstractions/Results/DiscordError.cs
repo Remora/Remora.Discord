@@ -161,6 +161,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownGuildTemplate = 100057,
 
         /// <summary>
+        /// Unknown interaction.
+        /// </summary>
+        UnknownInteraction = 10062,
+
+        /// <summary>
         /// Unknown application command.
         /// </summary>
         UnknownApplicationCommand = 10063,
