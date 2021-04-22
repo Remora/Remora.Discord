@@ -33,9 +33,6 @@ namespace Remora.Discord.Caching
     /// <summary>
     /// Stores the cache into Redis.
     /// </summary>
-    /// <remarks>
-    /// This client does not support expiration. Values will be stored in the Redis database until they are manually removed.
-    /// </remarks>
     public class RedisCacheClient : ICacheClient, IDisposable
     {
         private readonly IOptions<RedisOptions> _options;
