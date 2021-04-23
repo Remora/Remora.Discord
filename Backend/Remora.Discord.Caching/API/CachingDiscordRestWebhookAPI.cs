@@ -146,9 +146,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             var cache = await _cacheService.GetValueAsync<IWebhook>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IWebhook>.FromSuccess(cache.Value);
+               return Result<IWebhook>.FromSuccess(cache.Entity);
             }
 
             var getWebhook = await base.GetWebhookAsync(webhookID, ct);
@@ -196,9 +196,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateChannelWebhooksCacheKey(channelID);
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<IWebhook>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<IWebhook>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<IWebhook>>.FromSuccess(cache.Entity);
             }
 
             var getWebhooks = await base.GetChannelWebhooksAsync(channelID, ct);
@@ -227,9 +227,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateGuildWebhooksCacheKey(guildID);
             var cacheResult = await _cacheService.GetValueAsync<IReadOnlyList<IWebhook>>(key);
-            if (cacheResult.HasValue)
+            if (cacheResult.IsSuccess)
             {
-                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cacheResult.Value);
+                return Result<IReadOnlyList<IWebhook>>.FromSuccess(cacheResult.Entity);
             }
 
             var getWebhooks = await base.GetGuildWebhooksAsync(guildID, ct);
@@ -277,9 +277,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
             var cache = await _cacheService.GetValueAsync<IWebhook>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IWebhook>.FromSuccess(cache.Value);
+               return Result<IWebhook>.FromSuccess(cache.Entity);
             }
 
             var getWebhook = await base.GetWebhookWithTokenAsync(webhookID, token, ct);

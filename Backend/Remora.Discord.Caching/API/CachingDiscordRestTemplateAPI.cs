@@ -61,9 +61,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
             var cache = await _cacheService.GetValueAsync<ITemplate>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<ITemplate>.FromSuccess(cache.Value);
+               return Result<ITemplate>.FromSuccess(cache.Entity);
             }
 
             var getTemplate = await base.GetTemplateAsync(templateCode, ct);
@@ -130,9 +130,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateGuildTemplatesCacheKey(guildID);
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<ITemplate>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<ITemplate>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<ITemplate>>.FromSuccess(cache.Entity);
             }
 
             var getTemplates = await base.GetGuildTemplatesAsync(guildID, ct);

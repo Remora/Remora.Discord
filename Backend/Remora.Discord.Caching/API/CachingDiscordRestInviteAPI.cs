@@ -57,9 +57,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
             var cache = await _cacheService.GetValueAsync<IInvite>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IInvite>.FromSuccess(cache.Value);
+               return Result<IInvite>.FromSuccess(cache.Entity);
             }
 
             var getInvite = await base.GetInviteAsync(inviteCode, withCounts, ct);

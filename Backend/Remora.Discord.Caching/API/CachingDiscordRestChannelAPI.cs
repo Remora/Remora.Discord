@@ -63,9 +63,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
             var cache = await _cacheService.GetValueAsync<IChannel>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IChannel>.FromSuccess(cache.Value);
+               return Result<IChannel>.FromSuccess(cache.Entity);
             }
 
             var getChannel = await base.GetChannelAsync(channelID, ct);
@@ -156,9 +156,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
             var cache = await _cacheService.GetValueAsync<IMessage>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IMessage>.FromSuccess(cache.Value);
+               return Result<IMessage>.FromSuccess(cache.Entity);
             }
 
             var getMessage = await base.GetChannelMessageAsync(channelID, messageID, ct);
@@ -358,9 +358,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreatePinnedMessagesCacheKey(channelID);
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<IMessage>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<IMessage>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<IMessage>>.FromSuccess(cache.Entity);
             }
 
             var getResult = await base.GetPinnedMessagesAsync(channelID, ct);

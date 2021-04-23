@@ -55,9 +55,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateVoiceRegionsCacheKey();
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<IVoiceRegion>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cache.Entity);
             }
 
             var listRegions = await base.ListVoiceRegionsAsync(ct);

@@ -61,9 +61,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateUserCacheKey(userID);
             var cache = await _cacheService.GetValueAsync<IUser>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IUser>.FromSuccess(cache.Value);
+               return Result<IUser>.FromSuccess(cache.Entity);
             }
 
             var getUser = await base.GetUserAsync(userID, ct);
@@ -103,9 +103,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateCurrentUserCacheKey();
             var cache = await _cacheService.GetValueAsync<IUser>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IUser>.FromSuccess(cache.Value);
+               return Result<IUser>.FromSuccess(cache.Entity);
             }
 
             var getUser = await base.GetCurrentUserAsync(ct);
@@ -132,9 +132,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<IConnection>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<IConnection>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<IConnection>>.FromSuccess(cache.Entity);
             }
 
             var getUserConnections = await base.GetUserConnectionsAsync(ct);
@@ -187,9 +187,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
             var cache = await _cacheService.GetValueAsync<IReadOnlyList<IChannel>>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IReadOnlyList<IChannel>>.FromSuccess(cache.Value);
+               return Result<IReadOnlyList<IChannel>>.FromSuccess(cache.Entity);
             }
 
             var getUserDMs = await base.GetUserDMsAsync(ct);

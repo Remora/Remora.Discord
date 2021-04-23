@@ -173,19 +173,19 @@ namespace Remora.Discord.Caching.Responders
             var cache = await _cacheService.GetValueAsync<IGuildMember>(key);
             IGuildMember cachedInstance;
 
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
                 cachedInstance = new GuildMember
                 (
                     new Optional<IUser>(gatewayEvent.User),
-                    gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cache.Value.Nickname,
+                    gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cache.Entity.Nickname,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt,
-                    gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince.Value : cache.Value.PremiumSince,
-                    cache.Value.IsDeafened,
-                    cache.Value.IsMuted,
-                    cache.Value.IsPending,
-                    cache.Value.Permissions
+                    gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince.Value : cache.Entity.PremiumSince,
+                    cache.Entity.IsDeafened,
+                    cache.Entity.IsMuted,
+                    cache.Entity.IsPending,
+                    cache.Entity.Permissions
                 );
             }
             else if (gatewayEvent.PremiumSince.HasValue)

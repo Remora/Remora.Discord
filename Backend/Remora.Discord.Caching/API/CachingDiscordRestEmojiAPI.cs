@@ -64,9 +64,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
             var cache = await _cacheService.GetValueAsync<IEmoji>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IEmoji>.FromSuccess(cache.Value);
+               return Result<IEmoji>.FromSuccess(cache.Entity);
             }
 
             var getResult = await base.GetGuildEmojiAsync(guildID, emojiID, ct);

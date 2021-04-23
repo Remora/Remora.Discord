@@ -22,6 +22,7 @@
 
 using System.Threading.Tasks;
 using Remora.Discord.Caching.Services;
+using Remora.Results;
 
 namespace Remora.Discord.Caching
 {
@@ -45,7 +46,7 @@ namespace Remora.Discord.Caching
         /// <param name="key">The cache key.</param>
         /// <typeparam name="TInstance">The instance type.</typeparam>
         /// <returns>value from the cache provider.</returns>
-        public Task<CacheResult<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull;
+        public Task<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull;
 
         /// <summary>
         /// Removes value of the given key from the cache.

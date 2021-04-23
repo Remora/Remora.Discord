@@ -21,10 +21,13 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Results;
 using Remora.Discord.Caching.Services;
+using Remora.Results;
 
 namespace Remora.Discord.Caching
 {
@@ -70,11 +73,11 @@ namespace Remora.Discord.Caching
         }
 
         /// <inheritdoc />
-        public Task<CacheResult<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull
+        public Task<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull
         {
             var result = _memoryCache.TryGetValue(key, out TInstance instance)
-                ? new CacheResult<TInstance>(instance)
-                : default;
+                ? Result<TInstance>.FromSuccess(instance)
+                : Result<TInstance>.FromError(new CacheNotFoundError(key));
 
             return Task.FromResult(result);
         }

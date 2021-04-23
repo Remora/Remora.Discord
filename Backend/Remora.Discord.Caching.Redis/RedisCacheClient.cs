@@ -21,11 +21,12 @@
 //
 
 using System;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Remora.Discord.Caching.Results;
 using Remora.Discord.Caching.Services;
+using Remora.Results;
 using StackExchange.Redis;
 
 namespace Remora.Discord.Caching
@@ -87,14 +88,14 @@ namespace Remora.Discord.Caching
         }
 
         /// <inheritdoc />
-        public async Task<CacheResult<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull
+        public async Task<Result<TInstance>> RetrieveAsync<TInstance>(CacheKey key) where TInstance : notnull
         {
             var database = await GetDatabaseAsync();
             var cacheValue = await database.StringGetAsync(key.Key);
 
             if (!cacheValue.HasValue)
             {
-                return default;
+                return Result<TInstance>.FromError(new CacheNotFoundError(key));
             }
 
             var data = (ReadOnlyMemory<byte>)cacheValue;

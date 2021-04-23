@@ -54,9 +54,9 @@ namespace Remora.Discord.Caching.API
         {
             var key = KeyHelpers.CreateCurrentApplicationCacheKey();
             var cache = await _cacheService.GetValueAsync<IApplication>(key);
-            if (cache.HasValue)
+            if (cache.IsSuccess)
             {
-               return Result<IApplication>.FromSuccess(cache.Value);
+               return Result<IApplication>.FromSuccess(cache.Entity);
             }
 
             var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
