@@ -71,7 +71,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The settings.</returns>
         public CacheSettings EnableMessageCache()
         {
-            ShouldCacheMessages = true;
+            this.ShouldCacheMessages = true;
             return this;
         }
 
@@ -84,7 +84,7 @@ namespace Remora.Discord.Caching.Services
         /// <returns>The settings.</returns>
         public CacheSettings EnablePresenceCache()
         {
-            ShouldCacheMessages = true;
+            this.ShouldCacheMessages = true;
             return this;
         }
 
