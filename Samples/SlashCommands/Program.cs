@@ -84,10 +84,6 @@ namespace Remora.Discord.Samples.SlashCommands
                 {
                     b.UseRedis(connectionString);
                 }
-                else
-                {
-                    b.UseMemory();
-                }
             });
 
             serviceCollection.AddHttpClient();

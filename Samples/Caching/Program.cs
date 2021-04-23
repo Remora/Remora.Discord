@@ -75,7 +75,7 @@ namespace Remora.Discord.Samples.Caching
 
             serviceCollection.AddHttpClient();
 
-            serviceCollection.AddDiscordCaching(b => b.UseMemory());
+            serviceCollection.AddDiscordCaching();
 
             serviceCollection.Configure<CacheSettings>(settings =>
             {
