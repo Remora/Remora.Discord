@@ -66,18 +66,13 @@ namespace Remora.Discord.Caching
                 return;
             }
 
-            TimeSpan? expiration;
-            DateTimeOffset? startSlidingAt;
+            TimeSpan? expiration = null;
+            DateTimeOffset? startSlidingAt = null;
 
             if (expirationSetting != TimeSpan.MaxValue)
             {
                 expiration = expirationSetting;
                 startSlidingAt = DateTimeOffset.Now.Add(expirationSetting).Subtract(slidingSetting);
-            }
-            else
-            {
-                expiration = null;
-                startSlidingAt = null;
             }
 
             var cachedValue = new CachedValue<TInstance>(value, startSlidingAt, (int)slidingSetting.TotalSeconds);

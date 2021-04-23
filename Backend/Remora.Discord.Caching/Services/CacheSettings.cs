@@ -53,12 +53,12 @@ namespace Remora.Discord.Caching.Services
         private TimeSpan _defaultSlidingExpiration = TimeSpan.FromSeconds(10);
 
         /// <summary>
-        /// Gets a value indicating whether the messages should be cached.
+        /// Gets a value indicating whether messages should be cached.
         /// </summary>
         public bool ShouldCacheMessages { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the presences should be cached.
+        /// Gets a value indicating whether user presence information should be cached.
         /// </summary>
         public bool ShouldCachePresences { get; private set; }
 
