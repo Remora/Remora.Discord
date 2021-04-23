@@ -42,5 +42,19 @@ namespace Remora.Discord.Caching.Extensions
         /// Gets the application services.
         /// </summary>
         public IServiceCollection Services { get; }
+
+        /// <summary>
+        /// Replaces the default memory cache client with the given type.
+        /// </summary>
+        /// <remarks>
+        /// The type will be registered as a singleton in the service provider.
+        /// </remarks>
+        /// <typeparam name="TClient">New cache client to use.</typeparam>
+        /// <returns>Same instance of the builder.</returns>
+        public CacheBuilder UseClient<TClient>() where TClient : class, ICacheClient
+        {
+            Services.AddSingleton<ICacheClient, TClient>();
+            return this;
+        }
     }
 }

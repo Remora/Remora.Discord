@@ -31,7 +31,7 @@ namespace Remora.Discord.Caching
     public static class RedisExtensions
     {
         /// <summary>
-        /// Adds the memory cache client.
+        /// Replaces the default memory cache client with the Redis cache client.
         /// </summary>
         /// <param name="builder">The cache builder.</param>
         /// <param name="connectionString">The connection string of the Redis host.</param>
@@ -43,7 +43,7 @@ namespace Remora.Discord.Caching
                 builder.Services.Configure<RedisOptions>(options => { options.ConnectionString = connectionString; });
             }
 
-            builder.Services.AddSingleton<ICacheClient, RedisCacheClient>();
+            builder.UseClient<RedisCacheClient>();
             return builder;
         }
     }

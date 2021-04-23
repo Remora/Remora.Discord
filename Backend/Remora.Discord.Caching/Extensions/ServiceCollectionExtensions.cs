@@ -42,6 +42,7 @@ namespace Remora.Discord.Caching.Extensions
         /// Adds caching implementations of various API types, overriding the normally non-caching versions.
         /// </summary>
         /// <remarks>
+        /// By default the memory cache client is being used. To use a different
         /// Cache entry options for any cached type can be configured using <see cref="IOptions{CacheSettings}"/>.
         /// </remarks>
         /// <param name="services">The services.</param>
@@ -51,8 +52,10 @@ namespace Remora.Discord.Caching.Extensions
         {
             configure?.Invoke(new CacheBuilder(services));
 
+            services.AddMemoryCache();
             services.AddOptions<CacheSettings>();
             services.TryAddSingleton<ICacheService, CacheService>();
+            services.TryAddSingleton<ICacheClient, MemoryCacheClient>();
 
             services
                 .Replace(ServiceDescriptor.Singleton<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())
