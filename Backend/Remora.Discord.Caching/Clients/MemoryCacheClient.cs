@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
@@ -29,7 +28,7 @@ using Remora.Discord.Caching.Results;
 using Remora.Discord.Caching.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Caching
+namespace Remora.Discord.Caching.Clients
 {
     /// <summary>
     /// Stores the cache into memory.

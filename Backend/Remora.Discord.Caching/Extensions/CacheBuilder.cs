@@ -21,6 +21,7 @@
 //
 
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.Caching.Clients;
 
 namespace Remora.Discord.Caching.Extensions
 {
@@ -55,6 +56,18 @@ namespace Remora.Discord.Caching.Extensions
         {
             Services.AddSingleton<ICacheClient, TClient>();
             return this;
+        }
+
+        /// <summary>
+        /// Replaces the default memory cache client with the distributed cache client.
+        /// </summary>
+        /// <remarks>
+        /// A distributed cache client should be registered in the service collection.
+        /// </remarks>
+        /// <returns>Same instance of the builder.</returns>
+        public CacheBuilder UseDistributedCache()
+        {
+            return UseClient<DistributedCacheClient>();
         }
     }
 }

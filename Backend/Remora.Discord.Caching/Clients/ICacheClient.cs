@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using Remora.Discord.Caching.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Caching
+namespace Remora.Discord.Caching.Clients
 {
     /// <summary>
     /// Cache manager for <see cref="ICacheService"/>.

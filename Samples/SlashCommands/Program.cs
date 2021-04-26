@@ -78,13 +78,19 @@ namespace Remora.Discord.Samples.SlashCommands
                 .AddDiscordCommands(true)
                 .AddCommandGroup<HttpCatCommands>();
 
-            serviceCollection.AddDiscordCaching(b =>
+            if (Environment.GetEnvironmentVariable("REMORA_REDIS") is { Length: > 0 } connectionString)
             {
-                if (Environment.GetEnvironmentVariable("REMORA_REDIS") is { Length: > 0 } connectionString)
+                serviceCollection.AddStackExchangeRedisCache(options =>
                 {
-                    b.UseRedis(connectionString);
-                }
-            });
+                    options.Configuration = connectionString;
+                });
+
+                serviceCollection.AddDiscordCaching(b => b.UseDistributedCache());
+            }
+            else
+            {
+                serviceCollection.AddDiscordCaching();
+            }
 
             serviceCollection.AddHttpClient();
 

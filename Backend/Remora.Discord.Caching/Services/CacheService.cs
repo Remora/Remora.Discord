@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Caching.Clients;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Services
