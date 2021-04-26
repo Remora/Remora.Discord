@@ -20,8 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Caching.Clients;
+using Remora.Discord.Caching.Services;
 
 namespace Remora.Discord.Caching.Extensions
 {
@@ -45,12 +48,11 @@ namespace Remora.Discord.Caching.Extensions
         public IServiceCollection Services { get; }
 
         /// <summary>
-        /// Replaces the default memory cache client with the given type.
+        /// Adds a singleton service of the type specified in <typeparamref name="TClient"/> with an
+        /// implementation type specified in <see cref="ICacheClient"/> to the
+        /// service collection.
         /// </summary>
-        /// <remarks>
-        /// The type will be registered as a singleton in the service provider.
-        /// </remarks>
-        /// <typeparam name="TClient">New cache client to use.</typeparam>
+        /// <typeparam name="TClient">The type of the implementation to use.</typeparam>
         /// <returns>Same instance of the builder.</returns>
         public CacheBuilder UseClient<TClient>() where TClient : class, ICacheClient
         {
@@ -59,7 +61,9 @@ namespace Remora.Discord.Caching.Extensions
         }
 
         /// <summary>
-        /// Replaces the default memory cache client with the distributed cache client.
+        /// Adds the service <see cref="DistributedCacheClient"/> to the service collection. This causes the
+        /// <see cref="ICacheService"/> to use <see cref="IDistributedCache"/> instead of the default
+        /// <see cref="IMemoryCache"/>.
         /// </summary>
         /// <remarks>
         /// A distributed cache client should be registered in the service collection.

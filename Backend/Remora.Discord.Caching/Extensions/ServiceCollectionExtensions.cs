@@ -43,8 +43,13 @@ namespace Remora.Discord.Caching.Extensions
         /// Adds caching implementations of various API types, overriding the normally non-caching versions.
         /// </summary>
         /// <remarks>
-        /// By default the memory cache client is being used. To use a different
-        /// Cache entry options for any cached type can be configured using <see cref="IOptions{CacheSettings}"/>.
+        /// By default the client <see cref="MemoryCacheClient"/> will be used if no other client
+        /// is added to the service collection. To register a new cache client, use
+        /// <see cref="CacheBuilder.UseClient{TClient}"/>.
+        /// </remarks>
+        /// <remarks>
+        /// To use a different cache entry options for any cached type can be configured using
+        /// <see cref="IOptions{CacheSettings}"/>.
         /// </remarks>
         /// <param name="services">The services.</param>
         /// <param name="configure">Action to configure the caching.</param>
