@@ -22,6 +22,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Remora.Discord.Caching
 {
@@ -36,6 +37,7 @@ namespace Remora.Discord.Caching
         private readonly object? _arg1;
         private readonly object? _arg2;
         private readonly object? _arg3;
+        private readonly object[]? _args;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheKey"/> struct.
@@ -48,6 +50,7 @@ namespace Remora.Discord.Caching
             _arg1 = null;
             _arg2 = null;
             _arg3 = null;
+            _args = null;
         }
 
         /// <summary>
@@ -62,6 +65,7 @@ namespace Remora.Discord.Caching
             _arg1 = arg1;
             _arg2 = null;
             _arg3 = null;
+            _args = null;
         }
 
         /// <summary>
@@ -77,6 +81,7 @@ namespace Remora.Discord.Caching
             _arg1 = arg1;
             _arg2 = arg2;
             _arg3 = null;
+            _args = null;
         }
 
         /// <summary>
@@ -93,6 +98,22 @@ namespace Remora.Discord.Caching
             _arg1 = arg1;
             _arg2 = arg2;
             _arg3 = arg3;
+            _args = null;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheKey"/> struct.
+        /// </summary>
+        /// <param name="name">The first value.</param>
+        /// <param name="args">The second value.</param>
+        public CacheKey(string name, params object[] args)
+        {
+            _argCount = 3;
+            _name = name;
+            _arg1 = null;
+            _arg2 = null;
+            _arg3 = null;
+            _args = args;
         }
 
         /// <summary>
@@ -108,7 +129,7 @@ namespace Remora.Discord.Caching
                     1 => _name + ":" + _arg1,
                     2 => _name + ":" + _arg1 + ":" + _arg2,
                     3 => _name + ":" + _arg1 + ":" + _arg2 + ":" + _arg3,
-                    _ => throw new InvalidOperationException()
+                    _ => _name + ":" + string.Join(":", _args!)
                 };
             }
         }
@@ -116,7 +137,7 @@ namespace Remora.Discord.Caching
         /// <inheritdoc />
         public bool Equals(CacheKey other)
         {
-            return _argCount == other._argCount && Equals(_name, other._name) && Equals(_arg1, other._arg1) && Equals(_arg2, other._arg2) && Equals(_arg3, other._arg3);
+            return _argCount == other._argCount && _name == other._name && Equals(_arg1, other._arg1) && Equals(_arg2, other._arg2) && Equals(_arg3, other._arg3) && Equals(_args, other._args);
         }
 
         /// <inheritdoc />
@@ -134,7 +155,7 @@ namespace Remora.Discord.Caching
                 1 => HashCode.Combine(_name, _arg1),
                 2 => HashCode.Combine(_name, _arg1, _arg2),
                 3 => HashCode.Combine(_name, _arg1, _arg2, _arg3),
-                _ => throw new InvalidOperationException()
+                _ => _args!.Aggregate(_name.GetHashCode(), HashCode.Combine)
             };
         }
 
