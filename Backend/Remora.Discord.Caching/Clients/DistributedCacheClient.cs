@@ -24,7 +24,6 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Remora.Discord.Caching.Results;
 using Remora.Discord.Caching.Services;
@@ -33,7 +32,7 @@ using Remora.Results;
 namespace Remora.Discord.Caching.Clients
 {
     /// <summary>
-    /// Stores the cache into Redis.
+    /// Stores the cache into <see cref="IDistributedCache"/>.
     /// </summary>
     public class DistributedCacheClient : ICacheClient
     {
