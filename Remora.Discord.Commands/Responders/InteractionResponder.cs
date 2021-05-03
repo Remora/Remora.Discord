@@ -110,7 +110,7 @@ namespace Remora.Discord.Commands.Responders
             }
 
             // Signal Discord that we'll be handling this one asynchronously
-            var response = new InteractionResponse(InteractionResponseType.DeferredChannelMessageWithSource);
+            var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
             var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
             (
                 gatewayEvent.ID,

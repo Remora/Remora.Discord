@@ -54,7 +54,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             {
                 var interactionID = new Snowflake(0);
                 var token = "aaaa";
-                var interactionResponse = new InteractionResponse(InteractionResponseType.DeferredChannelMessageWithSource);
+                var interactionResponse = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
 
                 var api = CreateAPI
                 (

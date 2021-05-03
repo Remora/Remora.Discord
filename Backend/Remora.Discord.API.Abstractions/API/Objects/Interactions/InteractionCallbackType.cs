@@ -1,5 +1,5 @@
 //
-//  InteractionResponseType.cs
+//  InteractionCallbackType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Enumerates various response types.
     /// </summary>
     [PublicAPI]
-    public enum InteractionResponseType
+    public enum InteractionCallbackType
     {
         /// <summary>
         /// Acknowledge a <see cref="InteractionType.Ping"/>.

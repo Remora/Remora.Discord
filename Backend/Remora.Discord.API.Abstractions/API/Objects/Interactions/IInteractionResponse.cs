@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the response type.
         /// </summary>
-        InteractionResponseType Type { get; }
+        InteractionCallbackType Type { get; }
 
         /// <summary>
         /// Gets the response payload.
