@@ -68,6 +68,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The option is a role reference.
         /// </summary>
-        Role = 8
+        Role = 8,
+
+        /// <summary>
+        /// The option is some type of mentionable object (member, role, channel, etc).
+        /// </summary>
+        Mentionable = 9
     }
 }
