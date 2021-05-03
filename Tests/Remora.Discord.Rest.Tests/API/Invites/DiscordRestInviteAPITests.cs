@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
@@ -51,16 +52,24 @@ namespace Remora.Discord.Rest.Tests.API.Invites
             {
                 var inviteCode = "brr";
                 var withCounts = true;
+                var withExpiration = false;
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Get, $"{Constants.BaseURL}invite/{inviteCode}")
-                        .WithQueryString("with_counts", withCounts.ToString())
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("with_counts", withCounts.ToString()),
+                                new KeyValuePair<string, string>("with_expiration", withExpiration.ToString()),
+                            }
+                        )
                         .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );
 
-                var result = await api.GetInviteAsync(inviteCode, withCounts);
+                var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration);
                 ResultAssert.Successful(result);
             }
         }

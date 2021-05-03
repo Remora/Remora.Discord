@@ -60,5 +60,6 @@
         "avatar": "deadbeef",
         "discriminator": "1234"
     },
-    "target_type": 1
+    "target_type": 1,
+    "expires_at": "2021-01-23T02:33:17.017000+00:00"
 }

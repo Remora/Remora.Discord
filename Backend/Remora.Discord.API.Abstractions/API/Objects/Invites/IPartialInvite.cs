@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
@@ -75,5 +76,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the approximate count of total members.
         /// </summary>
         Optional<int> ApproximateMemberCount { get; }
+
+        /// <summary>
+        /// Gets the expiration date of this invite.
+        /// </summary>
+        Optional<DateTimeOffset> ExpiresAt { get; }
     }
 }

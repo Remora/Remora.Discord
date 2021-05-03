@@ -532,8 +532,11 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IInvite, Invite>();
-            options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
+            options.AddDataObjectConverter<IInvite, Invite>()
+                .WithPropertyConverter(i => i.ExpiresAt, new ISO8601DateTimeOffsetConverter());
+
+            options.AddDataObjectConverter<IPartialInvite, PartialInvite>()
+                .WithPropertyConverter(i => i.ExpiresAt, new ISO8601DateTimeOffsetConverter());
 
             return options;
         }

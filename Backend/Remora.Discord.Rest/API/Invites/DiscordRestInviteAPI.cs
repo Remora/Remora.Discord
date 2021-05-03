@@ -50,6 +50,7 @@ namespace Remora.Discord.Rest.API
         (
             string inviteCode,
             Optional<bool> withCounts = default,
+            Optional<bool> withExpiration = default,
             CancellationToken ct = default
         )
         {
@@ -61,6 +62,11 @@ namespace Remora.Discord.Rest.API
                     if (withCounts.HasValue)
                     {
                         b.AddQueryParameter("with_counts", withCounts.Value.ToString());
+                    }
+
+                    if (withExpiration.HasValue)
+                    {
+                        b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
                     }
                 },
                 ct: ct

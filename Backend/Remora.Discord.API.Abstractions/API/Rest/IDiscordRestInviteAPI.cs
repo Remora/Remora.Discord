@@ -40,12 +40,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="inviteCode">The invite code.</param>
         /// <param name="withCounts">Whether the invite should contain approximate member counts.</param>
+        /// <param name="withExpiration">Whether the invite should contain the expiration date.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<Result<IInvite>> GetInviteAsync
         (
             string inviteCode,
             Optional<bool> withCounts = default,
+            Optional<bool> withExpiration = default,
             CancellationToken ct = default
         );
 
