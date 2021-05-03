@@ -66,6 +66,22 @@ namespace Remora.Discord.API.Abstractions.Objects
         GuildStore = 6,
 
         /// <summary>
+        /// A temporary sub-channel within a <see cref="GuildNews"/> channel.
+        /// </summary>
+        GuildNewsThread = 10,
+
+        /// <summary>
+        /// A temporary sub-channel within a <see cref="GuildText"/> channel.
+        /// </summary>
+        GuildPublicThread = 11,
+
+        /// <summary>
+        /// A temporary sub-channel within a <see cref="GuildText"/> channel that is only viewable by those invited, and
+        /// those with the <see cref="DiscordTextPermission.ManageThreads"/> permission.
+        /// </summary>
+        GuildPrivateThread = 12,
+
+        /// <summary>
         /// A voice channel for hosting events with an audience.
         /// </summary>
         GuildStageVoice = 13

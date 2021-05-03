@@ -106,6 +106,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows usage of slash commands.
         /// </summary>
-        UseSlashCommands = 31
+        UseSlashCommands = 31,
+
+        /// <summary>
+        /// Allows the user to manage threads.
+        /// </summary>
+        ManageThreads = 34,
+
+        /// <summary>
+        /// Allows the user to create public threads.
+        /// </summary>
+        UsePublicThreads = 35,
+
+        /// <summary>
+        /// Allows the user to create private threads.
+        /// </summary>
+        UsePrivateThreads = 36
     }
 }

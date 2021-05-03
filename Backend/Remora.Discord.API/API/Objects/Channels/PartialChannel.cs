@@ -53,6 +53,10 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake?> ParentID = default,
         Optional<DateTimeOffset?> LastPinTimestamp = default,
         Optional<string?> RTCRegion = default,
-        Optional<VideoQualityMode> VideoQualityMode = default
+        Optional<VideoQualityMode> VideoQualityMode = default,
+        Optional<int> MessageCount = default,
+        Optional<int> MemberCount = default,
+        Optional<IThreadMetadata> ThreadMetadata = default,
+        Optional<IThreadMember> Member = default
     ) : IPartialChannel;
 }

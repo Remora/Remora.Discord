@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -50,6 +51,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="name">The new name of the channel.</param>
+        /// <param name="icon">The new icon.</param>
         /// <param name="type">
         /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
         /// <see cref="ChannelType.GuildNews"/> are supported.
@@ -63,12 +65,16 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="permissionOverwrites">The new permission overwrites.</param>
         /// <param name="parentId">The new parent category ID.</param>
         /// <param name="videoQualityMode">The new video quality mode.</param>
+        /// <param name="isArchived">Whether the thread is archived.</param>
+        /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
+        /// <param name="isLocked">Whether the thread is locked.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
+            Optional<Stream> icon = default,
             Optional<ChannelType> type = default,
             Optional<int?> position = default,
             Optional<string?> topic = default,
@@ -79,6 +85,9 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
+            Optional<bool> isArchived = default,
+            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<bool> isLocked = default,
             CancellationToken ct = default
         );
 
@@ -488,6 +497,164 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake channelID,
             Snowflake userID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Starts a new public thread from an existing message.
+        /// </summary>
+        /// <param name="channelID">The channel to start the thread in.</param>
+        /// <param name="messageID">The message to start the thread from.</param>
+        /// <param name="name">The name of the thread.</param>
+        /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> StartPublicThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Starts a new private thread.
+        /// </summary>
+        /// <param name="channelID">The channel to start the thread in.</param>
+        /// <param name="name">The name of the thread.</param>
+        /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> StartPrivateThreadAsync
+        (
+            Snowflake channelID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Joins the given thread.
+        /// </summary>
+        /// <param name="channelID">The thread to join.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result> JoinThreadAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Adds the given user to the given thread.
+        /// </summary>
+        /// <param name="channelID">The thread to add the user to.</param>
+        /// <param name="userID">The user to add to the thread.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result> AddUserToThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Leaves the given thread.
+        /// </summary>
+        /// <param name="channelID">The thread to leave.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result> LeaveThreadAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Removes the given user from the given thread.
+        /// </summary>
+        /// <param name="channelID">The thread to remove the user from.</param>
+        /// <param name="userID">The user to remove from the thread.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result> RemoveUserFromThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Lists the members of the given thread. Restricted to bots with with GuildMembers intent.
+        /// </summary>
+        /// <param name="channelID">The thread to list the members of.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Lists the active threads in the given channel.
+        /// </summary>
+        /// <param name="channelID">The channel.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Lists any public archived threads in the given channel.
+        /// </summary>
+        /// <param name="channelID">The channel.</param>
+        /// <param name="before">Limits the search to threads before the given timestamp.</param>
+        /// <param name="limit">Limits the search to a certain number of threads.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Lists any private archived threads in the given channel.
+        /// </summary>
+        /// <param name="channelID">The channel.</param>
+        /// <param name="before">Limits the search to threads before the given timestamp.</param>
+        /// <param name="limit">Limits the search to a certain number of threads.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Lists joined private archived threads in the given channel.
+        /// </summary>
+        /// <param name="channelID">The channel.</param>
+        /// <param name="before">Limits the search to threads before the given timestamp.</param>
+        /// <param name="limit">Limits the search to a certain number of threads.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
             CancellationToken ct = default
         );
     }

@@ -121,7 +121,7 @@ namespace Remora.Discord.Caching.Responders
         /// <inheritdoc/>
         public Task<Result> RespondAsync(IMessageDeleteBulk gatewayEvent, CancellationToken ct = default)
         {
-            foreach (var messageID in gatewayEvent.MessageIDs)
+            foreach (var messageID in gatewayEvent.IDs)
             {
                 var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, messageID);
                 _cacheService.Evict(key);

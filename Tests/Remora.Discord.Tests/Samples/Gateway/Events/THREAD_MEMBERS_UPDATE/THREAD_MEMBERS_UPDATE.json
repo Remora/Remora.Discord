@@ -1,0 +1,12 @@
+{
+    "t": "THREAD_MEMBERS_UPDATE",
+    "s": 3,
+    "op": 0,
+    "d": {
+        "id": "41771983423143937",
+        "guild_id": "41771983423143937",
+        "member_count": 11,
+        "added_members": [ ],
+        "removed_member_ids": [ ]
+    }
+}

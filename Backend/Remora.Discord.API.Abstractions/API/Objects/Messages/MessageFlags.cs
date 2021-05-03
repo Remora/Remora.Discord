@@ -57,6 +57,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Urgent = 1 << 4,
 
         /// <summary>
+        /// The message has an associated thread with the same ID as the message.
+        /// </summary>
+        HasThread = 1 << 5,
+
+        /// <summary>
         /// The message will only be visible to the executing user.
         /// </summary>
         Ephemeral = 1 << 6,

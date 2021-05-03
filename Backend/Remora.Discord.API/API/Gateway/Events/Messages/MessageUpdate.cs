@@ -60,7 +60,8 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<MessageFlags> Flags = default,
         Optional<IReadOnlyList<IMessageSticker>> Stickers = default,
         Optional<IMessage?> ReferencedMessage = default,
-        Optional<IMessageInteraction> Interaction = default
+        Optional<IMessageInteraction> Interaction = default,
+        Optional<IChannel> Thread = default
     )
     : PartialMessage
     (
@@ -90,6 +91,7 @@ namespace Remora.Discord.API.Gateway.Events
         Flags,
         Stickers,
         ReferencedMessage,
-        Interaction
+        Interaction,
+        Thread
     ), IMessageUpdate;
 }

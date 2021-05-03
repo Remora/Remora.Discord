@@ -190,6 +190,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IReadOnlyList<IChannel>> Channels { get; }
 
         /// <summary>
+        /// Gets the threads in the guild.
+        /// </summary>
+        Optional<IReadOnlyList<IChannel>> Threads { get; }
+
+        /// <summary>
         /// Gets the presences of the members in the guild.
         /// </summary>
         Optional<IReadOnlyList<IPartialPresence>> Presences { get; }

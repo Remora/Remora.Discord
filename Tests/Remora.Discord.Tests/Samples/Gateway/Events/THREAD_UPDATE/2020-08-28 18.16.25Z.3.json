@@ -1,0 +1,30 @@
+{
+  "t": "THREAD_UPDATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "type": 0,
+    "topic": null,
+    "rate_limit_per_user": 0,
+    "position": 14,
+    "permission_overwrites": [],
+    "parent_id": "728303464207220816",
+    "nsfw": false,
+    "name": "test",
+    "last_message_id": null,
+    "id": "748969255210450984",
+    "guild_id": "452526315288133644",
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "hash": "GLnpcR2C2RA"
+      },
+      "metadata": {
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "hash": "MZBuQtN5EIk"
+      }
+    }
+  }
+}

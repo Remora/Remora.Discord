@@ -178,5 +178,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the interaction associated with this message, if any.
         /// </summary>
         Optional<IMessageInteraction> Interaction { get; }
+
+        /// <summary>
+        /// Gets the thread that was started from this message, if any.
+        /// </summary>
+        Optional<IChannel> Thread { get; }
     }
 }

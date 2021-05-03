@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the IDs of the removed messages.
         /// </summary>
-        IReadOnlyList<Snowflake> MessageIDs { get; }
+        IReadOnlyList<Snowflake> IDs { get; }
 
         /// <summary>
         /// Gets the ID of the channel.

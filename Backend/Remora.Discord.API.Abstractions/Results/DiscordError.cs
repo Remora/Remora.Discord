@@ -418,6 +418,21 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidSticker = 50081,
 
         /// <summary>
+        /// You attempted to perform an operation on an archived thread that's not allowed.
+        /// </summary>
+        InvalidOperationOnArchivedThread = 50083,
+
+        /// <summary>
+        /// Invalid thread notification settings were provided.
+        /// </summary>
+        InvalidThreadNotificationSettings = 50084,
+
+        /// <summary>
+        /// The "before" value provided was earlier than the thread creation date.
+        /// </summary>
+        BeforeIsEarlierThanThreadCreation = 50085,
+
+        /// <summary>
         /// Two factor is required for this operation.
         /// </summary>
         TwoFactorRequired = 60003,

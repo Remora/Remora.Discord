@@ -126,6 +126,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <inheritdoc cref="IGuild.Channels" />
         Optional<IReadOnlyList<IChannel>> Channels { get; }
 
+        /// <inheritdoc cref="IGuild.Threads"/>
+        Optional<IReadOnlyList<IChannel>> Threads { get; }
+
         /// <inheritdoc cref="IGuild.Presences" />
         Optional<IReadOnlyList<IPartialPresence>> Presences { get; }
 

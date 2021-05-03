@@ -53,7 +53,11 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         Optional<Snowflake?> ParentID = default,
         Optional<DateTimeOffset?> LastPinTimestamp = default,
         Optional<string?> RTCRegion = default,
-        Optional<VideoQualityMode> VideoQualityMode = default
+        Optional<VideoQualityMode> VideoQualityMode = default,
+        Optional<int> MessageCount = default,
+        Optional<int> MemberCount = default,
+        Optional<IThreadMetadata> ThreadMetadata = default,
+        Optional<IThreadMember> Member = default
     ) :
     Channel
     (
@@ -76,6 +80,10 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         ParentID,
         LastPinTimestamp,
         RTCRegion,
-        VideoQualityMode
+        VideoQualityMode,
+        MessageCount,
+        MemberCount,
+        ThreadMetadata,
+        Member
     ), IChannelCreate;
 }

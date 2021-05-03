@@ -134,5 +134,25 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the video quality mode of the channel.
         /// </summary>
         Optional<VideoQualityMode> VideoQualityMode { get; }
+
+        /// <summary>
+        /// Gets an approximate count of the messages in the channel. Stops counting at 50.
+        /// </summary>
+        Optional<int> MessageCount { get; }
+
+        /// <summary>
+        /// Gets an approximate count of the messages in the channel. Stops counting at 50.
+        /// </summary>
+        Optional<int> MemberCount { get; }
+
+        /// <summary>
+        /// Gets a set of thread-specific fields.
+        /// </summary>
+        Optional<IThreadMetadata> ThreadMetadata { get; }
+
+        /// <summary>
+        /// Gets the thread member object for the current user, if they have joined the thread.
+        /// </summary>
+        Optional<IThreadMember> Member { get; }
     }
 }

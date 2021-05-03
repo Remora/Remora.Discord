@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,6 +85,7 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             Optional<string> name = default,
+            Optional<Stream> icon = default,
             Optional<ChannelType> type = default,
             Optional<int?> position = default,
             Optional<string?> topic = default,
@@ -94,6 +96,9 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
+            Optional<bool> isArchived = default,
+            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<bool> isLocked = default,
             CancellationToken ct = default
         )
         {
@@ -101,6 +106,7 @@ namespace Remora.Discord.Caching.API
             (
                 channelID,
                 name,
+                icon,
                 type,
                 position,
                 topic,
@@ -111,6 +117,9 @@ namespace Remora.Discord.Caching.API
                 permissionOverwrites,
                 parentId,
                 videoQualityMode,
+                isArchived,
+                autoArchiveDuration,
+                isLocked,
                 ct
             );
 
@@ -398,6 +407,143 @@ namespace Remora.Discord.Caching.API
             _cacheService.Evict(key);
 
             return deleteResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IChannel>> StartPublicThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        )
+        {
+            var createResult = await base.StartPublicThreadAsync(channelID, messageID, name, autoArchiveDuration, ct);
+            if (!createResult.IsSuccess)
+            {
+                return createResult;
+            }
+
+            var key = KeyHelpers.CreateChannelCacheKey(channelID);
+            _cacheService.Cache(key, createResult.Entity);
+
+            return createResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IChannel>> StartPrivateThreadAsync
+        (
+            Snowflake channelID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        )
+        {
+            var createResult = await base.StartPrivateThreadAsync(channelID, name, autoArchiveDuration, ct);
+            if (!createResult.IsSuccess)
+            {
+                return createResult;
+            }
+
+            var key = KeyHelpers.CreateChannelCacheKey(channelID);
+            _cacheService.Cache(key, createResult.Entity);
+
+            return createResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ListActiveThreadsAsync(channelID, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            foreach (var channel in getResult.Entity.Threads)
+            {
+                var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
+                _cacheService.Cache(key, channel);
+            }
+
+            return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ListPublicArchivedThreadsAsync(channelID, before, limit, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            foreach (var channel in getResult.Entity.Threads)
+            {
+                var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
+                _cacheService.Cache(key, channel);
+            }
+
+            return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ListPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            foreach (var channel in getResult.Entity.Threads)
+            {
+                var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
+                _cacheService.Cache(key, channel);
+            }
+
+            return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            foreach (var channel in getResult.Entity.Threads)
+            {
+                var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
+                _cacheService.Cache(key, channel);
+            }
+
+            return getResult;
         }
     }
 }

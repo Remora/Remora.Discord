@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Gateway.Events
     [PublicAPI]
     public record MessageDeleteBulk
     (
-        IReadOnlyList<Snowflake> MessageIDs,
+        IReadOnlyList<Snowflake> IDs,
         Snowflake ChannelID,
         Optional<Snowflake> GuildID = default
     ) : IMessageDeleteBulk;

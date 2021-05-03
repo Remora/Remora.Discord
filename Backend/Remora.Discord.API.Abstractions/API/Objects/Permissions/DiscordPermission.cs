@@ -196,6 +196,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows the user to request to speak in a stage channel.
         /// </summary>
-        RequestToSpeak = 32
+        RequestToSpeak = 32,
+
+        /// <summary>
+        /// Allows the user to manage threads.
+        /// </summary>
+        ManageThreads = 34,
+
+        /// <summary>
+        /// Allows the user to create public threads.
+        /// </summary>
+        UsePublicThreads = 35,
+
+        /// <summary>
+        /// Allows the user to create private threads.
+        /// </summary>
+        UsePrivateThreads = 36
     }
 }

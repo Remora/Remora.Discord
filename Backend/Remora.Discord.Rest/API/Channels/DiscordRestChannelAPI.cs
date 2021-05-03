@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -76,6 +77,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             Optional<string> name = default,
+            Optional<Stream> icon = default,
             Optional<ChannelType> type = default,
             Optional<int?> position = default,
             Optional<string?> topic = default,
@@ -86,6 +88,9 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
+            Optional<bool> isArchived = default,
+            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<bool> isLocked = default,
             CancellationToken ct = default
         )
         {
@@ -104,6 +109,25 @@ namespace Remora.Discord.Rest.API
                 return new GenericError("The user limit must be between 0 and 99.");
             }
 
+            Optional<string> base64EncodedIcon = default;
+            if (icon.HasValue)
+            {
+                byte[] bytes;
+                if (icon.Value is MemoryStream ms)
+                {
+                    bytes = ms.ToArray();
+                }
+                else
+                {
+                    await using var copy = new MemoryStream();
+                    await icon.Value.CopyToAsync(copy, ct);
+
+                    bytes = copy.ToArray();
+                }
+
+                base64EncodedIcon = Convert.ToBase64String(bytes);
+            }
+
             return await _discordHttpClient.PatchAsync<IChannel>
             (
                 $"channels/{channelID}",
@@ -112,6 +136,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.Write("name", name, _jsonOptions);
+                        json.Write("icon", base64EncodedIcon, _jsonOptions);
                         json.WriteEnum("type", type, jsonOptions: _jsonOptions);
                         json.Write("position", position, _jsonOptions);
                         json.Write("topic", topic, _jsonOptions);
@@ -122,6 +147,14 @@ namespace Remora.Discord.Rest.API
                         json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
                         json.Write("parent_id", parentId, _jsonOptions);
                         json.WriteEnum("video_quality_mode", videoQualityMode, jsonOptions: _jsonOptions);
+                        json.Write("archived", isArchived, _jsonOptions);
+
+                        if (autoArchiveDuration.HasValue)
+                        {
+                            json.WriteNumber("auto_archive_duration", autoArchiveDuration.Value.TotalMinutes);
+                        }
+
+                        json.Write("locked", isLocked, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -676,6 +709,233 @@ namespace Remora.Discord.Rest.API
             return _discordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/recipients/{userID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<Result<IChannel>> StartPublicThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        )
+        {
+            if (name.Length is < 2 or > 100)
+            {
+                return new GenericError("The name must be between 2 and 100 characters");
+            }
+
+            return await _discordHttpClient.PostAsync<IChannel>
+            (
+                $"channels/{channelID}/messages/{messageID}/threads",
+                b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.WriteString("name", name);
+                        json.WriteNumber("auto_archive_duration", autoArchiveDuration.TotalMinutes);
+                    }
+                ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual async Task<Result<IChannel>> StartPrivateThreadAsync
+        (
+            Snowflake channelID,
+            string name,
+            TimeSpan autoArchiveDuration,
+            CancellationToken ct = default
+        )
+        {
+            if (name.Length is < 2 or > 100)
+            {
+                return new GenericError("The name must be between 2 and 100 characters");
+            }
+
+            return await _discordHttpClient.PostAsync<IChannel>
+            (
+                $"channels/{channelID}/threads",
+                b => b.WithJson
+                (
+                    json =>
+                    {
+                        json.WriteString("name", name);
+                        json.WriteNumber("auto_archive_duration", autoArchiveDuration.TotalMinutes);
+                    }
+                ),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result> JoinThreadAsync(Snowflake channelID, CancellationToken ct = default)
+        {
+            return _discordHttpClient.PutAsync($"channels/{channelID}/thread-members/@me", ct: ct);
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result> AddUserToThreadAsync(Snowflake channelID, Snowflake userID, CancellationToken ct = default)
+        {
+            return _discordHttpClient.PutAsync
+            (
+                $"channels/{channelID}/thread-members/{userID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
+        {
+            return _discordHttpClient.DeleteAsync($"channels/{channelID}/thread-members/@me", ct: ct);
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result> RemoveUserFromThreadAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/thread-members/{userID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
+        {
+            // TODO: Verify that this ends in thread-members, and not threads-members
+            return _discordHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
+            (
+                $"channels/{channelID}/thread-members",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IThreadQueryResponse>
+            (
+                $"channels/{channelID}/threads/active",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IThreadQueryResponse>
+            (
+                $"channels/{channelID}/threads/archived/public",
+                b =>
+                {
+                    if (before.HasValue)
+                    {
+                        var offset = before.Value.Offset;
+                        var value = before.Value.ToString
+                        (
+                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                        );
+
+                        b.AddQueryParameter("before", value);
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IThreadQueryResponse>
+            (
+                $"channels/{channelID}/threads/archived/private",
+                b =>
+                {
+                    if (before.HasValue)
+                    {
+                        var offset = before.Value.Offset;
+                        var value = before.Value.ToString
+                        (
+                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                        );
+
+                        b.AddQueryParameter("before", value);
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public virtual Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+        (
+            Snowflake channelID,
+            Optional<DateTimeOffset> before = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            return _discordHttpClient.GetAsync<IThreadQueryResponse>
+            (
+                $"channels/{channelID}/users/@me/threads/archived/private",
+                b =>
+                {
+                    if (before.HasValue)
+                    {
+                        var offset = before.Value.Offset;
+                        var value = before.Value.ToString
+                        (
+                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                        );
+
+                        b.AddQueryParameter("before", value);
+                    }
+
+                    if (limit.HasValue)
+                    {
+                        b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+                },
                 ct: ct
             );
         }

@@ -415,7 +415,7 @@ namespace Remora.Discord.Gateway
                         );
                     }
 
-                    var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=8&encoding=json";
+                    var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=9&encoding=json";
                     if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                     {
                         return new GenericError

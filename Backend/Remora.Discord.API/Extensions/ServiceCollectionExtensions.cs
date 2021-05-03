@@ -140,7 +140,9 @@ namespace Remora.Discord.API.Extensions
 
             options.AddConverter<ShardIdentificationConverter>();
 
-            options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>();
+            options.AddDataObjectConverter<IRequestGuildMembers, RequestGuildMembers>()
+                .WithPropertyName(r => r.UserIDs, "user_ids");
+
             options.AddDataObjectConverter<IResume, Resume>()
                 .WithPropertyName(r => r.SequenceNumber, "seq");
 
@@ -193,6 +195,27 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
+
+            options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+            options.AddDataObjectConverter<IThreadUpdate, ThreadUpdate>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+
+            options.AddDataObjectConverter<IThreadDelete, ThreadDelete>()
+                .WithPropertyName(c => c.IsNsfw, "nsfw")
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
+
+            options.AddDataObjectConverter<IThreadListSync, ThreadListSync>()
+                .WithPropertyName(t => t.ChannelIDs, "channel_ids");
+
+            options.AddDataObjectConverter<IThreadMemberUpdate, ThreadMemberUpdate>()
+                .WithPropertyConverter(m => m.JoinTimestamp, new ISO8601DateTimeOffsetConverter());
+
+            options.AddDataObjectConverter<IThreadMembersUpdate, ThreadMembersUpdate>()
+                .WithPropertyName(m => m.RemovedMemberIDs, "removed_member_ids");
 
             // Guilds
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
@@ -267,7 +290,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IMessageDelete, MessageDelete>();
             options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>()
-                .WithPropertyName(d => d.MessageIDs, "ids");
+                .WithPropertyName(d => d.IDs, "ids");
 
             options.AddDataObjectConverter<IMessageReactionAdd, MessageReactionAdd>();
             options.AddDataObjectConverter<IMessageReactionRemove, MessageReactionRemove>();
@@ -392,6 +415,17 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(m => m.Parse, new StringEnumListConverter<MentionType>(new SnakeCaseNamingPolicy()));
 
             options.AddDataObjectConverter<IFollowedChannel, FollowedChannel>();
+
+            options.AddDataObjectConverter<IThreadMetadata, ThreadMetadata>()
+                .WithPropertyName(m => m.IsArchived, "archived")
+                .WithPropertyName(m => m.IsLocked, "locked")
+                .WithPropertyConverter(m => m.AutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes))
+                .WithPropertyConverter(m => m.ArchiveTimestamp, new ISO8601DateTimeOffsetConverter());
+
+            options.AddDataObjectConverter<IThreadMember, ThreadMember>()
+                .WithPropertyConverter(m => m.JoinTimestamp, new ISO8601DateTimeOffsetConverter());
+
+            options.AddDataObjectConverter<IThreadQueryResponse, ThreadQueryResponse>();
 
             return options;
         }

@@ -65,6 +65,7 @@ namespace Remora.Discord.API.Objects
         Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates,
         Optional<IReadOnlyList<IGuildMember>> Members,
         Optional<IReadOnlyList<IChannel>> Channels,
+        Optional<IReadOnlyList<IChannel>> Threads,
         Optional<IReadOnlyList<IPartialPresence>> Presences,
         Optional<int?> MaxPresences,
         Optional<int> MaxMembers,

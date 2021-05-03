@@ -82,6 +82,44 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
+            public async Task PerformsGroupDMRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var name = "brr";
+                var icon = new MemoryStream(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF });
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithJson
+                        (
+                            j => j
+                                .IsObject
+                                (
+                                    o => o
+                                        .WithProperty("name", p => p.Is(name))
+                                        .WithProperty("icon", p => p.Is("3q2+7w==")) // base64(DEADBEEF)
+                                )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                );
+
+                var result = await api.ModifyChannelAsync
+                (
+                    channelId,
+                    name,
+                    icon
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
             public async Task PerformsTextChannelRequestCorrectly()
             {
                 var channelId = new Snowflake(0);
@@ -93,7 +131,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var rateLimitPerUser = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
-                var videoQualityMode = VideoQualityMode.Auto;
 
                 var api = CreateAPI
                 (
@@ -113,7 +150,6 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                         .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
-                                        .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                                 )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -123,6 +159,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 (
                     channelId,
                     name,
+                    default,
                     type,
                     position,
                     topic,
@@ -131,8 +168,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     default,
                     default,
                     permissionOverwrites,
-                    parentId,
-                    videoQualityMode
+                    parentId
                 );
 
                 ResultAssert.Successful(result);
@@ -152,6 +188,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var userLimit = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
+                var videoQualityMode = VideoQualityMode.Auto;
 
                 var api = CreateAPI
                 (
@@ -169,6 +206,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("user_limit", p => p.Is(userLimit))
                                         .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
+                                        .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                                 )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -179,6 +217,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     name,
                     default,
+                    default,
                     position,
                     default,
                     default,
@@ -186,7 +225,55 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     bitrate,
                     userLimit,
                     permissionOverwrites,
-                    parentId
+                    parentId,
+                    videoQualityMode
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsThreadChannelRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var name = "brr";
+                var isArchived = true;
+                var autoArchiveDuration = TimeSpan.FromMinutes(1440);
+                var isLocked = false;
+                var rateLimitPerUser = 10;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithJson
+                        (
+                            j => j
+                                .IsObject
+                                (
+                                    o => o
+                                        .WithProperty("name", p => p.Is(name))
+                                        .WithProperty("archived", p => p.Is(isArchived))
+                                        .WithProperty("auto_archive_duration", p => p.Is(autoArchiveDuration.TotalMinutes))
+                                        .WithProperty("locked", p => p.Is(isLocked))
+                                        .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
+                                )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                );
+
+                var result = await api.ModifyChannelAsync
+                (
+                    channelId,
+                    name,
+                    isArchived: isArchived,
+                    autoArchiveDuration: autoArchiveDuration,
+                    isLocked: isLocked,
+                    rateLimitPerUser: rateLimitPerUser
                 );
 
                 ResultAssert.Successful(result);
@@ -226,6 +313,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var result = await api.ModifyChannelAsync
                 (
                     channelId,
+                    default,
                     default,
                     default,
                     null,
@@ -781,12 +869,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.CreateReactionAsync(channelId, messageId, "🔥");
@@ -813,12 +901,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/@me"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.DeleteOwnReactionAsync(channelId, messageId, "🔥");
@@ -847,12 +935,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/{userId}"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}/{userId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.DeleteUserReactionAsync(channelId, messageId, "🔥", userId);
@@ -881,20 +969,20 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Get,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
-                    )
-                    .WithQueryString
-                    (
-                        new[]
-                        {
-                            new KeyValuePair<string, string>("after", after.ToString()),
-                            new KeyValuePair<string, string>("limit", limit.ToString())
-                        }
-                    )
-                    .Respond("application/json", "[]")
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        )
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("after", after.ToString()),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
+                            }
+                        )
+                        .Respond("application/json", "[]")
                 );
 
                 var result = await api.GetReactionsAsync(channelId, messageId, "🔥", after, limit);
@@ -974,12 +1062,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.DeleteAllReactionsAsync(channelId, messageId);
@@ -1007,12 +1095,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Delete,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/reactions/{urlEncodedEmoji}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.DeleteAllReactionsForEmojiAsync(channelId, messageId, "🔥");
@@ -1043,23 +1131,23 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Patch,
-                        $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
-                    )
-                    .WithJson
-                    (
-                        j => j.IsObject
+                        .Expect
                         (
-                            o => o
-                                .WithProperty("content", p => p.Is(content))
-                                .WithProperty("embed", p => p.IsObject())
-                                .WithProperty("flags", p => p.Is((int)flags))
-                                .WithProperty("attachments", p => p.IsArray(a => a.WithCount(0)))
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}"
                         )
-                    )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("flags", p => p.Is((int)flags))
+                                    .WithProperty("attachments", p => p.IsArray(a => a.WithCount(0)))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
                 var result = await api.EditMessageAsync
@@ -1337,26 +1425,26 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Post,
-                        $"{Constants.BaseURL}channels/{channelId}/invites"
-                    )
-                    .WithJson
-                    (
-                        j => j.IsObject
+                        .Expect
                         (
-                            o => o
-                                .WithProperty("max_age", p => p.Is(maxAge.TotalSeconds))
-                                .WithProperty("max_uses", p => p.Is(maxUses))
-                                .WithProperty("temporary", p => p.Is(temporary))
-                                .WithProperty("unique", p => p.Is(unique))
-                                .WithProperty("target_type", p => p.Is((int)targetType))
-                                .WithProperty("target_user_id", p => p.Is(targetUser.Value.ToString()))
-                                .WithProperty("target_application_id", p => p.Is(targetApplication.Value.ToString()))
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/invites"
                         )
-                    )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("max_age", p => p.Is(maxAge.TotalSeconds))
+                                    .WithProperty("max_uses", p => p.Is(maxUses))
+                                    .WithProperty("temporary", p => p.Is(temporary))
+                                    .WithProperty("unique", p => p.Is(unique))
+                                    .WithProperty("target_type", p => p.Is((int)targetType))
+                                    .WithProperty("target_user_id", p => p.Is(targetUser.Value.ToString()))
+                                    .WithProperty("target_application_id", p => p.Is(targetApplication.Value.ToString()))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );
 
                 var result = await api.CreateChannelInviteAsync
@@ -1522,12 +1610,12 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var api = CreateAPI
                 (
                     b => b
-                    .Expect
-                    (
-                        HttpMethod.Put,
-                        $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
-                    )
-                    .Respond(HttpStatusCode.NoContent)
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.AddPinnedChannelMessageAsync(channelId, messageId);
@@ -1606,36 +1694,427 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var result = await api.GroupDMAddRecipientAsync(channelId, userId, accessToken, nick);
                 ResultAssert.Successful(result);
             }
+        }
 
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.GroupDMRemoveRecipientAsync"/> method.
+        /// </summary>
+        public class GroupDMRemoveRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
             /// <summary>
-            /// Tests the <see cref="DiscordRestChannelAPI.GroupDMRemoveRecipientAsync"/> method.
+            /// Tests whether the API method performs its request correctly.
             /// </summary>
-            public class GroupDMRemoveRecipientAsync : RestAPITestBase<IDiscordRestChannelAPI>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
             {
-                /// <summary>
-                /// Tests whether the API method performs its request correctly.
-                /// </summary>
-                /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-                [Fact]
-                public async Task PerformsRequestCorrectly()
-                {
-                    var channelId = new Snowflake(0);
-                    var userId = new Snowflake(1);
+                var channelId = new Snowflake(0);
+                var userId = new Snowflake(1);
 
-                    var api = CreateAPI
-                    (
-                        b => b
-                            .Expect
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.GroupDMRemoveRecipientAsync(channelId, userId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.StartPublicThreadAsync"/> method.
+        /// </summary>
+        public class StartPublicThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+                var name = "abba";
+                var duration = TimeSpan.FromMinutes(60);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/threads"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
                             (
-                                HttpMethod.Delete,
-                                $"{Constants.BaseURL}channels/{channelId}/recipients/{userId}"
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("auto_archive_duration", p => p.Is(duration.TotalMinutes))
                             )
-                            .Respond(HttpStatusCode.NoContent)
-                    );
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                );
 
-                    var result = await api.GroupDMRemoveRecipientAsync(channelId, userId);
-                    ResultAssert.Successful(result);
-                }
+                var result = await api.StartPublicThreadAsync(channelId, messageId, name, duration);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.StartPrivateThreadAsync"/> method.
+        /// </summary>
+        public class StartPrivateThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var name = "abba";
+                var duration = TimeSpan.FromMinutes(60);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/threads"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("auto_archive_duration", p => p.Is(duration.TotalMinutes))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+                );
+
+                var result = await api.StartPrivateThreadAsync(channelId, name, duration);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.JoinThreadAsync"/> method.
+        /// </summary>
+        public class JoinThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members/@me"
+                        )
+                        .WithNoContent()
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.JoinThreadAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.AddUserToThreadAsync"/> method.
+        /// </summary>
+        public class AddUserToThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var userId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Put,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        )
+                        .WithNoContent()
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.AddUserToThreadAsync(channelId, userId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.LeaveThreadAsync"/> method.
+        /// </summary>
+        public class LeaveThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members/@me"
+                        )
+                        .WithNoContent()
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.LeaveThreadAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.RemoveUserFromThreadAsync"/> method.
+        /// </summary>
+        public class RemoveUserFromThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var userId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        )
+                        .WithNoContent()
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.RemoveUserFromThreadAsync(channelId, userId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.ListThreadMembersAsync"/> method.
+        /// </summary>
+        public class ListThreadMembersAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", "[]")
+                );
+
+                var result = await api.ListThreadMembersAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.ListActiveThreadsAsync"/> method.
+        /// </summary>
+        public class ListActiveThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/threads/active"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IThreadQueryResponse)])
+                );
+
+                var result = await api.ListActiveThreadsAsync(channelId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.ListPublicArchivedThreadsAsync"/> method.
+        /// </summary>
+        public class ListPublicArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
+                var limit = 10;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/threads/archived/public"
+                        )
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("before", "2020-08-28T18:17:25.377506\u002B00:00"),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IThreadQueryResponse)])
+                );
+
+                var result = await api.ListPublicArchivedThreadsAsync(channelId, before, limit);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.ListPrivateArchivedThreadsAsync"/> method.
+        /// </summary>
+        public class ListPrivateArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
+                var limit = 10;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/threads/archived/private"
+                        )
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("before", "2020-08-28T18:17:25.377506\u002B00:00"),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IThreadQueryResponse)])
+                );
+
+                var result = await api.ListPrivateArchivedThreadsAsync(channelId, before, limit);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.ListJoinedPrivateArchivedThreadsAsync"/> method.
+        /// </summary>
+        public class ListJoinedPrivateArchivedThreadsAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
+                var limit = 10;
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/users/@me/threads/archived/private"
+                        )
+                        .WithQueryString
+                        (
+                            new[]
+                            {
+                                new KeyValuePair<string, string>("before", "2020-08-28T18:17:25.377506\u002B00:00"),
+                                new KeyValuePair<string, string>("limit", limit.ToString())
+                            }
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IThreadQueryResponse)])
+                );
+
+                var result = await api.ListJoinedPrivateArchivedThreadsAsync(channelId, before, limit);
+                ResultAssert.Successful(result);
             }
         }
     }

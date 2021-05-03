@@ -116,6 +116,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         GuildDiscoveryGracePeriodFinalWarning = 17,
 
         /// <summary>
+        /// A message that indicates a thread was created.
+        /// </summary>
+        ThreadCreated = 18,
+
+        /// <summary>
         /// A reply to another message.
         /// </summary>
         InlineReply = 19,
@@ -124,6 +129,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// An application command.
         /// </summary>
         ApplicationCommand = 20,
+
+        /// <summary>
+        /// A message that starts a thread.
+        /// </summary>
+        ThreadStarterMessage = 21,
 
         /// <summary>
         /// A reminder message about a guild invite.

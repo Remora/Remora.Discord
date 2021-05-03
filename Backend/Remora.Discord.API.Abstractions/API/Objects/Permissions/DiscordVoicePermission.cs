@@ -80,6 +80,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
         /// </summary>
-        ManageRoles = 28
+        ManageRoles = 28,
+
+        /// <summary>
+        /// Allows the user to request to speak in a stage channel.
+        /// </summary>
+        RequestToSpeak = 32,
     }
 }
