@@ -271,6 +271,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="embed">The new embed associated with the message.</param>
         /// <param name="flags">The new message flags.</param>
         /// <param name="allowedMentions">The allowed mentions for the message.</param>
+        /// <param name="attachments">The attachments to keep, if any.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditMessageAsync
@@ -281,6 +282,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IEmbed?> embed = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IAttachment>> attachments = default,
             CancellationToken ct = default
         );
 

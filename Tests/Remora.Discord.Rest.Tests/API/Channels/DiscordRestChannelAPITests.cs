@@ -1038,6 +1038,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var content = "drr";
                 var embed = new Embed();
                 var flags = MessageFlags.SuppressEmbeds;
+                var attachments = new List<IAttachment>();
 
                 var api = CreateAPI
                 (
@@ -1055,12 +1056,21 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 .WithProperty("content", p => p.Is(content))
                                 .WithProperty("embed", p => p.IsObject())
                                 .WithProperty("flags", p => p.Is((int)flags))
+                                .WithProperty("attachments", p => p.IsArray(a => a.WithCount(0)))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
-                var result = await api.EditMessageAsync(channelId, messageId, content, embed, flags);
+                var result = await api.EditMessageAsync
+                (
+                    channelId,
+                    messageId,
+                    content,
+                    embed,
+                    flags,
+                    attachments: attachments
+                );
                 ResultAssert.Successful(result);
             }
 
