@@ -859,6 +859,7 @@ namespace Remora.Discord.Rest.API
             Optional<int> days = default,
             Optional<bool> computePruneCount = default,
             Optional<IReadOnlyList<Snowflake>> includeRoles = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -880,6 +881,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("days", days, _jsonOptions);
                         json.Write("compute_prune_count", computePruneCount, _jsonOptions);
                         json.Write("include_roles", includeRoles, _jsonOptions);
+                        json.Write("reason", reason, _jsonOptions);
                     }
                 ),
                 ct: ct

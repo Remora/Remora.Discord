@@ -1716,6 +1716,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var days = 3;
                 var computePruneCount = true;
                 var includeRoles = new List<Snowflake>();
+                var reason = "bab";
 
                 var api = CreateAPI
                 (
@@ -1729,6 +1730,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                     .WithProperty("days", p => p.Is(days))
                                     .WithProperty("compute_prune_count", p => p.Is(computePruneCount))
                                     .WithProperty("include_roles", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("reason", p => p.Is(reason))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IPruneCount)])
@@ -1739,7 +1741,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     guildId,
                     days,
                     computePruneCount,
-                    includeRoles
+                    includeRoles,
+                    reason
                 );
 
                 ResultAssert.Successful(result);

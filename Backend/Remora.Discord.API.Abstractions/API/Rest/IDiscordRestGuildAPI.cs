@@ -550,6 +550,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="days">The days a user needs to have been inactive for them to be pruned.</param>
         /// <param name="computePruneCount">Whether the number of pruned users should be computed and returned.</param>
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
+        /// <param name="reason">The reason to display in the audit log.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<Result<IPruneCount>> BeginGuildPruneAsync
@@ -558,6 +559,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<int> days = default,
             Optional<bool> computePruneCount = default,
             Optional<IReadOnlyList<Snowflake>> includeRoles = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
