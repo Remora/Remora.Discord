@@ -219,6 +219,7 @@ namespace Remora.Discord.Caching.API
             Optional<IEmbed?> embed = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IAttachment>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -230,6 +231,7 @@ namespace Remora.Discord.Caching.API
                 embed,
                 flags,
                 allowedMentions,
+                attachments,
                 ct
             );
 
