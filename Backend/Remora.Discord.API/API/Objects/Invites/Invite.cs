@@ -42,6 +42,6 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> TargetApplication = default,
         Optional<int> ApproximatePresenceCount = default,
         Optional<int> ApproximateMemberCount = default,
-        Optional<DateTimeOffset> ExpiresAt = default
+        Optional<DateTimeOffset?> ExpiresAt = default
     ) : IInvite;
 }

@@ -80,6 +80,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the expiration date of this invite.
         /// </summary>
-        Optional<DateTimeOffset> ExpiresAt { get; }
+        Optional<DateTimeOffset?> ExpiresAt { get; }
     }
 }
