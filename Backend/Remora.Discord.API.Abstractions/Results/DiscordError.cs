@@ -241,6 +241,11 @@ namespace Remora.Discord.API.Abstractions.Results
         GuildAlreadyHasATemplate = 30031,
 
         /// <summary>
+        /// The maximum number of bans for non-guild members has been exceeded.
+        /// </summary>
+        MaxNumberOfNonMemberBansReached = 30035,
+
+        /// <summary>
         /// Unauthorized. Provide a valid token and try again.
         /// </summary>
         Unauthorized = 40001,
