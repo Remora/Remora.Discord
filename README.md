@@ -62,11 +62,11 @@ Remora.Discord is currently fully usable, and has been released for public
 consumption.
 
 ### 3.1 Gateway
-The Discord Gateway API (v8) is fully implemented. The gateway client can 
+The Discord Gateway API (v9) is fully implemented. The gateway client can 
 connect, heartbeat, reconnect, resume, receive events, and send commands.
 
 ### 3.2 REST
-The Discord REST API (v8) is fully implemented.
+The Discord REST API (v9) is fully implemented.
 
 ### 3.3 Voice
 The Discord Voice API is not implemented. If you'd like to contribute to the 
