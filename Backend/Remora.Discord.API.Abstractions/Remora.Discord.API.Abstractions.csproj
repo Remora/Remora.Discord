@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>16.0.0</Version>
+        <Version>17.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,11 +14,13 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Remove preview_asset from stickers.
-            Implement new endpoints.
-            Add support for NSFW guilds.
-            Correct error code of "Unknown guild template".
-            Document unknown interaction error code.
+            Implement the v9 Discord API.
+            Add attachment parameters.
+            Update name of enumeration.
+            Add expiration date to invite objects.
+            Add missing parameter to BeginGuildPrune.
+            Add new option type.
+            Add new JSON error code.
         </PackageReleaseNotes>
     </PropertyGroup>
 
