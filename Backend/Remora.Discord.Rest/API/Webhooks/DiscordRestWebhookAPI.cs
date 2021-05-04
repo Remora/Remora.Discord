@@ -260,6 +260,7 @@ namespace Remora.Discord.Rest.API
             Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -288,6 +289,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("tts", isTTS, _jsonOptions);
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                            json.Write("thread_id", threadID, _jsonOptions);
                         }
                     );
                 },

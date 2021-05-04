@@ -185,6 +185,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <paramref name="embeds"/> is required.
         /// </param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
+        /// <param name="threadID">Send a message to the specified thread within a webhook's channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> ExecuteWebhookAsync
@@ -199,6 +200,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         );
 

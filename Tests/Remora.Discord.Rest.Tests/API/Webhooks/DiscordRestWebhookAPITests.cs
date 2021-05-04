@@ -641,6 +641,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var avatarUrl = "http://aaaa";
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
+                var threadID = new Snowflake(1);
 
                 var api = CreateAPI
                 (
@@ -657,6 +658,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("thread_id", p => p.Is(threadID.ToString()))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -671,7 +673,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     username,
                     avatarUrl,
                     tts,
-                    allowedMentions: allowedMentions
+                    allowedMentions: allowedMentions,
+                    threadID: threadID
                 );
 
                 ResultAssert.Successful(result);

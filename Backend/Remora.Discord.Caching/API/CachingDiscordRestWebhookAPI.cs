@@ -107,6 +107,7 @@ namespace Remora.Discord.Caching.API
             Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -122,6 +123,7 @@ namespace Remora.Discord.Caching.API
                 file,
                 embeds,
                 allowedMentions,
+                threadID,
                 ct
             );
 
