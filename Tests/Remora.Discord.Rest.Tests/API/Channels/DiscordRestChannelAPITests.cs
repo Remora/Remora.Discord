@@ -1842,9 +1842,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.AddUserToThreadAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.AddThreadMemberAsync"/> method.
         /// </summary>
-        public class AddUserToThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class AddThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1868,7 +1868,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.AddUserToThreadAsync(channelId, userId);
+                var result = await api.AddThreadMemberAsync(channelId, userId);
                 ResultAssert.Successful(result);
             }
         }
@@ -1905,9 +1905,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.RemoveUserFromThreadAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.RemoveThreadMemberAsync"/> method.
         /// </summary>
-        public class RemoveUserFromThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class RemoveThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1931,7 +1931,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.RemoveUserFromThreadAsync(channelId, userId);
+                var result = await api.RemoveThreadMemberAsync(channelId, userId);
                 ResultAssert.Successful(result);
             }
         }

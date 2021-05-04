@@ -553,7 +553,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The user to add to the thread.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result> AddUserToThreadAsync
+        Task<Result> AddThreadMemberAsync
         (
             Snowflake channelID,
             Snowflake userID,
@@ -579,7 +579,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userID">The user to remove from the thread.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result> RemoveUserFromThreadAsync
+        Task<Result> RemoveThreadMemberAsync
         (
             Snowflake channelID,
             Snowflake userID,

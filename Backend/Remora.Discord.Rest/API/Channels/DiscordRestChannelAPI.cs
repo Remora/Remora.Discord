@@ -779,7 +779,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result> AddUserToThreadAsync(Snowflake channelID, Snowflake userID, CancellationToken ct = default)
+        public virtual Task<Result> AddThreadMemberAsync(Snowflake channelID, Snowflake userID, CancellationToken ct = default)
         {
             return _discordHttpClient.PutAsync
             (
@@ -795,7 +795,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result> RemoveUserFromThreadAsync
+        public virtual Task<Result> RemoveThreadMemberAsync
         (
             Snowflake channelID,
             Snowflake userID,
