@@ -61,7 +61,7 @@ namespace Remora.Discord.Commands.Responders
         public CommandResponder
         (
             CommandService commandService,
-            IOptions<CommandResponderOptions> options,
+            IOptions<ICommandResponderOptions> options,
             ExecutionEventCollectorService eventCollector,
             IServiceProvider services,
             ContextInjectionService contextInjection
