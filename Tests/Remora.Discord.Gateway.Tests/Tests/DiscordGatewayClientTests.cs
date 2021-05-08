@@ -65,7 +65,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Sequence
                 (
                     s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
@@ -125,7 +125,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Sequence
                 (
                     s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
@@ -149,7 +149,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         )
                         .Send<Reconnect>()
                         .ExpectDisconnect()
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
@@ -198,7 +198,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Sequence
                 (
                     s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
@@ -222,7 +222,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                         )
                         .Send<Reconnect>()
                         .ExpectDisconnect()
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Resume>
                         (
@@ -291,7 +291,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 .Sequence
                 (
                     s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
@@ -314,7 +314,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                             )
                         )
                         .SendException(() => new WebSocketException())
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
@@ -337,7 +337,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                             )
                         )
                         .SendException(() => new HttpRequestException())
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=8&encoding=json"))
+                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
                         .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                         .Expect<Identify>
                         (
