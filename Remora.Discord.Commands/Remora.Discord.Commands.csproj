@@ -22,7 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Humanizer.Core" Version="2.10.1" />
         <PackageReference Include="Remora.Commands" Version="3.1.0" />
         <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
     </ItemGroup>

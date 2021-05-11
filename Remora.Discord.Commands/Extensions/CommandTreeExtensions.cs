@@ -26,8 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Humanizer;
-using OneOf.Types;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -177,7 +175,7 @@ namespace Remora.Discord.Commands.Extensions
                     option = new ApplicationCommandOption
                     (
                         SubCommand,
-                        command.Key.Kebaberize(),
+                        command.Key.ToLowerInvariant(),
                         command.Shape.Description,
                         default,
                         default,
@@ -258,7 +256,7 @@ namespace Remora.Discord.Commands.Extensions
                     option = new ApplicationCommandOption
                     (
                         SubCommandGroup,
-                        group.Key.Kebaberize(),
+                        group.Key.ToLowerInvariant(),
                         group.Description,
                         default,
                         default,
@@ -345,7 +343,7 @@ namespace Remora.Discord.Commands.Extensions
                 var parameterOption = new ApplicationCommandOption
                 (
                     discordType,
-                    parameter.HintName.Kebaberize(),
+                    parameter.HintName.ToLowerInvariant(),
                     parameter.Description,
                     default,
                     !parameter.IsOmissible(),
