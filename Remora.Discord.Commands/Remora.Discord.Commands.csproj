@@ -5,14 +5,15 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.10.3</Version>
+        <Version>3.10.4</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Due to changes on Discord's API, all command names, group names, and parameter names are now kebaberized
+            (input words are separated with hyphens, and all letters are lower-cased) before being passed to the API.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -21,6 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Humanizer.Core" Version="2.10.1" />
         <PackageReference Include="Remora.Commands" Version="3.1.0" />
         <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
     </ItemGroup>

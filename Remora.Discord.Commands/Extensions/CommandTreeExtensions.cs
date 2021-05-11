@@ -26,6 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Humanizer;
 using OneOf.Types;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
@@ -157,13 +158,13 @@ namespace Remora.Discord.Commands.Extensions
                         return new UnsupportedFeatureError
                         (
                             $"\"{command.Key}\" is not a valid slash command name. " +
-                            "Names must match the regex \"^[\\w-]{{1,32}}$\"",
+                            "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
                             command
                         );
                     }
 
                     var descriptionLength = command.Shape.Description.Length;
-                    if (descriptionLength is > MaxDescriptionLength)
+                    if (descriptionLength > MaxDescriptionLength)
                     {
                         return new UnsupportedFeatureError
                         (
@@ -176,7 +177,7 @@ namespace Remora.Discord.Commands.Extensions
                     option = new ApplicationCommandOption
                     (
                         SubCommand,
-                        command.Key,
+                        command.Key.Kebaberize(),
                         command.Shape.Description,
                         default,
                         default,
@@ -202,7 +203,7 @@ namespace Remora.Discord.Commands.Extensions
                         return new UnsupportedFeatureError
                         (
                             $"\"{group.Key}\" is not a valid slash command group name. " +
-                            "Names must match the regex \"^[\\w-]{{1,32}}$\"",
+                            "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
                             group
                         );
                     }
@@ -257,7 +258,7 @@ namespace Remora.Discord.Commands.Extensions
                     option = new ApplicationCommandOption
                     (
                         SubCommandGroup,
-                        group.Key,
+                        group.Key.Kebaberize(),
                         group.Description,
                         default,
                         default,
@@ -344,12 +345,11 @@ namespace Remora.Discord.Commands.Extensions
                 var parameterOption = new ApplicationCommandOption
                 (
                     discordType,
-                    parameter.HintName,
+                    parameter.HintName.Kebaberize(),
                     parameter.Description,
                     default,
                     !parameter.IsOmissible(),
-                    choices,
-                    default
+                    choices
                 );
 
                 parameterOptions.Add(parameterOption);
