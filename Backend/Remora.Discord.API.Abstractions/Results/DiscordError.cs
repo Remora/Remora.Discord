@@ -116,6 +116,16 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownWebhook = 10015,
 
         /// <summary>
+        /// Unknown webhook service.
+        /// </summary>
+        UnknownWebhookService = 10016,
+
+        /// <summary>
+        /// Unknown session.
+        /// </summary>
+        UnknownSession = 10020,
+
+        /// <summary>
         /// Unknown ban.
         /// </summary>
         UnknownBan = 10026,
@@ -151,9 +161,19 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownBranch = 10032,
 
         /// <summary>
+        /// Unknown store directory layout.
+        /// </summary>
+        UnknownStoreDirectoryLayout = 10033,
+
+        /// <summary>
         /// Unknown redistributable.
         /// </summary>
         UnknownRedistributable = 10036,
+
+        /// <summary>
+        /// Unknown gift code.
+        /// </summary>
+        UnknownGiftCode = 10038,
 
         /// <summary>
         /// Unknown guild template.
@@ -171,6 +191,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownApplicationCommand = 10063,
 
         /// <summary>
+        /// Unknown application command permissions.
+        /// </summary>
+        UnknownApplicationCommandPermissions = 10066,
+
+        /// <summary>
         /// Bots cannot use this endpoint.
         /// </summary>
         NoBotsAllowed = 20001,
@@ -179,6 +204,26 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Only bots can use this endpoint.
         /// </summary>
         BotsOnly = 20002,
+
+        /// <summary>
+        /// Explicit content cannot be sent to the intended recipient(s).
+        /// </summary>
+        ExplictContentCannotBeSent = 20009,
+
+        /// <summary>
+        /// You are not allowed to perform that operation on this application.
+        /// </summary>
+        ApplicationActionUnauthorized = 20012,
+
+        /// <summary>
+        /// This action cannot be performed due to slow mode.
+        /// </summary>
+        SlowMode = 20016,
+
+        /// <summary>
+        /// Only the owner of this account can perform that action.
+        /// </summary>
+        OwnerOnly = 20018,
 
         /// <summary>
         /// This message cannot be edited due to announcement rate limits.
@@ -206,6 +251,11 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxPinsInChannelReached = 30003,
 
         /// <summary>
+        /// Maximum number of recipients reached.
+        /// </summary>
+        MaxRecipientsReached = 30004,
+
+        /// <summary>
         /// Maximum number of guild roles reached (250).
         /// </summary>
         MaxGuildRolesReached = 30005,
@@ -214,6 +264,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Maximum number of webhooks reached (10).
         /// </summary>
         MaxWebhooksReached = 30007,
+
+        /// <summary>
+        /// Maximum number of emojis reached.
+        /// </summary>
+        MaxEmojisReached = 30008,
 
         /// <summary>
         /// Maximum number of reactions reached (20).
@@ -256,6 +311,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnverifiedAccount = 40002,
 
         /// <summary>
+        /// You are opening direct messages too fast.
+        /// </summary>
+        OpeningDMsTooFast = 40003,
+
+        /// <summary>
         /// Request entity too large. Try sending something smaller in size.
         /// </summary>
         RequestEntityTooLarge = 40005,
@@ -269,6 +329,21 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The user is banned from this guild.
         /// </summary>
         UserBanned = 40007,
+
+        /// <summary>
+        /// The target user is not connected to voice.
+        /// </summary>
+        UserNotInVoice = 40032,
+
+        /// <summary>
+        /// This message has already been crossposted.
+        /// </summary>
+        MessageAlreadyCrossposted = 40033,
+
+        /// <summary>
+        /// An application command with that name already exists.
+        /// </summary>
+        ApplicationCommandWithNameExists = 40041,
 
         /// <summary>
         /// Missing access.
@@ -377,9 +452,19 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidOAuth2Token = 50025,
 
         /// <summary>
+        /// You are missing a required OAuth2 scope.
+        /// </summary>
+        MissingOAuth2Scope = 50026,
+
+        /// <summary>
         /// Invalid webhook token provided.
         /// </summary>
         InvalidWebhookToken = 50027,
+
+        /// <summary>
+        /// Invalid role provided.
+        /// </summary>
+        InvalidRole = 50028,
 
         /// <summary>
         /// One or more recipients were invalid.
@@ -406,6 +491,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Invalid API version provided.
         /// </summary>
         InvalidAPIVersion = 50041,
+
+        /// <summary>
+        /// You can't redeem this gift yourself.
+        /// </summary>
+        CannotSelfRedeemGift = 50054,
+
+        /// <summary>
+        /// You need a payment source to redeem this gift.
+        /// </summary>
+        PaymentSourceRequiredForRedemption = 50070,
 
         /// <summary>
         /// A channel required for community guilds cannot be deleted.
@@ -436,6 +531,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Two factor is required for this operation.
         /// </summary>
         TwoFactorRequired = 60003,
+
+        /// <summary>
+        /// No user with that tag exists.
+        /// </summary>
+        NoUserWithTag = 80004,
 
         /// <summary>
         /// Reaction was blocked.
