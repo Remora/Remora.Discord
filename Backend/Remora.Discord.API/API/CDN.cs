@@ -630,6 +630,78 @@ namespace Remora.Discord.API
         }
 
         /// <summary>
+        /// Gets the CDN URI of the given application's cover.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationCoverUrl
+        (
+            IApplication application,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!application.CoverImage.HasValue)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetApplicationCoverUrl(application.ID, application.CoverImage.Value, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given application's cover.
+        /// </summary>
+        /// <param name="applicationID">The ID of the application.</param>
+        /// <param name="coverHash">The image hash of the application's cover.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetApplicationCoverUrl
+        (
+            Snowflake applicationID,
+            IImageHash coverHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"app-icons/{applicationID}/{coverHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
         /// Gets the CDN URI of the given application's given asset.
         /// </summary>
         /// <param name="application">The application.</param>

@@ -598,6 +598,64 @@ namespace Remora.Discord.API.Tests
         }
 
         /// <summary>
+        /// Tests the <see cref="CDN.GetApplicationCoverUrl(IApplication, Optional{CDNImageFormat}, Optional{ushort})"/>
+        /// method and its overloads.
+        /// </summary>
+        public class GetApplicationCoverUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetApplicationCoverUrl"/> class.
+            /// </summary>
+            public GetApplicationCoverUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/app-icons/0/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <summary>
+            /// Tests whether the correct address is returned when the instance has no image set.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+            {
+                var applicationID = new Snowflake(0);
+
+                var mockedApplication = new Mock<IApplication>();
+                mockedApplication.SetupGet(g => g.CoverImage).Returns(default(Optional<IImageHash>));
+                mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+                var application = mockedApplication.Object;
+
+                var getActual = CDN.GetApplicationCoverUrl(application, CDNImageFormat.PNG);
+
+                Assert.False(getActual.IsSuccess);
+                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var applicationID = new Snowflake(0);
+                var imageHash = new ImageHash("1");
+
+                var mockedApplication = new Mock<IApplication>();
+                mockedApplication.SetupGet(g => g.CoverImage).Returns(imageHash);
+                mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
+
+                var application = mockedApplication.Object;
+                yield return CDN.GetApplicationCoverUrl(application, imageFormat, imageSize);
+                yield return CDN.GetApplicationCoverUrl(applicationID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
         /// Tests the
         /// <see cref="CDN.GetApplicationAssetUrl(IApplication, string, Optional{CDNImageFormat}, Optional{ushort})"/>
         /// method and its overloads.
