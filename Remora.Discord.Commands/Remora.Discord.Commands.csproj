@@ -5,15 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.10.5</Version>
+        <Version>3.10.6</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Due to changes on Discord's API, all command names, group names, and parameter names are now kebaberized
-            (input words are separated with hyphens, and all letters are lower-cased) before being passed to the API.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

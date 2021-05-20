@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.2.0</Version>
+        <Version>3.2.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,13 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Implement the v9 Discord API.
-            Add attachment parameters.
-            Update name of enumeration.
-            Add expiration date to invite objects.
-            Add missing parameter to BeginGuildPrune.
-            Add new option type.
-            Add new JSON error code.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

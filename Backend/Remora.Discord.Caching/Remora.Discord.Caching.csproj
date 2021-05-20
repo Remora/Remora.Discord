@@ -5,20 +5,27 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.0</Version>
+        <Version>4.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Implement the v9 Discord API.
-            Add attachment parameters.
-            Update name of enumeration.
-            Add expiration date to invite objects.
-            Add missing parameter to BeginGuildPrune.
-            Add new option type.
-            Add new JSON error code.
+            Update user flags.
+            Update pin/unpin method names.
+            Restructure application layout.
+            Update GetCurrentUserGuildsAsync limits.
+            Fix unit test.
+            Update member nullability.
+            Fix missing parameter.
+            Update emoji format support.
+            Correct nullability of member.
+            Add a bunch of error codes.
+            Add Team.Name.
+            Add Message.ApplicationID.
+            Implement stage instances.
+            Rename thread endpoints in accordance with Discord docs.
         </PackageReleaseNotes>
     </PropertyGroup>
 
