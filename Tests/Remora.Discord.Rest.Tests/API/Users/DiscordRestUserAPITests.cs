@@ -251,7 +251,7 @@ namespace Remora.Discord.Rest.Tests.API.Users
             [Fact]
             public async Task ReturnsErrorIfLimitIsTooHigh()
             {
-                var limit = 101;
+                var limit = 201;
 
                 var api = CreateAPI
                 (

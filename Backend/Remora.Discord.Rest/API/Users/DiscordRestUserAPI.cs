@@ -118,11 +118,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (limit.HasValue && (limit.Value < 1 || limit.Value > 100))
+            if (limit.HasValue && (limit.Value is < 1 or > 200))
             {
                 return new GenericError
                 (
-                    "The limit must be between 1 and 100."
+                    "The limit must be between 1 and 200."
                 );
             }
 
