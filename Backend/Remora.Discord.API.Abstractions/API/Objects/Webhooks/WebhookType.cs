@@ -39,6 +39,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Channel follower webhooks are internal webhooks used with channel following to post new messages into
         /// channels.
         /// </summary>
-        ChannelFollower = 2
+        ChannelFollower = 2,
+
+        /// <summary>
+        /// Application webhooks are used with interactions.
+        /// </summary>
+        Application = 3
     }
 }

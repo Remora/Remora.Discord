@@ -44,12 +44,12 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the guild that the webhook belongs to.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        Optional<Snowflake?> GuildID { get; }
 
         /// <summary>
         /// Gets the ID of the channel that the webhook belongs to.
         /// </summary>
-        Snowflake ChannelID { get; }
+        Snowflake? ChannelID { get; }
 
         /// <summary>
         /// Gets the user this webhook was created by. This is not returned when getting a webhook by its token.

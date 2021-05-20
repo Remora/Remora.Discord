@@ -34,8 +34,8 @@ namespace Remora.Discord.API.Objects
     (
         Snowflake ID,
         WebhookType Type,
-        Optional<Snowflake> GuildID,
-        Snowflake ChannelID,
+        Optional<Snowflake?> GuildID,
+        Snowflake? ChannelID,
         Optional<IUser> User,
         string? Name,
         string? Avatar,
