@@ -390,14 +390,14 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<Result> DeletePinnedChannelMessageAsync
+        public override async Task<Result> UnpinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeletePinnedChannelMessageAsync(channelID, messageID, ct);
+            var deleteResult = await base.UnpinMessageAsync(channelID, messageID, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;

@@ -447,7 +447,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result> AddPinnedChannelMessageAsync
+        Task<Result> PinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -461,7 +461,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result> DeletePinnedChannelMessageAsync
+        Task<Result> UnpinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,

@@ -644,7 +644,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result> AddPinnedChannelMessageAsync
+        public virtual Task<Result> PinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -659,7 +659,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result> DeletePinnedChannelMessageAsync
+        public virtual Task<Result> UnpinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,

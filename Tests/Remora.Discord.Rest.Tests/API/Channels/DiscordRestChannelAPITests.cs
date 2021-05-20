@@ -1593,7 +1593,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.AddPinnedChannelMessageAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.PinMessageAsync"/> method.
         /// </summary>
         public class AddPinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
@@ -1618,13 +1618,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.AddPinnedChannelMessageAsync(channelId, messageId);
+                var result = await api.PinMessageAsync(channelId, messageId);
                 ResultAssert.Successful(result);
             }
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.DeletePinnedChannelMessageAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.UnpinMessageAsync"/> method.
         /// </summary>
         public class DeletePinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
@@ -1649,7 +1649,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.DeletePinnedChannelMessageAsync(channelId, messageId);
+                var result = await api.UnpinMessageAsync(channelId, messageId);
                 ResultAssert.Successful(result);
             }
         }
