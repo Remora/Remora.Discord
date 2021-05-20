@@ -51,7 +51,7 @@ namespace Remora.Discord.API.Tests
                 : base
                 (
                     new Uri("https://cdn.discordapp.com/emojis/0"),
-                    new[] { CDNImageFormat.PNG, CDNImageFormat.GIF }
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.GIF, CDNImageFormat.WebP }
                 )
             {
             }
