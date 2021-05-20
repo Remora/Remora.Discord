@@ -135,6 +135,7 @@ namespace Remora.Discord.Rest.Extensions
             serviceCollection.TryAddSingleton<IDiscordRestInteractionAPI, DiscordRestInteractionAPI>();
             serviceCollection.TryAddSingleton<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>();
             serviceCollection.TryAddSingleton<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
+            serviceCollection.TryAddSingleton<IDiscordRestStageInstanceAPI, DiscordRestStageInstanceAPI>();
 
             return serviceCollection;
         }

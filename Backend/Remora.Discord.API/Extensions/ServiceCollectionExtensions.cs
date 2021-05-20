@@ -89,7 +89,8 @@ namespace Remora.Discord.API.Extensions
                             .AddTemplateObjectConverters()
                             .AddInteractionObjectConverters()
                             .AddOAuth2ObjectConverters()
-                            .AddTeamObjectConverters();
+                            .AddTeamObjectConverters()
+                            .AddStageInstanceObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -887,6 +888,18 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<ITeam, Team>();
             options.AddDataObjectConverter<ITeamMember, TeamMember>();
+
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle stage instance objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddStageInstanceObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<IStageInstance, StageInstance>();
 
             return options;
         }

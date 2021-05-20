@@ -1,5 +1,5 @@
 //
-//  IDiscordRestAPI.cs
+//  StageInstanceTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <summary>
-    /// Represents the full Discord REST API.
-    /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestAPI :
-        IDiscordRestApplicationAPI,
-        IDiscordRestAuditLogAPI,
-        IDiscordRestChannelAPI,
-        IDiscordRestEmojiAPI,
-        IDiscordRestGatewayAPI,
-        IDiscordRestGuildAPI,
-        IDiscordRestInteractionAPI,
-        IDiscordRestInviteAPI,
-        IDiscordRestOAuth2API,
-        IDiscordRestTemplateAPI,
-        IDiscordRestUserAPI,
-        IDiscordRestVoiceAPI,
-        IDiscordRestWebhookAPI
+    /// <inheritdoc />
+    public class StageInstanceTests : ObjectTestBase<IStageInstance>
     {
     }
 }
