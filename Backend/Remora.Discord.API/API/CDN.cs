@@ -84,7 +84,15 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            var formatValidation = ValidateOrDefaultImageFormat(imageFormat, CDNImageFormat.PNG, CDNImageFormat.GIF);
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
             if (!formatValidation.IsSuccess)
             {
                 return Result<Uri>.FromError(formatValidation);
