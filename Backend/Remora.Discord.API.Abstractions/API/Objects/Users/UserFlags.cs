@@ -94,6 +94,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The user is a verified bot developer.
         /// </summary>
-        VerifiedBotDeveloper = 1 << 17
+        EarlyVerifiedBotDeveloper = 1 << 17,
+
+        /// <summary>
+        /// The user is a Discord-certified moderator.
+        /// </summary>
+        DiscordCertifiedModerator = 1 << 18
     }
 }
