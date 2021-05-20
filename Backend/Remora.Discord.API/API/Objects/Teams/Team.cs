@@ -34,6 +34,7 @@ namespace Remora.Discord.API.Objects
         IImageHash? Icon,
         Snowflake ID,
         IReadOnlyList<ITeamMember> Members,
+        string Name,
         Snowflake OwnerUserID
     )
     : ITeam;

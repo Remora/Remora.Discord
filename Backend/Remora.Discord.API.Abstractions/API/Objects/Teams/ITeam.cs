@@ -48,6 +48,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         IReadOnlyList<ITeamMember> Members { get; }
 
         /// <summary>
+        /// Gets the name of the team.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Gets the user ID of the current team owner.
         /// </summary>
         Snowflake OwnerUserID { get; }
