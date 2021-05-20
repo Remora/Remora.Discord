@@ -509,7 +509,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IChannel>> StartPublicThreadAsync
+        Task<Result<IChannel>> StartThreadWithMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -526,7 +526,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IChannel>> StartPrivateThreadAsync
+        Task<Result<IChannel>> StartThreadWithoutMessageAsync
         (
             Snowflake channelID,
             string name,

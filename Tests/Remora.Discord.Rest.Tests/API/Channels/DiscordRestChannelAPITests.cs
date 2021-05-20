@@ -1728,7 +1728,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.StartPublicThreadAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithMessageAsync"/> method.
         /// </summary>
         public class StartPublicThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
@@ -1764,13 +1764,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartPublicThreadAsync(channelId, messageId, name, duration);
+                var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration);
                 ResultAssert.Successful(result);
             }
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.StartPrivateThreadAsync"/> method.
+        /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithoutMessageAsync"/> method.
         /// </summary>
         public class StartPrivateThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
@@ -1805,7 +1805,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartPrivateThreadAsync(channelId, name, duration);
+                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration);
                 ResultAssert.Successful(result);
             }
         }

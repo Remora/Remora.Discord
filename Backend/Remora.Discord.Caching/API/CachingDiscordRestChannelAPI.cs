@@ -410,7 +410,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<Result<IChannel>> StartPublicThreadAsync
+        public override async Task<Result<IChannel>> StartThreadWithMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -419,7 +419,7 @@ namespace Remora.Discord.Caching.API
             CancellationToken ct = default
         )
         {
-            var createResult = await base.StartPublicThreadAsync(channelID, messageID, name, autoArchiveDuration, ct);
+            var createResult = await base.StartThreadWithMessageAsync(channelID, messageID, name, autoArchiveDuration, ct);
             if (!createResult.IsSuccess)
             {
                 return createResult;
@@ -432,7 +432,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<Result<IChannel>> StartPrivateThreadAsync
+        public override async Task<Result<IChannel>> StartThreadWithoutMessageAsync
         (
             Snowflake channelID,
             string name,
@@ -440,7 +440,7 @@ namespace Remora.Discord.Caching.API
             CancellationToken ct = default
         )
         {
-            var createResult = await base.StartPrivateThreadAsync(channelID, name, autoArchiveDuration, ct);
+            var createResult = await base.StartThreadWithoutMessageAsync(channelID, name, autoArchiveDuration, ct);
             if (!createResult.IsSuccess)
             {
                 return createResult;

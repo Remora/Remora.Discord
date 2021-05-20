@@ -714,7 +714,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<Result<IChannel>> StartPublicThreadAsync
+        public virtual async Task<Result<IChannel>> StartThreadWithMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -744,7 +744,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<Result<IChannel>> StartPrivateThreadAsync
+        public virtual async Task<Result<IChannel>> StartThreadWithoutMessageAsync
         (
             Snowflake channelID,
             string name,
