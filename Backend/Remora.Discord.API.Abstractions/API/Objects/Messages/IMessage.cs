@@ -155,6 +155,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialApplication> Application { get; }
 
         /// <summary>
+        /// Gets the ID of the application the message's interaction belongs to. Sent with interactions.
+        /// </summary>
+        Optional<Snowflake> ApplicationID { get; }
+
+        /// <summary>
         /// Gets the message reference. Sent with cross-posted messages.
         /// </summary>
         Optional<IMessageReference> MessageReference { get;  }
