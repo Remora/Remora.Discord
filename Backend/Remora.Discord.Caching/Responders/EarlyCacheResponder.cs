@@ -177,7 +177,7 @@ namespace Remora.Discord.Caching.Responders
                     new Optional<IUser>(gatewayEvent.User),
                     gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cachedInstance.Nickname,
                     gatewayEvent.Roles,
-                    gatewayEvent.JoinedAt,
+                    gatewayEvent.JoinedAt ?? cachedInstance.JoinedAt,
                     gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince.Value : cachedInstance.PremiumSince,
                     cachedInstance.IsDeafened,
                     cachedInstance.IsMuted,
@@ -185,19 +185,17 @@ namespace Remora.Discord.Caching.Responders
                     cachedInstance.Permissions
                 );
             }
-            else if (gatewayEvent.PremiumSince.HasValue)
+            else if (gatewayEvent.PremiumSince.HasValue && gatewayEvent.JoinedAt.HasValue)
             {
                 cachedInstance = new GuildMember
                 (
                     new Optional<IUser>(gatewayEvent.User),
                     gatewayEvent.Nickname,
                     gatewayEvent.Roles,
-                    gatewayEvent.JoinedAt,
+                    gatewayEvent.JoinedAt.Value,
                     gatewayEvent.PremiumSince.Value,
                     false,
-                    false,
-                    default,
-                    default
+                    false
                 );
             }
             else
