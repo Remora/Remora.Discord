@@ -768,6 +768,10 @@ namespace Remora.Discord.Gateway
                 ? default
                 : new Optional<IShardIdentification>(_gatewayOptions.ShardIdentification);
 
+            var initialPresence = _gatewayOptions.Presence is null
+                ? default
+                : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
+
             SubmitCommandAsync
             (
                 new Identify
@@ -776,7 +780,8 @@ namespace Remora.Discord.Gateway
                     _gatewayOptions.ConnectionProperties,
                     Intents: _gatewayOptions.Intents,
                     Compress: false,
-                    Shard: shardInformation
+                    Shard: shardInformation,
+                    Presence: initialPresence
                 )
             );
 

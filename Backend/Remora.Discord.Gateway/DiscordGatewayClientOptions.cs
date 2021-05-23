@@ -46,23 +46,28 @@ namespace Remora.Discord.Gateway
         public TimeSpan MinimumSafetyMargin { get; set; } = TimeSpan.FromMilliseconds(20);
 
         /// <summary>
+        /// Gets or sets the connection properties that identify the connecting client or library code. By default,
+        /// this is the information about Remora.Discord itself. You may, optionally, override this to present your
+        /// own information.
+        /// </summary>
+        public IConnectionProperties ConnectionProperties { get; set; } = new ConnectionProperties("Remora.Discord");
+
+        /// <summary>
         /// Gets or sets the shard identification information. This is used to connect the client as a sharded
         /// connection, where events are distributed over a set of active connections.
         /// </summary>
         public IShardIdentification? ShardIdentification { get; set; }
 
         /// <summary>
+        /// Gets or sets the initial presence when the bot connects.
+        /// </summary>
+        public IUpdatePresence? Presence { get; set; }
+
+        /// <summary>
         /// Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and
         /// their messages).
         /// </summary>
         public GatewayIntents Intents { get; set; } = GatewayIntents.Guilds | GatewayIntents.GuildMessages;
-
-        /// <summary>
-        /// Gets or sets the connection properties that identify the connecting client or library code. By default,
-        /// this is the information about Remora.Discord itself. You may, optionally, override this to present your
-        /// own information.
-        /// </summary>
-        public IConnectionProperties ConnectionProperties { get; set; } = new ConnectionProperties("Remora.Discord");
 
         /// <summary>
         /// Calculates the true heartbeat safety margin, based on the heartbeat interval.

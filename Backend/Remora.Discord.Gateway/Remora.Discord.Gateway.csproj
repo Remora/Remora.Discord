@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.2.1</Version>
+        <Version>3.3.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Implement a way to send an initial presence with the initial connection.
         </PackageReleaseNotes>
     </PropertyGroup>
 
