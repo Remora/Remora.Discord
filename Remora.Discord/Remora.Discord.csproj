@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.31</Version>
+        <Version>3.0.32</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,6 +13,8 @@
             started.
         </Description>
         <PackageReleaseNotes>
+            This is a prerelease version, using undocumented Discord behaviour.
+
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>

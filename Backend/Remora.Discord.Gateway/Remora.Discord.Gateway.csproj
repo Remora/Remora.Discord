@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.3.0</Version>
+        <Version>3.3.1-beta1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,9 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Implement a way to send an initial presence with the initial connection.
+            This is a prerelease version, using undocumented Discord behaviour.
+
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
