@@ -261,6 +261,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<Snowflake> threadID = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -290,6 +291,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                             json.Write("thread_id", threadID, _jsonOptions);
+                            json.Write("components", components, _jsonOptions);
                         }
                     );
                 },
@@ -324,6 +326,7 @@ namespace Remora.Discord.Rest.API
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<FileData?> file = default,
             Optional<IReadOnlyList<IAttachment>> attachments = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -355,6 +358,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                             json.Write("attachments", attachments, _jsonOptions);
+                            json.Write("components", components, _jsonOptions);
                         }
                     );
                 },
@@ -385,6 +389,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -410,6 +415,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("content", content, _jsonOptions);
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                            json.Write("components", components, _jsonOptions);
                         }
                     );
                 },
@@ -444,6 +450,7 @@ namespace Remora.Discord.Rest.API
             Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -467,6 +474,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("tts", isTTS, _jsonOptions);
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                            json.Write("components", components, _jsonOptions);
                         }
                     );
                 },
@@ -483,6 +491,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -508,6 +517,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("content", content, _jsonOptions);
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
+                            json.Write("components", components, _jsonOptions);
                         }
                     );
                 },

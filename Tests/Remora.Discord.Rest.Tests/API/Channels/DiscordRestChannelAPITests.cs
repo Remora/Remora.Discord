@@ -794,6 +794,53 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
+            public async Task PerformsComponentRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+
+                var embed = new Embed();
+                var nonce = "aasda";
+                var tts = false;
+                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var components = new List<IMessageComponent>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}channels/{channelId}/messages")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("nonce", p => p.Is(nonce))
+                                    .WithProperty("tts", p => p.Is(tts))
+                                    .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("components", p => p.IsArray())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateMessageAsync
+                (
+                    channelId,
+                    nonce: nonce,
+                    isTTS: tts,
+                    embed: embed,
+                    allowedMentions: allowedMentions,
+                    components: components
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
                 var channelId = new Snowflake(0);
@@ -1127,6 +1174,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var embed = new Embed();
                 var flags = MessageFlags.SuppressEmbeds;
                 var attachments = new List<IAttachment>();
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -1145,6 +1193,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     .WithProperty("embed", p => p.IsObject())
                                     .WithProperty("flags", p => p.Is((int)flags))
                                     .WithProperty("attachments", p => p.IsArray(a => a.WithCount(0)))
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1157,7 +1206,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     content,
                     embed,
                     flags,
-                    attachments: attachments
+                    attachments: attachments,
+                    components: components
                 );
                 ResultAssert.Successful(result);
             }

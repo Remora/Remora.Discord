@@ -642,6 +642,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
                 var threadID = new Snowflake(1);
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -659,6 +660,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                                     .WithProperty("thread_id", p => p.Is(threadID.ToString()))
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -674,7 +676,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     avatarUrl,
                     tts,
                     allowedMentions: allowedMentions,
-                    threadID: threadID
+                    threadID: threadID,
+                    components: components
                 );
 
                 ResultAssert.Successful(result);
@@ -815,6 +818,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 var content = "booga";
                 var allowedMentions = new AllowedMentions();
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -831,6 +835,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                 o => o
                                     .WithProperty("content", p => p.Is(content))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -842,7 +847,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     messageID,
                     content,
-                    allowedMentions: allowedMentions
+                    allowedMentions: allowedMentions,
+                    components: components
                 );
 
                 ResultAssert.Successful(result);
@@ -1026,6 +1032,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var content = "booga";
                 var embeds = new List<IEmbed>();
                 var allowedMentions = new AllowedMentions(default, default, default, default);
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -1043,6 +1050,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("content", p => p.Is(content))
                                     .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1054,7 +1062,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     token,
                     content,
                     embeds,
-                    allowedMentions
+                    allowedMentions,
+                    components
                 );
 
                 ResultAssert.Successful(result);
@@ -1117,6 +1126,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var avatarUrl = "http://aaaa";
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -1132,6 +1142,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1145,7 +1156,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     username,
                     avatarUrl,
                     tts,
-                    allowedMentions: allowedMentions
+                    allowedMentions: allowedMentions,
+                    components: components
                 );
 
                 ResultAssert.Successful(result);
@@ -1281,6 +1293,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var content = "booga";
                 var embeds = new List<IEmbed>();
                 var allowedMentions = new AllowedMentions(default, default, default, default);
+                var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
                 (
@@ -1298,6 +1311,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("content", p => p.Is(content))
                                     .WithProperty("embeds", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
+                                    .WithProperty("components", p => p.IsArray())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1310,7 +1324,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     messageID,
                     content,
                     embeds,
-                    allowedMentions
+                    allowedMentions,
+                    components
                 );
 
                 ResultAssert.Successful(result);

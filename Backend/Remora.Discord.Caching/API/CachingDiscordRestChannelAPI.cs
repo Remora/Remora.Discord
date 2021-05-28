@@ -191,6 +191,7 @@ namespace Remora.Discord.Caching.API
             Optional<IEmbed> embed = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -204,6 +205,7 @@ namespace Remora.Discord.Caching.API
                 embed,
                 allowedMentions,
                 messageReference,
+                components,
                 ct
             );
 
@@ -229,6 +231,7 @@ namespace Remora.Discord.Caching.API
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IAttachment>> attachments = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
             CancellationToken ct = default
         )
         {
@@ -241,6 +244,7 @@ namespace Remora.Discord.Caching.API
                 flags,
                 allowedMentions,
                 attachments,
+                components,
                 ct
             );
 
