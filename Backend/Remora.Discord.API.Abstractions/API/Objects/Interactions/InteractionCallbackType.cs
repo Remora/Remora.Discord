@@ -43,6 +43,22 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Acknowledge a command without sending a message, showing the user input.
         /// </summary>
-        DeferredChannelMessageWithSource = 5
+        DeferredChannelMessageWithSource = 5,
+
+        /// <summary>
+        /// Acknowledge an interaction and edit the message later; the user does not see a loading state.
+        /// </summary>
+        /// <remarks>
+        /// Only relevant for component-based interactions.
+        /// </remarks>
+        DeferredUpdateMessage = 6,
+
+        /// <summary>
+        /// Respond by editing the message.
+        /// </summary>
+        /// <remarks>
+        /// Only relevant for component-based interactions.
+        /// </remarks>
+        UpdateMessage = 7
     }
 }

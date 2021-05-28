@@ -56,5 +56,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the callback flags.
         /// </summary>
         Optional<MessageFlags> Flags { get; }
+
+        /// <summary>
+        /// Gets the components attached to the message.
+        /// </summary>
+        Optional<IReadOnlyList<IMessageComponent>> Components { get; }
     }
 }

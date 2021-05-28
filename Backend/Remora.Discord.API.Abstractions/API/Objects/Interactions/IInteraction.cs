@@ -81,5 +81,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the version of the interaction API in use. Currently 1.
         /// </summary>
         int Version { get; }
+
+        /// <summary>
+        /// Gets the message the component was attached to.
+        /// </summary>
+        Optional<IMessage> Message { get; }
     }
 }

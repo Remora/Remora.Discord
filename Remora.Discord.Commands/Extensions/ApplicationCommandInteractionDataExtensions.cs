@@ -46,9 +46,14 @@ namespace Remora.Discord.Commands.Extensions
             out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
         )
         {
+            if (!commandData.Name.HasValue)
+            {
+                throw new InvalidOperationException();
+            }
+
             if (!commandData.Options.HasValue)
             {
-                commandName = commandData.Name;
+                commandName = commandData.Name.Value;
                 parameters = new Dictionary<string, IReadOnlyList<string>>();
 
                 return;
@@ -57,8 +62,8 @@ namespace Remora.Discord.Commands.Extensions
             UnpackInteractionOptions(commandData.Options.Value!, out var nestedCommandName, out var nestedParameters);
 
             commandName = nestedCommandName is not null
-                ? $"{commandData.Name} {nestedCommandName}"
-                : commandData.Name;
+                ? $"{commandData.Name.Value} {nestedCommandName}"
+                : commandData.Name.Value;
 
             parameters = nestedParameters ?? new Dictionary<string, IReadOnlyList<string>>();
         }

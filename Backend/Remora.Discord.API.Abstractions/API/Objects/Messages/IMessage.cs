@@ -188,5 +188,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the thread that was started from this message, if any.
         /// </summary>
         Optional<IChannel> Thread { get; }
+
+        /// <summary>
+        /// Gets the components in the message.
+        /// </summary>
+        Optional<IReadOnlyList<IMessageComponent>> Components { get; }
     }
 }

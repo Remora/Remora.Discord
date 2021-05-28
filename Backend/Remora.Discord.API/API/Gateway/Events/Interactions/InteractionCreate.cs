@@ -40,7 +40,8 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<IGuildMember> Member,
         Optional<IUser> User,
         string Token,
-        int Version
+        int Version,
+        Optional<IMessage> Message = default
     )
     : IInteractionCreate;
 }

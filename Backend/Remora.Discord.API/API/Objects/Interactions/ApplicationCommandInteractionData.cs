@@ -31,10 +31,12 @@ namespace Remora.Discord.API.Objects
     /// <inheritdoc cref="IApplicationCommandInteractionData" />
     public record ApplicationCommandInteractionData
     (
-        Snowflake ID,
-        string Name,
+        Optional<Snowflake> ID,
+        Optional<string> Name,
         Optional<IApplicationCommandInteractionDataResolved> Resolved,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default
+        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+        Optional<string> CustomID = default,
+        Optional<ComponentType> ComponentType = default
     )
     : IApplicationCommandInteractionData;
 }

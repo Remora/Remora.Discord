@@ -39,6 +39,7 @@ namespace Remora.Discord.API.Objects
         Optional<IGuildMember> Member,
         Optional<IUser> User,
         string Token,
-        int Version
+        int Version,
+        Optional<IMessage> Message = default
     ) : IInteraction;
 }

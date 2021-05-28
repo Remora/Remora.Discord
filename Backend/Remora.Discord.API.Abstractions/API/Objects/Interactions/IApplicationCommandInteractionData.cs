@@ -35,12 +35,12 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the invoked command.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
         /// Gets the name of the invoked command.
         /// </summary>
-        string Name { get; }
+        Optional<string> Name { get; }
 
         /// <summary>
         /// Gets any entities that were resolved while executing the command serverside.
@@ -51,5 +51,15 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the parameters and values supplied by the user.
         /// </summary>
         Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+
+        /// <summary>
+        /// Gets the custom ID associated with this interaction.
+        /// </summary>
+        Optional<string> CustomID { get; }
+
+        /// <summary>
+        /// Gets the type of component that the data originated from.
+        /// </summary>
+        Optional<ComponentType> ComponentType { get; }
     }
 }
