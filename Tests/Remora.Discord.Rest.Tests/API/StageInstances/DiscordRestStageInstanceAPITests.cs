@@ -54,6 +54,7 @@ namespace Remora.Discord.Rest.Tests.API
             {
                 var channelID = new Snowflake(1);
                 var topic = "aa";
+                var privacyLevel = StagePrivacyLevel.GuildOnly;
 
                 var api = CreateAPI
                 (
@@ -66,12 +67,13 @@ namespace Remora.Discord.Rest.Tests.API
                                 o => o
                                     .WithProperty("channel_id", p => p.Is(channelID.ToString()))
                                     .WithProperty("topic", p => p.Is(topic))
+                                    .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
                 );
 
-                var result = await api.CreateStageInstanceAsync(channelID, topic);
+                var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel);
                 ResultAssert.Successful(result);
             }
         }
@@ -117,6 +119,7 @@ namespace Remora.Discord.Rest.Tests.API
             {
                 var channelID = new Snowflake(1);
                 var topic = "aa";
+                var privacyLevel = StagePrivacyLevel.GuildOnly;
 
                 var api = CreateAPI
                 (
@@ -128,12 +131,13 @@ namespace Remora.Discord.Rest.Tests.API
                             (
                                 o => o
                                     .WithProperty("topic", p => p.Is(topic))
+                                    .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
                 );
 
-                var result = await api.UpdateStageInstanceAsync(channelID, topic);
+                var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel);
                 ResultAssert.Successful(result);
             }
         }

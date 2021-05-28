@@ -899,7 +899,8 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddStageInstanceObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IStageInstance, StageInstance>();
+            options.AddDataObjectConverter<IStageInstance, StageInstance>()
+                .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
 
             return options;
         }

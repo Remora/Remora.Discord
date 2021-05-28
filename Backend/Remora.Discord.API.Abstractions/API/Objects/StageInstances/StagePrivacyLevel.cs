@@ -1,5 +1,5 @@
 //
-//  IStageInstance.cs
+//  StagePrivacyLevel.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,43 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Core;
-
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents information about a live stage.
+    /// Enumerates various privacy levels for stage instances.
     /// </summary>
-    public interface IStageInstance
+    public enum StagePrivacyLevel
     {
         /// <summary>
-        /// Gets the ID of the stage instance.
+        /// The stage instance is visible publicly, such as in stage discovery.
         /// </summary>
-        Snowflake ID { get; }
+        Public = 1,
 
         /// <summary>
-        /// Gets the ID of the guild the instance is in.
+        /// The stage instance is only visible to guild members.
         /// </summary>
-        Snowflake GuildID { get; }
-
-        /// <summary>
-        /// Gets the ID of the stage channel the instance is associated with.
-        /// </summary>
-        Snowflake ChannelID { get; }
-
-        /// <summary>
-        /// Gets the topic of the instance.
-        /// </summary>
-        string Topic { get; }
-
-        /// <summary>
-        /// Gets the privacy level of the instance.
-        /// </summary>
-        StagePrivacyLevel PrivacyLevel { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether stage discovery is disabled for the instance.
-        /// </summary>
-        bool IsDiscoveryDisabled { get; }
+        GuildOnly = 2
     }
 }

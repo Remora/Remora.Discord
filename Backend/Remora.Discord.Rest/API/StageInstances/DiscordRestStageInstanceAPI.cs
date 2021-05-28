@@ -26,6 +26,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -50,6 +51,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             string topic,
+            Optional<StagePrivacyLevel> privacyLevel = default,
             CancellationToken ct = default
         )
         {
@@ -62,6 +64,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("channel_id", channelID.ToString());
                         json.WriteString("topic", topic);
+                        json.Write("privacy_level", privacyLevel);
                     }
                 ),
                 ct: ct
@@ -82,7 +85,8 @@ namespace Remora.Discord.Rest.API
         public Task<Result<IStageInstance>> UpdateStageInstanceAsync
         (
             Snowflake channelID,
-            string topic,
+            Optional<string> topic = default,
+            Optional<StagePrivacyLevel> privacyLevel = default,
             CancellationToken ct = default
         )
         {
@@ -93,7 +97,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.WriteString("topic", topic);
+                        json.Write("topic", topic);
+                        json.Write("privacy_level", privacyLevel);
                     }
                 ),
                 ct: ct
