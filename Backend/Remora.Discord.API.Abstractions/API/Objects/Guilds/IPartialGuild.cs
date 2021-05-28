@@ -173,5 +173,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.IsNSFW" />
         Optional<bool> IsNSFW { get; }
+
+        /// <inheritdoc cref="IGuild.StageInstances" />
+        Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
     }
 }

@@ -270,5 +270,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether this guild is designated as an NSFW server.
         /// </summary>
         bool IsNSFW { get; }
+
+        /// <summary>
+        /// Gets the stage instances in the guild.
+        /// </summary>
+        Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
     }
 }

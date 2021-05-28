@@ -80,6 +80,7 @@ namespace Remora.Discord.API.Objects
         Optional<int> ApproximateMemberCount,
         Optional<int> ApproximatePresenceCount,
         Optional<IWelcomeScreen> WelcomeScreen,
-        bool IsNSFW
+        bool IsNSFW,
+        Optional<IReadOnlyList<IStageInstance>> StageInstances
     ) : IGuild;
 }
