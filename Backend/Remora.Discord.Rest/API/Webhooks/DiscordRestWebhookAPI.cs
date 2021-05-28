@@ -61,7 +61,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             string name,
-            Stream? avatar,
+            Optional<Stream?> avatar,
             CancellationToken ct = default
         )
         {
@@ -75,7 +75,7 @@ namespace Remora.Discord.Rest.API
                 return new GenericError("Names cannot be \"clyde\".");
             }
 
-            var packAvatar = await ImagePacker.PackImageAsync(new Optional<Stream?>(avatar), ct);
+            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
                 return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);

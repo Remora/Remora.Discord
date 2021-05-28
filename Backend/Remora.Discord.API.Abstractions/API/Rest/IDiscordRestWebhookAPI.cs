@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake channelID,
             string name,
-            Stream? avatar,
+            Optional<Stream?> avatar,
             CancellationToken ct = default
         );
 

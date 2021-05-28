@@ -57,7 +57,7 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             string name,
-            Stream? avatar,
+            Optional<Stream?> avatar,
             CancellationToken ct = default
         )
         {
