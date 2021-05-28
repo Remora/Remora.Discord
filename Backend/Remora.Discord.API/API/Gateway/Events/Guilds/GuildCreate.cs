@@ -80,7 +80,7 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<int> ApproximateMemberCount,
         Optional<int> ApproximatePresenceCount,
         Optional<IWelcomeScreen> WelcomeScreen,
-        bool IsNSFW,
+        GuildNSFWLevel NSFWLevel,
         Optional<IReadOnlyList<IStageInstance>> StageInstances
     ) : Guild
     (
@@ -130,7 +130,7 @@ namespace Remora.Discord.API.Gateway.Events
         ApproximateMemberCount,
         ApproximatePresenceCount,
         WelcomeScreen,
-        IsNSFW,
+        NSFWLevel,
         StageInstances
     ), IGuildCreate;
 }

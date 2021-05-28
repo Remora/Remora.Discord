@@ -80,7 +80,7 @@ namespace Remora.Discord.API.Objects
         Optional<int> ApproximateMemberCount = default,
         Optional<int> ApproximatePresenceCount = default,
         Optional<IWelcomeScreen> WelcomeScreen = default,
-        Optional<bool> IsNSFW = default,
+        Optional<GuildNSFWLevel> NSFWLevel = default,
         Optional<IReadOnlyList<IStageInstance>> StageInstances = default
     ) : IPartialGuild;
 }

@@ -226,8 +226,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyName(g => g.IsNSFW, "nsfw");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -236,8 +235,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyName(g => g.IsNSFW, "nsfw");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
                 .WithPropertyName(d => d.IsUnavailable, "unavailable");
@@ -479,8 +477,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyName(g => g.IsNSFW, "nsfw");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -489,8 +486,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyName(g => g.IsNSFW, "nsfw");
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")

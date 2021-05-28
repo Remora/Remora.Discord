@@ -389,6 +389,6 @@
         "color": 2067276
       }
     ],
-    "nsfw": false
+    "nsfw_level": 0
   }
 }

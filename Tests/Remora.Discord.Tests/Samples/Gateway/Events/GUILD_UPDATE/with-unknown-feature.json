@@ -160,6 +160,6 @@
     "afk_channel_id": null,
     "guild_id": "452526315288133644",
     "max_presences": null,
-    "nsfw": false
+    "nsfw_level": 0
   }
 }

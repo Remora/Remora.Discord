@@ -378,6 +378,6 @@
     "description": null,
     "max_video_channel_users": 25,
     "id": "452526315288133644",
-    "nsfw": false
+    "nsfw_level": 0
   }
 }
