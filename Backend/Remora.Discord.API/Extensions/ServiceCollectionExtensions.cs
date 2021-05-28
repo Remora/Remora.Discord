@@ -20,9 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.ComponentModel;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
@@ -849,6 +847,15 @@ namespace Remora.Discord.API.Extensions
             >();
             options.AddDataObjectConverter<IApplicationCommandPermissions, ApplicationCommandPermissions>()
                 .WithPropertyName(p => p.HasPermission, "permission");
+
+            options.AddConverter<MessageComponentConverter>();
+
+            options.AddDataObjectConverter<IComponent, Component>()
+                .WithPropertyName(c => c.IsDisabled, "disabled");
+
+            options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>();
+            options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
+                .WithPropertyName(c => c.IsDisabled, "disabled");
 
             return options;
         }

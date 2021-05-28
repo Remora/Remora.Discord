@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  IMessageComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -25,24 +25,10 @@ using JetBrains.Annotations;
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates various interaction types.
+    /// Represents the base type for all components.
     /// </summary>
     [PublicAPI]
-    public enum InteractionType
+    public interface IMessageComponent
     {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
-
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
-
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3
     }
 }

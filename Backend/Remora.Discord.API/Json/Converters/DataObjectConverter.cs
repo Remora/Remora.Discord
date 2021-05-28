@@ -73,8 +73,8 @@ namespace Remora.Discord.API.Json
             _converterOverrides = new Dictionary<PropertyInfo, JsonConverter>();
             _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
-            var implementingType = typeof(TImplementation);
-            var visibleProperties = implementingType.GetPublicProperties().ToArray();
+            var interfaceType = typeof(TInterface);
+            var visibleProperties = interfaceType.GetPublicProperties().ToArray();
 
             _dtoConstructor = FindBestMatchingConstructor(visibleProperties);
             _dtoProperties = ReorderProperties(visibleProperties, _dtoConstructor);
@@ -198,6 +198,9 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
+            // Resolve the matching interface property
+            property = _dtoProperties.First(p => p.Name == property.Name);
+
             _writeNameOverrides.Add(property, name );
             _readNameOverrides.Add(property, new[] { name });
             return this;
@@ -226,6 +229,9 @@ namespace Remora.Discord.API.Json
             {
                 throw new InvalidOperationException();
             }
+
+            // Resolve the matching interface property
+            property = _dtoProperties.First(p => p.Name == property.Name);
 
             _writeNameOverrides.Add(property, name );
             return this;
@@ -256,6 +262,9 @@ namespace Remora.Discord.API.Json
             {
                 throw new InvalidOperationException();
             }
+
+            // Resolve the matching interface property
+            property = _dtoProperties.First(p => p.Name == property.Name);
 
             var overrides =
                 fallbacks.Length == 0
@@ -518,6 +527,12 @@ namespace Remora.Discord.API.Json
             JsonSerializerOptions options
         )
         {
+            if (value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
             writer.WriteStartObject();
 
             foreach (var dtoProperty in _dtoProperties)
@@ -624,6 +639,9 @@ namespace Remora.Discord.API.Json
                 throw new InvalidOperationException();
             }
 
+            // Resolve the matching interface property
+            property = _dtoProperties.First(p => p.Name == property.Name);
+
             _converterOverrides.Add(property, converter);
             return this;
         }
@@ -644,6 +662,9 @@ namespace Remora.Discord.API.Json
             {
                 throw new InvalidOperationException();
             }
+
+            // Resolve the matching interface property
+            property = _dtoProperties.First(p => p.Name == property.Name);
 
             _converterFactoryOverrides.Add(property, converterFactory);
             return this;

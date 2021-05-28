@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  IActionRowComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates various interaction types.
+    /// Represents a row of interactive components.
     /// </summary>
     [PublicAPI]
-    public enum InteractionType
+    public interface IActionRowComponent : IMessageComponent
     {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
-
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
-
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3
+        /// <inheritdoc cref="IComponent.Components"/>
+        IReadOnlyList<IMessageComponent> Components { get; }
     }
 }

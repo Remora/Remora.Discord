@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  Component.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Enumerates various interaction types.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
     [PublicAPI]
-    public enum InteractionType
-    {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
-
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
-
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3
-    }
+    public record Component
+    (
+        ComponentType Type,
+        Optional<IReadOnlyList<IMessageComponent>> Components,
+        Optional<ButtonComponentStyle> Style,
+        Optional<string> Label,
+        Optional<IPartialEmoji> Emoji,
+        Optional<string> CustomID,
+        Optional<string> URL,
+        Optional<bool> IsDisabled
+    ) : IMessageComponent, IComponent;
 }

@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  ButtonComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,28 +21,27 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Enumerates various interaction types.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
     [PublicAPI]
-    public enum InteractionType
+    public record ButtonComponent
+    (
+        ButtonComponentStyle Style,
+        Optional<string> Label = default,
+        Optional<IPartialEmoji> Emoji = default,
+        Optional<string> CustomID = default,
+        Optional<string> URL = default,
+        Optional<bool> IsDisabled = default
+    ) : IButtonComponent, IDefaultedComponent
     {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
+        /// <inheritdoc/>
+        ComponentType IComponent.Type => ComponentType.Button;
 
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
-
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3
+        /// <inheritdoc/>
+        Optional<ButtonComponentStyle> IComponent.Style => this.Style;
     }
 }

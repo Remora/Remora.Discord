@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  MessageComponentTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <summary>
-    /// Enumerates various interaction types.
-    /// </summary>
-    [PublicAPI]
-    public enum InteractionType
+    /// <inheritdoc />
+    public class MessageComponentTests : ObjectTestBase<IMessageComponent>
     {
-        /// <summary>
-        /// A Discord-initiated ping to check for connectivity.
-        /// </summary>
-        Ping = 1,
-
-        /// <summary>
-        /// A user-invoked slash command.
-        /// </summary>
-        ApplicationCommand = 2,
-
-        /// <summary>
-        /// A user-initiated interaction with a message component.
-        /// </summary>
-        MessageComponent = 3
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; } = new
+        (
+            new[]
+            {
+                "unknown_field"
+            }
+        );
     }
 }
