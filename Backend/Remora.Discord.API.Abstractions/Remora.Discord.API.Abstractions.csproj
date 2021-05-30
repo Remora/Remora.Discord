@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>19.0.0-beta1</Version>
+        <Version>19.0.0-beta2</Version>
         <Description>
             $(BaseDescription)
 
@@ -15,7 +15,7 @@
         </Description>
         <PackageReleaseNotes>
             This is a prerelease version, using undocumented Discord behaviour.
-            
+
             Implement component parameters for some endpoints.
             Implement support for button components.
             Implement the infrastructure for message components.
@@ -33,7 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.178" />
+      <PackageReference Include="OneOf" Version="3.0.186" />
       <PackageReference Include="Remora.Results" Version="4.0.1" />
     </ItemGroup>
 

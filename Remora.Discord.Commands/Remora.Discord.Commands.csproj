@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.10.8</Version>
+        <Version>3.10.9-beta1</Version>
         <Description>
             $(BaseDescription)
 
@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="3.1.0" />
+        <PackageReference Include="Remora.Commands" Version="4.0.0" />
         <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
     </ItemGroup>
 
