@@ -203,6 +203,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// An integration was deleted.
         /// </summary>
-        IntegrationDelete = 82
+        IntegrationDelete = 82,
+
+        /// <summary>
+        /// A stage instance was created.
+        /// </summary>
+        StageInstanceCreate = 83,
+
+        /// <summary>
+        /// A stage instance was updated.
+        /// </summary>
+        StageInstanceUpdate = 84,
+
+        /// <summary>
+        /// A stage instance was deleted.
+        /// </summary>
+        StageInstanceDelete = 85
     }
 }

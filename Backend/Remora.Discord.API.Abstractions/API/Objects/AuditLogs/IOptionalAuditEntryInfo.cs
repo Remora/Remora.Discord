@@ -47,7 +47,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the channel in which the entities were targeted.
         /// <remarks>
         /// Relevant for <see cref="AuditLogEvent.MemberMove"/>, <see cref="AuditLogEvent.MessagePin"/>,
-        /// <see cref="AuditLogEvent.MessageUnpin"/>, and <see cref="AuditLogEvent.MessageDelete"/>.</remarks>
+        /// <see cref="AuditLogEvent.MessageUnpin"/>, <see cref="AuditLogEvent.MessageDelete"/>,
+        /// <see cref="AuditLogEvent.StageInstanceCreate"/>, <see cref="AuditLogEvent.StageInstanceUpdate"/>, and
+        /// <see cref="AuditLogEvent.StageInstanceDelete"/>.</remarks>
         /// </summary>
         Optional<Snowflake> ChannelID { get; }
 

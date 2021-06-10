@@ -92,7 +92,8 @@ namespace Remora.Discord.API.Json
             { "enable_emoticons", typeof(bool) },
             { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
             { "expire_grace_period", typeof(TimeSpan) },
-            { "user_limit", typeof(int) }
+            { "user_limit", typeof(int) },
+            { "privacy_level", typeof(StagePrivacyLevel) }
         };
 
         private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =
