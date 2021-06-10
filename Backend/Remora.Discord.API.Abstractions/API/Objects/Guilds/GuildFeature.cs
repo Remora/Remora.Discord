@@ -31,34 +31,14 @@ namespace Remora.Discord.API.Abstractions.Objects
     public enum GuildFeature
     {
         /// <summary>
-        /// The guild has access to set an invite splash background.
+        /// The guild has access to set an animated icon.
         /// </summary>
-        InviteSplash,
+        AnimatedIcon,
 
         /// <summary>
-        /// The guild has access to set 384kbps bitrate in voice (previously VIP voice servers).
+        /// The guild has access to set a guild banner image.
         /// </summary>
-        VIPRegions,
-
-        /// <summary>
-        /// The server has access to set a vanity URL.
-        /// </summary>
-        VanityURL,
-
-        /// <summary>
-        /// The guild is verified.
-        /// </summary>
-        Verified,
-
-        /// <summary>
-        /// The guild is partnered.
-        /// </summary>
-        Partnered,
-
-        /// <summary>
-        /// The guild has community features enabled.
-        /// </summary>
-        Community,
+        Banner,
 
         /// <summary>
         /// The guild has access to use commerce features (i.e, create store channels).
@@ -66,9 +46,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         Commerce,
 
         /// <summary>
-        /// The guild has access to creating news channels.
+        /// The guild has community features enabled.
         /// </summary>
-        News,
+        Community,
 
         /// <summary>
         /// The guild is able to be discovered in the guild directory.
@@ -81,19 +61,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         Featurable,
 
         /// <summary>
-        /// The guild has access to set an animated icon.
+        /// The guild has access to set an invite splash background.
         /// </summary>
-        AnimatedIcon,
-
-        /// <summary>
-        /// The guild has access to set a guild banner image.
-        /// </summary>
-        Banner,
-
-        /// <summary>
-        /// The guild has enabled a welcome screen.
-        /// </summary>
-        WelcomeScreenEnabled,
+        InviteSplash,
 
         /// <summary>
         /// The guild has enabled membership screening.
@@ -101,13 +71,53 @@ namespace Remora.Discord.API.Abstractions.Objects
         MemberVerificationGateEnabled,
 
         /// <summary>
+        /// The guild has access to creating news channels.
+        /// </summary>
+        News,
+
+        /// <summary>
+        /// The guild is partnered.
+        /// </summary>
+        Partnered,
+
+        /// <summary>
         /// The guild can be previewed before joining.
         /// </summary>
         PreviewEnabled,
 
         /// <summary>
-        /// The guild was discoverable before the "Discovery Checklist" feature was launched.
+        /// The server has access to set a vanity URL.
         /// </summary>
-        EnabledDiscoverableBefore
+        VanityURL,
+
+        /// <summary>
+        /// The guild is verified.
+        /// </summary>
+        Verified,
+
+        /// <summary>
+        /// The guild has access to set 384kbps bitrate in voice (previously VIP voice servers).
+        /// </summary>
+        VIPRegions,
+
+        /// <summary>
+        /// The guild has enabled a welcome screen.
+        /// </summary>
+        WelcomeScreenEnabled,
+
+        /// <summary>
+        /// The guild has enabled ticketed events.
+        /// </summary>
+        TicketedEventsEnabled,
+
+        /// <summary>
+        /// The guild has enabled monetization features.
+        /// </summary>
+        MonetizationEnabled,
+
+        /// <summary>
+        /// The guild has increased custom sticker slots.
+        /// </summary>
+        MoreStickers
     }
 }
