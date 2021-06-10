@@ -153,7 +153,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="nonce">A nonce that can be used for optimistic message sending.</param>
         /// <param name="isTTS">Whether the message is a TTS message.</param>
         /// <param name="file">The contents of the file to upload.</param>
-        /// <param name="embed">The rich embed in the message.</param>
+        /// <param name="embeds">The rich embeds in the message.</param>
         /// <param name="allowedMentions">An object describing the allowed mention types.</param>
         /// <param name="messageReference">A reference to another message.</param>
         /// <param name="components">The components of the message.</param>
@@ -166,7 +166,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
             Optional<FileData> file = default,
-            Optional<IEmbed> embed = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
@@ -279,7 +279,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The ID of the channel the message is in.</param>
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="content">The new content of the message.</param>
-        /// <param name="embed">The new embed associated with the message.</param>
+        /// <param name="embeds">The new embeds associated with the message.</param>
         /// <param name="flags">The new message flags.</param>
         /// <param name="allowedMentions">The allowed mentions for the message.</param>
         /// <param name="attachments">The attachments to keep, if any.</param>
@@ -291,7 +291,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             Snowflake messageID,
             Optional<string?> content = default,
-            Optional<IEmbed?> embed = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IAttachment>> attachments = default,

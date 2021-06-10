@@ -754,7 +754,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
 
-                var embed = new Embed();
+                var embeds = new List<Embed>();
                 var nonce = "aasda";
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
@@ -768,7 +768,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             j => j.IsObject
                             (
                                 o => o
-                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("embeds", p => p.IsArray())
                                     .WithProperty("nonce", p => p.Is(nonce))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
@@ -782,7 +782,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     nonce: nonce,
                     isTTS: tts,
-                    embed: embed,
+                    embeds: embeds,
                     allowedMentions: allowedMentions
                 );
 
@@ -798,7 +798,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
 
-                var embed = new Embed();
+                var embeds = new List<Embed>();
                 var nonce = "aasda";
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
@@ -813,7 +813,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             j => j.IsObject
                             (
                                 o => o
-                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("embeds", p => p.IsArray())
                                     .WithProperty("nonce", p => p.Is(nonce))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
@@ -828,7 +828,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     nonce: nonce,
                     isTTS: tts,
-                    embed: embed,
+                    embeds: embeds,
                     allowedMentions: allowedMentions,
                     components: components
                 );
@@ -1171,7 +1171,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var messageId = new Snowflake(1);
 
                 var content = "drr";
-                var embed = new Embed();
+                var embeds = new List<Embed>();
                 var flags = MessageFlags.SuppressEmbeds;
                 var attachments = new List<IAttachment>();
                 var components = new List<IMessageComponent>();
@@ -1190,7 +1190,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             (
                                 o => o
                                     .WithProperty("content", p => p.Is(content))
-                                    .WithProperty("embed", p => p.IsObject())
+                                    .WithProperty("embeds", p => p.IsArray())
                                     .WithProperty("flags", p => p.Is((int)flags))
                                     .WithProperty("attachments", p => p.IsArray(a => a.WithCount(0)))
                                     .WithProperty("components", p => p.IsArray())
@@ -1204,7 +1204,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     channelId,
                     messageId,
                     content,
-                    embed,
+                    embeds,
                     flags,
                     attachments: attachments,
                     components: components
@@ -1236,14 +1236,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             (
                                 o => o
                                     .WithProperty("content", p => p.IsNull())
-                                    .WithProperty("embed", p => p.IsNull())
                                     .WithProperty("flags", p => p.IsNull())
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
-                var result = await api.EditMessageAsync(channelId, messageId, null, null, null);
+                var result = await api.EditMessageAsync(channelId, messageId, null, flags: null, allowedMentions: null);
                 ResultAssert.Successful(result);
             }
         }

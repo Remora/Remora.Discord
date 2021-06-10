@@ -256,7 +256,7 @@ namespace Remora.Discord.Rest.API
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
             Optional<FileData> file = default,
-            Optional<IEmbed> embed = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
@@ -285,7 +285,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("content", content, _jsonOptions);
                             json.Write("nonce", nonce, _jsonOptions);
                             json.Write("tts", isTTS, _jsonOptions);
-                            json.Write("embed", embed, _jsonOptions);
+                            json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                             json.Write("message_reference", messageReference, _jsonOptions);
                             json.Write("components", components, _jsonOptions);
@@ -417,7 +417,7 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             Snowflake messageID,
             Optional<string?> content = default,
-            Optional<IEmbed?> embed = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IAttachment>> attachments = default,
@@ -433,7 +433,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.Write("content", content, _jsonOptions);
-                        json.Write("embed", embed, _jsonOptions);
+                        json.Write("embeds", embeds, _jsonOptions);
                         json.WriteEnum("flags", flags, jsonOptions: _jsonOptions);
                         json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                         json.Write("attachments", attachments, _jsonOptions);
