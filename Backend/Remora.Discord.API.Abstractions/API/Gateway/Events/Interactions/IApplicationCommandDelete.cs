@@ -32,9 +32,5 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     [PublicAPI]
     public interface IApplicationCommandDelete : IApplicationCommand, IGatewayEvent
     {
-        /// <summary>
-        /// Gets the ID of the guild that the command was deleted in.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
     }
 }

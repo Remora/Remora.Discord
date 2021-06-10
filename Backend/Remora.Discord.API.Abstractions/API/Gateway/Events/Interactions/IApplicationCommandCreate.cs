@@ -32,9 +32,5 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     [PublicAPI]
     public interface IApplicationCommandCreate : IApplicationCommand, IGatewayEvent
     {
-        /// <summary>
-        /// Gets the ID of the guild that the command was created in.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
     }
 }

@@ -35,6 +35,7 @@ namespace Remora.Discord.API.Objects
     (
         Snowflake ID,
         Snowflake ApplicationID,
+        Optional<Snowflake> GuildID,
         string Name,
         string Description,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,

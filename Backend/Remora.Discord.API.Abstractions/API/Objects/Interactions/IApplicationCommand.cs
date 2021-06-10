@@ -43,6 +43,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Snowflake ApplicationID { get; }
 
         /// <summary>
+        /// Gets the ID of the guild the command belongs to.
+        /// </summary>
+        Optional<Snowflake> GuildID { get; }
+
+        /// <summary>
         /// Gets the name of the command.
         /// </summary>
         /// <remarks>The length of the name must be between 3 and 32 characters.</remarks>

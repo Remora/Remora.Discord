@@ -35,11 +35,12 @@ namespace Remora.Discord.API.Gateway.Events
     (
         Snowflake ID,
         Snowflake ApplicationID,
+        Optional<Snowflake> GuildID,
         string Name,
         string Description,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default,
-        Optional<Snowflake> GuildID = default
-    )
-    : ApplicationCommand(ID, ApplicationID, Name, Description, Options, DefaultPermission), IApplicationCommandCreate;
+        Optional<bool> DefaultPermission = default
+    ) :
+        ApplicationCommand(ID, ApplicationID, GuildID, Name, Description, Options, DefaultPermission),
+        IApplicationCommandCreate;
 }
