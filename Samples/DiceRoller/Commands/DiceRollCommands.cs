@@ -123,7 +123,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         {
             var failEmbed = new Embed(Description: "Dice rolling failed :(", Colour: Color.OrangeRed);
 
-            var replyFail = await _channelAPI.CreateMessageAsync(channel, embed: failEmbed);
+            var replyFail = await _channelAPI.CreateMessageAsync(channel, embeds: new[] { failEmbed });
 
             return !replyFail.IsSuccess
                 ? Result.FromError(replyFail)
@@ -143,7 +143,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
             var embed = new Embed("Rolls", Fields: fields, Colour: Color.LawnGreen);
 
-            var replyRolls = await _channelAPI.CreateMessageAsync(channel, embed: embed);
+            var replyRolls = await _channelAPI.CreateMessageAsync(channel, embeds: new[] { embed });
 
             return !replyRolls.IsSuccess
                 ? Result.FromError(replyRolls)

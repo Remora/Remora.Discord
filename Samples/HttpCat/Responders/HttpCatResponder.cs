@@ -69,7 +69,7 @@ namespace Remora.Discord.Samples.HttpCat.Responders
             var embedImage = new EmbedImage($"https://http.cat/{code}");
             var embed = new Embed(Image: embedImage);
 
-            var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embed: embed, ct: ct);
+            var reply = await _channelAPI.CreateMessageAsync(gatewayEvent.ChannelID, embeds: new[] { embed }, ct: ct);
             return !reply.IsSuccess
                 ? Result.FromError(reply)
                 : Result.FromSuccess();

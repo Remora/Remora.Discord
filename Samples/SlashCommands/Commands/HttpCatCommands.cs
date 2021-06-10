@@ -70,7 +70,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             var reply = await _channelAPI.CreateMessageAsync
             (
                 _context.ChannelID,
-                embed: embed,
+                embeds: new[] { embed },
                 ct: this.CancellationToken
             );
 
