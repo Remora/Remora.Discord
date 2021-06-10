@@ -29,8 +29,8 @@ namespace Remora.Discord.API.Objects
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMember" />
     public record ThreadMember
     (
-        Snowflake ID,
-        Snowflake UserID,
+        Optional<Snowflake> ID,
+        Optional<Snowflake> UserID,
         DateTimeOffset JoinTimestamp,
         ThreadMemberFlags Flags
     )

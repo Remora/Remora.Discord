@@ -31,8 +31,8 @@ namespace Remora.Discord.API.Gateway.Events.Channels
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadMemberUpdate" />
     public record ThreadMemberUpdate
     (
-        Snowflake ID,
-        Snowflake UserID,
+        Optional<Snowflake> ID,
+        Optional<Snowflake> UserID,
         DateTimeOffset JoinTimestamp,
         ThreadMemberFlags Flags
     ) : ThreadMember(ID, UserID, JoinTimestamp, Flags), IThreadMemberUpdate;

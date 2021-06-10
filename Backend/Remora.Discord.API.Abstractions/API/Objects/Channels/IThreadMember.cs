@@ -33,12 +33,12 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the thread.
         /// </summary>
-        Snowflake ID { get; }
+        Optional<Snowflake> ID { get; }
 
         /// <summary>
         /// Gets the ID of the user.
         /// </summary>
-        Snowflake UserID { get; }
+        Optional<Snowflake> UserID { get; }
 
         /// <summary>
         /// Gets the time the current user last joined the thread.
