@@ -216,6 +216,15 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IThreadMembersUpdate, ThreadMembersUpdate>()
                 .WithPropertyName(m => m.RemovedMemberIDs, "removed_member_ids");
 
+            options.AddDataObjectConverter<IStageInstanceCreate, StageInstanceCreate>()
+                .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
+
+            options.AddDataObjectConverter<IStageInstanceUpdate, StageInstanceUpdate>()
+                .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
+
+            options.AddDataObjectConverter<IStageInstanceDelete, StageInstanceDelete>()
+                .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
+
             // Guilds
             options.AddDataObjectConverter<IGuildCreate, GuildCreate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
