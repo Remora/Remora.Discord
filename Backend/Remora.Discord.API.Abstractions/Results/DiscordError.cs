@@ -296,6 +296,16 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxGuildInvitesReached = 30016,
 
         /// <summary>
+        /// Maximum number of animated emojis reached.
+        /// </summary>
+        MaxAnimatedEmojisReached = 30018,
+
+        /// <summary>
+        /// Maximum number of server members reached.
+        /// </summary>
+        MaxServerMembersReached = 30019,
+
+        /// <summary>
         /// The guild already has a template.
         /// </summary>
         GuildAlreadyHasATemplate = 30031,
