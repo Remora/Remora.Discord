@@ -60,7 +60,7 @@ namespace Remora.Discord.Commands.Conditions
 
             var application = getApplication.Entity;
 
-            if (!application.Owner.ID.HasValue)
+            if (application.Owner is null || !application.Owner.ID.HasValue)
             {
                 return new GenericError("The application owner's ID was not present.");
             }

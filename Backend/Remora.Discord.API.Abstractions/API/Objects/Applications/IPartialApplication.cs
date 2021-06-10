@@ -80,7 +80,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the user information of the application owner.
         /// </summary>
-        Optional<IPartialUser> Owner { get; }
+        Optional<IPartialUser?> Owner { get; }
 
         /// <summary>
         /// Gets the summary of the game, if the application is a game sold on the Discord storefront.

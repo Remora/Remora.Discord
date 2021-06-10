@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Objects
         Optional<bool> DoesBotRequireCodeGrant = default,
         Optional<string> TermsOfServiceURL = default,
         Optional<string> PrivacyPolicyURL = default,
-        Optional<IPartialUser> Owner = default,
+        Optional<IPartialUser?> Owner = default,
         Optional<string> Summary = default,
         Optional<string> VerifyKey = default,
         Optional<ITeam?> Team = default,
