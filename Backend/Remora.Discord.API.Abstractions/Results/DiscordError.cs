@@ -236,6 +236,11 @@ namespace Remora.Discord.API.Abstractions.Results
         WriteRateLimitHit = 20028,
 
         /// <summary>
+        /// Your stage channel topic contains disallowed words for a public stage.
+        /// </summary>
+        DisallowedWordsInStageTopic = 20031,
+
+        /// <summary>
         /// Maximum number of guilds reached (100).
         /// </summary>
         MaxGuildsReached = 30001,
