@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.3.1-beta2</Version>
+        <Version>3.3.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,6 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            This is a prerelease version, using undocumented Discord behaviour.
-
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>

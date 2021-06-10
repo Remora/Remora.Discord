@@ -5,15 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.10.9-beta1</Version>
+        <Version>3.10.9</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            This is a prerelease version, using undocumented Discord behaviour.
-
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>

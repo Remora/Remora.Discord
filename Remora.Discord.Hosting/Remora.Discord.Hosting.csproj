@@ -5,15 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.26-beta1</Version>
+        <Version>3.0.26</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            This is a prerelease version, using undocumented Discord behaviour.
-
             Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
