@@ -74,11 +74,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IDiscordPermissionSet> Permissions { get; }
 
         /// <summary>
-        /// Gets the unique ID of the voice region.
-        /// </summary>
-        string Region { get; }
-
-        /// <summary>
         /// Gets the ID of the AFK channel.
         /// </summary>
         Snowflake? AFKChannelID { get; }

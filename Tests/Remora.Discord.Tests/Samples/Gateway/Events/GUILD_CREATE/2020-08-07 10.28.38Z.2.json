@@ -368,8 +368,7 @@
         "hash": "5rZZdKiPRGI"
       }
     },
-    "region": "eu-central",
-    "mfa_level": 0,
+        "mfa_level": 0,
     "premium_subscription_count": 0,
     "system_channel_id": "452526315288133646",
     "premium_tier": 0,

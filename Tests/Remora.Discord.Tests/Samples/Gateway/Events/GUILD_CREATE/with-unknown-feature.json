@@ -295,8 +295,7 @@
     "vanity_url_code": null,
     "description": null,
     "rules_channel_id": null,
-    "region": "eu-central",
-    "id": "452526315288133644",
+        "id": "452526315288133644",
     "roles": [
       {
         "position": 0,

@@ -60,7 +60,6 @@ namespace Remora.Discord.Caching.API
         public override async Task<Result<IGuild>> CreateGuildAsync
         (
             string name,
-            Optional<string> region = default,
             Optional<Stream> icon = default,
             Optional<VerificationLevel> verificationLevel = default,
             Optional<MessageNotificationLevel> defaultMessageNotifications = default,
@@ -77,7 +76,6 @@ namespace Remora.Discord.Caching.API
             var createResult = await base.CreateGuildAsync
             (
                 name,
-                region,
                 icon,
                 verificationLevel,
                 defaultMessageNotifications,
@@ -159,7 +157,6 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildID,
             Optional<string> name = default,
-            Optional<string?> region = default,
             Optional<VerificationLevel?> verificationLevel = default,
             Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
@@ -184,7 +181,6 @@ namespace Remora.Discord.Caching.API
             (
                 guildID,
                 name,
-                region,
                 verificationLevel,
                 defaultMessageNotifications,
                 explicitContentFilter,

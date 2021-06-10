@@ -42,7 +42,6 @@ namespace Remora.Discord.API.Objects
         Optional<bool> IsOwner = default,
         Optional<Snowflake> OwnerID = default,
         Optional<IDiscordPermissionSet> Permissions = default,
-        Optional<string> Region = default,
         Optional<Snowflake?> AFKChannelID = default,
         Optional<TimeSpan> AFKTimeout = default,
         Optional<VerificationLevel> VerificationLevel = default,

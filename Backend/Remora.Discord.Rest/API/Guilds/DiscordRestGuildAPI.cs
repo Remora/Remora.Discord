@@ -61,7 +61,6 @@ namespace Remora.Discord.Rest.API
         public virtual async Task<Result<IGuild>> CreateGuildAsync
         (
             string name,
-            Optional<string> region = default,
             Optional<Stream> icon = default,
             Optional<VerificationLevel> verificationLevel = default,
             Optional<MessageNotificationLevel> defaultMessageNotifications = default,
@@ -98,7 +97,6 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.Write("region", region, _jsonOptions);
                         json.Write("icon", iconData, _jsonOptions);
                         json.Write("verification_level", verificationLevel, _jsonOptions);
                         json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
@@ -161,7 +159,6 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Optional<string> name = default,
-            Optional<string?> region = default,
             Optional<VerificationLevel?> verificationLevel = default,
             Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
@@ -257,7 +254,6 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.Write("name", name, _jsonOptions);
-                        json.Write("region", region, _jsonOptions);
                         json.WriteEnum("verification_level", verificationLevel, jsonOptions: _jsonOptions);
                         json.WriteEnum
                         (

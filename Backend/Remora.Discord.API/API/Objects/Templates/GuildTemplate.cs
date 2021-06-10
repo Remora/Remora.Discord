@@ -34,7 +34,6 @@ namespace Remora.Discord.API.Objects
     (
         string Name,
         string? Description,
-        string Region,
         IImageHash? IconHash,
         VerificationLevel VerificationLevel,
         MessageNotificationLevel DefaultMessageNotifications,

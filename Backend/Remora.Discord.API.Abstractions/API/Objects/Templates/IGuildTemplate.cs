@@ -42,11 +42,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         string? Description { get; }
 
         /// <summary>
-        /// Gets the unique ID of the voice region.
-        /// </summary>
-        string Region { get; }
-
-        /// <summary>
         /// Gets the guild's icon hash.
         /// </summary>
         IImageHash? IconHash { get; }

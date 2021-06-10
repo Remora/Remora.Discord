@@ -57,9 +57,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <inheritdoc cref="IGuild.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
 
-        /// <inheritdoc cref="IGuild.Region" />
-        Optional<string> Region { get; }
-
         /// <inheritdoc cref="IGuild.AFKChannelID" />
         Optional<Snowflake?> AFKChannelID { get; }
 

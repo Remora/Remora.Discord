@@ -1,8 +1,7 @@
 {
     "name": "Bot Dev",
     "description": null,
-    "region": "eu-central",
-    "icon_hash": null,
+        "icon_hash": null,
     "verification_level": 0,
     "default_message_notifications": 0,
     "explicit_content_filter": 0,

@@ -58,7 +58,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             public async Task PerformsRequestCorrectly()
             {
                 var name = "brr";
-                var region = "aa";
 
                 // Create a dummy PNG image
                 await using var icon = new MemoryStream();
@@ -86,7 +85,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             (
                                 o => o
                                 .WithProperty("name", p => p.Is(name))
-                                .WithProperty("region", p => p.Is(region))
                                 .WithProperty("icon", p => p.IsString())
                                 .WithProperty("verification_level", p => p.Is((int)verificationLevel))
                                 .WithProperty
@@ -109,7 +107,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var result = await api.CreateGuildAsync
                 (
                     name,
-                    region,
                     icon,
                     verificationLevel,
                     defaultMessageNotifications,
@@ -275,7 +272,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var name = "brr";
-                var region = "aa";
 
                 // Create a dummy PNG image
                 await using var icon = new MemoryStream();
@@ -323,7 +319,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                         (
                             o => o
                             .WithProperty("name", p => p.Is(name))
-                            .WithProperty("region", p => p.Is(region))
                             .WithProperty("verification_level", p => p.Is((int)verificationLevel))
                             .WithProperty
                             (
@@ -354,7 +349,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     guildId,
                     name,
-                    region,
                     verificationLevel,
                     defaultMessageNotifications,
                     explicitContentFilter,

@@ -43,7 +43,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// Creates a new guild. This can only by used by bots in less than 10 guilds.
         /// </summary>
         /// <param name="name">The name of the guild (2-100 characters).</param>
-        /// <param name="region">The voice region ID.</param>
         /// <param name="icon">The icon.</param>
         /// <param name="verificationLevel">The verification level.</param>
         /// <param name="defaultMessageNotifications">The default message notification level.</param>
@@ -59,7 +58,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         Task<Result<IGuild>> CreateGuildAsync
         (
             string name,
-            Optional<string> region = default,
             Optional<Stream> icon = default,
             Optional<VerificationLevel> verificationLevel = default,
             Optional<MessageNotificationLevel> defaultMessageNotifications = default,
@@ -107,7 +105,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="name">The new name of the guild.</param>
-        /// <param name="region">The new voice region of the guild.</param>
         /// <param name="verificationLevel">The new verification level of the guild.</param>
         /// <param name="defaultMessageNotifications">The new default notification level of the guild.</param>
         /// <param name="explicitContentFilter">The new explicit filter level of the guild.</param>
@@ -131,7 +128,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake guildID,
             Optional<string> name = default,
-            Optional<string?> region = default,
             Optional<VerificationLevel?> verificationLevel = default,
             Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
             Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
