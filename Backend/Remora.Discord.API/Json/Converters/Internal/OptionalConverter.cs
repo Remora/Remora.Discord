@@ -31,16 +31,16 @@ namespace Remora.Discord.API.Json
     /// Converts optional fields to their JSON representation.
     /// </summary>
     /// <typeparam name="TValue">The underlying type.</typeparam>
-    internal class OptionalConverter<TValue> : JsonConverter<Optional<TValue>>
+    internal class OptionalConverter<TValue> : JsonConverter<Optional<TValue?>>
     {
         /// <inheritdoc />
-        public override Optional<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override Optional<TValue?> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             return new(JsonSerializer.Deserialize<TValue>(ref reader, options));
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Optional<TValue> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Optional<TValue?> value, JsonSerializerOptions options)
         {
             if (value.Value is null)
             {

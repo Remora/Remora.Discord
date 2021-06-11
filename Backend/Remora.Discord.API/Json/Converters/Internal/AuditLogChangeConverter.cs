@@ -137,8 +137,8 @@ namespace Remora.Discord.API.Json
                 options.Converters.Add(keyConverter);
             }
 
-            Optional<object> newValue = default;
-            Optional<object> oldValue = default;
+            Optional<object?> newValue = default;
+            Optional<object?> oldValue = default;
 
             if (jsonDocument.RootElement.TryGetProperty("old_value", out var oldValueProperty))
             {

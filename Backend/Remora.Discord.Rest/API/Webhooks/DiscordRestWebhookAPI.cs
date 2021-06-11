@@ -345,7 +345,7 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
                 {
-                    if (file.HasValue)
+                    if (file.HasValue && file.Value is not null)
                     {
                         b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
                     }
@@ -359,6 +359,11 @@ namespace Remora.Discord.Rest.API
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                             json.Write("attachments", attachments, _jsonOptions);
                             json.Write("components", components, _jsonOptions);
+
+                            if (file.HasValue && file.Value is null)
+                            {
+                                json.WriteNull("file");
+                            }
                         }
                     );
                 },

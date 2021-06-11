@@ -36,12 +36,12 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <remarks>The type of this value (if present) is only known at runtime by inspecting the <see cref="Key"/>
         /// property and matching it with the appropriate audit log change key.</remarks>
         /// </summary>
-        Optional<object> NewValue { get; }
+        Optional<object?> NewValue { get; }
 
         /// <summary>
         /// Gets the old value of the key.
         /// </summary>
-        Optional<object> OldValue { get; }
+        Optional<object?> OldValue { get; }
 
         /// <summary>
         /// Gets the name of the audit log change key.
