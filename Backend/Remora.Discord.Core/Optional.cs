@@ -60,12 +60,16 @@ namespace Remora.Discord.Core
             }
         }
 
+        #pragma warning disable CS8775
         /// <inheritdoc />
         [Obsolete("Prefer Optional{TValue}.IsSpecified")]
+        [MemberNotNullWhen(true, nameof(Value))]
         public bool HasValue => IsSpecified;
 
         /// <inheritdoc />
+        [MemberNotNullWhen(true, nameof(Value))]
         public bool IsSpecified { get; }
+        #pragma warning restore CS8775
 
         [DebuggerHidden, ExcludeFromCodeCoverage]
         private string DebuggerDisplay
