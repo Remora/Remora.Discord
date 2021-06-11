@@ -166,14 +166,6 @@ namespace Remora.Discord.Tests.Tests.Core
             }
 
             [Fact]
-            public void ReturnsCorrectValueIfReferenceTypeOptionalContainsNullValue()
-            {
-                var optional = new Optional<string>(null);
-
-                Assert.Null(optional.Value);
-            }
-
-            [Fact]
             public void ThrowsIfReferenceTypeOptionalDoesNotContainValue()
             {
                 Optional<string> optional = default;
