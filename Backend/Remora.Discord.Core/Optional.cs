@@ -95,7 +95,7 @@ namespace Remora.Discord.Core
         /// Initializes a new instance of the <see cref="Optional{TValue}"/> struct.
         /// </summary>
         /// <param name="value">The contained value.</param>
-        public Optional(TValue value)
+        public Optional(TValue? value)
         {
             _value = value;
             this.IsNull = value is null;
@@ -107,7 +107,7 @@ namespace Remora.Discord.Core
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The created optional.</returns>
-        public static implicit operator Optional<TValue>(TValue value)
+        public static implicit operator Optional<TValue>(TValue? value)
         {
             return new(value);
         }
