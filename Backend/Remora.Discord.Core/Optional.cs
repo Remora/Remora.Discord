@@ -40,14 +40,14 @@ namespace Remora.Discord.Core
     [PublicAPI, DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<TValue> : IOptional
     {
-        private readonly TValue _value;
+        private readonly TValue? _value;
 
         /// <summary>
         /// Gets the value contained in the optional.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the optional does not contain a value.</exception>
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        public TValue Value
+        public TValue? Value
         {
             get
             {
@@ -60,15 +60,16 @@ namespace Remora.Discord.Core
             }
         }
 
+        // Member must have a non-null value when exiting in some condition
         #pragma warning disable CS8775
         /// <inheritdoc />
         [Obsolete("Prefer Optional{TValue}.IsSpecified")]
         [MemberNotNullWhen(true, nameof(Value))]
         public bool HasValue => IsSpecified;
-        #pragma warning restore CS8775
 
         /// <inheritdoc />
         public bool IsSpecified { get; }
+        #pragma warning restore CS8775
 
         /// <inheritdoc />
         [MemberNotNullWhen(false, nameof(Value))]
@@ -138,7 +139,7 @@ namespace Remora.Discord.Core
             {
                 return this.IsNull
                     ? other.IsNull
-                    : EqualityComparer<TValue>.Default.Equals(_value, other._value);
+                    : EqualityComparer<TValue>.Default.Equals(_value!, other._value!);
             }
 
             return !other.IsSpecified;
