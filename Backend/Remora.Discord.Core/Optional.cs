@@ -60,7 +60,9 @@ namespace Remora.Discord.Core
             }
         }
 
-        // Member must have a non-null value when exiting in some condition
+        // CS8775: Member must have a non-null value when exiting in some condition.
+        // Technically, this is a lie, but since the nullability of the type is reliant on the actual generic type and
+        // its annotations, this warning can be disabled.
         #pragma warning disable CS8775
         /// <inheritdoc />
         [Obsolete("Prefer Optional{TValue}.IsSpecified")]
