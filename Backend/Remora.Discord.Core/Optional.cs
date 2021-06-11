@@ -61,6 +61,7 @@ namespace Remora.Discord.Core
         }
 
         /// <inheritdoc />
+        [Obsolete("Prefer Optional{TValue}.IsSpecified")]
         public bool HasValue => IsSpecified;
 
         /// <inheritdoc />
