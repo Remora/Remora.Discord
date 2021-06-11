@@ -41,5 +41,10 @@ namespace Remora.Discord.Core
         /// Gets a value indicating whether the optional value is logically present.
         /// </summary>
         bool IsSpecified { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the value is <c>null</c>. If <see cref="IsSpecified"/> is false, <see cref="IsNull"/> is undefined.
+        /// </summary>
+        bool IsNull { get; }
     }
 }
