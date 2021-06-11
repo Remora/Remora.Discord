@@ -643,7 +643,7 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (!application.CoverImage.HasValue)
+            if (!application.CoverImage.IsSpecified || application.CoverImage.Value is null)
             {
                 return new ImageNotFoundError();
             }
