@@ -180,7 +180,7 @@ namespace Remora.Discord.Commands.Extensions
                         default,
                         default,
                         default,
-                        new Optional<IReadOnlyList<IApplicationCommandOption>>(parameterOptions)
+                        new Optional<IReadOnlyList<IApplicationCommandOption>>(parameterOptions!)
                     );
 
                     return Result.FromSuccess();
