@@ -51,7 +51,7 @@ namespace Remora.Discord.Core
         {
             get
             {
-                if (this.HasValue)
+                if (this.IsSpecified)
                 {
                     return _value;
                 }
