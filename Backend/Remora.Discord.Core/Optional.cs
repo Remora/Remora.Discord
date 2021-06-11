@@ -40,14 +40,14 @@ namespace Remora.Discord.Core
     [PublicAPI, DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
     public readonly struct Optional<TValue> : IOptional
     {
-        private readonly TValue? _value;
+        private readonly TValue _value;
 
         /// <summary>
         /// Gets the value contained in the optional.
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown if the optional does not contain a value.</exception>
         [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        public TValue? Value
+        public TValue Value
         {
             get
             {
@@ -60,13 +60,8 @@ namespace Remora.Discord.Core
             }
         }
 
-        // Technically, this is a lie, but since the nullability of the type is reliant on the actual generic type and
-        // its annotations, this warning can be disabled.
-        #pragma warning disable CS8775
         /// <inheritdoc />
-        [MemberNotNullWhen(true, nameof(Value))]
         public bool HasValue { get; }
-        #pragma warning restore CS8775
 
         [DebuggerHidden, ExcludeFromCodeCoverage]
         private string DebuggerDisplay
@@ -86,7 +81,7 @@ namespace Remora.Discord.Core
         /// Initializes a new instance of the <see cref="Optional{TValue}"/> struct.
         /// </summary>
         /// <param name="value">The contained value.</param>
-        public Optional(TValue? value)
+        public Optional(TValue value)
         {
             _value = value;
             this.HasValue = true;
@@ -97,7 +92,7 @@ namespace Remora.Discord.Core
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The created optional.</returns>
-        public static implicit operator Optional<TValue>(TValue? value)
+        public static implicit operator Optional<TValue>(TValue value)
         {
             return new(value);
         }
@@ -127,7 +122,7 @@ namespace Remora.Discord.Core
         /// <returns>true if the instances are considered equal; otherwise, false.</returns>
         public bool Equals(Optional<TValue> other)
         {
-            return EqualityComparer<TValue?>.Default.Equals(_value, other._value) && this.HasValue == other.HasValue;
+            return EqualityComparer<TValue>.Default.Equals(_value, other._value) && this.HasValue == other.HasValue;
         }
 
         /// <inheritdoc />
