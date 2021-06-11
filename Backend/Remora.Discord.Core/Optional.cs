@@ -60,20 +60,18 @@ namespace Remora.Discord.Core
             }
         }
 
-        // Technically, this is a lie, but since the nullability of the type is reliant on the actual generic type and
-        // its annotations, this warning can be disabled.
-        #pragma warning disable CS8775
         /// <inheritdoc />
-        [MemberNotNullWhen(true, nameof(Value))]
-        public bool HasValue { get; }
-        #pragma warning restore CS8775
+        public bool HasValue => IsSpecified;
+
+        /// <inheritdoc />
+        public bool IsSpecified { get; }
 
         [DebuggerHidden, ExcludeFromCodeCoverage]
         private string DebuggerDisplay
         {
             get
             {
-                if (this.HasValue)
+                if (this.IsSpecified)
                 {
                     return this.Value?.ToString() ?? "null";
                 }
@@ -89,7 +87,7 @@ namespace Remora.Discord.Core
         public Optional(TValue? value)
         {
             _value = value;
-            this.HasValue = true;
+            this.IsSpecified = true;
         }
 
         /// <summary>

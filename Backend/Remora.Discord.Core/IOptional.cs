@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.Core
@@ -33,6 +34,12 @@ namespace Remora.Discord.Core
         /// <summary>
         /// Gets a value indicating whether the optional contains a value.
         /// </summary>
+        [Obsolete("Prefer IOptional.IsSpecified")]
         bool HasValue { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the optional value is logically present.
+        /// </summary>
+        bool IsSpecified { get; }
     }
 }

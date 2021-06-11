@@ -35,16 +35,16 @@ namespace Remora.Discord.Tests.Tests.Core
     public class OptionalTests
     {
         /// <summary>
-        /// Tests the <see cref="Optional{TValue}.HasValue"/> property.
+        /// Tests the <see cref="Optional{TValue}.IsSpecified" /> property.
         /// </summary>
-        public class HasValue
+        public class IsSpecified
         {
             [Fact]
             public void ReturnsTrueWhenOptionalValueTypeContainsValue()
             {
                 var optional = new Optional<int>(0);
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
             }
 
             [Fact]
@@ -52,7 +52,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<int> optional = default;
 
-                Assert.False(optional.HasValue);
+                Assert.False(optional.IsSpecified);
             }
 
             [Fact]
@@ -60,7 +60,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 var optional = new Optional<int?>(0);
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
             }
 
             [Fact]
@@ -68,7 +68,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 var optional = new Optional<int?>(null);
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
             }
 
             [Fact]
@@ -76,7 +76,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<int?> optional = default;
 
-                Assert.False(optional.HasValue);
+                Assert.False(optional.IsSpecified);
             }
 
             [Fact]
@@ -84,7 +84,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 var optional = new Optional<string>("Hello world!");
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
             }
 
             [Fact]
@@ -92,7 +92,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<string> optional = default;
 
-                Assert.False(optional.HasValue);
+                Assert.False(optional.IsSpecified);
             }
 
             [Fact]
@@ -100,7 +100,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 var optional = new Optional<string?>(null);
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
             }
 
             [Fact]
@@ -108,7 +108,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<string?> optional = default;
 
-                Assert.False(optional.HasValue);
+                Assert.False(optional.IsSpecified);
             }
         }
 
@@ -216,7 +216,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<int> optional = 64;
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
                 Assert.Equal(64, optional.Value);
             }
 
@@ -225,12 +225,12 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<int?> optional = 64;
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
                 Assert.Equal(64, optional.Value);
 
                 Optional<int?> nullOptional = null;
 
-                Assert.True(nullOptional.HasValue);
+                Assert.True(nullOptional.IsSpecified);
                 Assert.Null(nullOptional.Value);
             }
 
@@ -239,7 +239,7 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<string> optional = "Hello world!";
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
                 Assert.Equal("Hello world!", optional.Value);
             }
 
@@ -248,12 +248,12 @@ namespace Remora.Discord.Tests.Tests.Core
             {
                 Optional<string?> optional = "Hello world!";
 
-                Assert.True(optional.HasValue);
+                Assert.True(optional.IsSpecified);
                 Assert.Equal("Hello world!", optional.Value);
 
                 Optional<string?> nullOptional = null;
 
-                Assert.True(nullOptional.HasValue);
+                Assert.True(nullOptional.IsSpecified);
                 Assert.Null(nullOptional.Value);
             }
         }
