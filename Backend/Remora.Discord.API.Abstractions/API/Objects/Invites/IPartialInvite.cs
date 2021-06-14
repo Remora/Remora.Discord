@@ -81,5 +81,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the expiration date of this invite.
         /// </summary>
         Optional<DateTimeOffset?> ExpiresAt { get; }
+
+        /// <summary>
+        /// Gets metadata about the stage instance the invite is for, if any.
+        /// </summary>
+        Optional<IInviteStageInstance> StageInstance { get; }
     }
 }

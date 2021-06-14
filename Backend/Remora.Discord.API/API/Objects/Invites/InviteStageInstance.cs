@@ -1,5 +1,5 @@
 //
-//  Invite.cs
+//  InviteStageInstance.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
-
-#pragma warning disable CS1591
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IInvite" />
-    [PublicAPI]
-    public record Invite
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IInviteStageInstance" />
+    public record InviteStageInstance
     (
-        string Code,
-        Optional<IPartialGuild> Guild,
-        IPartialChannel Channel,
-        Optional<IUser> Inviter = default,
-        Optional<InviteTarget> TargetType = default,
-        Optional<IPartialUser> TargetUser = default,
-        Optional<Snowflake> TargetApplication = default,
-        Optional<int> ApproximatePresenceCount = default,
-        Optional<int> ApproximateMemberCount = default,
-        Optional<DateTimeOffset?> ExpiresAt = default,
-        Optional<IInviteStageInstance> StageInstance = default
-    ) : IInvite;
+        IReadOnlyList<IPartialGuildMember> Members,
+        int ParticipantCount,
+        int SpeakerCount,
+        string Topic
+    ) : IInviteStageInstance;
 }

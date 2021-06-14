@@ -582,6 +582,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IPartialInvite, PartialInvite>()
                 .WithPropertyConverter(i => i.ExpiresAt, new ISO8601DateTimeOffsetConverter());
 
+            options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
+
             return options;
         }
 

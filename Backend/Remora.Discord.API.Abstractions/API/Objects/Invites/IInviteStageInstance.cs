@@ -1,5 +1,5 @@
 //
-//  Invite.cs
+//  IInviteStageInstance.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IInvite" />
+    /// <summary>
+    /// Represents stage information in an invite.
+    /// </summary>
     [PublicAPI]
-    public record Invite
-    (
-        string Code,
-        Optional<IPartialGuild> Guild,
-        IPartialChannel Channel,
-        Optional<IUser> Inviter = default,
-        Optional<InviteTarget> TargetType = default,
-        Optional<IPartialUser> TargetUser = default,
-        Optional<Snowflake> TargetApplication = default,
-        Optional<int> ApproximatePresenceCount = default,
-        Optional<int> ApproximateMemberCount = default,
-        Optional<DateTimeOffset?> ExpiresAt = default,
-        Optional<IInviteStageInstance> StageInstance = default
-    ) : IInvite;
+    public interface IInviteStageInstance
+    {
+        /// <summary>
+        /// Gets the speaking members of the stage.
+        /// </summary>
+        IReadOnlyList<IPartialGuildMember> Members { get; }
+
+        /// <summary>
+        /// Gets the number of stage participants.
+        /// </summary>
+        int ParticipantCount { get; }
+
+        /// <summary>
+        /// Gets the number of users speaking in the stage.
+        /// </summary>
+        int SpeakerCount { get; }
+
+        /// <summary>
+        /// Gets the topic of the stage.
+        /// </summary>
+        string Topic { get; }
+    }
 }
