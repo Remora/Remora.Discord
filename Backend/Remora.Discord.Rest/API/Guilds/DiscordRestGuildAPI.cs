@@ -1056,7 +1056,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc/>
-        public virtual Task<Result<IVoiceState>> UpdateCurrentUserVoiceStateAsync
+        public virtual Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
         (
             Snowflake guildID,
             Snowflake channelID,
@@ -1082,7 +1082,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IVoiceState>> UpdateUserVoiceStateAsync
+        public virtual Task<Result<IVoiceState>> ModifyUserVoiceStateAsync
         (
             Snowflake guildID,
             Snowflake userID,

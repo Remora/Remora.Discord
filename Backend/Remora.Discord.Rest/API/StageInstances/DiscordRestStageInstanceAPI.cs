@@ -82,7 +82,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IStageInstance>> UpdateStageInstanceAsync
+        public Task<Result<IStageInstance>> ModifyStageInstanceAsync
         (
             Snowflake channelID,
             Optional<string> topic = default,

@@ -60,14 +60,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         Task<Result<IStageInstance>> GetStageInstanceAsync(Snowflake channelID, CancellationToken ct = default);
 
         /// <summary>
-        /// Updates the stage instance of the given stage channel.
+        /// Modifies the stage instance of the given stage channel.
         /// </summary>
         /// <param name="channelID">The ID of the stage channel.</param>
         /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
         /// <param name="privacyLevel">The privacy level of the stage instance.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IStageInstance>> UpdateStageInstanceAsync
+        Task<Result<IStageInstance>> ModifyStageInstanceAsync
         (
             Snowflake channelID,
             Optional<string> topic = default,

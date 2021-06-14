@@ -2048,7 +2048,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestGuildAPI.UpdateCurrentUserVoiceStateAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync"/> method.
         /// </summary>
         public class UpdateCurrentUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -2081,7 +2081,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                         .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
                 );
 
-                var result = await api.UpdateCurrentUserVoiceStateAsync
+                var result = await api.ModifyCurrentUserVoiceStateAsync
                 (
                     guildId,
                     channelID,
@@ -2094,7 +2094,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestGuildAPI.UpdateCurrentUserVoiceStateAsync"/> method.
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentUserVoiceStateAsync"/> method.
         /// </summary>
         public class UpdateUserVoiceStateAsync : RestAPITestBase<IDiscordRestGuildAPI>
         {
@@ -2126,7 +2126,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                         .Respond("application/json", SampleRepository.Samples[typeof(IVoiceState)])
                 );
 
-                var result = await api.UpdateUserVoiceStateAsync
+                var result = await api.ModifyUserVoiceStateAsync
                 (
                     guildId,
                     userID,

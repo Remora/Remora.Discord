@@ -106,7 +106,7 @@ namespace Remora.Discord.Rest.Tests.API
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.UpdateStageInstanceAsync"/> method.
+        /// Tests the <see cref="DiscordRestStageInstanceAPI.ModifyStageInstanceAsync"/> method.
         /// </summary>
         public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
         {
@@ -137,7 +137,7 @@ namespace Remora.Discord.Rest.Tests.API
                         .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
                 );
 
-                var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel);
+                var result = await api.ModifyStageInstanceAsync(channelID, topic, privacyLevel);
                 ResultAssert.Successful(result);
             }
         }
