@@ -337,4 +337,4 @@ Good luck!
 [3]: https://code.visualstudio.com/
 [4]: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-3.1
 [5]: images/ping-pong.png
-[6]: https://www.github.com/Nihlus/Remora.Discord/Samples
+[6]: https://github.com/Nihlus/Remora.Discord/tree/master/Samples
