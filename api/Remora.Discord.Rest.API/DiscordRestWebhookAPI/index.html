@@ -148,6 +148,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI">Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI">DiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI">DiscordRestVoiceAPI</a></li>
@@ -200,6 +201,12 @@
 									</ul>
 								</dd>				
 							
+								<dt>Derived Types</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI">Caching<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
+									</ul>
+								</dd>			
 							
 						</dl>
 					</div>		
@@ -211,6 +218,8 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI"
 	Type["DiscordRestWebhookAPI"]
 class Type type-node
+	Derived0["CachingDiscordRestWebhookAPI"]--&gt;Type
+	click Derived0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI"
 
 						</div>
 					</div>
@@ -281,18 +290,17 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/1717B84C">Create<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/E8F04240">Create<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    TODO: Is the interaction ID not involved here?
     Creates a followup message.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/E7B01276">CreateWebhookAsync<wbr>(Snowflake, <wbr>string, <wbr>Stream?, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/68129201">CreateWebhookAsync<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Creates a new webhook.
@@ -301,7 +309,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/0725FC3D">Delete<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
     TODO: Is the interaction ID not involved here?
@@ -311,7 +319,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/440910C5">Delete<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
     Deletes the original interaction response.
@@ -320,7 +328,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/5ADF3C5D">DeleteWebhookAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
     Deletes the given webhook.
@@ -329,7 +337,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/B94ED423">Delete<wbr>Webhook<wbr>With<wbr>Token<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
     Deletes the given webhook.
@@ -337,28 +345,26 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/C69DF5B0">Edit<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/BC3F9C8E">Edit<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    TODO: Is the interaction ID not involved here?
     Edits an interaction followup message.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/98D57986">Edit<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/F8305C0A">Edit<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    TODO: Is the interaction ID not involved here?
     Edits the initial interaction response.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/62080EB1">Edit<wbr>Webhook<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/9B787FF2">Edit<wbr>Webhook<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IAttachment&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Edits a messages posted by a webhook.
@@ -366,8 +372,8 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/6F9BE480">ExecuteWebhookAsync<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/0F1F8134">ExecuteWebhookAsync<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Executes the given webhook.
@@ -376,7 +382,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/C1CDE11E">Get<wbr>Channel<wbr>Webhooks<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the webhooks for a channel.
@@ -385,7 +391,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/20E4F454">Get<wbr>Guild<wbr>Webhooks<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the webhooks for a guild.
@@ -393,8 +399,17 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/A15814F2">Get<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the message object of the original interaction response.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/A7B879C1">GetWebhookAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the webhook with the given ID.
@@ -402,8 +417,17 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/A500DA9A">Get<wbr>Webhook<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets a previously-sent webhook message.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/2E7440B3">Get<wbr>Webhook<wbr>With<wbr>Token<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the webhook with the given ID and token.
@@ -412,7 +436,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/764A4D48">ModifyWebhookAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Modifies the given webhook.
@@ -421,7 +445,7 @@ public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/87A7B32B">Modify<wbr>Webhook<wbr>With<wbr>Token<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook">IWebhook</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Modifies the given webhook.

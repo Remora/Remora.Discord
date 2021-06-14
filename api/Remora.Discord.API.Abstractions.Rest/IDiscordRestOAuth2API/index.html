@@ -138,7 +138,6 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Rest</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Interface Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAPI">IDiscordRestAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestApplicationAPI">I<wbr>Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAuditLogAPI">I<wbr>Discord<wbr>Rest<wbr>Audit<wbr>Log<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI">I<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>
@@ -148,6 +147,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI">I<wbr>Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI">I<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestOAuth2API">I<wbr>Discord<wbr>Rest<wbr>O<wbr>Auth2<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI">I<wbr>Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI">I<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI">IDiscordRestUserAPI</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI">IDiscordRestVoiceAPI</a></li>
@@ -192,6 +192,7 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestOAuth2API">Caching<wbr>Discord<wbr>Rest<wbr>O<wbr>Auth2<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -203,6 +204,8 @@
 class Type type-node
 	Implementing0["DiscordRestOAuth2API"]-.-&gt;Type
 	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API"
+	Implementing1["CachingDiscordRestOAuth2API"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestOAuth2API"
 
 						</div>
 					</div>
@@ -253,8 +256,17 @@ public interface IDiscordRestOAuth2API</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestOAuth2API/7216DA28">Get<wbr>Current<wbr>Application<wbr>Information<wbr>Async<wbr>(CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplication">IApplication</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestOAuth2API/659B6CD2">Get<wbr>Current<wbr>Authorization<wbr>Information<wbr>Async<wbr>(CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuthorizationInformation">I<wbr>Authorization<wbr>Information</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets information about the bot's current authorizations.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestOAuth2API/4AB70829">Get<wbr>Current<wbr>Bot<wbr>Application<wbr>Information<wbr>Async<wbr>(CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplication">IApplication</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the bot's OAuth2 application object. Flags are typically not included.

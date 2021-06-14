@@ -190,7 +190,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;IRetrieveRestEntityResult&lt;IReadOnlyList&lt;IPartialGuild&gt;&gt;&gt; GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt; before = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; after = default(Optional&lt;Snowflake&gt;), Optional&lt;int&gt; limit = default(Optional&lt;int&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;IReadOnlyList&lt;IPartialGuild&gt;&gt;&gt; GetCurrentUserGuildsAsync(Optional&lt;Snowflake&gt; before = default(Optional&lt;Snowflake&gt;), Optional&lt;Snowflake&gt; after = default(Optional&lt;Snowflake&gt;), Optional&lt;int&gt; limit = default(Optional&lt;int&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -220,7 +220,7 @@
 					<tr>
 						<td>limit</td>
 						<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
-						<td>The maximum number of guilds to get.</td>
+						<td>The maximum number of guilds to get (1-200). Defaults to 200.</td>
 					</tr>
 					<tr>
 						<td>ct</td>
@@ -242,7 +242,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 					<td>A retrieval result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

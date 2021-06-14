@@ -166,6 +166,14 @@
 						<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Gateway<wbr>.Events</a></li>
 </ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Objects</a></li>
+</ul></li>
+				<li class="treeview">
+				<a href="/Remora.Discord/api/Remora.Discord.Caching">Remora<wbr>.Discord<wbr>.Caching</a> <a href="#" class="expand"></a>
+				<ul class="treeview-menu">
+						<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Extensions">Remora<wbr>.Discord<wbr>.Caching<wbr>.Extensions</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders">Remora<wbr>.Discord<wbr>.Caching<wbr>.Responders</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services">Remora<wbr>.Discord<wbr>.Caching<wbr>.Services</a></li>
 </ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
 
 				<li class="treeview">
@@ -173,7 +181,6 @@
 				<ul class="treeview-menu">
 						<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Responders</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Results</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Transport">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Transport</a></li>
 </ul></li>
@@ -182,7 +189,6 @@
 				<ul class="treeview-menu">
 						<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results">Remora<wbr>.Discord<wbr>.Rest<wbr>.Results</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Utility">Remora<wbr>.Discord<wbr>.Rest<wbr>.Utility</a></li>
 </ul></li>
 				<li class="treeview">
@@ -223,6 +229,24 @@
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandCreate">I<wbr>Application<wbr>Command<wbr>Create</a></td>
+									<td>
+    Represents the creation of a new slash command.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandDelete">I<wbr>Application<wbr>Command<wbr>Delete</a></td>
+									<td>
+    Represents the deletion of a slash command.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandUpdate">I<wbr>Application<wbr>Command<wbr>Update</a></td>
+									<td>
+    Represents an update of a slash command.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate">IChannelCreate</a></td>
 									<td>
     Represents the creation of a channel.
@@ -347,6 +371,24 @@
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></td>
+									<td>
+    Represents the creation of an integration.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationDelete">IIntegrationDelete</a></td>
+									<td>
+    Represents the creation of an integration.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate">IIntegrationUpdate</a></td>
+									<td>
+    Represents the creation of an integration.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInteractionCreate">IInteractionCreate</a></td>
 									<td>
     Represents a user-invoked slash command.
@@ -440,6 +482,60 @@
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IResumed">IResumed</a></td>
 									<td>
     Represents an event that marks the completion of a session resumption.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate">IStageInstanceCreate</a></td>
+									<td>
+    Represents the creation of a stage instance.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete">IStageInstanceDelete</a></td>
+									<td>
+    Represents a deletion of a stage instance.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate">IStageInstanceUpdate</a></td>
+									<td>
+    Represents an update of a stage instance.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate">IThreadCreate</a></td>
+									<td>
+    Represents the creation of a channel.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadDelete">IThreadDelete</a></td>
+									<td>
+    Represents the creation of a channel.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadListSync">IThreadListSync</a></td>
+									<td>
+    Sent when the current user gains access to a thread channel.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMemberUpdate">IThreadMemberUpdate</a></td>
+									<td>
+    Represents an update to the current user's thread member object.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMembersUpdate">IThreadMembersUpdate</a></td>
+									<td>
+    Represents an update to the member list of a thread.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate">IThreadUpdate</a></td>
+									<td>
+    Represents the creation of a channel.
     </td>
 							</tr>
 							<tr>

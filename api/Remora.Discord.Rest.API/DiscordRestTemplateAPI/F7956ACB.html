@@ -189,7 +189,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;ICreateRestEntityResult&lt;ITemplate&gt;&gt; CreateGuildTemplateAsync(Snowflake guildID, string name, Optional&lt;string?&gt; description = default(Optional&lt;string?&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;ITemplate&gt;&gt; CreateGuildTemplateAsync(Snowflake guildID, string name, Optional&lt;string?&gt; description = default(Optional&lt;string?&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -241,7 +241,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a>&gt;<wbr>&gt;<wbr></td>
 					<td>A creation result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

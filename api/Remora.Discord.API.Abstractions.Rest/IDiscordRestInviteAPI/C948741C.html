@@ -141,7 +141,7 @@
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI/C948741C">DeleteInviteAsync<wbr>(string, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI/8D3A0744">GetInviteAsync<wbr>(string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI/FEEE2338">GetInviteAsync<wbr>(string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 
 
                     </ul>
@@ -182,7 +182,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Task&lt;IDeleteRestEntityResult&lt;IInvite&gt;&gt; DeleteInviteAsync(string inviteCode, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>Task&lt;Result&lt;IInvite&gt;&gt; DeleteInviteAsync(string inviteCode, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -224,7 +224,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult_1">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a>&gt;<wbr>&gt;<wbr></td>
 					<td>A deletion result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

@@ -163,10 +163,10 @@ incoming events at once.</p>
 <p>Remora.Discord is currently fully usable, and has been released for public
 consumption.</p>
 <h3 id="gateway">3.1 Gateway</h3>
-<p>The Discord Gateway API (v8) is fully implemented. The gateway client can
+<p>The Discord Gateway API (v9) is fully implemented. The gateway client can
 connect, heartbeat, reconnect, resume, receive events, and send commands.</p>
 <h3 id="rest">3.2 REST</h3>
-<p>The Discord REST API (v8) is fully implemented.</p>
+<p>The Discord REST API (v9) is fully implemented.</p>
 <h3 id="voice">3.3 Voice</h3>
 <p>The Discord Voice API is not implemented. If you'd like to contribute to the
 library, this would be an excellent start.</p>
@@ -200,7 +200,7 @@ endpoints change.</p>
 <p>Generally, these changes only affect the API and API.Abstractions packages -
 these will often increment their MAJOR versions. Dependant packages - such as
 Gateway or Rest - will update together with these packages, but unless their
-public API changes as a result, it will be considered a MINOR upgrade.</p>
+public API changes as a result, it will be considered a PATCH upgrade.</p>
 <p>The consequences of this is that you <em>may</em> see source-level breakages when
 upgrading from one minor version to the next. While undesirable, it is an effect
 of Discord's uneven and inaccurate update cycle. Because of the way C# handles
@@ -213,6 +213,9 @@ documented.</p>
 <p>As a bot developer, you should check in every now and then to see what's
 changed - changelogs are released along with tags here on Github, as well as in
 the individual package descriptions.</p>
+<p>Whenever a new set of packages are released, the commit the releases were built
+from is tagged with the year and an incremental release number - for example,
+<code>2021.1</code>.</p>
 <h2 id="contributing">6. Contributing</h2>
 <p>See <a href=".github/CONTRIBUTING.md">Contributing</a>.</p>
 <h2 id="thanks">Thanks</h2>

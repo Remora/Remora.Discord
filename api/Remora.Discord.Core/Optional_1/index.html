@@ -78,6 +78,7 @@
 <p><a href="#TypeParameters">Type Parameters</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
+<p><a href="#Methods">Methods</a></p>
 <p><a href="#Operators">Operators</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -140,15 +141,15 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Struct Types</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional<wbr>&lt;TValue&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></li>
 			<li class="header">Class Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></li>
 			<li class="header">Interface Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/IOptional">IOptional</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/ITokenStore">ITokenStore</a></li>
+			<li class="header">Struct Types</li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional<wbr>&lt;TValue&gt;<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></li>
 
 
                     </ul>
@@ -280,7 +281,7 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/6FFE4734">Optional<wbr>(TValue)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/A9520B7E">Optional<wbr>(TValue?)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional&lt;TValue&gt;</a></code> struct.
     </td>
@@ -314,7 +315,7 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/9A28127E">Value</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1#typeparam-TValue">TValue</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1#typeparam-TValue">TValue?</a></td>
 								<td>
 									<div>
     Gets the value contained in the optional.
@@ -326,6 +327,44 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 			</div>
 		
 
+			<h1 id="Methods">Methods</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/4A7F0956">Equals<wbr>(Optional<wbr>&lt;TValue&gt;<wbr>)<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Compares this instance for equality with another instance.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/E162CC0E">Equals<wbr>(object?)<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/AB80C2D6">GetHashCode<wbr>()<wbr></a></td>
+								<td>int</td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 			<h1 id="Operators">Operators</h1>
 			<div class="box">
@@ -339,8 +378,22 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td>implicit operator <wbr>Optional<wbr>&lt;TValue&gt;<wbr><wbr>(TValue)<wbr></td>
+								<td>implicit operator <wbr>Optional<wbr>&lt;TValue&gt;<wbr><wbr>(TValue?)<wbr></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1#typeparam-TValue">TValue</a>&gt;<wbr></td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr>
+								<td>operator !=<wbr>(Optional<wbr>&lt;TValue&gt;<wbr>, <wbr>Optional<wbr>&lt;TValue&gt;<wbr>)<wbr></td>
+								<td>bool</td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr>
+								<td>operator ==<wbr>(Optional<wbr>&lt;TValue&gt;<wbr>, <wbr>Optional<wbr>&lt;TValue&gt;<wbr>)<wbr></td>
+								<td>bool</td>
 								<td>
 									<div></div>
 								</td>

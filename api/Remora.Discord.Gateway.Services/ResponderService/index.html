@@ -137,10 +137,10 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Interface Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository">I<wbr>Responder<wbr>Type<wbr>Repository</a></li>
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService">ResponderService</a></li>
+			<li class="header">Interface Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository">I<wbr>Responder<wbr>Type<wbr>Repository</a></li>
 
 
                     </ul>
@@ -249,6 +249,24 @@ public class ResponderService : IResponderTypeRepository</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService/3D549D25">Get<wbr>Early<wbr>Responder<wbr>Types<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
+								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
+								<td>
+									<div>
+    Gets all responder types that are relevant for the given event, and should run before any other responders.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService/9EAC360B">Get<wbr>Late<wbr>Responder<wbr>Types<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
+								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
+								<td>
+									<div>
+    Gets all responder types that are relevant for the given event, and should run after any other responders.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService/3B5DF122">GetResponderTypes<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
 								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
 								<td>

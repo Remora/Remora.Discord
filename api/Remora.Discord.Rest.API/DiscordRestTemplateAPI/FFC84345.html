@@ -189,7 +189,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;IRetrieveRestEntityResult&lt;IReadOnlyList&lt;ITemplate&gt;&gt;&gt; GetGuildTemplatesAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;IReadOnlyList&lt;ITemplate&gt;&gt;&gt; GetGuildTemplatesAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -231,7 +231,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 					<td>A retrieval result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

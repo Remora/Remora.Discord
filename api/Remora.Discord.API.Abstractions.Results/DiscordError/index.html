@@ -137,13 +137,6 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Results</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Interface Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/ICreateRestEntityResult_1">I<wbr>Create<wbr>Rest<wbr>Entity<wbr>Result<wbr>&lt;TEntity&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IDeleteRestEntityResult_1">I<wbr>Delete<wbr>Rest<wbr>Entity<wbr>Result<wbr>&lt;TEntity&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result<wbr>&lt;TEntity&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRetrieveRestEntityResult_1">I<wbr>Retrieve<wbr>Rest<wbr>Entity<wbr>Result<wbr>&lt;TEntity&gt;<wbr></a></li>
 			<li class="header">Enum Types</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a></li>
 
@@ -259,11 +252,51 @@ public enum DiscordError</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FC72A70A">Application<wbr>Action<wbr>Unauthorized</a></td>
+								<td>20012</td>
+								<td>
+									<div>
+    You are not allowed to perform that operation on this application.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9C56A910">Application<wbr>Command<wbr>With<wbr>Name<wbr>Exists</a></td>
+								<td>40041</td>
+								<td>
+									<div>
+    An application command with that name already exists.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F4468511">Before<wbr>Is<wbr>Earlier<wbr>Than<wbr>Thread<wbr>Creation</a></td>
+								<td>50085</td>
+								<td>
+									<div>
+    The "before" value provided was earlier than the thread creation date.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/50FCA1AF">BotsOnly</a></td>
 								<td>20002</td>
 								<td>
 									<div>
     Only bots can use this endpoint.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A95AB2A">Cannot<wbr>Delete<wbr>Community<wbr>Required<wbr>Channel</a></td>
+								<td>50074</td>
+								<td>
+									<div>
+    A channel required for community guilds cannot be deleted.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -309,6 +342,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/205B1C39">CannotSelfRedeemGift</a></td>
+								<td>50054</td>
+								<td>
+									<div>
+    You can't redeem this gift yourself.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2AFCB810">Cannot<wbr>Send<wbr>Empty<wbr>Message</a></td>
 								<td>50006</td>
 								<td>
@@ -349,11 +392,31 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/A3E03862">Disallowed<wbr>Words<wbr>In<wbr>Stage<wbr>Topic</a></td>
+								<td>20031</td>
+								<td>
+									<div>
+    Your stage channel topic contains disallowed words for a public stage.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9E250394">Editing<wbr>Not<wbr>Allowed<wbr>Due<wbr>To<wbr>Announcement<wbr>Rate<wbr>Limits</a></td>
 								<td>20022</td>
 								<td>
 									<div>
     This message cannot be edited due to announcement rate limits.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/D78C5028">Explict<wbr>Content<wbr>Cannot<wbr>Be<wbr>Sent</a></td>
+								<td>20009</td>
+								<td>
+									<div>
+    Explicit content cannot be sent to the intended recipient(s).
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -460,6 +523,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C0826185">Invalid<wbr>Operation<wbr>On<wbr>Archived<wbr>Thread</a></td>
+								<td>50083</td>
+								<td>
+									<div>
+    You attempted to perform an operation on an archived thread that's not allowed.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/16DD33BE">Invalid<wbr>Or<wbr>Used<wbr>Invite<wbr>Code</a></td>
 								<td>50020</td>
 								<td>
@@ -480,11 +553,41 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4E75A645">InvalidRole</a></td>
+								<td>50028</td>
+								<td>
+									<div>
+    Invalid role provided.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/80705628">InvalidSticker</a></td>
 								<td>50081</td>
 								<td>
 									<div>
     Invalid sticker sent.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/6414272A">Invalid<wbr>Thread<wbr>Notification<wbr>Settings</a></td>
+								<td>50084</td>
+								<td>
+									<div>
+    Invalid thread notification settings were provided.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/20256B63">InvalidWebhookToken</a></td>
+								<td>50027</td>
+								<td>
+									<div>
+    Invalid webhook token provided.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -500,11 +603,31 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8C287F6D">Max<wbr>Animated<wbr>Emojis<wbr>Reached</a></td>
+								<td>30018</td>
+								<td>
+									<div>
+    Maximum number of animated emojis reached.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E5F65663">Max<wbr>Attachments<wbr>In<wbr>Message<wbr>Reached</a></td>
 								<td>30015</td>
 								<td>
 									<div>
     Maximum number of attachments in a message reached (10).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2094BB9E">MaxEmojisReached</a></td>
+								<td>30008</td>
+								<td>
+									<div>
+    Maximum number of emojis reached.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -560,6 +683,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E3F5AD59">Max<wbr>Number<wbr>Of<wbr>Non<wbr>Member<wbr>Bans<wbr>Reached</a></td>
+								<td>30035</td>
+								<td>
+									<div>
+    The maximum number of bans for non-guild members has been exceeded.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/4F0DB126">Max<wbr>Pins<wbr>In<wbr>Channel<wbr>Reached</a></td>
 								<td>30003</td>
 								<td>
@@ -580,11 +713,41 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/10E8BF59">MaxRecipientsReached</a></td>
+								<td>30004</td>
+								<td>
+									<div>
+    Maximum number of recipients reached.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/121AD208">Max<wbr>Server<wbr>Members<wbr>Reached</a></td>
+								<td>30019</td>
+								<td>
+									<div>
+    Maximum number of server members reached.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A761286">MaxWebhooksReached</a></td>
 								<td>30007</td>
 								<td>
 									<div>
     Maximum number of webhooks reached (10).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/31B5EE59">Message<wbr>Already<wbr>Crossposted</a></td>
+								<td>40033</td>
+								<td>
+									<div>
+    This message has already been crossposted.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -620,6 +783,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8F3BF0C0">MissingOAuth2Scope</a></td>
+								<td>50026</td>
+								<td>
+									<div>
+    You are missing a required OAuth2 scope.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/253E634D">MissingPermission</a></td>
 								<td>50013</td>
 								<td>
@@ -635,6 +808,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Bots cannot use this endpoint.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/AC8130BD">NoUserWithTag</a></td>
+								<td>80004</td>
+								<td>
+									<div>
+    No user with that tag exists.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -670,6 +853,36 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8C1C5452">OpeningDMsTooFast</a></td>
+								<td>40003</td>
+								<td>
+									<div>
+    You are opening direct messages too fast.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C4BF21AD">OwnerOnly</a></td>
+								<td>20018</td>
+								<td>
+									<div>
+    Only the owner of this account can perform that action.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/719FE304">Payment<wbr>Source<wbr>Required<wbr>For<wbr>Redemption</a></td>
+								<td>50070</td>
+								<td>
+									<div>
+    You need a payment source to redeem this gift.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8B332399">ReactionBlocked</a></td>
 								<td>90001</td>
 								<td>
@@ -700,12 +913,32 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1BF7DAC5">SlowMode</a></td>
+								<td>20016</td>
+								<td>
+									<div>
+    This action cannot be performed due to slow mode.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5C5C6C79">Too<wbr>Few<wbr>Or<wbr>Too<wbr>Many<wbr>Messages<wbr>To<wbr>Delete</a></td>
 								<td>50016</td>
 								<td>
 									<div>
     Provided too few or too many messages to delete. Must provide at least 2 and fewer than 100 messages to
     delete.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1FD293EE">TwoFactorRequired</a></td>
+								<td>60003</td>
+								<td>
+									<div>
+    Two factor is required for this operation.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -746,6 +979,26 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Unknown application.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9A681103">Unknown<wbr>Application<wbr>Command</a></td>
+								<td>10063</td>
+								<td>
+									<div>
+    Unknown application command.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3DFFCD67">Unknown<wbr>Application<wbr>Command<wbr>Permissions</a></td>
+								<td>10066</td>
+								<td>
+									<div>
+    Unknown application command permissions.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -811,6 +1064,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F8112E1E">UnknownGiftCode</a></td>
+								<td>10038</td>
+								<td>
+									<div>
+    Unknown gift code.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/67F05F55">UnknownGuild</a></td>
 								<td>10004</td>
 								<td>
@@ -822,7 +1085,7 @@ public enum DiscordError</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/37146DDD">UnknownGuildTemplate</a></td>
-								<td>100057</td>
+								<td>10057</td>
 								<td>
 									<div>
     Unknown guild template.
@@ -836,6 +1099,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Unknown integration.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/6256E628">UnknownInteraction</a></td>
+								<td>10062</td>
+								<td>
+									<div>
+    Unknown interaction.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -931,6 +1204,26 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/14920224">UnknownSession</a></td>
+								<td>10020</td>
+								<td>
+									<div>
+    Unknown session.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/56BDB0C4">Unknown<wbr>Store<wbr>Directory<wbr>Layout</a></td>
+								<td>10033</td>
+								<td>
+									<div>
+    Unknown store directory layout.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C95D8872">UnknownStoreListing</a></td>
 								<td>10028</td>
 								<td>
@@ -971,6 +1264,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F6D4B7FE">Unknown<wbr>Webhook<wbr>Service</a></td>
+								<td>10016</td>
+								<td>
+									<div>
+    Unknown webhook service.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8EFA2A06">UnverifiedAccount</a></td>
 								<td>40002</td>
 								<td>
@@ -986,6 +1289,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The user is banned from this guild.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/5299E841">UserNotInVoice</a></td>
+								<td>40032</td>
+								<td>
+									<div>
+    The target user is not connected to voice.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

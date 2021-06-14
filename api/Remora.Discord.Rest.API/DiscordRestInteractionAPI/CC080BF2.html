@@ -183,7 +183,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;IRestResult&gt; CreateInteractionResponseAsync(Snowflake interactionID, string interactionToken, IInteractionResponse response, CancellationToken ct)</code></pre>
+	<pre><code>public virtual Task&lt;Result&gt; CreateInteractionResponseAsync(Snowflake interactionID, string interactionToken, IInteractionResponse response, CancellationToken ct)</code></pre>
 
 
 
@@ -235,7 +235,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IRestResult">IRestResult</a>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result&gt;<wbr></td>
 					<td>A creation result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

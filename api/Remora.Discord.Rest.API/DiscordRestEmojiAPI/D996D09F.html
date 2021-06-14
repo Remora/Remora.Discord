@@ -187,7 +187,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;IModifyRestEntityResult&lt;IEmoji&gt;&gt; ModifyGuildEmojiAsync(Snowflake guildID, Snowflake emojiID, Optional&lt;string&gt; name = default(Optional&lt;string&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; roles = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;IEmoji&gt;&gt; ModifyGuildEmojiAsync(Snowflake guildID, Snowflake emojiID, Optional&lt;string&gt; name = default(Optional&lt;string&gt;), Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt; roles = default(Optional&lt;IReadOnlyList&lt;Snowflake&gt;?&gt;), CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -244,7 +244,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/IModifyRestEntityResult_1">I<wbr>Modify<wbr>Rest<wbr>Entity<wbr>Result</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji">IEmoji</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji">IEmoji</a>&gt;<wbr>&gt;<wbr></td>
 					<td>A modification result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

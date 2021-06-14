@@ -167,6 +167,14 @@
 						<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Gateway<wbr>.Events</a></li>
 </ul></li>			<li class=" selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Objects</a></li>
+</ul></li>
+				<li class="treeview">
+				<a href="/Remora.Discord/api/Remora.Discord.Caching">Remora<wbr>.Discord<wbr>.Caching</a> <a href="#" class="expand"></a>
+				<ul class="treeview-menu">
+						<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Extensions">Remora<wbr>.Discord<wbr>.Caching<wbr>.Extensions</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders">Remora<wbr>.Discord<wbr>.Caching<wbr>.Responders</a></li>
+			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services">Remora<wbr>.Discord<wbr>.Caching<wbr>.Services</a></li>
 </ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
 
 				<li class="treeview">
@@ -174,7 +182,6 @@
 				<ul class="treeview-menu">
 						<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Responders</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Results</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Transport">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Transport</a></li>
 </ul></li>
@@ -183,7 +190,6 @@
 				<ul class="treeview-menu">
 						<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Results">Remora<wbr>.Discord<wbr>.Rest<wbr>.Results</a></li>
 			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Utility">Remora<wbr>.Discord<wbr>.Rest<wbr>.Utility</a></li>
 </ul></li>
 				<li class="treeview">
@@ -236,6 +242,12 @@
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a></td>
+									<td>
+    Converts a user discriminator to or from JSON.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/OneOfConverter_1">OneOfConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/OneOfConverter_1#typeparam-TOneOf">TOneOf</a>&gt;<wbr></td>
 									<td>
     Converts instances of <code class="cs">IOneOf</code> to and from JSON.
@@ -254,9 +266,19 @@
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/SnowflakeDictionaryConverter_1">Snowflake<wbr>Dictionary<wbr>Converter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/SnowflakeDictionaryConverter_1#typeparam-TElement">TElement</a>&gt;<wbr></td>
+									<td></td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumConverter_1">StringEnumConverter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumConverter_1#typeparam-TEnum">TEnum</a>&gt;<wbr></td>
 									<td>
     Converts enum values to or from JSON.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumListConverter_1">String<wbr>Enum<wbr>List<wbr>Converter</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Json/StringEnumListConverter_1#typeparam-TEnum">TEnum</a>&gt;<wbr></td>
+									<td>
+    Converts string array values into corresponding enum lists.
     </td>
 							</tr>
 							<tr>
@@ -268,7 +290,7 @@
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Json/UnixDateTimeConverter">Unix<wbr>Date<wbr>Time<wbr>Converter</a></td>
 									<td>
-    Converts a <code class="cs"><a href="/Remora.Discord">DateTime</a></code> to and from unix time.
+    Converts a <code class="cs">System.DateTime</code> to and from unix time.
     </td>
 							</tr>
 					</tbody></table>

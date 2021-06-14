@@ -184,7 +184,7 @@ like that returns an <code>IResult</code> (or a type that implements that interf
 is a safe and predictable wrapper around either a failed or a successful
 operation - in the case of a failure, it'll contain a human-readable message
 that should help you understand what went wrong.</p>
-<p>In the case of <code>RunAsync</code>, this is a <code><a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/GatewayConnectionResult">GatewayConnectionResult</a></code>, which can
+<p>In the case of <code>RunAsync</code>, this is a <code>GatewayConnectionResult</code>, which can
 contain some additional information about what caused the gateway client to stop
 running.</p>
 <p>Let's implement some error handling next.</p>
@@ -264,7 +264,7 @@ information between events, you'll need to outsource that to some other type -
 most likely registered as a <code>Singleton</code>, or <code>Scoped</code> in an outer scope.</p>
 <p>The <code>IResponder&lt;T&gt;</code> interface is relatively simple, only defining a single
 method.</p>
-<pre><code class="language-csharp">public async Task&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Results/EventResponseResult">EventResponseResult</a>&gt; RespondAsync
+<pre><code class="language-csharp">public async Task&lt;EventResponseResult&gt; RespondAsync
 (
     <a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageCreate">IMessageCreate</a> gatewayEvent,
     CancellationToken ct = default
@@ -357,7 +357,7 @@ familiarized yourself with the basic concepts of the library. Hopefully, this
 should set you on the right path, and give you the tools you need to create
 great bots with the library.</p>
 <p>If you're interested in looking at some bots authored by the community or by the
-library author(s), have a look at the <a href="https://www.github.com/Nihlus/Remora.Discord/Samples">samples</a> in the repository. If you
+library author(s), have a look at the <a href="https://github.com/Nihlus/Remora.Discord/tree/master/Samples">samples</a> in the repository. If you
 have any questions, please don't hesitate to ask, or open an issue in the main
 repo.</p>
 <p>Good luck!</p>
