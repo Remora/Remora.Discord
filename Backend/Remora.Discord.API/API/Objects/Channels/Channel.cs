@@ -57,6 +57,7 @@ namespace Remora.Discord.API.Objects
         Optional<int> MessageCount = default,
         Optional<int> MemberCount = default,
         Optional<IThreadMetadata> ThreadMetadata = default,
-        Optional<IThreadMember> Member = default
+        Optional<IThreadMember> Member = default,
+        Optional<TimeSpan> DefaultAutoArchiveDuration = default
     ) : IChannel;
 }

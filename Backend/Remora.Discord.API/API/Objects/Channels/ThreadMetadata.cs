@@ -30,7 +30,6 @@ namespace Remora.Discord.API.Objects
     public record ThreadMetadata
     (
         bool IsArchived,
-        Optional<Snowflake> ArchiverID,
         TimeSpan AutoArchiveDuration,
         DateTimeOffset ArchiveTimestamp,
         Optional<bool> IsLocked

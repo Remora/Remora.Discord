@@ -36,11 +36,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         bool IsArchived { get; }
 
         /// <summary>
-        /// Gets the ID of the user that last archived or unarchived the thread.
-        /// </summary>
-        Optional<Snowflake> ArchiverID { get; }
-
-        /// <summary>
         /// Gets a duration in minutes of inactivity after which the thread is automatically archived. Accepted values
         /// are, at present, 60, 1440, 4320, and 10080.
         /// </summary>

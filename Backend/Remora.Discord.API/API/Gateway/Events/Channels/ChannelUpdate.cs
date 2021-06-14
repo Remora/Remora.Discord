@@ -57,7 +57,8 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         Optional<int> MessageCount = default,
         Optional<int> MemberCount = default,
         Optional<IThreadMetadata> ThreadMetadata = default,
-        Optional<IThreadMember> Member = default
+        Optional<IThreadMember> Member = default,
+        Optional<TimeSpan> DefaultAutoArchiveDuration = default
     ) :
         Channel
         (
@@ -84,6 +85,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
             MessageCount,
             MemberCount,
             ThreadMetadata,
-            Member
+            Member,
+            DefaultAutoArchiveDuration
         ), IChannelUpdate;
 }

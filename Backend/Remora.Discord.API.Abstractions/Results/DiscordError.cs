@@ -311,6 +311,11 @@ namespace Remora.Discord.API.Abstractions.Results
         GuildAlreadyHasATemplate = 30031,
 
         /// <summary>
+        /// The maximum number of participants in a thread has been reached.
+        /// </summary>
+        MaxNumberOfThreadParticipantsReached = 30033,
+
+        /// <summary>
         /// The maximum number of bans for non-guild members has been exceeded.
         /// </summary>
         MaxNumberOfNonMemberBansReached = 30035,
@@ -560,6 +565,26 @@ namespace Remora.Discord.API.Abstractions.Results
         /// <summary>
         /// API resource temporarily overloaded. Try again a little later.
         /// </summary>
-        ResourceOverloaded = 130000
+        ResourceOverloaded = 130000,
+
+        /// <summary>
+        /// A thread has already been created for this message.
+        /// </summary>
+        ThreadAlreadyCreated = 160004,
+
+        /// <summary>
+        /// The thread has been locked.
+        /// </summary>
+        ThreadLocked = 160005,
+
+        /// <summary>
+        /// The maximum number of threads has been reached.
+        /// </summary>
+        MaxNumberOfThreadsReached = 160006,
+
+        /// <summary>
+        /// The maximum number of announcement threads has been reached.
+        /// </summary>
+        MaxNumberOfAnnouncementThreadsReached = 160007
     }
 }

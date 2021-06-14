@@ -154,5 +154,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the thread member object for the current user, if they have joined the thread.
         /// </summary>
         Optional<IThreadMember> Member { get; }
+
+        /// <summary>
+        /// Gets the default duration for newly created threads in this channel, in minutes. Can be set to 60, 1440,
+        /// 4320, or 10080.
+        /// </summary>
+        Optional<TimeSpan> DefaultAutoArchiveDuration { get; }
     }
 }
