@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>19.0.0</Version>
+        <Version>20.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,30 +14,14 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Update samples.
-            Replace deprecated `embed` parameter with `embeds`.
-            A few more.
-            Remove deprecated feature (fixes tests).
-            Fix optionality of fields.
-            Add two more error codes.
-            Update GuildFeature.cs to match the documentation.
-            Move the GuildID field to the base interface.
-            Implement audit log events for stage instances.
-            Remove deprecated field.
-            Implement stage instance events.
-            Add a new error code.
-            Correct nullability of field.
-            Update versions and nuget packages.
-            Only respond to command interactions.
-            Implement component parameters for some endpoints.
-            Implement support for button components.
-            Implement the infrastructure for message components.
-            Add permission categorization for stage channels.
-            Replace IsNSFW with NSFWLevel.
-            Add missing field.
-            Fix optionality of parameter.
-            Update stage discovery implementation.
-            Implement a way to send presence information with the initial connection.
+            Improve method naming consistency.
+            Implement Invite::StageInstance.
+            Update &amp; fix channel-related property converters.
+            Update some thread-related things.
+            Fix bugs revealed by the improved annotation support.
+            Help the compiler a little.
+            Remove bad test.
+            Draft for improving nullability annotations in optionals.
         </PackageReleaseNotes>
     </PropertyGroup>
 
