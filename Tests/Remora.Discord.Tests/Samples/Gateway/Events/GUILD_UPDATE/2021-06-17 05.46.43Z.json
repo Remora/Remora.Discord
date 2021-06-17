@@ -1,0 +1,332 @@
+{
+  "t": "GUILD_UPDATE",
+  "s": 5,
+  "op": 0,
+  "d": {
+    "widget_channel_id": null,
+    "system_channel_id": "465266535783596035",
+    "premium_tier": 0,
+    "system_channel_flags": 0,
+    "discovery_splash": null,
+    "guild_id": "465266535783596033",
+    "application_id": null,
+    "guild_hashes": {
+      "version": 1,
+      "roles": { "hash": "IF5sEbOhfTQ" },
+      "metadata": { "hash": "40rI1CnjVCU" },
+      "channels": { "hash": "I/62+MvIeH8" }
+    },
+    "owner_id": "135910101667020800",
+    "banner": null,
+    "features": [],
+    "id": "465266535783596033",
+    "public_updates_channel_id": null,
+    "nsfw_level": 0,
+    "verification_level": 0,
+    "roles": [
+      {
+        "position": 0,
+        "permissions": "109592301249",
+        "name": "@everyone",
+        "mentionable": false,
+        "managed": false,
+        "id": "465266535783596033",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "tags": { "bot_id": "465267469628604416" },
+        "position": 23,
+        "permissions": "6442713664",
+        "name": "Modix-Dev",
+        "mentionable": false,
+        "managed": true,
+        "id": "465315145300705290",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "tags": { "bot_id": "465584521111273473" },
+        "position": 22,
+        "permissions": "8589278967",
+        "name": "MODiX-RubyTest",
+        "mentionable": false,
+        "managed": true,
+        "id": "465641676170330132",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 27,
+        "permissions": "8589410047",
+        "name": "Admin",
+        "mentionable": false,
+        "managed": false,
+        "id": "466787441592762378",
+        "hoist": true,
+        "color": 11342935
+      },
+      {
+        "tags": { "bot_id": "467854351705178137" },
+        "position": 21,
+        "permissions": "6442713664",
+        "name": "MODiX Test - JakenVeina",
+        "mentionable": false,
+        "managed": true,
+        "id": "467892207555313674",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 20,
+        "permissions": "6442451456",
+        "name": "MODiX_Moderation_Mute",
+        "mentionable": true,
+        "managed": false,
+        "id": "467892352472580096",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 24,
+        "permissions": "8589278967",
+        "name": "User Bot",
+        "mentionable": false,
+        "managed": false,
+        "id": "470617517522550794",
+        "hoist": true,
+        "color": 15105570
+      },
+      {
+        "position": 12,
+        "permissions": "6442451456",
+        "name": "ScottTestRole",
+        "mentionable": false,
+        "managed": false,
+        "id": "483465494020620288",
+        "hoist": false,
+        "color": 1146986
+      },
+      {
+        "position": 19,
+        "permissions": "6442451456",
+        "name": "Rank3",
+        "mentionable": false,
+        "managed": false,
+        "id": "483465717262319647",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 18,
+        "permissions": "6442451456",
+        "name": "Rank2",
+        "mentionable": true,
+        "managed": false,
+        "id": "483465874779537411",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 17,
+        "permissions": "8589410039",
+        "name": "DebugRole",
+        "mentionable": false,
+        "managed": false,
+        "id": "492228727716052992",
+        "hoist": false,
+        "color": 3447003
+      },
+      {
+        "position": 16,
+        "permissions": "8589410039",
+        "name": "ModixTestAinz",
+        "mentionable": false,
+        "managed": false,
+        "id": "492551111765655563",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 26,
+        "permissions": "8589410039",
+        "name": "Maintainers",
+        "mentionable": true,
+        "managed": false,
+        "id": "512008172752470017",
+        "hoist": true,
+        "color": 15844367
+      },
+      {
+        "tags": { "bot_id": "510819021306855424" },
+        "position": 15,
+        "permissions": "8589278903",
+        "name": "SCOTTiX",
+        "mentionable": false,
+        "managed": true,
+        "id": "512700426055843862",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 25,
+        "permissions": "8589409535",
+        "name": "Contributors",
+        "mentionable": false,
+        "managed": false,
+        "id": "514187444359266314",
+        "hoist": false,
+        "color": 3447003
+      },
+      {
+        "position": 14,
+        "permissions": "6513086161",
+        "name": "JmazODiX",
+        "mentionable": false,
+        "managed": false,
+        "id": "515406538375036931",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 11,
+        "permissions": "6513085121",
+        "name": "Softbanned",
+        "mentionable": false,
+        "managed": false,
+        "id": "560150725565612032",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 10,
+        "permissions": "6513086145",
+        "name": "pingabletest",
+        "mentionable": true,
+        "managed": false,
+        "id": "565985171556270159",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 9,
+        "permissions": "6513086145",
+        "name": "with space",
+        "mentionable": false,
+        "managed": false,
+        "id": "566557912445485061",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 8,
+        "permissions": "6513086145",
+        "name": "unmentionable",
+        "mentionable": false,
+        "managed": false,
+        "id": "573001248043696141",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 6,
+        "permissions": "6513086145",
+        "name": "insane",
+        "mentionable": false,
+        "managed": false,
+        "id": "616312641538883605",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 5,
+        "permissions": "6513086145",
+        "name": "new role",
+        "mentionable": false,
+        "managed": false,
+        "id": "666411368102232065",
+        "hoist": false,
+        "color": 0
+      },
+      {
+        "position": 4,
+        "permissions": "6513086145",
+        "name": "Jays-BB-8 bot",
+        "mentionable": false,
+        "managed": false,
+        "id": "676995239570964490",
+        "hoist": false,
+        "color": 15158332
+      },
+      {
+        "position": 3,
+        "permissions": "6513086145",
+        "name": "Its The Best Rank Ever",
+        "mentionable": false,
+        "managed": false,
+        "id": "676997069055197216",
+        "hoist": false,
+        "color": 3066993
+      },
+      {
+        "tags": { "bot_id": "711272498100174960" },
+        "position": 2,
+        "permissions": "7785016400",
+        "name": "Modix-Translation-Dev",
+        "mentionable": false,
+        "managed": true,
+        "id": "711423124314521601",
+        "hoist": false,
+        "color": 0
+      }
+    ],
+    "splash": null,
+    "afk_timeout": 300,
+    "vanity_url_code": null,
+    "icon": "49fab25a1850a96ba99459635fdbf42b",
+    "emojis": [
+      {
+        "roles": [],
+        "require_colons": true,
+        "name": "tldr",
+        "managed": false,
+        "id": "521568824038916107",
+        "available": true,
+        "animated": false
+      },
+      {
+        "roles": [],
+        "require_colons": true,
+        "name": "modix",
+        "managed": false,
+        "id": "559696137171501066",
+        "available": true,
+        "animated": false
+      },
+      {
+        "roles": [],
+        "require_colons": true,
+        "name": "GBlobShuffle",
+        "managed": false,
+        "id": "570344299846434817",
+        "available": true,
+        "animated": true
+      }
+    ],
+    "max_video_channel_users": 25,
+    "preferred_locale": "en-US",
+    "region": "us-east",
+    "explicit_content_filter": 0,
+    "rules_channel_id": null,
+    "default_message_notifications": 1,
+    "name": "Modix Test Test",
+    "nsfw": false,
+    "max_members": 100000,
+    "widget_enabled": false,
+    "description": null,
+    "premium_subscription_count": 0,
+    "mfa_level": 0,
+    "afk_channel_id": null,
+    "max_presences": null
+  }
+}

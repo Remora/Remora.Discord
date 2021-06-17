@@ -1,5 +1,5 @@
 //
-//  ISO8601DateTimeOffsetConverter.cs
+//  UnixMillisecondsDateTimeOffsetConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,27 +23,25 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts instances of the <see cref="DateTimeOffset"/> struct to and from an ISO8601 representation in JSON.
+    /// Converts a <see cref="DateTimeOffset"/> to and from unix time, in milliseconds.
     /// </summary>
-    internal class ISO8601DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+    [PublicAPI]
+    public class UnixMillisecondsDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
     {
         /// <inheritdoc />
         public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
-                case JsonTokenType.String:
+                case JsonTokenType.Number:
                 {
-                    if (!DateTimeOffset.TryParse(reader.GetString(), out var time))
-                    {
-                        throw new JsonException();
-                    }
-
-                    return time;
+                    var milliseconds = reader.GetInt64();
+                    return DateTimeOffset.FromUnixTimeMilliseconds(milliseconds);
                 }
                 default:
                 {
@@ -55,8 +53,8 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
         {
-            var offset = value.Offset;
-            writer.WriteStringValue(value.ToString($"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"));
+            var milliseconds = value.ToUnixTimeMilliseconds();
+            writer.WriteNumberValue(milliseconds);
         }
     }
 }

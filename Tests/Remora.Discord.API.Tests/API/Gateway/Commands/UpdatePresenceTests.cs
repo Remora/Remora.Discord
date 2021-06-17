@@ -1,5 +1,5 @@
 //
-//  UpdateStatusTests.cs
+//  UpdatePresenceTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,13 +23,23 @@
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Gateway.Commands
 {
     /// <summary>
     /// Tests the <see cref="UpdatePresence"/> command.
     /// </summary>
-    public class UpdateStatusTests : GatewayCommandTestBase<IUpdatePresence>
+    public class UpdatePresenceTests : GatewayCommandTestBase<IUpdatePresence>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; }
+            = new(JsonAssertOptions.Default)
+            {
+                AllowMissing = new[]
+                {
+                    "id", // undocumented value upon "activities[]" objects
+                }
+            };
     }
 }

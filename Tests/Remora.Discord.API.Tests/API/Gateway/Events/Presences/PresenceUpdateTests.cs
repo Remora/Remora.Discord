@@ -22,11 +22,21 @@
 
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Gateway.Events
 {
     /// <inheritdoc />
     public class PresenceUpdateTests : GatewayEventTestBase<IPresenceUpdate>
     {
+        /// <inheritdoc/>
+        protected override JsonAssertOptions AssertOptions { get; }
+            = new(JsonAssertOptions.Default)
+            {
+                AllowMissing = new[]
+                {
+                    "id" // undocumented field upon "activities[]" objects
+                }
+            };
     }
 }

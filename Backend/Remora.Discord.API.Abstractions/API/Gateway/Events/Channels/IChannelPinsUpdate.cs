@@ -45,6 +45,6 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the time at which the most recent pinned message was pinned.
         /// </summary>
-        Optional<DateTimeOffset> LastPinTimestamp { get; }
+        Optional<DateTimeOffset?> LastPinTimestamp { get; }
     }
 }

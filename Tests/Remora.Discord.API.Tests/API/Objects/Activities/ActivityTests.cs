@@ -23,6 +23,7 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Objects
 {
@@ -31,5 +32,14 @@ namespace Remora.Discord.API.Tests.Objects
     /// </summary>
     public class ActivityTests : ObjectTestBase<IActivity>
     {
+        /// <inheritdoc/>
+        protected override JsonAssertOptions AssertOptions { get; }
+            = new(JsonAssertOptions.Default)
+            {
+                AllowMissing = new[]
+                {
+                    "id" // undocumented field
+                }
+            };
     }
 }
