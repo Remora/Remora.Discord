@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the sticker pack.
         /// </summary>
-        Snowflake PackID { get; }
+        Optional<Snowflake> PackID { get; }
 
         /// <summary>
         /// Gets the name of the sticker.
@@ -53,9 +53,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Description { get; }
 
         /// <summary>
-        /// Gets a list of sticker tags.
+        /// Gets one or more comma-separated unicode emojis representing the sticker's expression.
         /// </summary>
-        Optional<IReadOnlyList<string>> Tags { get; }
+        string Tags { get; }
 
         /// <summary>
         /// Gets the sticker asset hash.
@@ -66,5 +66,25 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the format of the sticker.
         /// </summary>
         MessageStickerFormatType FormatType { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the sticker is available.
+        /// </summary>
+        Optional<bool> IsAvailable { get; }
+
+        /// <summary>
+        /// Gets the ID of the guild the sticker belongs to.
+        /// </summary>
+        Optional<Snowflake> GuildID { get; }
+
+        /// <summary>
+        /// Gets the user that uploaded the sticker.
+        /// </summary>
+        Optional<IUser> User { get; }
+
+        /// <summary>
+        /// Gets the sticker's sorting order within a sticker pack.
+        /// </summary>
+        Optional<int> SortValue { get; }
     }
 }

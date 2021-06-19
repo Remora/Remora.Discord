@@ -34,11 +34,15 @@ namespace Remora.Discord.API.Objects
     public record MessageSticker
     (
         Snowflake ID,
-        Snowflake PackID,
+        Optional<Snowflake> PackID,
         string Name,
         string Description,
-        Optional<IReadOnlyList<string>> Tags,
+        string Tags,
         IImageHash Asset,
-        MessageStickerFormatType FormatType
+        MessageStickerFormatType FormatType,
+        Optional<bool> IsAvailable = default,
+        Optional<Snowflake> GuildID = default,
+        Optional<IUser> User = default,
+        Optional<int> SortValue = default
     ) : IMessageSticker;
 }

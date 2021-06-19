@@ -629,7 +629,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
 
             options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
-                .WithPropertyConverter(s => s.Tags, new DelimitedListConverter<string>(";"));
+                .WithPropertyName(s => s.IsAvailable, "available");
 
             return options;
         }

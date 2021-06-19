@@ -170,11 +170,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<MessageFlags> Flags { get; }
 
         /// <summary>
-        /// Gets the stickers sent with the message.
-        /// </summary>
-        Optional<IReadOnlyList<IMessageSticker>> Stickers { get; }
-
-        /// <summary>
         /// Gets the referenced message, if any. A null value in this context refers to a deleted message.
         /// </summary>
         Optional<IMessage?> ReferencedMessage { get; }

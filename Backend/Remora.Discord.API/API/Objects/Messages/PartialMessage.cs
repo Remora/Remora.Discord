@@ -59,7 +59,6 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> ApplicationID = default,
         Optional<IMessageReference> MessageReference = default,
         Optional<MessageFlags> Flags = default,
-        Optional<IReadOnlyList<IMessageSticker>> Stickers = default,
         Optional<IMessage?> ReferencedMessage = default,
         Optional<IMessageInteraction> Interaction = default,
         Optional<IChannel> Thread = default,
