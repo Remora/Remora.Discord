@@ -100,6 +100,7 @@ namespace Remora.Discord.Caching.API
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<string?> rtcRegion = default,
             CancellationToken ct = default
         )
         {
@@ -122,6 +123,7 @@ namespace Remora.Discord.Caching.API
                 autoArchiveDuration,
                 isLocked,
                 defaultAutoArchiveDuration,
+                rtcRegion,
                 ct
             );
 
