@@ -36,7 +36,10 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Checks required Guild permissions before allowing execution.
     ///
-    /// <remarks>Fails if the command is executed outside of a Guild. It should be used together with <see cref=""./></remarks>
+    /// <remarks>
+    /// Fails if the command is executed outside of a Guild. It should be used together with
+    /// <see cref="RequireContextAttribute"/>.
+    /// </remarks>
     /// </summary>
     public class RequireUserGuildPermissionCondition : ICondition<RequireUserGuildPermissionAttribute>
     {

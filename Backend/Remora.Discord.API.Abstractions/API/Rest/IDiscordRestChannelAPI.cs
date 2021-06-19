@@ -303,7 +303,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Posts a message to the given channel.
         /// <remarks>
-        /// At least one of <paramref name="content"/>, <paramref name="embed"/>, or <paramref name="file"/> must be present.
+        /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="file"/> must be present.
         /// </remarks>
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
