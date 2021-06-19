@@ -105,7 +105,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.ModifyChannelAsync
+                var result = await api.ModifyGroupDMChannelAsync
                 (
                     channelId,
                     name,
@@ -157,21 +157,18 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.ModifyChannelAsync
+                var result = await api.ModifyGuildTextChannelAsync
                 (
                     channelId,
                     name,
-                    default,
                     type,
                     position,
                     topic,
                     nsfw,
                     rateLimitPerUser,
-                    default,
-                    default,
                     permissionOverwrites,
                     parentId,
-                    defaultAutoArchiveDuration: defaultAutoArchiveDuration
+                    defaultAutoArchiveDuration
                 );
 
                 ResultAssert.Successful(result);
@@ -215,16 +212,11 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.ModifyChannelAsync
+                var result = await api.ModifyGuildVoiceChannelAsync
                 (
                     channelId,
                     name,
-                    default,
-                    default,
                     position,
-                    default,
-                    default,
-                    default,
                     bitrate,
                     userLimit,
                     permissionOverwrites,
@@ -269,14 +261,14 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.ModifyChannelAsync
+                var result = await api.ModifyThreadChannelAsync
                 (
                     channelId,
                     name,
-                    isArchived: isArchived,
-                    autoArchiveDuration: autoArchiveDuration,
-                    isLocked: isLocked,
-                    rateLimitPerUser: rateLimitPerUser
+                    isArchived,
+                    autoArchiveDuration,
+                    isLocked,
+                    rateLimitPerUser
                 );
 
                 ResultAssert.Successful(result);

@@ -96,6 +96,156 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Modifies the given group DM channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="icon">The new icon.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyGroupDMChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<Stream> icon = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the given guild text channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="type">
+        /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
+        /// <see cref="ChannelType.GuildNews"/> are supported.
+        /// </param>
+        /// <param name="position">The new position of the channel in the listing.</param>
+        /// <param name="topic">The new topic of the channel.</param>
+        /// <param name="isNsfw">The new NSFW status of the channel.</param>
+        /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+        /// <param name="permissionOverwrites">The new permission overwrites.</param>
+        /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="defaultAutoArchiveDuration">
+        /// The default time of inactivity after which threads in the channel are archived.
+        /// </param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyGuildTextChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<ChannelType> type = default,
+            Optional<int?> position = default,
+            Optional<string?> topic = default,
+            Optional<bool?> isNsfw = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the given guild voice channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="position">The new position of the channel in the listing.</param>
+        /// <param name="bitrate">The new bitrate.</param>
+        /// <param name="userLimit">The new user limit.</param>
+        /// <param name="permissionOverwrites">The new permission overwrites.</param>
+        /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="videoQualityMode">The new video quality mode.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<int?> position = default,
+            Optional<int?> bitrate = default,
+            Optional<int?> userLimit = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            Optional<VideoQualityMode?> videoQualityMode = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the given guild news channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="type">
+        /// The new type of the channel. Only conversions between <see cref="ChannelType.GuildText"/> and
+        /// <see cref="ChannelType.GuildNews"/> are supported.
+        /// </param>
+        /// <param name="position">The new position of the channel in the listing.</param>
+        /// <param name="topic">The new topic of the channel.</param>
+        /// <param name="isNsfw">The new NSFW status of the channel.</param>
+        /// <param name="permissionOverwrites">The new permission overwrites.</param>
+        /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<ChannelType> type = default,
+            Optional<int?> position = default,
+            Optional<string?> topic = default,
+            Optional<bool?> isNsfw = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the given guild store channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="position">The new position of the channel in the listing.</param>
+        /// <param name="isNsfw">The new NSFW status of the channel.</param>
+        /// <param name="permissionOverwrites">The new permission overwrites.</param>
+        /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyGuildStoreChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<int?> position = default,
+            Optional<bool?> isNsfw = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Modifies the given channel.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="name">The new name of the channel.</param>
+        /// <param name="isArchived">Whether the thread is archived.</param>
+        /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
+        /// <param name="isLocked">Whether the thread is locked.</param>
+        /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded.</returns>
+        Task<Result<IChannel>> ModifyThreadChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<bool> isArchived = default,
+            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<bool> isLocked = default,
+            Optional<int?> rateLimitPerUser = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Deletes a channel by its ID.
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>

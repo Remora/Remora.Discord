@@ -172,6 +172,154 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyGroupDMChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<Stream> icon = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync(channelID, name, icon, ct: ct);
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyGuildTextChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<ChannelType> type = default,
+            Optional<int?> position = default,
+            Optional<string?> topic = default,
+            Optional<bool?> isNsfw = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync
+            (
+                channelID,
+                name,
+                type: type,
+                position: position,
+                topic: topic,
+                isNsfw: isNsfw,
+                rateLimitPerUser: rateLimitPerUser,
+                permissionOverwrites: permissionOverwrites,
+                parentId: parentId,
+                defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<int?> position = default,
+            Optional<int?> bitrate = default,
+            Optional<int?> userLimit = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            Optional<VideoQualityMode?> videoQualityMode = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync
+            (
+                channelID,
+                name,
+                position: position,
+                bitrate: bitrate,
+                userLimit: userLimit,
+                permissionOverwrites: permissionOverwrites,
+                parentId: parentId,
+                videoQualityMode: videoQualityMode,
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<ChannelType> type = default,
+            Optional<int?> position = default,
+            Optional<string?> topic = default,
+            Optional<bool?> isNsfw = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync
+            (
+                channelID,
+                name,
+                type: type,
+                position: position,
+                topic: topic,
+                isNsfw: isNsfw,
+                permissionOverwrites: permissionOverwrites,
+                parentId: parentId,
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyGuildStoreChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<int?> position = default,
+            Optional<bool?> isNsfw = default,
+            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+            Optional<Snowflake?> parentId = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync
+            (
+                channelID,
+                name,
+                position: position,
+                isNsfw: isNsfw,
+                permissionOverwrites: permissionOverwrites,
+                parentId: parentId,
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        public Task<Result<IChannel>> ModifyThreadChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> name = default,
+            Optional<bool> isArchived = default,
+            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<bool> isLocked = default,
+            Optional<int?> rateLimitPerUser = default,
+            CancellationToken ct = default
+        )
+        {
+            return ModifyChannelAsync
+            (
+                channelID,
+                name,
+                isArchived: isArchived,
+                autoArchiveDuration: autoArchiveDuration,
+                isLocked: isLocked,
+                rateLimitPerUser: rateLimitPerUser,
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual Task<Result> DeleteChannelAsync
         (
             Snowflake channelID,
