@@ -68,6 +68,9 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isArchived">Whether the thread is archived.</param>
         /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
         /// <param name="isLocked">Whether the thread is locked.</param>
+        /// <param name="defaultAutoArchiveDuration">
+        /// The default time of inactivity after which threads in the channel are archived.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyChannelAsync
@@ -88,6 +91,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool> isArchived = default,
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
+            Optional<TimeSpan> defaultAutoArchiveDuration = default,
             CancellationToken ct = default
         );
 

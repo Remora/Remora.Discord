@@ -91,6 +91,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool> isArchived = default,
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
+            Optional<TimeSpan> defaultAutoArchiveDuration = default,
             CancellationToken ct = default
         )
         {
@@ -155,6 +156,15 @@ namespace Remora.Discord.Rest.API
                         }
 
                         json.Write("locked", isLocked, _jsonOptions);
+
+                        if (defaultAutoArchiveDuration.HasValue)
+                        {
+                            json.WriteNumber
+                            (
+                                "default_auto_archive_duration",
+                                defaultAutoArchiveDuration.Value.TotalMinutes
+                            );
+                        }
                     }
                 ),
                 ct: ct
