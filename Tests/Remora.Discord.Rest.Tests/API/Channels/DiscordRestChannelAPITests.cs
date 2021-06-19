@@ -188,6 +188,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var userLimit = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
+                var rtcRegion = "somewhere";
                 var videoQualityMode = VideoQualityMode.Auto;
 
                 var api = CreateAPI
@@ -206,6 +207,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("user_limit", p => p.Is(userLimit))
                                         .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
+                                        .WithProperty("rtc_region", p => p.Is(rtcRegion))
                                         .WithProperty("video_quality_mode", p => p.Is((int)videoQualityMode))
                                 )
                         )
@@ -221,6 +223,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     userLimit,
                     permissionOverwrites,
                     parentId,
+                    rtcRegion,
                     videoQualityMode
                 );
 

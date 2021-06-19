@@ -92,6 +92,7 @@ namespace Remora.Discord.Rest.API
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<string?> rtcRegion = default,
             CancellationToken ct = default
         )
         {
@@ -165,6 +166,8 @@ namespace Remora.Discord.Rest.API
                                 defaultAutoArchiveDuration.Value.TotalMinutes
                             );
                         }
+
+                        json.Write("rtc_region", rtcRegion, _jsonOptions);
                     }
                 ),
                 ct: ct
@@ -225,6 +228,7 @@ namespace Remora.Discord.Rest.API
             Optional<int?> userLimit = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string?> rtcRegion = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
             CancellationToken ct = default
         )
@@ -238,6 +242,7 @@ namespace Remora.Discord.Rest.API
                 userLimit: userLimit,
                 permissionOverwrites: permissionOverwrites,
                 parentId: parentId,
+                rtcRegion: rtcRegion,
                 videoQualityMode: videoQualityMode,
                 ct: ct
             );

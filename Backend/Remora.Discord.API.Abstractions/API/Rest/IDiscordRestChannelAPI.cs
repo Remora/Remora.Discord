@@ -71,6 +71,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="defaultAutoArchiveDuration">
         /// The default time of inactivity after which threads in the channel are archived.
         /// </param>
+        /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyChannelAsync
@@ -92,6 +93,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<string?> rtcRegion = default,
             CancellationToken ct = default
         );
 
@@ -156,6 +158,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="userLimit">The new user limit.</param>
         /// <param name="permissionOverwrites">The new permission overwrites.</param>
         /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
         /// <param name="videoQualityMode">The new video quality mode.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
@@ -168,6 +171,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<int?> userLimit = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string?> rtcRegion = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
             CancellationToken ct = default
         );
