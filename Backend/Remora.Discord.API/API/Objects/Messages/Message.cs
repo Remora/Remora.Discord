@@ -62,6 +62,7 @@ namespace Remora.Discord.API.Objects
         Optional<IMessage?> ReferencedMessage = default,
         Optional<IMessageInteraction> Interaction = default,
         Optional<IChannel> Thread = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default
+        Optional<IReadOnlyList<IMessageComponent>> Components = default,
+        Optional<IReadOnlyList<IMessageStickerItem>> StickerItems = default
     ) : IMessage;
 }

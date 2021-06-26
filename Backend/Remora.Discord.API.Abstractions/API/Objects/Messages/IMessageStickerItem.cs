@@ -1,5 +1,5 @@
 //
-//  MessageSticker.cs
+//  IMessageStickerItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageSticker" />
+    /// <summary>
+    /// Represents a sticker in a message.
+    /// </summary>
     [PublicAPI]
-    public record MessageSticker
-    (
-        Snowflake ID,
-        Optional<Snowflake> PackID,
-        string Name,
-        string Description,
-        string Tags,
-        MessageStickerFormatType FormatType,
-        Optional<bool> IsAvailable = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<IUser> User = default,
-        Optional<int> SortValue = default
-    ) : IMessageSticker;
+    public interface IMessageStickerItem
+    {
+        /// <summary>
+        /// Gets the ID of the sticker.
+        /// </summary>
+        Snowflake ID { get; }
+
+        /// <summary>
+        /// Gets the name of the sticker.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
+        /// Gets the format of the sticker.
+        /// </summary>
+        MessageStickerFormatType FormatType { get; }
+    }
 }

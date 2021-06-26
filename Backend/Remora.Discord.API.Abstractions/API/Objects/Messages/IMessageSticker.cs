@@ -58,11 +58,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Tags { get; }
 
         /// <summary>
-        /// Gets the sticker asset hash.
-        /// </summary>
-        IImageHash Asset { get; }
-
-        /// <summary>
         /// Gets the format of the sticker.
         /// </summary>
         MessageStickerFormatType FormatType { get; }

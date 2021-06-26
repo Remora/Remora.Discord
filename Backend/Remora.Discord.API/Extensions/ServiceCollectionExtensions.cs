@@ -631,6 +631,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
                 .WithPropertyName(s => s.IsAvailable, "available");
 
+            options.AddDataObjectConverter<IMessageStickerItem, MessageStickerItem>();
+
             return options;
         }
 

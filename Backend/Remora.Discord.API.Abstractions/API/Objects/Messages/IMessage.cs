@@ -188,5 +188,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the components in the message.
         /// </summary>
         Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+
+        /// <summary>
+        /// Gets the stickers sent with the message.
+        /// </summary>
+        Optional<IReadOnlyList<IMessageStickerItem>> StickerItems { get; }
     }
 }

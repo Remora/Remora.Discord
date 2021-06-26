@@ -1,5 +1,5 @@
 //
-//  MessageSticker.cs
+//  MessageStickerItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageSticker" />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageStickerItem" />
     [PublicAPI]
-    public record MessageSticker
-    (
-        Snowflake ID,
-        Optional<Snowflake> PackID,
-        string Name,
-        string Description,
-        string Tags,
-        MessageStickerFormatType FormatType,
-        Optional<bool> IsAvailable = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<IUser> User = default,
-        Optional<int> SortValue = default
-    ) : IMessageSticker;
+    public record MessageStickerItem(Snowflake ID, string Name, MessageStickerFormatType FormatType)
+        : IMessageStickerItem;
 }
