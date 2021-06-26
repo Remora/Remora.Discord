@@ -1831,6 +1831,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var name = "abba";
                 var duration = TimeSpan.FromMinutes(60);
+                var type = ChannelType.GuildPrivateThread;
 
                 var api = CreateAPI
                 (
@@ -1847,12 +1848,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("auto_archive_duration", p => p.Is(duration.TotalMinutes))
+                                    .WithProperty("type", p => p.Is((int)type))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration);
+                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type);
                 ResultAssert.Successful(result);
             }
         }

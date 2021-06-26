@@ -445,10 +445,19 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<ChannelType> type,
             CancellationToken ct = default
         )
         {
-            var createResult = await base.StartThreadWithoutMessageAsync(channelID, name, autoArchiveDuration, ct);
+            var createResult = await base.StartThreadWithoutMessageAsync
+            (
+                channelID,
+                name,
+                autoArchiveDuration,
+                type,
+                ct
+            );
+
             if (!createResult.IsSuccess)
             {
                 return createResult;

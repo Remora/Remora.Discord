@@ -916,6 +916,7 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<ChannelType> type,
             CancellationToken ct = default
         )
         {
@@ -933,6 +934,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
                         json.WriteNumber("auto_archive_duration", autoArchiveDuration.TotalMinutes);
+                        json.Write("type", type, _jsonOptions);
                     }
                 ),
                 ct: ct

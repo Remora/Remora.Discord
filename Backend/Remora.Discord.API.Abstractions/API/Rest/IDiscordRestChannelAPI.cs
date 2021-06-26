@@ -686,6 +686,9 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The channel to start the thread in.</param>
         /// <param name="name">The name of the thread.</param>
         /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+        /// <param name="type">
+        /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
+        /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> StartThreadWithoutMessageAsync
@@ -693,6 +696,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<ChannelType> type = default,
             CancellationToken ct = default
         );
 
