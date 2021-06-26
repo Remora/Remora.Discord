@@ -51,7 +51,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the time when the activity was added to the user's session.
         /// </summary>
-        // This field is modeled as optional, due to various inconsistencies in documentation, as well as real-world-observed behavior, for this field.
+        /// <remarks>
+        /// This field is always present on activities received from Discord; it is optional because it should never be
+        /// sent by a bot. Discord's documentation is somewhat vague at first glance, but because of the above it's
+        /// implemented as an optional field.
+        /// </remarks>
         Optional<DateTimeOffset> CreatedAt { get; }
 
         /// <summary>
