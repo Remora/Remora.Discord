@@ -196,6 +196,11 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownApplicationCommandPermissions = 10066,
 
         /// <summary>
+        /// Unknown stage instance.
+        /// </summary>
+        UnknownStageInstance = 10067,
+
+        /// <summary>
         /// Bots cannot use this endpoint.
         /// </summary>
         NoBotsAllowed = 20001,
@@ -236,9 +241,9 @@ namespace Remora.Discord.API.Abstractions.Results
         WriteRateLimitHit = 20028,
 
         /// <summary>
-        /// Your stage channel topic contains disallowed words for a public stage.
+        /// Your stage channel topic, server name, description, or channel name contains disallowed words.
         /// </summary>
-        DisallowedWordsInStageTopic = 20031,
+        DisallowedWords = 20031,
 
         /// <summary>
         /// Maximum number of guilds reached (100).
@@ -566,6 +571,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// API resource temporarily overloaded. Try again a little later.
         /// </summary>
         ResourceOverloaded = 130000,
+
+        /// <summary>
+        /// The stage channel is already open.
+        /// </summary>
+        StageAlreadyOpen = 150006,
 
         /// <summary>
         /// A thread has already been created for this message.
