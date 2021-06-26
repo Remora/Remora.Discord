@@ -1,0 +1,11 @@
+{
+  "type": 4,
+  "name": "Custom Status",
+  "id": "custom",
+  "emoji": {
+    "name": "goose",
+    "id": "737220529865359420",
+    "animated": true
+  },
+  "created_at": 1623780808682
+}

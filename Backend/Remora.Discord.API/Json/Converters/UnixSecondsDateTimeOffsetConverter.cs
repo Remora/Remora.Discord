@@ -1,5 +1,5 @@
 //
-//  UnixDateTimeConverter.cs
+//  UnixSecondsDateTimeOffsetConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,20 +28,20 @@ using JetBrains.Annotations;
 namespace Remora.Discord.API.Json
 {
     /// <summary>
-    /// Converts a <see cref="DateTime"/> to and from unix time.
+    /// Converts a <see cref="DateTimeOffset"/> to and from unix time, in seconds.
     /// </summary>
     [PublicAPI]
-    public class UnixDateTimeConverter : JsonConverter<DateTime>
+    public class UnixSecondsDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
     {
         /// <inheritdoc />
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
                 case JsonTokenType.Number:
                 {
-                    var milliseconds = reader.GetDouble();
-                    return DateTime.UnixEpoch + TimeSpan.FromMilliseconds(milliseconds);
+                    var milliseconds = reader.GetInt64();
+                    return DateTimeOffset.FromUnixTimeSeconds(milliseconds);
                 }
                 default:
                 {
@@ -51,9 +51,9 @@ namespace Remora.Discord.API.Json
         }
 
         /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
         {
-            var milliseconds = (value.ToUniversalTime() - DateTime.UnixEpoch).TotalMilliseconds;
+            var milliseconds = value.ToUnixTimeSeconds();
             writer.WriteNumberValue(milliseconds);
         }
     }

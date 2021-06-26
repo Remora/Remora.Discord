@@ -23,6 +23,7 @@
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Gateway.Commands
 {
@@ -31,5 +32,14 @@ namespace Remora.Discord.API.Tests.Gateway.Commands
     /// </summary>
     public class IdentifyTests : GatewayCommandTestBase<IIdentify>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions { get; }
+            = new(JsonAssertOptions.Default)
+            {
+                AllowMissing = new[]
+                {
+                    "id", // undocumented value upon "presence.activities[]" objects
+                }
+            };
     }
 }

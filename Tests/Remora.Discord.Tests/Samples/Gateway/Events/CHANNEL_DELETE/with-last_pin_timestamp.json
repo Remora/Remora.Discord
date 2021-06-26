@@ -1,0 +1,31 @@
+{
+  "t": "CHANNEL_DELETE",
+  "s": 4,
+  "op": 0,
+  "d": {
+    "type": 0,
+    "topic": null,
+    "rate_limit_per_user": 0,
+    "position": 14,
+    "permission_overwrites": [],
+    "parent_id": "728303464207220816",
+    "nsfw": false,
+    "name": "test",
+    "last_message_id": null,
+    "last_pin_timestamp": "2020-07-03T17:13:38.958000\u002B00:00",
+    "id": "748969255210450984",
+    "guild_id": "452526315288133644",
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "hash": "GLnpcR2C2RA"
+      },
+      "metadata": {
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "hash": "5rZZdKiPRGI"
+      }
+    }
+  }
+}

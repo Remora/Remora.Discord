@@ -40,6 +40,8 @@ namespace Remora.Discord.API.Tests.Gateway.Events
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
                 "lazy", // undocumented value
+                "nsfw", // undocumented value, presumably duplicate of "nsfw_level"
+                "region", // deprecated value
                 "guild_id" // undocumented value
             },
             default,

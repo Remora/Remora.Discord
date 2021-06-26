@@ -34,18 +34,18 @@ namespace Remora.Discord.Tests
         /// <summary>
         /// Gets a list of property names that are allowed to be missing from the serialized result.
         /// </summary>
-        public IReadOnlyCollection<string> AllowMissing { get; }
+        public IReadOnlyCollection<string> AllowMissing { get; init; }
 
         /// <summary>
         /// Gets a function that inspects a property and determines if it's allowed to be missing in the serialized
         /// result.
         /// </summary>
-        public Func<JsonProperty, bool> AllowMissingBy { get; }
+        public Func<JsonProperty, bool> AllowMissingBy { get; init; }
 
         /// <summary>
         /// Gets a function that inspects an element and determines if validation of it should be skipped.
         /// </summary>
-        public Func<JsonElement, bool> AllowSkip { get; }
+        public Func<JsonElement, bool> AllowSkip { get; init; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonAssertOptions"/> class.
@@ -63,6 +63,17 @@ namespace Remora.Discord.Tests
             this.AllowMissing = allowMissing ?? new List<string>();
             this.AllowMissingBy = allowMissingBy ?? (_ => false);
             this.AllowSkip = allowSkip ?? (_ => false);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonAssertOptions"/> class.
+        /// </summary>
+        /// <param name="original">An existing <see cref="JsonAssertOptions"/> object to be cloned..</param>
+        public JsonAssertOptions(JsonAssertOptions original)
+        {
+            AllowMissing = original.AllowMissing;
+            AllowMissingBy = original.AllowMissingBy;
+            AllowSkip = original.AllowSkip;
         }
 
         /// <summary>

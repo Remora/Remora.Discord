@@ -37,9 +37,16 @@ namespace Remora.Discord.API.Tests.Gateway.Events
         (
             new[]
             {
+                "application_command_count", // undocumented value
+                "avatar", // undocumented value upon "members[]" objects
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
-                "lazy" // undocumented value
+                "id", // undocumented value upon "presences[].activities[]" objects
+                "is_pending", // undocumented value upon "members[]" objects, presumably duplicate of "pending"
+                "lazy", // undocumented value
+                "nsfw", // undocumented value, presumably duplicate of "nsfw_level"
+                "region", // deprecated value
+                "stickers" // undocumented value
             },
             default,
             e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"

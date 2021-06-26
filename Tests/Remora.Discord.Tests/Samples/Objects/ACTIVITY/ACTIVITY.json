@@ -1,4 +1,7 @@
 {
-    "name": "Cards Against Humanity",
-    "type": 0
+  "type": 4,
+  "state": "It be like that yanno",
+  "name": "Custom Status",
+  "id": "custom",
+  "created_at": 1623873199808
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -36,7 +37,7 @@ namespace Remora.Discord.API.Gateway.Events
         Snowflake ChannelID,
         Optional<Snowflake> GuildID,
         Snowflake UserID,
-        int Timestamp,
+        DateTimeOffset Timestamp,
         Optional<IGuildMember> Member = default
     ) : ITypingStart;
 }

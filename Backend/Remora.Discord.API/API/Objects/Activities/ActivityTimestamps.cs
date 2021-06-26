@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record ActivityTimestamps
     (
-        Optional<DateTime> Start = default,
-        Optional<DateTime> End = default
+        Optional<DateTimeOffset> Start = default,
+        Optional<DateTimeOffset> End = default
     ) : IActivityTimestamps;
 }
