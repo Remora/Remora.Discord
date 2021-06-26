@@ -33,9 +33,9 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class GuildUpdateTests : GatewayEventTestBase<IGuildUpdate>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
@@ -44,8 +44,8 @@ namespace Remora.Discord.API.Tests.Gateway.Events
                 "region", // deprecated value
                 "guild_id" // undocumented value
             },
-            default,
-            e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
-        );
+
+            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
+        };
     }
 }

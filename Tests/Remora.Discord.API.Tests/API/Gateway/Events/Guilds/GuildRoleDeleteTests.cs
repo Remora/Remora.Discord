@@ -32,12 +32,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class GuildRoleDeleteTests : GatewayEventTestBase<IGuildRoleDelete>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "guild_hashes" // internal discord value
             }
-        );
+        };
     }
 }

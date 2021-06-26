@@ -23,66 +23,43 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OneOf.Types;
 
 namespace Remora.Discord.Tests
 {
     /// <summary>
     /// Contains various options for the json assertions.
     /// </summary>
-    public class JsonAssertOptions
+    public record JsonAssertOptions
+    (
+        IReadOnlyCollection<string>? AllowMissing = null,
+        Func<JsonProperty, bool>? AllowMissingBy = null,
+        Func<JsonElement, bool>? AllowSkip = null
+    )
     {
         /// <summary>
         /// Gets a list of property names that are allowed to be missing from the serialized result.
         /// </summary>
-        public IReadOnlyCollection<string> AllowMissing { get; init; }
+        public IReadOnlyCollection<string> AllowMissing { get; init; } = AllowMissing ?? new List<string>();
 
         /// <summary>
         /// Gets a function that inspects a property and determines if it's allowed to be missing in the serialized
         /// result.
         /// </summary>
-        public Func<JsonProperty, bool> AllowMissingBy { get; init; }
+        public Func<JsonProperty, bool> AllowMissingBy { get; init; } = AllowMissingBy ?? (_ => false);
 
         /// <summary>
         /// Gets a function that inspects an element and determines if validation of it should be skipped.
         /// </summary>
-        public Func<JsonElement, bool> AllowSkip { get; init; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonAssertOptions"/> class.
-        /// </summary>
-        /// <param name="allowMissing">The names that are allowed to be missing.</param>
-        /// <param name="allowMissingBy">A function that determines if a property is allowed to be missing.</param>
-        /// <param name="allowSkip">A function that determines if validation of an element should be skipped.</param>
-        public JsonAssertOptions
-        (
-            IReadOnlyCollection<string>? allowMissing = default,
-            Func<JsonProperty, bool>? allowMissingBy = default,
-            Func<JsonElement, bool>? allowSkip = default
-        )
-        {
-            this.AllowMissing = allowMissing ?? new List<string>();
-            this.AllowMissingBy = allowMissingBy ?? (_ => false);
-            this.AllowSkip = allowSkip ?? (_ => false);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonAssertOptions"/> class.
-        /// </summary>
-        /// <param name="original">An existing <see cref="JsonAssertOptions"/> object to be cloned..</param>
-        public JsonAssertOptions(JsonAssertOptions original)
-        {
-            AllowMissing = original.AllowMissing;
-            AllowMissingBy = original.AllowMissingBy;
-            AllowSkip = original.AllowSkip;
-        }
+        public Func<JsonElement, bool> AllowSkip { get; init; } = AllowSkip ?? (_ => false);
 
         /// <summary>
         /// Gets a default instance of the assertion options. This default option set allows underscore-prefixed fields
         /// to be missing.
         /// </summary>
-        public static JsonAssertOptions Default { get; } = new
-        (
-            allowMissingBy: p => p.Name.StartsWith("_")
-        );
+        public static JsonAssertOptions Default { get; } = new()
+        {
+            AllowMissingBy = p => p.Name.StartsWith("_")
+        };
     }
 }

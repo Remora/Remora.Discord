@@ -33,9 +33,9 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class GuildCreateTests : GatewayEventTestBase<IGuildCreate>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "application_command_count", // undocumented value
                 "avatar", // undocumented value upon "members[]" objects
@@ -48,8 +48,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
                 "region", // deprecated value
                 "stickers" // undocumented value
             },
-            default,
-            e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
-        );
+            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
+        };
     }
 }

@@ -30,12 +30,12 @@ namespace Remora.Discord.API.Tests.Objects
     public class RoleTests : ObjectTestBase<IRole>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "permissions_new" // aliased and collapsed to just "permissions"
             }
-        );
+        };
     }
 }

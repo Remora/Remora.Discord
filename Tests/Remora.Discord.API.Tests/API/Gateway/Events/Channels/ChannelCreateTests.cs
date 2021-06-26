@@ -32,14 +32,14 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class ChannelCreateTests : GatewayEventTestBase<IChannelCreate>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
                 "lazy" // undocumented value
             }
-        );
+        };
     }
 }

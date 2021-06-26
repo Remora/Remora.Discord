@@ -31,11 +31,9 @@ namespace Remora.Discord.API.Tests.Objects
     public class AllowedMentionsTests : ObjectTestBase<IAllowedMentions>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions => new
-        (
-            default,
-            default,
-            e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_MENTION_TYPE"
-        );
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_MENTION_TYPE"
+        };
     }
 }

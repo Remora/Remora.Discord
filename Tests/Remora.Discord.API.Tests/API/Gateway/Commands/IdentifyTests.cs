@@ -33,13 +33,12 @@ namespace Remora.Discord.API.Tests.Gateway.Commands
     public class IdentifyTests : GatewayCommandTestBase<IIdentify>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; }
-            = new(JsonAssertOptions.Default)
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
-                AllowMissing = new[]
-                {
-                    "id", // undocumented value upon "presence.activities[]" objects
-                }
-            };
+                "id", // undocumented value upon "presence.activities[]" objects
+            }
+        };
     }
 }

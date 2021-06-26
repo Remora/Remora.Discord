@@ -33,13 +33,12 @@ namespace Remora.Discord.API.Tests.Objects
     public class ActivityTests : ObjectTestBase<IActivity>
     {
         /// <inheritdoc/>
-        protected override JsonAssertOptions AssertOptions { get; }
-            = new(JsonAssertOptions.Default)
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
-                AllowMissing = new[]
-                {
-                    "id" // undocumented field
-                }
-            };
+                "id" // undocumented field
+            }
+        };
     }
 }

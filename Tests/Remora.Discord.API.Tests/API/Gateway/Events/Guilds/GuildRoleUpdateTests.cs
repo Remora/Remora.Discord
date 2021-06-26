@@ -32,13 +32,13 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class GuildRoleUpdateTests : GatewayEventTestBase<IGuildRoleUpdate>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "permissions_new", // aliased and collapsed to just "permissions"
                 "guild_hashes" // internal discord value
             }
-        );
+        };
     }
 }

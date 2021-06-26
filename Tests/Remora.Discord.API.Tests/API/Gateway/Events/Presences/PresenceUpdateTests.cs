@@ -30,13 +30,12 @@ namespace Remora.Discord.API.Tests.Gateway.Events
     public class PresenceUpdateTests : GatewayEventTestBase<IPresenceUpdate>
     {
         /// <inheritdoc/>
-        protected override JsonAssertOptions AssertOptions { get; }
-            = new(JsonAssertOptions.Default)
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
-                AllowMissing = new[]
-                {
-                    "id" // undocumented field upon "activities[]" objects
-                }
-            };
+                "id" // undocumented field upon "activities[]" objects
+            }
+        };
     }
 }

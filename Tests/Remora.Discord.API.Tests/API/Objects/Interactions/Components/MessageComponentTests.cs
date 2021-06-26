@@ -30,12 +30,12 @@ namespace Remora.Discord.API.Tests.Objects
     public class MessageComponentTests : ObjectTestBase<IMessageComponent>
     {
         /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = new
-        (
-            new[]
+        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
             {
                 "unknown_field"
             }
-        );
+        };
     }
 }

@@ -60,12 +60,12 @@ namespace Remora.Discord.API.Tests.TestBases
         /// <summary>
         /// Gets the assertion options.
         /// </summary>
-        protected virtual JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default;
+        protected virtual JsonAssertOptions AssertOptions => JsonAssertOptions.Default;
 
         /// <summary>
         /// Gets a value indicating whether unknown events are allowed.
         /// </summary>
-        protected virtual bool AllowUnknownEvents { get; } = false;
+        protected virtual bool AllowUnknownEvents => false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonBackedTypeTestBase{TType,TSampleSource}"/> class.
