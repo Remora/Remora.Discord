@@ -195,12 +195,14 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionApplicationCommandCallbackData">I<wbr>Interaction<wbr>Application<wbr>Command<wbr>Callback<wbr>Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse">IInteractionResponse</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance">IInviteStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageInteraction">IMessageInteraction</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference">IMessageReference</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker">IMessageSticker</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageStickerItem">IMessageStickerItem</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo">I<wbr>Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication">IPartialApplication</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>
@@ -324,8 +326,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandDelete">I<wbr>Application<wbr>Command<wbr>Delete</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandUpdate">I<wbr>Application<wbr>Command<wbr>Update</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandDelete">I<wbr>Application<wbr>Command<wbr>Delete</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandCreate">I<wbr>Application<wbr>Command<wbr>Create</a></li>								
 									</ul>
 								</dd>				
@@ -336,10 +338,10 @@
 							graph BT
 	Type["IApplicationCommand"]
 class Type type-node
-	Implementing0["IApplicationCommandDelete"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandDelete"
-	Implementing1["IApplicationCommandUpdate"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandUpdate"
+	Implementing0["IApplicationCommandUpdate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandUpdate"
+	Implementing1["IApplicationCommandDelete"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandDelete"
 	Implementing2["IApplicationCommandCreate"]-.-&gt;Type
 	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IApplicationCommandCreate"
 

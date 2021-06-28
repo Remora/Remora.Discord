@@ -195,12 +195,14 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionApplicationCommandCallbackData">I<wbr>Interaction<wbr>Application<wbr>Command<wbr>Callback<wbr>Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse">IInteractionResponse</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance">IInviteStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageInteraction">IMessageInteraction</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference">IMessageReference</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker">IMessageSticker</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageStickerItem">IMessageStickerItem</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo">I<wbr>Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication">IPartialApplication</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>
@@ -377,15 +379,6 @@ public interface IMessageSticker</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/72EF6844">Asset</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash</a></td>
-								<td>
-									<div>
-    Gets the sticker asset hash.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/C984E817">Description</a></td>
 								<td>string</td>
 								<td>
@@ -404,11 +397,29 @@ public interface IMessageSticker</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/317698C2">GuildID</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the ID of the guild the sticker belongs to.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/F37F0AD9">ID</a></td>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
 								<td>
 									<div>
     Gets the ID of the sticker.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/ADD11BE6">IsAvailable</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>
+									<div>
+    Gets a value indicating whether the sticker is available.
     </div>
 								</td>
 							</tr>
@@ -423,7 +434,7 @@ public interface IMessageSticker</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/0C3539FF">PackID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the sticker pack.
@@ -431,11 +442,29 @@ public interface IMessageSticker</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/89C3B7C1">Tags</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;string&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/8B16404F">SortValue</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
-    Gets a list of sticker tags.
+    Gets the sticker's sorting order within a sticker pack.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/89C3B7C1">Tags</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Gets one or more comma-separated unicode emojis representing the sticker's expression.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageSticker/E6819823">User</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the user that uploaded the sticker.
     </div>
 								</td>
 							</tr>

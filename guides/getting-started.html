@@ -116,9 +116,9 @@ this guide. Feel free to use your favourite IDE instead, such as
 <a href="https://www.jetbrains.com/rider/">JetBrains Rider</a> or <a href="https://code.visualstudio.com/">VS Code</a>.</p>
 <pre><code class="language-bash">dotnet new console -n "PingPong"
 cd PingPong
-dotnet add package Remora.Discord -v "1.0.0-beta2"
+dotnet add package Remora.Discord -v "3.0.33"
 </code></pre>
-<p>In the commands above, replace <code>-v "1.0.0-beta2"</code> with the release you'd like to
+<p>In the commands above, replace <code>-v "3.0.33"</code> with the release you'd like to
 install (or remove it altogether if you'd like to use the latest stable
 release).</p>
 <p>Opening up the <code>Program.cs</code> file, we can start to set up our environment.</p>
@@ -190,22 +190,30 @@ running.</p>
 <p>Let's implement some error handling next.</p>
 <pre><code class="language-csharp">if (!runResult.IsSuccess)
 {
-    Console.WriteLine($"Oops! Something went wrong: {runResult.ErrorReason}");
-
-    if (runResult.GatewayCloseStatus.HasValue)
+    switch (runResult.Error)
     {
-        Console.WriteLine
-        (
-            $"Gateway close status: {runResult.GatewayCloseStatus}"
-        );
-    }
+        case ExceptionError exe:
+        {
+            log.LogError
+            (
+                exe.Exception,
+                "Exception during gateway connection: {ExceptionMessage}",
+                exe.Message
+            );
 
-    if (runResult.WebSocketCloseStatus.HasValue)
-    {
-        Console.WriteLine
-        (
-            $"Websocket close status: {runResult.WebSocketCloseStatus}"
-        );
+            break;
+        }
+        case GatewayWebSocketError:
+        case GatewayDiscordError:
+        {
+            log.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
+            break;
+        }
+        default:
+        {
+            log.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
+            break;
+        }
     }
 }
 
@@ -264,7 +272,7 @@ information between events, you'll need to outsource that to some other type -
 most likely registered as a <code>Singleton</code>, or <code>Scoped</code> in an outer scope.</p>
 <p>The <code>IResponder&lt;T&gt;</code> interface is relatively simple, only defining a single
 method.</p>
-<pre><code class="language-csharp">public async Task&lt;EventResponseResult&gt; RespondAsync
+<pre><code class="language-csharp">public async Task&lt;Result&gt; RespondAsync
 (
     <a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageCreate">IMessageCreate</a> gatewayEvent,
     CancellationToken ct = default
@@ -287,10 +295,10 @@ future, we'll have a proper command framework available, but that's outside of
 the scope of this quickstart.</p>
 <pre><code class="language-csharp">if (gatewayEvent.Content != "!ping")
 {
-    return EventResponseResult.FromSuccess();
+    return Result.FromSuccess();
 }
 
-var embed = new Embed(description: "Pong!", colour: Color.LawnGreen);
+var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
 </code></pre>
 <p>If the message isn't something we're interested in, we return a successful
 result - after all, if we just don't care, it's hardly a failure of our own
@@ -313,20 +321,20 @@ defining the various endpoints. Back in our responder method, we can now use the
 channel API.</p>
 <pre><code class="language-csharp">if (gatewayEvent.Content != "!ping")
 {
-    return EventResponseResult.FromSuccess();
+    return Result.FromSuccess();
 }
 
-var embed = new Embed(description: "Pong!", colour: Color.LawnGreen);
+var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
 var replyResult = await _channelAPI.CreateMessageAsync
 (
     gatewayEvent.ChannelID,
-    embed: embed,
+    embeds: new[] { embed },
     ct: ct
 );
 
 return !replyResult.IsSuccess
-    ? EventResponseResult.FromError(replyRolls)
-    : EventResponseResult.FromSuccess();
+    ? Result.FromError(replyResult)
+    : Result.FromSuccess();
 </code></pre>
 <p>The <code>CreateMessageAsync</code> method takes a lot of various parameters, but we're
 really only interested in the embed and channel parameters right now -

@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -196,6 +197,12 @@
 	<pre><code>Optional&lt;DateTimeOffset&gt; CreatedAt { get; }</code></pre>
 
 
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    This field is always present on activities received from Discord; it is optional because it should never be
+    sent by a bot. Discord's documentation is somewhat vague at first glance, but because of the above it's
+    implemented as an optional field.
+    </div>
 
 
 

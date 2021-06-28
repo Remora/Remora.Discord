@@ -191,8 +191,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -202,10 +202,10 @@
 							graph BT
 	Type["IDiscordRestGuildAPI"]
 class Type type-node
-	Implementing0["CachingDiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
-	Implementing1["DiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
+	Implementing0["DiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
+	Implementing1["CachingDiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
 
 						</div>
 					</div>
@@ -493,6 +493,15 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/A204AAFF">Modify<wbr>Current<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Modifies the voice state of the current user.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/DF9892D0">ModifyGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
@@ -556,6 +565,15 @@ public interface IDiscordRestGuildAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/F03DE6DA">Modify<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Modifies the voice state of another user.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/FE9C9C5F">RemoveGuildBanAsync<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
@@ -588,24 +606,6 @@ public interface IDiscordRestGuildAPI</code></pre>
 								<td>
 									<div>
     Gets a list of guild members whose username or nickname start with the query string.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/033031DD">Update<wbr>Current<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Updates the voice state of the current user.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/DA02B53E">Update<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Updates the voice state of another user.
     </div>
 								</td>
 							</tr>
