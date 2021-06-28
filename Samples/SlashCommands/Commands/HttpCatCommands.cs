@@ -37,21 +37,21 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
     /// </summary>
     public class HttpCatCommands : CommandGroup
     {
-        private readonly ICommandContext _context;
-        private readonly IDiscordRestChannelAPI _channelAPI;
+        private readonly InteractionContext _context;
+        private readonly IDiscordRestWebhookAPI _webhookAPI;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
         /// </summary>
-        /// <param name="channelAPI">The channel API.</param>
+        /// <param name="webhookAPI">The webhook API.</param>
         /// <param name="context">The command context.</param>
         public HttpCatCommands
         (
-            IDiscordRestChannelAPI channelAPI,
-            ICommandContext context
+            IDiscordRestWebhookAPI webhookAPI,
+            InteractionContext context
         )
         {
-            _channelAPI = channelAPI;
+            _webhookAPI = webhookAPI;
             _context = context;
         }
 
@@ -67,9 +67,10 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Image: embedImage);
 
-            var reply = await _channelAPI.CreateMessageAsync
+            var reply = await _webhookAPI.CreateFollowupMessageAsync
             (
-                _context.ChannelID,
+                _context.ApplicationID,
+                _context.Token,
                 embeds: new[] { embed },
                 ct: this.CancellationToken
             );
