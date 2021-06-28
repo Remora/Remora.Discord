@@ -89,7 +89,7 @@ dotnet pack -c Release
 Up-to-date documentation for the API, as well as a quickstart guide, is 
 available online at [the repository pages][1].
 
-Please refer to the [Samples](Samples) for community-created example bots.
+Please refer to the [Samples][7] for community-created example bots.
 
 ### 5.1 Versioning
 A note on versioning - Remora.Discord uses SEMVER 2.0.0, which, in short, means
@@ -143,3 +143,4 @@ Icon by [Twemoji][6], licensed under CC-BY 4.0.
 [4]: https://discord.gg/tRJbg8HNdt
 [5]: https://img.shields.io/static/v1?label=Chat&message=on%20Discord&color=7289da&logo=discord
 [6]: https://twemoji.twitter.com/
+[7]: https://github.com/Nihlus/Remora.Discord/tree/master/Samples
