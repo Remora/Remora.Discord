@@ -23,10 +23,10 @@ this guide. Feel free to use your favourite IDE instead, such as
 ```bash
 dotnet new console -n "PingPong"
 cd PingPong
-dotnet add package Remora.Discord -v "1.0.0-beta2"
+dotnet add package Remora.Discord -v "3.0.33"
 ```
 
-In the commands above, replace `-v "1.0.0-beta2"` with the release you'd like to
+In the commands above, replace `-v "3.0.33"` with the release you'd like to
 install (or remove it altogether if you'd like to use the latest stable
 release).
 
@@ -121,22 +121,30 @@ Let's implement some error handling next.
 ```csharp
 if (!runResult.IsSuccess)
 {
-    Console.WriteLine($"Oops! Something went wrong: {runResult.ErrorReason}");
-
-    if (runResult.GatewayCloseStatus.HasValue)
+    switch (runResult.Error)
     {
-        Console.WriteLine
-        (
-            $"Gateway close status: {runResult.GatewayCloseStatus}"
-        );
-    }
+        case ExceptionError exe:
+        {
+            log.LogError
+            (
+                exe.Exception,
+                "Exception during gateway connection: {ExceptionMessage}",
+                exe.Message
+            );
 
-    if (runResult.WebSocketCloseStatus.HasValue)
-    {
-        Console.WriteLine
-        (
-            $"Websocket close status: {runResult.WebSocketCloseStatus}"
-        );
+            break;
+        }
+        case GatewayWebSocketError:
+        case GatewayDiscordError:
+        {
+            log.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
+            break;
+        }
+        default:
+        {
+            log.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
+            break;
+        }
     }
 }
 
@@ -210,7 +218,7 @@ The `IResponder<T>` interface is relatively simple, only defining a single
 method.
 
 ```csharp
-public async Task<EventResponseResult> RespondAsync
+public async Task<Result> RespondAsync
 (
     IMessageCreate gatewayEvent,
     CancellationToken ct = default
@@ -238,10 +246,10 @@ the scope of this quickstart.
 ```csharp
 if (gatewayEvent.Content != "!ping")
 {
-    return EventResponseResult.FromSuccess();
+    return Result.FromSuccess();
 }
 
-var embed = new Embed(description: "Pong!", colour: Color.LawnGreen);
+var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
 ```
 
 If the message isn't something we're interested in, we return a successful
@@ -271,20 +279,20 @@ channel API.
 ```csharp
 if (gatewayEvent.Content != "!ping")
 {
-    return EventResponseResult.FromSuccess();
+    return Result.FromSuccess();
 }
 
-var embed = new Embed(description: "Pong!", colour: Color.LawnGreen);
+var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
 var replyResult = await _channelAPI.CreateMessageAsync
 (
     gatewayEvent.ChannelID,
-    embed: embed,
+    embeds: new[] { embed },
     ct: ct
 );
 
 return !replyResult.IsSuccess
-    ? EventResponseResult.FromError(replyRolls)
-    : EventResponseResult.FromSuccess();
+    ? Result.FromError(replyResult)
+    : Result.FromSuccess();
 ```
 
 The `CreateMessageAsync` method takes a lot of various parameters, but we're
