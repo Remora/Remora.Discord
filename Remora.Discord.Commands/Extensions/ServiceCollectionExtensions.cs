@@ -128,19 +128,13 @@ namespace Remora.Discord.Commands.Extensions
         /// Adds the command responder to the system.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="optionsConfigurator">The option configurator.</param>
         /// <returns>The collection, with the command responder.</returns>
         public static IServiceCollection AddCommandResponder
         (
-            this IServiceCollection serviceCollection,
-            Action<CommandResponderOptions>? optionsConfigurator = null
+            this IServiceCollection serviceCollection
         )
         {
-            optionsConfigurator ??= options => options.Prefix = "!";
-
             serviceCollection.AddResponder<CommandResponder>();
-            serviceCollection.Configure(optionsConfigurator);
-
             return serviceCollection;
         }
 

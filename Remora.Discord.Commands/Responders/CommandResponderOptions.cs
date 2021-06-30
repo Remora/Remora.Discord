@@ -20,14 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Commands.Responders
 {
     /// <summary>
     /// Represents a set of options relevant to a command responder.
     /// </summary>
+    [PublicAPI]
     public class CommandResponderOptions : ICommandResponderOptions
     {
         /// <inheritdoc />
-        public string? Prefix { get; set; }
+        public string? Prefix { get; set; } = "!";
     }
 }
