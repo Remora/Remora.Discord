@@ -35,19 +35,16 @@ namespace Remora.Discord.Samples.HttpCat.Responders
     /// <summary>
     /// Responds to a httpcat command.
     /// </summary>
-    public class HttpCatResponder : IResponder<IMessageCreate>, IDisposable
+    public class HttpCatResponder : IResponder<IMessageCreate>
     {
-        private readonly HttpClient _httpClient;
         private readonly IDiscordRestChannelAPI _channelAPI;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpCatResponder"/> class.
         /// </summary>
-        /// <param name="httpClientFactory">The http client factory.</param>
         /// <param name="channelAPI">The channel API.</param>
-        public HttpCatResponder(IHttpClientFactory httpClientFactory, IDiscordRestChannelAPI channelAPI)
+        public HttpCatResponder(IDiscordRestChannelAPI channelAPI)
         {
-            _httpClient = httpClientFactory.CreateClient();
             _channelAPI = channelAPI;
         }
 
@@ -73,13 +70,6 @@ namespace Remora.Discord.Samples.HttpCat.Responders
             return !reply.IsSuccess
                 ? Result.FromError(reply)
                 : Result.FromSuccess();
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            _httpClient.Dispose();
         }
     }
 }

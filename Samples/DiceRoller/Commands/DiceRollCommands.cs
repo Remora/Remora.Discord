@@ -41,7 +41,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
     /// <summary>
     /// Contains commands for rolling dice.
     /// </summary>
-    public class DiceRollCommands : CommandGroup, IDisposable
+    public class DiceRollCommands : CommandGroup
     {
         private readonly HttpClient _httpClient;
         private readonly IDiscordRestChannelAPI _channelAPI;
@@ -50,17 +50,17 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
         /// </summary>
-        /// <param name="httpClientFactory">The http client factory used for API requests.</param>
+        /// <param name="httpClient">The http client used for API requests.</param>
         /// <param name="channelAPI">The Discord channel API.</param>
         /// <param name="context">Additional context about the original message.</param>
         public DiceRollCommands
         (
-            IHttpClientFactory httpClientFactory,
+            HttpClient httpClient,
             IDiscordRestChannelAPI channelAPI,
             ICommandContext context
         )
         {
-            _httpClient = httpClientFactory.CreateClient();
+            _httpClient = httpClient;
             _channelAPI = channelAPI;
             _context = context;
         }
@@ -148,13 +148,6 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             return !replyRolls.IsSuccess
                 ? Result.FromError(replyRolls)
                 : Result.FromSuccess();
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            _httpClient.Dispose();
         }
     }
 }
