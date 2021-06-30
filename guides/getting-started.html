@@ -350,7 +350,6 @@ addition.</p>
 var services = new ServiceCollection()
     .AddDiscordGateway(() =&gt; botToken)
     .AddResponder&lt;PingPongResponder&gt;(responderService)
-    .AddSingleton&lt;<a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository">IResponderTypeRepository</a>&gt;(responderService)
     .BuildServiceProvider();
 </code></pre>
 <p>And that's it! The <code>AddResponder&lt;T&gt;</code> method registers the responder as a scoped
