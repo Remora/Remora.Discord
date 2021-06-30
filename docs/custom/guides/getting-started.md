@@ -313,7 +313,6 @@ var responderService = new ResponderService();
 var services = new ServiceCollection()
     .AddDiscordGateway(() => botToken)
     .AddResponder<PingPongResponder>(responderService)
-    .AddSingleton<IResponderTypeRepository>(responderService)
     .BuildServiceProvider();
 ```
 
