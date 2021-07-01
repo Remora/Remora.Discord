@@ -118,6 +118,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The guild has increased custom sticker slots.
         /// </summary>
-        MoreStickers
+        MoreStickers,
+
+        /// <summary>
+        /// The guild has access to the three-day archival time for threads.
+        /// </summary>
+        ThreeDayThreadArchive,
+
+        /// <summary>
+        /// The guild has access to the seven-day archival time for threads.
+        /// </summary>
+        SevenDayThreadArchive,
+
+        /// <summary>
+        /// Private threads may be created in the guild.
+        /// </summary>
+        PrivateThreads
     }
 }
