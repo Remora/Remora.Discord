@@ -311,7 +311,7 @@ addition.
 ```csharp
 var responderService = new ResponderService();
 var services = new ServiceCollection()
-    .AddDiscordGateway(() => botToken)
+    .AddDiscordGateway(_ => botToken)
     .AddResponder<PingPongResponder>(responderService)
     .BuildServiceProvider();
 ```
