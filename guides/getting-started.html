@@ -348,7 +348,7 @@ injection!</p>
 addition.</p>
 <pre><code class="language-csharp">var responderService = new ResponderService();
 var services = new ServiceCollection()
-    .AddDiscordGateway(() =&gt; botToken)
+    .AddDiscordGateway(_ =&gt; botToken)
     .AddResponder&lt;PingPongResponder&gt;(responderService)
     .BuildServiceProvider();
 </code></pre>

@@ -228,6 +228,8 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTags">IRoleTags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTemplate">IRoleTemplate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption">ISelectOption</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISessionStartLimit">ISessionStartLimit</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeam">ITeam</a></li>
@@ -326,8 +328,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -337,10 +339,10 @@
 							graph BT
 	Type["IUser"]
 class Type type-node
-	Implementing0["IUserUpdate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
-	Implementing1["IUserMention"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing0["IUserMention"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing1["IUserUpdate"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
 
 						</div>
 					</div>

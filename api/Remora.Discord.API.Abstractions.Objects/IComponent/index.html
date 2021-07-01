@@ -228,6 +228,8 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole">IRole</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTags">IRoleTags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTemplate">IRoleTemplate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption">ISelectOption</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISessionStartLimit">ISessionStartLimit</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeam">ITeam</a></li>
@@ -421,6 +423,42 @@ public interface IComponent</code></pre>
 								<td>
 									<div>
     Gets the label on the button.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/A080D50A">MaxValues</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the maximum number of options that may be selected.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/E1323EDD">MinValues</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the minimum number of options that must be selected.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/745443C8">Options</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption">ISelectOption</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the options in a select menu.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0710DAD8">Placeholder</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the placeholder text for a component.
     </div>
 								</td>
 							</tr>
