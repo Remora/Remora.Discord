@@ -246,6 +246,11 @@ namespace Remora.Discord.API.Abstractions.Results
         DisallowedWords = 20031,
 
         /// <summary>
+        /// The guild's premium subscription level is too low for the requested action.
+        /// </summary>
+        GuildPremiumLevelTooLow = 20035,
+
+        /// <summary>
         /// Maximum number of guilds reached (100).
         /// </summary>
         MaxGuildsReached = 30001,
