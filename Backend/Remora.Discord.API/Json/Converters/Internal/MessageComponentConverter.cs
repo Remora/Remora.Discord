@@ -69,6 +69,8 @@ namespace Remora.Discord.API.Json
                     => JsonSerializer.Deserialize<ActionRowComponent>(document.RootElement.GetRawText(), options),
                 ComponentType.Button
                     => JsonSerializer.Deserialize<ButtonComponent>(document.RootElement.GetRawText(), options),
+                ComponentType.SelectMenu
+                    => JsonSerializer.Deserialize<SelectMenuComponent>(document.RootElement.GetRawText(), options),
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
         }

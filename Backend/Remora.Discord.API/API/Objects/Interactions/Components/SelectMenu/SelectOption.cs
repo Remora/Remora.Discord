@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  SelectOption.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ISelectOption" />
     [PublicAPI]
-    public record Component
+    public record SelectOption
     (
-        ComponentType Type,
-        Optional<IReadOnlyList<IMessageComponent>> Components,
-        Optional<ButtonComponentStyle> Style,
-        Optional<string> Label,
+        string Label,
+        string Value,
+        Optional<string> Description,
         Optional<IPartialEmoji> Emoji,
-        Optional<string> CustomID,
-        Optional<string> URL,
-        Optional<bool> IsDisabled,
-        Optional<IReadOnlyList<ISelectOption>> Options,
-        Optional<string> Placeholder,
-        Optional<int> MinValues,
-        Optional<int> MaxValues
-    ) : IMessageComponent, IComponent;
+        Optional<bool> IsDefault
+    ) : ISelectOption;
 }

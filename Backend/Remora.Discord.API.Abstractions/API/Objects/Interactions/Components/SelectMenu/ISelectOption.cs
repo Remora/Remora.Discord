@@ -1,5 +1,5 @@
 //
-//  ComponentType.cs
+//  ISelectOption.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,28 +21,40 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates the various message component types.
+    /// Represents a single selectable option.
     /// </summary>
     [PublicAPI]
-    public enum ComponentType
+    public interface ISelectOption
     {
         /// <summary>
-        /// A row of actions.
+        /// Gets the user-facing name of the option. Max 25 characters.
         /// </summary>
-        ActionRow = 1,
+        string Label { get; }
 
         /// <summary>
-        /// A clickable button.
+        /// Gets the developer-defined value of the option. Max 100 characters.
         /// </summary>
-        Button = 2,
+        string Value { get; }
 
         /// <summary>
-        /// A menu of selectable options.
+        /// Gets an additional description of the option. Max 50 characters.
         /// </summary>
-        SelectMenu = 3
+        Optional<string> Description { get; }
+
+        /// <summary>
+        /// Gets an emoji that will render along with the option.
+        /// </summary>
+        Optional<IPartialEmoji> Emoji { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this option will be selected by default. May be <value>true</value> for more
+        /// than one option in a multi-select menu.
+        /// </summary>
+        Optional<bool> IsDefault { get; }
     }
 }

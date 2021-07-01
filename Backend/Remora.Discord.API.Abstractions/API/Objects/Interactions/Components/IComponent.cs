@@ -93,5 +93,37 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Valid for <see cref="IButtonComponent"/>s.
         /// </remarks>
         Optional<bool> IsDisabled { get; }
+
+        /// <summary>
+        /// Gets the options in a select menu.
+        /// </summary>
+        /// <remarks>
+        /// Valid for <see cref="ISelectMenuComponent"/>s.
+        /// </remarks>
+        Optional<IReadOnlyList<ISelectOption>> Options { get; }
+
+        /// <summary>
+        /// Gets the placeholder text for a component.
+        /// </summary>
+        /// <remarks>
+        /// Valid for <see cref="ISelectMenuComponent"/>s.
+        /// </remarks>
+        Optional<string> Placeholder { get; }
+
+        /// <summary>
+        /// Gets the minimum number of options that must be selected.
+        /// </summary>
+        /// <remarks>
+        /// Valid for <see cref="ISelectMenuComponent"/>s.
+        /// </remarks>
+        Optional<int> MinValues { get; }
+
+        /// <summary>
+        /// Gets the maximum number of options that may be selected.
+        /// </summary>
+        /// <remarks>
+        /// Valid for <see cref="ISelectMenuComponent"/>s.
+        /// </remarks>
+        Optional<int> MaxValues { get; }
     }
 }

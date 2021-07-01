@@ -54,5 +54,17 @@ namespace Remora.Discord.API.Objects
 
         /// <inheritdoc/>
         Optional<bool> IComponent.IsDisabled => default;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<ISelectOption>> IComponent.Options => default;
+
+        /// <inheritdoc/>
+        Optional<string> IComponent.Placeholder => default;
+
+        /// <inheritdoc/>
+        Optional<int> IComponent.MinValues => default;
+
+        /// <inheritdoc/>
+        Optional<int> IComponent.MaxValues => default;
     }
 }

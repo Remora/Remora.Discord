@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  SelectMenuComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,27 +21,28 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
-    [PublicAPI]
-    public record Component
+    /// <inheritdoc cref="ISelectMenuComponent" />
+    public record SelectMenuComponent
     (
-        ComponentType Type,
-        Optional<IReadOnlyList<IMessageComponent>> Components,
-        Optional<ButtonComponentStyle> Style,
-        Optional<string> Label,
-        Optional<IPartialEmoji> Emoji,
-        Optional<string> CustomID,
-        Optional<string> URL,
-        Optional<bool> IsDisabled,
-        Optional<IReadOnlyList<ISelectOption>> Options,
+        string CustomID,
+        IReadOnlyList<ISelectOption> Options,
         Optional<string> Placeholder,
         Optional<int> MinValues,
         Optional<int> MaxValues
-    ) : IMessageComponent, IComponent;
+    ) : ISelectMenuComponent, IDefaultedComponent
+    {
+        /// <inheritdoc/>
+        ComponentType IComponent.Type => ComponentType.SelectMenu;
+
+        /// <inheritdoc/>
+        Optional<string> IComponent.CustomID => this.CustomID;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<ISelectOption>> IComponent.Options => new(this.Options);
+    }
 }

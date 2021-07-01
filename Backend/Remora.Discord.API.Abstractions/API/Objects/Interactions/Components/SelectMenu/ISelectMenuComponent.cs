@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  ISelectMenuComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,26 +22,29 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
+    /// <summary>
+    /// Represents a dropdown of selectable values.
+    /// </summary>
     [PublicAPI]
-    public record Component
-    (
-        ComponentType Type,
-        Optional<IReadOnlyList<IMessageComponent>> Components,
-        Optional<ButtonComponentStyle> Style,
-        Optional<string> Label,
-        Optional<IPartialEmoji> Emoji,
-        Optional<string> CustomID,
-        Optional<string> URL,
-        Optional<bool> IsDisabled,
-        Optional<IReadOnlyList<ISelectOption>> Options,
-        Optional<string> Placeholder,
-        Optional<int> MinValues,
-        Optional<int> MaxValues
-    ) : IMessageComponent, IComponent;
+    public interface ISelectMenuComponent : IMessageComponent
+    {
+        /// <inheritdoc cref="IComponent.CustomID"/>
+        string CustomID { get; }
+
+        /// <inheritdoc cref="IComponent.Options"/>
+        IReadOnlyList<ISelectOption> Options { get; }
+
+        /// <inheritdoc cref="IComponent.Placeholder"/>
+        Optional<string> Placeholder { get; }
+
+        /// <inheritdoc cref="IComponent.MinValues"/>
+        Optional<int> MinValues { get; }
+
+        /// <inheritdoc cref="IComponent.MaxValues"/>
+        Optional<int> MaxValues { get; }
+    }
 }
