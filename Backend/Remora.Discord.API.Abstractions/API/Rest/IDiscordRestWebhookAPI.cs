@@ -325,6 +325,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
         /// <param name="components">The components that should be included with the message.</param>
+        /// <param name="flags">The message flags to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> CreateFollowupMessageAsync
@@ -339,6 +340,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<MessageFlags> flags = default,
             CancellationToken ct = default
         );
 

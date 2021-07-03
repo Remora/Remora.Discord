@@ -456,6 +456,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<MessageFlags> flags = default,
             CancellationToken ct = default
         )
         {
@@ -480,6 +481,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("embeds", embeds, _jsonOptions);
                             json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                             json.Write("components", components, _jsonOptions);
+                            json.Write("flags", flags, _jsonOptions);
                         }
                     );
                 },

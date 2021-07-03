@@ -1127,6 +1127,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var tts = false;
                 var allowedMentions = new AllowedMentions(default, default, default, default);
                 var components = new List<IMessageComponent>();
+                var flags = MessageFlags.Ephemeral;
 
                 var api = CreateAPI
                 (
@@ -1143,6 +1144,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                                     .WithProperty("components", p => p.IsArray())
+                                    .WithProperty("flags", p => p.Is((int)flags))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -1157,7 +1159,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     avatarUrl,
                     tts,
                     allowedMentions: allowedMentions,
-                    components: components
+                    components: components,
+                    flags: flags
                 );
 
                 ResultAssert.Successful(result);
