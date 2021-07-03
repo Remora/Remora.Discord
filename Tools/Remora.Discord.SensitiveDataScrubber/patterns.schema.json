@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "title": "Sensitive Pattern Definitions",
+    "description": "A set of sensitive data patterns.",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "properties": {
+            "value_pattern": {
+                "description": "The regex pattern to match against the field value.",
+                "type": "string"
+            },
+            "replacement": {
+                "description": "The value to replace the scrubbed data with.",
+                "type": "string"
+            }
+        }
+    }
+}
