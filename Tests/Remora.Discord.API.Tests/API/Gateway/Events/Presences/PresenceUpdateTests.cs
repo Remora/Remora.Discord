@@ -34,7 +34,9 @@ namespace Remora.Discord.API.Tests.Gateway.Events
         {
             AllowMissing = new[]
             {
-                "id" // undocumented field upon "activities[]" objects
+                "id",           // undocumented field in "activities[]" objects
+                "sync_id",      // undocumented field in "activities[]" objects
+                "session_id",
             }
         };
     }

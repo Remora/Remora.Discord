@@ -1,0 +1,39 @@
+{
+    "t": "PRESENCE_UPDATE",
+    "s": 14,
+    "op": 0,
+    "d": {
+        "user": {
+            "id": "225917460635713536"
+        },
+        "status": "online",
+        "guild_id": "465266535783596033",
+        "client_status": {
+            "desktop": "online"
+        },
+        "activities": [
+            {
+                "type": 2,
+                "timestamps": {
+                    "start": 1625340561059,
+                    "end": 1625340747899
+                },
+                "sync_id": "5o0INADFgCAXCu7v7F6XbP",
+                "state": "MORGAN",
+                "session_id": "f80c26676285831d674236af3ec471d3",
+                "party": {
+                    "id": "spotify:225917460635713536"
+                },
+                "name": "Spotify",
+                "id": "spotify:1",
+                "flags": 48,
+                "details": "Alien",
+                "created_at": 1625340561504,
+                "assets": {
+                    "large_text": "Alien",
+                    "large_image": "spotify:ab67616d0000b273980fc37cbe345a493156f379"
+                }
+            }
+        ]
+    }
+}
