@@ -1,7 +1,7 @@
 {
   "type": 1,
   "name": "none",
-  "description": "wewww",
+  "description": "none",
   "default": false,
   "required": true,
   "choices": [],

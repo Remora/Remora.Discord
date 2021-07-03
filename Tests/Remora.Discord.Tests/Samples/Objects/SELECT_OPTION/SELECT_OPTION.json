@@ -1,7 +1,7 @@
 {
-  "label": "Priest",
+  "label": "none",
   "value": "priest",
-  "description": "You get heals when I'm done doing damage",
+  "description": "none",
   "emoji": {
     "name": "none",
     "id": "999999999999999999"

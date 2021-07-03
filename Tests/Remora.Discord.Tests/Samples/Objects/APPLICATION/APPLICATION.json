@@ -2,7 +2,7 @@
   "bot_public": true,
   "bot_require_code_grant": false,
   "cover_image": "31deabb7e45b6c8ecfef77d2f99c81a5",
-  "description": "Test",
+  "description": "none",
   "guild_id": "999999999999999999",
   "icon": null,
   "id": "999999999999999999",
@@ -16,7 +16,7 @@
   },
   "primary_sku_id": "999999999999999999",
   "slug": "test",
-  "summary": "This is a game",
+  "summary": "none",
   "team": {
     "icon": "68b329da9893e34099c7d8ad5cb9c940",
     "id": "999999999999999999",
