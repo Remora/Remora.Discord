@@ -1,6 +1,6 @@
 {
-    "type": 2,
-    "label": "Click me!",
-    "style": 5,
-    "url": "https://example.org"
+  "type": 2,
+  "label": "Click me!",
+  "style": 5,
+  "url": "https://www.example.org"
 }

@@ -1,6 +1,6 @@
 {
   "name": "none",
-  "url": "https://example.org",
-  "icon_url": "https://example.org",
-  "proxy_icon_url": "https://proxy.example.org"
+  "url": "https://www.example.org",
+  "icon_url": "https://www.example.org",
+  "proxy_icon_url": "https://www.example.org"
 }

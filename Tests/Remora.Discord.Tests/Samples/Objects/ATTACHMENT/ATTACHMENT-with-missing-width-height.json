@@ -2,6 +2,6 @@
   "id": "999999999999999999",
   "filename": "booga.pdf",
   "size": 1643,
-  "url": "https://fake.url/booga.pdf",
-  "proxy_url": "https://fake.url/booga.pdf"
+  "url": "https://www.example.org",
+  "proxy_url": "https://www.example.org"
 }

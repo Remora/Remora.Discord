@@ -2,40 +2,40 @@
   "title": "aa",
   "type": "rich",
   "description": "bb",
-  "url": "https://foo.bar",
+  "url": "https://www.example.org",
   "timestamp": "2020-08-28T18:17:25.377506+00:00",
   "color": 12,
   "footer": {
     "text": "cc",
-    "icon_url": "https://example.org",
-    "proxy_icon_url": "https://proxy.example.org"
+    "icon_url": "https://www.example.org",
+    "proxy_icon_url": "https://www.example.org"
   },
   "image": {
-    "url": "https://example.org",
-    "proxy_url": "https://proxy.example.org",
+    "url": "https://www.example.org",
+    "proxy_url": "https://www.example.org",
     "height": 1,
     "width": 1
   },
   "thumbnail": {
-    "url": "https://example.org",
-    "proxy_url": "https://proxy.example.org",
+    "url": "https://www.example.org",
+    "proxy_url": "https://www.example.org",
     "height": 1,
     "width": 1
   },
   "video": {
-    "url": "https://example.org",
+    "url": "https://www.example.org",
     "height": 1,
     "width": 1
   },
   "provider": {
     "name": "none",
-    "url": "https://example.org"
+    "url": "https://www.example.org"
   },
   "author": {
     "name": "none",
-    "url": "https://example.org",
-    "icon_url": "https://example.org",
-    "proxy_icon_url": "https://proxy.example.org"
+    "url": "https://www.example.org",
+    "icon_url": "https://www.example.org",
+    "proxy_icon_url": "https://www.example.org"
   },
   "fields": [
     {
