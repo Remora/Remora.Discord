@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>21.0.0</Version>
+        <Version>21.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,31 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement selection menu components.
-            Add new error code.
-            Add new thread-related guild features.
-            Update getting-started.md.
-            Fix an issue where user-provided options might be overwritten.
-            Fix bad examples.
-            Remove useless line.
-            Update README.md.
-            Update the "Getting Started" guide.
-            Merge pull request #68 from JakenVeina/slash-command-sample-fix
-            Fixed incorrect usage of slash commands in the SlashCommand sample project.
-            Apply requested change to assert option type.
-            Apply requested change to documentation comment.
-            Merge pull request #67
-            Fixed failing GUILD_CREATE Gateway event deserialization, plus related fixes.
-            More parts of the new sticker API.
-            Implement thread type specification.
-            Update documentation comment.
-            Add more known error codes.
-            Fix some broken XML documentation.
-            Fix missing parameter.
-            Add support for changing the RTC region.
-            Implement convenience variants for ModifyChannel.
-            Add new parameter to ModifyChannel.
-            Update sticker-related fields.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
