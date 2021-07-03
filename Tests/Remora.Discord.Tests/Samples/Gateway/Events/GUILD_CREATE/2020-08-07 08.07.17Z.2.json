@@ -3,7 +3,7 @@
   "s": 2,
   "op": 0,
   "d": {
-    "joined_at": "2020-07-28T13:55:42.039337+00:00",
+    "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "roles": [
       {
         "position": 0,
@@ -137,7 +137,7 @@
         "permission_overwrites": [],
         "parent_id": "999999999999999999",
         "name": "none",
-        "last_pin_timestamp": "2020-07-03T17:13:38.958000+00:00",
+        "last_pin_timestamp": "1970-01-01T00:00:00.000000+00:00",
         "last_message_id": "999999999999999999",
         "id": "999999999999999999"
       },
@@ -342,7 +342,7 @@
         "premium_since": null,
         "nick": null,
         "mute": false,
-        "joined_at": "2020-07-28T13:55:42.039337+00:00",
+        "joined_at": "1970-01-01T00:00:00.000000+00:00",
         "hoisted_role": null,
         "deaf": false
       }
