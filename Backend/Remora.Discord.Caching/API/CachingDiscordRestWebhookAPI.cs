@@ -135,6 +135,11 @@ namespace Remora.Discord.Caching.API
             }
 
             var message = execute.Entity;
+            if (message is null)
+            {
+                return execute;
+            }
+
             var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
             _cacheService.Cache(key, message);
 
