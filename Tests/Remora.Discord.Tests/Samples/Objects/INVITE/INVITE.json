@@ -3,7 +3,7 @@
   "guild": {
     "id": "999999999999999999",
     "name": "none",
-    "icon": "f64c482b807da4f539cff778d174971c",
+    "icon": "68b329da9893e34099c7d8ad5cb9c940",
     "description": "The official place to report Discord Bugs!",
     "splash": null,
     "discovery_splash": null,
@@ -49,13 +49,13 @@
   "inviter": {
     "id": "999999999999999999",
     "username": "none",
-    "avatar": "deadbeef",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940",
     "discriminator": "7653"
   },
   "target_user": {
     "id": "999999999999999999",
     "username": "none",
-    "avatar": "deadbeef",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940",
     "discriminator": "1234"
   },
   "target_type": 1,

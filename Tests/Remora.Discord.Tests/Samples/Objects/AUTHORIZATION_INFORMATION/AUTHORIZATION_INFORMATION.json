@@ -2,7 +2,7 @@
   "application": {
     "id": "999999999999999999",
     "name": "none",
-    "icon": "f03590d3eb764081d154a66340ea7d6d",
+    "icon": "68b329da9893e34099c7d8ad5cb9c940",
     "description": "",
     "summary": "",
     "bot_public": true,
@@ -17,7 +17,7 @@
   "user": {
     "id": "999999999999999999",
     "username": "none",
-    "avatar": "f749bb0cbeeb26ef21eca719337d20f1",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940",
     "discriminator": "0001",
     "public_flags": 131072
   }

@@ -23,7 +23,7 @@
         },
         "id": "999999999999999999",
         "discriminator": "7487",
-        "avatar": "71f3dbf32f19b8831abcd6a6052674d1"
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940"
       }
     ],
     "mention_roles": [],
@@ -49,7 +49,7 @@
       "public_flags": 0,
       "id": "999999999999999999",
       "discriminator": "4061",
-      "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "attachments": [],
     "guild_id": "999999999999999999"
