@@ -128,13 +128,17 @@ namespace Remora.Discord.SensitiveDataScrubber
                 ScrubJson(patterns, json);
                 logger.LogInformation("Scrubbed {File}", realPath);
 
-                var outputFilename = Path.GetFileNameWithoutExtension(realPath);
-                await using var outputFile = File.Create
-                (
-                    Path.Combine(Options.OutputDirectory, $"{outputFilename}.scrubbed.json")
-                );
+                var outputFilename = Options.Overwrite
+                    ? realPath
+                    : Path.Combine
+                        (
+                            Options.OutputDirectory,
+                            $"{Path.GetFileNameWithoutExtension(realPath)}.scrubbed.json"
+                        );
 
+                await using var outputFile = File.Create(outputFilename);
                 await using var writer = new Utf8JsonWriter(outputFile, jsonWriterOptions);
+
                 json.WriteTo(writer, jsonOptions);
             }
 
