@@ -1,9 +1,9 @@
 {
-    "id": "452526315288133644",
-    "filename": "foo.bar",
-    "size": 1,
-    "url": "https://foo.bar",
-    "proxy_url": "https://proxy.foo.bar",
-    "height": 1,
-    "width": 1
+  "id": "999999999999999999",
+  "filename": "foo.bar",
+  "size": 1,
+  "url": "https://foo.bar",
+  "proxy_url": "https://proxy.foo.bar",
+  "height": 1,
+  "width": 1
 }

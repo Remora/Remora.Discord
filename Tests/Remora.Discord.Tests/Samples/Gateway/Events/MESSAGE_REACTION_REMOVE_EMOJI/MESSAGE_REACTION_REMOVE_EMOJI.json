@@ -1,16 +1,14 @@
 {
-    "t": "MESSAGE_REACTION_REMOVE_EMOJI",
-    "s": 2,
-    "op": 0,
-    "d":
-    {
-        "channel_id": "54351326674432000",
-        "message_id": "54351326674432000",
-        "guild_id": "54351326674432000",
-        "emoji": {
-            "id": null,
-            "name": "🔥"
-        }
+  "t": "MESSAGE_REACTION_REMOVE_EMOJI",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "channel_id": "999999999999999999",
+    "message_id": "999999999999999999",
+    "guild_id": "999999999999999999",
+    "emoji": {
+      "id": null,
+      "name": "\uD83D\uDD25"
     }
+  }
 }
-

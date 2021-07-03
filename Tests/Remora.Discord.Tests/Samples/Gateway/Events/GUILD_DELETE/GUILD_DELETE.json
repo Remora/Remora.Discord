@@ -1,10 +1,9 @@
 {
-    "t": "GUILD_DELETE",
-    "s": 2,
-    "op": 0,
-    "d":{
-        "guild_id": "452526315288133646",
-        "unavailable": false
-    }
+  "t": "GUILD_DELETE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "unavailable": false
+  }
 }
-

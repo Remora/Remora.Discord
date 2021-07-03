@@ -1,22 +1,22 @@
 {
-    "id": "197038439483310086",
-    "name": "Discord Testers",
-    "icon": "f64c482b807da4f539cff778d174971c",
-    "splash": null,
-    "discovery_splash": null,
-    "emojis": [],
-    "features": [
-        "DISCOVERABLE",
-        "VANITY_URL",
-        "ANIMATED_ICON",
-        "INVITE_SPLASH",
-        "REMORA_UNKNOWN_FEATURE",
-        "NEWS",
-        "COMMUNITY",
-        "BANNER",
-        "VERIFIED"
-    ],
-    "approximate_member_count": 60814,
-    "approximate_presence_count": 20034,
-    "description": "The official place to report Discord Bugs!"
+  "id": "999999999999999999",
+  "name": "Discord Testers",
+  "icon": "f64c482b807da4f539cff778d174971c",
+  "splash": null,
+  "discovery_splash": null,
+  "emojis": [],
+  "features": [
+    "DISCOVERABLE",
+    "VANITY_URL",
+    "ANIMATED_ICON",
+    "INVITE_SPLASH",
+    "REMORA_UNKNOWN_FEATURE",
+    "NEWS",
+    "COMMUNITY",
+    "BANNER",
+    "VERIFIED"
+  ],
+  "approximate_member_count": 60814,
+  "approximate_presence_count": 20034,
+  "description": "The official place to report Discord Bugs!"
 }

@@ -1,11 +1,11 @@
 {
-    "t": "THREAD_LIST_SYNC",
-    "s": 3,
-    "op": 0,
-    "d": {
-        "guild_id": "452526315288133644",
-        "channel_ids": [ ],
-        "threads": [ ],
-        "members": [ ]
-    }
+  "t": "THREAD_LIST_SYNC",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "channel_ids": [],
+    "threads": [],
+    "members": []
+  }
 }

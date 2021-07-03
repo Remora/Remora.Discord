@@ -3,10 +3,14 @@
   "s": 3,
   "op": 0,
   "d": {
-    "user": { "id": "232869278469062656" },
+    "user": {
+      "id": "999999999999999999"
+    },
     "status": "idle",
-    "guild_id": "465266535783596033",
-    "client_status": { "web": "idle" },
+    "guild_id": "999999999999999999",
+    "client_status": {
+      "web": "idle"
+    },
     "activities": [
       {
         "type": 4,
@@ -14,7 +18,7 @@
         "id": "custom",
         "emoji": {
           "name": "gif_NEVER_GONNA_GIVE_YOU_UP",
-          "id": "605441263243624470",
+          "id": "999999999999999999",
           "animated": true
         },
         "created_at": 1623886315212

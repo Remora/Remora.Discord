@@ -1,19 +1,17 @@
 {
-    "user":
-    {
-        "username": "Azazial",
-        "public_flags": 0,
-        "id": "54351326674432000",
-        "discriminator": "4061",
-        "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
-    },
-    "guild_id": "54351326674432000",
-    "status": "idle",
-    "activities": [],
-    "client_status":
-    {
-        "desktop": "idle",
-        "mobile": "dnd",
-        "web": "idle"
-    }
+  "user": {
+    "username": "Azazial",
+    "public_flags": 0,
+    "id": "999999999999999999",
+    "discriminator": "4061",
+    "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
+  },
+  "guild_id": "999999999999999999",
+  "status": "idle",
+  "activities": [],
+  "client_status": {
+    "desktop": "idle",
+    "mobile": "dnd",
+    "web": "idle"
+  }
 }

@@ -4,7 +4,7 @@
   "op": 0,
   "d": {
     "widget_channel_id": null,
-    "system_channel_id": "452526315288133646",
+    "system_channel_id": "999999999999999999",
     "premium_tier": 0,
     "system_channel_flags": 2,
     "discovery_splash": null,
@@ -21,10 +21,10 @@
         "hash": "hhl5RIBmoHg"
       }
     },
-    "owner_id": "135347310845624320",
+    "owner_id": "999999999999999999",
     "banner": null,
     "features": [],
-    "id": "452526315288133644",
+    "id": "999999999999999999",
     "public_updates_channel_id": null,
     "verification_level": 0,
     "roles": [
@@ -34,7 +34,7 @@
         "name": "@everyone",
         "mentionable": false,
         "managed": false,
-        "id": "452526315288133644",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
@@ -44,7 +44,7 @@
         "name": "Bot",
         "mentionable": false,
         "managed": false,
-        "id": "546251621081022486",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
@@ -54,7 +54,7 @@
         "name": "Bot Permission Manager",
         "mentionable": false,
         "managed": false,
-        "id": "728362120059682948",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
@@ -64,7 +64,7 @@
         "name": "Bass-test-role",
         "mentionable": true,
         "managed": false,
-        "id": "728678096634511412",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 15844367
       },
@@ -74,7 +74,7 @@
         "name": "Cat",
         "mentionable": true,
         "managed": false,
-        "id": "729384999236927540",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
@@ -84,7 +84,7 @@
         "name": "NotCat",
         "mentionable": true,
         "managed": false,
-        "id": "729385082359644212",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
@@ -94,7 +94,7 @@
         "name": "AT-red",
         "mentionable": false,
         "managed": false,
-        "id": "731882893961592992",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 16713222
       },
@@ -104,7 +104,7 @@
         "name": "AT-blue",
         "mentionable": false,
         "managed": false,
-        "id": "739485104744824903",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 2123412
       },
@@ -114,7 +114,7 @@
         "name": "AT-green",
         "mentionable": false,
         "managed": false,
-        "id": "739485235732807762",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 2067276
       }
@@ -129,14 +129,14 @@
         "require_colons": true,
         "name": "adb",
         "managed": false,
-        "id": "548554203027734528",
+        "id": "999999999999999999",
         "available": true,
         "animated": false
       }
     ],
     "max_video_channel_users": 25,
     "preferred_locale": "en-US",
-        "explicit_content_filter": 0,
+    "explicit_content_filter": 0,
     "rules_channel_id": null,
     "default_message_notifications": 0,
     "name": "Bot Dev",
@@ -146,7 +146,7 @@
     "premium_subscription_count": 0,
     "mfa_level": 0,
     "afk_channel_id": null,
-    "guild_id": "452526315288133644",
+    "guild_id": "999999999999999999",
     "max_presences": null,
     "nsfw_level": 0
   }

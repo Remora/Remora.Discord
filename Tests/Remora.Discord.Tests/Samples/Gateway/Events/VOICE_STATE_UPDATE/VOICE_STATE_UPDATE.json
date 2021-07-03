@@ -1,44 +1,41 @@
 {
-    "t": "VOICE_STATE_UPDATE",
-    "s": 2,
-    "op": 0,
-    "d":
-    {
-        "guild_id": "157733188964188161",
-        "channel_id": "157733188964188161",
-        "user_id": "80351110224678912",
-        "member": {
-            "user":
-            {
-                "id": "54351326674432000",
-                "username": "Azazial",
-                "discriminator": "4061",
-                "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
-                "bot": false,
-                "system": false,
-                "mfa_enabled": false,
-                "locale": "en-US",
-                "verified": true,
-                "email": "example@test.org",
-                "flags": 0,
-                "premium_type": 0,
-                "public_flags": 0
-            },
-            "nick": "NOT API SUPPORT",
-            "roles": [],
-            "joined_at": "2015-04-26T06:26:56.936000+00:00",
-            "premium_since": null,
-            "deaf": false,
-            "mute": false
-        },
-        "session_id": "90326bd25d71d39b9ef95b299e3872ff",
-        "deaf": false,
-        "mute": false,
-        "self_deaf": false,
-        "self_mute": true,
-        "self_video": false,
-        "suppress": false,
-        "request_to_speak_timestamp": "2020-08-28T18:17:25.377506\u002B00:00"
-    }
+  "t": "VOICE_STATE_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "user_id": "999999999999999999",
+    "member": {
+      "user": {
+        "id": "999999999999999999",
+        "username": "Azazial",
+        "discriminator": "4061",
+        "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
+        "bot": false,
+        "system": false,
+        "mfa_enabled": false,
+        "locale": "en-US",
+        "verified": true,
+        "email": "example@test.org",
+        "flags": 0,
+        "premium_type": 0,
+        "public_flags": 0
+      },
+      "nick": "NOT API SUPPORT",
+      "roles": [],
+      "joined_at": "2015-04-26T06:26:56.936000+00:00",
+      "premium_since": null,
+      "deaf": false,
+      "mute": false
+    },
+    "session_id": "90326bd25d71d39b9ef95b299e3872ff",
+    "deaf": false,
+    "mute": false,
+    "self_deaf": false,
+    "self_mute": true,
+    "self_video": false,
+    "suppress": false,
+    "request_to_speak_timestamp": "2020-08-28T18:17:25.377506+00:00"
+  }
 }
-

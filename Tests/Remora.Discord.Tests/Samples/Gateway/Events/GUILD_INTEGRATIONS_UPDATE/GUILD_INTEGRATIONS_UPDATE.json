@@ -1,9 +1,8 @@
 {
-    "t": "GUILD_INTEGRATIONS_UPDATE",
-    "s": 2,
-    "op": 0,
-    "d":{
-        "guild_id": "452526315288133646"
-    }
+  "t": "GUILD_INTEGRATIONS_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999"
+  }
 }
-
