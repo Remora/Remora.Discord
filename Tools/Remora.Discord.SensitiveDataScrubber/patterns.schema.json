@@ -12,7 +12,7 @@
                 "type": "string"
             },
             "replacement": {
-                "description": "The value to replace the scrubbed data with.",
+                "description": "The JSON string to replace the scrubbed data with.",
                 "type": "string"
             }
         }
