@@ -2,5 +2,9 @@
     "^.*((?<!\\w)|_)id$": {
         "value_pattern": "^\"\\d{1,18}\"$",
         "replacement": "\"999999999999999999\""
+    },
+    "^((user)?name)|nick$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"none\""
     }
 }
