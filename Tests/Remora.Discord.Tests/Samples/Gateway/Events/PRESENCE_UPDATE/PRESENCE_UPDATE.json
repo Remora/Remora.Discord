@@ -5,7 +5,7 @@
   "d": {
     "user": {
       "id": "999999999999999999",
-      "username": "Azazial",
+      "username": "none",
       "discriminator": "4061",
       "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
       "bot": false,
@@ -26,7 +26,7 @@
         "timestamps": {
           "start": 1623884617934
         },
-        "name": "Microsoft Visual Studio",
+        "name": "none",
         "id": "23a88ae01c3fbb05",
         "created_at": 1623884617941
       }

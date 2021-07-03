@@ -14,10 +14,10 @@
     "activities": [
       {
         "type": 4,
-        "name": "Custom Status",
+        "name": "none",
         "id": "custom",
         "emoji": {
-          "name": "gif_NEVER_GONNA_GIVE_YOU_UP",
+          "name": "none",
           "id": "999999999999999999",
           "animated": true
         },

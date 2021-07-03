@@ -33,7 +33,7 @@
       {
         "position": 0,
         "permissions": "109592301249",
-        "name": "@everyone",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -46,7 +46,7 @@
         },
         "position": 23,
         "permissions": "6442713664",
-        "name": "Modix-Dev",
+        "name": "none",
         "mentionable": false,
         "managed": true,
         "id": "999999999999999999",
@@ -59,7 +59,7 @@
         },
         "position": 22,
         "permissions": "8589278967",
-        "name": "MODiX-RubyTest",
+        "name": "none",
         "mentionable": false,
         "managed": true,
         "id": "999999999999999999",
@@ -69,7 +69,7 @@
       {
         "position": 27,
         "permissions": "8589410047",
-        "name": "Admin",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -82,7 +82,7 @@
         },
         "position": 21,
         "permissions": "6442713664",
-        "name": "MODiX Test - JakenVeina",
+        "name": "none",
         "mentionable": false,
         "managed": true,
         "id": "999999999999999999",
@@ -92,7 +92,7 @@
       {
         "position": 20,
         "permissions": "6442451456",
-        "name": "MODiX_Moderation_Mute",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -102,7 +102,7 @@
       {
         "position": 24,
         "permissions": "8589278967",
-        "name": "User Bot",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -112,7 +112,7 @@
       {
         "position": 12,
         "permissions": "6442451456",
-        "name": "ScottTestRole",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -122,7 +122,7 @@
       {
         "position": 19,
         "permissions": "6442451456",
-        "name": "Rank3",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -132,7 +132,7 @@
       {
         "position": 18,
         "permissions": "6442451456",
-        "name": "Rank2",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -142,7 +142,7 @@
       {
         "position": 17,
         "permissions": "8589410039",
-        "name": "DebugRole",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -152,7 +152,7 @@
       {
         "position": 16,
         "permissions": "8589410039",
-        "name": "ModixTestAinz",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -162,7 +162,7 @@
       {
         "position": 26,
         "permissions": "8589410039",
-        "name": "Maintainers",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -175,7 +175,7 @@
         },
         "position": 15,
         "permissions": "8589278903",
-        "name": "SCOTTiX",
+        "name": "none",
         "mentionable": false,
         "managed": true,
         "id": "999999999999999999",
@@ -185,7 +185,7 @@
       {
         "position": 25,
         "permissions": "8589409535",
-        "name": "Contributors",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -195,7 +195,7 @@
       {
         "position": 14,
         "permissions": "6513086161",
-        "name": "JmazODiX",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -205,7 +205,7 @@
       {
         "position": 11,
         "permissions": "6513085121",
-        "name": "Softbanned",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -215,7 +215,7 @@
       {
         "position": 10,
         "permissions": "6513086145",
-        "name": "pingabletest",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -225,7 +225,7 @@
       {
         "position": 9,
         "permissions": "6513086145",
-        "name": "with space",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -235,7 +235,7 @@
       {
         "position": 8,
         "permissions": "6513086145",
-        "name": "unmentionable",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -245,7 +245,7 @@
       {
         "position": 6,
         "permissions": "6513086145",
-        "name": "insane",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -255,7 +255,7 @@
       {
         "position": 5,
         "permissions": "6513086145",
-        "name": "new role",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -265,7 +265,7 @@
       {
         "position": 4,
         "permissions": "6513086145",
-        "name": "Jays-BB-8 bot",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -275,7 +275,7 @@
       {
         "position": 3,
         "permissions": "6513086145",
-        "name": "Its The Best Rank Ever",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -288,7 +288,7 @@
         },
         "position": 2,
         "permissions": "7785016400",
-        "name": "Modix-Translation-Dev",
+        "name": "none",
         "mentionable": false,
         "managed": true,
         "id": "999999999999999999",
@@ -304,7 +304,7 @@
       {
         "roles": [],
         "require_colons": true,
-        "name": "tldr",
+        "name": "none",
         "managed": false,
         "id": "999999999999999999",
         "available": true,
@@ -313,7 +313,7 @@
       {
         "roles": [],
         "require_colons": true,
-        "name": "modix",
+        "name": "none",
         "managed": false,
         "id": "999999999999999999",
         "available": true,
@@ -322,7 +322,7 @@
       {
         "roles": [],
         "require_colons": true,
-        "name": "GBlobShuffle",
+        "name": "none",
         "managed": false,
         "id": "999999999999999999",
         "available": true,
@@ -335,7 +335,7 @@
     "explicit_content_filter": 0,
     "rules_channel_id": null,
     "default_message_notifications": 1,
-    "name": "Modix Test Test",
+    "name": "none",
     "nsfw": false,
     "max_members": 100000,
     "widget_enabled": false,

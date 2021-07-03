@@ -6,13 +6,13 @@
   "guild_id": "999999999999999999",
   "icon": null,
   "id": "999999999999999999",
-  "name": "Baba O-Riley",
+  "name": "none",
   "owner": {
     "avatar": null,
     "discriminator": "1738",
     "flags": 1024,
     "id": "999999999999999999",
-    "username": "i own a bot"
+    "username": "none"
   },
   "primary_sku_id": "999999999999999999",
   "slug": "test",
@@ -32,11 +32,11 @@
           "avatar": "d9e261cd35999608eb7e3de1fae3688b",
           "discriminator": "0001",
           "id": "999999999999999999",
-          "username": "Mr Owner"
+          "username": "none"
         }
       }
     ],
-    "name": "wooga"
+    "name": "none"
   },
   "verify_key": "1e0a356058d627ca38a5c8c9648818061d49e49bd9da9e3ab17d98ad4d6bg2u8"
 }

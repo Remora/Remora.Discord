@@ -1,8 +1,8 @@
 {
-    "id": 9,
-    "name": "Bot",
-    "color": 0,
-    "hoist": false,
-    "mentionable": false,
-    "permissions": "2146959351"
+  "id": 9,
+  "name": "none",
+  "color": 0,
+  "hoist": false,
+  "mentionable": false,
+  "permissions": "2146959351"
 }

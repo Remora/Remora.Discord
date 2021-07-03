@@ -1,6 +1,6 @@
 {
   "id": "999999999999999999",
-  "name": "aa",
+  "name": "none",
   "type": "twitch",
   "enabled": true,
   "syncing": false,
@@ -10,7 +10,7 @@
   "expire_grace_period": 1,
   "user": {
     "id": "999999999999999999",
-    "username": "Azazial",
+    "username": "none",
     "discriminator": "4061",
     "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
     "bot": false,
@@ -25,20 +25,20 @@
   },
   "account": {
     "id": "999999999999999999",
-    "name": "ggg"
+    "name": "none"
   },
   "synced_at": "2020-08-28T18:17:25.377506+00:00",
   "subscriber_count": 10,
   "revoked": true,
   "application": {
     "id": "999999999999999999",
-    "name": "booga",
+    "name": "none",
     "icon": "tstststststst",
     "description": "asfadfah",
     "summary": "oooola",
     "bot": {
       "id": "999999999999999999",
-      "username": "Azazial",
+      "username": "none",
       "discriminator": "4061",
       "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
       "bot": false,

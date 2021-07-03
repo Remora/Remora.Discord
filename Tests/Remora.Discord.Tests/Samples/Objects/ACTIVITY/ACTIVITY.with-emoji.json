@@ -1,9 +1,9 @@
 {
   "type": 4,
-  "name": "Custom Status",
+  "name": "none",
   "id": "custom",
   "emoji": {
-    "name": "goose",
+    "name": "none",
     "id": "999999999999999999",
     "animated": true
   },

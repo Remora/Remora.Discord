@@ -10,12 +10,12 @@
     "nonce": "747423698125848576",
     "mentions": [
       {
-        "username": "Jax",
+        "username": "none",
         "public_flags": 0,
         "member": {
           "roles": [],
           "premium_since": null,
-          "nick": "Amby",
+          "nick": "none",
           "mute": false,
           "joined_at": "2018-06-02T17:38:01.163000+00:00",
           "hoisted_role": null,
@@ -45,7 +45,7 @@
     "content": "Is there some way to keep the dev bot up 24/7 with out inconveniencing you, <@135347310845624320>?",
     "channel_id": "999999999999999999",
     "author": {
-      "username": "Azazial",
+      "username": "none",
       "public_flags": 0,
       "id": "999999999999999999",
       "discriminator": "4061",

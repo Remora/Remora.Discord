@@ -1,7 +1,7 @@
 {
   "application": {
     "id": "999999999999999999",
-    "name": "AIRHORN SOLUTIONS",
+    "name": "none",
     "icon": "f03590d3eb764081d154a66340ea7d6d",
     "description": "",
     "summary": "",
@@ -16,7 +16,7 @@
   "expires": "2021-01-23T02:33:17.017000+00:00",
   "user": {
     "id": "999999999999999999",
-    "username": "Discord",
+    "username": "none",
     "avatar": "f749bb0cbeeb26ef21eca719337d20f1",
     "discriminator": "0001",
     "public_flags": 131072

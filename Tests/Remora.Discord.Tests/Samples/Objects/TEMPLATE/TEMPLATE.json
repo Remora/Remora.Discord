@@ -1,12 +1,12 @@
 {
   "code": "FMNCteJE9JyK",
-  "name": "test",
+  "name": "none",
   "description": null,
   "usage_count": 0,
   "creator_id": "999999999999999999",
   "creator": {
     "id": "999999999999999999",
-    "username": "Remora",
+    "username": "none",
     "avatar": null,
     "discriminator": "9821",
     "public_flags": 0,
@@ -16,7 +16,7 @@
   "updated_at": "2020-10-11T17:31:25.000000+00:00",
   "source_guild_id": "999999999999999999",
   "serialized_source_guild": {
-    "name": "Bot Dev",
+    "name": "none",
     "description": null,
     "icon_hash": null,
     "verification_level": 0,
@@ -27,7 +27,7 @@
     "roles": [
       {
         "id": 0,
-        "name": "@everyone",
+        "name": "none",
         "color": 0,
         "hoist": false,
         "mentionable": false,
@@ -35,7 +35,7 @@
       },
       {
         "id": 2,
-        "name": "AT-red",
+        "name": "none",
         "color": 16713222,
         "hoist": false,
         "mentionable": false,
@@ -43,7 +43,7 @@
       },
       {
         "id": 3,
-        "name": "AT-blue",
+        "name": "none",
         "color": 2123412,
         "hoist": false,
         "mentionable": false,
@@ -51,7 +51,7 @@
       },
       {
         "id": 4,
-        "name": "AT-green",
+        "name": "none",
         "color": 2067276,
         "hoist": false,
         "mentionable": false,
@@ -59,7 +59,7 @@
       },
       {
         "id": 5,
-        "name": "NotCat",
+        "name": "none",
         "color": 0,
         "hoist": false,
         "mentionable": true,
@@ -67,7 +67,7 @@
       },
       {
         "id": 6,
-        "name": "Cat",
+        "name": "none",
         "color": 0,
         "hoist": false,
         "mentionable": true,
@@ -75,7 +75,7 @@
       },
       {
         "id": 7,
-        "name": "Bass-test-role",
+        "name": "none",
         "color": 15844367,
         "hoist": false,
         "mentionable": true,
@@ -83,7 +83,7 @@
       },
       {
         "id": 8,
-        "name": "Bot Permission Manager",
+        "name": "none",
         "color": 0,
         "hoist": false,
         "mentionable": false,
@@ -91,7 +91,7 @@
       },
       {
         "id": 9,
-        "name": "Bot",
+        "name": "none",
         "color": 0,
         "hoist": false,
         "mentionable": false,
@@ -102,7 +102,7 @@
       {
         "id": 1,
         "type": 4,
-        "name": "Persistent",
+        "name": "none",
         "position": 0,
         "topic": null,
         "bitrate": 64000,
@@ -115,7 +115,7 @@
       {
         "id": 2,
         "type": 0,
-        "name": "general",
+        "name": "none",
         "position": 0,
         "topic": null,
         "bitrate": 64000,
@@ -128,7 +128,7 @@
       {
         "id": 3,
         "type": 0,
-        "name": "qa",
+        "name": "none",
         "position": 1,
         "topic": null,
         "bitrate": 64000,
@@ -141,7 +141,7 @@
       {
         "id": 4,
         "type": 0,
-        "name": "github",
+        "name": "none",
         "position": 2,
         "topic": null,
         "bitrate": 64000,
@@ -154,7 +154,7 @@
       {
         "id": 5,
         "type": 4,
-        "name": "Testing",
+        "name": "none",
         "position": 1,
         "topic": null,
         "bitrate": 64000,
@@ -167,7 +167,7 @@
       {
         "id": 6,
         "type": 0,
-        "name": "roleplay-plugin",
+        "name": "none",
         "position": 3,
         "topic": null,
         "bitrate": 64000,
@@ -180,7 +180,7 @@
       {
         "id": 7,
         "type": 0,
-        "name": "character-stuff",
+        "name": "none",
         "position": 4,
         "topic": null,
         "bitrate": 64000,
@@ -193,7 +193,7 @@
       {
         "id": 8,
         "type": 0,
-        "name": "mod-and-autorole",
+        "name": "none",
         "position": 5,
         "topic": null,
         "bitrate": 64000,
@@ -206,7 +206,7 @@
       {
         "id": 9,
         "type": 0,
-        "name": "reaction-room-for-autoroles",
+        "name": "none",
         "position": 6,
         "topic": null,
         "bitrate": 64000,
@@ -219,7 +219,7 @@
       {
         "id": 10,
         "type": 0,
-        "name": "autorole-log",
+        "name": "none",
         "position": 7,
         "topic": null,
         "bitrate": 64000,
@@ -232,7 +232,7 @@
       {
         "id": 11,
         "type": 0,
-        "name": "mod-log-test",
+        "name": "none",
         "position": 9,
         "topic": null,
         "bitrate": 64000,
@@ -245,7 +245,7 @@
       {
         "id": 12,
         "type": 0,
-        "name": "quotes",
+        "name": "none",
         "position": 10,
         "topic": null,
         "bitrate": 64000,
@@ -258,7 +258,7 @@
       {
         "id": 13,
         "type": 0,
-        "name": "core-plugin",
+        "name": "none",
         "position": 11,
         "topic": null,
         "bitrate": 64000,
@@ -271,7 +271,7 @@
       {
         "id": 14,
         "type": 0,
-        "name": "kinks-plugin",
+        "name": "none",
         "position": 12,
         "topic": null,
         "bitrate": 64000,
@@ -284,7 +284,7 @@
       {
         "id": 15,
         "type": 0,
-        "name": "jumbo-emotes",
+        "name": "none",
         "position": 13,
         "topic": null,
         "bitrate": 64000,
@@ -297,7 +297,7 @@
       {
         "id": 16,
         "type": 4,
-        "name": "Roleplay test",
+        "name": "none",
         "position": 2,
         "topic": null,
         "bitrate": 64000,
@@ -310,7 +310,7 @@
       {
         "id": 17,
         "type": 0,
-        "name": "nya-rp",
+        "name": "none",
         "position": 11,
         "topic": "Dedicated roleplay channel for nya. No summary set.",
         "bitrate": 64000,

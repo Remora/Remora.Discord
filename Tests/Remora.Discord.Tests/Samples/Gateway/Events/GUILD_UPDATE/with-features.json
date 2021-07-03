@@ -40,7 +40,7 @@
       {
         "position": 0,
         "permissions": "372624976",
-        "name": "@everyone",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -50,7 +50,7 @@
       {
         "position": 9,
         "permissions": "506985685",
-        "name": "Bot",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -60,7 +60,7 @@
       {
         "position": 8,
         "permissions": "372624976",
-        "name": "Bot Permission Manager",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -70,7 +70,7 @@
       {
         "position": 7,
         "permissions": "372624976",
-        "name": "Bass-test-role",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -80,7 +80,7 @@
       {
         "position": 6,
         "permissions": "372624976",
-        "name": "Cat",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -90,7 +90,7 @@
       {
         "position": 5,
         "permissions": "372624976",
-        "name": "NotCat",
+        "name": "none",
         "mentionable": true,
         "managed": false,
         "id": "999999999999999999",
@@ -100,7 +100,7 @@
       {
         "position": 2,
         "permissions": "372624976",
-        "name": "AT-red",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -110,7 +110,7 @@
       {
         "position": 3,
         "permissions": "372624976",
-        "name": "AT-blue",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -120,7 +120,7 @@
       {
         "position": 4,
         "permissions": "372624976",
-        "name": "AT-green",
+        "name": "none",
         "mentionable": false,
         "managed": false,
         "id": "999999999999999999",
@@ -136,7 +136,7 @@
       {
         "roles": [],
         "require_colons": true,
-        "name": "adb",
+        "name": "none",
         "managed": false,
         "id": "999999999999999999",
         "available": true,
@@ -148,7 +148,7 @@
     "explicit_content_filter": 0,
     "rules_channel_id": null,
     "default_message_notifications": 0,
-    "name": "Bot Dev",
+    "name": "none",
     "max_members": 250000,
     "widget_enabled": false,
     "description": null,

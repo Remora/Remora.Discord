@@ -1,12 +1,12 @@
 {
   "id": 12234243234,
-  "name": "booga",
+  "name": "none",
   "icon": "tstststststst",
   "description": "asfadfah",
   "summary": "oooola",
   "bot": {
     "id": "999999999999999999",
-    "username": "Azazial",
+    "username": "none",
     "discriminator": "4061",
     "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
     "bot": false,

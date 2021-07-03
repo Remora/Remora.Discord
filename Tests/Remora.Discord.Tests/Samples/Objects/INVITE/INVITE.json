@@ -2,7 +2,7 @@
   "code": "0vCdhLbwjZZTWZLD",
   "guild": {
     "id": "999999999999999999",
-    "name": "Discord Testers",
+    "name": "none",
     "icon": "f64c482b807da4f539cff778d174971c",
     "description": "The official place to report Discord Bugs!",
     "splash": null,
@@ -43,18 +43,18 @@
   },
   "channel": {
     "id": "999999999999999999",
-    "name": "illuminati",
+    "name": "none",
     "type": 0
   },
   "inviter": {
     "id": "999999999999999999",
-    "username": "speed",
+    "username": "none",
     "avatar": "deadbeef",
     "discriminator": "7653"
   },
   "target_user": {
     "id": "999999999999999999",
-    "username": "bob",
+    "username": "none",
     "avatar": "deadbeef",
     "discriminator": "1234"
   },
