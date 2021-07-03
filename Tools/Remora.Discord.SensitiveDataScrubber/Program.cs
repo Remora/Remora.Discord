@@ -176,9 +176,17 @@ namespace Remora.Discord.SensitiveDataScrubber
                     var replacements = new Dictionary<string, string>();
                     foreach (var (name, value) in jsonObject)
                     {
-                        if (value is null)
+                        switch (value)
                         {
-                            continue;
+                            case null:
+                            {
+                                continue;
+                            }
+                            case JsonObject or JsonArray:
+                            {
+                                modifiedJson |= ScrubJson(patterns, value);
+                                continue;
+                            }
                         }
 
                         var nameRegex = patterns.Keys.FirstOrDefault(key => key.IsMatch(name));
