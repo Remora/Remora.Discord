@@ -35,7 +35,7 @@ namespace Remora.Discord.SensitiveDataScrubber
         /// <summary>
         /// Gets the files to scrub.
         /// </summary>
-        [Option('i', "input-files", Min = 1, Required = true, HelpText = "The files to scrub.")]
+        [Option('i', "input", Min = 1, Required = true, HelpText = "The files or directories to scrub.")]
         public IReadOnlyList<string> InputFiles { get; }
 
         /// <summary>

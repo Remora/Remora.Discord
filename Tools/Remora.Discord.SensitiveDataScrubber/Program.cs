@@ -104,37 +104,57 @@ namespace Remora.Discord.SensitiveDataScrubber
                 Indented = true
             };
 
+            var actualFiles = new List<string>();
             foreach (var inputFile in Options.InputFiles)
             {
                 var realPath = Path.GetFullPath(inputFile);
-                if (!File.Exists(realPath))
+
+                if (Directory.Exists(inputFile))
                 {
-                    logger.LogWarning("File not found: {File}", realPath);
+                    // This is a directory, so we'll enumerate json files in it
+                    var jsonFiles = Directory.EnumerateFiles(inputFile, "*.json", SearchOption.AllDirectories);
+                    actualFiles.AddRange(jsonFiles);
+
                     continue;
                 }
 
+                if (File.Exists(realPath))
+                {
+                    actualFiles.Add(inputFile);
+                    continue;
+                }
+
+                logger.LogWarning("File not found: {File}", realPath);
+            }
+
+            foreach (var actualFile in actualFiles)
+            {
                 JsonNode json;
                 try
                 {
-                    await using var fileStream = File.OpenRead(realPath);
+                    await using var fileStream = File.OpenRead(actualFile);
                     json = JsonNode.Parse(fileStream) ?? throw new InvalidOperationException();
                 }
                 catch (Exception e)
                 {
-                    logger.LogWarning(e, "Failed to read {File} as a JSON document", realPath);
+                    logger.LogWarning(e, "Failed to read {File} as a JSON document", actualFile);
                     continue;
                 }
 
-                ScrubJson(patterns, json);
-                logger.LogInformation("Scrubbed {File}", realPath);
+                if (!ScrubJson(patterns, json))
+                {
+                    continue;
+                }
+
+                logger.LogInformation("Scrubbed {File}", actualFile);
 
                 var outputFilename = Options.Overwrite
-                    ? realPath
+                    ? actualFile
                     : Path.Combine
-                        (
-                            Options.OutputDirectory,
-                            $"{Path.GetFileNameWithoutExtension(realPath)}.scrubbed.json"
-                        );
+                    (
+                        Options.OutputDirectory,
+                        $"{Path.GetFileNameWithoutExtension(actualFile)}.scrubbed.json"
+                    );
 
                 await using var outputFile = File.Create(outputFilename);
                 await using var writer = new Utf8JsonWriter(outputFile, jsonWriterOptions);
@@ -145,8 +165,10 @@ namespace Remora.Discord.SensitiveDataScrubber
             return 0;
         }
 
-        private static void ScrubJson(IReadOnlyDictionary<Regex, SensitivePattern> patterns, JsonNode node)
+        private static bool ScrubJson(IReadOnlyDictionary<Regex, SensitivePattern> patterns, JsonNode node)
         {
+            var modifiedJson = false;
+
             switch (node)
             {
                 case JsonObject jsonObject:
@@ -177,6 +199,7 @@ namespace Remora.Discord.SensitiveDataScrubber
                     foreach (var (name, replacement) in replacements)
                     {
                         jsonObject[name] = JsonNode.Parse(replacement);
+                        modifiedJson = true;
                     }
 
                     break;
@@ -190,12 +213,14 @@ namespace Remora.Discord.SensitiveDataScrubber
                             continue;
                         }
 
-                        ScrubJson(patterns, jsonObject);
+                        modifiedJson = ScrubJson(patterns, jsonObject);
                     }
 
                     break;
                 }
             }
+
+            return modifiedJson;
         }
     }
 }
