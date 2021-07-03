@@ -139,7 +139,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.Write("name", name, _jsonOptions);
                         json.Write("icon", base64EncodedIcon, _jsonOptions);
-                        json.WriteEnum("type", type, jsonOptions: _jsonOptions);
+                        json.Write("type", type, _jsonOptions);
                         json.Write("position", position, _jsonOptions);
                         json.Write("topic", topic, _jsonOptions);
                         json.Write("nsfw", isNsfw, _jsonOptions);
@@ -148,7 +148,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("user_limit", userLimit, _jsonOptions);
                         json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
                         json.Write("parent_id", parentId, _jsonOptions);
-                        json.WriteEnum("video_quality_mode", videoQualityMode, jsonOptions: _jsonOptions);
+                        json.Write("video_quality_mode", videoQualityMode, jsonOptions: _jsonOptions);
                         json.Write("archived", isArchived, _jsonOptions);
 
                         if (autoArchiveDuration.HasValue)
@@ -597,7 +597,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.Write("content", content, _jsonOptions);
                         json.Write("embeds", embeds, _jsonOptions);
-                        json.WriteEnum("flags", flags, jsonOptions: _jsonOptions);
+                        json.Write("flags", flags, _jsonOptions);
                         json.Write("allowed_mentions", allowedMentions, _jsonOptions);
                         json.Write("attachments", attachments, _jsonOptions);
                         json.Write("components", components, _jsonOptions);
@@ -736,7 +736,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("max_uses", maxUses, _jsonOptions);
                         json.Write("temporary", isTemporary, _jsonOptions);
                         json.Write("unique", isUnique, _jsonOptions);
-                        json.WriteEnum("target_type", targetType, jsonOptions: _jsonOptions);
+                        json.Write("target_type", targetType, _jsonOptions);
                         json.Write("target_user_id", targetUserID, _jsonOptions);
                         json.Write("target_application_id", targetApplicationID, _jsonOptions);
                     }

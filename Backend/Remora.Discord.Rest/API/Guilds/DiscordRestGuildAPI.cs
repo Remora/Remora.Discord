@@ -254,15 +254,10 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.Write("name", name, _jsonOptions);
-                        json.WriteEnum("verification_level", verificationLevel, jsonOptions: _jsonOptions);
-                        json.WriteEnum
-                        (
-                            "default_message_notifications",
-                            defaultMessageNotifications,
-                            jsonOptions: _jsonOptions
-                        );
+                        json.Write("verification_level", verificationLevel, _jsonOptions);
+                        json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
 
-                        json.WriteEnum("explicit_content_filter", explicitContentFilter, jsonOptions: _jsonOptions);
+                        json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
                         json.Write("afk_channel_id", afkChannelID, _jsonOptions);
 
                         if (afkTimeout.HasValue)
