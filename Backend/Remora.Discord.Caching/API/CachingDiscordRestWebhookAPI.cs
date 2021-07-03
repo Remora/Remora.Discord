@@ -95,7 +95,7 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
-        public override async Task<Result<IMessage>> ExecuteWebhookAsync
+        public override async Task<Result<IMessage?>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,

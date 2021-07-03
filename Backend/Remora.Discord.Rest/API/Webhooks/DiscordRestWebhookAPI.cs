@@ -248,7 +248,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IMessage>> ExecuteWebhookAsync
+        public virtual Task<Result<IMessage?>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,
@@ -265,7 +265,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IMessage>
+            return _discordHttpClient.PostAsync<IMessage?>
             (
                 $"webhooks/{webhookID}/{token}",
                 b =>

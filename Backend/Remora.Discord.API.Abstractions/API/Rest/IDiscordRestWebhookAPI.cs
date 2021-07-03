@@ -188,8 +188,11 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="threadID">Send a message to the specified thread within a webhook's channel.</param>
         /// <param name="components">The components that should be included with the message.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IMessage>> ExecuteWebhookAsync
+        /// <returns>
+        /// A result which may or may not have succeeded. The returned message is null if <paramref name="shouldWait"/>
+        /// is false.
+        /// </returns>
+        Task<Result<IMessage?>> ExecuteWebhookAsync
         (
             Snowflake webhookID,
             string token,
