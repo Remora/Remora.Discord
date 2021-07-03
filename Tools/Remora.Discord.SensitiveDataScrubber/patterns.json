@@ -3,6 +3,10 @@
         "value_pattern": "^\"\\d{1,18}\"$",
         "replacement": "\"999999999999999999\""
     },
+    "^nonce$": {
+        "value_pattern": "^\"\\d{1,18}\"$",
+        "replacement": "\"999999999999999999\""
+    },
     "^((user)?name)|nick|description|content|label|summary$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""
