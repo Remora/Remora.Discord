@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -75,11 +76,20 @@ namespace Remora.Discord.SensitiveDataScrubber
                 return 1;
             }
 
+            var encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+
             var jsonOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
                 Converters = { new RegexConverter() },
-                WriteIndented = true
+                WriteIndented = true,
+                Encoder = encoder
+            };
+
+            var jsonWriterOptions = new JsonWriterOptions
+            {
+                Indented = true,
+                Encoder = encoder
             };
 
             await using var patternsFile = File.OpenRead("patterns.json");
@@ -96,13 +106,7 @@ namespace Remora.Discord.SensitiveDataScrubber
             }
 
             var patterns = rawPatterns.ToDictionary(kvp => new Regex(kvp.Key, RegexOptions.Compiled), kvp => kvp.Value);
-
             logger.LogInformation("Loaded {Count} patterns", patterns.Count);
-
-            var jsonWriterOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
 
             var actualFiles = new List<string>();
             foreach (var inputFile in Options.InputFiles)
@@ -141,7 +145,7 @@ namespace Remora.Discord.SensitiveDataScrubber
                     continue;
                 }
 
-                if (!ScrubJson(patterns, json))
+                if (!ScrubJson(patterns, jsonOptions, json))
                 {
                     continue;
                 }
@@ -165,7 +169,12 @@ namespace Remora.Discord.SensitiveDataScrubber
             return 0;
         }
 
-        private static bool ScrubJson(IReadOnlyDictionary<Regex, SensitivePattern> patterns, JsonNode node)
+        private static bool ScrubJson
+        (
+            IReadOnlyDictionary<Regex, SensitivePattern> patterns,
+            JsonSerializerOptions jsonOptions,
+            JsonNode node
+        )
         {
             var modifiedJson = false;
 
@@ -184,7 +193,7 @@ namespace Remora.Discord.SensitiveDataScrubber
                             }
                             case JsonObject or JsonArray:
                             {
-                                modifiedJson |= ScrubJson(patterns, value);
+                                modifiedJson |= ScrubJson(patterns, jsonOptions, value);
                                 continue;
                             }
                         }
@@ -196,7 +205,7 @@ namespace Remora.Discord.SensitiveDataScrubber
                         }
 
                         var (valuePattern, replacement) = patterns[nameRegex];
-                        var valueString = value.ToJsonString();
+                        var valueString = value.ToJsonString(jsonOptions);
 
                         if (valuePattern.IsMatch(valueString))
                         {
@@ -221,7 +230,7 @@ namespace Remora.Discord.SensitiveDataScrubber
                             continue;
                         }
 
-                        modifiedJson = ScrubJson(patterns, jsonObject);
+                        modifiedJson = ScrubJson(patterns, jsonOptions, jsonObject);
                     }
 
                     break;
