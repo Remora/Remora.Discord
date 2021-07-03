@@ -21,11 +21,11 @@
 //
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CommandLine;
@@ -78,7 +78,8 @@ namespace Remora.Discord.SensitiveDataScrubber
             var jsonOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = new SnakeCaseNamingPolicy(),
-                Converters = { new RegexConverter() }
+                Converters = { new RegexConverter() },
+                WriteIndented = true
             };
 
             await using var patternsFile = File.OpenRead("patterns.json");
@@ -97,7 +98,100 @@ namespace Remora.Discord.SensitiveDataScrubber
             var patterns = rawPatterns.ToDictionary(kvp => new Regex(kvp.Key, RegexOptions.Compiled), kvp => kvp.Value);
 
             logger.LogInformation("Loaded {Count} patterns", patterns.Count);
+
+            var jsonWriterOptions = new JsonWriterOptions
+            {
+                Indented = true
+            };
+
+            foreach (var inputFile in Options.InputFiles)
+            {
+                var realPath = Path.GetFullPath(inputFile);
+                if (!File.Exists(realPath))
+                {
+                    logger.LogWarning("File not found: {File}", realPath);
+                    continue;
+                }
+
+                JsonNode json;
+                try
+                {
+                    await using var fileStream = File.OpenRead(realPath);
+                    json = JsonNode.Parse(fileStream) ?? throw new InvalidOperationException();
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning(e, "Failed to read {File} as a JSON document", realPath);
+                    continue;
+                }
+
+                ScrubJson(patterns, json);
+                logger.LogInformation("Scrubbed {File}", realPath);
+
+                var outputFilename = Path.GetFileNameWithoutExtension(realPath);
+                await using var outputFile = File.Create
+                (
+                    Path.Combine(Options.OutputDirectory, $"{outputFilename}.scrubbed.json")
+                );
+
+                await using var writer = new Utf8JsonWriter(outputFile, jsonWriterOptions);
+                json.WriteTo(writer, jsonOptions);
+            }
+
             return 0;
+        }
+
+        private static void ScrubJson(IReadOnlyDictionary<Regex, SensitivePattern> patterns, JsonNode node)
+        {
+            switch (node)
+            {
+                case JsonObject jsonObject:
+                {
+                    var replacements = new Dictionary<string, string>();
+                    foreach (var (name, value) in jsonObject)
+                    {
+                        if (value is null)
+                        {
+                            continue;
+                        }
+
+                        var nameRegex = patterns.Keys.FirstOrDefault(key => key.IsMatch(name));
+                        if (nameRegex is null)
+                        {
+                            continue;
+                        }
+
+                        var (valuePattern, replacement) = patterns[nameRegex];
+                        var valueString = value.ToJsonString();
+
+                        if (valuePattern.IsMatch(valueString))
+                        {
+                            replacements.Add(name, replacement);
+                        }
+                    }
+
+                    foreach (var (name, replacement) in replacements)
+                    {
+                        jsonObject[name] = JsonNode.Parse(replacement);
+                    }
+
+                    break;
+                }
+                case JsonArray jsonArray:
+                {
+                    foreach (var jsonObject in jsonArray)
+                    {
+                        if (jsonObject is null)
+                        {
+                            continue;
+                        }
+
+                        ScrubJson(patterns, jsonObject);
+                    }
+
+                    break;
+                }
+            }
         }
     }
 }
