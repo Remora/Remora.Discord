@@ -7,6 +7,10 @@
         "value_pattern": "^\"\\d{4}\"$",
         "replacement": "\"9999\""
     },
+    "^email$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"nobody@example.org\""
+    },
     "^((user)?name)|nick|description|content|label|summary|topic$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""

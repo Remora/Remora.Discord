@@ -17,7 +17,7 @@
         "mfa_enabled": false,
         "locale": "en-US",
         "verified": true,
-        "email": "example@test.org",
+        "email": "nobody@example.org",
         "flags": 0,
         "premium_type": 0,
         "public_flags": 0
