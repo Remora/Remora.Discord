@@ -326,7 +326,7 @@
       },
       {
         "type": 0,
-        "topic": "Dedicated roleplay channel for nya. No summary set.",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 11,
         "permission_overwrites": [

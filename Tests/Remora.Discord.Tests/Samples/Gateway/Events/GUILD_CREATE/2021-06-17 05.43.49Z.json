@@ -1139,7 +1139,7 @@
       },
       {
         "type": 0,
-        "topic": "[Obsolete(\"See the #modix-development channel in the main server!\")]",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 0,
         "permission_overwrites": [
@@ -1256,7 +1256,7 @@
       },
       {
         "type": 0,
-        "topic": "distilld",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 12,
         "permission_overwrites": [
@@ -1318,7 +1318,7 @@
       },
       {
         "type": 0,
-        "topic": "JakenVeina",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 13,
         "permission_overwrites": [
@@ -1355,7 +1355,7 @@
       },
       {
         "type": 0,
-        "topic": "JakenVeina",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 14,
         "permission_overwrites": [
@@ -1391,7 +1391,7 @@
       },
       {
         "type": 0,
-        "topic": "Ainz",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 15,
         "permission_overwrites": [
@@ -1433,7 +1433,7 @@
       },
       {
         "type": 0,
-        "topic": "jmazouri",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 18,
         "permission_overwrites": [
@@ -1463,7 +1463,7 @@
       },
       {
         "type": 0,
-        "topic": "jmazouri",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 20,
         "permission_overwrites": [
@@ -1499,7 +1499,7 @@
       },
       {
         "type": 0,
-        "topic": "Scott",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 21,
         "permission_overwrites": [
@@ -1583,7 +1583,7 @@
       },
       {
         "type": 0,
-        "topic": "Inzanit",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 25,
         "permission_overwrites": [
@@ -1614,7 +1614,7 @@
       },
       {
         "type": 0,
-        "topic": "Scott",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 23,
         "permission_overwrites": [
@@ -1644,7 +1644,7 @@
       },
       {
         "type": 0,
-        "topic": "jmazouri",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 19,
         "permission_overwrites": [
@@ -1674,7 +1674,7 @@
       },
       {
         "type": 0,
-        "topic": "Scott",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 22,
         "permission_overwrites": [
@@ -1740,7 +1740,7 @@
       },
       {
         "type": 0,
-        "topic": "Ainz",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 16,
         "permission_overwrites": [
@@ -1800,7 +1800,7 @@
       },
       {
         "type": 0,
-        "topic": "Inzanit",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 26,
         "permission_overwrites": [
@@ -1880,7 +1880,7 @@
       },
       {
         "type": 0,
-        "topic": "Use the ??translate create <your-language> command to start a session",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 999,
         "permission_overwrites": [
@@ -1910,7 +1910,7 @@
       },
       {
         "type": 0,
-        "topic": "Use this channel to search past localized conversations",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 1000,
         "permission_overwrites": [

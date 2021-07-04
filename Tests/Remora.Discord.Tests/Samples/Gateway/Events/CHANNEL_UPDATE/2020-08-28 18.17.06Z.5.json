@@ -4,7 +4,7 @@
   "op": 0,
   "d": {
     "type": 0,
-    "topic": "Topic addition",
+    "topic": "none",
     "rate_limit_per_user": 0,
     "position": 1,
     "permission_overwrites": [],
