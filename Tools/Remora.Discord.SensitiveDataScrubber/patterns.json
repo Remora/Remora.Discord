@@ -11,6 +11,10 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"nobody@example.org\""
     },
+    "^code": {
+        "value_pattern": "^\".{6}\"$",
+        "replacement": "\"123456\""
+    },
     "^((user)?name)|nick|description|content|label|summary|topic$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""
