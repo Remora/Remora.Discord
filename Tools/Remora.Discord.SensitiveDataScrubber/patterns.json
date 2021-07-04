@@ -20,7 +20,7 @@
         "replacement": "\"none\""
     },
     "^code": {
-        "value_pattern": "^\".{6}\"$",
+        "value_pattern": "^\"[a-zA-Z0-9]+\"$",
         "replacement": "\"123456\""
     },
     "^(((user)?name)|nick|description|content|label|summary|topic)$": {
