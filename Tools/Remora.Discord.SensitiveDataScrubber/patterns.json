@@ -11,6 +11,10 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"nobody@example.org\""
     },
+    "^filename": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"file.png\""
+    },
     "^code": {
         "value_pattern": "^\".{6}\"$",
         "replacement": "\"123456\""
