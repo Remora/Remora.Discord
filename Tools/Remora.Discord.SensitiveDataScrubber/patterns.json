@@ -27,7 +27,7 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""
     },
-    "^(avatar|icon|banner)$": {
+    "^(avatar|icon|banner|cover_image)$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"68b329da9893e34099c7d8ad5cb9c940\""
     },
