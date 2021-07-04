@@ -223,14 +223,43 @@ namespace Remora.Discord.SensitiveDataScrubber
                 }
                 case JsonArray jsonArray:
                 {
-                    foreach (var jsonObject in jsonArray)
+                    var replacements = new Dictionary<int, string>();
+                    for (var i = 0; i < jsonArray.Count; i++)
                     {
-                        if (jsonObject is null)
+                        var jsonObject = jsonArray[(Index)i];
+                        switch (jsonObject)
+                        {
+                            case null:
+                            {
+                                continue;
+                            }
+                            case JsonObject or JsonArray:
+                            {
+                                modifiedJson |= ScrubJson(patterns, jsonOptions, jsonObject);
+                                continue;
+                            }
+                        }
+
+                        var name = jsonArray.GetPath().Split('.')[^1];
+                        var nameRegex = patterns.Keys.FirstOrDefault(key => key.IsMatch(name));
+                        if (nameRegex is null)
                         {
                             continue;
                         }
 
-                        modifiedJson = ScrubJson(patterns, jsonOptions, jsonObject);
+                        var (valuePattern, replacement) = patterns[nameRegex];
+                        var valueString = jsonObject.ToJsonString(jsonOptions);
+
+                        if (valuePattern.IsMatch(valueString))
+                        {
+                            replacements.Add(i, replacement);
+                        }
+                    }
+
+                    foreach (var (index, replacement) in replacements)
+                    {
+                        jsonArray[index] = JsonNode.Parse(replacement);
+                        modifiedJson = true;
                     }
 
                     break;
