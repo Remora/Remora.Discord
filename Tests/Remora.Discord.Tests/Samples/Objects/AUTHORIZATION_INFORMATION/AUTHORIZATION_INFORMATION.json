@@ -7,7 +7,7 @@
     "summary": "",
     "bot_public": true,
     "bot_require_code_grant": false,
-    "verify_key": "c8cde6a3c8c6e49d86af3191287b3ce255872be1fff6dc285bdb420c06a2c3c8"
+    "verify_key": "none"
   },
   "scopes": [
     "guilds.join",

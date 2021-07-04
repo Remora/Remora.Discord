@@ -1,5 +1,5 @@
 {
-    "^(.*((?<!\\w)|_)id)|nonce|roles$": {
+    "^((.*((?<!\\w)|_)id)|nonce|roles)$": {
         "value_pattern": "^\"\\d{1,18}\"$",
         "replacement": "\"999999999999999999\""
     },
@@ -15,7 +15,7 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"file.png\""
     },
-    "^token": {
+    "^(token|verify_key|session_id)$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""
     },
@@ -23,7 +23,7 @@
         "value_pattern": "^\".{6}\"$",
         "replacement": "\"123456\""
     },
-    "^((user)?name)|nick|description|content|label|summary|topic$": {
+    "^(((user)?name)|nick|description|content|label|summary|topic)$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""
     },
@@ -35,7 +35,7 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"https://www.example.org\""
     },
-    "^(.*_?timestamp)|.+_at$": {
+    "^((.*_?timestamp)|.+_at)$": {
         "value_pattern": "^\".+\\+00:00\"$",
         "replacement": "\"1970-01-01T00:00:00.000000+00:00\""
     }
