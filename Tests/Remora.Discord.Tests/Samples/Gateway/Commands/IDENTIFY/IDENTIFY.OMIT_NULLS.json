@@ -1,7 +1,7 @@
 {
   "op": 2,
   "d": {
-    "token": "my_token",
+    "token": "none",
     "properties": {
       "$os": "linux",
       "$browser": "disco",

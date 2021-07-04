@@ -1,10 +1,10 @@
 {
-    "op": 6,
-    "d": {
-        "token": "randomstring",
-        "session_id": "evenmorerandomstring",
-        "seq": 1337
-    },
-    "s": null,
-    "t": null
+  "op": 6,
+  "d": {
+    "token": "none",
+    "session_id": "evenmorerandomstring",
+    "seq": 1337
+  },
+  "s": null,
+  "t": null
 }

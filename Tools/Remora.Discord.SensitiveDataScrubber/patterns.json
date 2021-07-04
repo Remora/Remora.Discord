@@ -15,6 +15,10 @@
         "value_pattern": "^\".+\"$",
         "replacement": "\"file.png\""
     },
+    "^token": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"none\""
+    },
     "^code": {
         "value_pattern": "^\".{6}\"$",
         "replacement": "\"123456\""
