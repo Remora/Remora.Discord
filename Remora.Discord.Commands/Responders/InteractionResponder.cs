@@ -24,6 +24,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -45,6 +46,7 @@ namespace Remora.Discord.Commands.Responders
     public class InteractionResponder : IResponder<IInteractionCreate>
     {
         private readonly CommandService _commandService;
+        private readonly InteractionResponderOptions _options;
         private readonly IDiscordRestInteractionAPI _interactionAPI;
         private readonly ExecutionEventCollectorService _eventCollector;
         private readonly IServiceProvider _services;
@@ -54,6 +56,7 @@ namespace Remora.Discord.Commands.Responders
         /// Initializes a new instance of the <see cref="InteractionResponder"/> class.
         /// </summary>
         /// <param name="commandService">The command service.</param>
+        /// <param name="options">The options.</param>
         /// <param name="interactionAPI">The interaction API.</param>
         /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
@@ -61,6 +64,7 @@ namespace Remora.Discord.Commands.Responders
         public InteractionResponder
         (
             CommandService commandService,
+            IOptions<InteractionResponderOptions> options,
             IDiscordRestInteractionAPI interactionAPI,
             ExecutionEventCollectorService eventCollector,
             IServiceProvider services,
@@ -68,6 +72,7 @@ namespace Remora.Discord.Commands.Responders
         )
         {
             _commandService = commandService;
+            _options = options.Value;
             _eventCollector = eventCollector;
             _services = services;
             _contextInjection = contextInjection;
@@ -114,19 +119,22 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            // Signal Discord that we'll be handling this one asynchronously
-            var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
-            var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
-            (
-                gatewayEvent.ID,
-                gatewayEvent.Token,
-                response,
-                ct
-            );
-
-            if (!interactionResponse.IsSuccess)
+            if (!_options.SuppressAutomaticResponses)
             {
-                return interactionResponse;
+                // Signal Discord that we'll be handling this one asynchronously
+                var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
+                var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
+                (
+                    gatewayEvent.ID,
+                    gatewayEvent.Token,
+                    response,
+                    ct
+                );
+
+                if (!interactionResponse.IsSuccess)
+                {
+                    return interactionResponse;
+                }
             }
 
             var interactionData = gatewayEvent.Data.Value!;

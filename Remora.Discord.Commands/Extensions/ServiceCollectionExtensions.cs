@@ -148,7 +148,26 @@ namespace Remora.Discord.Commands.Extensions
             this IServiceCollection serviceCollection
         )
         {
+            return serviceCollection.AddInteractionResponder(null);
+        }
+
+        /// <summary>
+        /// Adds the interaction responder to the system.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="optionsConfigurator">The option configurator.</param>
+        /// <returns>The collection, with the interaction responder.</returns>
+        public static IServiceCollection AddInteractionResponder
+        (
+            this IServiceCollection serviceCollection,
+            Action<InteractionResponderOptions>? optionsConfigurator
+        )
+        {
+            optionsConfigurator ??= options => { };
+
             serviceCollection.AddResponder<InteractionResponder>();
+            serviceCollection.Configure(optionsConfigurator);
+
             return serviceCollection;
         }
     }
