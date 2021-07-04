@@ -18,7 +18,7 @@
       "COMMUNITY"
     ],
     "emojis": [],
-    "banner": "9b6439a7de04f1d26af92f84ac9e1e4a",
+    "banner": "68b329da9893e34099c7d8ad5cb9c940",
     "owner_id": "999999999999999999",
     "application_id": null,
     "afk_channel_id": null,
@@ -31,7 +31,7 @@
     "explicit_content_filter": 2,
     "max_presences": 40000,
     "max_members": 250000,
-    "vanity_url_code": "discord-testers",
+    "vanity_url_code": "none",
     "premium_tier": 3,
     "premium_subscription_count": 33,
     "system_channel_flags": 0,
