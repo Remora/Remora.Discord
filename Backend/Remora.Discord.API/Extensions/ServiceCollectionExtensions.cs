@@ -98,7 +98,8 @@ namespace Remora.Discord.API.Extensions
                             .AddConverter<SnowflakeConverter>()
                             .AddConverter<ColorConverter>()
                             .AddConverter<PropertyErrorDetailsConverter>()
-                            .AddConverter<OneOfConverterFactory>();
+                            .AddConverter<OneOfConverterFactory>()
+                            .AddConverter<ISO8601DateTimeOffsetConverter>();
 
                         options.PropertyNamingPolicy = snakeCasePolicy;
                         options.DictionaryKeyPolicy = snakeCasePolicy;
@@ -183,23 +184,19 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
                 .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes))
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
 
             options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
                 .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes))
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
 
             options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
                 .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes))
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
 
-            options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>()
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
             options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
@@ -219,8 +216,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IThreadListSync, ThreadListSync>()
                 .WithPropertyName(t => t.ChannelIDs, "channel_ids");
 
-            options.AddDataObjectConverter<IThreadMemberUpdate, ThreadMemberUpdate>()
-                .WithPropertyConverter(m => m.JoinTimestamp, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IThreadMemberUpdate, ThreadMemberUpdate>();
 
             options.AddDataObjectConverter<IThreadMembersUpdate, ThreadMembersUpdate>()
                 .WithPropertyName(m => m.RemovedMemberIDs, "removed_member_ids");
@@ -242,8 +238,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -252,8 +247,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
                 .WithPropertyName(d => d.IsUnavailable, "unavailable");
@@ -268,18 +262,14 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
                 .WithPropertyName(m => m.IsMuted, "mute")
-                .WithPropertyName(m => m.IsPending, "pending")
-                .WithPropertyConverter(m => m.JoinedAt, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(m => m.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
             options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
                 .WithPropertyName(u => u.Nickname, "nick")
                 .WithPropertyName(u => u.IsPending, "pending")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
-                .WithPropertyName(m => m.IsMuted, "mute")
-                .WithPropertyConverter(m => m.JoinedAt, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(m => m.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsMuted, "mute");
 
             options.AddDataObjectConverter<IGuildMembersChunk, GuildMembersChunk>();
 
@@ -301,18 +291,14 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                 .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                 .WithPropertyName(m => m.IsTTS, "tts")
-                .WithPropertyName(m => m.IsPinned, "pinned")
-                .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(e => e.EditedTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IMessageUpdate, MessageUpdate>()
                 .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
                 .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                 .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                 .WithPropertyName(m => m.IsTTS, "tts")
-                .WithPropertyName(m => m.IsPinned, "pinned")
-                .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(e => e.EditedTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IMessageDelete, MessageDelete>();
             options.AddDataObjectConverter<IMessageDeleteBulk, MessageDeleteBulk>()
@@ -432,13 +418,11 @@ namespace Remora.Discord.API.Extensions
         {
             options.AddDataObjectConverter<IChannel, Channel>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialChannel, PartialChannel>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.LastPinTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelMention, ChannelMention>();
             options.AddDataObjectConverter<IAllowedMentions, AllowedMentions>()
@@ -450,11 +434,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IThreadMetadata, ThreadMetadata>()
                 .WithPropertyName(m => m.IsArchived, "archived")
                 .WithPropertyName(m => m.IsLocked, "locked")
-                .WithPropertyConverter(m => m.AutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes))
-                .WithPropertyConverter(m => m.ArchiveTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(m => m.AutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
 
-            options.AddDataObjectConverter<IThreadMember, ThreadMember>()
-                .WithPropertyConverter(m => m.JoinTimestamp, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
             options.AddDataObjectConverter<IThreadQueryResponse, ThreadQueryResponse>();
 
@@ -509,8 +491,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
                 .WithPropertyName(g => g.IsOwner, "owner")
@@ -519,24 +500,19 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(g => g.IsLarge, "large")
                 .WithPropertyName(g => g.IsUnavailable, "unavailable")
                 .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
-                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(g => g.JoinedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IGuildMember, GuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
                 .WithPropertyName(m => m.IsMuted, "mute")
-                .WithPropertyName(m => m.IsPending, "pending")
-                .WithPropertyConverter(m => m.JoinedAt, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(m => m.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IPartialGuildMember, PartialGuildMember>()
                 .WithPropertyName(m => m.Nickname, "nick")
                 .WithPropertyName(m => m.IsDeafened, "deaf")
                 .WithPropertyName(m => m.IsMuted, "mute")
-                .WithPropertyName(m => m.IsPending, "pending")
-                .WithPropertyConverter(m => m.JoinedAt, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(m => m.PremiumSince, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPending, "pending");
 
             options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
                 .WithPropertyName(u => u.GuildID, "id")
@@ -581,15 +557,13 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
                 .WithPropertyName(i => i.IsRevoked, "revoked")
-                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days))
-                .WithPropertyConverter(i => i.SyncedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IPartialIntegration, PartialIntegration>()
                 .WithPropertyName(i => i.IsEnabled, "enabled")
                 .WithPropertyName(i => i.IsSyncing, "syncing")
                 .WithPropertyName(i => i.IsRevoked, "revoked")
-                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days))
-                .WithPropertyConverter(i => i.SyncedAt, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyConverter(g => g.ExpireGracePeriod, new UnitTimeSpanConverter(TimeUnit.Days));
 
             options.AddDataObjectConverter<IIntegrationApplication, IntegrationApplication>();
 
@@ -603,11 +577,9 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IInvite, Invite>()
-                .WithPropertyConverter(i => i.ExpiresAt, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IInvite, Invite>();
 
-            options.AddDataObjectConverter<IPartialInvite, PartialInvite>()
-                .WithPropertyConverter(i => i.ExpiresAt, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
 
             options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
 
@@ -626,8 +598,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IEmbed, Embed>()
                 .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
                 .WithPropertyConverter(e => e.Colour, new ColorConverter())
-                .WithPropertyName(e => e.Colour, "color")
-                .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(e => e.Colour, "color");
 
             options.AddDataObjectConverter<IEmbedAuthor, EmbedAuthor>();
             options.AddDataObjectConverter<IEmbedField, EmbedField>()
@@ -644,18 +615,14 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                 .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                 .WithPropertyName(m => m.IsTTS, "tts")
-                .WithPropertyName(m => m.IsPinned, "pinned")
-                .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(e => e.EditedTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IPartialMessage, PartialMessage>()
                 .WithPropertyName(m => m.MentionsEveryone, "mention_everyone")
                 .WithPropertyName(m => m.MentionedRoles, "mention_roles")
                 .WithPropertyName(m => m.MentionedChannels, "mention_channels")
                 .WithPropertyName(m => m.IsTTS, "tts")
-                .WithPropertyName(m => m.IsPinned, "pinned")
-                .WithPropertyConverter(e => e.Timestamp, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(e => e.EditedTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(m => m.IsPinned, "pinned");
 
             options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
@@ -784,8 +751,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(v => v.IsSelfMuted, "self_mute")
                 .WithPropertyName(v => v.IsStreaming, "self_stream")
                 .WithPropertyName(v => v.IsVideoEnabled, "self_video")
-                .WithPropertyName(v => v.IsSuppressed, "suppress")
-                .WithPropertyConverter(v => v.RequestToSpeakTimestamp, new ISO8601DateTimeOffsetConverter());
+                .WithPropertyName(v => v.IsSuppressed, "suppress");
 
             options.AddDataObjectConverter<IPartialVoiceState, PartialVoiceState>()
                 .WithPropertyName(v => v.IsDeafened, "deaf")
@@ -837,9 +803,7 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddTemplateObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<ITemplate, Template>()
-                .WithPropertyConverter(t => t.CreatedAt, new ISO8601DateTimeOffsetConverter())
-                .WithPropertyConverter(t => t.UpdatedAt, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<ITemplate, Template>();
             options.AddDataObjectConverter<IGuildTemplate, GuildTemplate>();
             options.AddDataObjectConverter<IRoleTemplate, RoleTemplate>()
                 .WithPropertyName(r => r.Colour, "color")
@@ -935,8 +899,7 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
                 .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
 
-            options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>()
-                .WithPropertyConverter(a => a.Expires, new ISO8601DateTimeOffsetConverter());
+            options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 
             return options;
         }

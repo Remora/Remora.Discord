@@ -1,0 +1,42 @@
+{
+    "^((.*((?<!\\w)|_)id)|nonce|roles)$": {
+        "value_pattern": "^\"\\d{1,18}\"$",
+        "replacement": "\"999999999999999999\""
+    },
+    "^discriminator$": {
+        "value_pattern": "^\"\\d{4}\"$",
+        "replacement": "\"9999\""
+    },
+    "^email$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"nobody@example.org\""
+    },
+    "^filename": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"file.png\""
+    },
+    "^(token|verify_key|session_id|vanity_url_code)$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"none\""
+    },
+    "^code": {
+        "value_pattern": "^\"[a-zA-Z0-9]+\"$",
+        "replacement": "\"123456\""
+    },
+    "^(((user)?name)|nick|description|content|label|summary|topic)$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"none\""
+    },
+    "^(avatar|icon|banner|cover_image)$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"68b329da9893e34099c7d8ad5cb9c940\""
+    },
+    "^.*((?<!\\w)|_)url$": {
+        "value_pattern": "^\".+\"$",
+        "replacement": "\"https://www.example.org\""
+    },
+    "^((.*_?timestamp)|.+_at)$": {
+        "value_pattern": "^\".+\\+00:00\"$",
+        "replacement": "\"1970-01-01T00:00:00.000000+00:00\""
+    }
+}

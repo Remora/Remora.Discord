@@ -1,13 +1,20 @@
 {
-    "type": 4,
-    "data": {
-        "tts": false,
-        "content": "aaa",
-        "embeds": [],
-        "allowed_mentions": {
-            "parse": [ "roles", "users" ],
-            "roles": [ "748969255210450984" ],
-            "users": [ "748969255210450984" ]
-        }
+  "type": 4,
+  "data": {
+    "tts": false,
+    "content": "none",
+    "embeds": [],
+    "allowed_mentions": {
+      "parse": [
+        "roles",
+        "users"
+      ],
+      "roles": [
+        "999999999999999999"
+      ],
+      "users": [
+        "748969255210450984"
+      ]
     }
+  }
 }

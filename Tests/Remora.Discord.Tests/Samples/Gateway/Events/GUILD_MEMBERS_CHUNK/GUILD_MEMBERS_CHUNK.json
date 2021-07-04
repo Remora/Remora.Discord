@@ -1,16 +1,14 @@
 {
-    "t": "GUILD_MEMBERS_CHUNK",
-    "s": 2,
-    "op": 0,
-    "d":
-    {
-        "guild_id": "54351326674432000",
-        "members": [ ],
-        "chunk_index": 1,
-        "chunk_count": 1,
-        "not_found": [ ],
-        "presences": [ ],
-        "nonce": "234234234"
-    }
+  "t": "GUILD_MEMBERS_CHUNK",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "members": [],
+    "chunk_index": 1,
+    "chunk_count": 1,
+    "not_found": [],
+    "presences": [],
+    "nonce": "999999999999999999"
+  }
 }
-

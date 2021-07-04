@@ -6,14 +6,14 @@
     "role": {
       "position": 1,
       "permissions": "372624976",
-      "name": "Thing",
+      "name": "none",
       "mentionable": false,
       "managed": false,
-      "id": "740279364301750515",
+      "id": "999999999999999999",
       "hoist": true,
       "color": 1146986
     },
-    "guild_id": "452526315288133644",
+    "guild_id": "999999999999999999",
     "guild_hashes": {
       "version": 1,
       "roles": {

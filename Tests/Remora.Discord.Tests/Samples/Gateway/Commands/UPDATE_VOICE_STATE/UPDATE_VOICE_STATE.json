@@ -1,11 +1,11 @@
 {
-    "op": 4,
-    "d": {
-        "guild_id": "41771983423143937",
-        "channel_id": "127121515262115840",
-        "self_mute": false,
-        "self_deaf": false
-    },
-    "s": null,
-    "t": null
+  "op": 4,
+  "d": {
+    "guild_id": "999999999999999999",
+    "channel_id": "999999999999999999",
+    "self_mute": false,
+    "self_deaf": false
+  },
+  "s": null,
+  "t": null
 }

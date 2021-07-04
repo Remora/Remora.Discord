@@ -1,12 +1,10 @@
 {
-    "t": "VOICE_SERVER_UPDATE",
-    "s": 2,
-    "op": 0,
-    "d":
-    {
-        "token": "brr",
-        "guild_id": "54351326674432000",
-        "endpoint": "example.org"
-    }
+  "t": "VOICE_SERVER_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "token": "none",
+    "guild_id": "999999999999999999",
+    "endpoint": "example.org"
+  }
 }
-

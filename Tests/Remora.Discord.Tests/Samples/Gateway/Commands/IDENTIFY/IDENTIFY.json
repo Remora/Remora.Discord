@@ -1,36 +1,36 @@
 {
-    "op": 2,
-    "d": {
-        "token": "my_token",
-        "properties": {
-            "$os": "linux",
-            "$browser": "disco",
-            "$device": "disco"
-        },
-        "compress": true,
-        "large_threshold": 250,
-        "shard": [
-            0,
-            1
-        ],
-        "presence": {
-            "since": 1623914239,
-            "activities": [
-                {
-                    "type": 0,
-                    "timestamps": {
-                        "start": 1623884617934
-                    },
-                    "name": "Microsoft Visual Studio",
-                    "id": "23a88ae01c3fbb05",
-                    "created_at": 1623884617941
-                }
-            ],
-            "status": "dnd",
-            "afk": false
-        },
-        "intents": 7
+  "op": 2,
+  "d": {
+    "token": "none",
+    "properties": {
+      "$os": "linux",
+      "$browser": "disco",
+      "$device": "disco"
     },
-    "s": null,
-    "t": null
+    "compress": true,
+    "large_threshold": 250,
+    "shard": [
+      0,
+      1
+    ],
+    "presence": {
+      "since": 1623914239,
+      "activities": [
+        {
+          "type": 0,
+          "timestamps": {
+            "start": 1623884617934
+          },
+          "name": "none",
+          "id": "23a88ae01c3fbb05",
+          "created_at": 1623884617941
+        }
+      ],
+      "status": "dnd",
+      "afk": false
+    },
+    "intents": 7
+  },
+  "s": null,
+  "t": null
 }

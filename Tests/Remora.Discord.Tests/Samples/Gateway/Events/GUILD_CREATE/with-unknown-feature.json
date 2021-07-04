@@ -10,25 +10,25 @@
         "rate_limit_per_user": 0,
         "position": 0,
         "permission_overwrites": [],
-        "parent_id": "728303464207220816",
-        "name": "general",
+        "parent_id": "999999999999999999",
+        "name": "none",
         "last_pin_timestamp": null,
-        "last_message_id": "741260432941121568",
-        "id": "452526315288133646"
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 4,
         "position": 1,
         "permission_overwrites": [],
-        "name": "Testing",
-        "id": "728303416350343208"
+        "name": "none",
+        "id": "999999999999999999"
       },
       {
         "type": 4,
         "position": 0,
         "permission_overwrites": [],
-        "name": "Persistent",
-        "id": "728303464207220816"
+        "name": "none",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -36,11 +36,11 @@
         "rate_limit_per_user": 0,
         "position": 1,
         "permission_overwrites": [],
-        "parent_id": "728303464207220816",
-        "name": "qa",
-        "last_pin_timestamp": "2020-07-03T17:13:38.958000\u002B00:00",
-        "last_message_id": "739485065855107114",
-        "id": "728303704234524744"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_pin_timestamp": "1970-01-01T00:00:00.000000+00:00",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -48,10 +48,10 @@
         "rate_limit_per_user": 0,
         "position": 3,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "roleplay-plugin",
-        "last_message_id": "740971319121674341",
-        "id": "728308533665464502"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -59,10 +59,10 @@
         "rate_limit_per_user": 0,
         "position": 2,
         "permission_overwrites": [],
-        "parent_id": "728303464207220816",
-        "name": "github",
-        "last_message_id": "741205178119880784",
-        "id": "728322710375235594"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -70,10 +70,10 @@
         "rate_limit_per_user": 0,
         "position": 4,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "character-stuff",
-        "last_message_id": "730869792898023424",
-        "id": "728340293941854329"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -81,11 +81,11 @@
         "rate_limit_per_user": 0,
         "position": 5,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
+        "parent_id": "999999999999999999",
         "nsfw": true,
-        "name": "mod-and-autorole",
-        "last_message_id": "739486764078727180",
-        "id": "728362711821320302"
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 4,
@@ -93,13 +93,13 @@
         "permission_overwrites": [
           {
             "type": 1,
-            "id": "452506031143125003",
+            "id": "999999999999999999",
             "deny": "0",
             "allow": "268435456"
           }
         ],
-        "name": "Roleplay test",
-        "id": "728621448943632416"
+        "name": "none",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -107,10 +107,10 @@
         "rate_limit_per_user": 0,
         "position": 10,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "quotes",
-        "last_message_id": "729416011400478740",
-        "id": "728681870010876015"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -118,10 +118,10 @@
         "rate_limit_per_user": 0,
         "position": 11,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "core-plugin",
-        "last_message_id": "730406658676752444",
-        "id": "728698861509541929"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -129,10 +129,10 @@
         "rate_limit_per_user": 0,
         "position": 12,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "kinks-plugin",
-        "last_message_id": "728974449855955024",
-        "id": "728701999486599249"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -140,10 +140,10 @@
         "rate_limit_per_user": 0,
         "position": 13,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "jumbo-emotes",
-        "last_message_id": "728704832726368337",
-        "id": "728703505057054720"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -151,40 +151,40 @@
         "rate_limit_per_user": 0,
         "position": 9,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "mod-log-test",
-        "last_message_id": "731422721715732521",
-        "id": "728719816311046217"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
-        "topic": "Dedicated roleplay channel for nya. No summary set.",
+        "topic": "none",
         "rate_limit_per_user": 0,
         "position": 11,
         "permission_overwrites": [
           {
             "type": 1,
-            "id": "108253912766631936",
+            "id": "999999999999999999",
             "deny": "68672",
             "allow": "0"
           },
           {
             "type": 1,
-            "id": "452506031143125003",
+            "id": "999999999999999999",
             "deny": "0",
             "allow": "805829713"
           },
           {
             "type": 0,
-            "id": "452526315288133644",
+            "id": "999999999999999999",
             "deny": "68672",
             "allow": "0"
           }
         ],
-        "parent_id": "728621448943632416",
-        "name": "nya-rp",
+        "parent_id": "999999999999999999",
+        "name": "none",
         "last_message_id": null,
-        "id": "729395867446149304"
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -192,10 +192,10 @@
         "rate_limit_per_user": 0,
         "position": 7,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "autorole-log",
-        "last_message_id": "739490527333974076",
-        "id": "729614843623112765"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       },
       {
         "type": 0,
@@ -203,10 +203,10 @@
         "rate_limit_per_user": 0,
         "position": 6,
         "permission_overwrites": [],
-        "parent_id": "728303416350343208",
-        "name": "reaction-room-for-autoroles",
-        "last_message_id": "739485723782283307",
-        "id": "729616555100602428"
+        "parent_id": "999999999999999999",
+        "name": "none",
+        "last_message_id": "999999999999999999",
+        "id": "999999999999999999"
       }
     ],
     "premium_subscription_count": 0,
@@ -217,9 +217,9 @@
       {
         "roles": [],
         "require_colons": true,
-        "name": "adb",
+        "name": "none",
         "managed": false,
-        "id": "548554203027734528",
+        "id": "999999999999999999",
         "available": true,
         "animated": false
       }
@@ -229,9 +229,9 @@
     "members": [
       {
         "user": {
-          "username": "Remora",
-          "id": "714902836760019017",
-          "discriminator": "9821",
+          "username": "none",
+          "id": "999999999999999999",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -239,7 +239,7 @@
         "premium_since": null,
         "nick": null,
         "mute": false,
-        "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
+        "joined_at": "1970-01-01T00:00:00.000000+00:00",
         "hoisted_role": null,
         "deaf": false
       }
@@ -268,14 +268,14 @@
     "application_id": null,
     "mfa_level": 0,
     "preferred_locale": "en-US",
-    "name": "Bot Dev",
+    "name": "none",
     "member_count": 8,
-    "joined_at": "2020-07-28T13:55:42.039337\u002B00:00",
+    "joined_at": "1970-01-01T00:00:00.000000+00:00",
     "unavailable": false,
     "discovery_splash": null,
     "icon": null,
     "large": false,
-    "owner_id": "135347310845624320",
+    "owner_id": "999999999999999999",
     "features": [
       "ANIMATED_ICON",
       "VERIFIED",
@@ -290,99 +290,99 @@
     "max_video_channel_users": 25,
     "public_updates_channel_id": null,
     "default_message_notifications": 0,
-    "system_channel_id": "452526315288133646",
+    "system_channel_id": "999999999999999999",
     "vanity_url_code": null,
     "description": null,
     "rules_channel_id": null,
-        "id": "452526315288133644",
+    "id": "999999999999999999",
     "roles": [
       {
         "position": 0,
         "permissions": "372624976",
-        "name": "@everyone",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "452526315288133644",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
       {
         "position": 9,
         "permissions": "506985685",
-        "name": "Bot",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "546251621081022486",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
       {
         "position": 8,
         "permissions": "372624976",
-        "name": "Bot Permission Manager",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "728362120059682948",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
       {
         "position": 7,
         "permissions": "372624976",
-        "name": "Bass-test-role",
+        "name": "none",
         "mentionable": true,
         "managed": false,
-        "id": "728678096634511412",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 15844367
       },
       {
         "position": 6,
         "permissions": "372624976",
-        "name": "Cat",
+        "name": "none",
         "mentionable": true,
         "managed": false,
-        "id": "729384999236927540",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
       {
         "position": 5,
         "permissions": "372624976",
-        "name": "NotCat",
+        "name": "none",
         "mentionable": true,
         "managed": false,
-        "id": "729385082359644212",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 0
       },
       {
         "position": 2,
         "permissions": "372624976",
-        "name": "AT-red",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "731882893961592992",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 16713222
       },
       {
         "position": 3,
         "permissions": "372624976",
-        "name": "AT-blue",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "739485104744824903",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 2123412
       },
       {
         "position": 4,
         "permissions": "372624976",
-        "name": "AT-green",
+        "name": "none",
         "mentionable": false,
         "managed": false,
-        "id": "739485235732807762",
+        "id": "999999999999999999",
         "hoist": false,
         "color": 2067276
       }

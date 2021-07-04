@@ -1,6 +1,14 @@
 {
-    "parse": [ "roles", "REMORA_UNKNOWN_MENTION_TYPE", "users" ],
-    "roles": [ "748969255210450984" ],
-    "users": [ "748969255210450984" ],
-    "replied_user": false
+  "parse": [
+    "roles",
+    "REMORA_UNKNOWN_MENTION_TYPE",
+    "users"
+  ],
+  "roles": [
+    "999999999999999999"
+  ],
+  "users": [
+    "748969255210450984"
+  ],
+  "replied_user": false
 }

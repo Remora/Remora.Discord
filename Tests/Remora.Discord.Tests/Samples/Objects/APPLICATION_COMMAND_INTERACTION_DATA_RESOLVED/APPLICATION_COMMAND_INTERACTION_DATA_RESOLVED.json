@@ -1,62 +1,62 @@
 {
-    "users": {
-        "54351326674432000": {
-            "id": "54351326674432000",
-            "username": "aaa",
-            "discriminator": "9999",
-            "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
-            "bot": false,
-            "system": false,
-            "mfa_enabled": false,
-            "locale": "en-US",
-            "verified": true,
-            "email": "example@test.org",
-            "flags": 0,
-            "premium_type": 0,
-            "public_flags": 0
-        },
-        "54351326674432001": {
-            "id": "54351326674432001",
-            "username": "aaa",
-            "discriminator": "9999",
-            "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
-            "bot": false,
-            "system": false,
-            "mfa_enabled": false,
-            "locale": "en-US",
-            "verified": true,
-            "email": "example@test.org",
-            "flags": 0,
-            "premium_type": 0,
-            "public_flags": 0
-        }
+  "users": {
+    "54351326674432000": {
+      "id": "999999999999999999",
+      "username": "none",
+      "discriminator": "9999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+      "bot": false,
+      "system": false,
+      "mfa_enabled": false,
+      "locale": "en-US",
+      "verified": true,
+      "email": "nobody@example.org",
+      "flags": 0,
+      "premium_type": 0,
+      "public_flags": 0
     },
-    "members":{
-        "54351326674432001": {
-            "nick": "NOT API SUPPORT",
-            "roles": [],
-            "joined_at": "2015-04-26T06:26:56.936000+00:00",
-            "premium_since": null,
-            "pending": false
-        }
-    },
-    "roles": {
-        "41771983423143936": {
-            "id": "41771983423143936",
-            "name": "WE DEM BOYZZ!!!!!!",
-            "color": 3447003,
-            "hoist": true,
-            "position": 1,
-            "permissions": "66321471",
-            "managed": false,
-            "mentionable": false
-        }
-    },
-    "channels": {
-        "748969255210450984": {
-            "id": "748969255210450984",
-            "type": 0,
-            "name": "test"
-        }
+    "54351326674432001": {
+      "id": "999999999999999999",
+      "username": "none",
+      "discriminator": "9999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+      "bot": false,
+      "system": false,
+      "mfa_enabled": false,
+      "locale": "en-US",
+      "verified": true,
+      "email": "nobody@example.org",
+      "flags": 0,
+      "premium_type": 0,
+      "public_flags": 0
     }
+  },
+  "members": {
+    "54351326674432001": {
+      "nick": "none",
+      "roles": [],
+      "joined_at": "1970-01-01T00:00:00.000000+00:00",
+      "premium_since": null,
+      "pending": false
+    }
+  },
+  "roles": {
+    "41771983423143936": {
+      "id": "999999999999999999",
+      "name": "none",
+      "color": 3447003,
+      "hoist": true,
+      "position": 1,
+      "permissions": "66321471",
+      "managed": false,
+      "mentionable": false
+    }
+  },
+  "channels": {
+    "748969255210450984": {
+      "id": "999999999999999999",
+      "type": 0,
+      "name": "none"
+    }
+  }
 }

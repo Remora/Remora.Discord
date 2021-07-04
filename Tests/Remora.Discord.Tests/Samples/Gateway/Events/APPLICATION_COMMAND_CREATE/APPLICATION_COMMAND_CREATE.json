@@ -1,13 +1,13 @@
 {
-    "t": "APPLICATION_COMMAND_CREATE",
-    "s": 3,
-    "op": 0,
-    "d": {
-        "id": "4323345325434254",
-        "application_id": "4323345325434254",
-        "name": "aaa",
-        "description": "wwww",
-        "options": [],
-        "guild_id": "4323345325434254"
-    }
+  "t": "APPLICATION_COMMAND_CREATE",
+  "s": 3,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "application_id": "999999999999999999",
+    "name": "none",
+    "description": "none",
+    "options": [],
+    "guild_id": "999999999999999999"
+  }
 }

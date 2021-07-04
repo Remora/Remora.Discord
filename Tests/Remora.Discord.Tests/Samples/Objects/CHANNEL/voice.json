@@ -1,14 +1,14 @@
 {
-    "id": "748969255210450984",
-    "type": 2,
-    "guild_id": "452526315288133644",
-    "position": 14,
-    "permission_overwrites": [],
-    "name": "test",
-    "topic": null,
-    "nsfw": false,
-    "bitrate": 10,
-    "user_limit": 2,
-    "parent_id": "728303464207220816",
-    "rtc_region": "aafaf"
+  "id": "999999999999999999",
+  "type": 2,
+  "guild_id": "999999999999999999",
+  "position": 14,
+  "permission_overwrites": [],
+  "name": "none",
+  "topic": null,
+  "nsfw": false,
+  "bitrate": 10,
+  "user_limit": 2,
+  "parent_id": "999999999999999999",
+  "rtc_region": "aafaf"
 }

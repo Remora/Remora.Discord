@@ -1,22 +1,20 @@
 {
-    "t": "USER_UPDATE",
-    "s": 2,
-    "op": 0,
-    "d":
-    {
-        "id": "54351326674432000",
-        "username": "Azazial",
-        "discriminator": "4061",
-        "avatar": "3cd6d2c10a8e927e2e096aebadece22a",
-        "bot": false,
-        "system": false,
-        "mfa_enabled": false,
-        "locale": "en-US",
-        "verified": true,
-        "email": "example@test.org",
-        "flags": 0,
-        "premium_type": 0,
-        "public_flags": 0
-    }
+  "t": "USER_UPDATE",
+  "s": 2,
+  "op": 0,
+  "d": {
+    "id": "999999999999999999",
+    "username": "none",
+    "discriminator": "9999",
+    "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+    "bot": false,
+    "system": false,
+    "mfa_enabled": false,
+    "locale": "en-US",
+    "verified": true,
+    "email": "nobody@example.org",
+    "flags": 0,
+    "premium_type": 0,
+    "public_flags": 0
+  }
 }
-

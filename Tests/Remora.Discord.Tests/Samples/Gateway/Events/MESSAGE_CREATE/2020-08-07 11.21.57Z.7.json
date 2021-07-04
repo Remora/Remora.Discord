@@ -5,36 +5,36 @@
   "d": {
     "type": 0,
     "tts": false,
-    "timestamp": "2020-08-07T11:21:57.771000\u002B00:00",
+    "timestamp": "1970-01-01T00:00:00.000000+00:00",
     "pinned": false,
-    "nonce": "747425587747880960",
+    "nonce": "999999999999999999",
     "mentions": [],
     "mention_roles": [],
     "mention_everyone": false,
     "member": {
       "roles": [
-        "728362120059682948",
-        "731882893961592992"
+        "999999999999999999",
+        "999999999999999999"
       ],
       "mute": false,
-      "joined_at": "2020-07-03T20:19:22.352000\u002B00:00",
+      "joined_at": "1970-01-01T00:00:00.000000+00:00",
       "hoisted_role": null,
       "deaf": false
     },
-    "id": "741254806722576424",
+    "id": "999999999999999999",
     "flags": 0,
     "embeds": [],
     "edited_timestamp": null,
-    "content": "You had mentioned at some point in the past that it was noisy and you\u0027d rather shut it down when you\u0027re sleep.",
-    "channel_id": "452526315288133646",
+    "content": "none",
+    "channel_id": "999999999999999999",
     "author": {
-      "username": "Azazial",
+      "username": "none",
       "public_flags": 0,
-      "id": "54351326674432000",
-      "discriminator": "4061",
-      "avatar": "3cd6d2c10a8e927e2e096aebadece22a"
+      "id": "999999999999999999",
+      "discriminator": "9999",
+      "avatar": "68b329da9893e34099c7d8ad5cb9c940"
     },
     "attachments": [],
-    "guild_id": "452526315288133644"
+    "guild_id": "999999999999999999"
   }
 }

@@ -10,15 +10,21 @@
     "permission_overwrites": [],
     "parent_id": null,
     "nsfw": false,
-    "name": "test",
+    "name": "none",
     "last_message_id": null,
-    "id": "854959721709568020",
-    "guild_id": "465266535783596033",
+    "id": "999999999999999999",
+    "guild_id": "999999999999999999",
     "guild_hashes": {
       "version": 1,
-      "roles": { "hash": "IF5sEbOhfTQ" },
-      "metadata": { "hash": "0Ak7ijB4Epo" },
-      "channels": { "hash": "I/62+MvIeH8" }
+      "roles": {
+        "hash": "IF5sEbOhfTQ"
+      },
+      "metadata": {
+        "hash": "0Ak7ijB4Epo"
+      },
+      "channels": {
+        "hash": "I/62+MvIeH8"
+      }
     }
   }
 }

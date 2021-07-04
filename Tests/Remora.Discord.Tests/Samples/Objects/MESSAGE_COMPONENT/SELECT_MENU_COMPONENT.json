@@ -1,18 +1,18 @@
 {
-    "type": 3,
-    "custom_id": "class_select_1",
-    "options": [
-        {
-            "label": "Priest",
-            "value": "priest",
-            "description": "You get heals when I'm done doing damage",
-            "emoji": {
-                "name": "priest",
-                "id": "625891303795982337"
-            }
-        }
-    ],
-    "placeholder": "Choose a class",
-    "min_values": 1,
-    "max_values": 3
+  "type": 3,
+  "custom_id": "class_select_1",
+  "options": [
+    {
+      "label": "none",
+      "value": "priest",
+      "description": "none",
+      "emoji": {
+        "name": "none",
+        "id": "999999999999999999"
+      }
+    }
+  ],
+  "placeholder": "Choose a class",
+  "min_values": 1,
+  "max_values": 3
 }
