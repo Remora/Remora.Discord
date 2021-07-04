@@ -12,7 +12,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "9021",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -28,7 +28,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "6598",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -41,7 +41,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4912",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -58,7 +58,7 @@
           "username": "none",
           "public_flags": 640,
           "id": "999999999999999999",
-          "discriminator": "1084",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -73,7 +73,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "9051",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -88,7 +88,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "8569",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -105,7 +105,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "2025",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -122,7 +122,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4106",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -138,7 +138,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4005",
+          "discriminator": "9999",
           "avatar": null
         },
         "roles": [],
@@ -152,7 +152,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "3153",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -166,7 +166,7 @@
           "username": "none",
           "public_flags": 640,
           "id": "999999999999999999",
-          "discriminator": "0404",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -181,7 +181,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "6249",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -198,7 +198,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "0002",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -215,7 +215,7 @@
           "username": "none",
           "public_flags": 512,
           "id": "999999999999999999",
-          "discriminator": "3858",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -230,7 +230,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4335",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -243,7 +243,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "6906",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -259,7 +259,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "6802",
+          "discriminator": "9999",
           "avatar": null
         },
         "roles": [],
@@ -274,7 +274,7 @@
           "username": "none",
           "public_flags": 640,
           "id": "999999999999999999",
-          "discriminator": "9000",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -293,7 +293,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "8400",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -311,7 +311,7 @@
           "username": "none",
           "public_flags": 64,
           "id": "999999999999999999",
-          "discriminator": "9609",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -325,7 +325,7 @@
           "username": "none",
           "public_flags": 512,
           "id": "999999999999999999",
-          "discriminator": "9278",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -342,7 +342,7 @@
           "username": "none",
           "public_flags": 576,
           "id": "999999999999999999",
-          "discriminator": "0867",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -356,7 +356,7 @@
           "username": "none",
           "public_flags": 640,
           "id": "999999999999999999",
-          "discriminator": "0001",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -371,7 +371,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "1222",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -388,7 +388,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "7561",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -405,7 +405,7 @@
           "username": "none",
           "public_flags": 512,
           "id": "999999999999999999",
-          "discriminator": "4839",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -418,7 +418,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "1651",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -435,7 +435,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4800",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -448,7 +448,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "4334",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -464,7 +464,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "1425",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
@@ -481,7 +481,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "9782",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -497,7 +497,7 @@
           "username": "none",
           "public_flags": 512,
           "id": "999999999999999999",
-          "discriminator": "1277",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -515,7 +515,7 @@
           "username": "none",
           "public_flags": 128,
           "id": "999999999999999999",
-          "discriminator": "1001",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -528,7 +528,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "7806",
+          "discriminator": "9999",
           "bot": true,
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
@@ -547,7 +547,7 @@
           "username": "none",
           "public_flags": 64,
           "id": "999999999999999999",
-          "discriminator": "9027",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -561,7 +561,7 @@
           "username": "none",
           "public_flags": 640,
           "id": "999999999999999999",
-          "discriminator": "0001",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [
@@ -577,7 +577,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "7448",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [],
@@ -590,7 +590,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "1758",
+          "discriminator": "9999",
           "avatar": "68b329da9893e34099c7d8ad5cb9c940"
         },
         "roles": [

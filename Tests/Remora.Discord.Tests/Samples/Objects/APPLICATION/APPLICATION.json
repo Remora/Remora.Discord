@@ -9,7 +9,7 @@
   "name": "none",
   "owner": {
     "avatar": null,
-    "discriminator": "1738",
+    "discriminator": "9999",
     "flags": 1024,
     "id": "999999999999999999",
     "username": "none"
@@ -30,7 +30,7 @@
         "team_id": "999999999999999999",
         "user": {
           "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-          "discriminator": "0001",
+          "discriminator": "9999",
           "id": "999999999999999999",
           "username": "none"
         }

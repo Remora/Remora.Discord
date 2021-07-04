@@ -3,6 +3,10 @@
         "value_pattern": "^\"\\d{1,18}\"$",
         "replacement": "\"999999999999999999\""
     },
+    "^discriminator$": {
+        "value_pattern": "^\"\\d{4}\"$",
+        "replacement": "\"9999\""
+    },
     "^((user)?name)|nick|description|content|label|summary|topic$": {
         "value_pattern": "^\".+\"$",
         "replacement": "\"none\""

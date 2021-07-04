@@ -37,7 +37,7 @@
         "user": {
           "username": "none",
           "id": "999999999999999999",
-          "discriminator": "9821",
+          "discriminator": "9999",
           "bot": true,
           "avatar": null
         },
