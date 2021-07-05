@@ -295,7 +295,8 @@ namespace Remora.Discord.Rest.API
                         }
                     );
                 },
-                ct: ct
+                true,
+                ct
             );
         }
 

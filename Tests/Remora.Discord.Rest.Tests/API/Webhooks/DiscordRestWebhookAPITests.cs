@@ -798,6 +798,42 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsNullReturnRequestCorrectly()
+            {
+                var webhookId = new Snowflake(0);
+                var token = "aa";
+                var content = "bb";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("content", p => p.Is(content))
+                            )
+                        )
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.ExecuteWebhookAsync
+                (
+                    webhookId,
+                    token,
+                    content: content
+                );
+
+                ResultAssert.Successful(result);
+            }
         }
 
         /// <summary>
