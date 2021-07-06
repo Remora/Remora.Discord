@@ -226,7 +226,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// Edits a messages posted by a webhook.
+        /// Edits a message posted by a webhook.
         /// </summary>
         /// <param name="webhookID">The ID of the webhook.</param>
         /// <param name="token">The token for the webhook.</param>
@@ -250,6 +250,22 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<FileData?> file = default,
             Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
+        /// Deletes a message posted by a webhook.
+        /// </summary>
+        /// <param name="webhookID">The ID of the webhook.</param>
+        /// <param name="token">The token for the webhook.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result> DeleteWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
             CancellationToken ct = default
         );
 
