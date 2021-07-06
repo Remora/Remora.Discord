@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1044,6 +1045,40 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     messageID,
                     content,
                     file: new FileData(fileName, file)
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookMessageAsync"/> method.
+        /// </summary>
+        public class DeleteWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "token";
+                var messageID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID
                 );
 
                 ResultAssert.Successful(result);
