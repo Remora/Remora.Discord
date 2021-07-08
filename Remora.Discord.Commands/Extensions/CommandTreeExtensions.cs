@@ -73,7 +73,7 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <param name="tree">The command tree.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static Remora.Results.Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
+        public static Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
         {
             var createdCommands = new List<IApplicationCommandOption>();
             foreach (var child in tree.Root.Children)
@@ -81,7 +81,7 @@ namespace Remora.Discord.Commands.Extensions
                 var createOption = ToOption(child, out var option, out var skip);
                 if (!createOption.IsSuccess)
                 {
-                    return Remora.Results.Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
                 }
 
                 if (skip)
@@ -366,7 +366,7 @@ namespace Remora.Discord.Commands.Extensions
             return Result.FromSuccess();
         }
 
-        private static Remora.Results.Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
+        private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
         (
             Type parameterType
         )
