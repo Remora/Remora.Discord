@@ -1051,6 +1051,40 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookMessageAsync"/> method.
+        /// </summary>
+        public class DeleteWebhookMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var webhookID = new Snowflake(0);
+                var token = "token";
+                var messageID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
+                        .Respond(HttpStatusCode.NoContent)
+                );
+
+                var result = await api.DeleteWebhookMessageAsync
+                (
+                    webhookID,
+                    token,
+                    messageID
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestWebhookAPI.EditOriginalInteractionResponseAsync"/> method.
         /// </summary>
         public class EditOriginalInteractionResponseAsync : RestAPITestBase<IDiscordRestWebhookAPI>
