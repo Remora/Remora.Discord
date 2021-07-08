@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using CommandLine;
-using JetBrains.Annotations;
 
 namespace Remora.Discord.SensitiveDataScrubber
 {

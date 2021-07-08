@@ -22,7 +22,6 @@
 
 using System.Linq;
 using Remora.Commands.Trees;
-using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Extensions;

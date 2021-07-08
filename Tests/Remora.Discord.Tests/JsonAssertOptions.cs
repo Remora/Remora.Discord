@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using OneOf.Types;
 
 namespace Remora.Discord.Tests
 {
