@@ -163,7 +163,7 @@ namespace Remora.Discord.Commands.Extensions
             Action<InteractionResponderOptions>? optionsConfigurator
         )
         {
-            optionsConfigurator ??= options => { };
+            optionsConfigurator ??= _ => { };
 
             serviceCollection.AddResponder<InteractionResponder>();
             serviceCollection.Configure(optionsConfigurator);
