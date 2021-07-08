@@ -373,7 +373,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual async Task<Result> DeleteWebhookMessageAsync
+        public virtual Task<Result> DeleteWebhookMessageAsync
         (
             Snowflake webhookID,
             string token,
@@ -381,7 +381,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return await _discordHttpClient.DeleteAsync
+            return _discordHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 ct: ct
