@@ -711,7 +711,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var content = "brr";
                 var nonce = "aasda";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
 
                 var api = CreateAPI
                 (
@@ -755,7 +755,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var embeds = new List<Embed>();
                 var nonce = "aasda";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
 
                 var api = CreateAPI
                 (
@@ -799,7 +799,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var embeds = new List<Embed>();
                 var nonce = "aasda";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
                 var components = new List<IMessageComponent>();
 
                 var api = CreateAPI

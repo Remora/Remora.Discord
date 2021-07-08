@@ -396,9 +396,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
                 (
                     new GatewayEndpoint
                     (
-                        "wss://gateway.discord.gg/",
-                        default,
-                        default
+                        "wss://gateway.discord.gg/"
                     )
                 )
             );

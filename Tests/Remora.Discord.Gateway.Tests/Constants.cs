@@ -39,16 +39,7 @@ namespace Remora.Discord.Gateway.Tests
             new Snowflake(0),
             "mock-bot",
             0,
-            null,
-            default,
-            default,
-            default,
-            default,
-            default,
-            default,
-            default,
-            default,
-            default
+            null
         );
 
         /// <summary>

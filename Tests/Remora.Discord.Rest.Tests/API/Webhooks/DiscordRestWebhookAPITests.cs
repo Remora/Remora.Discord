@@ -640,7 +640,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
                 var threadID = new Snowflake(1);
                 var components = new List<IMessageComponent>();
 
@@ -698,7 +698,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
 
                 var api = CreateAPI
                 (
@@ -1101,7 +1101,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 var content = "booga";
                 var embeds = new List<IEmbed>();
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
                 var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
@@ -1195,7 +1195,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
                 var components = new List<IMessageComponent>();
                 var flags = MessageFlags.Ephemeral;
 
@@ -1250,7 +1250,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var username = "aaaag";
                 var avatarUrl = "http://aaaa";
                 var tts = false;
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
 
                 var api = CreateAPI
                 (
@@ -1365,7 +1365,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
 
                 var content = "booga";
                 var embeds = new List<IEmbed>();
-                var allowedMentions = new AllowedMentions(default, default, default, default);
+                var allowedMentions = new AllowedMentions();
                 var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
