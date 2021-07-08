@@ -429,10 +429,7 @@ namespace Remora.Discord.Commands.Extensions
 
             if (option.Options.HasValue)
             {
-                foreach (var commandOption in option.Options.Value)
-                {
-                    length += GetCommandStringifiedLength(commandOption);
-                }
+                length += option.Options.Value.Sum(GetCommandStringifiedLength);
             }
 
             return length;
