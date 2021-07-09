@@ -76,6 +76,26 @@ namespace Remora.Discord.Rest.Tests.Json
         }
 
         /// <summary>
+        /// Adds a requirement that a given property should not exist.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The builder, with the requirement.</returns>
+        public JsonObjectMatcherBuilder WithoutProperty
+        (
+            string name
+        )
+        {
+            _matchers.Add
+            (
+                obj => obj.TryGetProperty(name, out var property)
+                    ? throw new Xunit.Sdk.DoesNotContainException(name, obj)
+                    : true
+            );
+
+            return this;
+        }
+
+        /// <summary>
         /// Builds the object matcher.
         /// </summary>
         /// <returns>The built object matcher.</returns>

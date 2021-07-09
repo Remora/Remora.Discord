@@ -293,11 +293,22 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task PerformsRequestCorrectly()
             {
                 var applicationID = new Snowflake(0);
-                var name = "aaa";
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: "bbbb",
+                        Options: new List<ApplicationCommandOption>(),
+                        DefaultPermission: true),
+                    new ApplicationCommandOverwriteData(
+                        Name: "ccc",
+                        Description: "dddd",
+                        Options: new List<ApplicationCommandOption>(),
+                        DefaultPermission: true),
+                    new ApplicationCommandOverwriteData(
+                        Name: "eee",
+                        Description: "ffff")
+                };
 
                 var api = CreateAPI
                 (
@@ -307,16 +318,45 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         (
                             json => json.IsArray
                             (
-                                a => a.WithSingleElement
-                                (
-                                    e => e.IsObject
+                                a => a
+                                    .WithElement
                                     (
-                                        o => o
-                                            .WithProperty("name", p => p.Is(name))
-                                            .WithProperty("description", p => p.Is(description))
-                                            .WithProperty("options", p => p.IsArray())
+                                        0,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[0].Name))
+                                                .WithProperty("description", p => p.Is(commands[0].Description))
+                                                .WithProperty("options", p => p.IsArray(
+                                                    a => a.WithCount(0)))
+                                                .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
+                                        )
                                     )
-                                )
+                                    .WithElement
+                                    (
+                                        1,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[1].Name))
+                                                .WithProperty("description", p => p.Is(commands[1].Description))
+                                                .WithProperty("options", p => p.IsArray(
+                                                    a => a.WithCount(0)))
+                                                .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
+                                        )
+                                    )
+                                    .WithElement
+                                    (
+                                        2,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[2].Name))
+                                                .WithProperty("description", p => p.Is(commands[2].Description))
+                                                .WithoutProperty("options")
+                                                .WithoutProperty("default_permission")
+                                        )
+                                    )
                             )
                         )
                         .Respond("application/json", "[]")
@@ -339,11 +379,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
                 var applicationID = new Snowflake(0);
-                var name = string.Empty;
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: string.Empty,
+                        Description: "wwww")
+                };
 
                 var api = CreateAPI
                 (
@@ -369,11 +410,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
                 var applicationID = new Snowflake(0);
-                var name = new string('a', 33);
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: new string('a', 33),
+                        Description: "wwww")
+                };
 
                 var api = CreateAPI
                 (
@@ -399,11 +441,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
                 var applicationID = new Snowflake(0);
-                var name = "aaa";
-                var description = string.Empty;
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: string.Empty)
+                };
 
                 var api = CreateAPI
                 (
@@ -429,11 +472,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
                 var applicationID = new Snowflake(0);
-                var name = "aaa";
-                var description = new string('a', 101);
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: new string('w', 101))
+                };
 
                 var api = CreateAPI
                 (
@@ -1029,11 +1073,22 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
-                var name = "aaa";
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: "bbbb",
+                        Options: new List<ApplicationCommandOption>(),
+                        DefaultPermission: true),
+                    new ApplicationCommandOverwriteData(
+                        Name: "ccc",
+                        Description: "dddd",
+                        Options: new List<ApplicationCommandOption>(),
+                        DefaultPermission: false),
+                    new ApplicationCommandOverwriteData(
+                        Name: "eee",
+                        Description: "ffff"),
+                };
 
                 var api = CreateAPI
                 (
@@ -1043,16 +1098,45 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         (
                             json => json.IsArray
                             (
-                                a => a.WithSingleElement
-                                (
-                                    e => e.IsObject
+                                a => a
+                                    .WithElement
                                     (
-                                        o => o
-                                            .WithProperty("name", p => p.Is(name))
-                                            .WithProperty("description", p => p.Is(description))
-                                            .WithProperty("options", p => p.IsArray())
+                                        0,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[0].Name))
+                                                .WithProperty("description", p => p.Is(commands[0].Description))
+                                                .WithProperty("options", p => p.IsArray(
+                                                    a => a.WithCount(0)))
+                                                .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
+                                        )
                                     )
-                                )
+                                    .WithElement
+                                    (
+                                        1,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[1].Name))
+                                                .WithProperty("description", p => p.Is(commands[1].Description))
+                                                .WithProperty("options", p => p.IsArray(
+                                                    a => a.WithCount(0)))
+                                                .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
+                                        )
+                                    )
+                                    .WithElement
+                                    (
+                                        2,
+                                        e => e.IsObject
+                                        (
+                                            o => o
+                                                .WithProperty("name", p => p.Is(commands[2].Name))
+                                                .WithProperty("description", p => p.Is(commands[2].Description))
+                                                .WithoutProperty("options")
+                                                .WithoutProperty("default_permission")
+                                        )
+                                    )
                             )
                         )
                         .Respond("application/json", "[]")
@@ -1077,11 +1161,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
-                var name = string.Empty;
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: string.Empty,
+                        Description: "wwww")
+                };
 
                 var api = CreateAPI
                 (
@@ -1109,11 +1194,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
-                var name = new string('a', 33);
-                var description = "wwww";
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: new string('a', 33),
+                        Description: "wwww")
+                };
 
                 var api = CreateAPI
                 (
@@ -1141,11 +1227,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
-                var name = "aaa";
-                var description = string.Empty;
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: string.Empty)
+                };
 
                 var api = CreateAPI
                 (
@@ -1173,11 +1260,12 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
-                var name = "aaa";
-                var description = new string('a', 101);
-                Optional<IReadOnlyList<IApplicationCommandOption>> options = new List<ApplicationCommandOption>();
-
-                var commands = new[] { (name, description, options) };
+                var commands = new[]
+                {
+                    new ApplicationCommandOverwriteData(
+                        Name: "aaa",
+                        Description: new string('a', 101))
+                };
 
                 var api = CreateAPI
                 (

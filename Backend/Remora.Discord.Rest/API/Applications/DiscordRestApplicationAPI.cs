@@ -119,11 +119,7 @@ namespace Remora.Discord.Rest.API
         public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
-            IReadOnlyList
-            <
-                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
-            >
-            commands,
+            IReadOnlyList<IApplicationCommandOverwriteData> commands,
             CancellationToken ct = default)
         {
             if (commands.Any(c => c.Name.Length is < 1 or > 32))
@@ -149,12 +145,13 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        foreach (var (name, description, options) in commands)
+                        foreach (var command in commands)
                         {
                             json.WriteStartObject();
-                            json.WriteString("name", name);
-                            json.WriteString("description", description);
-                            json.Write("options", options, _jsonOptions);
+                            json.WriteString("name", command.Name);
+                            json.WriteString("description", command.Description);
+                            json.Write("options", command.Options, _jsonOptions);
+                            json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
                         }
                     }
@@ -254,11 +251,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake applicationID,
             Snowflake guildID,
-            IReadOnlyList
-            <
-                (string Name, string Description, Optional<IReadOnlyList<IApplicationCommandOption>> Options)
-            >
-            commands,
+            IReadOnlyList<IApplicationCommandOverwriteData> commands,
             CancellationToken ct = default
         )
         {
@@ -285,12 +278,13 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        foreach (var (name, description, options) in commands)
+                        foreach (var command in commands)
                         {
                             json.WriteStartObject();
-                            json.WriteString("name", name);
-                            json.WriteString("description", description);
-                            json.Write("options", options, _jsonOptions);
+                            json.WriteString("name", command.Name);
+                            json.WriteString("description", command.Description);
+                            json.Write("options", command.Options, _jsonOptions);
+                            json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
                         }
                     }

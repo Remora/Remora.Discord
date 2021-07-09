@@ -20,14 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Commands.Trees;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
@@ -101,49 +99,32 @@ namespace Remora.Discord.Commands.Services
                 return Result.FromError(createCommands);
             }
 
-            CreateInteractionMethods
-            (
-                guildID,
-                application,
-                out var updateMethod,
-                ct
-            );
-
-            var commands = createCommands.Entity;
+            var commands = createCommands.Entity
+                .Select(c => new ApplicationCommandOverwriteData(
+                    Name: c.Name,
+                    Description: c.Description,
+                    Options: c.Options))
+                .ToArray();
 
             // Upsert the current valid command set
-            var updateCommands = await updateMethod(commands);
-            return updateCommands.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(updateCommands);
-        }
-
-        private void CreateInteractionMethods
-        (
-            Snowflake? guildID,
-            IApplication application,
-            out Func<IReadOnlyList<IApplicationCommandOption>, Task<Result<IReadOnlyList<IApplicationCommand>>>> updateMethod,
-            CancellationToken ct)
-        {
-            if (guildID is null)
-            {
-                updateMethod = cs => _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
+            var updateResult = await ((guildID is null)
+                ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
                 (
                     application.ID,
-                    cs.Select(c => (c.Name, c.Description, c.Options)).ToList(),
+                    commands,
                     ct
-                );
+                )
+                : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
+                (
+                    application.ID,
+                    guildID.Value,
+                    commands,
+                    ct
+                ));
 
-                return;
-            }
-
-            updateMethod = cs => _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
-            (
-                application.ID,
-                guildID.Value,
-                cs.Select(c => (c.Name, c.Description, c.Options)).ToList(),
-                ct
-            );
+            return updateResult.IsSuccess
+                ? Result.FromSuccess()
+                : Result.FromError(updateResult);
         }
     }
 }
