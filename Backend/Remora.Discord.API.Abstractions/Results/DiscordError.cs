@@ -181,6 +181,16 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownGuildTemplate = 10057,
 
         /// <summary>
+        /// Unknown discoverable server category.
+        /// </summary>
+        UnknownDiscoverableServerCategory = 10059,
+
+        /// <summary>
+        /// Unknown sticker.
+        /// </summary>
+        UnknownSticker = 10060,
+
+        /// <summary>
         /// Unknown interaction.
         /// </summary>
         UnknownInteraction = 10062,
@@ -199,6 +209,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Unknown stage instance.
         /// </summary>
         UnknownStageInstance = 10067,
+
+        /// <summary>
+        /// Unknown guild member verification form.
+        /// </summary>
+        UnknownGuildMemberVerificationForm = 10068,
+
+        /// <summary>
+        /// Unknown guild welcome screen.
+        /// </summary>
+        UnknownGuildWelcomeScreen = 10069,
 
         /// <summary>
         /// Bots cannot use this endpoint.
@@ -316,6 +336,11 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxServerMembersReached = 30019,
 
         /// <summary>
+        /// Maximum number of server categories reached (5).
+        /// </summary>
+        MaxServerCategoriesReached = 30030,
+
+        /// <summary>
         /// The guild already has a template.
         /// </summary>
         GuildAlreadyHasATemplate = 30031,
@@ -329,6 +354,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The maximum number of bans for non-guild members has been exceeded.
         /// </summary>
         MaxNumberOfNonMemberBansReached = 30035,
+
+        /// <summary>
+        /// Maximum number of stickers reached.
+        /// </summary>
+        MaxStickersReached = 30039,
 
         /// <summary>
         /// Unauthorized. Provide a valid token and try again.
