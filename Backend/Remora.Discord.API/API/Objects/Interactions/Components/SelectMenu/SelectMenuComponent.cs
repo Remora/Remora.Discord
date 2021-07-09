@@ -33,7 +33,8 @@ namespace Remora.Discord.API.Objects
         IReadOnlyList<ISelectOption> Options,
         Optional<string> Placeholder,
         Optional<int> MinValues,
-        Optional<int> MaxValues
+        Optional<int> MaxValues,
+        Optional<bool> IsDisabled
     ) : ISelectMenuComponent, IDefaultedComponent
     {
         /// <inheritdoc/>

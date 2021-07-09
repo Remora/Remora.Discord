@@ -90,7 +90,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the component is disabled.
         /// </summary>
         /// <remarks>
-        /// Valid for <see cref="IButtonComponent"/>s.
+        /// Valid for <see cref="IButtonComponent"/>s and <see cref="ISelectMenuComponent"/>s.
         /// </remarks>
         Optional<bool> IsDisabled { get; }
 

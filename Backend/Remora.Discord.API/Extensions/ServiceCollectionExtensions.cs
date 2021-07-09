@@ -875,7 +875,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
                 .WithPropertyName(c => c.IsDisabled, "disabled");
 
-            options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>();
+            options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
+                .WithPropertyName(c => c.IsDisabled, "disabled");
+
             options.AddDataObjectConverter<ISelectOption, SelectOption>()
                 .WithPropertyName(o => o.IsDefault, "default");
 

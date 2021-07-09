@@ -46,5 +46,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IComponent.MaxValues"/>
         Optional<int> MaxValues { get; }
+
+        /// <inheritdoc cref="IComponent.IsDisabled"/>
+        Optional<bool> IsDisabled { get; }
     }
 }
