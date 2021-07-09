@@ -176,7 +176,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Edits a messages posted by a webhook.
+    Edits a message posted by a webhook.
     </div>
 
 		<div class="panel panel-default">
@@ -254,7 +254,10 @@
 					<tr>
 						<td>components</td>
 						<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a>&gt;<wbr>&gt;<wbr></td>
-						<td>The components, if any.</td>
+						<td>
+    The components that should be included with the message. The webhook must be application-owned to use this
+    parameter.
+    </td>
 					</tr>
 					<tr>
 						<td>ct</td>

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscriminatorConverter.Read(Utf8JsonReader, Type, JsonSerializerOptions) Method</title>
+        <title>Remora.Discord Documentation - Using Undocumented Features</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -56,9 +56,9 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">                            
-                                    <li><a href="/Remora.Discord/guides">Guides</a></li>
+                                    <li class="active"><a href="/Remora.Discord/guides">Guides</a></li>
         <li><a href="/Remora.Discord/info">Info</a></li>
-        <li class="active"><a href="/Remora.Discord/api">API</a></li>
+        <li><a href="/Remora.Discord/api">API</a></li>
  
                         </ul>       
                     </div>
@@ -72,76 +72,18 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
-<hr class="infobar-hidden">
-</div>
+    <div id="infobar-headings"></div>
 
                 </section>
                 <section class="sidebar">    
                                      
-                    	
-	    <script src="/Remora.Discord/assets/js/lunr.min.js"></script>
-    <script src="/Remora.Discord/assets/js/searchIndex.js"></script>
-    <div class="sidebar-form">
-        <div class="input-group">
-            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
-            <span class="input-group-btn">
-                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-    </div>
-    <div id="search-results">
-    </div>
-    <script>
-        function runSearch(query){
-            $("#search-results").empty();			
-            if( query.length < 2 ){
-                return;
-            }			
-            var results = searchModule.search("*" + query + "*");
-            var listHtml = "<ul class='sidebar-menu'>";	
-            listHtml += "<li class='header'>Type Results</li>";	
-            if(results.length == 0 ){
-                listHtml += "<li>No results found</li>";
-            } else {					
-                for(var i = 0; i < results.length; ++i){
-                    var res = results[i];
-                    listHtml += "<li><a href='" + res.url + "'>" + htmlEscape(res.title) + "</a></li>";
-                }				
-            }
-            listHtml += "</ul>";				
-            $("#search-results").append(listHtml);
-        }
-
-        $(document).ready(function(){
-            $("#search").on('input propertychange paste', function() {
-                runSearch($("#search").val());
-            });
-        });
-
-        function htmlEscape(html) {
-            return document.createElement('div')
-                .appendChild(document.createTextNode(html))
-                .parentNode
-                .innerHTML;
-        }
-    </script>
-	
-    <hr>
+                    
 
                     <ul class="sidebar-menu">
                         
-			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
-		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a></li>
-		<li role="separator" class="divider"></li>
-			<li class="header">Method Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter/099A103C">Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter/07FFA9CB">Write<wbr>(Utf8JsonWriter, <wbr>ushort, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
 
+                <li><a href="/Remora.Discord/guides/getting-started">Getting Started</a></li>
+                <li class="selected"><a href="/Remora.Discord/guides/undocumented-features">Using Undocumented Features</a></li>
 
                     </ul>
                             
@@ -154,86 +96,138 @@
 
 
 
-<section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a>.</h3>
-	<h1>Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr> <small>Method</small></h1>
-</section>
-<section class="content">
-	
-	
-	
-		<div class="panel panel-default">
-  			<div class="panel-body">	
-				<dl class="dl-horizontal">	
-						
-						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></dd>
-					
-						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a></dd>		
-					
-				</dl>
-  			</div>
-		</div>
+		<section class="content-header">
+			<h1>Using Undocumented Features</h1>
+		</section>
+	<section class="content">
+		<p>The unfortunate reality of using the Discord API is that, while the online
+documentation is extensive, it is not exhaustive. Discord often exposes
+undocumented fields, endpoints, and data structures that may still be of use to
+developers, even though they aren't ready, finished, or thoroughly documented.</p>
+<p>Remora has a few ways for you to access these undocumented features, but beware!
+As with any unstable API surface, things may break from one second to the next
+without warning.</p>
+<h2 id="data">Data</h2>
+<h3 id="undocumented-fields">Undocumented Fields</h3>
+<p>If you want to implement access to an undocumented field on an existing type,
+create a new record that inherits from the existing model, and register it with
+the DI system.</p>
+<pre><code class="language-cs">public record SomeExistingDataWithMoreStuff(int Existing, int Additional) 
+    : SomeExistingData(Existing);
+</code></pre>
+<p>Note that to <em>override</em> an existing data model, you have to register it <em>after</em>
+Remora's own setup.</p>
+<pre><code class="language-cs">// Add the base types from Remora
+var serviceCollection = new ServiceCollection()
+    .AddDiscordGateway(_ =&gt; botToken)
+    .AddDiscordCommands(true);
 
-	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)</code></pre>
+// Add overriding data models
+serviceCollection.Configure&lt;JsonSerializerOptions&gt;
+(
+    options =&gt; 
+    {
+        options.AddDataObjectConverter&lt;ISomeExistingData, SomeExistingDataWithMoreStuff&gt;();
+    }
+);
+</code></pre>
+<p>You can also specialize various parts of the data model when registering it,
+such as property names (which is useful for C#-ifying naming of boolean
+properties) and their type converters.</p>
+<h3 id="undocumented-data-structures">Undocumented Data Structures</h3>
+<p>Any undocumented data structure can be added to Remora externally, and treated
+as if it were bundled with Remora using the existing DI system.</p>
+<p>Suppose we have the following undocumented data:</p>
+<pre><code class="language-json">{
+  "some_name": 10
+}
+</code></pre>
+<p>You would then model and register the following structures.</p>
+<pre><code class="language-cs">public interface ISomeData
+{
+    int SomeName { get; }
+}
 
+public record SomeData(int SomeName) : ISomeData;
+</code></pre>
+<p>Registration is the same as if you were implementing an undocumented field, but
+you may register it before Remora's own types.</p>
+<h2 id="gateway">Gateway</h2>
+<h3 id="undocumented-events-commands">Undocumented Events &amp; Commands</h3>
+<p>Any undocumented event or command can be added to Remora the same way as you
+would add a new undocumented data structure. However, you only need to model the
+data portion of the event or command.</p>
+<p>Suppose we have the following undocumented event:</p>
+<pre><code class="language-json">{
+  "t": "SOME_UNDOCUMENTED_EVENT",
+  "s": 4,
+  "op": 0,
+  "d": {
+      "some_name": 10
+  }
+}
+</code></pre>
+<p>You would then model and register the following event data. Note that event
+names <em>must</em> match the interface name you create - that is, if the event is
+named <code>SOME_EVENT</code>, your interface must be named <code>ISomeEvent</code>.</p>
+<pre><code class="language-cs">public interface ISomeUndocumentedEvent
+{
+    int SomeName { get; }
+}
 
+public record SomeUndocumentedEvent(int SomeName) : ISomeUndocumentedEvent;
+</code></pre>
+<h2 id="rest">REST</h2>
+<p>Features that relate to the REST API is customized through the
+<code><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> type, which can be accessed and used through DI. It's a
+named, scoped <code>HttpClient</code>, which takes care of minutia like authorization
+headers and respecting rate limits for you.</p>
+<pre><code class="language-cs">public class Somewhere
+{
+    private readonly <a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a> _client;
+    
+    public Somewhere(DiscordHttpClient client)
+    {
+        _client = client;
+    }
+}
+</code></pre>
+<h3 id="undocumented-endpoints">Undocumented Endpoints</h3>
+<p>To access an undocumented endpoint, you may use the <code><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> directly
+to make any kind of HTTP request, similar to how you might use a normal
+<code>HttpClient</code>. All requests made by this client are prepended with the most
+recently versioned Discord API base endpoint, which typically looks like this:
+<code>https://discord.com/api/v9/</code>. Therefore, you should only use relative endpoints
+when making requests.</p>
+<pre><code class="language-cs">var result = await _client.GetAsync&lt;ISomeData&gt;($"somewhere/{someId}/data");
+</code></pre>
+<p>Refer to the existing implementations of endpoints in the library for examples
+of how to add JSON parameters, HTTP headers, or similar data.</p>
+<h3 id="undocumented-parameters-headers">Undocumented Parameters &amp; Headers</h3>
+<p>If you want to provide additional data to an existing endpoint, such as JSON
+parameters, HTTP headers, or query string parameters, you can easily add
+customizations to <em>all</em> requests made by the client within a particular scope.</p>
+<p>This is useful when an endpoint is discovered to allow undocumented parameters,
+or metadata headers such as <code>X-Audit-Log-Reason</code>.</p>
+<p>To create a customization, use the <code>AddCustomization</code> method.</p>
+<pre><code class="language-cs">using (_ = _client.AddCustomization(r =&gt; r.WithJson(json =&gt; json.WriteString("name", "value"))))
+{
+    // This call will now have "name": "value" in its JSON payload, in addition
+    // to the normal data.
+    var result = await _api.SomeEndpointAsync();
+}
 
+// This call will not have any additional data
+var result = await _api.SomeEndpointAsync();
+</code></pre>
+<p>The customization uses the same types and logic for configuring a request's
+parameters, methods, and headers as implementing a custom endpoint, so if you
+learn one you should have no trouble using the other.</p>
+<p>Multiple customizations may be in effect at the same time, and will be applied
+in the order you create them. A customization is removed from the client when it
+is disposed.</p>
 
-
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>reader</td>
-						<td>Utf8JsonReader</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>typeToConvert</td>
-						<td>Type</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>options</td>
-						<td>Json<wbr>Serializer<wbr>Options</td>
-						<td></td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover two-cols">
-				<thead>
-					<tr>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-				<tbody><tr>
-					<td>ushort</td>
-					<td></td>
-				</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-
-	
-</section>
+	</section>
                 
             </div>           
             

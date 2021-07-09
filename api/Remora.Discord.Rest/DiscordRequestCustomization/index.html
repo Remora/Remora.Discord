@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscriminatorConverter.Write(Utf8JsonWriter, ushort, JsonSerializerOptions) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordRequestCustomization Class</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,9 +72,10 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
+<p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -134,13 +135,12 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
-		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest">Remora<wbr>.Discord<wbr>.Rest</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter/099A103C">Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter/07FFA9CB">Write<wbr>(Utf8JsonWriter, <wbr>ushort, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
+			<li class="header">Class Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/Constants">Constants</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></li>
 
 
                     </ul>
@@ -155,65 +155,63 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a>.</h3>
-	<h1>Write<wbr>(Utf8JsonWriter, <wbr>ushort, <wbr>Json<wbr>Serializer<wbr>Options)<wbr> <small>Method</small></h1>
+	<h1>Discord<wbr>Request<wbr>Customization <small>Class</small></h1>
 </section>
 <section class="content">
 	
 	
-	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Represents a set of customizations that will be applied to a REST request made to Discord.
+    </div>
+
 		<div class="panel panel-default">
-  			<div class="panel-body">	
-				<dl class="dl-horizontal">	
-						
-						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></dd>
-					
-						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json/DiscriminatorConverter">Discriminator<wbr>Converter</a></dd>		
-					
-				</dl>
+  			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<dl class="dl-horizontal">		
+
+								<dt>Namespace</dt>
+								<dd><a href="/Remora.Discord/api/Remora.Discord.Rest">Remora<wbr>.Discord<wbr>.Rest</a></dd>
+											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li>IDisposable</li>								
+									</ul>
+								</dd>
+							
+								<dt>Base Types</dt>
+								<dd>
+									<ul class="list-unstyled">										
+											<li>object</li>								
+									</ul>
+								</dd>				
+							
+							
+						</dl>
+					</div>		
+					<div class="col-md-6">
+						<div class="mermaid">
+							graph BT
+	Type--&gt;Base0["object"]
+	Type-.-&gt;Interface0["IDisposable"]
+	Type["DiscordRequestCustomization"]
+class Type type-node
+
+						</div>
+					</div>
+				</div>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public override void Write(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)</code></pre>
+	<pre><code>[PublicAPI]
+public class DiscordRequestCustomization : IDisposable</code></pre>
 
 
 
-
-
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>writer</td>
-						<td>Utf8JsonWriter</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>value</td>
-						<td>ushort</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>options</td>
-						<td>Json<wbr>Serializer<wbr>Options</td>
-						<td></td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Attributes">Attributes</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -223,13 +221,44 @@
 						<th>Description</th>
 					</tr>
 				</thead>
-				<tbody><tr>
-					<td>void</td>
-					<td></td>
-				</tr>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
 			</tbody></table>
 		</div>
 	</div>	
+
+
+
+
+
+
+
+
+			<h1 id="Methods">Methods</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization/28A646B3">Dispose<wbr>()<wbr></a></td>
+								<td>void</td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
 
 
 	

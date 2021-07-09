@@ -162,6 +162,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogEntry">IAuditLogEntry</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuthorizationInformation">I<wbr>Authorization<wbr>Information</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBan">IBan</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData">I<wbr>Bulk<wbr>Application<wbr>Command<wbr>Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent">IButtonComponent</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelMention">IChannelMention</a></li>
@@ -362,7 +363,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[Flags, PublicAPI]
+	<pre><code>[PublicAPI, Flags]
 public enum ActivityFlags</code></pre>
 
 
@@ -378,11 +379,11 @@ public enum ActivityFlags</code></pre>
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>FlagsAttribute</td>
+						<td>PublicAPI</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td>PublicAPI</td>
+						<td>FlagsAttribute</td>
 						<td></td>
 					</tr>
 			</tbody></table>
