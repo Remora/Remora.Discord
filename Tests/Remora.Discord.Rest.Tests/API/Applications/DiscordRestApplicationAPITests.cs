@@ -295,19 +295,25 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
                         Description: "bbbb",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true),
-                    new ApplicationCommandOverwriteData(
+                        DefaultPermission: true
+                    ),
+                    new BulkApplicationCommandData
+                    (
                         Name: "ccc",
                         Description: "dddd",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true),
-                    new ApplicationCommandOverwriteData(
+                        DefaultPermission: true
+                    ),
+                    new BulkApplicationCommandData
+                    (
                         Name: "eee",
-                        Description: "ffff")
+                        Description: "ffff"
+                    )
                 };
 
                 var api = CreateAPI
@@ -381,9 +387,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: string.Empty,
-                        Description: "wwww")
+                        Description: "wwww"
+                    )
                 };
 
                 var api = CreateAPI
@@ -412,9 +420,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: new string('a', 33),
-                        Description: "wwww")
+                        Description: "wwww"
+                    )
                 };
 
                 var api = CreateAPI
@@ -443,9 +453,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
-                        Description: string.Empty)
+                        Description: string.Empty
+                    )
                 };
 
                 var api = CreateAPI
@@ -474,9 +486,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
-                        Description: new string('w', 101))
+                        Description: new string('w', 101)
+                    )
                 };
 
                 var api = CreateAPI
@@ -1075,19 +1089,25 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
                         Description: "bbbb",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true),
-                    new ApplicationCommandOverwriteData(
+                        DefaultPermission: true
+                    ),
+                    new BulkApplicationCommandData
+                    (
                         Name: "ccc",
                         Description: "dddd",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: false),
-                    new ApplicationCommandOverwriteData(
+                        DefaultPermission: false
+                    ),
+                    new BulkApplicationCommandData
+                    (
                         Name: "eee",
-                        Description: "ffff"),
+                        Description: "ffff"
+                    ),
                 };
 
                 var api = CreateAPI
@@ -1163,9 +1183,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: string.Empty,
-                        Description: "wwww")
+                        Description: "wwww"
+                    )
                 };
 
                 var api = CreateAPI
@@ -1196,9 +1218,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: new string('a', 33),
-                        Description: "wwww")
+                        Description: "wwww"
+                    )
                 };
 
                 var api = CreateAPI
@@ -1229,9 +1253,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
-                        Description: string.Empty)
+                        Description: string.Empty
+                    )
                 };
 
                 var api = CreateAPI
@@ -1262,9 +1288,11 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var guildID = new Snowflake(1);
                 var commands = new[]
                 {
-                    new ApplicationCommandOverwriteData(
+                    new BulkApplicationCommandData
+                    (
                         Name: "aaa",
-                        Description: new string('a', 101))
+                        Description: new string('a', 101)
+                    )
                 };
 
                 var api = CreateAPI

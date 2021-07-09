@@ -81,7 +81,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
-            IReadOnlyList<IApplicationCommandOverwriteData> commands,
+            IReadOnlyList<IBulkApplicationCommandData> commands,
             CancellationToken ct = default
         );
 
@@ -161,7 +161,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake applicationID,
             Snowflake guildID,
-            IReadOnlyList<IApplicationCommandOverwriteData> commands,
+            IReadOnlyList<IBulkApplicationCommandData> commands,
             CancellationToken ct = default
         );
 

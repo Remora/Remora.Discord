@@ -1,5 +1,5 @@
 ﻿//
-//  IApplicationCommandOverwriteData.cs
+//  IBulkApplicationCommandData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a request to create or update an application command.
     /// </summary>
     [PublicAPI]
-    public interface IApplicationCommandOverwriteData
+    public interface IBulkApplicationCommandData
     {
         /// <inheritdoc cref="IApplicationCommand.Name"/>
         string Name { get; }

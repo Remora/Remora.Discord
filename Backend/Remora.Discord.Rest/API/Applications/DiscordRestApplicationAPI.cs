@@ -119,7 +119,7 @@ namespace Remora.Discord.Rest.API
         public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
-            IReadOnlyList<IApplicationCommandOverwriteData> commands,
+            IReadOnlyList<IBulkApplicationCommandData> commands,
             CancellationToken ct = default)
         {
             if (commands.Any(c => c.Name.Length is < 1 or > 32))
@@ -251,7 +251,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake applicationID,
             Snowflake guildID,
-            IReadOnlyList<IApplicationCommandOverwriteData> commands,
+            IReadOnlyList<IBulkApplicationCommandData> commands,
             CancellationToken ct = default
         )
         {

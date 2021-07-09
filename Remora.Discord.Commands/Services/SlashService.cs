@@ -100,10 +100,15 @@ namespace Remora.Discord.Commands.Services
             }
 
             var commands = createCommands.Entity
-                .Select(c => new ApplicationCommandOverwriteData(
-                    Name: c.Name,
-                    Description: c.Description,
-                    Options: c.Options))
+                .Select
+                (
+                    c => new BulkApplicationCommandData
+                    (
+                        c.Name,
+                        c.Description,
+                        c.Options
+                    )
+                )
                 .ToArray();
 
             // Upsert the current valid command set

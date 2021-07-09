@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandOverwriteData.cs
+//  BulkApplicationCommandData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,14 +27,14 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IApplicationCommandOverwriteData" />
+    /// <inheritdoc cref="IBulkApplicationCommandData" />
     [PublicAPI]
-    public record ApplicationCommandOverwriteData
+    public record BulkApplicationCommandData
     (
         string Name,
         string Description,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
         Optional<bool> DefaultPermission = default
     )
-    : IApplicationCommandOverwriteData;
+    : IBulkApplicationCommandData;
 }
