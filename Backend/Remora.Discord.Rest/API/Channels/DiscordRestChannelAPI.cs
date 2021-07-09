@@ -96,17 +96,17 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.HasValue && (name.Value.Length > 100 || name.Value.Length < 2))
+            if (name.HasValue && name.Value.Length is > 100 or < 1)
             {
-                return new GenericError("The name must be between 2 and 100 characters.");
+                return new GenericError("The name must be between 1 and 100 characters.");
             }
 
-            if (topic.HasValue && topic.Value is not null && (topic.Value.Length > 1024 || topic.Value.Length < 0))
+            if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
             {
                 return new GenericError("The topic must be between 0 and 1024 characters.");
             }
 
-            if (userLimit.HasValue && userLimit.Value is not null && (userLimit.Value > 99 || userLimit.Value < 0))
+            if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
             {
                 return new GenericError("The user limit must be between 0 and 99.");
             }
@@ -148,7 +148,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("user_limit", userLimit, _jsonOptions);
                         json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
                         json.Write("parent_id", parentId, _jsonOptions);
-                        json.Write("video_quality_mode", videoQualityMode, jsonOptions: _jsonOptions);
+                        json.Write("video_quality_mode", videoQualityMode, _jsonOptions);
                         json.Write("archived", isArchived, _jsonOptions);
 
                         if (autoArchiveDuration.HasValue)
@@ -359,7 +359,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
+            if (limit.HasValue && limit.Value is > 100 or < 1)
             {
                 return new GenericError
                 (
@@ -519,7 +519,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (limit.HasValue && (limit.Value > 100 || limit.Value < 1))
+            if (limit.HasValue && limit.Value is > 100 or < 1)
             {
                 return new GenericError("The limit must be between 1 and 100.");
             }
@@ -630,7 +630,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (messageIDs.Count > 100 || messageIDs.Count < 2)
+            if (messageIDs.Count is > 100 or < 2)
             {
                 return new GenericError("The number of messages to delete must be between 2 and 100.");
             }
@@ -890,9 +890,9 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.Length is < 2 or > 100)
+            if (name.Length is < 1 or > 100)
             {
-                return new GenericError("The name must be between 2 and 100 characters");
+                return new GenericError("The name must be between 1 and 100 characters");
             }
 
             return await _discordHttpClient.PostAsync<IChannel>
@@ -920,9 +920,9 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.Length is < 2 or > 100)
+            if (name.Length is < 1 or > 100)
             {
-                return new GenericError("The name must be between 2 and 100 characters");
+                return new GenericError("The name must be between 1 and 100 characters");
             }
 
             return await _discordHttpClient.PostAsync<IChannel>
@@ -985,7 +985,6 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            // TODO: Verify that this ends in thread-members, and not threads-members
             return _discordHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
             (
                 $"channels/{channelID}/thread-members",
