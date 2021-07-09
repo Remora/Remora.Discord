@@ -25,6 +25,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
@@ -38,6 +39,7 @@ namespace Remora.Discord.Caching.API
     /// <summary>
     /// Implements a caching version of the channel API.
     /// </summary>
+    [PublicAPI]
     public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
     {
         private readonly CacheService _cacheService;

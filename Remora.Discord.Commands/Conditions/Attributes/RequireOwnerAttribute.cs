@@ -21,6 +21,7 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 
 namespace Remora.Discord.Commands.Conditions
@@ -28,6 +29,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Marks a command as requiring the invoker to be the owner of the bot.
     /// </summary>
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Method)]
     public class RequireOwnerAttribute : ConditionAttribute
     {

@@ -37,7 +37,7 @@ namespace Remora.Discord.API.Json
     /// Converts instances of <see cref="IOneOf"/> to and from JSON.
     /// </summary>
     /// <typeparam name="TOneOf">The OneOf type.</typeparam>
-    public class OneOfConverter<TOneOf> : JsonConverter<TOneOf>
+    internal class OneOfConverter<TOneOf> : JsonConverter<TOneOf>
         where TOneOf : IOneOf
     {
         /// <summary>

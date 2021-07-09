@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes
@@ -28,6 +29,7 @@ namespace Remora.Discord.Commands.Attributes
     /// Enumerates supported type hints for slash command parameters. The values in this enum map to
     /// <see cref="ApplicationCommandOptionType"/>, and can be considered a subset of that enum.
     /// </summary>
+    [PublicAPI]
     public enum TypeHint
     {
         /// <summary>

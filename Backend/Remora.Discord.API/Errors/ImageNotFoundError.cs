@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.API.Errors
@@ -27,5 +28,6 @@ namespace Remora.Discord.API.Errors
     /// <summary>
     /// Represents an error produced by requesting an image that can't be found.
     /// </summary>
+    [PublicAPI]
     public record ImageNotFoundError() : ResultError("The requested image doesn't exist.");
 }

@@ -21,6 +21,7 @@
 //
 
 using System.Text.Json;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Rest.Extensions
@@ -28,6 +29,7 @@ namespace Remora.Discord.Rest.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="Utf8JsonWriter"/> class.
     /// </summary>
+    [PublicAPI]
     public static class Utf8JsonWriterExtensions
     {
         /// <summary>

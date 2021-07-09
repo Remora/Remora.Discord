@@ -36,7 +36,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="IChannel"/> from command-line inputs.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class ChannelParser : AbstractTypeParser<IChannel>
     {
         private readonly IDiscordRestChannelAPI _channelAPI;

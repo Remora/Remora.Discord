@@ -24,6 +24,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Results;
@@ -33,6 +34,7 @@ namespace Remora.Discord.Rest.Utility
     /// <summary>
     /// Packs images into a base64 representation.
     /// </summary>
+    [PublicAPI]
     public static class ImagePacker
     {
         /// <summary>

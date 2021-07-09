@@ -36,7 +36,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Checks required contexts before allowing execution.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class RequireContextCondition : ICondition<RequireContextAttribute>
     {
         private readonly ICommandContext _context;

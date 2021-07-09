@@ -37,7 +37,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="IGuildMember"/> from command-line inputs.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class GuildMemberParser : AbstractTypeParser<IGuildMember>
     {
         private readonly ICommandContext _context;

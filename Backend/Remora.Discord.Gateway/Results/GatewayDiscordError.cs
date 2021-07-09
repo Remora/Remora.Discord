@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Results;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents an unexpected closing of the gateway by Discord.
     /// </summary>
+    [PublicAPI]
     public record GatewayDiscordError(GatewayCloseStatus CloseStatus)
         : ResultError($"The gateway closed with Discord close status \"{CloseStatus}\".");
 }

@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IInteractionApplicationCommandCallbackData" />
+    [PublicAPI]
     public record InteractionApplicationCommandCallbackData
     (
         Optional<bool?> IsTTS = default,

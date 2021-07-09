@@ -21,12 +21,15 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
     /// Marks a parameter with type hinting for Discord slash commands, controlling what kind of autocompletion is used.
     /// </summary>
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Parameter)]
     public class DiscordTypeHintAttribute : Attribute
     {
         /// <summary>

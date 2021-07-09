@@ -25,6 +25,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
@@ -36,6 +37,7 @@ using Remora.Results;
 namespace Remora.Discord.Caching.API
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
     {
         private readonly CacheService _cacheService;

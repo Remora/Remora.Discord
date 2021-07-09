@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Extensions
@@ -31,6 +32,7 @@ namespace Remora.Discord.Commands.Extensions
     /// <summary>
     /// Defines extensions for the <see cref="IApplicationCommandInteractionData"/> interface.
     /// </summary>
+    [PublicAPI]
     public static class ApplicationCommandInteractionDataExtensions
     {
         /// <summary>

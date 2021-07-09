@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Results
@@ -27,5 +28,6 @@ namespace Remora.Discord.Gateway.Results
     /// <summary>
     /// Represents a clientside gateway error.
     /// </summary>
+    [PublicAPI]
     public record GatewayError(string Message) : ResultError(Message);
 }

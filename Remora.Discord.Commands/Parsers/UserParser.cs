@@ -36,7 +36,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="IUser"/> from command-line inputs.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class UserParser : AbstractTypeParser<IUser>
     {
         private readonly IDiscordRestUserAPI _userAPI;

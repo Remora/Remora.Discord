@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Objects;
 
@@ -28,6 +30,8 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Marks a command as requiring the requesting user to have a particular permission within the guild.
     /// </summary>
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Method)]
     public class RequireUserGuildPermissionAttribute : ConditionAttribute
     {
         /// <summary>

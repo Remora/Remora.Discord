@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Enumerates various user account flags.
     /// </summary>
-    [Flags, PublicAPI]
+    [PublicAPI, Flags]
     public enum UserFlags
     {
         /// <summary>

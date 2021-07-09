@@ -22,6 +22,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
 using Remora.Discord.Core;
@@ -32,6 +33,7 @@ namespace Remora.Discord.API
     /// <summary>
     /// Provides various helper methods for accessing Discord's CDN.
     /// </summary>
+    [PublicAPI]
     public static class CDN
     {
         /// <summary>

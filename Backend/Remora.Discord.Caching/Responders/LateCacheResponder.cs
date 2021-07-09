@@ -33,7 +33,7 @@ namespace Remora.Discord.Caching.Responders
     /// <summary>
     /// Evicts explicitly deleted data from the cache.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class LateCacheResponder :
         IResponder<IChannelDelete>,
         IResponder<IGuildBanRemove>,

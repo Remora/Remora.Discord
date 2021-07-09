@@ -23,6 +23,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -41,6 +42,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <see cref="RequireContextAttribute"/>.
     /// </remarks>
     /// </summary>
+    [PublicAPI]
     public class RequireUserGuildPermissionCondition : ICondition<RequireUserGuildPermissionAttribute>
     {
         private readonly ICommandContext _context;

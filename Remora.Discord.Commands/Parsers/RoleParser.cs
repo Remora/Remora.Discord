@@ -39,7 +39,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="IRole"/> from command-line inputs.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class RoleParser : AbstractTypeParser<IRole>
     {
         private readonly ICommandContext _context;

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Commands.Trees.Nodes;
 using Remora.Results;
 
@@ -28,5 +29,6 @@ namespace Remora.Discord.Commands.Results
     /// <summary>
     /// Represents a failure to satisfy a condition.
     /// </summary>
+    [PublicAPI]
     public record ConditionNotSatisfiedError(string Message, IChildNode? Node = default) : ResultError(Message);
 }

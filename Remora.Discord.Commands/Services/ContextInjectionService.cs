@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 
 namespace Remora.Discord.Commands.Services
@@ -27,6 +28,7 @@ namespace Remora.Discord.Commands.Services
     /// <summary>
     /// Assists with injection of an <see cref="ICommandContext"/> into a service provider.
     /// </summary>
+    [PublicAPI]
     public class ContextInjectionService
     {
         /// <summary>

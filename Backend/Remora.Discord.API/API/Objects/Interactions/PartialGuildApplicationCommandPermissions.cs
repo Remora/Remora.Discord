@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IPartialGuildApplicationCommandPermissions" />
+    [PublicAPI]
     public record PartialGuildApplicationCommandPermissions
     (
         Optional<Snowflake> ID,

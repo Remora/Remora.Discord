@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Responders
@@ -27,6 +28,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Represents a read-only view of a <see cref="InteractionResponderOptions"/> object.
     /// </summary>
+    [PublicAPI]
     public interface IInteractionResponderOptions
     {
         /// <summary>

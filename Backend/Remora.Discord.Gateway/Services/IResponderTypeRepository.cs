@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
 namespace Remora.Discord.Gateway.Services
@@ -29,6 +30,7 @@ namespace Remora.Discord.Gateway.Services
     /// <summary>
     /// Represents a type that can serve lists of registered responder types for gateway events.
     /// </summary>
+    [PublicAPI]
     public interface IResponderTypeRepository
     {
         /// <summary>

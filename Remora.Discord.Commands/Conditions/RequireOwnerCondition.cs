@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
@@ -33,6 +34,7 @@ namespace Remora.Discord.Commands.Conditions
     /// <summary>
     /// Checks that the bot's owner is the same as the invoking user.
     /// </summary>
+    [PublicAPI]
     public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
     {
         private readonly ICommandContext _context;

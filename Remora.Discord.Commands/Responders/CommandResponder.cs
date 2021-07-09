@@ -41,7 +41,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Responds to commands.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageUpdate>
     {
         private readonly CommandService _commandService;

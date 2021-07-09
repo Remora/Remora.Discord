@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Parsers
     /// <summary>
     /// Parses instances of <see cref="Snowflake"/>s.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         /// <inheritdoc />

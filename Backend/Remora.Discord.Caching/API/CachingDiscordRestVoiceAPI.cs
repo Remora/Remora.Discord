@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
@@ -32,6 +33,7 @@ using Remora.Results;
 namespace Remora.Discord.Caching.API
 {
     /// <inheritdoc />
+    [PublicAPI]
     public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
     {
         private readonly CacheService _cacheService;

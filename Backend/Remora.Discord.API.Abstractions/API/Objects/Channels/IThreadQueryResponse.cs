@@ -21,12 +21,14 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
     /// Represents a response object from the REST API regarding a thread query.
     /// </summary>
+    [PublicAPI]
     public interface IThreadQueryResponse
     {
         /// <summary>

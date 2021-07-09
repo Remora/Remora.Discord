@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
     /// <summary>
     /// Enumerates the gateway intents that can be specified.
     /// </summary>
-    [Flags, PublicAPI]
+    [PublicAPI, Flags]
     public enum GatewayIntents
     {
         /// <summary>

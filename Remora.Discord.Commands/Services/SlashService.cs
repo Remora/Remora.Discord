@@ -23,6 +23,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -35,6 +36,7 @@ namespace Remora.Discord.Commands.Services
     /// <summary>
     /// Handles updating and verifying of slash commands.
     /// </summary>
+    [PublicAPI]
     public class SlashService
     {
         private readonly CommandTree _commandTree;

@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
@@ -28,6 +29,7 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen" />
+    [PublicAPI]
     public record WelcomeScreen
     (
         string? Description,

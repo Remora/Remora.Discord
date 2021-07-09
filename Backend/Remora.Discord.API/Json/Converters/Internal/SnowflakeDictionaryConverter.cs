@@ -29,7 +29,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Json
 {
     /// <inheritdoc />
-    public class SnowflakeDictionaryConverter<TElement> : JsonConverter<IReadOnlyDictionary<Snowflake, TElement>>
+    internal class SnowflakeDictionaryConverter<TElement> : JsonConverter<IReadOnlyDictionary<Snowflake, TElement>>
     {
         /// <inheritdoc />
         public override IReadOnlyDictionary<Snowflake, TElement>? Read

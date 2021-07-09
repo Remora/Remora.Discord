@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -28,6 +29,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.Commands.Contexts
 {
     /// <inheritdoc cref="Remora.Discord.Commands.Contexts.ICommandContext" />
+    [PublicAPI]
     public record CommandContext
     (
         Optional<Snowflake> GuildID,

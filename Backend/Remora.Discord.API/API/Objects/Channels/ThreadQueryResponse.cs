@@ -21,11 +21,13 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
+    [PublicAPI]
     public record ThreadQueryResponse
     (
         IReadOnlyList<IChannel> Threads,

@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Json
     /// <summary>
     /// Converts a user discriminator to or from JSON.
     /// </summary>
-    public class DiscriminatorConverter : JsonConverter<ushort>
+    internal class DiscriminatorConverter : JsonConverter<ushort>
     {
         /// <inheritdoc />
         public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -20,12 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Gateway.Responders
 {
     /// <summary>
     /// Enumerates various responder groups. Responders registered within a group run in parallel, but are ordered among
     /// the groups.
     /// </summary>
+    [PublicAPI]
     public enum ResponderGroup
     {
         /// <summary>

@@ -42,7 +42,7 @@ namespace Remora.Discord.Commands.Responders
     /// <summary>
     /// Responds to interactions.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class InteractionResponder : IResponder<IInteractionCreate>
     {
         private readonly CommandService _commandService;

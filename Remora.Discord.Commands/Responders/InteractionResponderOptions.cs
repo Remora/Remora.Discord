@@ -20,11 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
+
 namespace Remora.Discord.Commands.Responders
 {
     /// <summary>
     /// Represents a set of options, controlling the behavior of a <see cref="InteractionResponder"/> instance.
     /// </summary>
+    [PublicAPI]
     public class InteractionResponderOptions : IInteractionResponderOptions
     {
         /// <inheritdoc />

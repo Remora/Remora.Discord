@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -30,6 +31,7 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
+    [PublicAPI]
     public record ApplicationCommandInteractionDataOption
     (
         string Name,

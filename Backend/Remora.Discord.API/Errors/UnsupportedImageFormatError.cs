@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Remora.Results;
 
 namespace Remora.Discord.API.Errors
@@ -29,6 +30,7 @@ namespace Remora.Discord.API.Errors
     /// <summary>
     /// Represents an error produced by requesting an unsupported image format.
     /// </summary>
+    [PublicAPI]
     public record UnsupportedImageFormatError(IReadOnlyList<CDNImageFormat> SupportedFormats)
         : ResultError
         (

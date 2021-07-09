@@ -22,6 +22,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
@@ -32,6 +33,7 @@ namespace Remora.Discord.Caching.Services
     /// <summary>
     /// Handles cache insert/evict operations for various types.
     /// </summary>
+    [PublicAPI]
     public class CacheService
     {
         private readonly IMemoryCache _memoryCache;

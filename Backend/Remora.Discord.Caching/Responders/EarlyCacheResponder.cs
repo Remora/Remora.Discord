@@ -36,7 +36,7 @@ namespace Remora.Discord.Caching.Responders
     /// <summary>
     /// Caches incoming data from the gateway.
     /// </summary>
-    [UsedImplicitly]
+    [PublicAPI]
     public class EarlyCacheResponder :
         IResponder<IChannelCreate>,
         IResponder<IChannelUpdate>,

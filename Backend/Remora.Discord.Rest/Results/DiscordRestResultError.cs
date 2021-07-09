@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
@@ -30,5 +31,6 @@ namespace Remora.Discord.Rest.Results
     /// <summary>
     /// Represents an error returned by the Discord API.
     /// </summary>
+    [PublicAPI]
     public record DiscordRestResultError(IRestError DiscordError) : ResultError(DiscordError.Message);
 }

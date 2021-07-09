@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees.Nodes;
 
@@ -31,6 +32,7 @@ namespace Remora.Discord.Commands.Results
     /// Represents a failure to create a slash command based on an unsupported feature, specifically related to a
     /// parameter.
     /// </summary>
+    [PublicAPI]
     public record UnsupportedParameterFeatureError(string Message, CommandNode Command, IParameterShape Parameter)
         : UnsupportedFeatureError(Message, Command);
 }

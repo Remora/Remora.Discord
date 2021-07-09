@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
@@ -33,6 +34,7 @@ namespace Remora.Discord.Hosting.Services
     /// <summary>
     /// The <see cref="IHostedService"/> that will run discord in the background.
     /// </summary>
+    [PublicAPI]
     public class DiscordService : BackgroundService
     {
         private readonly DiscordGatewayClient _gatewayClient;

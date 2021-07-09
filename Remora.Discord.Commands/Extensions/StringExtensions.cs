@@ -21,12 +21,14 @@
 //
 
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Extensions
 {
     /// <summary>
     /// Defines extension methods to the <see cref="string"/> type.
     /// </summary>
+    [PublicAPI]
     public static class StringExtensions
     {
         private static readonly Regex UnmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);

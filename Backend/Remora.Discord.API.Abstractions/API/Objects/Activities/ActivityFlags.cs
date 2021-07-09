@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Enumerates the flags an activity can have.
     /// </summary>
-    [Flags, PublicAPI]
+    [PublicAPI, Flags]
     public enum ActivityFlags
     {
         /// <summary>

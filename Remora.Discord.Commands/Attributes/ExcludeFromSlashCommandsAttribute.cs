@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
     /// Marks a command group or individual command as being excluded from slash command generation.
     /// </summary>
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class ExcludeFromSlashCommandsAttribute : Attribute
     {

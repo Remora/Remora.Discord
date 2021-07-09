@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
@@ -34,6 +35,7 @@ namespace Remora.Discord.Commands.Services
     /// <summary>
     /// Collects execution event services for simpler conjoined execution.
     /// </summary>
+    [PublicAPI]
     public class ExecutionEventCollectorService
     {
         private readonly IReadOnlyList<IExecutionEventService> _executionEventServices;

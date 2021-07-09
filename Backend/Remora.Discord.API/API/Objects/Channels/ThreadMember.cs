@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMember" />
+    [PublicAPI]
     public record ThreadMember
     (
         Optional<Snowflake> ID,

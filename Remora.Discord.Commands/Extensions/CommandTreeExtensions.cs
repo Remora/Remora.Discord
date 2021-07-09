@@ -26,6 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -43,6 +44,7 @@ namespace Remora.Discord.Commands.Extensions
     /// <summary>
     /// Defines extension methods for the <see cref="CommandTree"/> class.
     /// </summary>
+    [PublicAPI]
     public static class CommandTreeExtensions
     {
         /*

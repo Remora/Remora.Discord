@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +30,7 @@ namespace Remora.Discord.Caching
     /// <summary>
     /// Contains methods that create cache keys for various identified entities.
     /// </summary>
+    [PublicAPI]
     public static class KeyHelpers
     {
         /// <summary>
