@@ -44,6 +44,7 @@ namespace Remora.Discord.API.Json
     {
         private readonly ConstructorInfo _dtoConstructor;
         private readonly IReadOnlyList<PropertyInfo> _dtoProperties;
+        private readonly InterfaceMapping _interfaceMap;
 
         private readonly Dictionary<PropertyInfo, string[]> _readNameOverrides;
         private readonly Dictionary<PropertyInfo, string> _writeNameOverrides;
@@ -73,11 +74,12 @@ namespace Remora.Discord.API.Json
             _converterOverrides = new Dictionary<PropertyInfo, JsonConverter>();
             _converterFactoryOverrides = new Dictionary<PropertyInfo, JsonConverterFactory>();
 
-            var interfaceType = typeof(TInterface);
-            var visibleProperties = interfaceType.GetPublicProperties().ToArray();
+            var implementationType = typeof(TImplementation);
+            var visibleProperties = implementationType.GetPublicProperties().ToArray();
 
             _dtoConstructor = FindBestMatchingConstructor(visibleProperties);
             _dtoProperties = ReorderProperties(visibleProperties, _dtoConstructor);
+            _interfaceMap = implementationType.GetInterfaceMap(typeof(TInterface));
         }
 
         /// <summary>
@@ -541,6 +543,17 @@ namespace Remora.Discord.API.Json
                 if (propertyGetter is null)
                 {
                     continue;
+                }
+
+                // The value might be some sort of overriding type with explicit implementations; we'll map over to the
+                // interface if necessary
+                if (value.GetType() != typeof(TImplementation))
+                {
+                    var interfaceGetterIndex = Array.IndexOf(_interfaceMap.TargetMethods, propertyGetter);
+                    if (interfaceGetterIndex != -1)
+                    {
+                        propertyGetter = _interfaceMap.InterfaceMethods[interfaceGetterIndex];
+                    }
                 }
 
                 var propertyValue = propertyGetter.Invoke(value, new object?[] { });

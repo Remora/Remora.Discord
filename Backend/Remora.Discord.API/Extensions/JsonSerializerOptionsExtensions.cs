@@ -46,7 +46,7 @@ namespace Remora.Discord.API.Extensions
         ) where TActual : TInterface
         {
             var converter = new DataObjectConverter<TInterface, TActual>();
-            options.Converters.Add(converter);
+            options.Converters.Insert(0, converter);
 
             return converter;
         }
@@ -60,7 +60,7 @@ namespace Remora.Discord.API.Extensions
         public static JsonSerializerOptions AddConverter<TConverter>(this JsonSerializerOptions options)
             where TConverter : JsonConverter, new()
         {
-            options.Converters.Add(new TConverter());
+            options.Converters.Insert(0, new TConverter());
 
             return options;
         }
