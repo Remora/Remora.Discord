@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
@@ -43,6 +44,7 @@ namespace Remora.Discord.Rest
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _serializerOptions;
+        private readonly List<DiscordRequestCustomization> _customizations;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordHttpClient"/> class.
@@ -57,6 +59,30 @@ namespace Remora.Discord.Rest
         {
             _httpClient = httpClient;
             _serializerOptions = serializerOptions.Value;
+            _customizations = new List<DiscordRequestCustomization>();
+        }
+
+        /// <summary>
+        /// Creates a customization that will be applied to all requests made by the <see cref="DiscordHttpClient"/>.
+        /// The customization is removed when it is disposed.
+        /// </summary>
+        /// <param name="requestCustomizer">The action that customizes the request.</param>
+        /// <returns>The created customization.</returns>
+        public DiscordRequestCustomization AddCustomization(Action<RestRequestBuilder> requestCustomizer)
+        {
+            var customization = new DiscordRequestCustomization(this, requestCustomizer);
+            _customizations.Add(customization);
+
+            return customization;
+        }
+
+        /// <summary>
+        /// Removes a customization from the client.
+        /// </summary>
+        /// <param name="customization">The customization to remove.</param>
+        internal void RemoveCustomization(DiscordRequestCustomization customization)
+        {
+            _customizations.Remove(customization);
         }
 
         /// <summary>
@@ -82,6 +108,11 @@ namespace Remora.Discord.Rest
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Get);
+
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
 
             try
             {
@@ -121,6 +152,11 @@ namespace Remora.Discord.Rest
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Get);
+
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
 
             try
             {
@@ -171,6 +207,11 @@ namespace Remora.Discord.Rest
 
             requestBuilder.WithMethod(HttpMethod.Post);
 
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
+
             try
             {
                 using var request = requestBuilder.Build();
@@ -209,6 +250,11 @@ namespace Remora.Discord.Rest
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Post);
+
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
 
             try
             {
@@ -252,6 +298,11 @@ namespace Remora.Discord.Rest
 
             requestBuilder.WithMethod(HttpMethod.Patch);
 
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
+
             try
             {
                 using var request = requestBuilder.Build();
@@ -291,6 +342,11 @@ namespace Remora.Discord.Rest
 
             requestBuilder.WithMethod(HttpMethod.Patch);
 
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
+
             try
             {
                 using var request = requestBuilder.Build();
@@ -329,6 +385,11 @@ namespace Remora.Discord.Rest
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Delete);
+
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
 
             try
             {
@@ -372,6 +433,11 @@ namespace Remora.Discord.Rest
 
             requestBuilder.WithMethod(HttpMethod.Delete);
 
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
+
             try
             {
                 using var request = requestBuilder.Build();
@@ -414,6 +480,11 @@ namespace Remora.Discord.Rest
 
             requestBuilder.WithMethod(HttpMethod.Put);
 
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
+
             try
             {
                 using var request = requestBuilder.Build();
@@ -452,6 +523,11 @@ namespace Remora.Discord.Rest
             configureRequestBuilder(requestBuilder);
 
             requestBuilder.WithMethod(HttpMethod.Put);
+
+            foreach (var customization in _customizations)
+            {
+                customization.RequestCustomizer(requestBuilder);
+            }
 
             try
             {
