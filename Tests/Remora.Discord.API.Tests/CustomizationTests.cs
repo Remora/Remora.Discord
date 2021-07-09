@@ -24,6 +24,7 @@ using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
+using Remora.Discord.Tests;
 using Xunit;
 
 namespace Remora.Discord.API.Tests
@@ -98,6 +99,50 @@ namespace Remora.Discord.API.Tests
             Assert.NotNull(value);
             Assert.IsType<Customized>(value);
             Assert.Equal("some-other-value", ((Customized)value!).AdditionalValue);
+        }
+
+        /// <summary>
+        /// Tests whether an existing data type can be overridden.
+        /// </summary>
+        [Fact]
+        public void CanSerializeOverriddenDataType()
+        {
+            var serviceCollection = new ServiceCollection()
+                .AddDiscordApi()
+                .Configure<JsonSerializerOptions>
+                (
+                    options =>
+                    {
+                        // Add the existing type
+                        options.AddDataObjectConverter<IExisting, Existing>();
+                    }
+                );
+
+            serviceCollection.Configure<JsonSerializerOptions>
+            (
+                options =>
+                {
+                    // Override the existing type
+                    options.AddDataObjectConverter<IExisting, Customized>();
+                }
+            );
+
+            var services = serviceCollection.BuildServiceProvider();
+            var value = new Customized("some-value", "some-other-value");
+
+            var json = @"
+            {
+                ""existing_value"": ""some-value"",
+                ""additional_value"": ""some-other-value""
+            }";
+
+            var jsonOptions = services.GetRequiredService<IOptions<JsonSerializerOptions>>().Value;
+            var serializedJson = JsonSerializer.Serialize<IExisting>(value, jsonOptions);
+
+            using var original = JsonDocument.Parse(json);
+            using var serialized = JsonDocument.Parse(serializedJson);
+
+            JsonAssert.Equivalent(original, serialized);
         }
     }
 }
