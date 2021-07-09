@@ -186,7 +186,10 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
         /// <param name="threadID">Send a message to the specified thread within a webhook's channel.</param>
-        /// <param name="components">The components that should be included with the message.</param>
+        /// <param name="components">
+        /// The components that should be included with the message. The webhook must be application-owned to use this
+        /// parameter.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>
         /// A result which may or may not have succeeded. The returned message is null if <paramref name="shouldWait"/>
@@ -236,7 +239,10 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="allowedMentions">The new allowed mentions, if any.</param>
         /// <param name="file">The new file, if any.</param>
         /// <param name="attachments">The attachments to keep, if any.</param>
-        /// <param name="components">The components, if any.</param>
+        /// <param name="components">
+        /// The components that should be included with the message. The webhook must be application-owned to use this
+        /// parameter.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditWebhookMessageAsync
