@@ -112,20 +112,23 @@ namespace Remora.Discord.Commands.Services
                 .ToArray();
 
             // Upsert the current valid command set
-            var updateResult = await ((guildID is null)
-                ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    application.ID,
-                    commands,
-                    ct
-                )
-                : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    application.ID,
-                    guildID.Value,
-                    commands,
-                    ct
-                ));
+            var updateResult = await
+            (
+                guildID is null
+                    ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
+                    (
+                        application.ID,
+                        commands,
+                        ct
+                    )
+                    : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
+                    (
+                        application.ID,
+                        guildID.Value,
+                        commands,
+                        ct
+                    )
+            );
 
             return updateResult.IsSuccess
                 ? Result.FromSuccess()
