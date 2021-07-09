@@ -16,11 +16,13 @@ own.
 
 ## Quick Reference
   * [API Documentation][4]
-  * [Getting Started][1] 
+  * [Getting Started][1]
+  * [Using Undocumented Features][6]
   * [Project README][5]
 
-[1]: guides/getting-started
-[2]: github-info/CONTRIBUTING
+[1]: guides/getting-started.
+[2]: github-info/CONTRIBUTING.
 [3]: https://www.github.com/Nihlus/Remora.Discord/issues
 [4]: api
-[5]: info/README
+[5]: info/README.
+[6]: guides/undocumented-features
