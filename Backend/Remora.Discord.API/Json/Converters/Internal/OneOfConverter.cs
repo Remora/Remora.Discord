@@ -112,6 +112,9 @@ namespace Remora.Discord.API.Json
         {
             oneOf = default;
 
+            // This method is used to promote the most likely type to successfully deserialize to the start of the
+            // considered types. The original most-likely order is generally preserved, but this increases our chances
+            // significantly.
             static bool CouldMatchJson(Type type, JsonTokenType tokenType)
             {
                 return tokenType switch
