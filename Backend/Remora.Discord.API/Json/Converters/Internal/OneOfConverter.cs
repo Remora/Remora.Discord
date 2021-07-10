@@ -112,6 +112,24 @@ namespace Remora.Discord.API.Json
         {
             oneOf = default;
 
+            static bool CouldMatchJson(Type type, JsonTokenType tokenType)
+            {
+                return tokenType switch
+                {
+                    JsonTokenType.StartArray => type.IsCollection(),
+                    JsonTokenType.String => type == typeof(string),
+                    JsonTokenType.Number => type.IsNumeric(),
+                    JsonTokenType.True => type == typeof(bool),
+                    JsonTokenType.False => type == typeof(bool),
+                    JsonTokenType.Null => type.IsNullable(),
+                    JsonTokenType.StartObject => !type.IsPrimitive,
+                    _ => false
+                };
+            }
+
+            var currentTokenType = reader.TokenType;
+            types = types.OrderByDescending(t => CouldMatchJson(t, currentTokenType));
+
             // Try deserializing from one of the "other" types
             foreach (var type in types)
             {
