@@ -256,10 +256,10 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     Assert.NotNull(commands);
                     Assert.Equal(2, commands!.Count);
 
-                    var topLevelCommand = commands.FirstOrDefault(c => c.Type == SubCommand);
+                    var topLevelCommand = commands.FirstOrDefault(c => c.Name == "top-level-command");
                     Assert.NotNull(topLevelCommand);
 
-                    var topLevelGroup = commands.FirstOrDefault(c => c.Type == SubCommandGroup);
+                    var topLevelGroup = commands.FirstOrDefault(c => c.Name == "top-level-group");
                     Assert.NotNull(topLevelGroup);
 
                     Assert.True(topLevelGroup!.Options.HasValue);
@@ -406,7 +406,6 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var group = commands.Single();
 
-                    Assert.Equal(SubCommandGroup, group.Type);
                     Assert.Equal("a", group.Name);
 
                     Assert.Collection
@@ -437,7 +436,6 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var group = commands.Single();
 
-                    Assert.Equal(SubCommandGroup, group.Type);
                     Assert.Equal("a", group.Name);
 
                     var nestedGroup = group.Options.Value!.Single();
@@ -491,7 +489,6 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var group = commands.Single();
 
-                    Assert.Equal(SubCommandGroup, group.Type);
                     Assert.Equal("a", group.Name);
 
                     Assert.Collection

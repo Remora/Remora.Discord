@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -55,18 +54,20 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxGroupCommands = 25;
         private const int MaxChoiceValues = 25;
         private const int MaxCommandParameters = 25;
-        private const int MaxGroupDepth = 1;
         private const int MaxCommandStringifiedLength = 4000;
         private const int MaxChoiceNameLength = 100;
         private const int MaxChoiceValueLength = 100;
         private const int MaxDescriptionLength = 100;
+        private const int MaxTreeDepth = 3; // Top level is a depth of 1
+
+        private const string NameRegexPattern = "^[\\w-]{1,32}$";
 
         /// <summary>
         /// Holds a regular expression that matches valid command names.
         /// </summary>
         private static readonly Regex NameRegex = new
         (
-            "^[\\w-]{1,32}$",
+            NameRegexPattern,
             RegexOptions.Compiled
         );
 
@@ -75,230 +76,179 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <param name="tree">The command tree.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static Result<IReadOnlyList<IApplicationCommandOption>> CreateApplicationCommands(this CommandTree tree)
+        public static Result<IReadOnlyList<IBulkApplicationCommandData>> CreateApplicationCommands(this CommandTree tree)
         {
-            var createdCommands = new List<IApplicationCommandOption>();
-            foreach (var child in tree.Root.Children)
+            var commands = new List<IBulkApplicationCommandData>();
+            var commandNames = new HashSet<string>();
+            foreach (var node in tree.Root.Children)
             {
-                var createOption = ToOption(child, out var option, out var skip);
-                if (!createOption.IsSuccess)
+                // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it returns an "option" object, which isn't truly what we want.
+                var translationResult = TryTranslateCommandNode(node, 1);
+                if (!translationResult.IsSuccess)
                 {
-                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createOption);
+                    return Result<IReadOnlyList<IBulkApplicationCommandData>>.FromError(translationResult.Unwrap());
                 }
 
-                if (skip)
+                if (translationResult.Entity is null)
                 {
                     continue;
                 }
 
-                createdCommands.Add(option!);
+                if (!commandNames.Add(translationResult.Entity.Name))
+                {
+                    return new UnsupportedFeatureError("Overloads are not supported.");
+                }
+
+                if (GetCommandStringifiedLength(translationResult.Entity) > MaxCommandStringifiedLength)
+                {
+                    return new UnsupportedFeatureError
+                    (
+                        "One or more commands is too long (combined length of name, description, and value properties), " +
+                        $"max {MaxCommandStringifiedLength}).",
+                        node
+                    );
+                }
+
+                commands.Add(new BulkApplicationCommandData(
+                    Name: translationResult.Entity.Name,
+                    Description: translationResult.Entity.Description,
+                    Options: translationResult.Entity.Options));
             }
 
-            if (createdCommands.Count > MaxRootCommandsOrGroups)
+            if (commands.Count > MaxRootCommandsOrGroups)
             {
                 return new UnsupportedFeatureError
                 (
-                    $"Too many root-level commands or groups (had {createdCommands.Count}, max " +
+                    $"Too many root-level commands or groups (had {commands.Count}, max " +
                     $"{MaxRootCommandsOrGroups})."
                 );
             }
 
-            if (createdCommands.GroupBy(c => c.Name).Any(g => g.Count() > 1))
-            {
-                return new UnsupportedFeatureError("Overloads are not supported.");
-            }
+            return commands;
+        }
 
-            if (createdCommands.Any(c => GetCommandStringifiedLength(c) > MaxCommandStringifiedLength))
+        private static Result<IApplicationCommandOption?> TryTranslateCommandNode(IChildNode node, int treeDepth)
+        {
+            if (treeDepth > MaxTreeDepth)
             {
                 return new UnsupportedFeatureError
                 (
-                    "One or more commands is too long (combined length of name, description, and value properties), " +
-                    $"max {MaxCommandStringifiedLength})."
+                    $"A sub-command or group was nested too deeply (depth {treeDepth}, max {MaxTreeDepth}.",
+                    node
                 );
             }
 
-            return createdCommands;
-        }
-
-        private static Result ToOption
-        (
-            IChildNode child,
-            [NotNullWhen(true)] out IApplicationCommandOption? option,
-            out bool skip,
-            ulong depth = 0
-        )
-        {
-            option = null;
-            skip = false;
-
-            switch (child)
+            switch (node)
             {
                 case CommandNode command:
                 {
-                    if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                    if ((command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                        || (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null))
                     {
-                        skip = true;
-                        return Result.FromSuccess();
+                        return Result<IApplicationCommandOption?>.FromSuccess(null);
                     }
 
-                    if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                    var validateNameResult = ValidateCommandName(command.Key, command);
+                    if (!validateNameResult.IsSuccess)
                     {
-                        skip = true;
-                        return Result.FromSuccess();
+                        return Result<IApplicationCommandOption?>.FromError(validateNameResult.Unwrap());
                     }
 
-                    var createParameterOptions = CreateCommandParameterOptions(command, out var parameterOptions);
-                    if (!createParameterOptions.IsSuccess)
+                    var validateDescriptionResult = ValidateCommandDescription(command.Shape.Description, command);
+                    if (!validateDescriptionResult.IsSuccess)
                     {
-                        return createParameterOptions;
+                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult.Unwrap());
                     }
 
-                    if (!NameRegex.IsMatch(command.Key))
+                    var buildOptionsResult = CreateCommandParameterOptions(command);
+                    if (!buildOptionsResult.IsSuccess)
                     {
-                        return new UnsupportedFeatureError
-                        (
-                            $"\"{command.Key}\" is not a valid slash command name. " +
-                            "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
-                            command
-                        );
+                        return Result<IApplicationCommandOption?>.FromError(buildOptionsResult.Unwrap());
                     }
 
-                    var descriptionLength = command.Shape.Description.Length;
-                    if (descriptionLength > MaxDescriptionLength)
-                    {
-                        return new UnsupportedFeatureError
-                        (
-                            $"A command's description was too long (length {descriptionLength}, max " +
-                            $"{MaxDescriptionLength}).",
-                            command
-                        );
-                    }
-
-                    option = new ApplicationCommandOption
-                    (
-                        SubCommand,
-                        command.Key.ToLowerInvariant(),
-                        command.Shape.Description,
-                        default,
-                        default,
-                        default,
-                        new Optional<IReadOnlyList<IApplicationCommandOption>>(parameterOptions!)
-                    );
-
-                    return Result.FromSuccess();
+                    return new ApplicationCommandOption(
+                        Type: SubCommand, // Might not actually be a sub-command, but the caller will handle that
+                        Name: command.Key.ToLowerInvariant(),
+                        Description: command.Shape.Description,
+                        Options: new(buildOptionsResult.Entity));
                 }
                 case GroupNode group:
                 {
-                    if (depth > MaxGroupDepth)
+                    var validateNameResult = ValidateCommandName(group.Key, group);
+                    if (!validateNameResult.IsSuccess)
                     {
-                        return new UnsupportedFeatureError
-                        (
-                            $"A group was nested too deeply (depth {depth}, max {MaxGroupDepth}.",
-                            group
-                        );
+                        return Result<IApplicationCommandOption?>.FromError(validateNameResult.Unwrap());
                     }
 
-                    if (!NameRegex.IsMatch(group.Key))
+                    var validateDescriptionResult = ValidateCommandDescription(group.Description, group);
+                    if (!validateDescriptionResult.IsSuccess)
                     {
-                        return new UnsupportedFeatureError
-                        (
-                            $"\"{group.Key}\" is not a valid slash command group name. " +
-                            "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
-                            group
-                        );
+                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult.Unwrap());
                     }
 
                     var groupOptions = new List<IApplicationCommandOption>();
-
-                    // Continue down
-                    foreach (var groupChild in group.Children)
+                    var groupOptionNames = new HashSet<string>();
+                    var subCommandCount = 0;
+                    foreach (var childNode in group.Children)
                     {
-                        var createNestedOption = ToOption
-                        (
-                            groupChild,
-                            out var nestedOptions,
-                            out var skipNested,
-                            depth + 1
-                        );
-
-                        if (!createNestedOption.IsSuccess)
+                        var translateChildNodeResult = TryTranslateCommandNode(childNode, treeDepth + 1);
+                        if (!translateChildNodeResult.IsSuccess)
                         {
-                            return createNestedOption;
+                            return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult.Unwrap());
                         }
 
-                        if (skipNested)
+                        if (translateChildNodeResult.Entity is not null)
                         {
-                            continue;
-                        }
+                            if (translateChildNodeResult.Entity.Type is SubCommand)
+                            {
+                                ++subCommandCount;
+                            }
 
-                        groupOptions.Add(nestedOptions!);
+                            if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
+                            {
+                                return new UnsupportedFeatureError("Overloads are not supported.", group);
+                            }
+
+                            groupOptions.Add(translateChildNodeResult.Entity);
+                        }
                     }
 
                     if (groupOptions.Count == 0)
                     {
-                        skip = true;
-                        return Result.FromSuccess();
+                        return Result<IApplicationCommandOption?>.FromSuccess(null);
                     }
 
-                    var subcommandCount = groupOptions.Count(o => o.Type == SubCommand);
-                    if (subcommandCount > MaxGroupCommands)
+                    if (subCommandCount > MaxGroupCommands)
                     {
                         return new UnsupportedFeatureError
                         (
-                            $"Too many commands under a group ({subcommandCount}, max {MaxGroupCommands}).",
+                            $"Too many commands under a group ({subCommandCount}, max {MaxGroupCommands}).",
                             group
                         );
                     }
 
-                    if (groupOptions.GroupBy(c => c.Name).Any(g => g.Count() > 1))
-                    {
-                        return new UnsupportedFeatureError("Overloads are not supported.", group);
-                    }
-
-                    option = new ApplicationCommandOption
-                    (
-                        SubCommandGroup,
-                        group.Key.ToLowerInvariant(),
-                        group.Description,
-                        default,
-                        default,
-                        default,
-                        groupOptions
-                    );
-
-                    return Result.FromSuccess();
+                    return new ApplicationCommandOption(
+                        Type: SubCommandGroup,
+                        Name: group.Key.ToLowerInvariant(),
+                        Description: group.Description,
+                        Options: new(groupOptions));
                 }
                 default:
                 {
-                    throw new InvalidOperationException
-                    (
-                        "An unknown node type was encountered; operation cannot continue."
-                    );
+                    throw new InvalidOperationException($"Unable to translate node of type {node.GetType().FullName} into a Discord Application Command");
                 }
             }
         }
 
-        private static Result CreateCommandParameterOptions
-        (
-            CommandNode command,
-            [NotNullWhen(true)] out IReadOnlyList<IApplicationCommandOption>? parameters
-        )
+        private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions(CommandNode command)
         {
-            parameters = null;
             var parameterOptions = new List<IApplicationCommandOption>();
-
-            // Create a set of parameter options
             foreach (var parameter in command.Shape.Parameters)
             {
-                var descriptionLength = parameter.Description.Length;
-                if (descriptionLength is > MaxDescriptionLength)
+                var validateDescriptionResult = ValidateCommandDescription(parameter.Description, command);
+                if (!validateDescriptionResult.IsSuccess)
                 {
-                    return new UnsupportedFeatureError
-                    (
-                        $"A parameter's description was too long (length {descriptionLength}, max " +
-                        $"{MaxDescriptionLength}).",
-                        command
-                    );
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(validateDescriptionResult.Unwrap());
                 }
 
                 switch (parameter)
@@ -336,7 +286,7 @@ namespace Remora.Discord.Commands.Extensions
                     var createChoices = CreateApplicationCommandOptionChoices(parameterType);
                     if (!createChoices.IsSuccess)
                     {
-                        return Result.FromError(createChoices);
+                        return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
                     }
 
                     choices = new(createChoices.Entity);
@@ -364,8 +314,7 @@ namespace Remora.Discord.Commands.Extensions
                 );
             }
 
-            parameters = parameterOptions;
-            return Result.FromSuccess();
+            return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
         }
 
         private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
@@ -435,6 +384,30 @@ namespace Remora.Discord.Commands.Extensions
             }
 
             return length;
+        }
+
+        private static Result ValidateCommandName(string name, IChildNode node)
+        {
+            return NameRegex.IsMatch(name)
+                ? Result.FromSuccess()
+                : new UnsupportedFeatureError
+                (
+                    $"\"{name}\" is not a valid slash command or group name. " +
+                    "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
+                    node
+                );
+        }
+
+        private static Result ValidateCommandDescription(string description, IChildNode node)
+        {
+            return (description.Length <= MaxDescriptionLength)
+                ? Result.FromSuccess()
+                : new UnsupportedFeatureError
+                (
+                    $"A command, group, or parameter description was too long (length {description.Length}, max " +
+                    $"{MaxDescriptionLength}).",
+                    node
+                );
         }
     }
 }
