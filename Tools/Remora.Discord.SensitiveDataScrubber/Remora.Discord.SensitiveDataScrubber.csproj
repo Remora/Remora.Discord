@@ -3,11 +3,12 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
-    
+
     <PropertyGroup>
         <Description>
-            This tool assists in scrubbing sensitive information from captured Discord payloads, allowing them to be 
+            This tool assists in scrubbing sensitive information from captured Discord payloads, allowing them to be
             included in the repository for the purpose of unit and integration tests. Sensitive data (such as user IDs,
             emails, avatar hashes, etc) are automatically replaced with equivalent but non-identifying data, resulting
             in a "clean" file.
