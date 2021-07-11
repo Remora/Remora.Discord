@@ -150,8 +150,12 @@ namespace Remora.Discord.Commands.Extensions
             {
                 case CommandNode command:
                 {
-                    if ((command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
-                        || (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null))
+                    if (command.GroupType.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
+                    {
+                        return Result<IApplicationCommandOption?>.FromSuccess(null);
+                    }
+
+                    if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
                     {
                         return Result<IApplicationCommandOption?>.FromSuccess(null);
                     }
