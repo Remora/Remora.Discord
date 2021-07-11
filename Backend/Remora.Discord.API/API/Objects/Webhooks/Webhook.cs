@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Objects
         string? Name,
         string? Avatar,
         Optional<string> Token = default,
-        Optional<Snowflake> ApplicationID = default,
+        Snowflake? ApplicationID = default,
         Optional<IPartialGuild> SourceGuild = default,
         Optional<IPartialChannel> SourceChannel = default,
         Optional<string> URL = default
