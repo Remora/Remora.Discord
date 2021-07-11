@@ -101,18 +101,6 @@ namespace Remora.Discord.Commands.Services
                 return Result.FromError(createCommands);
             }
 
-            var commands = createCommands.Entity
-                .Select
-                (
-                    c => new BulkApplicationCommandData
-                    (
-                        c.Name,
-                        c.Description,
-                        c.Options
-                    )
-                )
-                .ToArray();
-
             // Upsert the current valid command set
             var updateResult = await
             (
@@ -120,14 +108,14 @@ namespace Remora.Discord.Commands.Services
                     ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
                     (
                         application.ID,
-                        commands,
+                        createCommands.Entity,
                         ct
                     )
                     : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
                     (
                         application.ID,
                         guildID.Value,
-                        commands,
+                        createCommands.Entity,
                         ct
                     )
             );
