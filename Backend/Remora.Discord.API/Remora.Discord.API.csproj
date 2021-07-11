@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>21.0.1</Version>
+        <Version>22.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,47 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Discord's regex sucks and lies, so we'll roll our own.
+            Improve error message.
+            Invert if to reduce nesting.
+            Split checks to avoid wrapping.
+            Fix some formatting.
+            Add some more documentation.
+            Merge pull request #70 from JakenVeina/slash-command-direct-response
+            Followup to #69, breaking changes to reduce/simplify API surface
+            Merge pull request #74 from JakenVeina/slash-command-translation-rework
+            Reworked and enhanced the logic for translating Remora command trees into Discord command trees. The translation now returns IBulkApplicationCommandData at the top level, rather than IApplicationCommandOption, to better reflect the Discord API model.
+            Merge pull request #75 from JakenVeina/webhook-modeling-error
+            Fixed incorrect optional/nullable modeling for Webhook.ApplicationID
+            Improve accuracy of the OneOf converter.
+            Add a round-trip test.
+            Fix overrides for data types so the docs don't lie.
+            Add a link in the index to the guide.
+            Add documentation on how to use undocumented features.
+            Enable customizations of REST requests on the fly.
+            Do a pass over PublicAPI and Flags attributes.
+            Improve formatting.
+            Rename ApplicationCommandOverwriteData.
+            Merge pull request #71 from JakenVeina/command-bulk-overwrites
+            Formatting
+            deploy: 1946342b97e8eee62e9479dca3dddfcfef710f7b
+            Enhanced the Rest Applications API to include the "default_permission" parameter when bulk overwriting commands, and to reduce verbosity.
+            Update channel name limits (and use patterns).
+            Implement IsDisabled for selection menus.
+            Add some additional notes.
+            Add more known error codes.
+            Suppress some warnings.
+            Remove redundant arguments.
+            Add new dictionary term.
+            Discard unused parameter.
+            Convert loop to LINQ.
+            Remove redundant qualifiers.
+            Remove unused usings.
+            Return task directly when possible.
+            Merge pull request #73 from ProIcons/master
+            Removed unused import.
+            Added tests for the new method.
+            Implements #72 - DeleteWebhookMessageAsync
         </PackageReleaseNotes>
     </PropertyGroup>
 
