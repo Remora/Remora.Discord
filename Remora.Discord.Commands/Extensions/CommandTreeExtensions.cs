@@ -60,7 +60,7 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxDescriptionLength = 100;
         private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
-        private const string NameRegexPattern = "^[\\w-]{1,32}$";
+        private const string NameRegexPattern = "^[a-z0-9_-]{1,32}$";
 
         /// <summary>
         /// Holds a regular expression that matches valid command names.
@@ -224,7 +224,7 @@ namespace Remora.Discord.Commands.Extensions
 
                         if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
                         {
-                            return new UnsupportedFeatureError("Overloads are not supported.", @group);
+                            return new UnsupportedFeatureError("Overloads are not supported.", group);
                         }
 
                         groupOptions.Add(translateChildNodeResult.Entity);
@@ -428,7 +428,7 @@ namespace Remora.Discord.Commands.Extensions
 
         private static Result ValidateCommandDescription(string description, IChildNode node)
         {
-            return (description.Length <= MaxDescriptionLength)
+            return description.Length <= MaxDescriptionLength
                 ? Result.FromSuccess()
                 : new UnsupportedFeatureError
                 (
