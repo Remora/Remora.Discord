@@ -211,20 +211,23 @@ namespace Remora.Discord.Commands.Extensions
                             return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult.Unwrap());
                         }
 
-                        if (translateChildNodeResult.Entity is not null)
+                        if (translateChildNodeResult.Entity is null)
                         {
-                            if (translateChildNodeResult.Entity.Type is SubCommand)
-                            {
-                                ++subCommandCount;
-                            }
-
-                            if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
-                            {
-                                return new UnsupportedFeatureError("Overloads are not supported.", group);
-                            }
-
-                            groupOptions.Add(translateChildNodeResult.Entity);
+                            // Skipped
+                            continue;
                         }
+
+                        if (translateChildNodeResult.Entity.Type is SubCommand)
+                        {
+                            ++subCommandCount;
+                        }
+
+                        if (!groupOptionNames.Add(translateChildNodeResult.Entity.Name))
+                        {
+                            return new UnsupportedFeatureError("Overloads are not supported.", @group);
+                        }
+
+                        groupOptions.Add(translateChildNodeResult.Entity);
                     }
 
                     if (groupOptions.Count == 0)
