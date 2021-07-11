@@ -76,13 +76,17 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <param name="tree">The command tree.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static Result<IReadOnlyList<IBulkApplicationCommandData>> CreateApplicationCommands(this CommandTree tree)
+        public static Result<IReadOnlyList<IBulkApplicationCommandData>> CreateApplicationCommands
+        (
+            this CommandTree tree
+        )
         {
             var commands = new List<IBulkApplicationCommandData>();
             var commandNames = new HashSet<string>();
             foreach (var node in tree.Root.Children)
             {
-                // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it returns an "option" object, which isn't truly what we want.
+                // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it
+                // returns an "option" object, which isn't truly what we want.
                 var translationResult = TryTranslateCommandNode(node, 1);
                 if (!translationResult.IsSuccess)
                 {
@@ -103,24 +107,28 @@ namespace Remora.Discord.Commands.Extensions
                 {
                     return new UnsupportedFeatureError
                     (
-                        "One or more commands is too long (combined length of name, description, and value properties), " +
-                        $"max {MaxCommandStringifiedLength}).",
+                        "One or more commands is too long (combined length of name, description, and value " +
+                        $"properties), max {MaxCommandStringifiedLength}).",
                         node
                     );
                 }
 
-                commands.Add(new BulkApplicationCommandData(
-                    Name: translationResult.Entity.Name,
-                    Description: translationResult.Entity.Description,
-                    Options: translationResult.Entity.Options));
+                commands.Add
+                (
+                    new BulkApplicationCommandData
+                    (
+                        translationResult.Entity.Name,
+                        translationResult.Entity.Description,
+                        translationResult.Entity.Options
+                    )
+                );
             }
 
             if (commands.Count > MaxRootCommandsOrGroups)
             {
                 return new UnsupportedFeatureError
                 (
-                    $"Too many root-level commands or groups (had {commands.Count}, max " +
-                    $"{MaxRootCommandsOrGroups})."
+                    $"Too many root-level commands or groups (had {commands.Count}, max {MaxRootCommandsOrGroups})."
                 );
             }
 
@@ -166,11 +174,13 @@ namespace Remora.Discord.Commands.Extensions
                         return Result<IApplicationCommandOption?>.FromError(buildOptionsResult.Unwrap());
                     }
 
-                    return new ApplicationCommandOption(
-                        Type: SubCommand, // Might not actually be a sub-command, but the caller will handle that
-                        Name: command.Key.ToLowerInvariant(),
-                        Description: command.Shape.Description,
-                        Options: new(buildOptionsResult.Entity));
+                    return new ApplicationCommandOption
+                    (
+                        SubCommand, // Might not actually be a sub-command, but the caller will handle that
+                        command.Key.ToLowerInvariant(),
+                        command.Shape.Description,
+                        Options: new(buildOptionsResult.Entity)
+                    );
                 }
                 case GroupNode group:
                 {
@@ -227,20 +237,28 @@ namespace Remora.Discord.Commands.Extensions
                         );
                     }
 
-                    return new ApplicationCommandOption(
-                        Type: SubCommandGroup,
-                        Name: group.Key.ToLowerInvariant(),
-                        Description: group.Description,
-                        Options: new(groupOptions));
+                    return new ApplicationCommandOption
+                    (
+                        SubCommandGroup,
+                        group.Key.ToLowerInvariant(),
+                        group.Description,
+                        Options: new(groupOptions)
+                    );
                 }
                 default:
                 {
-                    throw new InvalidOperationException($"Unable to translate node of type {node.GetType().FullName} into a Discord Application Command");
+                    throw new InvalidOperationException
+                    (
+                        $"Unable to translate node of type {node.GetType().FullName} into a Discord Application Command"
+                    );
                 }
             }
         }
 
-        private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions(CommandNode command)
+        private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions
+        (
+            CommandNode command
+        )
         {
             var parameterOptions = new List<IApplicationCommandOption>();
             foreach (var parameter in command.Shape.Parameters)
@@ -248,7 +266,10 @@ namespace Remora.Discord.Commands.Extensions
                 var validateDescriptionResult = ValidateCommandDescription(parameter.Description, command);
                 if (!validateDescriptionResult.IsSuccess)
                 {
-                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(validateDescriptionResult.Unwrap());
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError
+                    (
+                        validateDescriptionResult.Unwrap()
+                    );
                 }
 
                 switch (parameter)
