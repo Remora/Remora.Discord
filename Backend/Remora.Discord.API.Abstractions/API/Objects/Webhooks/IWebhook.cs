@@ -74,7 +74,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the bot or OAuth2 application that created this webhook.
         /// </summary>
-        Optional<Snowflake> ApplicationID { get; }
+        Snowflake? ApplicationID { get; }
 
         /// <summary>
         /// Gets the guild of the channel that the webhook is following.
