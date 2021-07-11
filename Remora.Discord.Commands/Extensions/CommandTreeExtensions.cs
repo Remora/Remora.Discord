@@ -256,7 +256,7 @@ namespace Remora.Discord.Commands.Extensions
                 {
                     throw new InvalidOperationException
                     (
-                        $"Unable to translate node of type {node.GetType().FullName} into a Discord Application Command"
+                        $"Unable to translate node of type {node.GetType().FullName} into an application command"
                     );
                 }
             }
