@@ -39,6 +39,7 @@
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIconUrl>https://cdn.gullberg.tk/remora/icon/shark.png</PackageIconUrl>
+        <PackageIcon>shark.png</PackageIcon>
 
         <BaseDescription>
             Remora.Discord is a .NET library for the Discord API, built for performance, reliability, and concurrency.
@@ -121,5 +122,10 @@
     <!-- SourceLink -->
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    </ItemGroup>
+
+    <!-- NuGet Icon -->
+    <ItemGroup>
+        <None Include="$(SolutionDir)/images/shark.png" Pack="true" PackagePath="/" />
     </ItemGroup>
 </Project>
