@@ -566,7 +566,7 @@ namespace Remora.Discord.Rest
             }
 
             // See if we have a JSON error to get some more details from
-            if (response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength <= 0)
+            if (response.Content.Headers.ContentLength is <= 0)
             {
                 return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
@@ -644,7 +644,7 @@ namespace Remora.Discord.Rest
             }
 
             // See if we have a JSON error to get some more details from
-            if (!response.Content.Headers.ContentLength.HasValue || !(response.Content.Headers.ContentLength > 0))
+            if (response.Content.Headers.ContentLength is not > 0)
             {
                 return new HttpResultError(response.StatusCode, response.ReasonPhrase);
             }
