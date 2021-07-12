@@ -150,7 +150,7 @@ namespace Remora.Discord.Caching.Responders
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            foreach (var presence in gatewayEvent.Presences.Value!)
+            foreach (var presence in gatewayEvent.Presences.Value)
             {
                 if (!presence.User.ID.HasValue)
                 {

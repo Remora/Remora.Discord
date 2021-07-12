@@ -181,7 +181,7 @@ namespace Remora.Discord.Caching.Services
 
             if (guild.Channels.HasValue)
             {
-                foreach (var channel in guild.Channels.Value!)
+                foreach (var channel in guild.Channels.Value)
                 {
                     var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
 
@@ -215,9 +215,9 @@ namespace Remora.Discord.Caching.Services
             if (guild.Members.HasValue)
             {
                 var membersKey = KeyHelpers.CreateGuildMembersKey(guild.ID, default, default);
-                Cache(membersKey, guild.Members.Value!);
+                Cache(membersKey, guild.Members.Value);
 
-                foreach (var guildMember in guild.Members.Value!)
+                foreach (var guildMember in guild.Members.Value)
                 {
                     if (!guildMember.User.HasValue)
                     {
@@ -297,7 +297,7 @@ namespace Remora.Discord.Caching.Services
                 return;
             }
 
-            foreach (var recipient in channel.Recipients.Value!)
+            foreach (var recipient in channel.Recipients.Value)
             {
                 var recipientKey = KeyHelpers.CreateUserCacheKey(recipient.ID);
                 Cache(recipientKey, recipient);

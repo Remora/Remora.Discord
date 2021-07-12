@@ -173,7 +173,7 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            var author = gatewayEvent.Author.Value!;
+            var author = gatewayEvent.Author.Value;
             if (author.IsBot.HasValue && author.IsBot.Value)
             {
                 return Result.FromSuccess();
@@ -192,7 +192,7 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent
             );
 
-            return await ExecuteCommandAsync(gatewayEvent.Content.Value!, context, ct);
+            return await ExecuteCommandAsync(gatewayEvent.Content.Value, context, ct);
         }
 
         private async Task<Result> ExecuteCommandAsync

@@ -137,7 +137,7 @@ namespace Remora.Discord.Commands.Responders
                 }
             }
 
-            var interactionData = gatewayEvent.Data.Value!;
+            var interactionData = gatewayEvent.Data.Value;
             interactionData.UnpackInteraction(out var command, out var parameters);
 
             var context = new InteractionContext

@@ -61,7 +61,7 @@ namespace Remora.Discord.Commands.Extensions
                 return;
             }
 
-            UnpackInteractionOptions(commandData.Options.Value!, out var nestedCommandName, out var nestedParameters);
+            UnpackInteractionOptions(commandData.Options.Value, out var nestedCommandName, out var nestedParameters);
 
             commandName = nestedCommandName is not null
                 ? $"{commandData.Name.Value} {nestedCommandName}"
@@ -112,7 +112,7 @@ namespace Remora.Discord.Commands.Extensions
             else if (singleOption.Options.HasValue)
             {
                 // A nested group
-                var nestedOptions = singleOption.Options.Value!;
+                var nestedOptions = singleOption.Options.Value;
 
                 UnpackInteractionOptions(nestedOptions, out var nestedCommandName, out parameters);
 
@@ -138,7 +138,7 @@ namespace Remora.Discord.Commands.Extensions
             }
 
             var values = new List<string>();
-            var optionValue = option.Value.Value!;
+            var optionValue = option.Value.Value;
             if (optionValue.Value is ICollection collection)
             {
                 values.AddRange(collection.Cast<object>().Select(o => o.ToString() ?? string.Empty));

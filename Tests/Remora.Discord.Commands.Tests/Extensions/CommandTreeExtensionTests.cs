@@ -279,18 +279,18 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     Assert.NotNull(topLevelGroup);
 
                     Assert.True(topLevelGroup!.Options.HasValue);
-                    Assert.Equal(2, topLevelGroup.Options.Value!.Count);
+                    Assert.Equal(2, topLevelGroup.Options.Value.Count);
 
-                    var firstNestedCommand = topLevelGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommand);
+                    var firstNestedCommand = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
                     Assert.NotNull(firstNestedCommand);
 
-                    var nestedGroup = topLevelGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommandGroup);
+                    var nestedGroup = topLevelGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommandGroup);
                     Assert.NotNull(nestedGroup);
 
                     Assert.True(nestedGroup!.Options.HasValue);
-                    Assert.Single(nestedGroup.Options.Value!);
+                    Assert.Single(nestedGroup.Options.Value);
 
-                    var secondNestedCommand = nestedGroup.Options.Value!.FirstOrDefault(c => c.Type == SubCommand);
+                    var secondNestedCommand = nestedGroup.Options.Value.FirstOrDefault(c => c.Type == SubCommand);
                     Assert.NotNull(secondNestedCommand);
                 }
 
@@ -316,7 +316,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                         var command = commands!.FirstOrDefault(c => c.Name == commandName);
                         Assert.NotNull(command);
 
-                        var parameter = command!.Options.Value![0];
+                        var parameter = command!.Options.Value[0];
                         Assert.Equal(type, parameter.Type);
                     }
 
@@ -344,10 +344,10 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     AssertExistsWithType("enum-value", String);
                     var enumCommand = commands!.First(c => c.Name == "enum-value");
-                    var enumParameter = enumCommand.Options.Value![0];
+                    var enumParameter = enumCommand.Options.Value[0];
                     Assert.True(enumParameter.Choices.HasValue);
 
-                    var enumChoices = enumParameter.Choices.Value!;
+                    var enumChoices = enumParameter.Choices.Value;
                     Assert.Equal(2, enumChoices.Count);
                     Assert.Collection
                     (
@@ -387,12 +387,12 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     Assert.NotNull(commands);
 
                     var requiredCommand = commands!.First(c => c.Name == "required");
-                    var requiredParameter = requiredCommand.Options.Value![0];
+                    var requiredParameter = requiredCommand.Options.Value[0];
                     Assert.True(requiredParameter.IsRequired.HasValue);
                     Assert.True(requiredParameter.IsRequired.Value);
 
                     var optionalCommand = commands!.First(c => c.Name == "optional");
-                    var optionalParameter = optionalCommand.Options.Value![0];
+                    var optionalParameter = optionalCommand.Options.Value[0];
                     if (optionalParameter.IsRequired.HasValue)
                     {
                         Assert.False(optionalParameter.IsRequired.Value);
@@ -494,7 +494,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     Assert.Collection
                     (
-                        group.Options.Value!,
+                        group.Options.Value,
                         c =>
                         {
                             Assert.Equal(SubCommand, c.Type);
@@ -522,14 +522,14 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     Assert.Equal("a", group.Name);
 
-                    var nestedGroup = group.Options.Value!.Single();
+                    var nestedGroup = @group.Options.Value.Single();
 
                     Assert.Equal(SubCommandGroup, nestedGroup.Type);
                     Assert.Equal("b", nestedGroup.Name);
 
                     Assert.Collection
                     (
-                        nestedGroup.Options.Value!,
+                        nestedGroup.Options.Value,
                         c =>
                         {
                             Assert.Equal(SubCommand, c.Type);
@@ -577,7 +577,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     Assert.Collection
                     (
-                        group.Options.Value!,
+                        group.Options.Value,
                         c =>
                         {
                             Assert.Equal(SubCommand, c.Type);
