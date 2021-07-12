@@ -129,7 +129,7 @@ namespace Remora.Discord.Gateway.Transport
 
                 if (memoryStream.Length > 4096)
                 {
-                    return new GenericError
+                    return new NotSupportedError
                     (
                         "The payload was too large to be accepted by the gateway."
                     );
@@ -210,7 +210,7 @@ namespace Remora.Discord.Gateway.Transport
                 var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
                 if (payload is null)
                 {
-                    return new GenericError
+                    return new NotSupportedError
                     (
                         "The received payload deserialized as a null value."
                     );
