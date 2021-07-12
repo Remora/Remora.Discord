@@ -80,7 +80,7 @@ namespace Remora.Discord.Rest.API
             var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
             if (!packIcon.IsSuccess)
             {
-                return Result<IGuild>.FromError(new GenericError("Failed to pack icon."), packIcon);
+                return Result<IGuild>.FromError(packIcon);
             }
 
             var iconData = packIcon.Entity;

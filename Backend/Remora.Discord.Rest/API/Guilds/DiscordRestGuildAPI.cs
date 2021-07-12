@@ -76,7 +76,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length < 2 || name.Length > 100)
             {
-                return new GenericError("The name must be between 2 and 100 characters.");
+                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 100 characters.");
             }
 
             await using var memoryStream = new MemoryStream();
@@ -84,7 +84,7 @@ namespace Remora.Discord.Rest.API
             var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
             if (!packIcon.IsSuccess)
             {
-                return Result<IGuild>.FromError(new GenericError("Failed to pack icon."), packIcon);
+                return Result<IGuild>.FromError(packIcon);
             }
 
             var iconData = packIcon.Entity;
@@ -193,7 +193,7 @@ namespace Remora.Discord.Rest.API
                     var packImage = await ImagePacker.PackImageAsync(icon.Value, ct);
                     if (!packImage.IsSuccess)
                     {
-                        return Result<IGuild>.FromError(new GenericError("Failed to pack icon."), packImage);
+                        return Result<IGuild>.FromError(packImage);
                     }
 
                     iconData = packImage.Entity;
@@ -212,7 +212,7 @@ namespace Remora.Discord.Rest.API
                     var packImage = await ImagePacker.PackImageAsync(splash.Value, ct);
                     if (!packImage.IsSuccess)
                     {
-                        return Result<IGuild>.FromError(new GenericError("Failed to pack splash."), packImage);
+                        return Result<IGuild>.FromError(packImage);
                     }
 
                     splashData = packImage.Entity;
@@ -231,7 +231,7 @@ namespace Remora.Discord.Rest.API
                     var packImage = await ImagePacker.PackImageAsync(discoverySplash.Value, ct);
                     if (!packImage.IsSuccess)
                     {
-                        return Result<IGuild>.FromError(new GenericError("Failed to pack discovery splash."), packImage);
+                        return Result<IGuild>.FromError(packImage);
                     }
 
                     discoverySplashData = packImage.Entity;
@@ -241,7 +241,7 @@ namespace Remora.Discord.Rest.API
             var packBanner = await ImagePacker.PackImageAsync(banner, ct);
             if (!packBanner.IsSuccess)
             {
-                return Result<IGuild>.FromError(new GenericError("Failed to pack banner."), packBanner);
+                return Result<IGuild>.FromError(packBanner);
             }
 
             var bannerData = packBanner.Entity;
@@ -436,7 +436,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && limit.Value is < 1 or > 1000)
             {
-                return new GenericError("The limit must be between 1 and 1000.");
+                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
             return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
@@ -469,7 +469,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && limit.Value is < 1 or > 1000)
             {
-                return new GenericError("The limit must be between 1 and 1000.");
+                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
             return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
@@ -814,8 +814,9 @@ namespace Remora.Discord.Rest.API
         {
             if (days.HasValue && days.Value is < 1 or > 30)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(days),
                     "The requested number of days must be between 1 and 30."
                 );
             }
@@ -856,8 +857,9 @@ namespace Remora.Discord.Rest.API
         {
             if (days.HasValue && days.Value is < 1 or > 30)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(days),
                     "The requested number of days must be between 1 and 30."
                 );
             }

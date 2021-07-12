@@ -202,7 +202,7 @@ namespace Remora.Discord.API.Json
         {
             if (!objectType.IsGenericType)
             {
-                return new GenericError("Unable to determine operation code.");
+                return new NotSupportedError("Unable to determine operation code.");
             }
 
             if (objectType.GetGenericTypeDefinition() == typeof(EventPayload<>))
@@ -247,7 +247,7 @@ namespace Remora.Discord.API.Json
                 => OperationCode.Reconnect,
 
                 // Other
-                _ => new GenericError("Unknown operation code.")
+                _ => new NotSupportedError("Unknown operation code.")
             };
         }
 

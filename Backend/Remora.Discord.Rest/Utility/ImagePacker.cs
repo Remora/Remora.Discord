@@ -106,7 +106,7 @@ namespace Remora.Discord.Rest.Utility
             }
 
             return mediaType is null
-                ? new GenericError("Unknown or unsupported image format.")
+                ? new NotSupportedError("Unknown or unsupported image format.")
                 : $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
         }
     }

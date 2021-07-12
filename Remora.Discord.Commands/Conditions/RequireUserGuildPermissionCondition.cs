@@ -94,13 +94,13 @@ namespace Remora.Discord.Commands.Conditions
             var everyoneRole = guildRoles.FirstOrDefault(r => r.ID == guildId);
             if (everyoneRole is null)
             {
-                return new GenericError("No @everyone role found.");
+                return new InvalidOperationError("No @everyone role found.");
             }
 
             var user = getGuildMember.Entity;
             if (user is null)
             {
-                return new GenericError("Executing user not found");
+                return new InvalidOperationError("Executing user not found");
             }
 
             var getGuild = await _guildApi.GetGuildAsync(guildId, ct: ct);

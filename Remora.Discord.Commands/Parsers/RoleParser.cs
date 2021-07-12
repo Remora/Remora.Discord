@@ -65,19 +65,19 @@ namespace Remora.Discord.Commands.Parsers
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
-                return Result<IRole>.FromError(new GenericError("Failed to get a valid channel."), getChannel);
+                return Result<IRole>.FromError(getChannel);
             }
 
             var channel = getChannel.Entity;
             if (!channel.GuildID.HasValue)
             {
-                return new GenericError("You're not in a guild channel, so I can't get any roles.");
+                return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
             }
 
             var getRoles = await _guildAPI.GetGuildRolesAsync(channel.GuildID.Value, ct);
             if (!getRoles.IsSuccess)
             {
-                return Result<IRole>.FromError(new GenericError("Failed to get the guild's roles."), getRoles);
+                return Result<IRole>.FromError(getRoles);
             }
 
             var roles = getRoles.Entity;
@@ -94,7 +94,7 @@ namespace Remora.Discord.Commands.Parsers
 
             return role is not null
                 ? Result<IRole>.FromSuccess(role)
-                : new GenericError("No role with that ID could be found.");
+                : new ParsingError<IRole>("No role with that ID could be found.");
         }
     }
 }

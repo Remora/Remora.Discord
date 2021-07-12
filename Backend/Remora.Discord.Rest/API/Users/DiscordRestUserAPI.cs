@@ -89,7 +89,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return Result<IUser>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
+                return Result<IUser>.FromError(packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -118,10 +118,11 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (limit.HasValue && (limit.Value is < 1 or > 200))
+            if (limit.HasValue && limit.Value is < 1 or > 200)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(limit),
                     "The limit must be between 1 and 200."
                 );
             }

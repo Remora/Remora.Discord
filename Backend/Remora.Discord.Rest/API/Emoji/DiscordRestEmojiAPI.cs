@@ -95,13 +95,13 @@ namespace Remora.Discord.Rest.API
         {
             if (image.Length > 256000)
             {
-                return new GenericError("Image too large.");
+                return new NotSupportedError("Image too large (max 256k).");
             }
 
             var packImage = await ImagePacker.PackImageAsync(image, ct);
             if (!packImage.IsSuccess)
             {
-                return Result<IEmoji>.FromError(new GenericError("Failed to pack emoji."), packImage);
+                return Result<IEmoji>.FromError(packImage);
             }
 
             var emojiData = packImage.Entity;

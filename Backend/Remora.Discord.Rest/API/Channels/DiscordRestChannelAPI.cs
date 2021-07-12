@@ -98,17 +98,17 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && name.Value.Length is > 100 or < 1)
             {
-                return new GenericError("The name must be between 1 and 100 characters.");
+                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
             }
 
             if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
             {
-                return new GenericError("The topic must be between 0 and 1024 characters.");
+                return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
             }
 
             if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
             {
-                return new GenericError("The user limit must be between 0 and 99.");
+                return new ArgumentOutOfRangeError(nameof(userLimit), "The user limit must be between 0 and 99.");
             }
 
             Optional<string> base64EncodedIcon = default;
@@ -353,7 +353,7 @@ namespace Remora.Discord.Rest.API
             var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue;
             if (hasAny && !hasStrictlyOne)
             {
-                return new GenericError
+                return new NotSupportedError
                 (
                     $"{nameof(around)}, {nameof(before)}, and {nameof(after)} are mutually exclusive."
                 );
@@ -361,8 +361,9 @@ namespace Remora.Discord.Rest.API
 
             if (limit.HasValue && limit.Value is > 100 or < 1)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(limit),
                     "The message limit must be between 1 and 100."
                 );
             }
@@ -428,7 +429,7 @@ namespace Remora.Discord.Rest.API
         {
             if (nonce.HasValue && nonce.Value.Length > 25)
             {
-                return new GenericError("The nonce length must be less than 25 characters.");
+                return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
             }
 
             return await _discordHttpClient.PostAsync<IMessage>
@@ -521,7 +522,7 @@ namespace Remora.Discord.Rest.API
         {
             if (limit.HasValue && limit.Value is > 100 or < 1)
             {
-                return new GenericError("The limit must be between 1 and 100.");
+                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
             }
 
             return await _discordHttpClient.GetAsync<IReadOnlyList<IUser>>
@@ -632,7 +633,11 @@ namespace Remora.Discord.Rest.API
         {
             if (messageIDs.Count is > 100 or < 2)
             {
-                return new GenericError("The number of messages to delete must be between 2 and 100.");
+                return new ArgumentOutOfRangeError
+                (
+                    nameof(messageIDs),
+                    "The number of messages to delete must be between 2 and 100."
+                );
             }
 
             return await _discordHttpClient.PostAsync
@@ -707,17 +712,19 @@ namespace Remora.Discord.Rest.API
         {
             if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    $"{nameof(maxAge)} must be between 0 and 604800 seconds."
+                    nameof(maxAge),
+                    "The maximum age must be between 0 and 604800 seconds."
                 );
             }
 
             if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    $"{nameof(maxAge)} must be between 0 and 100 seconds."
+                    nameof(maxUses),
+                    "The maximum number of uses must be between 0 and 100."
                 );
             }
 
@@ -892,7 +899,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 1 or > 100)
             {
-                return new GenericError("The name must be between 1 and 100 characters");
+                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
             }
 
             return await _discordHttpClient.PostAsync<IChannel>
@@ -922,7 +929,7 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 1 or > 100)
             {
-                return new GenericError("The name must be between 1 and 100 characters");
+                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
             }
 
             return await _discordHttpClient.PostAsync<IChannel>

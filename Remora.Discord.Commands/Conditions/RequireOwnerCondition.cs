@@ -64,7 +64,7 @@ namespace Remora.Discord.Commands.Conditions
 
             if (application.Owner is null || !application.Owner.ID.HasValue)
             {
-                return new GenericError("The application owner's ID was not present.");
+                return new InvalidOperationError("The application owner's ID was not present.");
             }
 
             return application.Owner.ID.Value == _context.User.ID

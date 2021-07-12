@@ -84,16 +84,18 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 1 or > 32)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(name),
                     "The name must be between 1 and 32 characters."
                 );
             }
 
             if (description.Length is < 1 or > 100)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(description),
                     "The description must be between 1 and 100 characters."
                 );
             }
@@ -124,17 +126,19 @@ namespace Remora.Discord.Rest.API
         {
             if (commands.Any(c => c.Name.Length is < 1 or > 32))
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    "The name must be between 1 and 32 characters."
+                    nameof(commands),
+                    "Command names must be between 1 and 32 characters."
                 );
             }
 
             if (commands.Any(c => c.Description.Length is < 1 or > 100))
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    "The description must be between 1 and 100 characters."
+                    nameof(commands),
+                    "Command descriptions must be between 1 and 100 characters."
                 );
             }
 
@@ -189,16 +193,18 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && name.Value.Length is < 1 or > 32)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(name),
                     "The name must be between 1 and 32 characters."
                 );
             }
 
             if (description.HasValue && description.Value.Length is < 1 or > 100)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(description),
                     "The description must be between 1 and 100 characters."
                 );
             }
@@ -257,17 +263,19 @@ namespace Remora.Discord.Rest.API
         {
             if (commands.Any(c => c.Name.Length is < 1 or > 32))
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    "The name must be between 1 and 32 characters."
+                    nameof(commands),
+                    "Command names must be between 1 and 32 characters."
                 );
             }
 
             if (commands.Any(c => c.Description.Length is < 1 or > 100))
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
-                    "The description must be between 1 and 100 characters."
+                    nameof(commands),
+                    "Command descriptions must be between 1 and 100 characters."
                 );
             }
 
@@ -307,16 +315,18 @@ namespace Remora.Discord.Rest.API
         {
             if (name.Length is < 1 or > 32)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(name),
                     "The name must be between 1 and 32 characters."
                 );
             }
 
             if (description.Length is < 1 or > 100)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(description),
                     "The description must be between 1 and 100 characters."
                 );
             }
@@ -369,16 +379,18 @@ namespace Remora.Discord.Rest.API
         {
             if (name.HasValue && name.Value.Length is < 1 or > 32)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(name),
                     "The name must be between 1 and 32 characters."
                 );
             }
 
             if (description.HasValue && description.Value.Length is < 1 or > 100)
             {
-                return new GenericError
+                return new ArgumentOutOfRangeError
                 (
+                    nameof(description),
                     "The description must be between 1 and 100 characters."
                 );
             }

@@ -65,20 +65,20 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.Length < 1 || name.Length > 80)
+            if (name.Length is < 1 or > 80)
             {
-                return new GenericError("Names must be between 1 and 80 characters");
+                return new ArgumentOutOfRangeError(nameof(name), "Names must be between 1 and 80 characters");
             }
 
             if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
             {
-                return new GenericError("Names cannot be \"clyde\".");
+                return new NotSupportedError("Names cannot be \"clyde\".");
             }
 
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
+                return Result<IWebhook>.FromError(packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -168,7 +168,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
+                return Result<IWebhook>.FromError(packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -202,7 +202,7 @@ namespace Remora.Discord.Rest.API
             var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
             if (!packAvatar.IsSuccess)
             {
-                return Result<IWebhook>.FromError(new GenericError("Failed to pack avatar."), packAvatar);
+                return Result<IWebhook>.FromError(packAvatar);
             }
 
             var avatarData = packAvatar.Entity;
@@ -333,12 +333,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return new GenericError("Message content is too long.");
+                return new NotSupportedError("Message content is too long (max 2000).");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return new GenericError("Too many embeds.");
+                return new NotSupportedError("Too many embeds (max 10).");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>
@@ -417,12 +417,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return new GenericError("Message content is too long.");
+                return new NotSupportedError("Message content is too long (max 2000).");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return new GenericError("Too many embeds.");
+                return new NotSupportedError("Too many embeds (max 10).");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>
@@ -521,12 +521,12 @@ namespace Remora.Discord.Rest.API
         {
             if (content.HasValue && content.Value?.Length > 2000)
             {
-                return new GenericError("Message content is too long.");
+                return new NotSupportedError("Message content is too long (max 2000).");
             }
 
             if (embeds.HasValue && embeds.Value?.Count > 10)
             {
-                return new GenericError("Too many embeds.");
+                return new NotSupportedError("Too many embeds (max 10).");
             }
 
             return await _discordHttpClient.PatchAsync<IMessage>

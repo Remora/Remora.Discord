@@ -68,13 +68,13 @@ namespace Remora.Discord.Commands.Parsers
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
             {
-                return Result<IGuildMember>.FromError(new GenericError("Failed to get a valid channel."), getChannel);
+                return Result<IGuildMember>.FromError(getChannel);
             }
 
             var channel = getChannel.Entity;
             if (!channel.GuildID.HasValue)
             {
-                return new GenericError("You're not in a guild channel, so I can't get any guild members.");
+                return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
             }
 
             return await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);

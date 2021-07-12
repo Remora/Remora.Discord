@@ -73,7 +73,7 @@ namespace Remora.Discord.Gateway.Transport
         {
             if (_clientWebSocket is not null)
             {
-                return new GenericError("The transport service is already connected.");
+                return new InvalidOperationError("The transport service is already connected.");
             }
 
             var socket = _services.GetRequiredService<ClientWebSocket>();
@@ -112,12 +112,12 @@ namespace Remora.Discord.Gateway.Transport
         {
             if (_clientWebSocket is null)
             {
-                return new GenericError("The transport service is not connected.");
+                return new InvalidOperationError("The transport service is not connected.");
             }
 
             if (_clientWebSocket.State != WebSocketState.Open)
             {
-                return new GenericError("The socket was not open.");
+                return new InvalidOperationError("The socket was not open.");
             }
 
             await using var memoryStream = new MemoryStream();
@@ -171,12 +171,12 @@ namespace Remora.Discord.Gateway.Transport
         {
             if (_clientWebSocket is null)
             {
-                return new GenericError("The transport service is not connected.");
+                return new InvalidOperationError("The transport service is not connected.");
             }
 
             if (_clientWebSocket.State != WebSocketState.Open)
             {
-                return new GenericError("The socket was not open.");
+                return new InvalidOperationError("The socket was not open.");
             }
 
             await using var memoryStream = new MemoryStream();
@@ -233,7 +233,7 @@ namespace Remora.Discord.Gateway.Transport
         {
             if (_clientWebSocket is null)
             {
-                return new GenericError("The transport service is not connected.");
+                return new InvalidOperationError("The transport service is not connected.");
             }
 
             switch (_clientWebSocket.State)
