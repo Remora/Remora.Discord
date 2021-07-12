@@ -215,6 +215,22 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfMultipleNamedGroupsWithTheSameNameHaveADefaultPermissionAttribute()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<AtMostOneDefaultPermissionAttributeAllowed.Named.GroupOne>();
+                    builder.RegisterModule<AtMostOneDefaultPermissionAttributeAllowed.Named.GroupTwo>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
@@ -381,6 +397,74 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     {
                         Assert.False(optionalParameter.IsRequired.Value);
                     }
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesUnnamedGroupWithDefaultPermissionCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<UnnamedGroupWithDefaultPermission>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    var command = commands!.SingleOrDefault();
+                    Assert.True(command!.DefaultPermission.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesNamedGroupWithDefaultPermissionCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<NamedGroupWithDefaultPermission>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    var command = commands!.SingleOrDefault();
+                    Assert.True(command!.DefaultPermission.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesUngroupedTopLevelCommandsWithDefaultPermissionCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<MultipleCommandsWithDefaultPermission.GroupOne>();
+                    builder.RegisterModule<MultipleCommandsWithDefaultPermission.GroupTwo>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    Assert.Equal(2, commands!.Count);
+                    var a = commands[0];
+                    var b = commands[1];
+
+                    Assert.True(a.DefaultPermission.Value);
+                    Assert.False(b.DefaultPermission.Value);
                 }
             }
 

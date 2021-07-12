@@ -113,13 +113,57 @@ namespace Remora.Discord.Commands.Extensions
                     );
                 }
 
+                Optional<bool> defaultPermission = default;
+                switch (node)
+                {
+                    case GroupNode groupNode:
+                    {
+                        var defaultPermissionAttributes = groupNode.GroupTypes.Select
+                        (
+                            t => t.GetCustomAttribute<DiscordDefaultPermissionAttribute>()
+                        )
+                        .ToList();
+
+                        if (defaultPermissionAttributes.Count > 1)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                "In a set of groups with the same name, only one may be marked with a default " +
+                                $"permission attribute (had {defaultPermissionAttributes.Count})."
+                            );
+                        }
+
+                        var permissionAttribute = defaultPermissionAttributes.SingleOrDefault();
+                        if (permissionAttribute is not null)
+                        {
+                            defaultPermission = permissionAttribute.DefaultPermission;
+                        }
+
+                        break;
+                    }
+                    case CommandNode commandNode:
+                    {
+                        // Top-level command outside of a group
+                        var permissionAttribute = commandNode.GroupType
+                            .GetCustomAttribute<DiscordDefaultPermissionAttribute>();
+
+                        if (permissionAttribute is not null)
+                        {
+                            defaultPermission = permissionAttribute.DefaultPermission;
+                        }
+
+                        break;
+                    }
+                }
+
                 commands.Add
                 (
                     new BulkApplicationCommandData
                     (
                         translationResult.Entity.Name,
                         translationResult.Entity.Description,
-                        translationResult.Entity.Options
+                        translationResult.Entity.Options,
+                        defaultPermission
                     )
                 );
             }
