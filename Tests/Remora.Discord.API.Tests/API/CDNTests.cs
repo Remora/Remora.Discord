@@ -103,7 +103,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetEmojiUrl(emoji);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<UnsupportedArgumentError>(getActual.Unwrap());
+                Assert.IsType<UnsupportedArgumentError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -201,7 +201,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetGuildIconUrl(guild, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -259,7 +259,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetGuildSplashUrl(guild, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -317,7 +317,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetGuildDiscoverySplashUrl(guild, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -375,7 +375,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetGuildBannerUrl(guild, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -516,7 +516,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetUserAvatarUrl(user, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -574,7 +574,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetApplicationIconUrl(application, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -632,7 +632,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetApplicationCoverUrl(application, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />
@@ -766,7 +766,7 @@ namespace Remora.Discord.API.Tests
                 var getActual = CDN.GetTeamIconUrl(team, CDNImageFormat.PNG);
 
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageNotFoundError>(getActual.Unwrap());
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
             }
 
             /// <inheritdoc />

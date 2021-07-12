@@ -64,7 +64,7 @@
 
     <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.190" />
-      <PackageReference Include="Remora.Results" Version="4.0.1" />
+      <PackageReference Include="Remora.Results" Version="4.1.0" />
     </ItemGroup>
 
     <ItemGroup>

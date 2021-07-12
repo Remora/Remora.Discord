@@ -41,7 +41,7 @@ namespace Remora.Discord.API.Tests.Services
             var getSamples = sampleData.GetSampleEventDataSet<TData>();
             if (!getSamples.IsSuccess)
             {
-                throw new SkipException(getSamples.Unwrap().Message);
+                throw new SkipException(getSamples.Error.Message);
             }
 
             foreach (var sample in getSamples.Entity)

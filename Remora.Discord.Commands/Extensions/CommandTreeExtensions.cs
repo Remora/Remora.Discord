@@ -90,7 +90,7 @@ namespace Remora.Discord.Commands.Extensions
                 var translationResult = TryTranslateCommandNode(node, 1);
                 if (!translationResult.IsSuccess)
                 {
-                    return Result<IReadOnlyList<IBulkApplicationCommandData>>.FromError(translationResult.Unwrap());
+                    return Result<IReadOnlyList<IBulkApplicationCommandData>>.FromError(translationResult);
                 }
 
                 if (translationResult.Entity is null)
@@ -207,19 +207,19 @@ namespace Remora.Discord.Commands.Extensions
                     var validateNameResult = ValidateCommandName(command.Key, command);
                     if (!validateNameResult.IsSuccess)
                     {
-                        return Result<IApplicationCommandOption?>.FromError(validateNameResult.Unwrap());
+                        return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
                     var validateDescriptionResult = ValidateCommandDescription(command.Shape.Description, command);
                     if (!validateDescriptionResult.IsSuccess)
                     {
-                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult.Unwrap());
+                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
                     }
 
                     var buildOptionsResult = CreateCommandParameterOptions(command);
                     if (!buildOptionsResult.IsSuccess)
                     {
-                        return Result<IApplicationCommandOption?>.FromError(buildOptionsResult.Unwrap());
+                        return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
                     }
 
                     return new ApplicationCommandOption
@@ -235,13 +235,13 @@ namespace Remora.Discord.Commands.Extensions
                     var validateNameResult = ValidateCommandName(group.Key, group);
                     if (!validateNameResult.IsSuccess)
                     {
-                        return Result<IApplicationCommandOption?>.FromError(validateNameResult.Unwrap());
+                        return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
                     var validateDescriptionResult = ValidateCommandDescription(group.Description, group);
                     if (!validateDescriptionResult.IsSuccess)
                     {
-                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult.Unwrap());
+                        return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
                     }
 
                     var groupOptions = new List<IApplicationCommandOption>();
@@ -252,7 +252,7 @@ namespace Remora.Discord.Commands.Extensions
                         var translateChildNodeResult = TryTranslateCommandNode(childNode, treeDepth + 1);
                         if (!translateChildNodeResult.IsSuccess)
                         {
-                            return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult.Unwrap());
+                            return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult);
                         }
 
                         if (translateChildNodeResult.Entity is null)
@@ -317,10 +317,7 @@ namespace Remora.Discord.Commands.Extensions
                 var validateDescriptionResult = ValidateCommandDescription(parameter.Description, command);
                 if (!validateDescriptionResult.IsSuccess)
                 {
-                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError
-                    (
-                        validateDescriptionResult.Unwrap()
-                    );
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(validateDescriptionResult);
                 }
 
                 switch (parameter)

@@ -94,12 +94,12 @@ namespace Remora.Discord.Samples.UnknownEventLogger
                     case GatewayWebSocketError:
                     case GatewayDiscordError:
                     {
-                        log.LogError("Gateway error: {Message}", runResult.Unwrap().Message);
+                        log.LogError("Gateway error: {Message}", runResult.Error.Message);
                         break;
                     }
                     default:
                     {
-                        log.LogError("Unknown error: {Message}", runResult.Unwrap().Message);
+                        log.LogError("Unknown error: {Message}", runResult.Error.Message);
                         break;
                     }
                 }

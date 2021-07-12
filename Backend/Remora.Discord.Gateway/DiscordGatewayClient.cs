@@ -313,7 +313,7 @@ namespace Remora.Discord.Gateway
             shouldTerminate = false;
             withNewSession = false;
 
-            switch (iterationResult.Unwrap())
+            switch (iterationResult.Error)
             {
                 case GatewayDiscordError gde:
                 {
@@ -583,7 +583,7 @@ namespace Remora.Discord.Gateway
                             _log.LogWarning
                             (
                                 "Error in gateway event responder.\n{Reason}",
-                                responderResult.Unwrap().Message
+                                responderResult.Error.Message
                             );
 
                             break;

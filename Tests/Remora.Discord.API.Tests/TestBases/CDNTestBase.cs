@@ -138,13 +138,13 @@ namespace Remora.Discord.API.Tests.TestBases
             foreach (var getActual in GetImageUris(imageSize: 8))
             {
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Unwrap());
+                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
             }
 
             foreach (var getActual in GetImageUris(imageSize: 8192))
             {
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Unwrap());
+                Assert.IsType<ImageSizeOutOfRangeError>(getActual.Error);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Remora.Discord.API.Tests.TestBases
             foreach (var getActual in GetImageUris(imageSize: 63))
             {
                 Assert.False(getActual.IsSuccess);
-                Assert.IsType<ImageSizeNotPowerOfTwoError>(getActual.Unwrap());
+                Assert.IsType<ImageSizeNotPowerOfTwoError>(getActual.Error);
             }
         }
 
@@ -179,7 +179,7 @@ namespace Remora.Discord.API.Tests.TestBases
                 foreach (var getActual in GetImageUris(unsupportedFormat))
                 {
                     Assert.False(getActual.IsSuccess);
-                    Assert.IsType<UnsupportedImageFormatError>(getActual.Unwrap());
+                    Assert.IsType<UnsupportedImageFormatError>(getActual.Error);
                 }
             }
         }
