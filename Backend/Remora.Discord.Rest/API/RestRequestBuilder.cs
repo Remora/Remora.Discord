@@ -64,6 +64,11 @@ namespace Remora.Discord.Rest.API
         private readonly Dictionary<string, string> _additionalHeaders;
 
         /// <summary>
+        /// Holds the configured additional content headers.
+        /// </summary>
+        private readonly Dictionary<string, string> _additionalContentHeaders;
+
+        /// <summary>
         /// Holds the additional content.
         /// </summary>
         private readonly Dictionary<string, (HttpContent, string?)> _additionalContent;
@@ -97,6 +102,7 @@ namespace Remora.Discord.Rest.API
             _jsonObjectConfigurators = new List<Action<Utf8JsonWriter>>();
             _jsonArrayConfigurators = new List<Action<Utf8JsonWriter>>();
             _additionalHeaders = new Dictionary<string, string>();
+            _additionalContentHeaders = new Dictionary<string, string>();
             _additionalContent = new Dictionary<string, (HttpContent, string?)>();
         }
 
@@ -196,6 +202,18 @@ namespace Remora.Discord.Rest.API
         public RestRequestBuilder AddHeader(string name, string value)
         {
             _additionalHeaders.Add(name, value);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a custom content header to the request.
+        /// </summary>
+        /// <param name="name">The name of the header.</param>
+        /// <param name="value">The value of the header.</param>
+        /// <returns>The builder, with the header added.</returns>
+        public RestRequestBuilder AddContentHeader(string name, string value)
+        {
+            _additionalContentHeaders.Add(name, value);
             return this;
         }
 
@@ -306,6 +324,14 @@ namespace Remora.Discord.Rest.API
             else
             {
                 request.Content = jsonBody;
+            }
+
+            if (request.Content is not null)
+            {
+                foreach (var (headerName, headerValue) in _additionalContentHeaders)
+                {
+                    request.Content.Headers.Add(headerName, headerValue);
+                }
             }
 
             var context = new Context { { "endpoint", _endpoint } };
