@@ -334,7 +334,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                                 .WithProperty("name", p => p.Is(commands[0].Name))
                                                 .WithProperty("description", p => p.Is(commands[0].Description))
                                                 .WithProperty("options", p => p.IsArray(
-                                                    a => a.WithCount(0)))
+                                                    ar => ar.WithCount(0)))
                                                 .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
                                         )
                                     )
@@ -347,7 +347,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                                 .WithProperty("name", p => p.Is(commands[1].Name))
                                                 .WithProperty("description", p => p.Is(commands[1].Description))
                                                 .WithProperty("options", p => p.IsArray(
-                                                    a => a.WithCount(0)))
+                                                    ar => ar.WithCount(0)))
                                                 .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
                                         )
                                     )
@@ -1128,7 +1128,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                                 .WithProperty("name", p => p.Is(commands[0].Name))
                                                 .WithProperty("description", p => p.Is(commands[0].Description))
                                                 .WithProperty("options", p => p.IsArray(
-                                                    a => a.WithCount(0)))
+                                                    ar => ar.WithCount(0)))
                                                 .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
                                         )
                                     )
@@ -1141,7 +1141,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                                 .WithProperty("name", p => p.Is(commands[1].Name))
                                                 .WithProperty("description", p => p.Is(commands[1].Description))
                                                 .WithProperty("options", p => p.IsArray(
-                                                    a => a.WithCount(0)))
+                                                    ar => ar.WithCount(0)))
                                                 .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
                                         )
                                     )

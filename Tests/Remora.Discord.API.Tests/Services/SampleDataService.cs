@@ -76,7 +76,7 @@ namespace Remora.Discord.API.Tests.Services
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (basePath is null)
             {
-                return new GenericError("Failed to retrieve the base path of the assembly.");
+                return new InvalidOperationError("Failed to retrieve the base path of the assembly.");
             }
 
             return Path.Combine(basePath, "Samples");
@@ -101,7 +101,7 @@ namespace Remora.Discord.API.Tests.Services
             var samplesPath = Path.Combine(basePath, samplesDirectoryName);
             if (!Directory.Exists(samplesPath))
             {
-                return new GenericError("No valid sample data found.");
+                return new InvalidOperationError("No valid sample data found.");
             }
 
             return Directory.EnumerateFiles(samplesPath, "*.json", SearchOption.AllDirectories)

@@ -93,7 +93,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             {
                 return Task.FromResult<IResult>
                 (
-                    Result.FromError(new GenericError("No user field in the guild member??"))
+                    Result.FromError(new InvalidOperationError("No user field in the guild member??"))
                 );
             }
 

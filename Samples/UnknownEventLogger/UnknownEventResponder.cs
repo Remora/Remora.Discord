@@ -76,7 +76,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
             var eventType = eventTypeElement.GetString();
             if (eventType is null)
             {
-                return new GenericError("The event type was null.");
+                return new InvalidOperationError("The event type was null.");
             }
 
             var sequenceNumber = eventSequenceElement.GetInt64();

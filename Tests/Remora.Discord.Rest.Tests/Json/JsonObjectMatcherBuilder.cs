@@ -87,7 +87,7 @@ namespace Remora.Discord.Rest.Tests.Json
         {
             _matchers.Add
             (
-                obj => obj.TryGetProperty(name, out var property)
+                obj => obj.TryGetProperty(name, out _)
                     ? throw new Xunit.Sdk.DoesNotContainException(name, obj)
                     : true
             );

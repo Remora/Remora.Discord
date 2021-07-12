@@ -111,7 +111,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
 
             if (rollResponse is null)
             {
-                return new GenericError("The roll response was null.");
+                return new InvalidOperationError("The roll response was null.");
             }
 
             return !rollResponse.Success

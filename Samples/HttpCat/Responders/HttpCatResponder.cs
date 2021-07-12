@@ -58,7 +58,7 @@ namespace Remora.Discord.Samples.HttpCat.Responders
 
             if (!int.TryParse(statusCode, out var code))
             {
-                return new GenericError("Could not parse an integer.");
+                return new ArgumentOutOfRangeError(nameof(statusCode), "Could not parse an integer.");
             }
 
             var embedImage = new EmbedImage($"https://http.cat/{code}");
