@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - Remora.Discord.Gateway.Extensions Namespace</title>
+        <title>Remora.Discord Documentation - API - RestRequestBuilder.AddContentHeader(string, string) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,7 +72,10 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#ClassTypes">Class Types</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Parameters">Parameters</a></p>
+<p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -131,72 +134,23 @@
 
                     <ul class="sidebar-menu">
                         
-	<li class="header">Namespaces</li>   
+			<li class="header">Namespace</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Constructors</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/E967E8F7">RestRequestBuilder<wbr>(string)<wbr></a></li>
+			<li class="header">Method Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/F9CA0BD9">AddContent<wbr>(HttpContent, <wbr>string, <wbr>string?)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/B700016C">AddContentHeader<wbr>(string, <wbr>string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/DF4346A9">AddHeader<wbr>(string, <wbr>string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/CFB37307">AddQueryParameter<wbr>(string, <wbr>string)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/18CEBBEF">Build<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/AA17839A">WithJson<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>, <wbr>bool)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/7608113B">WithJsonArray<wbr>(Action<wbr>&lt;<wbr>Utf8<wbr>Json<wbr>Writer&gt;<wbr>, <wbr>bool)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder/4CD744FD">WithMethod<wbr>(HttpMethod)<wbr></a></li>
 
-				<li class="treeview active">
-				<a href="/Remora.Discord/api/Remora">Remora</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-			
-				<li class="treeview active">
-				<a href="/Remora.Discord/api/Remora.Discord">Remora<wbr>.Discord</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-			
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.API">Remora<wbr>.Discord<wbr>.API</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-			
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-			
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Bidirectional</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Commands</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Events</a></li>
-</ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Rest</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Results</a></li>
-</ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.API.Extensions">Remora<wbr>.Discord<wbr>.API<wbr>.Extensions</a></li>
-
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.API.Gateway">Remora<wbr>.Discord<wbr>.API<wbr>.Gateway</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li><a href="/Remora.Discord/api/Remora.Discord.API.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Gateway<wbr>.Events</a></li>
-</ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.API.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Objects</a></li>
-</ul></li>
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.Caching">Remora<wbr>.Discord<wbr>.Caching</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Extensions">Remora<wbr>.Discord<wbr>.Caching<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Responders">Remora<wbr>.Discord<wbr>.Caching<wbr>.Responders</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services">Remora<wbr>.Discord<wbr>.Caching<wbr>.Services</a></li>
-</ul></li>			<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
-
-				<li class="treeview active">
-				<a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li class=" selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Responders">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Responders</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Transport">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Transport</a></li>
-</ul></li>
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.Rest">Remora<wbr>.Discord<wbr>.Rest</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
-			<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Utility">Remora<wbr>.Discord<wbr>.Rest<wbr>.Utility</a></li>
-</ul></li>
-				<li class="treeview">
-				<a href="/Remora.Discord/api/Remora.Discord.Unstable">Remora<wbr>.Discord<wbr>.Unstable</a> <a href="#" class="expand"></a>
-				<ul class="treeview-menu">
-						<li><a href="/Remora.Discord/api/Remora.Discord.Unstable.Extensions">Remora<wbr>.Discord<wbr>.Unstable<wbr>.Extensions</a></li>
-</ul></li></ul></li></ul></li>			<li><a href="/Remora.Discord/api/global">global</a></li>
-      
 
                     </ul>
                             
@@ -210,40 +164,81 @@
 
 
 <section class="content-header">
-	<h1>Remora<wbr>.Discord<wbr>.Gateway<wbr>.Extensions <small>Namespace</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a>.</h3>
+	<h1>AddContentHeader<wbr>(string, <wbr>string)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
-	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Adds a custom content header to the request.
+    </div>
+
+		<div class="panel panel-default">
+  			<div class="panel-body">	
+				<dl class="dl-horizontal">	
+						
+						<dt>Namespace</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></dd>		
+					
+				</dl>
+  			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>public RestRequestBuilder AddContentHeader(string name, string value)</code></pre>
 
 
-			<h1 id="ClassTypes">Class Types</h1>
-			<div class="box">
-				<div class="box-body no-padding table-responsive">
-					<table class="table table-striped table-hover two-cols">
-						<thead>
-							<tr>
-								<th>Class</th>
-									<th>Summary</th>
-							</tr>
-						</thead>
-							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></td>
-									<td>
-    Defines extension methods for the <code class="cs">IServiceCollection</code> class.
-    </td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Extensions/TypeExtensions">TypeExtensions</a></td>
-									<td>
-    Defines extension methods for the <code class="cs"><a href="/Remora.Discord">Type</a></code> class.
-    </td>
-							</tr>
-					</tbody></table>
-				</div>
-			</div>
-		
+
+
+
+	<h1 id="Parameters">Parameters</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover three-cols">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>name</td>
+						<td>string</td>
+						<td>The name of the header.</td>
+					</tr>
+					<tr>
+						<td>value</td>
+						<td>string</td>
+						<td>The value of the header.</td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+	<h1 id="ReturnValue">Return Value</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
+					<td>The builder, with the header added.</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
 
 	
 </section>

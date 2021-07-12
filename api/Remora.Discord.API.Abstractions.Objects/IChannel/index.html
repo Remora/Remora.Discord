@@ -329,11 +329,11 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate">IThreadUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate">IChannelCreate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate">IChannelUpdate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate">IThreadCreate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete">IChannelDelete</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate">IThreadUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate">IThreadCreate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate">IChannelUpdate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -343,16 +343,16 @@
 							graph BT
 	Type["IChannel"]
 class Type type-node
-	Implementing0["IThreadUpdate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate"
-	Implementing1["IChannelCreate"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate"
-	Implementing2["IChannelUpdate"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate"
+	Implementing0["IChannelCreate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate"
+	Implementing1["IChannelDelete"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete"
+	Implementing2["IThreadUpdate"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate"
 	Implementing3["IThreadCreate"]-.-&gt;Type
 	click Implementing3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate"
-	Implementing4["IChannelDelete"]-.-&gt;Type
-	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete"
+	Implementing4["IChannelUpdate"]-.-&gt;Type
+	click Implementing4 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate"
 
 						</div>
 					</div>
