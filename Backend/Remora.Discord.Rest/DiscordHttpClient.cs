@@ -171,7 +171,7 @@ namespace Remora.Discord.Rest
                 var unpackedResponse = await UnpackResponseAsync(response, ct);
                 if (!unpackedResponse.IsSuccess)
                 {
-                    return Result<Stream>.FromError(new GenericError("Failed to unpack response."), unpackedResponse);
+                    return Result<Stream>.FromError(unpackedResponse);
                 }
 
                 var responseContent = await response.Content.ReadAsStreamAsync();
