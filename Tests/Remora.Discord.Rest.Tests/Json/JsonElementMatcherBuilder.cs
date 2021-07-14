@@ -133,7 +133,7 @@ namespace Remora.Discord.Rest.Tests.Json
         {
             _matchers.Add
             (
-                j => j.ValueKind == JsonValueKind.True || j.ValueKind == JsonValueKind.False
+                j => j.ValueKind is JsonValueKind.True or JsonValueKind.False
             );
 
             return this;

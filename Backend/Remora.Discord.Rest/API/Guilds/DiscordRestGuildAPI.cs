@@ -74,7 +74,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (name.Length < 2 || name.Length > 100)
+            if (name.Length is < 2 or > 100)
             {
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 100 characters.");
             }
