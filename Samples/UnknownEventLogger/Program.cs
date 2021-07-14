@@ -73,8 +73,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger
 
             var log = services.GetRequiredService<ILogger<Program>>();
 
-            using var scope = services.CreateScope();
-            var gatewayClient = scope.ServiceProvider.GetRequiredService<DiscordGatewayClient>();
+            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
 
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)

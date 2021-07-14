@@ -57,8 +57,7 @@ namespace Remora.Discord.Gateway.Extensions
 
             serviceCollection.TryAddSingleton<Random>();
             serviceCollection.TryAddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
-
-            serviceCollection.TryAddScoped<DiscordGatewayClient>();
+            serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 
             serviceCollection.TryAddTransient<ClientWebSocket>();
             serviceCollection.TryAddTransient<IPayloadTransportService, WebSocketPayloadTransportService>();
