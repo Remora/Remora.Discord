@@ -23,6 +23,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.Gateway;
@@ -37,24 +38,26 @@ namespace Remora.Discord.Hosting.Services
     [PublicAPI]
     public class DiscordService : BackgroundService
     {
-        private readonly DiscordGatewayClient _gatewayClient;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<DiscordService> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordService"/> class.
         /// </summary>
-        /// <param name="gatewayClient">The <see cref="DiscordGatewayClient"/>.</param>
+        /// <param name="scopeFactory">The scope factory.</param>
         /// <param name="logger">The <see cref="ILogger"/>.</param>
-        public DiscordService(DiscordGatewayClient gatewayClient, ILogger<DiscordService> logger)
+        public DiscordService(IServiceScopeFactory scopeFactory, ILogger<DiscordService> logger)
         {
-            _gatewayClient = gatewayClient;
+            _scopeFactory = scopeFactory;
             _logger = logger;
         }
 
         /// <inheritdoc />
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var runResult = await _gatewayClient.RunAsync(stoppingToken);
+            using var scope = _scopeFactory.CreateScope();
+            var gatewayClient = scope.ServiceProvider.GetRequiredService<DiscordGatewayClient>();
+            var runResult = await gatewayClient.RunAsync(stoppingToken);
 
             if (!runResult.IsSuccess)
             {

@@ -77,7 +77,8 @@ namespace Remora.Discord.Samples.HttpCat
 
             var log = services.GetRequiredService<ILogger<Program>>();
 
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+            using var scope = services.CreateScope();
+            var gatewayClient = scope.ServiceProvider.GetRequiredService<DiscordGatewayClient>();
 
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)

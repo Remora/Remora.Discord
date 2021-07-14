@@ -118,7 +118,7 @@ namespace Remora.Discord.Commands.Extensions
                 return serviceCollection;
             }
 
-            serviceCollection.TryAddSingleton<SlashService>();
+            serviceCollection.TryAddScoped<SlashService>();
             serviceCollection.AddInteractionResponder();
 
             return serviceCollection;

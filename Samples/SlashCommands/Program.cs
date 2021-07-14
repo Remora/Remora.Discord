@@ -95,7 +95,8 @@ namespace Remora.Discord.Samples.SlashCommands
             }
 #endif
 
-            var slashService = services.GetRequiredService<SlashService>();
+            using var scope = services.CreateScope();
+            var slashService = scope.ServiceProvider.GetRequiredService<SlashService>();
 
             var checkSlashSupport = slashService.SupportsSlashCommands();
             if (!checkSlashSupport.IsSuccess)
@@ -115,7 +116,7 @@ namespace Remora.Discord.Samples.SlashCommands
                 }
             }
 
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+            var gatewayClient = scope.ServiceProvider.GetRequiredService<DiscordGatewayClient>();
 
             var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
             if (!runResult.IsSuccess)
