@@ -136,7 +136,12 @@ namespace Remora.Discord.Commands.Responders
                     gatewayEvent.Application,
                     gatewayEvent.ApplicationID,
                     gatewayEvent.MessageReference,
-                    gatewayEvent.Flags
+                    gatewayEvent.Flags,
+                    gatewayEvent.ReferencedMessage,
+                    gatewayEvent.Interaction,
+                    gatewayEvent.Thread,
+                    gatewayEvent.Components,
+                    gatewayEvent.StickerItems
                 )
             );
 
