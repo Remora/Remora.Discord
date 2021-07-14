@@ -116,7 +116,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -161,7 +161,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -216,7 +216,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -261,7 +261,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -309,7 +309,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -354,7 +354,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -399,7 +399,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -447,7 +447,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -495,7 +495,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
@@ -540,7 +540,7 @@ namespace Remora.Discord.Rest
 
             try
             {
-                using var httpClient = _httpClientFactory.CreateClient("Discord");
+                var httpClient = _httpClientFactory.CreateClient("Discord");
                 using var request = requestBuilder.Build();
                 using var response = await httpClient.SendAsync
                 (
