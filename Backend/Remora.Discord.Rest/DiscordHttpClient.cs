@@ -68,7 +68,7 @@ namespace Remora.Discord.Rest
         /// </summary>
         /// <param name="requestCustomizer">The action that customizes the request.</param>
         /// <returns>The created customization.</returns>
-        public DiscordRequestCustomization AddCustomization(Action<RestRequestBuilder> requestCustomizer)
+        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
         {
             var customization = new DiscordRequestCustomization(this, requestCustomizer);
             _customizations.Add(customization);
