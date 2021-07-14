@@ -760,7 +760,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                         (
                             m =>
                             {
-                                if (!(m.Content is MultipartFormDataContent multipart))
+                                if (m.Content is not MultipartFormDataContent multipart)
                                 {
                                     return false;
                                 }
@@ -1010,7 +1010,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                         (
                             m =>
                             {
-                                if (!(m.Content is MultipartFormDataContent multipart))
+                                if (m.Content is not MultipartFormDataContent multipart)
                                 {
                                     return false;
                                 }
@@ -1308,7 +1308,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                         (
                             m =>
                             {
-                                if (!(m.Content is MultipartFormDataContent multipart))
+                                if (m.Content is not MultipartFormDataContent multipart)
                                 {
                                     return false;
                                 }

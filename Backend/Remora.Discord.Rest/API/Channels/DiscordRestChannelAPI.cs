@@ -101,7 +101,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
             }
 
-            if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
+            if (topic.HasValue && (topic.Value?.Length is > 1024 or < 0))
             {
                 return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
             }

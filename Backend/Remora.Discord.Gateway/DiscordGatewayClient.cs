@@ -438,7 +438,7 @@ namespace Remora.Discord.Gateway
                         return Result.FromError(new GatewayError("Failed to receive the Hello payload."), receiveHello);
                     }
 
-                    if (!(receiveHello.Entity is IPayload<IHello> hello))
+                    if (receiveHello.Entity is not IPayload<IHello> hello)
                     {
                         // Not receiving a hello is a non-recoverable error
                         return new GatewayError

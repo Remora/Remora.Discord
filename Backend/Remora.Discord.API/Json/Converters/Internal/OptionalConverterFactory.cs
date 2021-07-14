@@ -53,7 +53,7 @@ namespace Remora.Discord.API.Json
 
             var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
 
-            if (!(Activator.CreateInstance(optionalType) is JsonConverter createdConverter))
+            if (Activator.CreateInstance(optionalType) is not JsonConverter createdConverter)
             {
                 throw new JsonException();
             }

@@ -856,7 +856,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         (
                             m =>
                             {
-                                if (!(m.Content is MultipartFormDataContent multipart))
+                                if (m.Content is not MultipartFormDataContent multipart)
                                 {
                                     return false;
                                 }

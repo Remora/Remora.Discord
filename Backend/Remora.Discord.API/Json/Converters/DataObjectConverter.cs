@@ -189,13 +189,13 @@ namespace Remora.Discord.API.Json
             string name
         )
         {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            if (propertyExpression.Body is not MemberExpression memberExpression)
             {
                 throw new InvalidOperationException();
             }
 
             var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
+            if (member is not PropertyInfo property)
             {
                 throw new InvalidOperationException();
             }
@@ -221,13 +221,13 @@ namespace Remora.Discord.API.Json
             string name
         )
         {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            if (propertyExpression.Body is not MemberExpression memberExpression)
             {
                 throw new InvalidOperationException();
             }
 
             var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
+            if (member is not PropertyInfo property)
             {
                 throw new InvalidOperationException();
             }
@@ -254,13 +254,13 @@ namespace Remora.Discord.API.Json
             params string[] fallbacks
         )
         {
-            if (!(propertyExpression.Body is MemberExpression memberExpression))
+            if (propertyExpression.Body is not MemberExpression memberExpression)
             {
                 throw new InvalidOperationException();
             }
 
             var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
+            if (member is not PropertyInfo property)
             {
                 throw new InvalidOperationException();
             }
@@ -641,13 +641,13 @@ namespace Remora.Discord.API.Json
             JsonConverter converter
         )
         {
-            if (!(expression.Body is MemberExpression memberExpression))
+            if (expression.Body is not MemberExpression memberExpression)
             {
                 throw new InvalidOperationException();
             }
 
             var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
+            if (member is not PropertyInfo property)
             {
                 throw new InvalidOperationException();
             }
@@ -665,13 +665,13 @@ namespace Remora.Discord.API.Json
             JsonConverterFactory converterFactory
         )
         {
-            if (!(expression.Body is MemberExpression memberExpression))
+            if (expression.Body is not MemberExpression memberExpression)
             {
                 throw new InvalidOperationException();
             }
 
             var member = memberExpression.Member;
-            if (!(member is PropertyInfo property))
+            if (member is not PropertyInfo property)
             {
                 throw new InvalidOperationException();
             }

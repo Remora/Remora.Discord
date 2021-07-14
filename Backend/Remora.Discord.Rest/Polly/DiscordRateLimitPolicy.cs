@@ -66,7 +66,7 @@ namespace Remora.Discord.Rest.Polly
             bool continueOnCapturedContext
         )
         {
-            if (!context.TryGetValue("endpoint", out var rawEndpoint) || !(rawEndpoint is string endpoint))
+            if (!context.TryGetValue("endpoint", out var rawEndpoint) || rawEndpoint is not string endpoint)
             {
                 throw new InvalidOperationException("No endpoint set.");
             }

@@ -363,7 +363,7 @@ namespace Remora.Discord.API.Json
                 }
             );
 
-            if (!(eventObject is IPayload))
+            if (eventObject is not IPayload)
             {
                 throw new JsonException();
             }

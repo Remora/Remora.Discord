@@ -85,7 +85,7 @@ namespace Remora.Discord.API.Extensions
                     }
                     case IReadOnlyCollection<CustomAttributeTypedArgument> multiArg:
                     {
-                        if (!(multiArg.First().Value is byte firstArg))
+                        if (multiArg.First().Value is not byte firstArg)
                         {
                             throw new InvalidOperationException();
                         }

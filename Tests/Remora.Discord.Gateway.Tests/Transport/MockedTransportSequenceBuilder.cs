@@ -95,7 +95,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
                 (
                     (p, ignoreUnexpected) =>
                     {
-                        if (!(p is IPayload<TExpected> expected))
+                        if (p is not IPayload<TExpected> expected)
                         {
                             if (ignoreUnexpected)
                             {

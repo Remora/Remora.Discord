@@ -85,7 +85,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var sequence in _sequences.Except(_finishedSequences))
                 {
-                    if (!(sequence.Current is ConnectEvent c))
+                    if (sequence.Current is not ConnectEvent c)
                     {
                         continue;
                     }
@@ -120,7 +120,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var continuousSequence in _continuousSequences)
                 {
-                    if (!(continuousSequence.Current is ConnectEvent c))
+                    if (continuousSequence.Current is not ConnectEvent c)
                     {
                         continue;
                     }
@@ -177,7 +177,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var sequence in _sequences.Except(_finishedSequences))
                 {
-                    if (!(sequence.Current is ReceiveEvent r))
+                    if (sequence.Current is not ReceiveEvent r)
                     {
                         continue;
                     }
@@ -212,7 +212,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var continuousSequence in _continuousSequences)
                 {
-                    if (!(continuousSequence.Current is ReceiveEvent r))
+                    if (continuousSequence.Current is not ReceiveEvent r)
                     {
                         continue;
                     }
@@ -300,7 +300,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                     foreach (var continuousSequence in _continuousSequences)
                     {
-                        if (!(continuousSequence.Current is SendEvent s))
+                        if (continuousSequence.Current is not SendEvent s)
                         {
                             continue;
                         }
@@ -346,7 +346,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var sequence in _sequences.Except(_finishedSequences))
                 {
-                    if (!(sequence.Current is DisconnectEvent d))
+                    if (sequence.Current is not DisconnectEvent d)
                     {
                         continue;
                     }
@@ -381,7 +381,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var continuousSequence in _continuousSequences)
                 {
-                    if (!(continuousSequence.Current is DisconnectEvent d))
+                    if (continuousSequence.Current is not DisconnectEvent d)
                     {
                         continue;
                     }
