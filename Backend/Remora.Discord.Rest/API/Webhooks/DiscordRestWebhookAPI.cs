@@ -38,11 +38,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestWebhookAPI" />
     [PublicAPI]
-    public class DiscordRestWebhookAPI : IDiscordRestWebhookAPI
+    public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhookAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
@@ -51,15 +50,9 @@ namespace Remora.Discord.Rest.API
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestWebhookAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
             _jsonOptions = jsonOptions.Value;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -89,7 +82,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await _discordHttpClient.PostAsync<IWebhook>
+            return await this.DiscordHttpClient.PostAsync<IWebhook>
             (
                 $"channels/{channelID}/webhooks",
                 b => b.WithJson
@@ -111,7 +104,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"channels/{channelID}/webhooks",
                 ct: ct
@@ -125,7 +118,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"guilds/{guildID}/webhooks",
                 ct: ct
@@ -139,7 +132,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IWebhook>
+            return this.DiscordHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
                 ct: ct
@@ -154,7 +147,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IWebhook>
+            return this.DiscordHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
                 ct: ct
@@ -179,7 +172,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await _discordHttpClient.PatchAsync<IWebhook>
+            return await this.DiscordHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
                 b => b.WithJson
@@ -213,7 +206,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await _discordHttpClient.PatchAsync<IWebhook>
+            return await this.DiscordHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
                 b => b.WithJson
@@ -231,7 +224,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}",
                 ct: ct
@@ -246,7 +239,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}",
                 ct: ct
@@ -271,7 +264,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IMessage?>
+            return this.DiscordHttpClient.PostAsync<IMessage?>
             (
                 $"webhooks/{webhookID}/{token}",
                 b =>
@@ -315,7 +308,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IMessage>
+            return this.DiscordHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
                 ct: ct
@@ -347,7 +340,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await _discordHttpClient.PatchAsync<IMessage>
+            return await this.DiscordHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
@@ -387,7 +380,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 ct: ct
@@ -402,7 +395,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IMessage>
+            return this.DiscordHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{interactionToken}/messages/@original",
                 ct: ct
@@ -431,7 +424,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await _discordHttpClient.PatchAsync<IMessage>
+            return await this.DiscordHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}/messages/@original",
                 b =>
@@ -459,7 +452,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{applicationID}/{token}/messages/@original",
                 ct: ct
@@ -483,7 +476,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IMessage>
+            return this.DiscordHttpClient.PostAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}",
                 b =>
@@ -535,7 +528,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await _discordHttpClient.PatchAsync<IMessage>
+            return await this.DiscordHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
                 b =>
@@ -564,7 +557,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
                 ct: ct

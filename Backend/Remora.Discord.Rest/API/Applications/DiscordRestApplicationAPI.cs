@@ -36,11 +36,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestApplicationAPI" />
     [PublicAPI]
-    public class DiscordRestApplicationAPI : IDiscordRestApplicationAPI
+    public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApplicationAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
@@ -53,15 +52,9 @@ namespace Remora.Discord.Rest.API
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions
         )
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
             _jsonOptions = jsonOptions.Value;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -71,7 +64,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
             (
                 $"applications/{applicationID}/commands",
                 ct: ct
@@ -107,7 +100,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PostAsync<IApplicationCommand>
+            return await this.DiscordHttpClient.PostAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/commands",
                 b => b.WithJson
@@ -149,7 +142,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+            return await this.DiscordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
             (
                 $"applications/{applicationID}/commands",
                 b => b.WithJsonArray
@@ -179,7 +172,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IApplicationCommand>
+            return this.DiscordHttpClient.GetAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/commands/{commandID}",
                 ct: ct
@@ -216,7 +209,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PatchAsync<IApplicationCommand>
+            return await this.DiscordHttpClient.PatchAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/commands/{commandID}",
                 b => b.WithJson
@@ -241,7 +234,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.DeleteAsync($"applications/{applicationID}/commands/{commandID}", ct: ct);
+            return this.DiscordHttpClient.DeleteAsync($"applications/{applicationID}/commands/{commandID}", ct: ct);
         }
 
         /// <inheritdoc />
@@ -252,7 +245,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands",
                 ct: ct
@@ -286,7 +279,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+            return await this.DiscordHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands",
                 b => b.WithJsonArray
@@ -338,7 +331,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PostAsync<IApplicationCommand>
+            return await this.DiscordHttpClient.PostAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands",
                 b => b.WithJson
@@ -364,7 +357,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IApplicationCommand>
+            return this.DiscordHttpClient.GetAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
                 ct: ct
@@ -402,7 +395,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PatchAsync<IApplicationCommand>
+            return await this.DiscordHttpClient.PatchAsync<IApplicationCommand>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
                 b => b.WithJson
@@ -428,7 +421,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
                 ct: ct
@@ -444,7 +437,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
                 ct: ct
@@ -460,7 +453,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildApplicationCommandPermissions>
+            return this.DiscordHttpClient.GetAsync<IGuildApplicationCommandPermissions>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
                 ct: ct
@@ -477,7 +470,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync<IGuildApplicationCommandPermissions>
+            return this.DiscordHttpClient.PutAsync<IGuildApplicationCommandPermissions>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
                 b => b.WithJson
@@ -502,7 +495,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
+            return this.DiscordHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
             (
                 $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
                 b => b.WithJsonArray

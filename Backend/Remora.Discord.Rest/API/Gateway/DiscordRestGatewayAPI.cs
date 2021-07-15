@@ -30,33 +30,23 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <summary>
-    /// Implements the Discord REST gateway API.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI" />
     [PublicAPI]
-    public class DiscordRestGatewayAPI : IDiscordRestGatewayAPI
+    public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGatewayAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The specialized Discord Http client.</param>
         public DiscordRestGatewayAPI(DiscordHttpClient discordHttpClient)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
         {
-            return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
+            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
         }
 
         /// <inheritdoc />
@@ -65,7 +55,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
+            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
         }
     }
 }

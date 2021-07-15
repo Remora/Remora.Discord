@@ -31,25 +31,17 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
     [PublicAPI]
-    public class DiscordRestVoiceAPI : IDiscordRestVoiceAPI
+    public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -58,7 +50,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
                 "voice/regions",
                 ct: ct

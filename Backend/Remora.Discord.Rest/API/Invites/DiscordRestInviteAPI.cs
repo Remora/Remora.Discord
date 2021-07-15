@@ -33,23 +33,15 @@ namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
     [PublicAPI]
-    public class DiscordRestInviteAPI : IDiscordRestInviteAPI
+    public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestInviteAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         public DiscordRestInviteAPI(DiscordHttpClient discordHttpClient)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -61,7 +53,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IInvite>
+            return this.DiscordHttpClient.GetAsync<IInvite>
             (
                 $"invite/{inviteCode}",
                 b =>
@@ -87,7 +79,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync<IInvite>
+            return this.DiscordHttpClient.DeleteAsync<IInvite>
             (
                 $"invite/{inviteCode}",
                 ct: ct

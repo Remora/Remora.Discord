@@ -31,25 +31,17 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestAuditLogAPI" />
     [PublicAPI]
-    public class DiscordRestAuditLogAPI : IDiscordRestAuditLogAPI
+    public class DiscordRestAuditLogAPI : AbstractDiscordRestAPI, IDiscordRestAuditLogAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestAuditLogAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         public DiscordRestAuditLogAPI(DiscordHttpClient discordHttpClient)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -72,7 +64,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.GetAsync<IAuditLog>
+            return await this.DiscordHttpClient.GetAsync<IAuditLog>
             (
                 $"guilds/{guildID}/audit-logs",
                 b =>

@@ -33,11 +33,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInteractionAPI" />
     [PublicAPI]
-    public class DiscordRestInteractionAPI : IDiscordRestInteractionAPI
+    public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInteractionAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
@@ -50,15 +49,9 @@ namespace Remora.Discord.Rest.API
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions
         )
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
             _jsonOptions = jsonOptions.Value;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -70,7 +63,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct
         )
         {
-            return _discordHttpClient.PostAsync
+            return this.DiscordHttpClient.PostAsync
             (
                 $"interactions/{interactionID}/{interactionToken}/callback",
                 b => b.WithJson

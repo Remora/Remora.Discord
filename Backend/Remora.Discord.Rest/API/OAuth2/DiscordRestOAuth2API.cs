@@ -32,23 +32,15 @@ namespace Remora.Discord.Rest.API
 {
     /// <inheritdoc />
     [PublicAPI]
-    public class DiscordRestOAuth2API : IDiscordRestOAuth2API
+    public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -57,7 +49,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IApplication>
+            return this.DiscordHttpClient.GetAsync<IApplication>
             (
                 "oauth2/applications/@me",
                 ct: ct
@@ -70,7 +62,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IAuthorizationInformation>
+            return this.DiscordHttpClient.GetAsync<IAuthorizationInformation>
             (
                 "oauth2/@me",
                 ct: ct

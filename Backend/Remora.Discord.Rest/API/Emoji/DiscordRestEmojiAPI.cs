@@ -37,11 +37,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestEmojiAPI" />
     [PublicAPI]
-    public class DiscordRestEmojiAPI : IDiscordRestEmojiAPI
+    public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
@@ -50,15 +49,9 @@ namespace Remora.Discord.Rest.API
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
         public DiscordRestEmojiAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
             _jsonOptions = jsonOptions.Value;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -68,7 +61,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IEmoji>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IEmoji>>
             (
                 $"guilds/{guildID}/emojis",
                 ct: ct
@@ -83,7 +76,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IEmoji>
+            return this.DiscordHttpClient.GetAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
                 ct: ct
@@ -113,7 +106,7 @@ namespace Remora.Discord.Rest.API
 
             var emojiData = packImage.Entity;
 
-            return await _discordHttpClient.PostAsync<IEmoji>
+            return await this.DiscordHttpClient.PostAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis",
                 b => b.WithJson
@@ -141,7 +134,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IEmoji>
+            return this.DiscordHttpClient.PatchAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
                 b => b.WithJson
@@ -164,7 +157,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
                 ct: ct

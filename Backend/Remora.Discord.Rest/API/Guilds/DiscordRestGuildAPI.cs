@@ -39,11 +39,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI" />
     [PublicAPI]
-    public class DiscordRestGuildAPI : IDiscordRestGuildAPI
+    public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
         /// <summary>
@@ -52,15 +51,9 @@ namespace Remora.Discord.Rest.API
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestGuildAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient)
         {
-            _discordHttpClient = discordHttpClient;
             _jsonOptions = jsonOptions.Value;
-        }
-
-        /// <inheritdoc cref="DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
-        {
-            return _discordHttpClient.WithCustomization(requestCustomizer);
         }
 
         /// <inheritdoc />
@@ -95,7 +88,7 @@ namespace Remora.Discord.Rest.API
 
             var iconData = packIcon.Entity;
 
-            return await _discordHttpClient.PostAsync<IGuild>
+            return await this.DiscordHttpClient.PostAsync<IGuild>
             (
                 "guilds",
                 b => b.WithJson
@@ -132,7 +125,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuild>
+            return this.DiscordHttpClient.GetAsync<IGuild>
             (
                 $"guilds/{guildID}",
                 b =>
@@ -153,7 +146,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildPreview>
+            return this.DiscordHttpClient.GetAsync<IGuildPreview>
             (
                 $"guilds/{guildID}/preview",
                 ct: ct
@@ -252,7 +245,7 @@ namespace Remora.Discord.Rest.API
 
             var bannerData = packBanner.Entity;
 
-            return await _discordHttpClient.PatchAsync<IGuild>
+            return await this.DiscordHttpClient.PatchAsync<IGuild>
             (
                 $"guilds/{guildID}",
                 b => b.WithJson
@@ -292,7 +285,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}",
                 ct: ct
@@ -306,7 +299,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IChannel>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IChannel>>
             (
                 $"guilds/{guildID}/channels",
                 ct: ct
@@ -330,7 +323,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IChannel>
+            return this.DiscordHttpClient.PostAsync<IChannel>
             (
                 $"guilds/{guildID}/channels",
                 b => b.WithJson
@@ -369,7 +362,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync
+            return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/channels",
                 b => b.WithJsonArray
@@ -424,7 +417,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildMember>
+            return this.DiscordHttpClient.GetAsync<IGuildMember>
             (
                 $"guilds/{guildID}/members/{userID}",
                 ct: ct
@@ -445,7 +438,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
             (
                 $"guilds/{guildID}/members",
                 b =>
@@ -478,7 +471,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
             (
                 $"guilds/{guildID}/members/search",
                 b =>
@@ -507,7 +500,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync<IGuildMember?>
+            return this.DiscordHttpClient.PutAsync<IGuildMember?>
             (
                 $"guilds/{guildID}/members/{userID}",
                 b => b.WithJson
@@ -539,7 +532,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync
+            return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/members/{userID}",
                 b => b.WithJson
@@ -565,7 +558,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<string>
+            return this.DiscordHttpClient.PatchAsync<string>
             (
                 $"guilds/{guildID}/members/@me/nick",
                 b => b.WithJson(json => json.Write("nick", nickname, _jsonOptions)),
@@ -582,7 +575,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync
+            return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
                 ct: ct
@@ -598,7 +591,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
                 ct: ct
@@ -613,7 +606,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}",
                 ct: ct
@@ -627,7 +620,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IBan>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IBan>>
             (
                 $"guilds/{guildID}/bans",
                 ct: ct
@@ -642,7 +635,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IBan>
+            return this.DiscordHttpClient.GetAsync<IBan>
             (
                 $"guilds/{guildID}/bans/{userID}",
                 ct: ct
@@ -659,7 +652,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync
+            return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
                 b => b.WithJson
@@ -682,7 +675,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
                 ct: ct
@@ -696,7 +689,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IRole>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
                 ct: ct
@@ -715,7 +708,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IRole>
+            return this.DiscordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
                 b => b.WithJson
@@ -741,7 +734,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IReadOnlyList<IRole>>
+            return this.DiscordHttpClient.PatchAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
                 b => b.WithJsonArray
@@ -776,7 +769,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IRole>
+            return this.DiscordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
                 b => b.WithJson
@@ -802,7 +795,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildId}/roles/{roleID}",
                 ct: ct
@@ -827,7 +820,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.GetAsync<IPruneCount>
+            return await this.DiscordHttpClient.GetAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b =>
@@ -870,7 +863,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PostAsync<IPruneCount>
+            return await this.DiscordHttpClient.PostAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b => b.WithJson
@@ -894,7 +887,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
                 $"guilds/{guildID}/regions",
                 ct: ct
@@ -908,7 +901,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IInvite>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IInvite>>
             (
                 $"guilds/{guildID}/invites",
                 ct: ct
@@ -923,7 +916,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
             (
                 $"guilds/{guildID}/integrations",
                 b =>
@@ -948,7 +941,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildWidget>
+            return this.DiscordHttpClient.GetAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
                 ct: ct
@@ -964,7 +957,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IGuildWidget>
+            return this.DiscordHttpClient.PatchAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
                 b => b.WithJson
@@ -986,7 +979,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IPartialInvite>
+            return this.DiscordHttpClient.GetAsync<IPartialInvite>
             (
                 $"guilds/{guildID}/vanity-url",
                 ct: ct
@@ -1001,7 +994,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetContentAsync
+            return this.DiscordHttpClient.GetContentAsync
             (
                 $"guilds/{guildID}/widget.png",
                 b =>
@@ -1022,7 +1015,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IWelcomeScreen>
+            return this.DiscordHttpClient.GetAsync<IWelcomeScreen>
             (
                 $"guilds/{guildID}/welcome-screen",
                 ct: ct
@@ -1039,7 +1032,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IWelcomeScreen>
+            return this.DiscordHttpClient.PatchAsync<IWelcomeScreen>
             (
                 $"guilds/{guildID}/welcome-screen",
                 b =>
@@ -1068,7 +1061,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IVoiceState>
+            return this.DiscordHttpClient.PatchAsync<IVoiceState>
             (
                 $"guilds/{guildID}/voice-states/@me",
                 b => b.WithJson
@@ -1094,7 +1087,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IVoiceState>
+            return this.DiscordHttpClient.PatchAsync<IVoiceState>
             (
                 $"guilds/{guildID}/voice-states/{userID}",
                 b => b.WithJson
