@@ -29,7 +29,7 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestOAuth2API" />
     [PublicAPI]
     public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
     {

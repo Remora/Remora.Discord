@@ -30,7 +30,7 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInviteAPI" />
     [PublicAPI]
     public class DiscordRestInviteAPI : AbstractDiscordRestAPI, IDiscordRestInviteAPI
     {

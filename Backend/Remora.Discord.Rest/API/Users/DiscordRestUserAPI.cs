@@ -36,7 +36,7 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI" />
     [PublicAPI]
     public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     {
