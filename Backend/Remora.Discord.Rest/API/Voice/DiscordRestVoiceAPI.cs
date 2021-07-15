@@ -21,9 +21,11 @@
 //
 
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Results;
@@ -38,8 +40,9 @@ namespace Remora.Discord.Rest.API
         /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient)
-            : base(discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
         }
 

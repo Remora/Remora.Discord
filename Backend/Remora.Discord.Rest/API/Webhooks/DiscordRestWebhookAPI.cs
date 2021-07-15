@@ -42,17 +42,14 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhookAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestWebhookAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -179,9 +176,9 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("avatar", avatarData, _jsonOptions);
-                        json.Write("channel_id", channelID, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("avatar", avatarData, this.JsonOptions);
+                        json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -213,8 +210,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("avatar", avatarData, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -283,14 +280,14 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("content", content, _jsonOptions);
-                            json.Write("username", username, _jsonOptions);
-                            json.Write("avatar_url", avatarUrl, _jsonOptions);
-                            json.Write("tts", isTTS, _jsonOptions);
-                            json.Write("embeds", embeds, _jsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
-                            json.Write("thread_id", threadID, _jsonOptions);
-                            json.Write("components", components, _jsonOptions);
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("username", username, this.JsonOptions);
+                            json.Write("avatar_url", avatarUrl, this.JsonOptions);
+                            json.Write("tts", isTTS, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("thread_id", threadID, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
                         }
                     );
                 },
@@ -354,11 +351,11 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("content", content, _jsonOptions);
-                            json.Write("embeds", embeds, _jsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
-                            json.Write("attachments", attachments, _jsonOptions);
-                            json.Write("components", components, _jsonOptions);
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("attachments", attachments, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
 
                             if (file.HasValue && file.Value is null)
                             {
@@ -433,10 +430,10 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("content", content, _jsonOptions);
-                            json.Write("embeds", embeds, _jsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
-                            json.Write("components", components, _jsonOptions);
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
                         }
                     );
                 },
@@ -490,14 +487,14 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("content", content, _jsonOptions);
-                            json.Write("username", username, _jsonOptions);
-                            json.Write("avatar_url", avatarUrl, _jsonOptions);
-                            json.Write("tts", isTTS, _jsonOptions);
-                            json.Write("embeds", embeds, _jsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
-                            json.Write("components", components, _jsonOptions);
-                            json.Write("flags", flags, _jsonOptions);
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("username", username, this.JsonOptions);
+                            json.Write("avatar_url", avatarUrl, this.JsonOptions);
+                            json.Write("tts", isTTS, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
                         }
                     );
                 },
@@ -537,10 +534,10 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("content", content, _jsonOptions);
-                            json.Write("embeds", embeds, _jsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, _jsonOptions);
-                            json.Write("components", components, _jsonOptions);
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
                         }
                     );
                 },

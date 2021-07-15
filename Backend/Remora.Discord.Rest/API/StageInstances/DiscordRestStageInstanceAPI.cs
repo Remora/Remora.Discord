@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
@@ -39,8 +41,13 @@ namespace Remora.Discord.Rest.API
         /// Initializes a new instance of the <see cref="DiscordRestStageInstanceAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        public DiscordRestStageInstanceAPI(DiscordHttpClient discordHttpClient)
-            : base(discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestStageInstanceAPI
+        (
+            DiscordHttpClient discordHttpClient,
+            IOptions<JsonSerializerOptions> jsonOptions
+        )
+            : base(discordHttpClient, jsonOptions)
         {
         }
 

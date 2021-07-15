@@ -40,17 +40,14 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestEmojiAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
         public DiscordRestEmojiAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -116,7 +113,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("image", emojiData);
 
                         json.WritePropertyName("roles");
-                        JsonSerializer.Serialize(json, roles, _jsonOptions);
+                        JsonSerializer.Serialize(json, roles, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -140,8 +137,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
                     }
                 ),
                 ct: ct

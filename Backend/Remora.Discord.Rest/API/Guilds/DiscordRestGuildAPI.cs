@@ -43,17 +43,14 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestGuildAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestGuildAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -96,21 +93,21 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.Write("icon", iconData, _jsonOptions);
-                        json.Write("verification_level", verificationLevel, _jsonOptions);
-                        json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
-                        json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("channels", channels, _jsonOptions);
-                        json.Write("afk_channel_id", afkChannelID, _jsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("verification_level", verificationLevel, this.JsonOptions);
+                        json.Write("default_message_notifications", defaultMessageNotifications, this.JsonOptions);
+                        json.Write("explicit_content_filter", explicitContentFilter, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("channels", channels, this.JsonOptions);
+                        json.Write("afk_channel_id", afkChannelID, this.JsonOptions);
 
                         if (afkTimeout.HasValue)
                         {
                             json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
                         }
 
-                        json.Write("system_channel_id", systemChannelID, _jsonOptions);
-                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
+                        json.Write("system_channel_id", systemChannelID, this.JsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -252,30 +249,30 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("verification_level", verificationLevel, _jsonOptions);
-                        json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("verification_level", verificationLevel, this.JsonOptions);
+                        json.Write("default_message_notifications", defaultMessageNotifications, this.JsonOptions);
 
-                        json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
-                        json.Write("afk_channel_id", afkChannelID, _jsonOptions);
+                        json.Write("explicit_content_filter", explicitContentFilter, this.JsonOptions);
+                        json.Write("afk_channel_id", afkChannelID, this.JsonOptions);
 
                         if (afkTimeout.HasValue)
                         {
                             json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
                         }
 
-                        json.Write("icon", iconData, _jsonOptions);
-                        json.Write("owner_id", ownerID, _jsonOptions);
-                        json.Write("splash", splashData, _jsonOptions);
-                        json.Write("discovery_splash", discoverySplashData, _jsonOptions);
-                        json.Write("banner", bannerData, _jsonOptions);
-                        json.Write("system_channel_id", systemChannelID, _jsonOptions);
-                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
-                        json.Write("rules_channel_id", rulesChannelID, _jsonOptions);
-                        json.Write("public_updates_channel_id", publicUpdatesChannelID, _jsonOptions);
-                        json.Write("preferred_locale", preferredLocale, _jsonOptions);
-                        json.Write("features", features, _jsonOptions);
-                        json.Write("description", description, _jsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("owner_id", ownerID, this.JsonOptions);
+                        json.Write("splash", splashData, this.JsonOptions);
+                        json.Write("discovery_splash", discoverySplashData, this.JsonOptions);
+                        json.Write("banner", bannerData, this.JsonOptions);
+                        json.Write("system_channel_id", systemChannelID, this.JsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, this.JsonOptions);
+                        json.Write("rules_channel_id", rulesChannelID, this.JsonOptions);
+                        json.Write("public_updates_channel_id", publicUpdatesChannelID, this.JsonOptions);
+                        json.Write("preferred_locale", preferredLocale, this.JsonOptions);
+                        json.Write("features", features, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -331,15 +328,15 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.Write("type", type, _jsonOptions);
-                        json.Write("topic", topic, _jsonOptions);
-                        json.Write("bitrate", bitrate, _jsonOptions);
-                        json.Write("user_limit", userLimit, _jsonOptions);
-                        json.Write("rate_limit_per_user", rateLimitPerUser, _jsonOptions);
-                        json.Write("position", position, _jsonOptions);
-                        json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
-                        json.Write("parent_id", parentID, _jsonOptions);
-                        json.Write("nsfw", isNsfw, _jsonOptions);
+                        json.Write("type", type, this.JsonOptions);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("bitrate", bitrate, this.JsonOptions);
+                        json.Write("user_limit", userLimit, this.JsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
+                        json.Write("position", position, this.JsonOptions);
+                        json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
+                        json.Write("parent_id", parentID, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -508,10 +505,10 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("access_token", accessToken);
-                        json.Write("nick", nickname, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("mute", isMuted, _jsonOptions);
-                        json.Write("deaf", isDeafened, _jsonOptions);
+                        json.Write("nick", nickname, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("mute", isMuted, this.JsonOptions);
+                        json.Write("deaf", isDeafened, this.JsonOptions);
                     }
                 ),
                 true,
@@ -539,11 +536,11 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("nick", nickname, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("mute", isMuted, _jsonOptions);
-                        json.Write("deaf", isDeafened, _jsonOptions);
-                        json.Write("channel_id", channelID, _jsonOptions);
+                        json.Write("nick", nickname, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("mute", isMuted, this.JsonOptions);
+                        json.Write("deaf", isDeafened, this.JsonOptions);
+                        json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 ),
                 ct
@@ -561,7 +558,7 @@ namespace Remora.Discord.Rest.API
             return this.DiscordHttpClient.PatchAsync<string>
             (
                 $"guilds/{guildID}/members/@me/nick",
-                b => b.WithJson(json => json.Write("nick", nickname, _jsonOptions)),
+                b => b.WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
                 ct: ct
             );
         }
@@ -659,8 +656,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("delete_message_days", deleteMessageDays, _jsonOptions);
-                        json.Write("reason", reason, _jsonOptions);
+                        json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
+                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct
@@ -715,11 +712,11 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("permissions", permissions, _jsonOptions);
-                        json.Write("color", colour, _jsonOptions);
-                        json.Write("hoist", isHoisted, _jsonOptions);
-                        json.Write("mentionable", isMentionable, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("permissions", permissions, this.JsonOptions);
+                        json.Write("color", colour, this.JsonOptions);
+                        json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -746,7 +743,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             {
                                 json.WriteString("id", roleID.ToString());
-                                json.Write("position", position, _jsonOptions);
+                                json.Write("position", position, this.JsonOptions);
                             }
                             json.WriteEndObject();
                         }
@@ -776,11 +773,11 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("permissions", permissions, _jsonOptions);
-                        json.Write("color", colour, _jsonOptions);
-                        json.Write("hoist", isHoisted, _jsonOptions);
-                        json.Write("mentionable", isMentionable, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("permissions", permissions, this.JsonOptions);
+                        json.Write("color", colour, this.JsonOptions);
+                        json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -870,10 +867,10 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("days", days, _jsonOptions);
-                        json.Write("compute_prune_count", computePruneCount, _jsonOptions);
-                        json.Write("include_roles", includeRoles, _jsonOptions);
-                        json.Write("reason", reason, _jsonOptions);
+                        json.Write("days", days, this.JsonOptions);
+                        json.Write("compute_prune_count", computePruneCount, this.JsonOptions);
+                        json.Write("include_roles", includeRoles, this.JsonOptions);
+                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -964,8 +961,8 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("enabled", isEnabled, _jsonOptions);
-                        json.Write("channel_id", channelID, _jsonOptions);
+                        json.Write("enabled", isEnabled, this.JsonOptions);
+                        json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -1041,9 +1038,9 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("enabled", isEnabled, _jsonOptions);
-                            json.Write("welcome_channels", welcomeChannels, _jsonOptions);
-                            json.Write("description", description, _jsonOptions);
+                            json.Write("enabled", isEnabled, this.JsonOptions);
+                            json.Write("welcome_channels", welcomeChannels, this.JsonOptions);
+                            json.Write("description", description, this.JsonOptions);
                         }
                     );
                 },
@@ -1069,8 +1066,8 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("channel_id", channelID.ToString());
-                        json.Write("suppress", suppress, _jsonOptions);
-                        json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, _jsonOptions);
+                        json.Write("suppress", suppress, this.JsonOptions);
+                        json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -1095,7 +1092,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("channel_id", channelID.ToString());
-                        json.Write("suppress", suppress, _jsonOptions);
+                        json.Write("suppress", suppress, this.JsonOptions);
                     }
                 ),
                 ct: ct

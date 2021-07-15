@@ -40,17 +40,14 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTemplateAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The Json options.</param>
         public DiscordRestTemplateAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -130,7 +127,7 @@ namespace Remora.Discord.Rest.API
                     j =>
                     {
                         j.WriteString("name", name);
-                        j.Write("description", description, _jsonOptions);
+                        j.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -170,7 +167,7 @@ namespace Remora.Discord.Rest.API
                     j =>
                     {
                         j.WriteString("name", name);
-                        j.Write("description", description, _jsonOptions);
+                        j.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct

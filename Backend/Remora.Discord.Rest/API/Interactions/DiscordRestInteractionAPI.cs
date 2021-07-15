@@ -36,8 +36,6 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInteractionAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestInteractionAPI"/> class.
         /// </summary>
@@ -48,9 +46,8 @@ namespace Remora.Discord.Rest.API
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions
         )
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -69,7 +66,7 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        JsonSerializer.Serialize(json, response, _jsonOptions);
+                        JsonSerializer.Serialize(json, response, this.JsonOptions);
                     },
                     false
                 ),

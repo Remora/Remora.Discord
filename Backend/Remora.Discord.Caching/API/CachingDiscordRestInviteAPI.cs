@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
@@ -38,13 +40,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestInviteAPI(DiscordHttpClient)" />
+        /// <inheritdoc cref="DiscordRestInviteAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
         public CachingDiscordRestInviteAPI
         (
             DiscordHttpClient discordHttpClient,
+            IOptions<JsonSerializerOptions> jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }

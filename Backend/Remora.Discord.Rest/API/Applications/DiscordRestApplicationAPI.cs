@@ -39,8 +39,6 @@ namespace Remora.Discord.Rest.API
     [PublicAPI]
     public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApplicationAPI
     {
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestApplicationAPI"/> class.
         /// </summary>
@@ -51,9 +49,8 @@ namespace Remora.Discord.Rest.API
             DiscordHttpClient discordHttpClient,
             IOptions<JsonSerializerOptions> jsonOptions
         )
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -108,8 +105,8 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
                         json.WriteString("description", description);
-                        json.Write("options", options, _jsonOptions);
-                        json.Write("default_permission", defaultPermission, _jsonOptions);
+                        json.Write("options", options, this.JsonOptions);
+                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -153,7 +150,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
                             json.WriteString("description", command.Description);
-                            json.Write("options", command.Options, _jsonOptions);
+                            json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
                         }
@@ -215,10 +212,10 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("description", description, _jsonOptions);
-                        json.Write("options", options, _jsonOptions);
-                        json.Write("default_permission", defaultPermission, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write("options", options, this.JsonOptions);
+                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -290,7 +287,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
                             json.WriteString("description", command.Description);
-                            json.Write("options", command.Options, _jsonOptions);
+                            json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
                         }
@@ -339,8 +336,8 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
                         json.WriteString("description", description);
-                        json.Write("options", options, _jsonOptions);
-                        json.Write("default_permission", defaultPermission, _jsonOptions);
+                        json.Write("options", options, this.JsonOptions);
+                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -401,10 +398,10 @@ namespace Remora.Discord.Rest.API
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("description", description, _jsonOptions);
-                        json.Write("options", options, _jsonOptions);
-                        json.Write("default_permission", defaultPermission, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write("options", options, this.JsonOptions);
+                        json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -477,7 +474,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WritePropertyName("permissions");
-                        JsonSerializer.Serialize(json, permissions, _jsonOptions);
+                        JsonSerializer.Serialize(json, permissions, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -503,7 +500,7 @@ namespace Remora.Discord.Rest.API
                     {
                         foreach (var permission in permissions)
                         {
-                            JsonSerializer.Serialize(json, permission, _jsonOptions);
+                            JsonSerializer.Serialize(json, permission, this.JsonOptions);
                         }
                     }
                 ),

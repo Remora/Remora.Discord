@@ -21,7 +21,9 @@
 //
 
 using System;
+using System.Text.Json;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 
 namespace Remora.Discord.Rest.API
 {
@@ -37,12 +39,23 @@ namespace Remora.Discord.Rest.API
         protected DiscordHttpClient DiscordHttpClient { get; }
 
         /// <summary>
+        /// Gets the <see cref="System.Text.Json.JsonSerializerOptions"/> available to the API instance.
+        /// </summary>
+        protected JsonSerializerOptions JsonOptions { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AbstractDiscordRestAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord-specialized Http client.</param>
-        protected AbstractDiscordRestAPI(DiscordHttpClient discordHttpClient)
+        /// <param name="jsonOptions">The Remora-specialized JSON options.</param>
+        protected AbstractDiscordRestAPI
+        (
+            DiscordHttpClient discordHttpClient,
+            IOptions<JsonSerializerOptions> jsonOptions
+        )
         {
             this.DiscordHttpClient = discordHttpClient;
+            this.JsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc cref="Remora.Discord.Rest.DiscordHttpClient.WithCustomization"/>
