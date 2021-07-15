@@ -92,52 +92,60 @@ namespace Remora.Discord.Rest.API
         {
             result = null;
 
-            if (!headers.TryGetValues("X-RateLimit-Limit", out var rawLimit))
+            try
             {
+                if (!headers.TryGetValues("X-RateLimit-Limit", out var rawLimit))
+                {
+                    return false;
+                }
+
+                if (!int.TryParse(rawLimit.SingleOrDefault(), out var limit))
+                {
+                    return false;
+                }
+
+                if (!headers.TryGetValues("X-RateLimit-Remaining", out var rawRemaining))
+                {
+                    return false;
+                }
+
+                if (!int.TryParse(rawRemaining.SingleOrDefault(), out var remaining))
+                {
+                    return false;
+                }
+
+                if (!headers.TryGetValues("X-RateLimit-Reset", out var rawReset))
+                {
+                    return false;
+                }
+
+                if (!int.TryParse(rawReset.SingleOrDefault(), out var resetsAtEpoch))
+                {
+                    return false;
+                }
+
+                if (!headers.TryGetValues("X-RateLimit-Bucket", out var rawBucket))
+                {
+                    return false;
+                }
+
+                var id = rawBucket.SingleOrDefault();
+                if (id is null)
+                {
+                    return false;
+                }
+
+                var isGlobal = headers.Contains("X-RateLimit-Global");
+                var resetsAt = DateTime.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
+
+                result = new RateLimitBucket(limit, remaining, resetsAt, id, isGlobal);
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                // More than one element in a sequence that expected one and only one
                 return false;
             }
-
-            if (!int.TryParse(rawLimit.SingleOrDefault(), out var limit))
-            {
-                return false;
-            }
-
-            if (!headers.TryGetValues("X-RateLimit-Remaining", out var rawRemaining))
-            {
-                return false;
-            }
-
-            if (!int.TryParse(rawRemaining.SingleOrDefault(), out var remaining))
-            {
-                return false;
-            }
-
-            if (!headers.TryGetValues("X-RateLimit-Reset", out var rawReset))
-            {
-                return false;
-            }
-
-            if (!int.TryParse(rawReset.SingleOrDefault(), out var resetsAtEpoch))
-            {
-                return false;
-            }
-
-            if (!headers.TryGetValues("X-RateLimit-Bucket", out var rawBucket))
-            {
-                return false;
-            }
-
-            var id = rawBucket.SingleOrDefault();
-            if (id is null)
-            {
-                return false;
-            }
-
-            var isGlobal = headers.Contains("X-RateLimit-Global");
-            var resetsAt = DateTime.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
-
-            result = new RateLimitBucket(limit, remaining, resetsAt, id, isGlobal);
-            return true;
         }
 
         /// <summary>
