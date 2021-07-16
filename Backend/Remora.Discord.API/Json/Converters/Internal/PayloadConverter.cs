@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -40,9 +42,14 @@ namespace Remora.Discord.API.Json
         private readonly SnakeCaseNamingPolicy _snakeCase = new();
 
         /// <summary>
-        /// Gets a value indicating whether unknown events are allowed to be deserialized.
+        /// Holds a value indicating whether unknown events are allowed to be deserialized.
         /// </summary>
         private readonly bool _allowUnknownEvents;
+
+        /// <summary>
+        /// Holds a cache of event names to event types.
+        /// </summary>
+        private readonly ConcurrentDictionary<string, Type?> _eventTypes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PayloadConverter"/> class.
@@ -51,6 +58,7 @@ namespace Remora.Discord.API.Json
         public PayloadConverter(bool allowUnknownEvents = true)
         {
             _allowUnknownEvents = allowUnknownEvents;
+            _eventTypes = new ConcurrentDictionary<string, Type?>();
         }
 
         /// <inheritdoc />
@@ -292,17 +300,37 @@ namespace Remora.Discord.API.Json
 
             var sequenceNumber = sequenceNumberProperty.GetInt32();
 
-            // TODO: This is problematic for injecting new event types in different assemblies
             var eventName = eventNameProperty.GetString();
-            var eventNamespace = typeof(IHello).Namespace;
-            var eventTypes = typeof(IHello).Assembly.ExportedTypes
-                .Where(t => t.Namespace == eventNamespace)
-                .Where(t => t.IsInterface);
+            if (eventName is null)
+            {
+                throw new JsonException();
+            }
 
-            var eventType = eventTypes.FirstOrDefault
-            (
-                t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
-            );
+            if (!_eventTypes.TryGetValue(eventName, out var eventType))
+            {
+                var convertibleTypes = options.Converters.Where
+                (
+                    c =>
+                    {
+                        var converterType = c.GetType();
+                        if (!converterType.IsGenericType)
+                        {
+                            return false;
+                        }
+
+                        var genericConverterType = converterType.GetGenericTypeDefinition();
+                        return genericConverterType == typeof(DataObjectConverter<,>);
+                    }
+                )
+                .Select(c => c.GetType().GetGenericArguments()[0]);
+
+                eventType = convertibleTypes.FirstOrDefault
+                (
+                    t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
+                );
+
+                _eventTypes.TryAdd(eventName, eventType);
+            }
 
             if (eventType is null)
             {
