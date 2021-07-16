@@ -21,28 +21,29 @@
 //
 
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
     [PublicAPI]
-    public class DiscordRestVoiceAPI : IDiscordRestVoiceAPI
+    public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
         }
 
         /// <inheritdoc />
@@ -51,7 +52,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
                 "voice/regions",
                 ct: ct

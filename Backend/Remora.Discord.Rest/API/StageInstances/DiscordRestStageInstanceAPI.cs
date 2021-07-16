@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
@@ -31,19 +33,22 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestStageInstanceAPI" />
     [PublicAPI]
-    public class DiscordRestStageInstanceAPI : IDiscordRestStageInstanceAPI
+    public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestStageInstanceAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestStageInstanceAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        public DiscordRestStageInstanceAPI(DiscordHttpClient discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestStageInstanceAPI
+        (
+            DiscordHttpClient discordHttpClient,
+            IOptions<JsonSerializerOptions> jsonOptions
+        )
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
         }
 
         /// <inheritdoc />
@@ -55,7 +60,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IStageInstance>
+            return this.DiscordHttpClient.PostAsync<IStageInstance>
             (
                 "stage-instances",
                 r => r.WithJson
@@ -74,7 +79,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public Task<Result<IStageInstance>> GetStageInstanceAsync(Snowflake channelID, CancellationToken ct = default)
         {
-            return _discordHttpClient.GetAsync<IStageInstance>
+            return this.DiscordHttpClient.GetAsync<IStageInstance>
             (
                 $"stage-instances/{channelID}",
                 ct: ct
@@ -90,7 +95,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IStageInstance>
+            return this.DiscordHttpClient.PatchAsync<IStageInstance>
             (
                 $"stage-instances/{channelID}",
                 r => r.WithJson
@@ -108,7 +113,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public Task<Result> DeleteStageInstance(Snowflake channelID, CancellationToken ct = default)
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"stage-instances/{channelID}",
                 ct: ct

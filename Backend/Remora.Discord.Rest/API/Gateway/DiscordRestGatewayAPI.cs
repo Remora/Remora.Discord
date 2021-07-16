@@ -20,36 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <summary>
-    /// Implements the Discord REST gateway API.
-    /// </summary>
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI" />
     [PublicAPI]
-    public class DiscordRestGatewayAPI : IDiscordRestGatewayAPI
+    public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGatewayAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The specialized Discord Http client.</param>
-        public DiscordRestGatewayAPI(DiscordHttpClient discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestGatewayAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
         {
-            return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
+            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
         }
 
         /// <inheritdoc />
@@ -58,7 +57,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
+            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
         }
     }
 }

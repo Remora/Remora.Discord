@@ -36,28 +36,24 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestUserAPI" />
     [PublicAPI]
-    public class DiscordRestUserAPI : IDiscordRestUserAPI
+    public class DiscordRestUserAPI : AbstractDiscordRestAPI, IDiscordRestUserAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestUserAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestUserAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
         {
-            return _discordHttpClient.GetAsync<IUser>
+            return this.DiscordHttpClient.GetAsync<IUser>
             (
                 "users/@me",
                 ct: ct
@@ -71,7 +67,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IUser>
+            return this.DiscordHttpClient.GetAsync<IUser>
             (
                 $"users/{userID}",
                 ct: ct
@@ -94,15 +90,15 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await _discordHttpClient.PatchAsync<IUser>
+            return await this.DiscordHttpClient.PatchAsync<IUser>
             (
                 "users/@me",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("username", username, _jsonOptions);
-                        json.Write("avatar", avatarData, _jsonOptions);
+                        json.Write("username", username, this.JsonOptions);
+                        json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -127,7 +123,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IPartialGuild>>
+            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IPartialGuild>>
             (
                 "users/@me/guilds",
                 b =>
@@ -154,7 +150,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"users/@me/guilds/{guildID}",
                 ct: ct
@@ -167,7 +163,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IChannel>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IChannel>>
             (
                 "users/@me/channels",
                 ct: ct
@@ -181,7 +177,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IChannel>
+            return this.DiscordHttpClient.PostAsync<IChannel>
             (
                 "users/@me/channels",
                 b => b.WithJson
@@ -201,7 +197,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IConnection>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IConnection>>
             (
                 "users/@me/connections",
                 ct: ct

@@ -21,9 +21,11 @@
 //
 
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
@@ -38,13 +40,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestVoiceAPI(DiscordHttpClient)" />
+        /// <inheritdoc cref="DiscordRestVoiceAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
         public CachingDiscordRestVoiceAPI
         (
             DiscordHttpClient discordHttpClient,
+            IOptions<JsonSerializerOptions> jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient)
+            : base(discordHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }

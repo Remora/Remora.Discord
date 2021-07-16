@@ -20,28 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestOAuth2API" />
     [PublicAPI]
-    public class DiscordRestOAuth2API : IDiscordRestOAuth2API
+    public class DiscordRestOAuth2API : AbstractDiscordRestAPI, IDiscordRestOAuth2API
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
-        public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient)
+        /// <param name="jsonOptions">The JSON options.</param>
+        public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
         }
 
         /// <inheritdoc />
@@ -50,7 +51,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IApplication>
+            return this.DiscordHttpClient.GetAsync<IApplication>
             (
                 "oauth2/applications/@me",
                 ct: ct
@@ -63,7 +64,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IAuthorizationInformation>
+            return this.DiscordHttpClient.GetAsync<IAuthorizationInformation>
             (
                 "oauth2/@me",
                 ct: ct

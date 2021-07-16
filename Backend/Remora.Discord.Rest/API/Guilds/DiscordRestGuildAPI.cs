@@ -39,22 +39,18 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI" />
     [PublicAPI]
-    public class DiscordRestGuildAPI : IDiscordRestGuildAPI
+    public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestGuildAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
         public DiscordRestGuildAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -89,7 +85,7 @@ namespace Remora.Discord.Rest.API
 
             var iconData = packIcon.Entity;
 
-            return await _discordHttpClient.PostAsync<IGuild>
+            return await this.DiscordHttpClient.PostAsync<IGuild>
             (
                 "guilds",
                 b => b.WithJson
@@ -97,21 +93,21 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.Write("icon", iconData, _jsonOptions);
-                        json.Write("verification_level", verificationLevel, _jsonOptions);
-                        json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
-                        json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("channels", channels, _jsonOptions);
-                        json.Write("afk_channel_id", afkChannelID, _jsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("verification_level", verificationLevel, this.JsonOptions);
+                        json.Write("default_message_notifications", defaultMessageNotifications, this.JsonOptions);
+                        json.Write("explicit_content_filter", explicitContentFilter, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("channels", channels, this.JsonOptions);
+                        json.Write("afk_channel_id", afkChannelID, this.JsonOptions);
 
                         if (afkTimeout.HasValue)
                         {
                             json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
                         }
 
-                        json.Write("system_channel_id", systemChannelID, _jsonOptions);
-                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
+                        json.Write("system_channel_id", systemChannelID, this.JsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -126,7 +122,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuild>
+            return this.DiscordHttpClient.GetAsync<IGuild>
             (
                 $"guilds/{guildID}",
                 b =>
@@ -147,7 +143,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildPreview>
+            return this.DiscordHttpClient.GetAsync<IGuildPreview>
             (
                 $"guilds/{guildID}/preview",
                 ct: ct
@@ -246,37 +242,37 @@ namespace Remora.Discord.Rest.API
 
             var bannerData = packBanner.Entity;
 
-            return await _discordHttpClient.PatchAsync<IGuild>
+            return await this.DiscordHttpClient.PatchAsync<IGuild>
             (
                 $"guilds/{guildID}",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("verification_level", verificationLevel, _jsonOptions);
-                        json.Write("default_message_notifications", defaultMessageNotifications, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("verification_level", verificationLevel, this.JsonOptions);
+                        json.Write("default_message_notifications", defaultMessageNotifications, this.JsonOptions);
 
-                        json.Write("explicit_content_filter", explicitContentFilter, _jsonOptions);
-                        json.Write("afk_channel_id", afkChannelID, _jsonOptions);
+                        json.Write("explicit_content_filter", explicitContentFilter, this.JsonOptions);
+                        json.Write("afk_channel_id", afkChannelID, this.JsonOptions);
 
                         if (afkTimeout.HasValue)
                         {
                             json.WriteNumber("afk_timeout", (ulong)afkTimeout.Value.TotalSeconds);
                         }
 
-                        json.Write("icon", iconData, _jsonOptions);
-                        json.Write("owner_id", ownerID, _jsonOptions);
-                        json.Write("splash", splashData, _jsonOptions);
-                        json.Write("discovery_splash", discoverySplashData, _jsonOptions);
-                        json.Write("banner", bannerData, _jsonOptions);
-                        json.Write("system_channel_id", systemChannelID, _jsonOptions);
-                        json.Write("system_channel_flags", systemChannelFlags, _jsonOptions);
-                        json.Write("rules_channel_id", rulesChannelID, _jsonOptions);
-                        json.Write("public_updates_channel_id", publicUpdatesChannelID, _jsonOptions);
-                        json.Write("preferred_locale", preferredLocale, _jsonOptions);
-                        json.Write("features", features, _jsonOptions);
-                        json.Write("description", description, _jsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("owner_id", ownerID, this.JsonOptions);
+                        json.Write("splash", splashData, this.JsonOptions);
+                        json.Write("discovery_splash", discoverySplashData, this.JsonOptions);
+                        json.Write("banner", bannerData, this.JsonOptions);
+                        json.Write("system_channel_id", systemChannelID, this.JsonOptions);
+                        json.Write("system_channel_flags", systemChannelFlags, this.JsonOptions);
+                        json.Write("rules_channel_id", rulesChannelID, this.JsonOptions);
+                        json.Write("public_updates_channel_id", publicUpdatesChannelID, this.JsonOptions);
+                        json.Write("preferred_locale", preferredLocale, this.JsonOptions);
+                        json.Write("features", features, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -286,7 +282,7 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}",
                 ct: ct
@@ -300,7 +296,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IChannel>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IChannel>>
             (
                 $"guilds/{guildID}/channels",
                 ct: ct
@@ -324,7 +320,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IChannel>
+            return this.DiscordHttpClient.PostAsync<IChannel>
             (
                 $"guilds/{guildID}/channels",
                 b => b.WithJson
@@ -332,15 +328,15 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.Write("type", type, _jsonOptions);
-                        json.Write("topic", topic, _jsonOptions);
-                        json.Write("bitrate", bitrate, _jsonOptions);
-                        json.Write("user_limit", userLimit, _jsonOptions);
-                        json.Write("rate_limit_per_user", rateLimitPerUser, _jsonOptions);
-                        json.Write("position", position, _jsonOptions);
-                        json.Write("permission_overwrites", permissionOverwrites, _jsonOptions);
-                        json.Write("parent_id", parentID, _jsonOptions);
-                        json.Write("nsfw", isNsfw, _jsonOptions);
+                        json.Write("type", type, this.JsonOptions);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("bitrate", bitrate, this.JsonOptions);
+                        json.Write("user_limit", userLimit, this.JsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
+                        json.Write("position", position, this.JsonOptions);
+                        json.Write("permission_overwrites", permissionOverwrites, this.JsonOptions);
+                        json.Write("parent_id", parentID, this.JsonOptions);
+                        json.Write("nsfw", isNsfw, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -363,7 +359,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync
+            return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/channels",
                 b => b.WithJsonArray
@@ -418,7 +414,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildMember>
+            return this.DiscordHttpClient.GetAsync<IGuildMember>
             (
                 $"guilds/{guildID}/members/{userID}",
                 ct: ct
@@ -439,7 +435,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
             (
                 $"guilds/{guildID}/members",
                 b =>
@@ -472,7 +468,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
             }
 
-            return await _discordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
+            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
             (
                 $"guilds/{guildID}/members/search",
                 b =>
@@ -501,7 +497,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync<IGuildMember?>
+            return this.DiscordHttpClient.PutAsync<IGuildMember?>
             (
                 $"guilds/{guildID}/members/{userID}",
                 b => b.WithJson
@@ -509,10 +505,10 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("access_token", accessToken);
-                        json.Write("nick", nickname, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("mute", isMuted, _jsonOptions);
-                        json.Write("deaf", isDeafened, _jsonOptions);
+                        json.Write("nick", nickname, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("mute", isMuted, this.JsonOptions);
+                        json.Write("deaf", isDeafened, this.JsonOptions);
                     }
                 ),
                 true,
@@ -533,18 +529,18 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync
+            return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/members/{userID}",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("nick", nickname, _jsonOptions);
-                        json.Write("roles", roles, _jsonOptions);
-                        json.Write("mute", isMuted, _jsonOptions);
-                        json.Write("deaf", isDeafened, _jsonOptions);
-                        json.Write("channel_id", channelID, _jsonOptions);
+                        json.Write("nick", nickname, this.JsonOptions);
+                        json.Write("roles", roles, this.JsonOptions);
+                        json.Write("mute", isMuted, this.JsonOptions);
+                        json.Write("deaf", isDeafened, this.JsonOptions);
+                        json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 ),
                 ct
@@ -559,10 +555,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<string>
+            return this.DiscordHttpClient.PatchAsync<string>
             (
                 $"guilds/{guildID}/members/@me/nick",
-                b => b.WithJson(json => json.Write("nick", nickname, _jsonOptions)),
+                b => b.WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
                 ct: ct
             );
         }
@@ -576,7 +572,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync
+            return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
                 ct: ct
@@ -592,7 +588,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
                 ct: ct
@@ -607,7 +603,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}",
                 ct: ct
@@ -621,7 +617,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IBan>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IBan>>
             (
                 $"guilds/{guildID}/bans",
                 ct: ct
@@ -636,7 +632,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IBan>
+            return this.DiscordHttpClient.GetAsync<IBan>
             (
                 $"guilds/{guildID}/bans/{userID}",
                 ct: ct
@@ -653,15 +649,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync
+            return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("delete_message_days", deleteMessageDays, _jsonOptions);
-                        json.Write("reason", reason, _jsonOptions);
+                        json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
+                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct
@@ -676,7 +672,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
                 ct: ct
@@ -690,7 +686,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IRole>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
                 ct: ct
@@ -709,18 +705,18 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<IRole>
+            return this.DiscordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("permissions", permissions, _jsonOptions);
-                        json.Write("color", colour, _jsonOptions);
-                        json.Write("hoist", isHoisted, _jsonOptions);
-                        json.Write("mentionable", isMentionable, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("permissions", permissions, this.JsonOptions);
+                        json.Write("color", colour, this.JsonOptions);
+                        json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -735,7 +731,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IReadOnlyList<IRole>>
+            return this.DiscordHttpClient.PatchAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
                 b => b.WithJsonArray
@@ -747,7 +743,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             {
                                 json.WriteString("id", roleID.ToString());
-                                json.Write("position", position, _jsonOptions);
+                                json.Write("position", position, this.JsonOptions);
                             }
                             json.WriteEndObject();
                         }
@@ -770,18 +766,18 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IRole>
+            return this.DiscordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("name", name, _jsonOptions);
-                        json.Write("permissions", permissions, _jsonOptions);
-                        json.Write("color", colour, _jsonOptions);
-                        json.Write("hoist", isHoisted, _jsonOptions);
-                        json.Write("mentionable", isMentionable, _jsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("permissions", permissions, this.JsonOptions);
+                        json.Write("color", colour, this.JsonOptions);
+                        json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -796,7 +792,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync
+            return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildId}/roles/{roleID}",
                 ct: ct
@@ -821,7 +817,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.GetAsync<IPruneCount>
+            return await this.DiscordHttpClient.GetAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b =>
@@ -864,17 +860,17 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await _discordHttpClient.PostAsync<IPruneCount>
+            return await this.DiscordHttpClient.PostAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("days", days, _jsonOptions);
-                        json.Write("compute_prune_count", computePruneCount, _jsonOptions);
-                        json.Write("include_roles", includeRoles, _jsonOptions);
-                        json.Write("reason", reason, _jsonOptions);
+                        json.Write("days", days, this.JsonOptions);
+                        json.Write("compute_prune_count", computePruneCount, this.JsonOptions);
+                        json.Write("include_roles", includeRoles, this.JsonOptions);
+                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -888,7 +884,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
                 $"guilds/{guildID}/regions",
                 ct: ct
@@ -902,7 +898,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IInvite>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IInvite>>
             (
                 $"guilds/{guildID}/invites",
                 ct: ct
@@ -917,7 +913,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IIntegration>>
             (
                 $"guilds/{guildID}/integrations",
                 b =>
@@ -942,7 +938,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IGuildWidget>
+            return this.DiscordHttpClient.GetAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
                 ct: ct
@@ -958,15 +954,15 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IGuildWidget>
+            return this.DiscordHttpClient.PatchAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
                 b => b.WithJson
                 (
                     json =>
                     {
-                        json.Write("enabled", isEnabled, _jsonOptions);
-                        json.Write("channel_id", channelID, _jsonOptions);
+                        json.Write("enabled", isEnabled, this.JsonOptions);
+                        json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -980,7 +976,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IPartialInvite>
+            return this.DiscordHttpClient.GetAsync<IPartialInvite>
             (
                 $"guilds/{guildID}/vanity-url",
                 ct: ct
@@ -995,7 +991,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetContentAsync
+            return this.DiscordHttpClient.GetContentAsync
             (
                 $"guilds/{guildID}/widget.png",
                 b =>
@@ -1016,7 +1012,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IWelcomeScreen>
+            return this.DiscordHttpClient.GetAsync<IWelcomeScreen>
             (
                 $"guilds/{guildID}/welcome-screen",
                 ct: ct
@@ -1033,7 +1029,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IWelcomeScreen>
+            return this.DiscordHttpClient.PatchAsync<IWelcomeScreen>
             (
                 $"guilds/{guildID}/welcome-screen",
                 b =>
@@ -1042,9 +1038,9 @@ namespace Remora.Discord.Rest.API
                     (
                         json =>
                         {
-                            json.Write("enabled", isEnabled, _jsonOptions);
-                            json.Write("welcome_channels", welcomeChannels, _jsonOptions);
-                            json.Write("description", description, _jsonOptions);
+                            json.Write("enabled", isEnabled, this.JsonOptions);
+                            json.Write("welcome_channels", welcomeChannels, this.JsonOptions);
+                            json.Write("description", description, this.JsonOptions);
                         }
                     );
                 },
@@ -1062,7 +1058,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IVoiceState>
+            return this.DiscordHttpClient.PatchAsync<IVoiceState>
             (
                 $"guilds/{guildID}/voice-states/@me",
                 b => b.WithJson
@@ -1070,8 +1066,8 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("channel_id", channelID.ToString());
-                        json.Write("suppress", suppress, _jsonOptions);
-                        json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, _jsonOptions);
+                        json.Write("suppress", suppress, this.JsonOptions);
+                        json.Write("request_to_speak_timestamp", requestToSpeakTimestamp, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -1088,7 +1084,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<IVoiceState>
+            return this.DiscordHttpClient.PatchAsync<IVoiceState>
             (
                 $"guilds/{guildID}/voice-states/{userID}",
                 b => b.WithJson
@@ -1096,7 +1092,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("channel_id", channelID.ToString());
-                        json.Write("suppress", suppress, _jsonOptions);
+                        json.Write("suppress", suppress, this.JsonOptions);
                     }
                 ),
                 ct: ct

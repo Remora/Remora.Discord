@@ -36,22 +36,18 @@ using Remora.Results;
 
 namespace Remora.Discord.Rest.API
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestTemplateAPI" />
     [PublicAPI]
-    public class DiscordRestTemplateAPI : IDiscordRestTemplateAPI
+    public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTemplateAPI
     {
-        private readonly DiscordHttpClient _discordHttpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
         /// </summary>
         /// <param name="discordHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The Json options.</param>
         public DiscordRestTemplateAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
+            : base(discordHttpClient, jsonOptions)
         {
-            _discordHttpClient = discordHttpClient;
-            _jsonOptions = jsonOptions.Value;
         }
 
         /// <inheritdoc />
@@ -61,7 +57,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<ITemplate>
+            return this.DiscordHttpClient.GetAsync<ITemplate>
             (
                 $"guilds/templates/{templateCode}",
                 ct: ct
@@ -85,7 +81,7 @@ namespace Remora.Discord.Rest.API
 
             var iconData = packIcon.Entity;
 
-            return await _discordHttpClient.PostAsync<IGuild>
+            return await this.DiscordHttpClient.PostAsync<IGuild>
             (
                 $"guilds/templates/{templateCode}",
                 b => b.WithJson
@@ -107,7 +103,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.GetAsync<IReadOnlyList<ITemplate>>
+            return this.DiscordHttpClient.GetAsync<IReadOnlyList<ITemplate>>
             (
                 $"guilds/{guildID}/templates",
                 ct: ct
@@ -123,7 +119,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PostAsync<ITemplate>
+            return this.DiscordHttpClient.PostAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates",
                 b => b.WithJson
@@ -131,7 +127,7 @@ namespace Remora.Discord.Rest.API
                     j =>
                     {
                         j.WriteString("name", name);
-                        j.Write("description", description, _jsonOptions);
+                        j.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -146,7 +142,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PutAsync<ITemplate>
+            return this.DiscordHttpClient.PutAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
                 ct: ct
@@ -163,7 +159,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.PatchAsync<ITemplate>
+            return this.DiscordHttpClient.PatchAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
                 b => b.WithJson
@@ -171,7 +167,7 @@ namespace Remora.Discord.Rest.API
                     j =>
                     {
                         j.WriteString("name", name);
-                        j.Write("description", description, _jsonOptions);
+                        j.Write("description", description, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -186,7 +182,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return _discordHttpClient.DeleteAsync<ITemplate>
+            return this.DiscordHttpClient.DeleteAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
                 ct: ct

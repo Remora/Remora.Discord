@@ -38,8 +38,10 @@ namespace Remora.Discord.Rest.Tests.TestBases
         /// <returns>The created client.</returns>
         protected DiscordHttpClient CreateClient(Action<MockHttpMessageHandler> builder)
         {
-            var serviceCollection = new ServiceCollection();
-            var clientBuilder = serviceCollection.AddHttpClient<DiscordHttpClient>("Discord");
+            var serviceCollection = new ServiceCollection()
+                .AddTransient<DiscordHttpClient>();
+
+            var clientBuilder = serviceCollection.AddHttpClient("Discord");
             clientBuilder.ConfigurePrimaryHttpMessageHandler
             (
                 _ =>
