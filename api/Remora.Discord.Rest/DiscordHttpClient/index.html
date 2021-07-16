@@ -237,7 +237,7 @@ public class DiscordHttpClient</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/CA006FA1">DiscordHttpClient<wbr>(HttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/E025F7F6">DiscordHttpClient<wbr>(<wbr>I<wbr>Http<wbr>Client<wbr>Factory, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> class.
     </td>
@@ -262,16 +262,6 @@ public class DiscordHttpClient</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/699C884E">AddCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
-								<td>
-									<div>
-    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
-    The customization is removed when it is disposed.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/420BE8DE">DeleteAsync<wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
@@ -358,6 +348,16 @@ public class DiscordHttpClient</code></pre>
 								<td>
 									<div>
     Performs a PUT request to the Discord REST API at the given endpoint.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/4DEBAAD2">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
+								<td>
+									<div>
+    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
+    The customization is removed when it is disposed.
     </div>
 								</td>
 							</tr>

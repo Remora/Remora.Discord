@@ -76,6 +76,7 @@
 <p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
+<p><a href="#Properties">Properties</a></p>
 <p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -139,6 +140,7 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Class Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI">Discord<wbr>Rest<wbr>Application<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI">Discord<wbr>Rest<wbr>Audit<wbr>Log<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>
@@ -198,6 +200,7 @@
 								<dd>
 									<ul class="list-unstyled">										
 											<li>object</li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 							
@@ -213,7 +216,9 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type--&gt;Base0["object"]
+	Type--&gt;Base0["AbstractDiscordRestAPI"]
+	click Base0 "/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI"
+	Base0--&gt;Base1["object"]
 	Type-.-&gt;Interface0["IDiscordRestEmojiAPI"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestEmojiAPI"
 	Type["DiscordRestEmojiAPI"]
@@ -229,7 +234,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public class DiscordRestEmojiAPI : IDiscordRestEmojiAPI</code></pre>
+public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI</code></pre>
 
 
 
@@ -277,6 +282,41 @@ public class DiscordRestEmojiAPI : IDiscordRestEmojiAPI</code></pre>
 
 
 
+			<h1 id="Properties">Properties</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
+								<td>
+									<div>
+    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></td>
+								<td>Json<wbr>Serializer<wbr>Options</td>
+								<td>
+									<div>
+    Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 			<h1 id="Methods">Methods</h1>
 			<div class="box">
@@ -332,6 +372,17 @@ public class DiscordRestEmojiAPI : IDiscordRestEmojiAPI</code></pre>
 									<div>
     Modifies the given emoji.
     </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
+								<td>
+									<div>
+    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
+    The customization is removed when it is disposed.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
 							</tr>
 					</tbody></table>

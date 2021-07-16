@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordRestStageInstanceAPI.DiscordRestStageInstanceAPI(DiscordHttpClient) Constructor</title>
+        <title>Remora.Discord Documentation - API - CachingDiscordRestInviteAPI.CachingDiscordRestInviteAPI(DiscordHttpClient, IOptions&lt;JsonSerializerOptions&gt;, CacheService) Constructor</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,8 +72,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
-<p><a href="#Syntax">Syntax</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -135,17 +134,19 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI/801FC793">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/3972723D">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>, <wbr>CacheService)<wbr></a></li>
 			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI/F4F3E533">Create<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;<wbr>Stage<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI/9D0ABB4B">DeleteStageInstance<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI/E4B72A31">Get<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI/30586FFD">Modify<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Stage<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/A334C4F8">DeleteInviteAsync<wbr>(string, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/AA614237">GetInviteAsync<wbr>(string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></li>
 
 
                     </ul>
@@ -160,33 +161,29 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient)<wbr> <small>Constructor</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a>.</h3>
+	<h1>Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>, <wbr>CacheService)<wbr> <small>Constructor</small></h1>
 </section>
 <section class="content">
 	
 	
-		<h1 id="Summary">Summary</h1>
-	<div class="lead">
-    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">DiscordRestStageInstanceAPI</a></code> class.
-    </div>
-
+	
 		<div class="panel panel-default">
   			<div class="panel-body">	
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI">Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public DiscordRestStageInstanceAPI(DiscordHttpClient discordHttpClient)</code></pre>
+	<pre><code>public CachingDiscordRestInviteAPI(DiscordHttpClient discordHttpClient, IOptions&lt;JsonSerializerOptions&gt; jsonOptions, CacheService cacheService)</code></pre>
 
 
 
@@ -206,7 +203,17 @@
 					<tbody><tr>
 						<td>discordHttpClient</td>
 						<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
-						<td>The Discord HTTP client.</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>jsonOptions</td>
+						<td>IOptions<wbr>&lt;Json<wbr>Serializer<wbr>Options&gt;<wbr></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>cacheService</td>
+						<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a></td>
+						<td></td>
 					</tr>
 			</tbody></table>
 		</div>

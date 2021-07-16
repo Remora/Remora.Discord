@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordHttpClient.AddCustomization(Action&lt;RestRequestBuilder&gt;) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordHttpClient.DiscordHttpClient(IHttpClientFactory, IOptions&lt;JsonSerializerOptions&gt;) Constructor</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -140,9 +140,8 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/CA006FA1">DiscordHttpClient<wbr>(HttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/E025F7F6">DiscordHttpClient<wbr>(<wbr>I<wbr>Http<wbr>Client<wbr>Factory, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></li>
 			<li class="header">Method Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/699C884E">AddCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/420BE8DE">DeleteAsync<wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/6E515616">DeleteAsync<wbr>&lt;TEntity&gt;<wbr><wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>bool, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/79A1DF36">GetAsync<wbr>&lt;TEntity&gt;<wbr><wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>bool, <wbr>CancellationToken)<wbr></a></li>
@@ -153,6 +152,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/4F07C02B">PostAsync<wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/D10E8BC6">PutAsync<wbr>&lt;TEntity&gt;<wbr><wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>bool, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/F9229462">PutAsync<wbr>(string, <wbr>Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>?, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient/4DEBAAD2">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
 
 
                     </ul>
@@ -168,15 +168,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a>.</h3>
-	<h1>AddCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr> <small>Method</small></h1>
+	<h1>DiscordHttpClient<wbr>(<wbr>I<wbr>Http<wbr>Client<wbr>Factory, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr> <small>Constructor</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Creates a customization that will be applied to all requests made by the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code>.
-    The customization is removed when it is disposed.
+    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> class.
     </div>
 
 		<div class="panel panel-default">
@@ -194,7 +193,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public DiscordRequestCustomization AddCustomization(Action&lt;RestRequestBuilder&gt; requestCustomizer)</code></pre>
+	<pre><code>public DiscordHttpClient(IHttpClientFactory httpClientFactory, IOptions&lt;JsonSerializerOptions&gt; serializerOptions)</code></pre>
 
 
 
@@ -212,9 +211,14 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>requestCustomizer</td>
-						<td>Action<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a>&gt;<wbr></td>
-						<td>The action that customizes the request.</td>
+						<td>httpClientFactory</td>
+						<td>IHttpClientFactory</td>
+						<td>The Http client factory.</td>
+					</tr>
+					<tr>
+						<td>serializerOptions</td>
+						<td>IOptions<wbr>&lt;Json<wbr>Serializer<wbr>Options&gt;<wbr></td>
+						<td>The serialization options.</td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -231,8 +235,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordRequestCustomization">Discord<wbr>Request<wbr>Customization</a></td>
-					<td>The created customization.</td>
+					<td>void</td>
+					<td></td>
 				</tr>
 			</tbody></table>
 		</div>

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - CachingDiscordRestInviteAPI.CachingDiscordRestInviteAPI(DiscordHttpClient, CacheService) Constructor</title>
+        <title>Remora.Discord Documentation - API - AbstractDiscordRestAPI.DiscordHttpClient Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,15 +134,17 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/A9612B09">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>CacheService)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/128A336E">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></li>
 			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/A334C4F8">DeleteInviteAsync<wbr>(string, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI/AA614237">GetInviteAsync<wbr>(string, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
 
 
                     </ul>
@@ -158,64 +159,39 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>CacheService)<wbr> <small>Constructor</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a>.</h3>
+	<h1>DiscordHttpClient <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI">DiscordRestInviteAPI</a></code> class.
+    Gets the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></code> available to the API instance.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
+  			<div class="panel-body">
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.API">Remora<wbr>.Discord<wbr>.Caching<wbr>.API</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public CachingDiscordRestInviteAPI(DiscordHttpClient discordHttpClient, CacheService cacheService)</code></pre>
+	<pre><code>protected DiscordHttpClient DiscordHttpClient { get; }</code></pre>
 
 
 
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>discordHttpClient</td>
-						<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
-						<td>The Discord HTTP client.</td>
-					</tr>
-					<tr>
-						<td>cacheService</td>
-						<td><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a></td>
-						<td></td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -226,7 +202,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>void</td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
 					<td></td>
 				</tr>
 			</tbody></table>

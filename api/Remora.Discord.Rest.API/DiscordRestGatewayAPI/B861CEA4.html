@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordRestOAuth2API.DiscordRestOAuth2API(DiscordHttpClient) Constructor</title>
+        <title>Remora.Discord Documentation - API - DiscordRestGatewayAPI.DiscordRestGatewayAPI(DiscordHttpClient, IOptions&lt;JsonSerializerOptions&gt;) Constructor</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -137,13 +137,17 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API/F02A3A69">DiscordRestOAuth2API<wbr>(DiscordHttpClient)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI/B861CEA4">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr></a></li>
 			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API/718D713B">Get<wbr>Current<wbr>Authorization<wbr>Information<wbr>Async<wbr>(CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API/217E3B33">Get<wbr>Current<wbr>Bot<wbr>Application<wbr>Information<wbr>Async<wbr>(CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI/70DB3E28">GetGatewayAsync<wbr>(CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI/46F538E3">GetGatewayBotAsync<wbr>(CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/A015CCC3">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/D335E8AD">DiscordHttpClient</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></li>
 
 
                     </ul>
@@ -158,15 +162,15 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a>.</h3>
-	<h1>DiscordRestOAuth2API<wbr>(DiscordHttpClient)<wbr> <small>Constructor</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a>.</h3>
+	<h1>Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I<wbr>(DiscordHttpClient, <wbr>IOptions<wbr>&lt;<wbr>Json<wbr>Serializer<wbr>Options&gt;<wbr>)<wbr> <small>Constructor</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></code> class.
+    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">DiscordRestGatewayAPI</a></code> class.
     </div>
 
 		<div class="panel panel-default">
@@ -177,14 +181,14 @@
 						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API">DiscordRestOAuth2API</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI">Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient)</code></pre>
+	<pre><code>public DiscordRestGatewayAPI(DiscordHttpClient discordHttpClient, IOptions&lt;JsonSerializerOptions&gt; jsonOptions)</code></pre>
 
 
 
@@ -204,7 +208,12 @@
 					<tbody><tr>
 						<td>discordHttpClient</td>
 						<td><a href="/Remora.Discord/api/Remora.Discord.Rest/DiscordHttpClient">DiscordHttpClient</a></td>
-						<td>The Discord HTTP client.</td>
+						<td>The specialized Discord Http client.</td>
+					</tr>
+					<tr>
+						<td>jsonOptions</td>
+						<td>IOptions<wbr>&lt;Json<wbr>Serializer<wbr>Options&gt;<wbr></td>
+						<td>The JSON options.</td>
 					</tr>
 			</tbody></table>
 		</div>
