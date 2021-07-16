@@ -292,6 +292,7 @@ namespace Remora.Discord.API.Json
 
             var sequenceNumber = sequenceNumberProperty.GetInt32();
 
+            // TODO: This is problematic for injecting new event types in different assemblies
             var eventName = eventNameProperty.GetString();
             var eventNamespace = typeof(IHello).Namespace;
             var eventTypes = typeof(IHello).Assembly.ExportedTypes
