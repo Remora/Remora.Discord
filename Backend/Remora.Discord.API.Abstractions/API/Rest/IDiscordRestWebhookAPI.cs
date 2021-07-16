@@ -391,7 +391,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
-        /// TODO: Is the interaction ID not involved here?
         /// Deletes an interaction followup message.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>
