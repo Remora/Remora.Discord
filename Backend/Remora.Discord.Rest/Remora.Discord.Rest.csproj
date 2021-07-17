@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>17.1.1</Version>
+        <Version>18.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,8 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Rework lifetimes with respect to DiscordHttpClient.
+            Implement delegating methods on the API types for customizations.
         </PackageReleaseNotes>
     </PropertyGroup>
 
