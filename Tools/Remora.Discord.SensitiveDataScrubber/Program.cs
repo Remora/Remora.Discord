@@ -198,18 +198,23 @@ namespace Remora.Discord.SensitiveDataScrubber
                             }
                         }
 
-                        var nameRegex = patterns.Keys.FirstOrDefault(key => key.IsMatch(name));
-                        if (nameRegex is null)
+                        foreach (var key in patterns.Keys)
                         {
-                            continue;
-                        }
+                            if (!key.IsMatch(name))
+                            {
+                                continue;
+                            }
 
-                        var (valuePattern, replacement) = patterns[nameRegex];
-                        var valueString = value.ToJsonString(jsonOptions);
+                            var (valuePattern, replacement) = patterns[key];
+                            var valueString = value.ToJsonString(jsonOptions);
 
-                        if (valuePattern.IsMatch(valueString))
-                        {
+                            if (!valuePattern.IsMatch(valueString))
+                            {
+                                continue;
+                            }
+
                             replacements.Add(name, replacement);
+                            break;
                         }
                     }
 
@@ -241,18 +246,23 @@ namespace Remora.Discord.SensitiveDataScrubber
                         }
 
                         var name = jsonArray.GetPath().Split('.')[^1];
-                        var nameRegex = patterns.Keys.FirstOrDefault(key => key.IsMatch(name));
-                        if (nameRegex is null)
+                        foreach (var key in patterns.Keys)
                         {
-                            continue;
-                        }
+                            if (!key.IsMatch(name))
+                            {
+                                continue;
+                            }
 
-                        var (valuePattern, replacement) = patterns[nameRegex];
-                        var valueString = jsonObject.ToJsonString(jsonOptions);
+                            var (valuePattern, replacement) = patterns[key];
+                            var valueString = jsonObject.ToJsonString(jsonOptions);
 
-                        if (valuePattern.IsMatch(valueString))
-                        {
+                            if (!valuePattern.IsMatch(valueString))
+                            {
+                                continue;
+                            }
+
                             replacements.Add(i, replacement);
+                            break;
                         }
                     }
 
