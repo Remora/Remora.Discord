@@ -39,6 +39,7 @@ namespace Remora.Discord.API.Objects
         ActivityType Type,
         Optional<Uri?> Url = default,
         Optional<DateTimeOffset> CreatedAt = default,
+        Optional<Snowflake> ApplicationID = default,
         Optional<IActivityTimestamps> Timestamps = default,
         Optional<string?> Details = default,
         Optional<string?> State = default,

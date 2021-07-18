@@ -65,6 +65,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IActivityTimestamps> Timestamps { get; }
 
         /// <summary>
+        /// Gets the ID of the application the activity is associated with.
+        /// </summary>
+        Optional<Snowflake> ApplicationID { get; }
+
+        /// <summary>
         /// Gets a detail string about what the user is currently doing.
         /// </summary>
         Optional<string?> Details { get; }
