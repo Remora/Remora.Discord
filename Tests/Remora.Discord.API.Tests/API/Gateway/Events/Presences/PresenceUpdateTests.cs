@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Tests.Gateway.Events
             {
                 "id",           // undocumented field in "activities[]" objects
                 "sync_id",      // undocumented field in "activities[]" objects
-                "session_id",
+                "session_id"
             }
         };
     }
