@@ -37,7 +37,8 @@ namespace Remora.Discord.API.Tests.Objects
         {
             AllowMissing = new[]
             {
-                "id" // undocumented field
+                "id",        // undocumented field
+                "session_id" // undocumented field
             }
         };
     }
