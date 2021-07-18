@@ -2,7 +2,7 @@
   "op": 6,
   "d": {
     "token": "none",
-    "session_id": "evenmorerandomstring",
+    "session_id": "none",
     "seq": 1337
   },
   "s": null,

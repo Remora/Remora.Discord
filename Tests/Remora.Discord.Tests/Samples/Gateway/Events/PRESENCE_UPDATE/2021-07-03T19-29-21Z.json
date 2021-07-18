@@ -15,22 +15,22 @@
       {
         "type": 2,
         "timestamps": {
-          "start": 1625340561059,
-          "end": 1625340747899
+          "start": 0,
+          "end": 0
         },
         "sync_id": "5o0INADFgCAXCu7v7F6XbP",
-        "state": "MORGAN",
-        "session_id": "f80c26676285831d674236af3ec471d3",
+        "state": "none",
+        "session_id": "none",
         "party": {
-          "id": "spotify:225917460635713536"
+          "id": "none"
         },
         "name": "none",
-        "id": "spotify:1",
+        "id": "none",
         "flags": 48,
-        "details": "Alien",
-        "created_at": 1625340561504,
+        "details": "none",
+        "created_at": 0,
         "assets": {
-          "large_text": "Alien",
+          "large_text": "none",
           "large_image": "spotify:ab67616d0000b273980fc37cbe345a493156f379"
         }
       }

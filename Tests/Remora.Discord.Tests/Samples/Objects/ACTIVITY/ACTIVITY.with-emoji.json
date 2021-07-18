@@ -1,11 +1,11 @@
 {
   "type": 4,
   "name": "none",
-  "id": "custom",
+  "id": "none",
   "emoji": {
     "name": "none",
     "id": "999999999999999999",
     "animated": true
   },
-  "created_at": 1623780808682
+  "created_at": 0
 }

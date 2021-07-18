@@ -916,13 +916,13 @@
           {
             "type": 4,
             "name": "none",
-            "id": "custom",
+            "id": "none",
             "emoji": {
               "name": "none",
               "id": "999999999999999999",
               "animated": true
             },
-            "created_at": 1623780808682
+            "created_at": 0
           }
         ]
       },
@@ -937,10 +937,10 @@
         "activities": [
           {
             "type": 4,
-            "state": "\"state\": \"Registering\"",
+            "state": "none",
             "name": "none",
-            "id": "custom",
-            "created_at": 1623811942701
+            "id": "none",
+            "created_at": 0
           }
         ]
       },
@@ -956,11 +956,11 @@
           {
             "type": 0,
             "timestamps": {
-              "start": 1623889553613
+              "start": 0
             },
             "name": "none",
-            "id": "23a88ae01c3fbb05",
-            "created_at": 1623889553589
+            "id": "none",
+            "created_at": 0
           }
         ]
       },
@@ -975,15 +975,15 @@
         "activities": [
           {
             "type": 4,
-            "state": "why am i fps dorp",
+            "state": "none",
             "name": "none",
-            "id": "custom",
+            "id": "none",
             "emoji": {
               "name": "none",
               "id": "999999999999999999",
               "animated": false
             },
-            "created_at": 1623893547478
+            "created_at": 0
           }
         ]
       },
@@ -999,10 +999,10 @@
         "activities": [
           {
             "type": 4,
-            "state": "It be like that yanno",
+            "state": "none",
             "name": "none",
-            "id": "custom",
-            "created_at": 1623873199808
+            "id": "none",
+            "created_at": 0
           }
         ]
       },
@@ -1017,13 +1017,13 @@
         "activities": [
           {
             "type": 4,
-            "state": "Heir to the Mushroom Kingdom.",
+            "state": "none",
             "name": "none",
-            "id": "custom",
+            "id": "none",
             "emoji": {
               "name": "none"
             },
-            "created_at": 1623906254546
+            "created_at": 0
           }
         ]
       },
@@ -1049,13 +1049,13 @@
           {
             "type": 4,
             "name": "none",
-            "id": "custom",
+            "id": "none",
             "emoji": {
               "name": "none",
               "id": "999999999999999999",
               "animated": true
             },
-            "created_at": 1623886315212
+            "created_at": 0
           }
         ]
       },

@@ -15,31 +15,31 @@
       {
         "type": 4,
         "name": "none",
-        "id": "custom",
+        "id": "none",
         "emoji": {
           "name": "none"
         },
-        "created_at": 1626590327642
+        "created_at": 0
       },
       {
         "type": 0,
         "timestamps": {
-          "start": 1626590294067
+          "start": 0
         },
-        "state": "Workspace: MystPaste.NET.wiki",
-        "session_id": "537d1ffd21c15e204acbb34bbad2a94e",
+        "state": "none",
+        "session_id": "none",
         "name": "none",
-        "id": "8906294bb1e6443",
-        "details": "Editing Timestamp.md",
-        "created_at": 1626590327642,
+        "id": "none",
+        "details": "none",
+        "created_at": 0,
         "buttons": [
-          "View Repository"
+          "none"
         ],
         "assets": {
-          "small_text": "Visual Studio Code",
-          "small_image": "565945770067623946",
-          "large_text": "Editing a MARKDOWN file",
-          "large_image": "565945077491433494"
+          "small_text": "none",
+          "small_image": "999999999999999999",
+          "large_text": "none",
+          "large_image": "999999999999999999"
         },
         "application_id": "999999999999999999"
       }
