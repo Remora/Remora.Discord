@@ -1,0 +1,48 @@
+{
+  "t": "PRESENCE_UPDATE",
+  "s": 48,
+  "op": 0,
+  "d": {
+    "user": {
+      "id": "999999999999999999"
+    },
+    "status": "dnd",
+    "guild_id": "999999999999999999",
+    "client_status": {
+      "desktop": "dnd"
+    },
+    "activities": [
+      {
+        "type": 4,
+        "name": "none",
+        "id": "custom",
+        "emoji": {
+          "name": "none"
+        },
+        "created_at": 1626590327642
+      },
+      {
+        "type": 0,
+        "timestamps": {
+          "start": 1626590294067
+        },
+        "state": "Workspace: MystPaste.NET.wiki",
+        "session_id": "537d1ffd21c15e204acbb34bbad2a94e",
+        "name": "none",
+        "id": "8906294bb1e6443",
+        "details": "Editing Timestamp.md",
+        "created_at": 1626590327642,
+        "buttons": [
+          "View Repository"
+        ],
+        "assets": {
+          "small_text": "Visual Studio Code",
+          "small_image": "565945770067623946",
+          "large_text": "Editing a MARKDOWN file",
+          "large_image": "565945077491433494"
+        },
+        "application_id": "999999999999999999"
+      }
+    ]
+  }
+}
