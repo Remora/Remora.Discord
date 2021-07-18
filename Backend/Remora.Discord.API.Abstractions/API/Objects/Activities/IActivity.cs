@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -106,6 +107,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the custom buttons show in Rich Presence.
         /// </summary>
-        Optional<IReadOnlyList<IActivityButton>> Buttons { get; }
+        Optional<OneOf<IReadOnlyList<string>, IReadOnlyList<IActivityButton>>> Buttons { get; }
     }
 }
