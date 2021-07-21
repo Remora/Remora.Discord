@@ -80,6 +80,7 @@ namespace Remora.Discord.Rest.Extensions
             serviceCollection.TryAddTransient<IDiscordRestApplicationAPI, DiscordRestApplicationAPI>();
             serviceCollection.TryAddTransient<IDiscordRestOAuth2API, DiscordRestOAuth2API>();
             serviceCollection.TryAddTransient<IDiscordRestStageInstanceAPI, DiscordRestStageInstanceAPI>();
+            serviceCollection.TryAddTransient<IDiscordRestStickerAPI, DiscordRestStickerAPI>();
 
             var rateLimitPolicy = DiscordRateLimitPolicy.Create();
             var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);

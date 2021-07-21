@@ -942,6 +942,9 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IStickerPack, StickerPack>()
                 .WithPropertyName(s => s.SKUID, "sku_id");
+
+            options.AddDataObjectConverter<INitroStickerPacks, NitroStickerPacks>();
+
             return options;
         }
     }

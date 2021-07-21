@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a pack of stickers.
     /// </summary>
+    [PublicAPI]
     public interface IStickerPack
     {
         /// <summary>

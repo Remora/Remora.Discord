@@ -1,5 +1,5 @@
 //
-//  StickerPack.cs
+//  INitroStickerPacks.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,21 +22,18 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStickerPack" />
+    /// <summary>
+    /// Represents a set of sticker packs available to Nitro subscribers.
+    /// </summary>
     [PublicAPI]
-    public record StickerPack
-    (
-        Snowflake ID,
-        IReadOnlyList<ISticker> Stickers,
-        string Name,
-        Snowflake SKUID,
-        Optional<Snowflake> CoverStickerID,
-        string Description,
-        Snowflake BannerAssetID
-    ) : IStickerPack;
+    public interface INitroStickerPacks
+    {
+        /// <summary>
+        /// Gets the sticker packs.
+        /// </summary>
+        IReadOnlyList<IStickerPack> StickerPacks { get; }
+    }
 }
