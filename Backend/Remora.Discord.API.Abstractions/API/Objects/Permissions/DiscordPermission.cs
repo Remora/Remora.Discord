@@ -184,9 +184,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         ManageWebhooks = 29,
 
         /// <summary>
-        /// Allows management and editing of emojis.
+        /// Allows management and editing of emojis and stickers.
         /// </summary>
-        ManageEmojis = 30,
+        ManageEmojisAndStickers = 30,
 
         /// <summary>
         /// Allows usage of slash commands.

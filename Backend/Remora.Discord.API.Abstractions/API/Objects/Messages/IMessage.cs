@@ -192,6 +192,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the stickers sent with the message.
         /// </summary>
-        Optional<IReadOnlyList<IMessageStickerItem>> StickerItems { get; }
+        Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
     }
 }

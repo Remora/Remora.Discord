@@ -433,6 +433,7 @@ namespace Remora.Discord.Rest.API
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<Snowflake>> stickerIds = default,
             CancellationToken ct = default
         )
         {
@@ -462,6 +463,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("message_reference", messageReference, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
+                            json.Write("sticker_ids", stickerIds, this.JsonOptions);
                         }
                     );
                 },

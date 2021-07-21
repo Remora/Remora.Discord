@@ -1,5 +1,5 @@
 //
-//  CDNImageFormat.cs
+//  StickerFormatType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,37 +22,27 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates the image formats supported by the CDN.
+    /// Enumerates sticker format types.
     /// </summary>
     [PublicAPI]
-    public enum CDNImageFormat
+    public enum StickerFormatType
     {
         /// <summary>
-        /// Requests a JPEG image.
+        /// The sticker is a PNG image.
         /// </summary>
-        JPEG,
+        PNG = 1,
 
         /// <summary>
-        /// Requests a PNG image.
+        /// The sticker is an APNG image.
         /// </summary>
-        PNG,
+        APNG = 2,
 
         /// <summary>
-        /// Requests a WebP image.
+        /// The sticker is a Discord "Lottie" sticker.
         /// </summary>
-        WebP,
-
-        /// <summary>
-        /// Requests a GIF image.
-        /// </summary>
-        GIF,
-
-        /// <summary>
-        /// Requests a JSON-formatted image description.
-        /// </summary>
-        Lottie
+        Lottie = 3
     }
 }

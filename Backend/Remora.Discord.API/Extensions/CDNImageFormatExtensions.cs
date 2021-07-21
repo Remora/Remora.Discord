@@ -1,5 +1,5 @@
 //
-//  MessageStickerFormatType.cs
+//  CDNImageFormatExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,29 +20,33 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Extensions
 {
     /// <summary>
-    /// Enumerates sticker format types.
+    /// Defines extension methods for the <see cref="CDNImageFormat"/> enumeration.
     /// </summary>
     [PublicAPI]
-    public enum MessageStickerFormatType
+    public static class CDNImageFormatExtensions
     {
         /// <summary>
-        /// The sticker is a PNG image.
+        /// Maps the image format to a file extension.
         /// </summary>
-        PNG = 1,
-
-        /// <summary>
-        /// The sticker is an APNG image.
-        /// </summary>
-        APNG = 2,
-
-        /// <summary>
-        /// The sticker is a Discord "Lottie" sticker.
-        /// </summary>
-        Lottie = 3
+        /// <param name="format">The format.</param>
+        /// <returns>The extension.</returns>
+        public static string ToFileExtension(this CDNImageFormat format)
+        {
+            return format switch
+            {
+                CDNImageFormat.JPEG => "jpeg",
+                CDNImageFormat.PNG => "png",
+                CDNImageFormat.WebP => "webp",
+                CDNImageFormat.GIF => "gif",
+                CDNImageFormat.Lottie => "json",
+                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+            };
+        }
     }
 }

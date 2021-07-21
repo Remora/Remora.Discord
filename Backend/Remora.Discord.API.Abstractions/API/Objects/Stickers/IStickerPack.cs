@@ -1,5 +1,5 @@
 //
-//  CDNImageFormat.cs
+//  IStickerPack.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,49 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Collections.Generic;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates the image formats supported by the CDN.
+    /// Represents a pack of stickers.
     /// </summary>
-    [PublicAPI]
-    public enum CDNImageFormat
+    public interface IStickerPack
     {
         /// <summary>
-        /// Requests a JPEG image.
+        /// Gets the ID of the sticker pack.
         /// </summary>
-        JPEG,
+        Snowflake ID { get; }
 
         /// <summary>
-        /// Requests a PNG image.
+        /// Gets the stickers in the pack.
         /// </summary>
-        PNG,
+        IReadOnlyList<ISticker> Stickers { get; }
 
         /// <summary>
-        /// Requests a WebP image.
+        /// Gets the name of the sticker pack.
         /// </summary>
-        WebP,
+        string Name { get; }
 
         /// <summary>
-        /// Requests a GIF image.
+        /// Gets the sticker pack's store ID.
         /// </summary>
-        GIF,
+        Snowflake SKUID { get; }
 
         /// <summary>
-        /// Requests a JSON-formatted image description.
+        /// Gets the ID of the sticker in the pack which is shown as the pack's icon.
         /// </summary>
-        Lottie
+        Optional<Snowflake> CoverStickerID { get; }
+
+        /// <summary>
+        /// Gets the description of the pack.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// Gets the ID of the sticker pack's banner image.
+        /// </summary>
+        Snowflake BannerAssetID { get; }
     }
 }

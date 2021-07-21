@@ -201,6 +201,7 @@ namespace Remora.Discord.Caching.API
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<Snowflake>> stickerIds = default,
             CancellationToken ct = default
         )
         {
@@ -215,6 +216,7 @@ namespace Remora.Discord.Caching.API
                 allowedMentions,
                 messageReference,
                 components,
+                stickerIds,
                 ct
             );
 

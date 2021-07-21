@@ -269,5 +269,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the stage instances in the guild.
         /// </summary>
         Optional<IReadOnlyList<IStageInstance>> StageInstances { get; }
+
+        /// <summary>
+        /// Gets the stickers in the guild.
+        /// </summary>
+        Optional<IReadOnlyList<ISticker>> Stickers { get; }
     }
 }

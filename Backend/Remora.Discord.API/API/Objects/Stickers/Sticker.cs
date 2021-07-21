@@ -1,5 +1,5 @@
 //
-//  MessageSticker.cs
+//  Sticker.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,19 +28,20 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageSticker" />
+    /// <inheritdoc cref="ISticker" />
     [PublicAPI]
-    public record MessageSticker
+    public record Sticker
     (
         Snowflake ID,
         Optional<Snowflake> PackID,
         string Name,
         string Description,
         string Tags,
-        MessageStickerFormatType FormatType,
+        StickerType Type,
+        StickerFormatType FormatType,
         Optional<bool> IsAvailable = default,
         Optional<Snowflake> GuildID = default,
         Optional<IUser> User = default,
         Optional<int> SortValue = default
-    ) : IMessageSticker;
+    ) : ISticker;
 }

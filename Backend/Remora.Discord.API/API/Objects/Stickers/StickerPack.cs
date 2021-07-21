@@ -1,5 +1,5 @@
 //
-//  MessageStickerItem.cs
+//  StickerPack.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageStickerItem" />
-    [PublicAPI]
-    public record MessageStickerItem(Snowflake ID, string Name, MessageStickerFormatType FormatType)
-        : IMessageStickerItem;
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStickerPack" />
+    public record StickerPack
+    (
+        Snowflake ID,
+        IReadOnlyList<ISticker> Stickers,
+        string Name,
+        Snowflake SKUID,
+        Optional<Snowflake> CoverStickerID,
+        string Description,
+        Snowflake BannerAssetID
+    ) : IStickerPack;
 }

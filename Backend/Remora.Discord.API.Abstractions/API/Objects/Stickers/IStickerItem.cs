@@ -1,5 +1,5 @@
 //
-//  IMessageSticker.cs
+//  IStickerItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,10 +26,10 @@ using Remora.Discord.Core;
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a sticker sent with a message.
+    /// Represents a sticker in a message.
     /// </summary>
     [PublicAPI]
-    public interface IMessageSticker
+    public interface IStickerItem
     {
         /// <summary>
         /// Gets the ID of the sticker.
@@ -37,48 +37,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         Snowflake ID { get; }
 
         /// <summary>
-        /// Gets the ID of the sticker pack.
-        /// </summary>
-        Optional<Snowflake> PackID { get; }
-
-        /// <summary>
         /// Gets the name of the sticker.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Gets the description of the sticker.
-        /// </summary>
-        string Description { get; }
-
-        /// <summary>
-        /// Gets one or more comma-separated unicode emojis representing the sticker's expression.
-        /// </summary>
-        string Tags { get; }
-
-        /// <summary>
         /// Gets the format of the sticker.
         /// </summary>
-        MessageStickerFormatType FormatType { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the sticker is available.
-        /// </summary>
-        Optional<bool> IsAvailable { get; }
-
-        /// <summary>
-        /// Gets the ID of the guild the sticker belongs to.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
-
-        /// <summary>
-        /// Gets the user that uploaded the sticker.
-        /// </summary>
-        Optional<IUser> User { get; }
-
-        /// <summary>
-        /// Gets the sticker's sorting order within a sticker pack.
-        /// </summary>
-        Optional<int> SortValue { get; }
+        StickerFormatType FormatType { get; }
     }
 }

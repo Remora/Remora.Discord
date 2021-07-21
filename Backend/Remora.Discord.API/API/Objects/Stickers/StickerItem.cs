@@ -1,5 +1,5 @@
 //
-//  CDNImageFormat.cs
+//  StickerItem.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,38 +21,13 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Objects
 {
-    /// <summary>
-    /// Enumerates the image formats supported by the CDN.
-    /// </summary>
+    /// <inheritdoc cref="IStickerItem" />
     [PublicAPI]
-    public enum CDNImageFormat
-    {
-        /// <summary>
-        /// Requests a JPEG image.
-        /// </summary>
-        JPEG,
-
-        /// <summary>
-        /// Requests a PNG image.
-        /// </summary>
-        PNG,
-
-        /// <summary>
-        /// Requests a WebP image.
-        /// </summary>
-        WebP,
-
-        /// <summary>
-        /// Requests a GIF image.
-        /// </summary>
-        GIF,
-
-        /// <summary>
-        /// Requests a JSON-formatted image description.
-        /// </summary>
-        Lottie
-    }
+    public record StickerItem(Snowflake ID, string Name, StickerFormatType FormatType)
+        : IStickerItem;
 }

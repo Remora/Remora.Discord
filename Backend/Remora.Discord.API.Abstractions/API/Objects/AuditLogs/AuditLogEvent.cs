@@ -218,6 +218,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A stage instance was deleted.
         /// </summary>
-        StageInstanceDelete = 85
+        StageInstanceDelete = 85,
+
+        /// <summary>
+        /// A sticker was created.
+        /// </summary>
+        StickerCreate = 90,
+
+        /// <summary>
+        /// A sticker was updated.
+        /// </summary>
+        StickerUpdate = 91,
+
+        /// <summary>
+        /// A sticker was deleted.
+        /// </summary>
+        StickerDelete = 92
     }
 }

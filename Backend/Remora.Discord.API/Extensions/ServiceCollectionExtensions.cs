@@ -88,7 +88,8 @@ namespace Remora.Discord.API.Extensions
                             .AddInteractionObjectConverters()
                             .AddOAuth2ObjectConverters()
                             .AddTeamObjectConverters()
-                            .AddStageInstanceObjectConverters();
+                            .AddStageInstanceObjectConverters()
+                            .AddStickerObjectConverters();
 
                         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
@@ -627,11 +628,6 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IMessageActivity, MessageActivity>();
             options.AddDataObjectConverter<IMessageReference, MessageReference>();
 
-            options.AddDataObjectConverter<IMessageSticker, MessageSticker>()
-                .WithPropertyName(s => s.IsAvailable, "available");
-
-            options.AddDataObjectConverter<IMessageStickerItem, MessageStickerItem>();
-
             return options;
         }
 
@@ -929,6 +925,23 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IStageInstance, StageInstance>()
                 .WithPropertyName(i => i.IsDiscoveryDisabled, "discoverable_disabled");
 
+            return options;
+        }
+
+        /// <summary>
+        /// Adds the JSON converters that handle sticker objects.
+        /// </summary>
+        /// <param name="options">The serializer options.</param>
+        /// <returns>The options, with the converters added.</returns>
+        private static JsonSerializerOptions AddStickerObjectConverters(this JsonSerializerOptions options)
+        {
+            options.AddDataObjectConverter<ISticker, Sticker>()
+                .WithPropertyName(s => s.IsAvailable, "available");
+
+            options.AddDataObjectConverter<IStickerItem, StickerItem>();
+
+            options.AddDataObjectConverter<IStickerPack, StickerPack>()
+                .WithPropertyName(s => s.SKUID, "sku_id");
             return options;
         }
     }

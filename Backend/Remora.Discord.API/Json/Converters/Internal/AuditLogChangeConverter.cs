@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
@@ -88,12 +89,17 @@ namespace Remora.Discord.API.Json
             { "nick", typeof(string) },
             { "avatar_hash", typeof(IImageHash) },
             { "id", typeof(Snowflake) },
-            { "type", typeof(string) },
+            { "type", typeof(OneOf<int, string>) },
             { "enable_emoticons", typeof(bool) },
             { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
             { "expire_grace_period", typeof(TimeSpan) },
             { "user_limit", typeof(int) },
-            { "privacy_level", typeof(StagePrivacyLevel) }
+            { "privacy_level", typeof(StagePrivacyLevel) },
+            { "tags", typeof(string) },
+            { "format_type", typeof(CDNImageFormat) },
+            { "asset", typeof(string) },
+            { "available", typeof(bool) },
+            { "guild_id", typeof(Snowflake) }
         };
 
         private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =

@@ -1,5 +1,5 @@
 //
-//  CDNImageFormat.cs
+//  StickerType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Enumerates the image formats supported by the CDN.
+    /// Enumerates various types of stickers.
     /// </summary>
-    [PublicAPI]
-    public enum CDNImageFormat
+    public enum StickerType
     {
         /// <summary>
-        /// Requests a JPEG image.
+        /// An official sticker in a pack, part of Nitro or in a removed purchasable pack.
         /// </summary>
-        JPEG,
+        Standard = 1,
 
         /// <summary>
-        /// Requests a PNG image.
+        /// A sticker uploaded to a boosted guild for the guild's members.
         /// </summary>
-        PNG,
-
-        /// <summary>
-        /// Requests a WebP image.
-        /// </summary>
-        WebP,
-
-        /// <summary>
-        /// Requests a GIF image.
-        /// </summary>
-        GIF,
-
-        /// <summary>
-        /// Requests a JSON-formatted image description.
-        /// </summary>
-        Lottie
+        Guild = 2
     }
 }

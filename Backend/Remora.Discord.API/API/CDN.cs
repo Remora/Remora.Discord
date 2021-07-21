@@ -25,6 +25,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
+using Remora.Discord.API.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
@@ -110,7 +111,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"emojis/{emojiID}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"emojis/{emojiID}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -189,7 +190,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"icons/{guildID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"icons/{guildID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -261,7 +262,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"splashes/{guildID}/{splashHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"splashes/{guildID}/{splashHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -333,7 +334,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -405,7 +406,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"banners/{guildID}/{bannerHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"banners/{guildID}/{bannerHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -469,7 +470,7 @@ namespace Remora.Discord.API
             var discriminatorModulus = userDiscriminator % 5;
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"embed/avatars/{discriminatorModulus}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"embed/avatars/{discriminatorModulus}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -548,7 +549,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"avatars/{userID}/{avatarHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"avatars/{userID}/{avatarHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -620,7 +621,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-icons/{applicationID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"app-icons/{applicationID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -692,7 +693,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-icons/{applicationID}/{coverHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"app-icons/{applicationID}/{coverHash.Value}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -758,7 +759,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-assets/{applicationID}/{assetID}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"app-assets/{applicationID}/{assetID}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -828,7 +829,70 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given sticker pack's banner.
+        /// </summary>
+        /// <param name="stickerPack">The sticker pack.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetStickerPackBannerUrl
+        (
+            IStickerPack stickerPack,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        ) => GetStickerPackBannerUrl(stickerPack.BannerAssetID, imageFormat, imageSize);
+
+        /// <summary>
+        /// Gets the CDN URI of the given sticker pack's banner.
+        /// </summary>
+        /// <param name="bannerAssetId">The asset ID of the sticker pack.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetStickerPackBannerUrl
+        (
+            Snowflake bannerAssetId,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                // Yes, all stickers are stored under this hardcoded application. This is intentional.
+                Path = $"app-assets/710982414301790216/store/icons/{bannerAssetId}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -900,7 +964,68 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"team-icons/{teamID}/{iconHash.Value}.{imageFormat.Value.ToString().ToLowerInvariant()}"
+                Path = $"team-icons/{teamID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given sticker.
+        /// </summary>
+        /// <param name="sticker">The sticker pack.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetStickerUrl
+        (
+            ISticker sticker,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        ) => GetStickerUrl(sticker.ID, imageFormat, imageSize);
+
+        /// <summary>
+        /// Gets the CDN URI of the given sticker.
+        /// </summary>
+        /// <param name="stickerId">The ID of the sticker.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetStickerUrl
+        (
+            Snowflake stickerId,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.Lottie
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"stickers/{stickerId}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)

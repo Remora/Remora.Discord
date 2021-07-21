@@ -333,6 +333,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="allowedMentions">An object describing the allowed mention types.</param>
         /// <param name="messageReference">A reference to another message.</param>
         /// <param name="components">The components of the message.</param>
+        /// <param name="stickerIds">The stickers to send with the message (max 3).</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> CreateMessageAsync
@@ -346,6 +347,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<Snowflake>> stickerIds = default,
             CancellationToken ct = default
         );
 
