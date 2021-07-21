@@ -58,6 +58,7 @@ namespace Remora.Discord.API.Objects
         Optional<int> MemberCount = default,
         Optional<IThreadMetadata> ThreadMetadata = default,
         Optional<IThreadMember> Member = default,
-        Optional<TimeSpan> DefaultAutoArchiveDuration = default
+        Optional<TimeSpan> DefaultAutoArchiveDuration = default,
+        Optional<IDiscordPermissionSet> Permissions = default
     ) : IPartialChannel;
 }

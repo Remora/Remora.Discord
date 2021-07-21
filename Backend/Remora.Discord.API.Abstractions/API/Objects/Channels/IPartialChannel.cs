@@ -160,5 +160,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// 4320, or 10080.
         /// </summary>
         Optional<TimeSpan> DefaultAutoArchiveDuration { get; }
+
+        /// <summary>
+        /// Gets the computed permission set for the invoking user in the channel. Typically present when the channel is
+        /// resolved via a slash command interaction.
+        /// </summary>
+        Optional<IDiscordPermissionSet> Permissions { get; }
     }
 }

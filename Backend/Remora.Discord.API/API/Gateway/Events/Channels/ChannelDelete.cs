@@ -58,7 +58,8 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         Optional<int> MemberCount = default,
         Optional<IThreadMetadata> ThreadMetadata = default,
         Optional<IThreadMember> Member = default,
-        Optional<TimeSpan> DefaultAutoArchiveDuration = default
+        Optional<TimeSpan> DefaultAutoArchiveDuration = default,
+        Optional<IDiscordPermissionSet> Permissions = default
     ) :
         Channel
         (
@@ -86,6 +87,7 @@ namespace Remora.Discord.API.Gateway.Events.Channels
             MemberCount,
             ThreadMetadata,
             Member,
-            DefaultAutoArchiveDuration
+            DefaultAutoArchiveDuration,
+            Permissions
         ), IChannelDelete;
 }
