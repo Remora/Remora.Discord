@@ -1,5 +1,5 @@
 //
-//  MessageStickerItemTests.cs
+//  StickerTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,7 +26,7 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
-    public class MessageStickerItemTests : ObjectTestBase<IMessageStickerItem>
+    public class StickerTests : ObjectTestBase<ISticker>
     {
     }
 }
