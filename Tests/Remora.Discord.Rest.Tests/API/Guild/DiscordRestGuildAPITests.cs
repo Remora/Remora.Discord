@@ -308,11 +308,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var preferredLocale = "dd";
                 var features = Array.Empty<GuildFeature>();
                 var description = "aaa";
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .WithJson
                     (
                         j => j.IsObject
@@ -365,7 +367,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     publicUpdatesChannelID,
                     preferredLocale,
                     features,
-                    description
+                    description,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -582,11 +585,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var permissionOverwrites = new List<IPermissionOverwrite>();
                 var parentId = new Snowflake(1);
                 var nsfw = true;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -615,7 +620,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     position: position,
                     permissionOverwrites: permissionOverwrites,
                     parentID: parentId,
-                    isNsfw: nsfw
+                    isNsfw: nsfw,
+                    reason: reason
                 );
 
                 ResultAssert.Successful(result);
@@ -638,11 +644,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var permissionOverwrites = new List<IPermissionOverwrite>();
                 var parentId = new Snowflake(1);
                 var nsfw = true;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
@@ -657,7 +665,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     position: position,
                     permissionOverwrites: permissionOverwrites,
                     parentID: parentId,
-                    isNsfw: nsfw
+                    isNsfw: nsfw,
+                    reason: reason
                 );
 
                 ResultAssert.Successful(result);
@@ -692,11 +701,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     (new Snowflake(3), 3, false, new Snowflake(0)),
                     (new Snowflake(4), 4, false, new Snowflake(0))
                 };
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/channels")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsArray
@@ -756,7 +767,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps);
+                var result = await api.ModifyGuildChannelPositionsAsync(guildId, swaps, reason);
 
                 ResultAssert.Successful(result);
             }
@@ -1080,11 +1091,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var mute = true;
                 var deaf = true;
                 var channelId = new Snowflake(2);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1108,7 +1121,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     roles,
                     mute,
                     deaf,
-                    channelId
+                    channelId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1129,10 +1143,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var nick = "cdd";
+                var reason = "test";
+
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/@me/nick")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1147,7 +1164,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var result = await api.ModifyCurrentUserNickAsync
                 (
                     guildId,
-                    nick
+                    nick,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1169,11 +1187,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var guildId = new Snowflake(0);
                 var userId = new Snowflake(1);
                 var roleId = new Snowflake(2);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
@@ -1181,7 +1201,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     guildId,
                     userId,
-                    roleId
+                    roleId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1203,11 +1224,17 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var guildId = new Snowflake(0);
                 var userId = new Snowflake(1);
                 var roleId = new Snowflake(2);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}")
+                        .Expect
+                        (
+                            HttpMethod.Delete,
+                            $"{Constants.BaseURL}guilds/{guildId}/members/{userId}/roles/{roleId}"
+                        )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
@@ -1215,7 +1242,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     guildId,
                     userId,
-                    roleId
+                    roleId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1236,18 +1264,21 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var userId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/members/{userId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.RemoveGuildMemberAsync
                 (
                     guildId,
-                    userId
+                    userId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1337,13 +1368,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     b => b
                         .Expect(HttpMethod.Put, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
                             (
                                 o => o
                                     .WithProperty("delete_message_days", p => p.Is(deleteMessageDays))
-                                    .WithProperty("reason", p => p.Is(reason))
                             )
                         )
                         .Respond(HttpStatusCode.NoContent)
@@ -1375,18 +1406,21 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var userId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/bans/{userId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.RemoveGuildBanAsync
                 (
                     guildId,
-                    userId
+                    userId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1441,11 +1475,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var color = Color.Aqua;
                 var hoist = true;
                 var mentionable = true;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/roles")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1468,7 +1504,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     permissions,
                     color,
                     hoist,
-                    mentionable
+                    mentionable,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1495,11 +1532,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     (new Snowflake(3), 3),
                     (new Snowflake(4), 4)
                 };
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/roles")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsArray
@@ -1554,7 +1593,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var result = await api.ModifyGuildRolePositionsAsync
                 (
                     guildId,
-                    swaps
+                    swaps,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1580,11 +1620,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var color = Color.Aqua;
                 var hoist = true;
                 var mentionable = true;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/roles/{roleId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1608,7 +1650,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     permissions,
                     color,
                     hoist,
-                    mentionable
+                    mentionable,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1629,18 +1672,21 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var roleId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/roles/{roleId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
                 var result = await api.DeleteGuildRoleAsync
                 (
                     guildId,
-                    roleId
+                    roleId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1716,6 +1762,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/prune")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1724,7 +1771,6 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                     .WithProperty("days", p => p.Is(days))
                                     .WithProperty("compute_prune_count", p => p.Is(computePruneCount))
                                     .WithProperty("include_roles", p => p.IsArray(a => a.WithCount(0)))
-                                    .WithProperty("reason", p => p.Is(reason))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IPruneCount)])
@@ -1880,11 +1926,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var guildId = new Snowflake(0);
                 var enabled = true;
                 var channelId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/widget")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1901,7 +1949,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 (
                     guildId,
                     enabled,
-                    channelId
+                    channelId,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -2017,11 +2066,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var isEnabled = true;
                 var welcomeChannels = Array.Empty<IWelcomeScreenChannel>();
                 var description = "aaa";
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/welcome-screen")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -2040,7 +2091,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     guildId,
                     isEnabled,
                     welcomeChannels,
-                    description
+                    description,
+                    reason
                 );
 
                 ResultAssert.Successful(result);

@@ -83,10 +83,11 @@ namespace Remora.Discord.Caching.API
         public override async Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteInvite = await base.DeleteInviteAsync(inviteCode, ct);
+            var deleteInvite = await base.DeleteInviteAsync(inviteCode, reason, ct);
             if (!deleteInvite.IsSuccess)
             {
                 return deleteInvite;

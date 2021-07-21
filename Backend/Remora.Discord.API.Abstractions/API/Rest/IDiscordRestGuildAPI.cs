@@ -122,6 +122,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="preferredLocale">The new preferred locale.</param>
         /// <param name="features">The new guild features.</param>
         /// <param name="description">The new discovery description.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IGuild>> ModifyGuildAsync
@@ -145,6 +146,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string?> preferredLocale = default,
             Optional<IReadOnlyList<GuildFeature>> features = default,
             Optional<string?> description = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -182,6 +184,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="permissionOverwrites">The permission overwrites of the new channel.</param>
         /// <param name="parentID">The ID of the parent category of the new channel.</param>
         /// <param name="isNsfw">Whether the new channel is NSFW.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> CreateGuildChannelAsync
@@ -197,6 +200,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
             Optional<Snowflake> parentID = default,
             Optional<bool> isNsfw = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -205,6 +209,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="positionModifications">The new positions of the modified channels.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> ModifyGuildChannelPositionsAsync
@@ -219,6 +224,7 @@ namespace Remora.Discord.API.Abstractions.Rest
                     Snowflake? ParentID
                 )
             > positionModifications,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -305,6 +311,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isMuted">The new mute state of the user.</param>
         /// <param name="isDeafened">The new deaf state of the user.</param>
         /// <param name="channelID">The new voice channel of the user.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A rest result which may or may not have succeeded.</returns>
         Task<Result> ModifyGuildMemberAsync
@@ -316,6 +323,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool?> isMuted = default,
             Optional<bool?> isDeafened = default,
             Optional<Snowflake?> channelID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -324,12 +332,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="nickname">The new nickname.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -339,6 +349,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user.</param>
         /// <param name="roleID">The ID of the role.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> AddGuildMemberRoleAsync
@@ -346,6 +357,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake guildID,
             Snowflake userID,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -355,6 +367,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user.</param>
         /// <param name="roleID">The ID of the role.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> RemoveGuildMemberRoleAsync
@@ -362,6 +375,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake guildID,
             Snowflake userID,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -370,12 +384,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> RemoveGuildMemberAsync
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -411,7 +427,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user.</param>
         /// <param name="deleteMessageDays">The number of days to delete messages for (0-7).</param>
-        /// <param name="reason">The reason for the ban.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> CreateGuildBanAsync
@@ -428,12 +444,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="userID">The ID of the user.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> RemoveGuildBanAsync
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -458,6 +476,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="colour">The colour of the new role.</param>
         /// <param name="isHoisted">Whether the new role is displayed separately in the sidebar.</param>
         /// <param name="isMentionable">Whether the new role is mentionable.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IRole>> CreateGuildRoleAsync
@@ -468,6 +487,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
             Optional<bool> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -476,12 +496,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="modifiedPositions">The modified role positions.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -495,6 +517,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="color">The new color of the role.</param>
         /// <param name="isHoisted">Whether the role is displayed separately in the sidebar.</param>
         /// <param name="isMentionable">Whether the role is mentionable.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IRole>> ModifyGuildRoleAsync
@@ -506,6 +529,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Color?> color = default,
             Optional<bool?> isHoisted = default,
             Optional<bool?> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -514,12 +538,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildId">The ID of the guild.</param>
         /// <param name="roleID">The ID of the role.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> DeleteGuildRoleAsync
         (
             Snowflake guildId,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -546,7 +572,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="days">The days a user needs to have been inactive for them to be pruned.</param>
         /// <param name="computePruneCount">Whether the number of pruned users should be computed and returned.</param>
         /// <param name="includeRoles">The roles that should be included in a prune operation.</param>
-        /// <param name="reason">The reason to display in the audit log.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<Result<IPruneCount>> BeginGuildPruneAsync
@@ -615,6 +641,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="isEnabled">Whether the widget is enabled.</param>
         /// <param name="channelID">The ID of the channel invites will be generated for.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
@@ -622,6 +649,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake guildID,
             Optional<bool> isEnabled = default,
             Optional<Snowflake?> channelID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -670,6 +698,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isEnabled">Whether the welcome screen is enabled.</param>
         /// <param name="welcomeChannels">The channels displayed.</param>
         /// <param name="description">The guild's description.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<Result<IWelcomeScreen>> ModifyGuildWelcomeScreenAsync
@@ -678,6 +707,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool?> isEnabled = default,
             Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
             Optional<string?> description = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 

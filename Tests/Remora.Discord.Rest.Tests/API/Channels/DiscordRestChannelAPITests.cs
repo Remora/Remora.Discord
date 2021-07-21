@@ -132,11 +132,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
                 var defaultAutoArchiveDuration = TimeSpan.FromMinutes(1440);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j
@@ -168,7 +170,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     rateLimitPerUser,
                     permissionOverwrites,
                     parentId,
-                    defaultAutoArchiveDuration
+                    defaultAutoArchiveDuration,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -190,11 +193,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var parentId = new Snowflake(1);
                 var rtcRegion = "somewhere";
                 var videoQualityMode = VideoQualityMode.Auto;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j
@@ -224,7 +229,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     permissionOverwrites,
                     parentId,
                     rtcRegion,
-                    videoQualityMode
+                    videoQualityMode,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -243,11 +249,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var autoArchiveDuration = TimeSpan.FromMinutes(1440);
                 var isLocked = false;
                 var rateLimitPerUser = 10;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j
@@ -271,7 +279,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     isArchived,
                     autoArchiveDuration,
                     isLocked,
-                    rateLimitPerUser
+                    rateLimitPerUser,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -446,15 +455,17 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             public async Task PerformsRequestCorrectly()
             {
                 var channelId = new Snowflake(0);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}channels/{channelId.ToString()}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.DeleteChannelAsync(channelId);
+                var result = await api.DeleteChannelAsync(channelId, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1290,6 +1301,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var messageIds = new[] { new Snowflake(1), new Snowflake(2) };
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1299,6 +1311,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Post,
                             $"{Constants.BaseURL}channels/{channelId}/messages/bulk-delete"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1318,7 +1331,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.BulkDeleteMessagesAsync(channelId, messageIds);
+                var result = await api.BulkDeleteMessagesAsync(channelId, messageIds, reason);
                 ResultAssert.Successful(result);
             }
 
@@ -1391,6 +1404,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var allow = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var deny = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var type = PermissionOverwriteType.Member;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1400,6 +1414,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Put,
                             $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1413,7 +1428,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.EditChannelPermissionsAsync(channelId, overwriteId, allow, deny, type);
+                var result = await api.EditChannelPermissionsAsync(channelId, overwriteId, allow, deny, type, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1468,6 +1483,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var targetUser = new Snowflake(1);
                 var targetType = InviteTarget.Stream;
                 var targetApplication = new Snowflake(2);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1477,6 +1493,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Post,
                             $"{Constants.BaseURL}channels/{channelId}/invites"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1503,7 +1520,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     unique,
                     targetType,
                     targetUser,
-                    targetApplication
+                    targetApplication,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
@@ -1524,6 +1542,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var overwriteId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1533,10 +1552,11 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Delete,
                             $"{Constants.BaseURL}channels/{channelId}/permissions/{overwriteId}"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.DeleteChannelPermissionAsync(channelId, overwriteId);
+                var result = await api.DeleteChannelPermissionAsync(channelId, overwriteId, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1642,7 +1662,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.PinMessageAsync"/> method.
         /// </summary>
-        public class AddPinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class PinMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1653,6 +1673,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var messageId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1662,10 +1683,11 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Put,
                             $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.PinMessageAsync(channelId, messageId);
+                var result = await api.PinMessageAsync(channelId, messageId, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1673,7 +1695,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.UnpinMessageAsync"/> method.
         /// </summary>
-        public class DeletePinnedChannelMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class UnpinMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1684,6 +1706,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var messageId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1693,10 +1716,11 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Delete,
                             $"{Constants.BaseURL}channels/{channelId}/pins/{messageId}"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.UnpinMessageAsync(channelId, messageId);
+                var result = await api.UnpinMessageAsync(channelId, messageId, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1777,7 +1801,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithMessageAsync"/> method.
         /// </summary>
-        public class StartPublicThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class StartThreadWithMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1790,6 +1814,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var messageId = new Snowflake(1);
                 var name = "abba";
                 var duration = TimeSpan.FromMinutes(60);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1799,6 +1824,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Post,
                             $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/threads"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             json => json.IsObject
@@ -1811,7 +1837,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration);
+                var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -1819,7 +1845,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithoutMessageAsync"/> method.
         /// </summary>
-        public class StartPrivateThreadAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        public class StartThreadWithoutMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {
             /// <summary>
             /// Tests whether the API method performs its request correctly.
@@ -1832,6 +1858,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var name = "abba";
                 var duration = TimeSpan.FromMinutes(60);
                 var type = ChannelType.GuildPrivateThread;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -1841,6 +1868,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             HttpMethod.Post,
                             $"{Constants.BaseURL}channels/{channelId}/threads"
                         )
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             json => json.IsObject
@@ -1854,7 +1882,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type);
+                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type, reason);
                 ResultAssert.Successful(result);
             }
         }

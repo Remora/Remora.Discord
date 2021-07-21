@@ -112,6 +112,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             {
                 var guildId = new Snowflake(0);
                 var name = "ff";
+                var reason = "test";
 
                 // Create a dummy PNG image
                 await using var image = new MemoryStream();
@@ -125,6 +126,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -138,7 +140,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                         .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
                 );
 
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
+                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles, reason);
                 ResultAssert.Successful(result);
             }
 
@@ -237,11 +239,13 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                 var emojiId = new Snowflake(1);
                 var name = "ff";
                 var roles = new List<Snowflake>();
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -254,7 +258,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
                         .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
                 );
 
-                var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, roles);
+                var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, roles, reason);
                 ResultAssert.Successful(result);
             }
 
@@ -304,15 +308,17 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             {
                 var guildId = new Snowflake(0);
                 var emojiId = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.DeleteGuildEmojiAsync(guildId, emojiId);
+                var result = await api.DeleteGuildEmojiAsync(guildId, emojiId, reason);
                 ResultAssert.Successful(result);
             }
         }

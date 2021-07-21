@@ -103,6 +103,7 @@ namespace Remora.Discord.Caching.API
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -126,6 +127,7 @@ namespace Remora.Discord.Caching.API
                 isLocked,
                 defaultAutoArchiveDuration,
                 rtcRegion,
+                reason,
                 ct
             );
 
@@ -145,10 +147,11 @@ namespace Remora.Discord.Caching.API
         public override async Task<Result> DeleteChannelAsync
         (
             Snowflake channelID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeleteChannelAsync(channelID, ct);
+            var deleteResult = await base.DeleteChannelAsync(channelID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -271,10 +274,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeleteMessageAsync(channelID, messageID, ct);
+            var deleteResult = await base.DeleteMessageAsync(channelID, messageID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -291,10 +295,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.BulkDeleteMessagesAsync(channelID, messageIDs, ct);
+            var deleteResult = await base.BulkDeleteMessagesAsync(channelID, messageIDs, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -320,6 +325,7 @@ namespace Remora.Discord.Caching.API
             Optional<InviteTarget> targetType = default,
             Optional<Snowflake> targetUserID = default,
             Optional<Snowflake> targetApplicationID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -333,6 +339,7 @@ namespace Remora.Discord.Caching.API
                 targetType,
                 targetUserID,
                 targetApplicationID,
+                reason,
                 ct
             );
 
@@ -353,10 +360,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             Snowflake overwriteID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeleteChannelPermissionAsync(channelID, overwriteID, ct);
+            var deleteResult = await base.DeleteChannelPermissionAsync(channelID, overwriteID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -404,10 +412,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.UnpinMessageAsync(channelID, messageID, ct);
+            var deleteResult = await base.UnpinMessageAsync(channelID, messageID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -426,10 +435,20 @@ namespace Remora.Discord.Caching.API
             Snowflake messageID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var createResult = await base.StartThreadWithMessageAsync(channelID, messageID, name, autoArchiveDuration, ct);
+            var createResult = await base.StartThreadWithMessageAsync
+            (
+                channelID,
+                messageID,
+                name,
+                autoArchiveDuration,
+                reason,
+                ct
+            );
+
             if (!createResult.IsSuccess)
             {
                 return createResult;
@@ -448,6 +467,7 @@ namespace Remora.Discord.Caching.API
             string name,
             TimeSpan autoArchiveDuration,
             Optional<ChannelType> type,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -457,6 +477,7 @@ namespace Remora.Discord.Caching.API
                 name,
                 autoArchiveDuration,
                 type,
+                reason,
                 ct
             );
 

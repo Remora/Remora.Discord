@@ -70,6 +70,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="name">The name of the new emoji.</param>
         /// <param name="image">The image data.</param>
         /// <param name="roles">The roles that the emoji will be restricted to.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IEmoji>> CreateGuildEmojiAsync
@@ -78,6 +79,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             Stream image,
             IReadOnlyList<Snowflake> roles,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -88,6 +90,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="emojiID">The ID of the emoji.</param>
         /// <param name="name">The new name of the emoji.</param>
         /// <param name="roles">The new restricted roles.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IEmoji>> ModifyGuildEmojiAsync
@@ -96,6 +99,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake emojiID,
             Optional<string> name = default,
             Optional<IReadOnlyList<Snowflake>?> roles = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -104,12 +108,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="emojiID">The ID of the emoji.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> DeleteGuildEmojiAsync
         (
             Snowflake guildID,
             Snowflake emojiID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
     }

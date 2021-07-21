@@ -86,6 +86,7 @@ namespace Remora.Discord.Rest.API
             string name,
             Stream image,
             IReadOnlyList<Snowflake> roles,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -105,7 +106,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -127,13 +130,16 @@ namespace Remora.Discord.Rest.API
             Snowflake emojiID,
             Optional<string> name = default,
             Optional<IReadOnlyList<Snowflake>?> roles = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -150,13 +156,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Snowflake emojiID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
     }

@@ -87,14 +87,17 @@ namespace Remora.Discord.Rest.Tests.API.Invites
             public async Task PerformsRequestCorrectly()
             {
                 var inviteCode = "brr";
+                var reason = "test";
+
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invite/{inviteCode}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );
 
-                var result = await api.DeleteInviteAsync(inviteCode);
+                var result = await api.DeleteInviteAsync(inviteCode, reason);
                 ResultAssert.Successful(result);
             }
         }

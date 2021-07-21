@@ -176,6 +176,7 @@ namespace Remora.Discord.Caching.API
             Optional<string?> preferredLocale = default,
             Optional<IReadOnlyList<GuildFeature>> features = default,
             Optional<string?> description = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -200,6 +201,7 @@ namespace Remora.Discord.Caching.API
                 preferredLocale,
                 features,
                 description,
+                reason,
                 ct
             );
 
@@ -280,6 +282,7 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
             Optional<Snowflake> parentID = default,
             Optional<bool> isNsfw = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -296,6 +299,7 @@ namespace Remora.Discord.Caching.API
                 permissionOverwrites,
                 parentID,
                 isNsfw,
+                reason,
                 ct
             );
 
@@ -425,10 +429,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var removeMember = await base.RemoveGuildMemberAsync(guildID, userID, ct);
+            var removeMember = await base.RemoveGuildMemberAsync(guildID, userID, reason, ct);
             if (!removeMember.IsSuccess)
             {
                 return removeMember;
@@ -502,10 +507,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.RemoveGuildBanAsync(guildID, userID, ct);
+            var deleteResult = await base.RemoveGuildBanAsync(guildID, userID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -557,6 +563,7 @@ namespace Remora.Discord.Caching.API
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
             Optional<bool> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -568,6 +575,7 @@ namespace Remora.Discord.Caching.API
                 colour,
                 isHoisted,
                 isMentionable,
+                reason,
                 ct
             );
 
@@ -588,10 +596,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var modifyResult = await base.ModifyGuildRolePositionsAsync(guildID, modifiedPositions, ct);
+            var modifyResult = await base.ModifyGuildRolePositionsAsync(guildID, modifiedPositions, reason, ct);
 
             if (!modifyResult.IsSuccess)
             {
@@ -621,6 +630,7 @@ namespace Remora.Discord.Caching.API
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
             Optional<bool?> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -633,6 +643,7 @@ namespace Remora.Discord.Caching.API
                 colour,
                 isHoisted,
                 isMentionable,
+                reason,
                 ct
             );
 
@@ -653,10 +664,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildId,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeleteGuildRoleAsync(guildId, roleID, ct);
+            var deleteResult = await base.DeleteGuildRoleAsync(guildId, roleID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
@@ -796,10 +808,11 @@ namespace Remora.Discord.Caching.API
             Snowflake guildID,
             Optional<bool> isEnabled = default,
             Optional<Snowflake?> channelID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var modifyResult = await base.ModifyGuildWidgetAsync(guildID, isEnabled, channelID, ct);
+            var modifyResult = await base.ModifyGuildWidgetAsync(guildID, isEnabled, channelID, reason, ct);
             if (!modifyResult.IsSuccess)
             {
                 return modifyResult;

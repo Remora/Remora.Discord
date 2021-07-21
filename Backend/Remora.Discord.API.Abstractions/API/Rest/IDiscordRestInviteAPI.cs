@@ -55,11 +55,13 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// Deletes the given invite code.
         /// </summary>
         /// <param name="inviteCode">The invite code.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
     }

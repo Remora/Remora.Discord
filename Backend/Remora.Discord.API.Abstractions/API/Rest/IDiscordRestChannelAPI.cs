@@ -72,6 +72,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// The default time of inactivity after which threads in the channel are archived.
         /// </param>
         /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyChannelAsync
@@ -94,6 +95,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -131,6 +133,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="defaultAutoArchiveDuration">
         /// The default time of inactivity after which threads in the channel are archived.
         /// </param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyGuildTextChannelAsync
@@ -145,6 +148,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -160,6 +164,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="parentId">The new parent category ID.</param>
         /// <param name="rtcRegion">The channel's voice region. Automatic when null.</param>
         /// <param name="videoQualityMode">The new video quality mode.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
@@ -173,6 +178,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Snowflake?> parentId = default,
             Optional<string?> rtcRegion = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -190,6 +196,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isNsfw">The new NSFW status of the channel.</param>
         /// <param name="permissionOverwrites">The new permission overwrites.</param>
         /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyGuildNewsChannelAsync
@@ -202,6 +209,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool?> isNsfw = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -214,6 +222,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isNsfw">The new NSFW status of the channel.</param>
         /// <param name="permissionOverwrites">The new permission overwrites.</param>
         /// <param name="parentId">The new parent category ID.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyGuildStoreChannelAsync
@@ -224,6 +233,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool?> isNsfw = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -236,6 +246,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="autoArchiveDuration">The time of inactivity after which the thread is archived.</param>
         /// <param name="isLocked">Whether the thread is locked.</param>
         /// <param name="rateLimitPerUser">The new rate limit per user.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> ModifyThreadChannelAsync
@@ -246,6 +257,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -253,9 +265,15 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// Deletes a channel by its ID.
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result> DeleteChannelAsync(Snowflake channelID, CancellationToken ct = default);
+        Task<Result> DeleteChannelAsync
+        (
+            Snowflake channelID,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        );
 
         /// <summary>
         /// Gets the messages for a channel.
@@ -462,12 +480,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="channelID">The ID of the channel the message is in.</param>
         /// <param name="messageID">The ID of the message.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> DeleteMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -480,12 +500,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// invalid message IDs will count towards the minimum and maximum number of messages to deleted (currently 2
         /// and 100, respectively).
         /// </param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> BulkDeleteMessagesAsync
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -497,6 +519,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="allow">The permissions to allow.</param>
         /// <param name="deny">The permissions to deny.</param>
         /// <param name="type">The new type of the overwrite.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result> EditChannelPermissionsAsync
@@ -506,6 +529,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IDiscordPermissionSet> allow = default,
             Optional<IDiscordPermissionSet> deny = default,
             Optional<PermissionOverwriteType> type = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -535,6 +559,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// The ID of the application to open for this invite. Required if <paramref name="targetType"/> is
         /// <see cref="InviteTarget.EmbeddedApplication"/>.
         /// </param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IInvite>> CreateChannelInviteAsync
@@ -547,6 +572,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<InviteTarget> targetType = default,
             Optional<Snowflake> targetUserID = default,
             Optional<Snowflake> targetApplicationID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -555,12 +581,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="overwriteID">The ID of the permission overwrite.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A deletion result which may or may not have succeeded.</returns>
         Task<Result> DeleteChannelPermissionAsync
         (
             Snowflake channelID,
             Snowflake overwriteID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -607,12 +635,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="messageID">The ID of the message.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> PinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -621,12 +651,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="channelID">The ID of the channel.</param>
         /// <param name="messageID">The ID of the message.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> UnpinMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -669,6 +701,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The message to start the thread from.</param>
         /// <param name="name">The name of the thread.</param>
         /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> StartThreadWithMessageAsync
@@ -677,6 +710,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake messageID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -689,6 +723,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="type">
         /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
         /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> StartThreadWithoutMessageAsync
@@ -697,6 +732,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             TimeSpan autoArchiveDuration,
             Optional<ChannelType> type = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 

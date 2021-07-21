@@ -35,5 +35,10 @@ namespace Remora.Discord.Rest
         /// Gets the base API URL.
         /// </summary>
         public static Uri BaseURL { get; } = new("https://discord.com/api/v9/");
+
+        /// <summary>
+        /// Gets the name of the audit log reason header.
+        /// </summary>
+        public static string AuditLogHeaderName { get; } = "X-Audit-Log-Reason";
     }
 }

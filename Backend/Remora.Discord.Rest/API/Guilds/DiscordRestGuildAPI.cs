@@ -172,6 +172,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> preferredLocale = default,
             Optional<IReadOnlyList<GuildFeature>> features = default,
             Optional<string?> description = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -245,7 +246,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PatchAsync<IGuild>
             (
                 $"guilds/{guildID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -317,13 +320,16 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
             Optional<Snowflake> parentID = default,
             Optional<bool> isNsfw = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PostAsync<IChannel>
             (
                 $"guilds/{guildID}/channels",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -356,13 +362,16 @@ namespace Remora.Discord.Rest.API
                     Snowflake? ParentID
                 )
             > positionModifications,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/channels",
-                b => b.WithJsonArray
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJsonArray
                 (
                     json =>
                     {
@@ -526,13 +535,16 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isMuted = default,
             Optional<bool?> isDeafened = default,
             Optional<Snowflake?> channelID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync
             (
                 $"guilds/{guildID}/members/{userID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -552,13 +564,16 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<string>
             (
                 $"guilds/{guildID}/members/@me/nick",
-                b => b.WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
+                b => b
+                    .AddAuditLogReason(reason)
+                    .WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
                 ct: ct
             );
         }
@@ -569,13 +584,15 @@ namespace Remora.Discord.Rest.API
             Snowflake guildID,
             Snowflake userID,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -585,13 +602,15 @@ namespace Remora.Discord.Rest.API
             Snowflake guildID,
             Snowflake userID,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -600,13 +619,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/members/{userID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -652,12 +673,13 @@ namespace Remora.Discord.Rest.API
             return this.DiscordHttpClient.PutAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
                         json.Write("delete_message_days", deleteMessageDays, this.JsonOptions);
-                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct
@@ -669,13 +691,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Snowflake userID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/bans/{userID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -702,13 +726,16 @@ namespace Remora.Discord.Rest.API
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
             Optional<bool> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -728,13 +755,16 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IReadOnlyList<IRole>>
             (
                 $"guilds/{guildID}/roles",
-                b => b.WithJsonArray
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJsonArray
                 (
                     json =>
                     {
@@ -763,13 +793,16 @@ namespace Remora.Discord.Rest.API
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
             Optional<bool?> isMentionable = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -789,13 +822,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildId,
             Snowflake roleID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"guilds/{guildId}/roles/{roleID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -863,14 +898,15 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync<IPruneCount>
             (
                 $"guilds/{guildID}/prune",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
                         json.Write("days", days, this.JsonOptions);
                         json.Write("compute_prune_count", computePruneCount, this.JsonOptions);
                         json.Write("include_roles", includeRoles, this.JsonOptions);
-                        json.Write("reason", reason, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -951,13 +987,16 @@ namespace Remora.Discord.Rest.API
             Snowflake guildID,
             Optional<bool> isEnabled = default,
             Optional<Snowflake?> channelID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IGuildWidget>
             (
                 $"guilds/{guildID}/widget",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -1026,24 +1065,24 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isEnabled = default,
             Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
             Optional<string?> description = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IWelcomeScreen>
             (
                 $"guilds/{guildID}/welcome-screen",
-                b =>
-                {
-                    b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("enabled", isEnabled, this.JsonOptions);
-                            json.Write("welcome_channels", welcomeChannels, this.JsonOptions);
-                            json.Write("description", description, this.JsonOptions);
-                        }
-                    );
-                },
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
+                (
+                    json =>
+                    {
+                        json.Write("enabled", isEnabled, this.JsonOptions);
+                        json.Write("welcome_channels", welcomeChannels, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                    }
+                ),
                 ct: ct
             );
         }

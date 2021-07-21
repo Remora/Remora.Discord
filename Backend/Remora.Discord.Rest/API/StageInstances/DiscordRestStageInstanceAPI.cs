@@ -57,13 +57,16 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             string topic,
             Optional<StagePrivacyLevel> privacyLevel = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PostAsync<IStageInstance>
             (
                 "stage-instances",
-                r => r.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -87,18 +90,21 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IStageInstance>> ModifyStageInstanceAsync
+        public Task<Result<IStageInstance>> UpdateStageInstanceAsync
         (
             Snowflake channelID,
             Optional<string> topic = default,
             Optional<StagePrivacyLevel> privacyLevel = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PatchAsync<IStageInstance>
             (
                 $"stage-instances/{channelID}",
-                r => r.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -111,12 +117,18 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result> DeleteStageInstance(Snowflake channelID, CancellationToken ct = default)
+        public Task<Result> DeleteStageInstance
+        (
+            Snowflake channelID,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"stage-instances/{channelID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
     }

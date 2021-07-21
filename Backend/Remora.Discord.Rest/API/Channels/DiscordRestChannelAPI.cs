@@ -87,6 +87,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool> isLocked = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -127,7 +128,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PatchAsync<IChannel>
             (
                 $"channels/{channelID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -193,6 +196,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
             Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -208,6 +212,7 @@ namespace Remora.Discord.Rest.API
                 permissionOverwrites: permissionOverwrites,
                 parentId: parentId,
                 defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+                reason: reason,
                 ct: ct
             );
         }
@@ -224,6 +229,7 @@ namespace Remora.Discord.Rest.API
             Optional<Snowflake?> parentId = default,
             Optional<string?> rtcRegion = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -238,6 +244,7 @@ namespace Remora.Discord.Rest.API
                 parentId: parentId,
                 rtcRegion: rtcRegion,
                 videoQualityMode: videoQualityMode,
+                reason: reason,
                 ct: ct
             );
         }
@@ -253,6 +260,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isNsfw = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -266,6 +274,7 @@ namespace Remora.Discord.Rest.API
                 isNsfw: isNsfw,
                 permissionOverwrites: permissionOverwrites,
                 parentId: parentId,
+                reason: reason,
                 ct: ct
             );
         }
@@ -279,6 +288,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isNsfw = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -290,6 +300,7 @@ namespace Remora.Discord.Rest.API
                 isNsfw: isNsfw,
                 permissionOverwrites: permissionOverwrites,
                 parentId: parentId,
+                reason: reason,
                 ct: ct
             );
         }
@@ -303,6 +314,7 @@ namespace Remora.Discord.Rest.API
             Optional<TimeSpan> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -314,6 +326,7 @@ namespace Remora.Discord.Rest.API
                 autoArchiveDuration: autoArchiveDuration,
                 isLocked: isLocked,
                 rateLimitPerUser: rateLimitPerUser,
+                reason: reason,
                 ct: ct
             );
         }
@@ -322,13 +335,15 @@ namespace Remora.Discord.Rest.API
         public virtual Task<Result> DeleteChannelAsync
         (
             Snowflake channelID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -607,13 +622,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -622,6 +639,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             IReadOnlyList<Snowflake> messageIDs,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -637,7 +655,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync
             (
                 $"channels/{channelID}/messages/bulk-delete",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -657,13 +677,16 @@ namespace Remora.Discord.Rest.API
             Optional<IDiscordPermissionSet> allow = default,
             Optional<IDiscordPermissionSet> deny = default,
             Optional<PermissionOverwriteType> type = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PutAsync
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -701,6 +724,7 @@ namespace Remora.Discord.Rest.API
             Optional<InviteTarget> targetType = default,
             Optional<Snowflake> targetUserID = default,
             Optional<Snowflake> targetApplicationID = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -725,7 +749,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync<IInvite>
             (
                 $"channels/{channelID}/invites",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -751,13 +777,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             Snowflake overwriteID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -816,13 +844,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.PutAsync
             (
                 $"channels/{channelID}/pins/{messageID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -831,13 +861,15 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             Snowflake messageID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/pins/{messageID}",
-                ct: ct
+                b => b.AddAuditLogReason(reason),
+                ct
             );
         }
 
@@ -888,6 +920,7 @@ namespace Remora.Discord.Rest.API
             Snowflake messageID,
             string name,
             TimeSpan autoArchiveDuration,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -899,7 +932,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync<IChannel>
             (
                 $"channels/{channelID}/messages/{messageID}/threads",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {
@@ -918,6 +953,7 @@ namespace Remora.Discord.Rest.API
             string name,
             TimeSpan autoArchiveDuration,
             Optional<ChannelType> type,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -929,7 +965,9 @@ namespace Remora.Discord.Rest.API
             return await this.DiscordHttpClient.PostAsync<IChannel>
             (
                 $"channels/{channelID}/threads",
-                b => b.WithJson
+                b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
                     json =>
                     {

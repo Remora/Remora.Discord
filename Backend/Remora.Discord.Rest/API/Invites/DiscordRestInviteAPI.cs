@@ -28,6 +28,7 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
+using Remora.Discord.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -78,12 +79,14 @@ namespace Remora.Discord.Rest.API
         public virtual Task<Result<IInvite>> DeleteInviteAsync
         (
             string inviteCode,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync<IInvite>
             (
                 $"invite/{inviteCode}",
+                b => b.AddAuditLogReason(reason),
                 ct: ct
             );
         }

@@ -55,11 +55,13 @@ namespace Remora.Discord.Rest.Tests.API
                 var channelID = new Snowflake(1);
                 var topic = "aa";
                 var privacyLevel = StagePrivacyLevel.GuildOnly;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Post, $"{Constants.BaseURL}stage-instances")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             json => json.IsObject
@@ -73,7 +75,7 @@ namespace Remora.Discord.Rest.Tests.API
                         .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
                 );
 
-                var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel);
+                var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -106,7 +108,7 @@ namespace Remora.Discord.Rest.Tests.API
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.ModifyStageInstanceAsync"/> method.
+        /// Tests the <see cref="DiscordRestStageInstanceAPI.UpdateStageInstanceAsync"/> method.
         /// </summary>
         public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
         {
@@ -120,11 +122,13 @@ namespace Remora.Discord.Rest.Tests.API
                 var channelID = new Snowflake(1);
                 var topic = "aa";
                 var privacyLevel = StagePrivacyLevel.GuildOnly;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}stage-instances/{channelID}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             json => json.IsObject
@@ -137,7 +141,7 @@ namespace Remora.Discord.Rest.Tests.API
                         .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
                 );
 
-                var result = await api.ModifyStageInstanceAsync(channelID, topic, privacyLevel);
+                var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -155,16 +159,18 @@ namespace Remora.Discord.Rest.Tests.API
             public async Task PerformsRequestCorrectly()
             {
                 var channelID = new Snowflake(1);
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}stage-instances/{channelID}")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithNoContent()
                         .Respond(HttpStatusCode.NoContent)
                 );
 
-                var result = await api.DeleteStageInstance(channelID);
+                var result = await api.DeleteStageInstance(channelID, reason);
                 ResultAssert.Successful(result);
             }
         }

@@ -89,10 +89,11 @@ namespace Remora.Discord.Caching.API
             string name,
             Stream image,
             IReadOnlyList<Snowflake> roles,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var createResult = await base.CreateGuildEmojiAsync(guildID, name, image, roles, ct);
+            var createResult = await base.CreateGuildEmojiAsync(guildID, name, image, roles, reason, ct);
             if (!createResult.IsSuccess)
             {
                 return createResult;
@@ -118,10 +119,11 @@ namespace Remora.Discord.Caching.API
             Snowflake emojiID,
             Optional<string> name = default,
             Optional<IReadOnlyList<Snowflake>?> roles = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var modifyResult = await base.ModifyGuildEmojiAsync(guildID, emojiID, name, roles, ct);
+            var modifyResult = await base.ModifyGuildEmojiAsync(guildID, emojiID, name, roles, reason, ct);
             if (!modifyResult.IsSuccess)
             {
                 return modifyResult;
@@ -139,10 +141,11 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake guildID,
             Snowflake emojiID,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            var deleteResult = await base.DeleteGuildEmojiAsync(guildID, emojiID, ct);
+            var deleteResult = await base.DeleteGuildEmojiAsync(guildID, emojiID, reason, ct);
             if (!deleteResult.IsSuccess)
             {
                 return deleteResult;
