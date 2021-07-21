@@ -22,11 +22,7 @@
         <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
         <PackageReference Include="System.Text.Json" Version="5.0.2" />
     </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
-    </ItemGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.API.Abstractions\Remora.Discord.API.Abstractions.csproj" />
     </ItemGroup>

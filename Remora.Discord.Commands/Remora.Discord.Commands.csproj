@@ -22,7 +22,6 @@
 
     <ItemGroup>
         <PackageReference Include="Remora.Commands" Version="4.1.1" />
-        <PackageReference Include="IsExternalInit" Version="1.0.0" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>
