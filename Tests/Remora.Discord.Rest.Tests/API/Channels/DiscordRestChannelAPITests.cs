@@ -131,7 +131,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var rateLimitPerUser = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
                 var parentId = new Snowflake(1);
-                var defaultAutoArchiveDuration = TimeSpan.FromMinutes(1440);
+                var defaultAutoArchiveDuration = AutoArchiveDuration.Hour;
                 var reason = "test";
 
                 var api = CreateAPI
@@ -153,7 +153,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                         .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                         .WithProperty("permission_overwrites", p => p.IsArray(a => a.WithCount(0)))
                                         .WithProperty("parent_id", p => p.Is(parentId.Value.ToString()))
-                                        .WithProperty("default_auto_archive_duration", p => p.Is(defaultAutoArchiveDuration.TotalMinutes))
+                                        .WithProperty("default_auto_archive_duration", p => p.Is((int)defaultAutoArchiveDuration))
                                 )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -246,7 +246,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var name = "brr";
                 var isArchived = true;
-                var autoArchiveDuration = TimeSpan.FromMinutes(1440);
+                var autoArchiveDuration = AutoArchiveDuration.Hour;
                 var isLocked = false;
                 var rateLimitPerUser = 10;
                 var reason = "test";
@@ -264,7 +264,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     o => o
                                         .WithProperty("name", p => p.Is(name))
                                         .WithProperty("archived", p => p.Is(isArchived))
-                                        .WithProperty("auto_archive_duration", p => p.Is(autoArchiveDuration.TotalMinutes))
+                                        .WithProperty("auto_archive_duration", p => p.Is((int)autoArchiveDuration))
                                         .WithProperty("locked", p => p.Is(isLocked))
                                         .WithProperty("rate_limit_per_user", p => p.Is(rateLimitPerUser))
                                 )
@@ -1813,7 +1813,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var channelId = new Snowflake(0);
                 var messageId = new Snowflake(1);
                 var name = "abba";
-                var duration = TimeSpan.FromMinutes(60);
+                var duration = AutoArchiveDuration.Hour;
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1831,7 +1831,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("auto_archive_duration", p => p.Is(duration.TotalMinutes))
+                                    .WithProperty("auto_archive_duration", p => p.Is((int)duration))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -1856,7 +1856,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var channelId = new Snowflake(0);
                 var name = "abba";
-                var duration = TimeSpan.FromMinutes(60);
+                var duration = AutoArchiveDuration.Hour;
                 var type = ChannelType.GuildPrivateThread;
                 var reason = "test";
 
@@ -1875,7 +1875,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("auto_archive_duration", p => p.Is(duration.TotalMinutes))
+                                    .WithProperty("auto_archive_duration", p => p.Is((int)duration))
                                     .WithProperty("type", p => p.Is((int)type))
                             )
                         )

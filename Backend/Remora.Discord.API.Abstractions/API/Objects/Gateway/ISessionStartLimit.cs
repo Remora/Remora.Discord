@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         int Remaining { get; }
 
         /// <summary>
-        /// Gets the time after which the limit resets.
+        /// Gets the time (in milliseconds) after which the limit resets.
         /// </summary>
         TimeSpan ResetAfter { get; }
 

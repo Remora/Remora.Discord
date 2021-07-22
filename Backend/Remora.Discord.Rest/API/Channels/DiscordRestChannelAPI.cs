@@ -83,9 +83,9 @@ namespace Remora.Discord.Rest.API
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
             Optional<bool> isArchived = default,
-            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
-            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -147,23 +147,9 @@ namespace Remora.Discord.Rest.API
                         json.Write("parent_id", parentId, this.JsonOptions);
                         json.Write("video_quality_mode", videoQualityMode, this.JsonOptions);
                         json.Write("archived", isArchived, this.JsonOptions);
-
-                        if (autoArchiveDuration.HasValue)
-                        {
-                            json.WriteNumber("auto_archive_duration", autoArchiveDuration.Value.TotalMinutes);
-                        }
-
+                        json.Write("auto_archive_duration", autoArchiveDuration);
                         json.Write("locked", isLocked, this.JsonOptions);
-
-                        if (defaultAutoArchiveDuration.HasValue)
-                        {
-                            json.WriteNumber
-                            (
-                                "default_auto_archive_duration",
-                                defaultAutoArchiveDuration.Value.TotalMinutes
-                            );
-                        }
-
+                        json.Write("default_auto_archive_duration", defaultAutoArchiveDuration);
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                     }
                 ),
@@ -195,7 +181,7 @@ namespace Remora.Discord.Rest.API
             Optional<int?> rateLimitPerUser = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
-            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -311,7 +297,7 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             Optional<string> name = default,
             Optional<bool> isArchived = default,
-            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
@@ -930,7 +916,7 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -950,7 +936,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.WriteNumber("auto_archive_duration", autoArchiveDuration.TotalMinutes);
+                        json.WriteNumber("auto_archive_duration", (int)autoArchiveDuration);
                     }
                 ),
                 ct: ct
@@ -962,7 +948,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake channelID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -983,7 +969,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.WriteNumber("auto_archive_duration", autoArchiveDuration.TotalMinutes);
+                        json.WriteNumber("auto_archive_duration", (int)autoArchiveDuration);
                         json.Write("type", type, this.JsonOptions);
                     }
                 ),

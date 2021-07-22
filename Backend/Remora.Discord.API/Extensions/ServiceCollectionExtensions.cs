@@ -184,35 +184,29 @@ namespace Remora.Discord.API.Extensions
             // Channels
             options.AddDataObjectConverter<IChannelCreate, ChannelCreate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelUpdate, ChannelUpdate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelDelete, ChannelDelete>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
             options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IThreadUpdate, ThreadUpdate>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IThreadDelete, ThreadDelete>()
                 .WithPropertyName(c => c.IsNsfw, "nsfw")
-                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds))
-                .WithPropertyConverter(c => c.DefaultAutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
             options.AddDataObjectConverter<IThreadListSync, ThreadListSync>()
                 .WithPropertyName(t => t.ChannelIDs, "channel_ids");
@@ -437,8 +431,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IThreadMetadata, ThreadMetadata>()
                 .WithPropertyName(m => m.IsArchived, "archived")
-                .WithPropertyName(m => m.IsLocked, "locked")
-                .WithPropertyConverter(m => m.AutoArchiveDuration, new UnitTimeSpanConverter(TimeUnit.Minutes));
+                .WithPropertyName(m => m.IsLocked, "locked");
 
             options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 

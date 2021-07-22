@@ -1,5 +1,5 @@
 //
-//  IThreadMetadata.cs
+//  AutoArchiveDuration.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,36 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents metadata information for a thread channel.
+    /// Enumerates various recognized auto-archival durations.
     /// </summary>
     [PublicAPI]
-    public interface IThreadMetadata
+    public enum AutoArchiveDuration
     {
         /// <summary>
-        /// Gets a value indicating whether the thread has been archived.
+        /// Threads will be archived after one hour.
         /// </summary>
-        bool IsArchived { get; }
+        Hour = 60,
 
         /// <summary>
-        /// Gets a time of inactivity after which the thread is automatically archived.
+        /// Threads will be archived after one day.
         /// </summary>
-        AutoArchiveDuration AutoArchiveDuration { get; }
+        Day = 1440,
 
         /// <summary>
-        /// Gets a timestamp when the thread's archival status was last changed.
+        /// Threads will be archived after three days.
         /// </summary>
-        DateTimeOffset ArchiveTimestamp { get; }
+        ThreeDays = 4320,
 
         /// <summary>
-        /// Gets a value indicating whether the thread has been locked.
+        /// Threads will be archived after one week.
         /// </summary>
-        Optional<bool> IsLocked { get; }
+        Week = 10080
     }
 }

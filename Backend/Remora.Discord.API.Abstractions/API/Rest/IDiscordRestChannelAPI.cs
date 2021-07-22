@@ -91,9 +91,9 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
             Optional<bool> isArchived = default,
-            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
-            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -147,7 +147,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<int?> rateLimitPerUser = default,
             Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
             Optional<Snowflake?> parentId = default,
-            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         );
@@ -254,7 +254,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             Optional<string> name = default,
             Optional<bool> isArchived = default,
-            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
             Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
@@ -711,7 +711,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<string> reason = default,
             CancellationToken ct = default
         );
@@ -732,7 +732,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         (
             Snowflake channelID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
             Optional<string> reason = default,
             CancellationToken ct = default

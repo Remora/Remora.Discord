@@ -156,10 +156,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IThreadMember> Member { get; }
 
         /// <summary>
-        /// Gets the default duration for newly created threads in this channel, in minutes. Can be set to 60, 1440,
-        /// 4320, or 10080.
+        /// Gets the default duration for newly created threads in this channel.
         /// </summary>
-        Optional<TimeSpan> DefaultAutoArchiveDuration { get; }
+        Optional<AutoArchiveDuration> DefaultAutoArchiveDuration { get; }
 
         /// <summary>
         /// Gets the computed permission set for the invoking user in the channel. Typically present when the channel is

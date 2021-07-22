@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Objects
     public record ThreadMetadata
     (
         bool IsArchived,
-        TimeSpan AutoArchiveDuration,
+        AutoArchiveDuration AutoArchiveDuration,
         DateTimeOffset ArchiveTimestamp,
         Optional<bool> IsLocked
     )

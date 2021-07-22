@@ -99,9 +99,9 @@ namespace Remora.Discord.Caching.API
             Optional<Snowflake?> parentId = default,
             Optional<VideoQualityMode?> videoQualityMode = default,
             Optional<bool> isArchived = default,
-            Optional<TimeSpan> autoArchiveDuration = default,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<bool> isLocked = default,
-            Optional<TimeSpan> defaultAutoArchiveDuration = default,
+            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
             Optional<string?> rtcRegion = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -436,7 +436,7 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -467,7 +467,7 @@ namespace Remora.Discord.Caching.API
         (
             Snowflake channelID,
             string name,
-            TimeSpan autoArchiveDuration,
+            AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type,
             Optional<string> reason = default,
             CancellationToken ct = default

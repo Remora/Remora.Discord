@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
     public interface IHello : IGatewayEvent
     {
         /// <summary>
-        /// Gets the heartbeat interval.
+        /// Gets the heartbeat interval (in milliseconds).
         /// </summary>
         TimeSpan HeartbeatInterval { get; }
     }
