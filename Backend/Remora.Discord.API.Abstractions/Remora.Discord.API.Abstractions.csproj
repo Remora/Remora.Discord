@@ -75,6 +75,9 @@
       <Compile Update="API\Objects\Activities\IActivityButton.cs">
         <DependentUpon>IActivity.cs</DependentUpon>
       </Compile>
+      <Compile Update="API\Voice\Commands\Protocols\IVoiceProtocolData.cs">
+        <DependentUpon>IVoiceSelectProtocol.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>
