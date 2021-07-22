@@ -442,6 +442,15 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
             }
 
+            if (!content.HasValue && !file.HasValue && !embeds.HasValue && !stickerIds.HasValue)
+            {
+                return new InvalidOperationError
+                (
+                    $"At least one of {nameof(content)}, {nameof(file)}, {nameof(embeds)}, or {nameof(stickerIds)} " +
+                    "is required."
+                );
+            }
+
             return await this.DiscordHttpClient.PostAsync<IMessage>
             (
                 $"channels/{channelID}/messages",
