@@ -892,7 +892,7 @@ namespace Remora.Discord.API
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
                 // Yes, all stickers are stored under this hardcoded application. This is intentional.
-                Path = $"app-assets/710982414301790216/store/icons/{bannerAssetId}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-assets/710982414301790216/store/{bannerAssetId}.{imageFormat.Value.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
