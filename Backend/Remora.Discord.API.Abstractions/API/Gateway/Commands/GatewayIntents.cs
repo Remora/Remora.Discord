@@ -45,6 +45,14 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         ///     - CHANNEL_UPDATE
         ///     - CHANNEL_DELETE
         ///     - CHANNEL_PINS_UPDATE
+        ///     - THREAD_CREATE
+        ///     - THREAD_UPDATE
+        ///     - THREAD_DELETE
+        ///     - THREAD_LIST_SYNC
+        ///     - THREAD_MEMBER_UPDATE
+        ///     - THREAD_MEMBERS_UPDATE
+        ///     - STAGE_INSTANCE_UPDATE
+        ///     - STAGE_INSTANCE_DELETE
         /// </summary>
         Guilds = 1 << 0,
 
@@ -53,6 +61,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         ///     - GUILD_MEMBER_ADD
         ///     - GUILD_MEMBER_UPDATE
         ///     - GUILD_MEMBER_REMOVE
+        ///     - THREAD_MEMBERS_UPDATE
         /// </summary>
         GuildMembers = 1 << 1,
 
@@ -66,12 +75,16 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// <summary>
         /// Subscribes to the following events:
         ///     - GUILD_EMOJIS_UPDATE
+        ///     - GUILD_STICKERS_UPDATE
         /// </summary>
-        GuildEmojis = 1 << 3,
+        GuildEmojisAndStickers = 1 << 3,
 
         /// <summary>
         /// Subscribes to the following events:
         ///     - GUILD_INTEGRATIONS_UPDATE
+        ///     - INTEGRATION_CREATE
+        ///     - INTEGRATION_UPDATE
+        ///     - INTEGRATION_DELETE
         /// </summary>
         GuildIntegrations = 1 << 4,
 

@@ -361,6 +361,9 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IIntegrationDelete, IntegrationDelete>();
 
+            // Stickers
+            options.AddDataObjectConverter<IGuildStickersUpdate, GuildStickersUpdate>();
+
             // Other
             options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
 
