@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.5.0</Version>
+        <Version>3.5.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Improve dispatch deserialization.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

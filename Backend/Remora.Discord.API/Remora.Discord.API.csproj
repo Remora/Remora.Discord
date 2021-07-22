@@ -5,15 +5,40 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>22.0.2</Version>
+        <Version>23.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package contains the default implementations for the abstract API definitions, provided by
             Remora.Discord.API.Abstractions.
         </Description>
-        <PackageReleaseNotes>
-            Update dependencies.
+        <PackageReleaseNotes>Update nuget packages.
+            Implement a helper for converting archival durations.
+            Replace auto-archival TimeSpans with an enum.
+            Update documentation comment.
+            Add a clientside check for required fields.
+            Fix incorrect type.
+            Fix invalid path.
+            Add new permissions.
+            Implement new error codes.
+            Implement new gateway events.
+            Implement tests for the REST API.
+            Implement the REST portion of the sticker API.
+            Implement tests for the new sticker model.
+            Implement the updated sticker model.
+            Remove spurious package references.
+            Add the computed permission field to channel definitions.
+            Implement audit log reason parameters.
+            Ignore undocumented field.
+            Add a separate file for the new failing activity.
+            Rescrub files.
+            Ensure all patterns are tested when scrubbing.
+            Update scrubbing patterns.
+            Remove trailing comma.
+            Add missing ApplicationID field.
+            Correct Buttons type.
+            Scrub webhook file.
+            Add new sample for PRESENCE_UPDATE.
         </PackageReleaseNotes>
     </PropertyGroup>
 
