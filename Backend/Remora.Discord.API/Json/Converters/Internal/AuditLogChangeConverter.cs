@@ -96,7 +96,7 @@ namespace Remora.Discord.API.Json
             { "user_limit", typeof(int) },
             { "privacy_level", typeof(StagePrivacyLevel) },
             { "tags", typeof(string) },
-            { "format_type", typeof(CDNImageFormat) },
+            { "format_type", typeof(StickerFormatType) },
             { "asset", typeof(string) },
             { "available", typeof(bool) },
             { "guild_id", typeof(Snowflake) }
