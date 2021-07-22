@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Voice
 {
@@ -28,6 +29,7 @@ namespace Remora.Discord.API.Abstractions.Voice
     /// Represents real-time voice data from Discord. This technically represents an RFC3550 RTP packet, but takes a lot
     /// of shortcuts to avoid implementing stuff Discord doesn't use or provide.
     /// </summary>
+    [PublicAPI]
     public interface IVoiceData
     {
         /// <summary>
