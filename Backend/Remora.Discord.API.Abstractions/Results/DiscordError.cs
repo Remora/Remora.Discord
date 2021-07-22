@@ -553,6 +553,16 @@ namespace Remora.Discord.API.Abstractions.Results
         InvalidAPIVersion = 50041,
 
         /// <summary>
+        /// The uploaded file is greater than the maximum size allowed.
+        /// </summary>
+        FileUploadExceedsMaximumSize = 50045,
+
+        /// <summary>
+        /// The uploaded file is invalid.
+        /// </summary>
+        InvalidFileUploaded = 50046,
+
+        /// <summary>
         /// You can't redeem this gift yourself.
         /// </summary>
         CannotSelfRedeemGift = 50054,
@@ -630,6 +640,41 @@ namespace Remora.Discord.API.Abstractions.Results
         /// <summary>
         /// The maximum number of announcement threads has been reached.
         /// </summary>
-        MaxNumberOfAnnouncementThreadsReached = 160007
+        MaxNumberOfAnnouncementThreadsReached = 160007,
+
+        /// <summary>
+        /// The JSON in the uploaded Lottie-format file was invalid.
+        /// </summary>
+        InvalidJsonForUploadedLottieFile = 170001,
+
+        /// <summary>
+        /// Uploaded Lottie files cannot contain rasterized images such as PNG or JPEG.
+        /// </summary>
+        UploadedLottiesCannotBeRasterized = 170002,
+
+        /// <summary>
+        /// The maximum framerate for a sticker has been exceeded.
+        /// </summary>
+        StickerFramerateExceeded = 170003,
+
+        /// <summary>
+        /// The maximum number of frames in a sticker has been exceeded (currently 1000).
+        /// </summary>
+        StickerFrameCountExceeded = 170004,
+
+        /// <summary>
+        /// The maximum dimensions of an animated Lottie sticker has been exceeded.
+        /// </summary>
+        LottieAnimationDimensionsExceeded = 170005,
+
+        /// <summary>
+        /// The framerate of the sticker is too small or too large.
+        /// </summary>
+        StickerFramerateTooSmallOrTooLarge = 170006,
+
+        /// <summary>
+        /// The sticker animation is too long (currently max 5 seconds).
+        /// </summary>
+        StickerAnimationDurationTooLong = 170007
     }
 }
