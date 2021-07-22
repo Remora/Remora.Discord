@@ -48,7 +48,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Name { get; }
 
         /// <summary>
-        /// Gets the sticker pack's store ID.
+        /// Gets the sticker pack's stock keeping unit ID.
         /// </summary>
         Snowflake SKUID { get; }
 
