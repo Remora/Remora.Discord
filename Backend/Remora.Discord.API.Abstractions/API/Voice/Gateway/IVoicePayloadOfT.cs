@@ -1,5 +1,5 @@
 //
-//  IVoiceGatewayEvent.cs
+//  IVoicePayloadOfT.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,14 +21,22 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Gateway;
 
-namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
+#pragma warning disable SA1649
+
+namespace Remora.Discord.API.Abstractions.Voice.Gateway
 {
     /// <summary>
-    /// Acts as a marker interface for voice gateway events.
+    /// Marker interface for voice payload classes.
     /// </summary>
+    /// <typeparam name="TData">The data contained in the payload.</typeparam>
     [PublicAPI]
-    public interface IVoiceGatewayEvent : IVoiceGatewayPayloadData
+    public interface IVoicePayload<out TData> : IPayload
     {
+        /// <summary>
+        /// Gets the data contained in the payload.
+        /// </summary>
+        TData Data { get; }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IVoiceGatewayEvent.cs
+//  IVoiceGatewayPayloadData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,13 +22,13 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Voice.Gateway
 {
     /// <summary>
-    /// Acts as a marker interface for voice gateway events.
+    /// Represents a marker interface for voice gateway payload data.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceGatewayEvent : IVoiceGatewayPayloadData
+    public interface IVoiceGatewayPayloadData
     {
     }
 }

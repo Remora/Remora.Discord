@@ -21,7 +21,6 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway;
 
 namespace Remora.Discord.API.Abstractions.Voice.Gateway.Commands
 {
@@ -29,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Commands
     /// Acts as a marker interface for voice gateway commands.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceGatewayCommand : IGatewayPayloadData
+    public interface IVoiceGatewayCommand : IVoiceGatewayPayloadData
     {
     }
 }
