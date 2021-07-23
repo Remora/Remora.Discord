@@ -39,6 +39,7 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Gateway;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.Core;

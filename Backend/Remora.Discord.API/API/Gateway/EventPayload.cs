@@ -24,7 +24,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Gateway
 {
     /// <summary>
     /// Represents a Discord event payload.

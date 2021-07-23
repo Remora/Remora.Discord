@@ -25,7 +25,7 @@ using Remora.Discord.API.Abstractions.Gateway;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API.Gateway
 {
     /// <summary>
     /// Represents a payload from the Discord gateway.
