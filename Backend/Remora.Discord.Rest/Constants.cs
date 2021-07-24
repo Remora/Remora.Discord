@@ -40,5 +40,30 @@ namespace Remora.Discord.Rest
         /// Gets the name of the audit log reason header.
         /// </summary>
         public static string AuditLogHeaderName { get; } = "X-Audit-Log-Reason";
+
+        /// <summary>
+        /// Gets the name of the rate limit header.
+        /// </summary>
+        public static string RateLimitHeaderName { get; } = "X-RateLimit-Limit";
+
+        /// <summary>
+        /// Gets the name of the remaining rate limit token header.
+        /// </summary>
+        public static string RateLimitRemainingHeaderName { get; } = "X-RateLimit-Remaining";
+
+        /// <summary>
+        /// Gets the name of the rate limit reset time header.
+        /// </summary>
+        public static string RateLimitResetHeaderName { get; } = "X-RateLimit-Reset";
+
+        /// <summary>
+        /// Gets the name of the rate limit bucket header.
+        /// </summary>
+        public static string RateLimitBucketHeaderName { get; } = "X-RateLimit-Bucket";
+
+        /// <summary>
+        /// Gets the name of the global rate limit header.
+        /// </summary>
+        public static string RateLimitGlobalHeaderName { get; } = "X-RateLimit-Bucket";
     }
 }

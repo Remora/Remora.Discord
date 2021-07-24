@@ -94,7 +94,7 @@ namespace Remora.Discord.Rest.API
 
             try
             {
-                if (!headers.TryGetValues("X-RateLimit-Limit", out var rawLimit))
+                if (!headers.TryGetValues(Constants.RateLimitHeaderName, out var rawLimit))
                 {
                     return false;
                 }
@@ -104,7 +104,7 @@ namespace Remora.Discord.Rest.API
                     return false;
                 }
 
-                if (!headers.TryGetValues("X-RateLimit-Remaining", out var rawRemaining))
+                if (!headers.TryGetValues(Constants.RateLimitRemainingHeaderName, out var rawRemaining))
                 {
                     return false;
                 }
@@ -114,7 +114,7 @@ namespace Remora.Discord.Rest.API
                     return false;
                 }
 
-                if (!headers.TryGetValues("X-RateLimit-Reset", out var rawReset))
+                if (!headers.TryGetValues(Constants.RateLimitResetHeaderName, out var rawReset))
                 {
                     return false;
                 }
@@ -124,7 +124,7 @@ namespace Remora.Discord.Rest.API
                     return false;
                 }
 
-                if (!headers.TryGetValues("X-RateLimit-Bucket", out var rawBucket))
+                if (!headers.TryGetValues(Constants.RateLimitBucketHeaderName, out var rawBucket))
                 {
                     return false;
                 }
@@ -135,7 +135,7 @@ namespace Remora.Discord.Rest.API
                     return false;
                 }
 
-                var isGlobal = headers.Contains("X-RateLimit-Global");
+                var isGlobal = headers.Contains(Constants.RateLimitGlobalHeaderName);
                 var resetsAt = DateTime.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
 
                 result = new RateLimitBucket(limit, remaining, resetsAt, id, isGlobal);
