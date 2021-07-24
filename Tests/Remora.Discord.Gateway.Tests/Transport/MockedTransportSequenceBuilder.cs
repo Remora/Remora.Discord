@@ -26,6 +26,7 @@ using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Gateway;
 using Remora.Discord.Gateway.Tests.Transport.Events;
 using Xunit.Sdk;
 
