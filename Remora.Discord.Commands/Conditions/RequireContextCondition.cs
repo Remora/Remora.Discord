@@ -77,7 +77,8 @@ namespace Remora.Discord.Commands.Conditions
                     ? Result.FromSuccess()
                     : new ConditionNotSatisfiedError("This command can only be used in a group DM."),
                 ChannelContext.Guild =>
-                    channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore
+                    channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore or
+                        GuildPrivateThread or GuildPublicThread
                         ? Result.FromSuccess()
                         : new ConditionNotSatisfiedError("This command can only be used in a guild."),
                 _ => throw new ArgumentOutOfRangeException(nameof(attribute))
