@@ -907,6 +907,37 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.CrosspostMessageAsync"/> method.
+        /// </summary>
+        public class CrosspostMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var messageId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}channels/{channelId}/messages/{messageId}/crosspost"
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CrosspostMessageAsync(channelId, messageId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.CreateReactionAsync"/> method.
         /// </summary>
         public class CreateReactionAsync : RestAPITestBase<IDiscordRestChannelAPI>

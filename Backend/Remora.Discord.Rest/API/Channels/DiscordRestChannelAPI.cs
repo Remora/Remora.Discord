@@ -467,6 +467,21 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual async Task<Result<IMessage>> CrosspostMessageAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            return await this.DiscordHttpClient.PostAsync<IMessage>
+            (
+                $"channels/{channelID}/messages/{messageID}/crosspost",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual Task<Result> CreateReactionAsync
         (
             Snowflake channelID,
