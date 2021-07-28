@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Objects
         Snowflake ID,
         Optional<Snowflake> PackID,
         string Name,
-        string Description,
+        string? Description,
         string Tags,
         StickerType Type,
         StickerFormatType FormatType,
