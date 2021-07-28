@@ -352,6 +352,20 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Crosspost a message otherwise known as "publishing" a message from a announcement channel that other guilds can follow.
+        /// </summary>
+        /// <param name="channelID">The ID of the channel.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IMessage>> CrosspostMessageAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Adds a reaction to the given message.
         /// </summary>
         /// <param name="channelID">The ID of the channel the message is in.</param>
