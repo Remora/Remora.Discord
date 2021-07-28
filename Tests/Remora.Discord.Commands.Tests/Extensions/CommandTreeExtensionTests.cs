@@ -329,9 +329,9 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     AssertExistsWithType("long-value", Integer);
                     AssertExistsWithType("ulong-value", Integer);
 
-                    AssertExistsWithType("float-value", String);
-                    AssertExistsWithType("double-value", String);
-                    AssertExistsWithType("decimal-value", String);
+                    AssertExistsWithType("float-value", Number);
+                    AssertExistsWithType("double-value", Number);
+                    AssertExistsWithType("decimal-value", Number);
 
                     AssertExistsWithType("string-value", String);
 

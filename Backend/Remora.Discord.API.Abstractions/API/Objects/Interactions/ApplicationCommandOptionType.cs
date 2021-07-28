@@ -73,6 +73,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The option is some type of mentionable object (member, role, channel, etc).
         /// </summary>
-        Mentionable = 9
+        Mentionable = 9,
+
+        /// <summary>
+        /// The option is a floating-point number (double precision).
+        /// </summary>
+        Number = 10
     }
 }

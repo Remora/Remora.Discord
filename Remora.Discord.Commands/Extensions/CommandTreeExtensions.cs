@@ -423,6 +423,7 @@ namespace Remora.Discord.Commands.Extensions
                 var t when t == typeof(IGuildMember) => ApplicationCommandOptionType.User,
                 var t when t == typeof(IChannel) => ApplicationCommandOptionType.Channel,
                 var t when t.IsInteger() => Integer,
+                var t when t.IsFloatingPoint() => Number,
                 _ => ApplicationCommandOptionType.String
             };
 

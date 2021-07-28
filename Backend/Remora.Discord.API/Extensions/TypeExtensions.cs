@@ -187,6 +187,28 @@ namespace Remora.Discord.API.Extensions
         }
 
         /// <summary>
+        /// Checks whether the type is one of C#'s builtin floating-point types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>true if the type is a builtin floating-point type; otherwise, false.</returns>
+        public static bool IsFloatingPoint(this Type type)
+        {
+            switch (type)
+            {
+                case var _ when type == typeof(float):
+                case var _ when type == typeof(double):
+                case var _ when type == typeof(decimal):
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Determines whether the given type is a closed <see cref="Optional{TValue}"/>.
         /// </summary>
         /// <param name="type">The type.</param>
