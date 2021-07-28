@@ -22,6 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Commands.Conditions;
+using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Conditions
 {
@@ -32,17 +33,33 @@ namespace Remora.Discord.Commands.Conditions
     public class RequireContextAttribute : ConditionAttribute
     {
         /// <summary>
-        /// Gets the command context.
+        /// Gets the command grouped contexts.
         /// </summary>
-        public ChannelContext Context { get; }
+        public ChannelContext[]? ChannelContexts { get; }
+
+        /// <summary>
+        /// Gets the command individual channel type contexts.
+        /// </summary>
+        public ChannelType[]? ChannelTypes { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
         /// </summary>
-        /// <param name="context">The context.</param>
-        public RequireContextAttribute(ChannelContext context)
+        /// <param name="channelContexts">The grouped channel contexts.</param>
+        public RequireContextAttribute(params ChannelContext[] channelContexts)
         {
-            this.Context = context;
+            this.ChannelTypes = null;
+            this.ChannelContexts = channelContexts;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
+        /// </summary>
+        /// <param name="channelType">The individual channel types.</param>
+        public RequireContextAttribute(params ChannelType[] channelType)
+        {
+            this.ChannelTypes = channelType;
+            this.ChannelContexts = null;
         }
     }
 }
