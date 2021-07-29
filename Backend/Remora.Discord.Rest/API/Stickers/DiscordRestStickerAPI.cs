@@ -54,19 +54,19 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
+        public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
         {
             return this.DiscordHttpClient.GetAsync<ISticker>($"stickers/{id}", ct: ct);
         }
 
         /// <inheritdoc />
-        public Task<Result<INitroStickerPacks>> ListNitroStickerPacksAsync(CancellationToken ct = default)
+        public virtual Task<Result<INitroStickerPacks>> ListNitroStickerPacksAsync(CancellationToken ct = default)
         {
             return this.DiscordHttpClient.GetAsync<INitroStickerPacks>("sticker-packs", ct: ct);
         }
 
         /// <inheritdoc />
-        public Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync
+        public virtual Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync
         (
             Snowflake guildId,
             CancellationToken ct = default
@@ -76,7 +76,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<ISticker>> GetGuildStickerAsync
+        public virtual Task<Result<ISticker>> GetGuildStickerAsync
         (
             Snowflake guildId,
             Snowflake stickerId,
@@ -87,7 +87,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<ISticker>> CreateGuildStickerAsync
+        public virtual async Task<Result<ISticker>> CreateGuildStickerAsync
         (
             Snowflake guildId,
             string name,
@@ -130,7 +130,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<ISticker>> ModifyGuildStickerAsync
+        public virtual async Task<Result<ISticker>> ModifyGuildStickerAsync
         (
             Snowflake guildId,
             Snowflake stickerId,
@@ -181,7 +181,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result> DeleteGuildStickerAsync
+        public virtual Task<Result> DeleteGuildStickerAsync
         (
             Snowflake guildId,
             Snowflake stickerId,

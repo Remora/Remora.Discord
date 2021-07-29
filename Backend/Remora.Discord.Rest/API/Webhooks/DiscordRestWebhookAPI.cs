@@ -297,7 +297,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IMessage>> GetWebhookMessageAsync
+        public virtual Task<Result<IMessage>> GetWebhookMessageAsync
         (
             Snowflake webhookID,
             string webhookToken,
@@ -385,7 +385,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+        public virtual Task<Result<IMessage>> GetOriginalInteractionResponseAsync
         (
             Snowflake applicationID,
             string interactionToken,

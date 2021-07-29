@@ -52,10 +52,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync
-        (
-            CancellationToken ct = default
-        )
+        public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default)
         {
             return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
         }

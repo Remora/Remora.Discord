@@ -114,7 +114,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
+        public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
         (
             Snowflake applicationID,
             IReadOnlyList<IBulkApplicationCommandData> commands,
@@ -249,7 +249,8 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
+        public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>>
+        BulkOverwriteGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -425,7 +426,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+        public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
         GetGuildApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,
@@ -441,7 +442,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
+        public virtual Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -457,7 +458,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
+        public virtual Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
@@ -482,7 +483,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+        public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
         BatchEditApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,

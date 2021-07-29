@@ -158,7 +158,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyGroupDMChannelAsync
+        public virtual Task<Result<IChannel>> ModifyGroupDMChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -170,7 +170,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyGuildTextChannelAsync
+        public virtual Task<Result<IChannel>> ModifyGuildTextChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -204,7 +204,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
+        public virtual Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -236,7 +236,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+        public virtual Task<Result<IChannel>> ModifyGuildNewsChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -266,7 +266,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyGuildStoreChannelAsync
+        public virtual Task<Result<IChannel>> ModifyGuildStoreChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,
@@ -292,7 +292,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IChannel>> ModifyThreadChannelAsync
+        public virtual Task<Result<IChannel>> ModifyThreadChannelAsync
         (
             Snowflake channelID,
             Optional<string> name = default,

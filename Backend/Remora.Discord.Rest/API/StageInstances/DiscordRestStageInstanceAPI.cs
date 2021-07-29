@@ -52,7 +52,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IStageInstance>> CreateStageInstanceAsync
+        public virtual Task<Result<IStageInstance>> CreateStageInstanceAsync
         (
             Snowflake channelID,
             string topic,
@@ -80,7 +80,11 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IStageInstance>> GetStageInstanceAsync(Snowflake channelID, CancellationToken ct = default)
+        public virtual Task<Result<IStageInstance>> GetStageInstanceAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
         {
             return this.DiscordHttpClient.GetAsync<IStageInstance>
             (
@@ -90,7 +94,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result<IStageInstance>> UpdateStageInstanceAsync
+        public virtual Task<Result<IStageInstance>> UpdateStageInstanceAsync
         (
             Snowflake channelID,
             Optional<string> topic = default,
@@ -117,7 +121,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public Task<Result> DeleteStageInstance
+        public virtual Task<Result> DeleteStageInstance
         (
             Snowflake channelID,
             Optional<string> reason = default,

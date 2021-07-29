@@ -47,10 +47,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync
-        (
-            CancellationToken ct = default
-        )
+        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
         {
             return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
