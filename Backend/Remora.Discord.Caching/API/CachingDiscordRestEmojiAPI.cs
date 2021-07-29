@@ -156,5 +156,38 @@ namespace Remora.Discord.Caching.API
 
             return deleteResult;
         }
+
+        /// <inheritdoc />
+        public override async Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateGuildEmojisCacheKey(guildID);
+            if (_cacheService.TryGetValue<IReadOnlyList<IEmoji>>(key, out var cachedInstance))
+            {
+                return Result<IReadOnlyList<IEmoji>>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.ListGuildEmojisAsync(guildID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            foreach (var emoji in result.Entity)
+            {
+                if (emoji.ID is null)
+                {
+                    continue;
+                }
+
+                var emojiKey = KeyHelpers.CreateEmojiCacheKey(guildID, emoji.ID.Value);
+                _cacheService.Cache(emojiKey, emoji);
+            }
+
+            return result;
+        }
     }
 }

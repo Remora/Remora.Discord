@@ -501,16 +501,24 @@ namespace Remora.Discord.Caching.API
             CancellationToken ct = default
         )
         {
+            var key = KeyHelpers.CreateThreadQueryResponseCacheKey(channelID);
+            if (_cacheService.TryGetValue<IThreadQueryResponse>(key, out var cachedInstance))
+            {
+                return Result<IThreadQueryResponse>.FromSuccess(cachedInstance);
+            }
+
             var getResult = await base.ListActiveThreadsAsync(channelID, ct);
             if (!getResult.IsSuccess)
             {
                 return getResult;
             }
 
+            _cacheService.Cache(key, getResult.Entity);
+
             foreach (var channel in getResult.Entity.Threads)
             {
-                var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
-                _cacheService.Cache(key, channel);
+                var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
+                _cacheService.Cache(channelKey, channel);
             }
 
             return getResult;
@@ -586,6 +594,136 @@ namespace Remora.Discord.Caching.API
             }
 
             return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+        (
+            Snowflake channelID,
+            Optional<Snowflake> around = default,
+            Optional<Snowflake> before = default,
+            Optional<Snowflake> after = default,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.GetChannelMessagesAsync(channelID, around, before, after, limit, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            foreach (var message in getResult.Entity)
+            {
+                var key = KeyHelpers.CreateMessageCacheKey(channelID, message.ID);
+                _cacheService.Cache(key, message);
+            }
+
+            return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> CrosspostMessageAsync
+        (
+            Snowflake channelID,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.CrosspostMessageAsync(channelID, messageID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var message = result.Entity;
+            var key = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+            _cacheService.Cache(key, message);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateChannelInvitesCacheKey(channelID);
+            if (_cacheService.TryGetValue<IReadOnlyList<IInvite>>(key, out var cachedInstance))
+            {
+                return Result<IReadOnlyList<IInvite>>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetChannelInvitesAsync(channelID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            _cacheService.Cache(key, result.Entity);
+
+            foreach (var invite in result.Entity)
+            {
+                var inviteKey = KeyHelpers.CreateInviteCacheKey(invite.Code);
+                _cacheService.Cache(inviteKey, invite);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+        (
+            Snowflake channelID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateThreadMembersCacheKey(channelID);
+            if (_cacheService.TryGetValue<IReadOnlyList<IThreadMember>>(key, out var cachedInstance))
+            {
+                return Result<IReadOnlyList<IThreadMember>>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.ListThreadMembersAsync(channelID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            foreach (var threadMember in result.Entity)
+            {
+                if (!threadMember.UserID.HasValue)
+                {
+                    continue;
+                }
+
+                var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, threadMember.UserID.Value);
+                _cacheService.Cache(memberKey, threadMember);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result> RemoveThreadMemberAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.RemoveThreadMemberAsync(channelID, userID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
+            _cacheService.Evict(key);
+
+            return result;
         }
     }
 }

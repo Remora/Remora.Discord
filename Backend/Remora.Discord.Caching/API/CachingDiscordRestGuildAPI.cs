@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Rest;
@@ -832,17 +833,51 @@ namespace Remora.Discord.Caching.API
             CancellationToken ct = default
         )
         {
+            var key = KeyHelpers.CreateGuildWelcomeScreenCacheKey(guildID);
+            if (_cacheService.TryGetValue<IWelcomeScreen>(key, out var cachedInstance))
+            {
+                return Result<IWelcomeScreen>.FromSuccess(cachedInstance);
+            }
+
             var getResult = await base.GetGuildWelcomeScreenAsync(guildID, ct);
             if (!getResult.IsSuccess)
             {
                 return getResult;
             }
 
-            var key = KeyHelpers.CreateGuildWelcomeScreenCacheKey(guildID);
             var welcomeScreen = getResult.Entity;
             _cacheService.Cache(key, welcomeScreen);
 
             return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+        (
+            Snowflake guildID,
+            string query,
+            Optional<int> limit = default,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.SearchGuildMembersAsync(guildID, query, limit, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            foreach (var guildMember in result.Entity)
+            {
+                if (!guildMember.User.HasValue)
+                {
+                    continue;
+                }
+
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, guildMember.User.Value.ID);
+                _cacheService.Cache(key, guildMember);
+            }
+
+            return result;
         }
     }
 }

@@ -446,7 +446,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake applicationID,
             string token,
-            CancellationToken ct
+            CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync

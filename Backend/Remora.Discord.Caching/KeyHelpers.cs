@@ -401,9 +401,101 @@ namespace Remora.Discord.Caching
         /// </summary>
         /// <param name="guildID">The guild ID.</param>
         /// <returns>The cache key.</returns>
-        public static object CreateGuildWelcomeScreenCacheKey(Snowflake guildID)
+        public static object CreateGuildWelcomeScreenCacheKey(in Snowflake guildID)
         {
             return (typeof(IWelcomeScreen), CreateGuildCacheKey(guildID));
+        }
+
+        /// <summary>
+        /// Creates a cache key for a <see cref="IThreadMember"/> instance.
+        /// </summary>
+        /// <param name="threadID">The ID of the thread.</param>
+        /// <param name="userID">The ID of the user.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateThreadMemberCacheKey(in Snowflake threadID, in Snowflake userID)
+        {
+            return (typeof(IThreadMember), CreateChannelCacheKey(threadID), CreateUserCacheKey(userID));
+        }
+
+        /// <summary>
+        /// Creates a cache key for a <see cref="IAuthorizationInformation"/> instance.
+        /// </summary>
+        /// <returns>The cache key.</returns>
+        public static object CreateCurrentAuthorizationInformationCacheKey()
+        {
+            return typeof(IAuthorizationInformation);
+        }
+
+        /// <summary>
+        /// Creates a cache key for an original interaction <see cref="IMessage"/> instance.
+        /// </summary>
+        /// <param name="token">The interaction token.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateOriginalInteractionMessageCacheKey(string token)
+        {
+            return (typeof(IMessage), token, "@original");
+        }
+
+        /// <summary>
+        /// Creates a cache key for an interaction followup <see cref="IMessage"/> instance.
+        /// </summary>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="messageID">The message ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateFollowupMessageCacheKey(string token, in Snowflake messageID)
+        {
+            return CreateWebhookMessageCacheKey(token, messageID);
+        }
+
+        /// <summary>
+        /// Creates a cache key for a webhook <see cref="IMessage"/> instance.
+        /// </summary>
+        /// <param name="token">The webhook token.</param>
+        /// <param name="messageID">The message ID.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateWebhookMessageCacheKey(string token, in Snowflake messageID)
+        {
+            return (typeof(IMessage), token, messageID);
+        }
+
+        /// <summary>
+        /// Creates a cache key for a <see cref="IThreadQueryResponse"/> instance.
+        /// </summary>
+        /// <param name="channelID">The ID of the queried channel.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateThreadQueryResponseCacheKey(in Snowflake channelID)
+        {
+            return (typeof(IThreadQueryResponse), channelID);
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of channel-scoped <see cref="IInvite"/> instances.
+        /// </summary>
+        /// <param name="channelID">The ID of the queried channel.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateChannelInvitesCacheKey(in Snowflake channelID)
+        {
+            return (typeof(IReadOnlyList<IInvite>), CreateChannelCacheKey(channelID));
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of <see cref="IThreadMember"/> instances.
+        /// </summary>
+        /// <param name="channelID">The ID of the queried channel.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateThreadMembersCacheKey(Snowflake channelID)
+        {
+            return (typeof(IReadOnlyList<IThreadMember>), CreateChannelCacheKey(channelID));
+        }
+
+        /// <summary>
+        /// Creates a cache key for a set of guild-scoped <see cref="IEmoji"/> instances.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <returns>The cache key.</returns>
+        public static object CreateGuildEmojisCacheKey(Snowflake guildID)
+        {
+            return (typeof(IReadOnlyList<IEmoji>), CreateGuildCacheKey(guildID));
         }
     }
 }

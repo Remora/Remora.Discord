@@ -74,5 +74,28 @@ namespace Remora.Discord.Caching.API
 
             return getCurrent;
         }
+
+        /// <inheritdoc />
+        public override async Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+        (
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
+            if (_cacheService.TryGetValue<IAuthorizationInformation>(key, out var cachedInstance))
+            {
+                return Result<IAuthorizationInformation>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetCurrentAuthorizationInformationAsync(ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            _cacheService.Cache(key, result.Entity);
+
+            return result;
+        }
     }
 }

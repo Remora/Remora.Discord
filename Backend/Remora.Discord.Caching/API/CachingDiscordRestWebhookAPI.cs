@@ -327,5 +327,313 @@ namespace Remora.Discord.Caching.API
 
             return modifyWebhook;
         }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> CreateFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<string> content = default,
+            Optional<string> username = default,
+            Optional<string> avatarUrl = default,
+            Optional<bool> isTTS = default,
+            Optional<FileData> file = default,
+            Optional<IReadOnlyList<IEmbed>> embeds = default,
+            Optional<IAllowedMentions> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<MessageFlags> flags = default,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.CreateFollowupMessageAsync
+            (
+                applicationID,
+                token,
+                content,
+                username,
+                avatarUrl,
+                isTTS,
+                file,
+                embeds,
+                allowedMentions,
+                components,
+                flags,
+                ct
+            );
+
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var message = result.Entity;
+
+            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+            var followupKey = KeyHelpers.CreateFollowupMessageCacheKey(token, message.ID);
+
+            _cacheService.Cache(messageKey, message);
+            _cacheService.Cache(followupKey, message);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result> DeleteFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.DeleteFollowupMessageAsync(applicationID, token, messageID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+            _cacheService.Evict(key);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> GetFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
+            {
+                return Result<IMessage>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetFollowupMessageAsync(applicationID, token, messageID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            _cacheService.Cache(key, result.Entity);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> EditWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<FileData?> file = default,
+            Optional<IReadOnlyList<IAttachment>> attachments = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.EditWebhookMessageAsync
+            (
+                webhookID,
+                token,
+                messageID,
+                content,
+                embeds,
+                allowedMentions,
+                file,
+                attachments,
+                components,
+                ct
+            );
+
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+            _cacheService.Cache(key, result.Entity);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result> DeleteWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.DeleteWebhookMessageAsync(webhookID, token, messageID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+            _cacheService.Evict(key);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> EditFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.EditFollowupMessageAsync
+            (
+                applicationID,
+                token,
+                messageID,
+                content,
+                embeds,
+                allowedMentions,
+                components,
+                ct
+            );
+
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+            _cacheService.Cache(key, result.Entity);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> GetWebhookMessageAsync
+        (
+            Snowflake webhookID,
+            string webhookToken,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateWebhookMessageCacheKey(webhookToken, messageID);
+            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
+            {
+                return Result<IMessage>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetWebhookMessageAsync(webhookID, webhookToken, messageID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            _cacheService.Cache(key, result.Entity);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string interactionToken,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(interactionToken);
+            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
+            {
+                return Result<IMessage>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var message = result.Entity;
+
+            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+
+            _cacheService.Cache(key, message);
+            _cacheService.Cache(messageKey, message);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Optional<string?> content = default,
+            Optional<IReadOnlyList<IEmbed>?> embeds = default,
+            Optional<IAllowedMentions?> allowedMentions = default,
+            Optional<IReadOnlyList<IMessageComponent>> components = default,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.EditOriginalInteractionResponseAsync
+            (
+                applicationID,
+                token,
+                content,
+                embeds,
+                allowedMentions,
+                components,
+                ct
+            );
+
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var message = result.Entity;
+
+            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
+            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+
+            _cacheService.Cache(key, message);
+            _cacheService.Cache(messageKey, message);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result> DeleteOriginalInteractionResponseAsync
+        (
+            Snowflake applicationID,
+            string token,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.DeleteOriginalInteractionResponseAsync(applicationID, token, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
+            _cacheService.Evict(key);
+
+            return result;
+        }
     }
 }
