@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +29,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
-using static Remora.Discord.API.Abstractions.Objects.ChannelType;
 
 namespace Remora.Discord.Commands.Conditions
 {
