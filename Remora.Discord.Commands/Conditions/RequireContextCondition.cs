@@ -21,6 +21,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -68,21 +69,14 @@ namespace Remora.Discord.Commands.Conditions
 
             var channel = getChannel.Entity;
 
-            return attribute.Context switch
+            if (attribute.ChannelTypes is null)
             {
-                ChannelContext.DM => channel.Type is DM
-                    ? Result.FromSuccess()
-                    : new ConditionNotSatisfiedError("This command can only be used in a DM."),
-                ChannelContext.GroupDM => channel.Type is GroupDM
-                    ? Result.FromSuccess()
-                    : new ConditionNotSatisfiedError("This command can only be used in a group DM."),
-                ChannelContext.Guild =>
-                    channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews or GuildStore or
-                        GuildPrivateThread or GuildPublicThread
-                        ? Result.FromSuccess()
-                        : new ConditionNotSatisfiedError("This command can only be used in a guild."),
-                _ => throw new ArgumentOutOfRangeException(nameof(attribute))
-            };
+                throw new ArgumentException($"{nameof(attribute.ChannelTypes)} were not defined");
+            }
+
+            return attribute.ChannelTypes.Contains(channel.Type)
+                ? Result.FromSuccess()
+                : new ConditionNotSatisfiedError($"This command was invoked in a channel of type '{channel.Type}', but it can only be used in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'");
         }
     }
 }
