@@ -69,42 +69,14 @@ namespace Remora.Discord.Commands.Conditions
 
             var channel = getChannel.Entity;
 
-            if (attribute.ChannelTypes != null)
+            if (attribute.ChannelTypes is null)
             {
-                return attribute.ChannelTypes.Contains(channel.Type)
-                    ? Result.FromSuccess()
-                    : new ConditionNotSatisfiedError($"This command was invoked in a channel of type '{channel.Type}', but it can only be used in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'");
+                throw new ArgumentException($"{nameof(attribute.ChannelTypes)} were not defined");
             }
 
-            if (attribute.ChannelContexts == null)
-            {
-                throw new ArgumentException($"Neither {nameof(attribute.ChannelContexts)} nor {nameof(attribute.ChannelTypes)} are defined");
-            }
-
-            foreach (var channelContext in attribute.ChannelContexts)
-            {
-                var conditionResult = channelContext switch
-                {
-                    ChannelContext.DM => channel.Type is DM
-                        ? Result.FromSuccess()
-                        : new ConditionNotSatisfiedError("This command can only be used in a DM."),
-                    ChannelContext.GroupDM => channel.Type is GroupDM
-                        ? Result.FromSuccess()
-                        : new ConditionNotSatisfiedError("This command can only be used in a group DM."),
-                    ChannelContext.Guild => channel.Type is GuildText or GuildVoice or GuildCategory or GuildNews
-                        or GuildStore or GuildPrivateThread or GuildPublicThread or GuildNewsThread
-                        ? Result.FromSuccess()
-                        : new ConditionNotSatisfiedError("This command can only be used in a guild."),
-                    _ => throw new ArgumentOutOfRangeException(nameof(attribute))
-                };
-
-                if (conditionResult.IsSuccess)
-                {
-                    return conditionResult;
-                }
-            }
-
-            return new ConditionNotSatisfiedError($"This command was invoked in a channel of type '{channel.Type}', but it can only be used in '{string.Join(", ", attribute.ChannelContexts.Select(x => x.ToString()))}'");
+            return attribute.ChannelTypes.Contains(channel.Type)
+                ? Result.FromSuccess()
+                : new ConditionNotSatisfiedError($"This command was invoked in a channel of type '{channel.Type}', but it can only be used in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'");
         }
     }
 }

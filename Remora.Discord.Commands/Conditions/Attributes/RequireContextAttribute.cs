@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Linq;
 using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Extensions;
 
 namespace Remora.Discord.Commands.Conditions
 {
@@ -33,14 +35,9 @@ namespace Remora.Discord.Commands.Conditions
     public class RequireContextAttribute : ConditionAttribute
     {
         /// <summary>
-        /// Gets the command grouped contexts.
+        /// Gets the command's channel contexts.
         /// </summary>
-        public ChannelContext[]? ChannelContexts { get; }
-
-        /// <summary>
-        /// Gets the command individual channel type contexts.
-        /// </summary>
-        public ChannelType[]? ChannelTypes { get; }
+        public ChannelType[] ChannelTypes { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
@@ -48,8 +45,7 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="channelContexts">The grouped channel contexts.</param>
         public RequireContextAttribute(params ChannelContext[] channelContexts)
         {
-            this.ChannelTypes = null;
-            this.ChannelContexts = channelContexts;
+            this.ChannelTypes = channelContexts.SelectMany(x => x.GetChannelTypes()).ToArray();
         }
 
         /// <summary>
@@ -59,7 +55,6 @@ namespace Remora.Discord.Commands.Conditions
         public RequireContextAttribute(params ChannelType[] channelType)
         {
             this.ChannelTypes = channelType;
-            this.ChannelContexts = null;
         }
     }
 }
