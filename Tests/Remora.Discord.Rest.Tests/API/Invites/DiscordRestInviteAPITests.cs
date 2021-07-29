@@ -57,7 +57,7 @@ namespace Remora.Discord.Rest.Tests.API.Invites
                 var api = CreateAPI
                 (
                     b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}invite/{inviteCode}")
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}invites/{inviteCode}")
                         .WithQueryString
                         (
                             new[]
@@ -92,7 +92,7 @@ namespace Remora.Discord.Rest.Tests.API.Invites
                 var api = CreateAPI
                 (
                     b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invite/{inviteCode}")
+                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
                         .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );

@@ -58,7 +58,7 @@ namespace Remora.Discord.Rest.API
         {
             return this.DiscordHttpClient.GetAsync<IInvite>
             (
-                $"invite/{inviteCode}",
+                $"invites/{inviteCode}",
                 b =>
                 {
                     if (withCounts.HasValue)
@@ -85,7 +85,7 @@ namespace Remora.Discord.Rest.API
         {
             return this.DiscordHttpClient.DeleteAsync<IInvite>
             (
-                $"invite/{inviteCode}",
+                $"invites/{inviteCode}",
                 b => b.AddAuditLogReason(reason),
                 ct: ct
             );
