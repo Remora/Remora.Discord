@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using static Remora.Discord.API.Abstractions.Objects.ChannelType;
@@ -33,42 +35,48 @@ namespace Remora.Discord.Commands.Extensions
     public static class ChannelContextExtensions
     {
         /// <summary>
-        /// Determines whether a channel type belongs to a ChannelContext.
+        /// Holds a mapping of channel contexts to their constituent channel types.
         /// </summary>
-        /// <param name="channelContext">The channel context to check if a channel type belongs to.</param>
-        /// <param name="type">The channel type.</param>
-        /// <returns>Whether channel type belongs to the channel context.</returns>
-        public static bool IsChannelTypeInContext(this ChannelContext channelContext, ChannelType type)
+        private static readonly IReadOnlyDictionary<ChannelContext, IReadOnlyList<ChannelType>> ChannelTypesMap =
+        new Dictionary<ChannelContext, IReadOnlyList<ChannelType>>
         {
-            return channelContext switch
             {
-                ChannelContext.DM => type is DM,
-                ChannelContext.GroupDM => type is GroupDM,
-                ChannelContext.Guild => type is GuildText or GuildVoice or GuildCategory or GuildNews
-                    or GuildStore or GuildPrivateThread or GuildPublicThread or GuildNewsThread,
-                _ => throw new ArgumentOutOfRangeException(nameof(channelContext))
-            };
-        }
+                ChannelContext.Guild,
+                new[]
+                {
+                    GuildText,
+                    GuildVoice,
+                    GuildCategory,
+                    GuildNews,
+                    GuildStore,
+                    GuildPrivateThread,
+                    GuildPublicThread
+                }
+            },
+            {
+                ChannelContext.DM,
+                new[]
+                {
+                    DM
+                }
+            },
+            {
+                ChannelContext.GroupDM,
+                new[]
+                {
+                    GroupDM
+                }
+            }
+        };
 
         /// <summary>
-        /// Gets the channel types a channel context describes.
+        /// Converts the general channel context into its constituent channel types.
         /// </summary>
         /// <param name="channelContext">The channel context to retrieve the channel types from.</param>
         /// <returns>The channel context's channels types.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if there are no channel types defined for a specific channel context.</exception>
-        public static ChannelType[] GetChannelTypes(this ChannelContext channelContext)
+        public static IReadOnlyList<ChannelType> ToChannelTypes(this ChannelContext channelContext)
         {
-            return channelContext switch
-            {
-                ChannelContext.DM => new[] { DM },
-                ChannelContext.GroupDM => new[] { GroupDM },
-                ChannelContext.Guild => new[]
-                {
-                    GuildText, GuildVoice, GuildCategory, GuildNews, GuildStore,
-                    GuildPrivateThread, GuildPublicThread, GuildNewsThread
-                },
-                _ => throw new ArgumentOutOfRangeException(nameof(channelContext))
-            };
+            return ChannelTypesMap[channelContext];
         }
     }
 }

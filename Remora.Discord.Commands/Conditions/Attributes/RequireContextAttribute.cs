@@ -35,7 +35,7 @@ namespace Remora.Discord.Commands.Conditions
     public class RequireContextAttribute : ConditionAttribute
     {
         /// <summary>
-        /// Gets the command's channel contexts.
+        /// Gets the channel types command execution is permitted in.
         /// </summary>
         public ChannelType[] ChannelTypes { get; }
 
@@ -45,7 +45,7 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="channelContexts">The grouped channel contexts.</param>
         public RequireContextAttribute(params ChannelContext[] channelContexts)
         {
-            this.ChannelTypes = channelContexts.SelectMany(x => x.GetChannelTypes()).ToArray();
+            this.ChannelTypes = channelContexts.SelectMany(x => x.ToChannelTypes()).ToArray();
         }
 
         /// <summary>

@@ -69,14 +69,13 @@ namespace Remora.Discord.Commands.Conditions
 
             var channel = getChannel.Entity;
 
-            if (attribute.ChannelTypes is null)
-            {
-                throw new ArgumentException($"{nameof(attribute.ChannelTypes)} were not defined");
-            }
-
             return attribute.ChannelTypes.Contains(channel.Type)
                 ? Result.FromSuccess()
-                : new ConditionNotSatisfiedError($"This command was invoked in a channel of type '{channel.Type}', but it can only be used in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'");
+                : new ConditionNotSatisfiedError
+                (
+                    $"This command was invoked in a channel of type '{channel.Type}', but it can only be used " +
+                    $"in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'"
+                );
         }
     }
 }
