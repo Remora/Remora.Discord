@@ -1348,6 +1348,45 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestWebhookAPI.GetFollowupMessageAsync"/> method.
+        /// </summary>
+        public class GetFollowupMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.GetFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestWebhookAPI.DeleteWebhookWithTokenAsync"/> method.
         /// </summary>
         public class EditFollowupMessageAsync : RestAPITestBase<IDiscordRestWebhookAPI>

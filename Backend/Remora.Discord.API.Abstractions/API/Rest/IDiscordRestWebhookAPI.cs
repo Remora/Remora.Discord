@@ -367,6 +367,22 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a followup message associated with the given interaction.
+        /// </summary>
+        /// <param name="applicationID">The ID of the bot application.</param>
+        /// <param name="token">The interaction token.</param>
+        /// <param name="messageID">The ID of the message.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IMessage>> GetFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Edits an interaction followup message.
         /// </summary>
         /// <param name="applicationID">The ID of the bot application.</param>

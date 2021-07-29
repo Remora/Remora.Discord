@@ -503,6 +503,22 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual Task<Result<IMessage>> GetFollowupMessageAsync
+        (
+            Snowflake applicationID,
+            string token,
+            Snowflake messageID,
+            CancellationToken ct = default
+        )
+        {
+            return this.DiscordHttpClient.GetAsync<IMessage>
+            (
+                $"webhooks/{applicationID}/{token}/messages/{messageID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual async Task<Result<IMessage>> EditFollowupMessageAsync
         (
             Snowflake applicationID,
