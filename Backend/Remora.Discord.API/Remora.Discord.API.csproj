@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>24.0.1</Version>
+        <Version>24.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Fix missing nullability annotation.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
