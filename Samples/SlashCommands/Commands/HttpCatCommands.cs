@@ -28,31 +28,25 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.SlashCommands.Commands
 {
     /// <summary>
-    /// Responds to a httpcat command.
+    /// Responds to a HttpCat command.
     /// </summary>
     public class HttpCatCommands : CommandGroup
     {
-        private readonly InteractionContext _context;
-        private readonly IDiscordRestWebhookAPI _webhookAPI;
+        private readonly FeedbackService _feedbackService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
         /// </summary>
-        /// <param name="webhookAPI">The webhook API.</param>
-        /// <param name="context">The command context.</param>
-        public HttpCatCommands
-        (
-            IDiscordRestWebhookAPI webhookAPI,
-            InteractionContext context
-        )
+        /// <param name="feedbackService">The feedback service.</param>
+        public HttpCatCommands(FeedbackService feedbackService)
         {
-            _webhookAPI = webhookAPI;
-            _context = context;
+            _feedbackService = feedbackService;
         }
 
         /// <summary>
@@ -65,15 +59,9 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
-            var embed = new Embed(Image: embedImage);
+            var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
 
-            var reply = await _webhookAPI.CreateFollowupMessageAsync
-            (
-                _context.ApplicationID,
-                _context.Token,
-                embeds: new[] { embed },
-                ct: this.CancellationToken
-            );
+            var reply = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
 
             return !reply.IsSuccess
                 ? Result.FromError(reply)

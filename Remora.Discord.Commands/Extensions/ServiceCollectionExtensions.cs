@@ -28,6 +28,8 @@ using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Feedback.Services;
+using Remora.Discord.Commands.Feedback.Themes;
 using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
@@ -112,6 +114,10 @@ namespace Remora.Discord.Commands.Extensions
                 .AddParser<Snowflake, SnowflakeParser>();
 
             serviceCollection.TryAddScoped<ExecutionEventCollectorService>();
+
+            serviceCollection.TryAddScoped<FeedbackService>();
+            serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
+            serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
 
             if (!enableSlash)
             {

@@ -32,7 +32,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Core;
+using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Samples.DiceRoller.API;
 using Remora.Results;
 
@@ -44,25 +44,17 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
     public class DiceRollCommands : CommandGroup
     {
         private readonly HttpClient _httpClient;
-        private readonly IDiscordRestChannelAPI _channelAPI;
-        private readonly ICommandContext _context;
+        private readonly FeedbackService _feedbackService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
         /// </summary>
         /// <param name="httpClient">The http client used for API requests.</param>
-        /// <param name="channelAPI">The Discord channel API.</param>
-        /// <param name="context">Additional context about the original message.</param>
-        public DiceRollCommands
-        (
-            HttpClient httpClient,
-            IDiscordRestChannelAPI channelAPI,
-            ICommandContext context
-        )
+        /// <param name="feedbackService">The feedback service.</param>
+        public DiceRollCommands(HttpClient httpClient, FeedbackService feedbackService)
         {
             _httpClient = httpClient;
-            _channelAPI = channelAPI;
-            _context = context;
+            _feedbackService = feedbackService;
         }
 
         /// <summary>
@@ -82,7 +74,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             var getRolls = await GetRollsAsync(rollRequests);
             if (!getRolls.IsSuccess)
             {
-                var replyWithFailure = await ReplyWithFailureAsync(_context.ChannelID);
+                var replyWithFailure = await ReplyWithFailureAsync();
 
                 return replyWithFailure.IsSuccess
                     ? Result.FromError(getRolls)
@@ -91,7 +83,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
 
             var rollResponse = getRolls.Entity;
 
-            return await ReplyWithRollsAsync(_context.ChannelID, rollResponse);
+            return await ReplyWithRollsAsync(rollResponse);
         }
 
         private async Task<Result<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
@@ -119,18 +111,20 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
                 : rollResponse;
         }
 
-        private async Task<Result> ReplyWithFailureAsync(Snowflake channel)
+        private async Task<Result> ReplyWithFailureAsync()
         {
-            var failEmbed = new Embed(Description: "Dice rolling failed :(", Colour: Color.OrangeRed);
-
-            var replyFail = await _channelAPI.CreateMessageAsync(channel, embeds: new[] { failEmbed });
+            var replyFail = await _feedbackService.SendContextualErrorAsync
+            (
+                "Dice rolling failed :(",
+                ct: this.CancellationToken
+            );
 
             return !replyFail.IsSuccess
                 ? Result.FromError(replyFail)
                 : Result.FromSuccess();
         }
 
-        private async Task<Result> ReplyWithRollsAsync(Snowflake channel, RollResponse rollResponse)
+        private async Task<Result> ReplyWithRollsAsync(RollResponse rollResponse)
         {
             var rolls = rollResponse.Dice
                 .GroupBy(d => d.Type)
@@ -141,9 +135,9 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
                 );
 
             var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
-            var embed = new Embed("Rolls", Fields: fields, Colour: Color.LawnGreen);
+            var embed = new Embed("Rolls", Fields: fields, Colour: _feedbackService.Theme.Success);
 
-            var replyRolls = await _channelAPI.CreateMessageAsync(channel, embeds: new[] { embed });
+            var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
 
             return !replyRolls.IsSuccess
                 ? Result.FromError(replyRolls)
