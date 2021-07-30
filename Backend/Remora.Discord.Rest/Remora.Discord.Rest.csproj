@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>20.0.0</Version>
+        <Version>20.1.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,10 +13,7 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Fix Invite API.
-            Add a bunch of missing virtual modifiers.
-            Implement GetFollowupMessageAsync.
-            Add support for the Crosspost Message endpoint to the Discord REST Channel API.
+            Implement new &amp; modified thread-related stuff.
         </PackageReleaseNotes>
     </PropertyGroup>
 

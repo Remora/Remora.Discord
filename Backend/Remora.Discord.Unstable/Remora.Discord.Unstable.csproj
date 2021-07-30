@@ -17,7 +17,7 @@
             component to the appropriate stable component of Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Added select-menu undocumented values field received on InteractionCreate event.
         </PackageReleaseNotes>
     </PropertyGroup>
 
