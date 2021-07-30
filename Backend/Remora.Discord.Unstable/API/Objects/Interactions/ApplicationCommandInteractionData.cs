@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Unstable.API.Objects.Interactions
+namespace Remora.Discord.Unstable.API.Objects
 {
     /// <inheritdoc cref="IApplicationCommandInteractionData" />
     [PublicAPI]
