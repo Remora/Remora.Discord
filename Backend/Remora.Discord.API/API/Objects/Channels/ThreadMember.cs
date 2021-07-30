@@ -34,7 +34,9 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> ID,
         Optional<Snowflake> UserID,
         DateTimeOffset JoinTimestamp,
-        ThreadMemberFlags Flags
+        ThreadMemberFlags Flags,
+        Optional<IGuildMember> Member = default,
+        Optional<IPartialPresence> Presence = default
     )
     : IThreadMember;
 }

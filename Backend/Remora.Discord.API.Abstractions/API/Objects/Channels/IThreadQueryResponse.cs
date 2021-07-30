@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -28,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Represents a response object from the REST API regarding a thread query.
     /// </summary>
-    [PublicAPI]
+    [PublicAPI, Obsolete("Will be removed in API v10.")]
     public interface IThreadQueryResponse
     {
         /// <summary>

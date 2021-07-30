@@ -36,6 +36,8 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         Optional<Snowflake> ID,
         Optional<Snowflake> UserID,
         DateTimeOffset JoinTimestamp,
-        ThreadMemberFlags Flags
-    ) : ThreadMember(ID, UserID, JoinTimestamp, Flags), IThreadMemberUpdate;
+        ThreadMemberFlags Flags,
+        Optional<IGuildMember> Member,
+        Optional<IPartialPresence> Presence
+    ) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;
 }

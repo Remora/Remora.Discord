@@ -22,6 +22,7 @@
 
 using System;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -51,5 +52,17 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets any user-thread settings.
         /// </summary>
         ThreadMemberFlags Flags { get; }
+
+        /// <summary>
+        /// Gets the guild member object related to the thread member.
+        /// </summary>
+        /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
+        Optional<IGuildMember> Member { get; }
+
+        /// <summary>
+        /// Gets the presence information related to the thread member.
+        /// </summary>
+        /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
+        Optional<IPartialPresence> Presence { get; }
     }
 }

@@ -525,6 +525,7 @@ namespace Remora.Discord.API.Extensions
 
             options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
             options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
+            options.AddDataObjectConverter<IGuildThreadQueryResponse, GuildThreadQueryResponse>();
 
             return options;
         }

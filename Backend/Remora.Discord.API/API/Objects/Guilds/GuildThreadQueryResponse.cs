@@ -1,5 +1,5 @@
 //
-//  AuditLog.cs
+//  GuildThreadQueryResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,18 +24,14 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IAuditLog" />
+    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
     [PublicAPI]
-    public record AuditLog
+    public record GuildThreadQueryResponse
     (
-        IReadOnlyList<IWebhook> Webhooks,
-        IReadOnlyList<IUser> Users,
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-        IReadOnlyList<IPartialIntegration> Integrations,
-        IReadOnlyList<IChannel> Threads
-    ) : IAuditLog;
+        IReadOnlyList<IChannel> Threads,
+        IReadOnlyList<IThreadMember> Members
+    )
+    : IGuildThreadQueryResponse;
 }

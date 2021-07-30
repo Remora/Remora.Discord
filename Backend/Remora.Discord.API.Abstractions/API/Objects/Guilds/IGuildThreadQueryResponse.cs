@@ -1,5 +1,5 @@
 //
-//  AuditLog.cs
+//  IGuildThreadQueryResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,20 +22,23 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IAuditLog" />
+    /// <summary>
+    /// Represents a response object from the REST API regarding a thread query.
+    /// </summary>
     [PublicAPI]
-    public record AuditLog
-    (
-        IReadOnlyList<IWebhook> Webhooks,
-        IReadOnlyList<IUser> Users,
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-        IReadOnlyList<IPartialIntegration> Integrations,
-        IReadOnlyList<IChannel> Threads
-    ) : IAuditLog;
+    public interface IGuildThreadQueryResponse
+    {
+        /// <summary>
+        /// Gets the threads returned by the query.
+        /// </summary>
+        IReadOnlyList<IChannel> Threads { get; }
+
+        /// <summary>
+        /// Gets a set of member objects that map to the returned threads the current user has joined.
+        /// </summary>
+        IReadOnlyList<IThreadMember> Members { get; }
+    }
 }

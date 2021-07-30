@@ -1137,5 +1137,19 @@ namespace Remora.Discord.Rest.API
                 ct: ct
             );
         }
+
+        /// <inheritdoc />
+        public Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            return this.DiscordHttpClient.GetAsync<IGuildThreadQueryResponse>
+            (
+                $"guilds/{guildID}/threads/active",
+                ct: ct
+            );
+        }
     }
 }

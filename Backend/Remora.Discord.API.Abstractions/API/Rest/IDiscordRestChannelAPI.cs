@@ -742,6 +742,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
+        [Obsolete("Pass the channel type explicitly. This method will be removed in API v10.")]
         Task<Result<IChannel>> StartThreadWithoutMessageAsync
         (
             Snowflake channelID,
@@ -822,6 +823,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="channelID">The channel.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
+        [Obsolete("Use IDiscordRestGuildAPI::ListActiveThreadsAsync instead. This method will be removed in API v10.")]
         Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
         (
             Snowflake channelID,

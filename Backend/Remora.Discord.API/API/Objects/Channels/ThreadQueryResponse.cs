@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -27,7 +28,7 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
-    [PublicAPI]
+    [PublicAPI, Obsolete("Will be removed in API v10.")]
     public record ThreadQueryResponse
     (
         IReadOnlyList<IChannel> Threads,

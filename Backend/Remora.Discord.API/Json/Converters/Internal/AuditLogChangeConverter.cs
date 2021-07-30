@@ -99,7 +99,11 @@ namespace Remora.Discord.API.Json
             { "format_type", typeof(StickerFormatType) },
             { "asset", typeof(string) },
             { "available", typeof(bool) },
-            { "guild_id", typeof(Snowflake) }
+            { "guild_id", typeof(Snowflake) },
+            { "archived", typeof(bool) },
+            { "locked", typeof(bool) },
+            { "auto_archive_duration", typeof(AutoArchiveDuration) },
+            { "default_auto_archive_duration", typeof(AutoArchiveDuration) }
         };
 
         private static readonly IReadOnlyDictionary<string, JsonConverter> KeyConverters =

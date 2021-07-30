@@ -1,5 +1,5 @@
 //
-//  AuditLog.cs
+//  GuildThreadQueryResponseTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Tests.TestBases;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <inheritdoc cref="IAuditLog" />
-    [PublicAPI]
-    public record AuditLog
-    (
-        IReadOnlyList<IWebhook> Webhooks,
-        IReadOnlyList<IUser> Users,
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-        IReadOnlyList<IPartialIntegration> Integrations,
-        IReadOnlyList<IChannel> Threads
-    ) : IAuditLog;
+    /// <inheritdoc />
+    public class GuildThreadQueryResponseTests : ObjectTestBase<IGuildThreadQueryResponse>
+    {
+    }
 }

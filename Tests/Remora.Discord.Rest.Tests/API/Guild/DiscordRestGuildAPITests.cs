@@ -2189,5 +2189,36 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 ResultAssert.Successful(result);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.ListActiveThreadsAsync"/> method.
+        /// </summary>
+        public class ListActiveThreadsAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildID = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}guilds/{guildID}/threads/active"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildThreadQueryResponse)])
+                );
+
+                var result = await api.ListActiveThreadsAsync(guildID);
+                ResultAssert.Successful(result);
+            }
+        }
     }
 }
