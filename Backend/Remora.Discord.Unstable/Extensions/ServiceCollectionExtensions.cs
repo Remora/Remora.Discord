@@ -46,8 +46,12 @@ namespace Remora.Discord.Unstable.Extensions
             this IServiceCollection serviceCollection
         )
         {
-            serviceCollection.Configure<JsonSerializerOptions>(options =>
-                options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>());
+            serviceCollection.Configure<JsonSerializerOptions>
+            (
+                options =>
+                    options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>()
+            );
+
             return serviceCollection;
         }
     }

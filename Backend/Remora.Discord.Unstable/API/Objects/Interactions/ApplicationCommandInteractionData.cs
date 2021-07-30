@@ -30,14 +30,14 @@ namespace Remora.Discord.Unstable.API.Objects
     /// <inheritdoc cref="IApplicationCommandInteractionData" />
     [PublicAPI]
     public record ApplicationCommandInteractionData
-        (
-            Optional<Snowflake> ID,
-            Optional<string> Name,
-            Optional<IApplicationCommandInteractionDataResolved> Resolved,
-            Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
-            Optional<IReadOnlyList<string>> Values = default,
-            Optional<string> CustomID = default,
-            Optional<ComponentType> ComponentType = default
-        )
-        : IApplicationCommandInteractionData;
+    (
+        Optional<Snowflake> ID,
+        Optional<string> Name,
+        Optional<IApplicationCommandInteractionDataResolved> Resolved,
+        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+        Optional<IReadOnlyList<string>> Values = default,
+        Optional<string> CustomID = default,
+        Optional<ComponentType> ComponentType = default
+    )
+    : IApplicationCommandInteractionData;
 }
