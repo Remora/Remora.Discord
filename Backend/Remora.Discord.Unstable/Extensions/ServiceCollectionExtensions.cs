@@ -20,8 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Extensions;
+using Remora.Discord.Unstable.API.Objects;
 
 // ReSharper disable once CheckNamespace
 namespace Remora.Discord.Unstable.Extensions
@@ -42,6 +46,8 @@ namespace Remora.Discord.Unstable.Extensions
             this IServiceCollection serviceCollection
         )
         {
+            serviceCollection.Configure<JsonSerializerOptions>(options =>
+                options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>());
             return serviceCollection;
         }
     }
