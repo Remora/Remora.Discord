@@ -27,7 +27,6 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Commands.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions
@@ -69,7 +68,7 @@ namespace Remora.Discord.Commands.Conditions
 
             return attribute.ChannelTypes.Contains(channel.Type)
                 ? Result.FromSuccess()
-                : new ConditionNotSatisfiedError
+                : new InvalidOperationError
                 (
                     $"This command was invoked in a channel of type '{channel.Type}', but it can only be used " +
                     $"in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'"

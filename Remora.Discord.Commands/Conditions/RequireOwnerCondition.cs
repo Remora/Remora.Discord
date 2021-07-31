@@ -26,7 +26,6 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
-using Remora.Discord.Commands.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions
@@ -69,7 +68,7 @@ namespace Remora.Discord.Commands.Conditions
 
             return application.Owner.ID.Value == _context.User.ID
                 ? Result.FromSuccess()
-                : new ConditionNotSatisfiedError("You need to be the bot owner to do that.");
+                : new InvalidOperationError("You need to be the bot owner to do that.");
         }
     }
 }
