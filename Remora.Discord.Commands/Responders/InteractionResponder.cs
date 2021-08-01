@@ -173,6 +173,8 @@ namespace Remora.Discord.Commands.Responders
                 ct: ct
             );
 
+            // Note to self: this doesn't check whether the *command* succeeded, it checks whether *execution*
+            // succeeded. This is why we return here, and why post-execution events still run for unsuccessful commands.
             if (!executeResult.IsSuccess)
             {
                 return Result.FromError(executeResult);
