@@ -220,7 +220,7 @@ namespace Remora.Discord.Commands.Responders
             }
 
             // Run any user-provided pre execution events
-            var preExecution = await _eventCollector.RunPreExecutionEvents(commandContext, ct);
+            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
             if (!preExecution.IsSuccess)
             {
                 return preExecution;
@@ -242,6 +242,7 @@ namespace Remora.Discord.Commands.Responders
             // Run any user-provided post execution events
             var postExecution = await _eventCollector.RunPostExecutionEvents
             (
+                _services,
                 commandContext,
                 executeResult.Entity,
                 ct

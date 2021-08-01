@@ -60,6 +60,7 @@ namespace Remora.Discord.Commands.Extensions
             serviceCollection
                 .TryAddScoped<ContextInjectionService>();
 
+            // Set up context injection
             serviceCollection
                 .TryAddTransient<ICommandContext>
                 (
@@ -113,7 +114,7 @@ namespace Remora.Discord.Commands.Extensions
                 .AddParser<IUser, UserParser>()
                 .AddParser<Snowflake, SnowflakeParser>();
 
-            serviceCollection.TryAddScoped<ExecutionEventCollectorService>();
+            serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 
             serviceCollection.TryAddScoped<FeedbackService>();
             serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
@@ -160,6 +161,48 @@ namespace Remora.Discord.Commands.Extensions
 
             serviceCollection.AddResponder<InteractionResponder>();
             serviceCollection.Configure(optionsConfigurator);
+
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a pre-execution event to the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TEvent">The event type.</typeparam>
+        /// <returns>The collection, with the event.</returns>
+        public static IServiceCollection AddPreExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+            where TEvent : class, IPreExecutionEvent
+        {
+            serviceCollection.AddScoped<IPreExecutionEvent, TEvent>();
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a post-execution event to the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TEvent">The event type.</typeparam>
+        /// <returns>The collection, with the event.</returns>
+        public static IServiceCollection AddPostExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+            where TEvent : class, IPostExecutionEvent
+        {
+            serviceCollection.AddScoped<IPostExecutionEvent, TEvent>();
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds a pre- and post-execution event to the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TEvent">The event type.</typeparam>
+        /// <returns>The collection, with the event.</returns>
+        public static IServiceCollection AddExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+            where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
+        {
+            serviceCollection
+                .AddPreExecutionEvent<TEvent>()
+                .AddPostExecutionEvent<TEvent>();
 
             return serviceCollection;
         }

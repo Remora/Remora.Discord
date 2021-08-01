@@ -1,5 +1,5 @@
 //
-//  IExecutionEventService.cs
+//  IPostExecutionEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,28 +22,18 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Services
 {
     /// <summary>
-    /// Defines the public API for a service that performs actions related to command execution.
+    /// Represents the public interface of a service that can perform a post-execution event.
     /// </summary>
-    [PublicAPI]
-    public interface IExecutionEventService
+    public interface IPostExecutionEvent
     {
         /// <summary>
-        /// Runs before the attempted execution of a command.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="ct">The cancellation token of the current operation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<Result> BeforeExecutionAsync(ICommandContext context, CancellationToken ct = default);
-
-        /// <summary>
-        /// Runs after a command has been successfully executed.
+        /// Runs after a command has been executed, successfully or otherwise.
         /// </summary>
         /// <param name="context">The command context.</param>
         /// <param name="executionResult">The result of the execution.</param>
