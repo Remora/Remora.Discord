@@ -100,7 +100,7 @@ namespace Remora.Discord.Commands.Tests
         [Fact]
         public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
         {
-            var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, default);
+            var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, null!);
             _contextInjection.Context = dummyContext;
 
             var result = await _commands.TryExecuteAsync("interaction command", _services);

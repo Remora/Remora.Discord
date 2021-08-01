@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,34 +37,25 @@ namespace Remora.Discord.Commands.Services
     [PublicAPI]
     public class ExecutionEventCollectorService
     {
-        private readonly IReadOnlyList<IExecutionEventService> _executionEventServices;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExecutionEventCollectorService"/> class.
-        /// </summary>
-        /// <param name="services">The available application services.</param>
-        public ExecutionEventCollectorService(IServiceProvider services)
-        {
-            _executionEventServices = services
-                .GetServices<IExecutionEventService>()
-                .ToList();
-        }
-
         /// <summary>
         /// Runs all collected pre-execution events.
         /// </summary>
+        /// <param name="services">The service provider.</param>
         /// <param name="commandContext">The command context.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result> RunPreExecutionEvents
         (
+            IServiceProvider services,
             ICommandContext commandContext,
             CancellationToken ct
         )
         {
             var results = await Task.WhenAll
             (
-                _executionEventServices.Select(e => e.BeforeExecutionAsync(commandContext, ct))
+                services
+                    .GetServices<IPreExecutionEvent>()
+                    .Select(e => e.BeforeExecutionAsync(commandContext, ct))
             );
 
             foreach (var result in results)
@@ -82,12 +72,14 @@ namespace Remora.Discord.Commands.Services
         /// <summary>
         /// Runs all collected post-execution events.
         /// </summary>
+        /// <param name="services">The service provider.</param>
         /// <param name="commandContext">The command context.</param>
         /// <param name="commandResult">The result of the executed command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result> RunPostExecutionEvents
         (
+            IServiceProvider services,
             ICommandContext commandContext,
             IResult commandResult,
             CancellationToken ct
@@ -95,7 +87,9 @@ namespace Remora.Discord.Commands.Services
         {
             var results = await Task.WhenAll
             (
-                _executionEventServices.Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
+                services
+                    .GetServices<IPostExecutionEvent>()
+                    .Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
             );
 
             foreach (var result in results)

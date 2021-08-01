@@ -149,14 +149,14 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.Token,
                 gatewayEvent.ID,
                 gatewayEvent.ApplicationID,
-                interactionData.Resolved
+                interactionData
             );
 
             // Provide the created context to any services inside this scope
             _contextInjection.Context = context;
 
             // Run any user-provided pre execution events
-            var preExecution = await _eventCollector.RunPreExecutionEvents(context, ct);
+            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
             if (!preExecution.IsSuccess)
             {
                 return preExecution;
@@ -173,6 +173,8 @@ namespace Remora.Discord.Commands.Responders
                 ct: ct
             );
 
+            // Note to self: this doesn't check whether the *command* succeeded, it checks whether *execution*
+            // succeeded. This is why we return here, and why post-execution events still run for unsuccessful commands.
             if (!executeResult.IsSuccess)
             {
                 return Result.FromError(executeResult);
@@ -181,6 +183,7 @@ namespace Remora.Discord.Commands.Responders
             // Run any user-provided post execution events
             return await _eventCollector.RunPostExecutionEvents
             (
+                _services,
                 context,
                 executeResult.Entity,
                 ct
