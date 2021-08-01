@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "metadata", ".\", "{F1A57014
 		stylecop.json = stylecop.json
 		stylecop.ruleset = stylecop.ruleset
 		Directory.Build.props = Directory.Build.props
-		.travis.yml = .travis.yml
 	EndProjectSection
 EndProject
 
