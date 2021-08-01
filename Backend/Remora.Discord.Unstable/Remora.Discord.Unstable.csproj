@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2.0.0</Version>
+        <Version>2.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -17,7 +17,7 @@
             component to the appropriate stable component of Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Added select-menu undocumented values field received on InteractionCreate event.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
