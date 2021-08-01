@@ -2,5 +2,6 @@
     "webhooks": [ ],
     "users": [ ],
     "audit_log_entries": [ ],
-    "integrations": [ ]
+    "integrations": [ ],
+    "threads": [ ]
 }

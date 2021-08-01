@@ -55,7 +55,6 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var response = "{\"webhooks\": [], \"users\": [], \"audit_log_entries\": [], \"integrations\": []}";
                 var guildID = new Snowflake(0);
                 var userID = new Snowflake(1);
                 var actionType = AuditLogEvent.BotAdd;
@@ -77,7 +76,7 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                                     new KeyValuePair<string, string>("limit", limit.ToString())
                                 }
                             )
-                            .Respond("application/json", response)
+                            .Respond("application/json", SampleRepository.Samples[typeof(IAuditLog)])
                 );
 
                 var result = await api.GetAuditLogAsync
