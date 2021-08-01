@@ -149,7 +149,7 @@ namespace Remora.Discord.Commands.Responders
                 gatewayEvent.Token,
                 gatewayEvent.ID,
                 gatewayEvent.ApplicationID,
-                interactionData.Resolved
+                interactionData
             );
 
             // Provide the created context to any services inside this scope
