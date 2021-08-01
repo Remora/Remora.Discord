@@ -83,7 +83,7 @@ namespace Remora.Discord.API.Abstractions.Gateway
         /// <summary>
         /// Sharding is required by this session.
         /// </summary>
-        ShardingRequired = 40011,
+        ShardingRequired = 4011,
 
         /// <summary>
         /// An invalid API version was sent to the gateway.
