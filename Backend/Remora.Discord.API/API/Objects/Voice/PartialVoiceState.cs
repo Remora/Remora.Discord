@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -43,6 +44,7 @@ namespace Remora.Discord.API.Objects
         Optional<bool> IsSelfMuted = default,
         Optional<bool> IsStreaming = default,
         Optional<bool> IsVideoEnabled = default,
-        Optional<bool> IsSuppressed = default
+        Optional<bool> IsSuppressed = default,
+        Optional<DateTimeOffset?> RequestToSpeakTimestamp = default
     ) : IPartialVoiceState;
 }
