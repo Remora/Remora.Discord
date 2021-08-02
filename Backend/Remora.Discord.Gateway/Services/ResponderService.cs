@@ -72,32 +72,18 @@ namespace Remora.Discord.Gateway.Services
 
             foreach (var responderInterface in responderInterfaces)
             {
-                if (!_registeredResponderTypes.TryGetValue(responderInterface, out var responderTypeList))
+                var registeredTypes = group switch
+                {
+                    ResponderGroup.Early => _registeredEarlyResponderTypes,
+                    ResponderGroup.Normal => _registeredResponderTypes,
+                    ResponderGroup.Late => _registeredLateResponderTypes,
+                    _ => throw new ArgumentOutOfRangeException(nameof(group), group, null)
+                };
+
+                if (!registeredTypes.TryGetValue(responderInterface, out var responderTypeList))
                 {
                     responderTypeList = new List<Type>();
-
-                    switch (group)
-                    {
-                        case ResponderGroup.Early:
-                        {
-                            _registeredEarlyResponderTypes.Add(responderInterface, responderTypeList);
-                            break;
-                        }
-                        case ResponderGroup.Normal:
-                        {
-                            _registeredResponderTypes.Add(responderInterface, responderTypeList);
-                            break;
-                        }
-                        case ResponderGroup.Late:
-                        {
-                            _registeredLateResponderTypes.Add(responderInterface, responderTypeList);
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(@group), @group, null);
-                        }
-                    }
+                    registeredTypes.Add(responderInterface, responderTypeList);
                 }
 
                 if (responderTypeList.Contains(responderType))
