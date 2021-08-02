@@ -234,25 +234,15 @@ namespace Remora.Discord.Commands.Responders
                 ct: ct
             );
 
-            // Note to self: this doesn't check whether the *command* succeeded, it checks whether *execution*
-            // succeeded. This is why we return here, and why post-execution events still run for unsuccessful commands.
-            if (!executeResult.IsSuccess)
-            {
-                return Result.FromError(executeResult);
-            }
-
-            // Run any user-provided post execution events
-            var postExecution = await _eventCollector.RunPostExecutionEvents
+            // Run any user-provided post execution events, passing along either the result of the command itself, or if
+            // execution failed, the reason why
+            return await _eventCollector.RunPostExecutionEvents
             (
                 _services,
                 commandContext,
-                executeResult.Entity,
+                executeResult.IsSuccess ? executeResult.Entity : executeResult,
                 ct
             );
-
-            return postExecution.IsSuccess
-                ? Result.FromSuccess()
-                : postExecution;
         }
     }
 }
