@@ -21,9 +21,16 @@
 //
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
+using Remora.Discord.Core;
+using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.TestBases
 {
@@ -44,8 +51,22 @@ namespace Remora.Discord.Commands.Tests.TestBases
         /// </summary>
         public InteractionResponderTestBase()
         {
+            var interactionRestMock = new Mock<IDiscordRestInteractionAPI>();
+            interactionRestMock.Setup
+            (
+                i => i.CreateInteractionResponseAsync
+                (
+                    It.IsAny<Snowflake>(),
+                    It.IsAny<string>(),
+                    It.IsAny<IInteractionResponse>(),
+                    It.IsAny<CancellationToken>()
+                )
+            )
+            .Returns(Task.FromResult(Result.FromSuccess()));
+
             var serviceCollection = new ServiceCollection()
-                .AddDiscordCommands();
+                .AddSingleton(interactionRestMock.Object)
+                .AddDiscordCommands(true);
 
             // ReSharper disable once VirtualMemberCallInConstructor
             ConfigureServices(serviceCollection);
