@@ -80,7 +80,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc />
-        public async Task<Result> RespondAsync
+        public virtual async Task<Result> RespondAsync
         (
             IInteractionCreate? gatewayEvent,
             CancellationToken ct = default

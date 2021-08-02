@@ -75,7 +75,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<Result> RespondAsync
+        public virtual async Task<Result> RespondAsync
         (
             IMessageCreate? gatewayEvent,
             CancellationToken ct = default
@@ -149,7 +149,7 @@ namespace Remora.Discord.Commands.Responders
         }
 
         /// <inheritdoc/>
-        public async Task<Result> RespondAsync
+        public virtual async Task<Result> RespondAsync
         (
             IMessageUpdate? gatewayEvent,
             CancellationToken ct = default
@@ -200,7 +200,14 @@ namespace Remora.Discord.Commands.Responders
             return await ExecuteCommandAsync(gatewayEvent.Content.Value, context, ct);
         }
 
-        private async Task<Result> ExecuteCommandAsync
+        /// <summary>
+        /// Executes the actual command.
+        /// </summary>
+        /// <param name="content">The contents of the message.</param>
+        /// <param name="commandContext">The command context.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        protected virtual async Task<Result> ExecuteCommandAsync
         (
             string content,
             ICommandContext commandContext,
