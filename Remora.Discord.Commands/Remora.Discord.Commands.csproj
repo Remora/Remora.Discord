@@ -12,6 +12,7 @@
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
+            Let post-execution events handle all return conditions.
             Rework pre- and post-execution events.
             Expose the full interaction data, not just resolved.
         </PackageReleaseNotes>
