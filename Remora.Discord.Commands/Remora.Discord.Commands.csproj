@@ -5,16 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>7.0.0</Version>
+        <Version>8.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Let post-execution events handle all return conditions.
-            Rework pre- and post-execution events.
-            Expose the full interaction data, not just resolved.
+            Make the methods in the command responders virtual.
         </PackageReleaseNotes>
     </PropertyGroup>
 
