@@ -107,9 +107,13 @@ namespace Remora.Discord.API.Format
         /// </returns>
         public static string BlockCode(string text, string language) => $"```{language}\n{text}\n```";
 
-        /*
-        public static string InlineQuote(string text) => throw new NotImplementedException();
-        public static string BlockQuote(string text) => throw new NotImplementedException();
-        */
+        /// <summary>
+        /// Formats a string to use Markdown Quote Block formatting.
+        /// </summary>
+        /// <param name="text">The input text to format.</param>
+        /// <returns>
+        /// A markdown-formatted block quote string.
+        /// </returns>
+        public static string BlockQuote(string text) => $">>> {text}";
     }
 }
