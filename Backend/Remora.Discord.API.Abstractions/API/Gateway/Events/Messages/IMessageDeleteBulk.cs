@@ -35,6 +35,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// <summary>
         /// Gets the IDs of the removed messages.
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         IReadOnlyList<Snowflake> IDs { get; }
 
         /// <summary>
