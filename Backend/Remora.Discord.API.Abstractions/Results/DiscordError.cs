@@ -176,6 +176,16 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownGiftCode = 10038,
 
         /// <summary>
+        /// Unknown stream.
+        /// </summary>
+        UnknownStream = 10049,
+
+        /// <summary>
+        /// Unknown premium server subscription cooldown.
+        /// </summary>
+        UnknownPremiumServerSubscriptionCooldown = 10050,
+
+        /// <summary>
         /// Unknown guild template.
         /// </summary>
         UnknownGuildTemplate = 10057,
@@ -219,6 +229,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Unknown guild welcome screen.
         /// </summary>
         UnknownGuildWelcomeScreen = 10069,
+
+        /// <summary>
+        /// Unknown guild scheduled event.
+        /// </summary>
+        UnknownGuildScheduledEvent = 10070,
+
+        /// <summary>
+        /// Unknown guild scheduled event user.
+        /// </summary>
+        UnknownGuildScheduledEventUser = 10071,
 
         /// <summary>
         /// Bots cannot use this endpoint.
@@ -596,6 +616,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The "before" value provided was earlier than the thread creation date.
         /// </summary>
         BeforeIsEarlierThanThreadCreation = 50085,
+
+        /// <summary>
+        /// This server is not available in your location.
+        /// </summary>
+        ServerUnavailableInYourLocation = 50095,
+
+        /// <summary>
+        /// This server must have monetization enabled to perform this action.
+        /// </summary>
+        ServerMonetizationRequired = 50097,
 
         /// <summary>
         /// Two factor is required for this operation.
