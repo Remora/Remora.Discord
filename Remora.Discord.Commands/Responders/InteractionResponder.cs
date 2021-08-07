@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
+using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -163,12 +164,15 @@ namespace Remora.Discord.Commands.Responders
             }
 
             // Run the actual command
+            // TODO: Make these configurable via DI or something
+            var tokenizerOptions = new TokenizerOptions();
             var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
             var executeResult = await _commandService.TryExecuteAsync
             (
                 command,
                 parameters,
                 _services,
+                tokenizerOptions: tokenizerOptions,
                 searchOptions: searchOptions,
                 ct: ct
             );
