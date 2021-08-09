@@ -52,6 +52,9 @@ namespace Remora.Discord.Commands.Responders
         private readonly IServiceProvider _services;
         private readonly ContextInjectionService _contextInjection;
 
+        private readonly TokenizerOptions _tokenizerOptions;
+        private readonly TreeSearchOptions _treeSearchOptions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandResponder"/> class.
         /// </summary>
@@ -60,13 +63,17 @@ namespace Remora.Discord.Commands.Responders
         /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
         /// <param name="contextInjection">The injection service.</param>
+        /// <param name="tokenizerOptions">The tokenizer options.</param>
+        /// <param name="treeSearchOptions">The tree search options.</param>
         public CommandResponder
         (
             CommandService commandService,
             IOptions<CommandResponderOptions> options,
             ExecutionEventCollectorService eventCollector,
             IServiceProvider services,
-            ContextInjectionService contextInjection
+            ContextInjectionService contextInjection,
+            IOptions<TokenizerOptions> tokenizerOptions,
+            IOptions<TreeSearchOptions> treeSearchOptions
         )
         {
             _commandService = commandService;
@@ -74,6 +81,9 @@ namespace Remora.Discord.Commands.Responders
             _contextInjection = contextInjection;
             _eventCollector = eventCollector;
             _options = options.Value;
+
+            _tokenizerOptions = tokenizerOptions.Value;
+            _treeSearchOptions = treeSearchOptions.Value;
         }
 
         /// <inheritdoc/>
@@ -236,15 +246,12 @@ namespace Remora.Discord.Commands.Responders
             }
 
             // Run the actual command
-            // TODO: Make these configurable via DI or something
-            var tokenizerOptions = new TokenizerOptions();
-            var searchOptions = new TreeSearchOptions(StringComparison.OrdinalIgnoreCase);
             var executeResult = await _commandService.TryExecuteAsync
             (
                 content,
                 _services,
-                tokenizerOptions: tokenizerOptions,
-                searchOptions: searchOptions,
+                tokenizerOptions: _tokenizerOptions,
+                searchOptions: _treeSearchOptions,
                 ct: ct
             );
 

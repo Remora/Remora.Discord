@@ -25,6 +25,8 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
+using Remora.Commands.Tokenization;
+using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
@@ -35,6 +37,7 @@ using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Commands.Extensions
 {
@@ -99,6 +102,13 @@ namespace Remora.Discord.Commands.Extensions
                         );
                     }
                 );
+
+            // Configure option types
+            serviceCollection.Configure<TokenizerOptions>(opt => opt);
+            serviceCollection.Configure<TreeSearchOptions>
+            (
+                opt => opt with { KeyComparison = StringComparison.OrdinalIgnoreCase }
+            );
 
             serviceCollection.AddCommands();
             serviceCollection.AddCommandResponder();

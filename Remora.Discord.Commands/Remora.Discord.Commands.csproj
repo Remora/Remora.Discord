@@ -22,6 +22,7 @@
 
     <ItemGroup>
         <PackageReference Include="Remora.Commands" Version="5.0.0" />
+        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.0" />
     </ItemGroup>
 
 </Project>
