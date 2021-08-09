@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>26.0.0</Version>
+        <Version>26.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Fixed the value of ShardingRequired.
-            Fixed the missing field in IPartialVoiceState.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

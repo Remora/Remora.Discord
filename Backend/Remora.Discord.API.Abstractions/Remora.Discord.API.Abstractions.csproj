@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>28.0.0</Version>
+        <Version>29.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,8 +14,8 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Fixed the value of ShardingRequired.
-            Fixed the missing field in IPartialVoiceState.
+            Add more error codes.
+            Update documented field limits.
         </PackageReleaseNotes>
     </PropertyGroup>
 
