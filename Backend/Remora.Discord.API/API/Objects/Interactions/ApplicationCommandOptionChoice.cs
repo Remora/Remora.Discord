@@ -33,7 +33,7 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommandOptionChoice
     (
         string Name,
-        OneOf<string, int, double> Value
+        OneOf<string, int, double, bool> Value
     )
     : IApplicationCommandOptionChoice;
 }
