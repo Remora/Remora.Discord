@@ -1,5 +1,5 @@
 //
-//  IApplicationCommandInteractionData.cs
+//  IInteractionData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents payload data for a command.
     /// </summary>
     [PublicAPI]
-    public interface IApplicationCommandInteractionData
+    public interface IInteractionData
     {
         /// <summary>
         /// Gets the ID of the invoked command.
@@ -61,5 +61,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the type of component that the data originated from.
         /// </summary>
         Optional<ComponentType> ComponentType { get; }
+
+        /// <summary>
+        /// Gets the values selected by the user.
+        /// </summary>
+        Optional<IReadOnlyList<string>> Values { get; }
     }
 }

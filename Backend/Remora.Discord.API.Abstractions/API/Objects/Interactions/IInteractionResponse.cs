@@ -39,6 +39,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the response payload.
         /// </summary>
-        Optional<IInteractionApplicationCommandCallbackData> Data { get; }
+        Optional<IInteractionCallbackData> Data { get; }
     }
 }

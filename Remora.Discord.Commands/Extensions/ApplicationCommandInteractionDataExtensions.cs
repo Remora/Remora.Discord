@@ -30,7 +30,7 @@ using Remora.Discord.API.Abstractions.Objects;
 namespace Remora.Discord.Commands.Extensions
 {
     /// <summary>
-    /// Defines extensions for the <see cref="IApplicationCommandInteractionData"/> interface.
+    /// Defines extensions for the <see cref="IInteractionData"/> interface.
     /// </summary>
     [PublicAPI]
     public static class ApplicationCommandInteractionDataExtensions
@@ -43,7 +43,7 @@ namespace Remora.Discord.Commands.Extensions
         /// <param name="parameters">The parameters supplied to the command.</param>
         public static void UnpackInteraction
         (
-            this IApplicationCommandInteractionData commandData,
+            this IInteractionData commandData,
             out string commandName,
             out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
         )

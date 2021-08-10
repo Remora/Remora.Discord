@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionData.cs
+//  InteractionData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -29,16 +29,16 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionData" />
+    /// <inheritdoc cref="IInteractionData" />
     [PublicAPI]
-    public record ApplicationCommandInteractionData
+    public record InteractionData
     (
         Optional<Snowflake> ID,
         Optional<string> Name,
         Optional<IApplicationCommandInteractionDataResolved> Resolved,
         Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
         Optional<string> CustomID = default,
-        Optional<ComponentType> ComponentType = default
-    )
-    : IApplicationCommandInteractionData;
+        Optional<ComponentType> ComponentType = default,
+        Optional<IReadOnlyList<string>> Values = default)
+    : IInteractionData;
 }

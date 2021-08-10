@@ -1,5 +1,5 @@
 //
-//  InteractionApplicationCommandCallbackDataTests.cs
+//  InteractionCallbackDataFlags.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
+using System;
+using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc />
-    public class InteractionApplicationCommandCallbackDataTests
-        : ObjectTestBase<IInteractionApplicationCommandCallbackData>
+    /// <summary>
+    /// Enumerates various interaction callback data flags.
+    /// </summary>
+    [PublicAPI, Flags]
+    public enum InteractionCallbackDataFlags
     {
+        /// <summary>
+        /// The message will only be visible to the executing user.
+        /// </summary>
+        Ephemeral = 1 << 6
     }
 }

@@ -45,7 +45,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackRootLevelParameterlessCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",
@@ -63,7 +63,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackRootLevelSingleParameterCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",
@@ -95,7 +95,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackRootLevelMultipleParameterCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",
@@ -137,7 +137,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackNestedParameterlessCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",
@@ -163,7 +163,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackNestedSingleParameterCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",
@@ -204,7 +204,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             [Fact]
             public void CanUnpackNestedMultipleParameterCommand()
             {
-                var command = new ApplicationCommandInteractionData
+                var command = new InteractionData
                 (
                     new Snowflake(0),
                     "a",

@@ -72,16 +72,16 @@ namespace Remora.Discord.Commands.Tests.Responders
             public async Task AreExecuted()
             {
                 var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IApplicationCommandInteractionData>();
+                var dataMock = new Mock<IInteractionData>();
 
                 dataMock.Setup(d => d.Name).Returns("successful");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IApplicationCommandInteractionData>(dataMock.Object));
+                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
@@ -135,16 +135,16 @@ namespace Remora.Discord.Commands.Tests.Responders
             public async Task AreExecuted()
             {
                 var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IApplicationCommandInteractionData>();
+                var dataMock = new Mock<IInteractionData>();
 
                 dataMock.Setup(d => d.Name).Returns("successful");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IApplicationCommandInteractionData>(dataMock.Object));
+                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
@@ -169,16 +169,16 @@ namespace Remora.Discord.Commands.Tests.Responders
             public async Task AreExecutedForUnsuccessfulCommands()
             {
                 var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IApplicationCommandInteractionData>();
+                var dataMock = new Mock<IInteractionData>();
 
                 dataMock.Setup(d => d.Name).Returns("unsuccessful");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IApplicationCommandInteractionData>(dataMock.Object));
+                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
@@ -203,16 +203,16 @@ namespace Remora.Discord.Commands.Tests.Responders
             public async Task AreExecutedForNotFoundCommands()
             {
                 var userMock = new Mock<IUser>();
-                var dataMock = new Mock<IApplicationCommandInteractionData>();
+                var dataMock = new Mock<IInteractionData>();
 
                 dataMock.Setup(d => d.Name).Returns("notfound");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
-                eventMock.Setup(e => e.Data).Returns(new Optional<IApplicationCommandInteractionData>(dataMock.Object));
+                eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);

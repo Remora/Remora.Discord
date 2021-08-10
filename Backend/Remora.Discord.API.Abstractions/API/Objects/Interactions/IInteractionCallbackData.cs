@@ -1,5 +1,5 @@
 //
-//  IInteractionApplicationCommandCallbackData.cs
+//  IInteractionCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,12 +30,12 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents return payload data for an interaction response.
     /// </summary>
     [PublicAPI]
-    public interface IInteractionApplicationCommandCallbackData
+    public interface IInteractionCallbackData
     {
         /// <summary>
         /// Gets a value indicating whether the message is a TTS message.
         /// </summary>
-        Optional<bool?> IsTTS { get; }
+        Optional<bool> IsTTS { get; }
 
         /// <summary>
         /// Gets the content of the message.
@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the callback flags.
         /// </summary>
-        Optional<MessageFlags> Flags { get; }
+        Optional<InteractionCallbackDataFlags> Flags { get; }
 
         /// <summary>
         /// Gets the components attached to the message.

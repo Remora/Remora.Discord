@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionData.cs
+//  InteractionDataTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,24 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.Unstable.API.Objects
+namespace Remora.Discord.API.Tests.Objects
 {
-    /// <inheritdoc cref="IApplicationCommandInteractionData" />
-    [PublicAPI]
-    public record ApplicationCommandInteractionData
-    (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<IApplicationCommandInteractionDataResolved> Resolved,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
-        Optional<IReadOnlyList<string>> Values = default,
-        Optional<string> CustomID = default,
-        Optional<ComponentType> ComponentType = default
-    )
-    : IApplicationCommandInteractionData;
+    /// <inheritdoc />
+    public class InteractionDataTests : ObjectTestBase<IInteractionData>
+    {
+    }
 }

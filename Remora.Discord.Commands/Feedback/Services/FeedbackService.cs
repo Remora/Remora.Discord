@@ -48,7 +48,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         private readonly ContextInjectionService _contextInjection;
         private readonly IDiscordRestChannelAPI _channelAPI;
         private readonly IDiscordRestUserAPI _userAPI;
-        private readonly IDiscordRestWebhookAPI _webhookAPI;
+        private readonly IDiscordRestInteractionAPI _interactionAPI;
 
         /// <summary>
         /// Gets the theme used by the feedback service.
@@ -61,21 +61,21 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channelAPI">The channel API.</param>
         /// <param name="userAPI">The user API.</param>
         /// <param name="contextInjection">The context injection service.</param>
-        /// <param name="webhookAPI">The webhook API.</param>
+        /// <param name="interactionAPI">The webhook API.</param>
         /// <param name="feedbackTheme">The feedback theme to use.</param>
         public FeedbackService
         (
             IDiscordRestChannelAPI channelAPI,
             IDiscordRestUserAPI userAPI,
             ContextInjectionService contextInjection,
-            IDiscordRestWebhookAPI webhookAPI,
+            IDiscordRestInteractionAPI interactionAPI,
             IFeedbackTheme feedbackTheme
         )
         {
             _channelAPI = channelAPI;
             _userAPI = userAPI;
             _contextInjection = contextInjection;
-            _webhookAPI = webhookAPI;
+            _interactionAPI = interactionAPI;
 
             this.Theme = feedbackTheme;
         }
@@ -424,7 +424,7 @@ namespace Remora.Discord.Commands.Feedback.Services
                     embeds: new[] { embed },
                     ct: ct
                 ),
-                InteractionContext interactionContext => await _webhookAPI.CreateFollowupMessageAsync
+                InteractionContext interactionContext => await _interactionAPI.CreateFollowupMessageAsync
                 (
                     interactionContext.ApplicationID,
                     interactionContext.Token,

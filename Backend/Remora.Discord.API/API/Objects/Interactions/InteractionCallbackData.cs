@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataTests.cs
+//  InteractionCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,13 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Tests.Objects
+#pragma warning disable CS1591
+
+namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc />
-    public class ApplicationCommandInteractionDataTests : ObjectTestBase<IApplicationCommandInteractionData>
-    {
-    }
+    /// <inheritdoc cref="IInteractionCallbackData" />
+    [PublicAPI]
+    public record InteractionCallbackData
+    (
+        Optional<bool> IsTTS = default,
+        Optional<string> Content = default,
+        Optional<IReadOnlyList<IEmbed>> Embeds = default,
+        Optional<IAllowedMentions> AllowedMentions = default,
+        Optional<InteractionCallbackDataFlags> Flags = default,
+        Optional<IReadOnlyList<IMessageComponent>> Components = default
+    ) : IInteractionCallbackData;
 }

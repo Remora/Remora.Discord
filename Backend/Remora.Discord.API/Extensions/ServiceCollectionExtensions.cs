@@ -818,7 +818,7 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddInteractionObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IApplicationCommandInteractionData, ApplicationCommandInteractionData>();
+            options.AddDataObjectConverter<IInteractionData, InteractionData>();
             options.AddDataObjectConverter
             <
                 IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
@@ -827,7 +827,7 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IInteraction, Interaction>();
             options.AddDataObjectConverter
             <
-                IInteractionApplicationCommandCallbackData, InteractionApplicationCommandCallbackData
+                IInteractionCallbackData, InteractionCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 

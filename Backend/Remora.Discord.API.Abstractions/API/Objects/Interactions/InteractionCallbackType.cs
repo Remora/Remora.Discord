@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     public enum InteractionCallbackType
     {
         /// <summary>
-        /// Acknowledge a <see cref="InteractionType.Ping"/>.
+        /// Acknowledge a <see cref="InteractionRequestType.Ping"/>.
         /// </summary>
         Pong = 1,
 
