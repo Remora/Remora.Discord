@@ -59,6 +59,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
         /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
+        /// <param name="type">The type of the application command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
@@ -68,6 +69,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
             Optional<bool> defaultPermission = default,
+            ApplicationCommandType type = default,
             CancellationToken ct = default
         );
 
@@ -177,6 +179,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="description">The description of the command. 1-100 characters.</param>
         /// <param name="options">The parameters for the command.</param>
         /// <param name="defaultPermission">Whether the command is enabled by default in a guild.</param>
+        /// <param name="type">The type of the application command.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
@@ -187,6 +190,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
             Optional<bool> defaultPermission = default,
+            ApplicationCommandType type = default,
             CancellationToken ct = default
         );
 

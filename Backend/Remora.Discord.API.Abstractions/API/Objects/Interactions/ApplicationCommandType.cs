@@ -1,5 +1,5 @@
-//
-//  ApplicationCommand.cs
+﻿//
+//  ApplicationCommandType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Abstractions.Objects
 {
-    /// <inheritdoc cref="IApplicationCommand" />
+    /// <summary>
+    /// Enumerates various application command types.
+    /// </summary>
     [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        ApplicationCommandType Type,
-        Snowflake ApplicationID,
-        Optional<Snowflake> GuildID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    )
-    : IApplicationCommand;
+    public enum ApplicationCommandType
+    {
+        /// <summary>
+        /// Slash commands; a text-based command that shows up when a user types /.
+        /// </summary>
+        ChatInput = 1,
+
+        /// <summary>
+        /// A UI-based command that shows up when you right click or tap on a user.
+        /// </summary>
+        User = 2,
+
+        /// <summary>
+        /// A UI-based command that shows up when you right click or tap on a messages.
+        /// </summary>
+        Message = 3
+    }
 }

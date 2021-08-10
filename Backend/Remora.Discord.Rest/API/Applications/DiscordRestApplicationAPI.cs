@@ -75,6 +75,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            ApplicationCommandType type,
             CancellationToken ct
         )
         {
@@ -87,7 +88,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.Length is < 1 or > 100)
+            if (type is ApplicationCommandType.ChatInput && description.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -104,6 +105,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.WriteNumber("type", (int)type);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
@@ -307,6 +309,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            ApplicationCommandType type,
             CancellationToken ct
         )
         {
@@ -319,7 +322,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.Length is < 1 or > 100)
+            if (type is ApplicationCommandType.ChatInput && description.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -336,6 +339,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.WriteNumber("type", (int)type);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
