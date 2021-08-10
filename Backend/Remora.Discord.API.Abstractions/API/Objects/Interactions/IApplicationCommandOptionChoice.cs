@@ -40,6 +40,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the value of the choice.
         /// </summary>
-        OneOf<string, int, double, bool> Value { get; }
+        OneOf<string, int, double> Value { get; }
     }
 }
