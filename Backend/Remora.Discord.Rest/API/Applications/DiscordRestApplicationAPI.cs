@@ -75,6 +75,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            Optional<ApplicationCommandType> type,
             CancellationToken ct
         )
         {
@@ -104,6 +105,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
@@ -149,6 +151,7 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
+                            json.Write("type", command.Type, this.JsonOptions);
                             json.WriteString("description", command.Description);
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
@@ -287,6 +290,7 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
+                            json.Write("type", command.Type, this.JsonOptions);
                             json.WriteString("description", command.Description);
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
@@ -307,6 +311,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            Optional<ApplicationCommandType> type,
             CancellationToken ct
         )
         {
@@ -336,6 +341,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);

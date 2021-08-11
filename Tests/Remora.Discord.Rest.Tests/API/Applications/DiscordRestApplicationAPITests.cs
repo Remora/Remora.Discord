@@ -87,6 +87,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task PerformsRequestCorrectly()
             {
                 var applicationID = new Snowflake(0);
+                var type = ApplicationCommandType.Message;
                 var name = "aaa";
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -101,6 +102,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
@@ -113,7 +115,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     applicationID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Successful(result);
@@ -130,6 +133,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
+                var type = ApplicationCommandType.ChatInput;
 
                 var api = CreateAPI
                 (
@@ -140,6 +144,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             json => json.IsObject
                             (
                                 o => o
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
@@ -153,7 +158,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     applicationID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Unsuccessful(result);
@@ -300,14 +306,16 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         Name: "aaa",
                         Description: "bbbb",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true
+                        DefaultPermission: true,
+                        Type: ApplicationCommandType.ChatInput
                     ),
                     new BulkApplicationCommandData
                     (
                         Name: "ccc",
                         Description: "dddd",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true
+                        DefaultPermission: true,
+                        Type: ApplicationCommandType.Message
                     ),
                     new BulkApplicationCommandData
                     (
@@ -332,6 +340,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[0].Name))
+                                                .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                                 .WithProperty("description", p => p.Is(commands[0].Description))
                                                 .WithProperty("options", p => p.IsArray(
                                                     ar => ar.WithCount(0)))
@@ -345,6 +354,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[1].Name))
+                                                .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                                 .WithProperty("description", p => p.Is(commands[1].Description))
                                                 .WithProperty("options", p => p.IsArray(
                                                     ar => ar.WithCount(0)))
@@ -358,6 +368,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[2].Name))
+                                                .WithoutProperty("type")
                                                 .WithProperty("description", p => p.Is(commands[2].Description))
                                                 .WithoutProperty("options")
                                                 .WithoutProperty("default_permission")
@@ -847,6 +858,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
 
+                var type = ApplicationCommandType.Message;
                 var name = "aaa";
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -865,6 +877,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
@@ -878,7 +891,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     guildID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Successful(result);
@@ -1094,14 +1108,16 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                         Name: "aaa",
                         Description: "bbbb",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true
+                        DefaultPermission: true,
+                        Type: ApplicationCommandType.ChatInput
                     ),
                     new BulkApplicationCommandData
                     (
                         Name: "ccc",
                         Description: "dddd",
                         Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: false
+                        DefaultPermission: false,
+                        Type: ApplicationCommandType.Message
                     ),
                     new BulkApplicationCommandData
                     (
@@ -1126,6 +1142,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[0].Name))
+                                                .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
                                                 .WithProperty("description", p => p.Is(commands[0].Description))
                                                 .WithProperty("options", p => p.IsArray(
                                                     ar => ar.WithCount(0)))
@@ -1139,6 +1156,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[1].Name))
+                                                .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
                                                 .WithProperty("description", p => p.Is(commands[1].Description))
                                                 .WithProperty("options", p => p.IsArray(
                                                     ar => ar.WithCount(0)))
@@ -1152,6 +1170,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                         (
                                             o => o
                                                 .WithProperty("name", p => p.Is(commands[2].Name))
+                                                .WithoutProperty("type")
                                                 .WithProperty("description", p => p.Is(commands[2].Description))
                                                 .WithoutProperty("options")
                                                 .WithoutProperty("default_permission")

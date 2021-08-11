@@ -1,5 +1,5 @@
 ﻿//
-//  IBulkApplicationCommandData.cs
+//  ApplicationCommandType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
     /// <summary>
-    /// Represents a request to create or update an application command.
+    /// Enumerates various application command types.
     /// </summary>
     [PublicAPI]
-    public interface IBulkApplicationCommandData
+    public enum ApplicationCommandType
     {
-        /// <inheritdoc cref="IApplicationCommand.Name"/>
-        string Name { get; }
+        /// <summary>
+        /// Slash commands; a text-based command that shows up when a user types /.
+        /// </summary>
+        ChatInput = 1,
 
-        /// <inheritdoc cref="IApplicationCommand.Description"/>
-        string Description { get; }
+        /// <summary>
+        /// A UI-based command that shows up when you right click or tap on a user.
+        /// </summary>
+        User = 2,
 
-        /// <inheritdoc cref="IApplicationCommand.Options"/>
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
-
-        /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
-        Optional<bool> DefaultPermission { get; }
-
-        /// <inheritdoc cref="IApplicationCommand.Type"/>
-        Optional<ApplicationCommandType> Type { get; }
+        /// <summary>
+        /// A UI-based command that shows up when you right click or tap on a messages.
+        /// </summary>
+        Message = 3
     }
 }

@@ -36,6 +36,7 @@ namespace Remora.Discord.API.Gateway.Events
     public record ApplicationCommandUpdate
     (
         Snowflake ID,
+        Optional<ApplicationCommandType> Type,
         Snowflake ApplicationID,
         Optional<Snowflake> GuildID,
         string Name,
@@ -43,6 +44,6 @@ namespace Remora.Discord.API.Gateway.Events
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
         Optional<bool> DefaultPermission = default
     ) :
-        ApplicationCommand(ID, ApplicationID, GuildID, Name, Description, Options, DefaultPermission),
+        ApplicationCommand(ID, Type, ApplicationID, GuildID, Name, Description, Options, DefaultPermission),
         IApplicationCommandUpdate;
 }

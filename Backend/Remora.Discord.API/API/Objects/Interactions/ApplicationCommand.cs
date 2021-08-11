@@ -34,6 +34,7 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommand
     (
         Snowflake ID,
+        Optional<ApplicationCommandType> Type,
         Snowflake ApplicationID,
         Optional<Snowflake> GuildID,
         string Name,

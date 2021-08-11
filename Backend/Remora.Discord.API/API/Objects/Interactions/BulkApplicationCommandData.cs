@@ -34,7 +34,8 @@ namespace Remora.Discord.API.Objects
         string Name,
         string Description,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
+        Optional<bool> DefaultPermission = default,
+        Optional<ApplicationCommandType> Type = default
     )
     : IBulkApplicationCommandData;
 }
