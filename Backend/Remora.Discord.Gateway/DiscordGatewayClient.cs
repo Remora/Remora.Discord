@@ -362,6 +362,11 @@ namespace Remora.Discord.Gateway
 
                     break;
                 }
+                case GatewayError gae:
+                {
+                    // We'll try reconnecting on non-critical internal errors
+                    return !gae.IsCritical;
+                }
                 case ExceptionError exe:
                 {
                     switch (exe.Exception)
@@ -410,7 +415,7 @@ namespace Remora.Discord.Gateway
                     {
                         return Result.FromError
                         (
-                            new GatewayError("Failed to get the gateway endpoint."),
+                            new GatewayError("Failed to get the gateway endpoint.", true),
                             getGatewayEndpoint
                         );
                     }
@@ -420,7 +425,8 @@ namespace Remora.Discord.Gateway
                     {
                         return new GatewayError
                         (
-                            "Failed to parse the received gateway endpoint."
+                            "Failed to parse the received gateway endpoint.",
+                            true
                         );
                     }
 
@@ -435,7 +441,11 @@ namespace Remora.Discord.Gateway
                     var receiveHello = await _transportService.ReceivePayloadAsync(stopRequested);
                     if (!receiveHello.IsSuccess)
                     {
-                        return Result.FromError(new GatewayError("Failed to receive the Hello payload."), receiveHello);
+                        return Result.FromError
+                        (
+                            new GatewayError("Failed to receive the Hello payload.", true),
+                            receiveHello
+                        );
                     }
 
                     if (receiveHello.Entity is not IPayload<IHello> hello)
@@ -443,7 +453,8 @@ namespace Remora.Discord.Gateway
                         // Not receiving a hello is a non-recoverable error
                         return new GatewayError
                         (
-                            "The first payload from the gateway was not a hello. Rude!"
+                            "The first payload from the gateway was not a hello. Rude!",
+                            true
                         );
                     }
 
@@ -802,7 +813,8 @@ namespace Remora.Discord.Gateway
                 {
                     return new GatewayError
                     (
-                        "The payload after identification was not a Ready payload."
+                        "The payload after identification was not a Ready payload.",
+                        true
                     );
                 }
 
@@ -845,13 +857,13 @@ namespace Remora.Discord.Gateway
             {
                 if (ct.IsCancellationRequested)
                 {
-                    return new GatewayError("Operation was cancelled.");
+                    return new GatewayError("Operation was cancelled.", false);
                 }
 
                 var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
                 if (!receiveEvent.IsSuccess)
                 {
-                    return Result.FromError(new GatewayError("Failed to receive a payload."), receiveEvent);
+                    return Result.FromError(new GatewayError("Failed to receive a payload.", false), receiveEvent);
                 }
 
                 switch (receiveEvent.Entity)
@@ -919,7 +931,8 @@ namespace Remora.Discord.Gateway
                         {
                             return new GatewayError
                             (
-                                "The server did not respond in time with a heartbeat acknowledgement."
+                                "The server did not respond in time with a heartbeat acknowledgement.",
+                                false
                             );
                         }
 
@@ -938,7 +951,11 @@ namespace Remora.Discord.Gateway
 
                         if (!sendHeartbeat.IsSuccess)
                         {
-                            return Result.FromError(new GatewayError("Failed to send a heartbeat."), sendHeartbeat);
+                            return Result.FromError
+                            (
+                                new GatewayError("Failed to send a heartbeat.", false),
+                                sendHeartbeat
+                            );
                         }
 
                         lastHeartbeat = DateTime.UtcNow;
