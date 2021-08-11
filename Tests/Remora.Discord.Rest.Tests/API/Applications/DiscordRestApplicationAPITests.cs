@@ -621,7 +621,6 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)ApplicationCommandType.ChatInput))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
