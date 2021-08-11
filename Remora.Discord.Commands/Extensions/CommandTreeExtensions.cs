@@ -534,7 +534,7 @@ namespace Remora.Discord.Commands.Extensions
                             );
                     }
 
-                    return description is "" or "No description set."
+                    return description == string.Empty || description == Remora.Commands.Constants.DefaultDescription
                         ? Result.FromSuccess()
                         : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
                 }
