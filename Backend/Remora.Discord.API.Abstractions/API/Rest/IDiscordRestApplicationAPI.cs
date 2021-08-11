@@ -69,7 +69,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
             Optional<bool> defaultPermission = default,
-            ApplicationCommandType type = default,
+            Optional<ApplicationCommandType> type = default,
             CancellationToken ct = default
         );
 
@@ -190,7 +190,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
             Optional<bool> defaultPermission = default,
-            ApplicationCommandType type = default,
+            Optional<ApplicationCommandType> type = default,
             CancellationToken ct = default
         );
 

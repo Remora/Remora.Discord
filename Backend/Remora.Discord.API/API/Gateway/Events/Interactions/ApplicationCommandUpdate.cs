@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Gateway.Events
     public record ApplicationCommandUpdate
     (
         Snowflake ID,
-        ApplicationCommandType Type,
+        Optional<ApplicationCommandType> Type,
         Snowflake ApplicationID,
         Optional<Snowflake> GuildID,
         string Name,

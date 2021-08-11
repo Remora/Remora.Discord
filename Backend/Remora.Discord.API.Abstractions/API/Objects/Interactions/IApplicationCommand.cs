@@ -40,7 +40,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the type of the command.
         /// </summary>
-        ApplicationCommandType Type { get; }
+        Optional<ApplicationCommandType> Type { get; }
 
         /// <summary>
         /// Gets the ID of the application.
