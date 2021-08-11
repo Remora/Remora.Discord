@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataExtensions.cs
+//  InteractionDataExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -33,7 +33,7 @@ namespace Remora.Discord.Commands.Extensions
     /// Defines extensions for the <see cref="IInteractionData"/> interface.
     /// </summary>
     [PublicAPI]
-    public static class ApplicationCommandInteractionDataExtensions
+    public static class InteractionDataExtensions
     {
         /// <summary>
         /// Unpacks an interaction into a command name string and a set of parameters.

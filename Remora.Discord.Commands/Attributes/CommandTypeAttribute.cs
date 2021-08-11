@@ -1,5 +1,5 @@
-﻿//
-//  IBulkApplicationCommandData.cs
+//
+//  CommandTypeAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using System;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
-    /// Represents a request to create or update an application command.
+    /// Marks a command as being of a specific type (chat input, context menu, etc).
     /// </summary>
-    [PublicAPI]
-    public interface IBulkApplicationCommandData
+    [PublicAPI, AttributeUsage(AttributeTargets.Method)]
+    public class CommandTypeAttribute : Attribute
     {
-        /// <inheritdoc cref="IApplicationCommand.Name"/>
-        string Name { get; }
+        /// <summary>
+        /// Gets the command type.
+        /// </summary>
+        public ApplicationCommandType Type { get; }
 
-        /// <inheritdoc cref="IApplicationCommand.Description"/>
-        Optional<string> Description { get; }
-
-        /// <inheritdoc cref="IApplicationCommand.Options"/>
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
-
-        /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
-        Optional<bool> DefaultPermission { get; }
-
-        /// <inheritdoc cref="IApplicationCommand.Type"/>
-        Optional<ApplicationCommandType> Type { get; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandTypeAttribute"/> class.
+        /// </summary>
+        /// <param name="type">The command type.</param>
+        public CommandTypeAttribute(ApplicationCommandType type)
+        {
+            this.Type = type;
+        }
     }
 }

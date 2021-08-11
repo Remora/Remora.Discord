@@ -20,12 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Attributes;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -37,14 +42,45 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
     public class HttpCatCommands : CommandGroup
     {
         private readonly FeedbackService _feedbackService;
+        private readonly ICommandContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HttpCatCommands"/> class.
         /// </summary>
         /// <param name="feedbackService">The feedback service.</param>
-        public HttpCatCommands(FeedbackService feedbackService)
+        /// <param name="context">The command context.</param>
+        public HttpCatCommands(FeedbackService feedbackService, ICommandContext context)
         {
             _feedbackService = feedbackService;
+            _context = context;
+        }
+
+        /// <summary>
+        /// Posts a cat image that matches the user.
+        /// </summary>
+        /// <returns>The result of the command.</returns>
+        [Command("Cattify")]
+        [CommandType(ApplicationCommandType.User)]
+        public async Task<IResult> PostContextualUserHttpCatAsync()
+        {
+            if (_context is not InteractionContext interactionContext)
+            {
+                return Result.FromSuccess();
+            }
+
+            if (!interactionContext.Data.Resolved.HasValue)
+            {
+                return Result.FromSuccess();
+            }
+
+            var resolved = interactionContext.Data.Resolved.Value;
+            if (!resolved.Users.HasValue)
+            {
+                return Result.FromSuccess();
+            }
+
+            var user = resolved.Users.Value.First().Value;
+            return await PostUserHttpCatAsync(user);
         }
 
         /// <summary>
@@ -73,18 +109,18 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
         /// <returns>The result of the command.</returns>
         [Command("user-cat")]
         [Description("Posts a cat image that matches the user.")]
-        public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IGuildMember catUser)
+        public Task<IResult> PostUserHttpCatAsync([Description("The user to cattify")] IUser catUser)
         {
-            if (!catUser.User.HasValue)
-            {
-                return Task.FromResult<IResult>
-                (
-                    Result.FromError(new InvalidOperationError("No user field in the guild member??"))
-                );
-            }
+            var values = Enum.GetValues<HttpStatusCode>();
+            var index = Map(catUser.ID.Value, 0, ulong.MaxValue, 0, (ulong)(values.Length - 1));
 
-            var modulo = (int)(catUser.User.Value.ID.Value % 999);
-            return PostHttpCatAsync(modulo);
+            var code = values[index];
+            return PostHttpCatAsync((int)code);
+        }
+
+        private static ulong Map(ulong value, ulong fromSource, ulong toSource, ulong fromTarget, ulong toTarget)
+        {
+            return ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget)) + fromTarget;
         }
     }
 }

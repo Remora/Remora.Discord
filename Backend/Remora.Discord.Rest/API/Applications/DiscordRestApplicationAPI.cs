@@ -131,7 +131,15 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            if
+            (
+                commands.Any
+                (
+                    c =>
+                        (!c.Type.HasValue || c.Type.Value is ApplicationCommandType.ChatInput) &&
+                        c.Description.HasValue && c.Description.Value.Length is < 1 or > 100
+                )
+            )
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -152,7 +160,12 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
                             json.Write("type", command.Type, this.JsonOptions);
-                            json.WriteString("description", command.Description);
+
+                            if (!command.Type.HasValue || command.Type.Value is ApplicationCommandType.ChatInput)
+                            {
+                                json.Write("description", command.Description, this.JsonOptions);
+                            }
+
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
@@ -270,7 +283,15 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            if
+            (
+                commands.Any
+                (
+                    c =>
+                        (!c.Type.HasValue || c.Type.Value is ApplicationCommandType.ChatInput) &&
+                        c.Description.HasValue && c.Description.Value.Length is < 1 or > 100
+                )
+            )
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -291,7 +312,12 @@ namespace Remora.Discord.Rest.API
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
                             json.Write("type", command.Type, this.JsonOptions);
-                            json.WriteString("description", command.Description);
+
+                            if (!command.Type.HasValue || command.Type.Value is ApplicationCommandType.ChatInput)
+                            {
+                                json.Write("description", command.Description, this.JsonOptions);
+                            }
+
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();

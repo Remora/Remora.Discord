@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandInteractionDataExtensionsTests.cs
+//  InteractionDataExtensionsTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,12 +30,12 @@ using Xunit;
 namespace Remora.Discord.Commands.Tests.Extensions
 {
     /// <summary>
-    /// Tests the <see cref="ApplicationCommandInteractionDataExtensions"/> class.
+    /// Tests the <see cref="InteractionDataExtensions"/> class.
     /// </summary>
-    public class ApplicationCommandInteractionDataExtensionsTests
+    public class InteractionDataExtensionsTests
     {
         /// <summary>
-        /// Tests the <see cref="ApplicationCommandInteractionDataExtensions.UnpackInteraction"/> method.
+        /// Tests the <see cref="InteractionDataExtensions.UnpackInteraction"/> method.
         /// </summary>
         public class UnpackInteraction
         {

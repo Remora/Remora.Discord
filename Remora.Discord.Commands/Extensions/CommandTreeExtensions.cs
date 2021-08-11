@@ -37,6 +37,7 @@ using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
+using String = System.String;
 
 namespace Remora.Discord.Commands.Extensions
 {
@@ -57,7 +58,7 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxCommandStringifiedLength = 4000;
         private const int MaxChoiceNameLength = 100;
         private const int MaxChoiceValueLength = 100;
-        private const int MaxDescriptionLength = 100;
+        private const int MaxCommandDescriptionLength = 100;
         private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
         private const string NameRegexPattern = "^[a-z0-9_-]{1,32}$";
@@ -81,8 +82,8 @@ namespace Remora.Discord.Commands.Extensions
             this CommandTree tree
         )
         {
-            var commands = new List<IBulkApplicationCommandData>();
-            var commandNames = new HashSet<string>();
+            var commands = new List<BulkApplicationCommandData>();
+            var commandNames = new Dictionary<int, HashSet<string>>();
             foreach (var node in tree.Root.Children)
             {
                 // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it
@@ -98,7 +99,19 @@ namespace Remora.Discord.Commands.Extensions
                     continue;
                 }
 
-                if (!commandNames.Add(translationResult.Entity.Name))
+                var option = translationResult.Entity;
+
+                // Perform validations
+
+                // int is used as a lookup here because dictionaries can't have null keys
+                var type = node is CommandNode command ? (int)command.GetCommandType() : -1;
+                if (!commandNames.TryGetValue(type, out var names))
+                {
+                    names = new HashSet<string>();
+                    commandNames.Add(type, names);
+                }
+
+                if (!names.Add(option.Name))
                 {
                     return new UnsupportedFeatureError("Overloads are not supported.");
                 }
@@ -113,6 +126,8 @@ namespace Remora.Discord.Commands.Extensions
                     );
                 }
 
+                // Translate from options to bulk data
+                Optional<ApplicationCommandType> commandType = default;
                 Optional<bool> defaultPermission = default;
                 switch (node)
                 {
@@ -143,6 +158,8 @@ namespace Remora.Discord.Commands.Extensions
                     }
                     case CommandNode commandNode:
                     {
+                        commandType = commandNode.GetCommandType();
+
                         // Top-level command outside of a group
                         var permissionAttribute = commandNode.GroupType
                             .GetCustomAttribute<DiscordDefaultPermissionAttribute>();
@@ -160,14 +177,16 @@ namespace Remora.Discord.Commands.Extensions
                 (
                     new BulkApplicationCommandData
                     (
-                        translationResult.Entity.Name,
-                        translationResult.Entity.Description,
-                        translationResult.Entity.Options,
-                        defaultPermission
+                        option.Name,
+                        option.Description,
+                        option.Options,
+                        defaultPermission,
+                        commandType
                     )
                 );
             }
 
+            // Perform validations
             if (commands.Count > MaxRootCommandsOrGroups)
             {
                 return new UnsupportedFeatureError
@@ -204,16 +223,38 @@ namespace Remora.Discord.Commands.Extensions
                         return Result<IApplicationCommandOption?>.FromSuccess(null);
                     }
 
-                    var validateNameResult = ValidateCommandName(command.Key, command);
+                    var validateNameResult = ValidateNodeName(command.Key, command);
                     if (!validateNameResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
-                    var validateDescriptionResult = ValidateCommandDescription(command.Shape.Description, command);
+                    var validateDescriptionResult = ValidateNodeDescription(command.Shape.Description, command);
                     if (!validateDescriptionResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
+                    }
+
+                    var commandType = command.GetCommandType();
+                    if (commandType is not ApplicationCommandType.ChatInput)
+                    {
+                        if (treeDepth > 1)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                "Context menu commands may not be nested.",
+                                command
+                            );
+                        }
+
+                        if (command.CommandMethod.GetParameters().Length > 0)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                "Context menu commands may not have parameters.",
+                                command
+                            );
+                        }
                     }
 
                     var buildOptionsResult = CreateCommandParameterOptions(command);
@@ -232,13 +273,13 @@ namespace Remora.Discord.Commands.Extensions
                 }
                 case GroupNode group:
                 {
-                    var validateNameResult = ValidateCommandName(group.Key, group);
+                    var validateNameResult = ValidateNodeName(group.Key, group);
                     if (!validateNameResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
-                    var validateDescriptionResult = ValidateCommandDescription(group.Description, group);
+                    var validateDescriptionResult = ValidateNodeDescription(group.Description, group);
                     if (!validateDescriptionResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
@@ -314,7 +355,7 @@ namespace Remora.Discord.Commands.Extensions
             var parameterOptions = new List<IApplicationCommandOption>();
             foreach (var parameter in command.Shape.Parameters)
             {
-                var validateDescriptionResult = ValidateCommandDescription(parameter.Description, command);
+                var validateDescriptionResult = ValidateNodeDescription(parameter.Description, command);
                 if (!validateDescriptionResult.IsSuccess)
                 {
                     return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(validateDescriptionResult);
@@ -456,8 +497,14 @@ namespace Remora.Discord.Commands.Extensions
             return length;
         }
 
-        private static Result ValidateCommandName(string name, IChildNode node)
+        private static Result ValidateNodeName(string name, IChildNode node)
         {
+            if (node is CommandNode commandNode && commandNode.GetCommandType() is not ApplicationCommandType.ChatInput)
+            {
+                // These can be anything, basically
+                return Result.FromSuccess();
+            }
+
             return NameRegex.IsMatch(name)
                 ? Result.FromSuccess()
                 : new UnsupportedFeatureError
@@ -468,16 +515,42 @@ namespace Remora.Discord.Commands.Extensions
                 );
         }
 
-        private static Result ValidateCommandDescription(string description, IChildNode node)
+        private static Result ValidateNodeDescription(string description, IChildNode node)
         {
-            return description.Length <= MaxDescriptionLength
-                ? Result.FromSuccess()
-                : new UnsupportedFeatureError
-                (
-                    $"A command, group, or parameter description was too long (length {description.Length}, max " +
-                    $"{MaxDescriptionLength}).",
-                    node
-                );
+            switch (node)
+            {
+                case CommandNode command:
+                {
+                    var type = command.GetCommandType();
+                    if (type is ApplicationCommandType.ChatInput)
+                    {
+                        return description.Length <= MaxCommandDescriptionLength
+                            ? Result.FromSuccess()
+                            : new UnsupportedFeatureError
+                            (
+                                $"A command description was too long (length {description.Length}, " +
+                                $"max {MaxCommandDescriptionLength}).",
+                                node
+                            );
+                    }
+
+                    return description is "" or "No description set."
+                        ? Result.FromSuccess()
+                        : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
+                }
+                default:
+                {
+                    // Assume it uses the default limits
+                    return description.Length <= MaxCommandDescriptionLength
+                        ? Result.FromSuccess()
+                        : new UnsupportedFeatureError
+                        (
+                            $"A group or parameter description was too long (length {description.Length}, " +
+                            $"max {MaxCommandDescriptionLength}).",
+                            node
+                        );
+                }
+            }
         }
     }
 }

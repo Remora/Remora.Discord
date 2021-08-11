@@ -1,5 +1,5 @@
 //
-//  BulkApplicationCommandData.cs
+//  CommandNodeExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Reflection;
+using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Discord.Commands.Attributes;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Extensions
 {
-    /// <inheritdoc cref="IBulkApplicationCommandData" />
-    [PublicAPI]
-    public record BulkApplicationCommandData
-    (
-        string Name,
-        Optional<string> Description = default,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default,
-        Optional<ApplicationCommandType> Type = default
-    )
-    : IBulkApplicationCommandData;
+    /// <summary>
+    /// Defines extension methods for the <see cref="CommandNode"/> type.
+    /// </summary>
+    public static class CommandNodeExtensions
+    {
+        /// <summary>
+        /// Gets the command type of the given node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <returns>The command type.</returns>
+        public static ApplicationCommandType GetCommandType(this CommandNode node)
+        {
+            var attribute = node.CommandMethod.GetCustomAttribute<CommandTypeAttribute>();
+            return attribute?.Type ?? ApplicationCommandType.ChatInput;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  BulkApplicationCommandData.cs
+//  NestedContextMenusAreNotSupported.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Discord.Commands.Attributes;
+using Remora.Results;
 
-namespace Remora.Discord.API.Objects
+#pragma warning disable CS1591, SA1600
+
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
 {
-    /// <inheritdoc cref="IBulkApplicationCommandData" />
-    [PublicAPI]
-    public record BulkApplicationCommandData
-    (
-        string Name,
-        Optional<string> Description = default,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default,
-        Optional<ApplicationCommandType> Type = default
-    )
-    : IBulkApplicationCommandData;
+    [Group("nested")]
+    public class NestedContextMenusAreNotSupported : CommandGroup
+    {
+        [Command("Do thing")]
+        [CommandType(ApplicationCommandType.User)]
+        public Task<IResult> ContextCommand() => throw new NotImplementedException();
+    }
 }

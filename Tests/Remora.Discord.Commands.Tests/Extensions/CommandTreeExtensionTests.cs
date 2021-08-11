@@ -231,6 +231,51 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuHasDescription()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ContextMenusWithDescriptionsAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuIsNested()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<NestedContextMenusAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuHasParameters()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ContextMenusWithParametersAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
@@ -454,10 +499,9 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity;
-
                     ResultAssert.Successful(result);
-                    Assert.NotNull(commands);
+
+                    var commands = result.Entity;
 
                     Assert.Equal(2, commands!.Count);
                     var a = commands[0];
@@ -465,6 +509,56 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     Assert.True(a.DefaultPermission.Value);
                     Assert.False(b.DefaultPermission.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesContextMenuCommandsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupWithContextMenus>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Successful(result);
+
+                    var commands = result.Entity;
+
+                    Assert.Equal(2, commands!.Count);
+
+                    var user = commands[0];
+                    var message = commands[1];
+
+                    Assert.Equal(ApplicationCommandType.User, user.Type.Value);
+                    Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesCombinedContextMenuCommandsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupWithContextMenuAndCommand>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Successful(result);
+
+                    var commands = result.Entity;
+
+                    Assert.Equal(2, commands!.Count);
+
+                    var normal = commands[0];
+                    var message = commands[1];
+
+                    Assert.Equal(ApplicationCommandType.ChatInput, normal.Type.Value);
+                    Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
                 }
             }
 
