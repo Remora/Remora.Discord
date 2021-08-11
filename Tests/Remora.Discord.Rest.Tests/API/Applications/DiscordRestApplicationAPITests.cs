@@ -87,6 +87,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             public async Task PerformsRequestCorrectly()
             {
                 var applicationID = new Snowflake(0);
+                var type = ApplicationCommandType.Message;
                 var name = "aaa";
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -101,6 +102,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
@@ -113,7 +115,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     applicationID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Successful(result);
@@ -130,6 +133,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
+                var type = ApplicationCommandType.ChatInput;
 
                 var api = CreateAPI
                 (
@@ -140,6 +144,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             json => json.IsObject
                             (
                                 o => o
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
@@ -153,7 +158,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     applicationID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Unsuccessful(result);
@@ -615,6 +621,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)ApplicationCommandType.ChatInput))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
@@ -847,6 +854,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
 
+                var type = ApplicationCommandType.Message;
                 var name = "aaa";
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -865,6 +873,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("description", p => p.Is(description))
                                     .WithProperty("options", p => p.IsArray())
                             )
@@ -878,7 +887,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                     guildID,
                     name,
                     description,
-                    options
+                    options,
+                    type: type
                 );
 
                 ResultAssert.Successful(result);
