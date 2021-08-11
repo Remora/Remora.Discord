@@ -102,10 +102,16 @@ namespace Remora.Discord.Rest.Extensions
                             new ProductInfoHeaderValue(name, version.ToString())
                         );
 
+                        var token = tokenStore.Token;
+                        if (string.IsNullOrWhiteSpace(token))
+                        {
+                            throw new InvalidOperationException("The authentication token has to contain something.");
+                        }
+
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
                         (
                             "Bot",
-                            tokenStore.Token
+                            token
                         );
                     }
                 )
