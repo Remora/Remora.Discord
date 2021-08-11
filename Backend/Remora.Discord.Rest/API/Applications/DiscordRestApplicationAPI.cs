@@ -151,6 +151,7 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
+                            json.Write("type", command.Type, this.JsonOptions);
                             json.WriteString("description", command.Description);
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
@@ -289,6 +290,7 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
+                            json.Write("type", command.Type, this.JsonOptions);
                             json.WriteString("description", command.Description);
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);

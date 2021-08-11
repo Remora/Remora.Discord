@@ -43,5 +43,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
         Optional<bool> DefaultPermission { get; }
+
+        /// <inheritdoc cref="IApplicationCommand.Type"/>
+        Optional<ApplicationCommandType> Type { get; }
     }
 }
