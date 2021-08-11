@@ -263,10 +263,14 @@ namespace Remora.Discord.Commands.Extensions
                         return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
                     }
 
+                    var key = commandType is not ApplicationCommandType.ChatInput
+                        ? command.Key
+                        : command.Key.ToLowerInvariant();
+
                     return new ApplicationCommandOption
                     (
                         SubCommand, // Might not actually be a sub-command, but the caller will handle that
-                        command.Key.ToLowerInvariant(),
+                        key,
                         command.Shape.Description,
                         Options: new(buildOptionsResult.Entity)
                     );
