@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>27.0.0</Version>
+        <Version>28.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement context menus.
-            Update interaction types.
+            Rename type.
         </PackageReleaseNotes>
     </PropertyGroup>
 

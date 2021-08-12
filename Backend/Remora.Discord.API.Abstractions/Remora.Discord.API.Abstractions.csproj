@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>30.0.0</Version>
+        <Version>31.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,8 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Implement context menus.
-            Update interaction types.
+            Rename type.
         </PackageReleaseNotes>
     </PropertyGroup>
 
