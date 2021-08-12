@@ -27,5 +27,5 @@ namespace Remora.Discord.API.Voice.Gateway.Bidirectional
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional.IVoiceSpeaking" />
     [PublicAPI]
-    public record VoiceSpeaking(SpeakingFlags Speaking, int Delay, uint SSRC) : IVoiceSpeaking;
+    public record VoiceSpeaking(SpeakingFlags Speaking, uint SSRC) : IVoiceSpeaking;
 }

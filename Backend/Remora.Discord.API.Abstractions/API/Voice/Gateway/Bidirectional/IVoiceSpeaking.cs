@@ -38,11 +38,6 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional
         SpeakingFlags Speaking { get; }
 
         /// <summary>
-        /// Gets the delay of the speech event.
-        /// </summary>
-        int Delay { get; }
-
-        /// <summary>
         /// Gets the synchronization source ID that this speech event is associated with.
         /// </summary>
         uint SSRC { get; }
