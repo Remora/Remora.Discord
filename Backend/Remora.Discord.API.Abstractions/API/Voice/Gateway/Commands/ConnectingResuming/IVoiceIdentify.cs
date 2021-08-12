@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Commands
     /// Represents a request to identify with the voice gateway.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceIdentify
+    public interface IVoiceIdentify : IVoiceGatewayCommand
     {
         /// <summary>
         /// Gets the ID of the guild to identify with.

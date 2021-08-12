@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
     /// Represents a session descriptor with information used to establish an encrypted voice connection.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceSessionDescription
+    public interface IVoiceSessionDescription : IVoiceGatewayEvent
     {
         /// <summary>
         /// Gets the encryption mode that the server accepted for the session.

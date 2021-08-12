@@ -1,5 +1,5 @@
 //
-//  IVoiceHeartbeat.cs
+//  IVoiceHeartbeatAcknowledge.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,19 +21,17 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Voice.Gateway.Commands;
-using Remora.Discord.API.Abstractions.Voice.Gateway.Events;
 
-namespace Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional
+namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
 {
     /// <summary>
-    /// Represents a heartbeat command to or from Discord.
+    /// Represents a heartbeat acknowledgement.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceHeartbeat : IVoiceGatewayCommand, IVoiceGatewayEvent
+    public interface IVoiceHeartbeatAcknowledge : IVoiceGatewayEvent
     {
         /// <summary>
-        /// Gets the nonce used for this heartbeat.
+        /// Gets the nonce used for the received heartbeat.
         /// </summary>
         long Nonce { get; }
     }

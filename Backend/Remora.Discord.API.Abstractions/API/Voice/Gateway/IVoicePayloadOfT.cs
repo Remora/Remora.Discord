@@ -21,7 +21,6 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway;
 
 #pragma warning disable SA1649
 
@@ -32,7 +31,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway
     /// </summary>
     /// <typeparam name="TData">The data contained in the payload.</typeparam>
     [PublicAPI]
-    public interface IVoicePayload<out TData> : IPayload
+    public interface IVoicePayload<out TData> : IVoicePayload
     {
         /// <summary>
         /// Gets the data contained in the payload.
