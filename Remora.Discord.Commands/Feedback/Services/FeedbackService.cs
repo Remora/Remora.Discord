@@ -56,6 +56,13 @@ namespace Remora.Discord.Commands.Feedback.Services
         public IFeedbackTheme Theme { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the service, in the context of an interaction, has edited the original
+        /// message.
+        /// </summary>
+        /// <remarks>This method always returns false in a message context.</remarks>
+        public bool HasEditedOriginalMessage { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FeedbackService"/> class.
         /// </summary>
         /// <param name="channelAPI">The channel API.</param>
@@ -416,23 +423,44 @@ namespace Remora.Discord.Commands.Feedback.Services
                 return new InvalidOperationError("Contextual sends require a context to be available.");
             }
 
-            return _contextInjection.Context switch
+            switch (_contextInjection.Context)
             {
-                MessageContext messageContext => await _channelAPI.CreateMessageAsync
-                (
-                    messageContext.ChannelID,
-                    embeds: new[] { embed },
-                    ct: ct
-                ),
-                InteractionContext interactionContext => await _interactionAPI.CreateFollowupMessageAsync
-                (
-                    interactionContext.ApplicationID,
-                    interactionContext.Token,
-                    embeds: new[] { embed },
-                    ct: ct
-                ),
-                _ => throw new InvalidOperationException()
-            };
+                case MessageContext messageContext:
+                {
+                    return await _channelAPI.CreateMessageAsync
+                    (
+                        messageContext.ChannelID,
+                        embeds: new[] { embed },
+                        ct: ct
+                    );
+                }
+                case InteractionContext interactionContext:
+                {
+                    var result = await _interactionAPI.CreateFollowupMessageAsync
+                    (
+                        interactionContext.ApplicationID,
+                        interactionContext.Token,
+                        embeds: new[] { embed },
+                        ct: ct
+                    );
+
+                    if (!result.IsSuccess)
+                    {
+                        return result;
+                    }
+
+                    if (!this.HasEditedOriginalMessage)
+                    {
+                        this.HasEditedOriginalMessage = true;
+                    }
+
+                    return result;
+                }
+                default:
+                {
+                    throw new InvalidOperationException();
+                }
+            }
         }
 
         /// <summary>
