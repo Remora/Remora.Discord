@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
         /// <summary>
         /// Gets the synchronization source ID. This acts as an identifier for this voice connection.
         /// </summary>
-        int SSRC { get; }
+        uint SSRC { get; }
 
         /// <summary>
         /// Gets the IP that the voice server is available on.

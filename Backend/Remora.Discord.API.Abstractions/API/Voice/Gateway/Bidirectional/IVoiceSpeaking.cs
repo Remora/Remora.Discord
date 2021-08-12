@@ -45,6 +45,6 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional
         /// <summary>
         /// Gets the synchronization source ID that this speech event is associated with.
         /// </summary>
-        int SSRC { get; }
+        uint SSRC { get; }
     }
 }
