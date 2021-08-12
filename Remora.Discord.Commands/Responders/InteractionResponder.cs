@@ -102,7 +102,7 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (gatewayEvent.Type != InteractionRequestType.ApplicationCommand)
+            if (gatewayEvent.Type != InteractionType.ApplicationCommand)
             {
                 return Result.FromSuccess();
             }

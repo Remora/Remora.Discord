@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the interaction type.
         /// </summary>
-        InteractionRequestType Type { get; }
+        InteractionType Type { get; }
 
         /// <summary>
         /// Gets the name of the application command.

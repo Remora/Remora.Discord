@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Gateway.Events
     (
         Snowflake ID,
         Snowflake ApplicationID,
-        InteractionRequestType Type,
+        InteractionType Type,
         Optional<IInteractionData> Data,
         Optional<Snowflake> GuildID,
         Optional<Snowflake> ChannelID,

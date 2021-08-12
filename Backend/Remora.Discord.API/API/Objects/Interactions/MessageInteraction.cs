@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Objects
     public record MessageInteraction
     (
         Snowflake ID,
-        InteractionRequestType Type,
+        InteractionType Type,
         string Name,
         IUser User
     ) : IMessageInteraction;

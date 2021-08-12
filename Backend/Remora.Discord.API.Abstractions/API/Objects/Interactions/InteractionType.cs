@@ -1,5 +1,5 @@
 //
-//  InteractionRequestType.cs
+//  InteractionType.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Enumerates various interaction types.
     /// </summary>
     [PublicAPI]
-    public enum InteractionRequestType
+    public enum InteractionType
     {
         /// <summary>
         /// A Discord-initiated ping to check for connectivity.

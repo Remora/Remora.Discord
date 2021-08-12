@@ -78,7 +78,7 @@ namespace Remora.Discord.Commands.Tests.Responders
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
                 eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
@@ -141,7 +141,7 @@ namespace Remora.Discord.Commands.Tests.Responders
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
                 eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
@@ -175,7 +175,7 @@ namespace Remora.Discord.Commands.Tests.Responders
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
                 eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
@@ -209,7 +209,7 @@ namespace Remora.Discord.Commands.Tests.Responders
 
                 var eventMock = new Mock<IInteractionCreate>();
 
-                eventMock.Setup(e => e.Type).Returns(InteractionRequestType.ApplicationCommand);
+                eventMock.Setup(e => e.Type).Returns(InteractionType.ApplicationCommand);
                 eventMock.Setup(e => e.ChannelID).Returns(new Snowflake(0));
                 eventMock.Setup(e => e.User).Returns(new Optional<IUser>(userMock.Object));
                 eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));

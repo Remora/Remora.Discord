@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Objects
     (
         Snowflake ID,
         Snowflake ApplicationID,
-        InteractionRequestType Type,
+        InteractionType Type,
         Optional<IInteractionData> Data,
         Optional<Snowflake> GuildID,
         Optional<Snowflake> ChannelID,
