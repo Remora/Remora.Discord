@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Commands
         /// <summary>
         /// Gets the ID of the server to resume the connection to.
         /// </summary>
-        Snowflake ServerID { get; }
+        Snowflake GuildID { get; }
 
         /// <summary>
         /// Gets the ID of the session to resume.
