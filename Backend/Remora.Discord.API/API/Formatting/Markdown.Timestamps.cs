@@ -63,7 +63,14 @@ namespace Remora.Discord.API.Formatting
         public static string Timestamp(DateTime dateTime, TimestampStyle? timestampStyle = default)
             => Timestamp(((DateTimeOffset)dateTime).ToUnixTimeSeconds(), timestampStyle);
 
-        private static char TimestampStyleToCode(TimestampStyle timestampStyle)
+        /// <summary>
+        /// Converts a <see cref="TimestampStyle"/> to its Discord Markdown code.
+        /// </summary>
+        /// <param name="timestampStyle">The style to convert.</param>
+        /// <returns>
+        /// The Discord Markdown code for the given style.
+        /// </returns>
+        private static char TimestampStyleToCode(TimestampStyle? timestampStyle)
         {
             return timestampStyle switch
             {
