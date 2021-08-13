@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Formatting
@@ -27,6 +28,7 @@ namespace Remora.Discord.API.Formatting
     /// <summary>
     /// Provides helper methods to mention various Discord objects.
     /// </summary>
+    [PublicAPI]
     public static class Mention
     {
         /// <summary>
