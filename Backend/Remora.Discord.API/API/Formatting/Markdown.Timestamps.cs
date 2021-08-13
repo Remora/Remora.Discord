@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Remora.Discord.API.Format
+namespace Remora.Discord.API.Formatting
 {
     public partial class Markdown
     {

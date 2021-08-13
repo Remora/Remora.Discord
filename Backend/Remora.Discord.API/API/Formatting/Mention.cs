@@ -22,7 +22,7 @@
 
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Format
+namespace Remora.Discord.API.Formatting
 {
     /// <summary>
     /// Provides helper methods to mention various Discord objects.
