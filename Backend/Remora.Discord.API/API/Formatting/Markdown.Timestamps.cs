@@ -34,8 +34,12 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A Discord markdown-formatted Timestamp string.
         /// </returns>
-        public static string Timestamp(long unixTimestamp, TimestampStyle timestampStyle = TimestampStyle.Default)
-            => $"<t:{unixTimestamp}:{TimestampStyleToCode(timestampStyle)}>";
+        public static string Timestamp(long unixTimestamp, TimestampStyle? timestampStyle = default)
+        {
+            return timestampStyle.HasValue
+                ? $"<t:{unixTimestamp}:{TimestampStyleToCode(timestampStyle)}>"
+                : $"<t:{unixTimestamp}>";
+        }
 
         /// <summary>
         /// Formats a Unix timestamp value into Discord Markdown Timestamp.
@@ -45,7 +49,7 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A Discord markdown-formatted Timestamp string.
         /// </returns>
-        public static string Timestamp(DateTimeOffset dateTimeOffset, TimestampStyle timestampStyle = TimestampStyle.Default)
+        public static string Timestamp(DateTimeOffset dateTimeOffset, TimestampStyle? timestampStyle = default)
             => Timestamp(dateTimeOffset.ToUnixTimeSeconds(), timestampStyle);
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A Discord markdown-formatted Timestamp string.
         /// </returns>
-        public static string Timestamp(DateTime dateTime, TimestampStyle timestampStyle = TimestampStyle.Default)
+        public static string Timestamp(DateTime dateTime, TimestampStyle? timestampStyle = default)
             => Timestamp(((DateTimeOffset)dateTime).ToUnixTimeSeconds(), timestampStyle);
 
         private static char TimestampStyleToCode(TimestampStyle timestampStyle)
@@ -70,7 +74,10 @@ namespace Remora.Discord.API.Formatting
                 TimestampStyle.ShortDateTime => 'f',
                 TimestampStyle.LongDateTime => 'F',
                 TimestampStyle.RelativeTime => 'R',
-                _ => TimestampStyleToCode(TimestampStyle.Default)
+
+                // This will not cause infinite recursion.
+                null => TimestampStyleToCode(TimestampStyle.ShortDateTime),
+                _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, "The specified timestamp style was invalid.")
             };
         }
     }

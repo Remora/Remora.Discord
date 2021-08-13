@@ -60,11 +60,6 @@ namespace Remora.Discord.API.Formatting
         /// <summary>
         /// 2 months ago.
         /// </summary>
-        RelativeTime,
-
-        /// <summary>
-        /// The default timestamp style.
-        /// </summary>
-        Default = ShortDateTime
+        RelativeTime
     }
 }
