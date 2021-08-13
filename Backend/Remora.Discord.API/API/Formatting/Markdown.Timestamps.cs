@@ -67,8 +67,8 @@ namespace Remora.Discord.API.Formatting
         {
             return timestampStyle switch
             {
-                TimestampStyle.ShortTime => 'f',
-                TimestampStyle.LongTime => 'F',
+                TimestampStyle.ShortTime => 't',
+                TimestampStyle.LongTime => 'T',
                 TimestampStyle.ShortDate => 'd',
                 TimestampStyle.LongDate => 'D',
                 TimestampStyle.ShortDateTime => 'f',
