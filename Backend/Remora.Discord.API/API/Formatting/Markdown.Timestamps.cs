@@ -81,8 +81,6 @@ namespace Remora.Discord.API.Formatting
                 TimestampStyle.ShortDateTime => 'f',
                 TimestampStyle.LongDateTime => 'F',
                 TimestampStyle.RelativeTime => 'R',
-
-                // This will not cause infinite recursion.
                 null => TimestampStyleToCode(TimestampStyle.ShortDateTime),
                 _ => throw new ArgumentOutOfRangeException(nameof(timestampStyle), timestampStyle, "The specified timestamp style was invalid.")
             };
