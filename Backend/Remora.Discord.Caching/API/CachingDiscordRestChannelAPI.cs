@@ -470,6 +470,7 @@ namespace Remora.Discord.Caching.API
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type,
             Optional<string> reason = default,
+            Optional<bool> isInvitable = default,
             CancellationToken ct = default
         )
         {
@@ -480,6 +481,7 @@ namespace Remora.Discord.Caching.API
                 autoArchiveDuration,
                 type,
                 reason,
+                isInvitable,
                 ct
             );
 

@@ -34,7 +34,8 @@ namespace Remora.Discord.API.Objects
         bool IsArchived,
         AutoArchiveDuration AutoArchiveDuration,
         DateTimeOffset ArchiveTimestamp,
-        Optional<bool> IsLocked
+        bool IsLocked,
+        Optional<bool> IsInvitable
     )
     : IThreadMetadata;
 }

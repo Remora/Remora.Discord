@@ -966,6 +966,7 @@ namespace Remora.Discord.Rest.API
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type,
             Optional<string> reason = default,
+            Optional<bool> isInvitable = default,
             CancellationToken ct = default
         )
         {
@@ -986,6 +987,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("name", name);
                         json.WriteNumber("auto_archive_duration", (int)autoArchiveDuration);
                         json.Write("type", type, this.JsonOptions);
+                        json.Write("invitable", isInvitable, this.JsonOptions);
                     }
                 ),
                 ct: ct
