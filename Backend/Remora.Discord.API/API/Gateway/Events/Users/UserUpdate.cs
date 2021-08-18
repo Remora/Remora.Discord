@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -30,42 +31,39 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUserUpdate" />
     [PublicAPI]
-    public record UserUpdate : User, IUserUpdate
-    {
-        /// <inheritdoc cref="User" />
-        public UserUpdate
-        (
-            Snowflake id,
-            string username,
-            ushort discriminator,
-            IImageHash? avatar,
-            Optional<bool> isBot = default,
-            Optional<bool> isSystem = default,
-            Optional<bool> isMFAEnabled = default,
-            Optional<string> locale = default,
-            Optional<bool> isVerified = default,
-            Optional<string?> email = default,
-            Optional<UserFlags> flags = default,
-            Optional<PremiumType> premiumType = default,
-            Optional<UserFlags> publicFlags = default
-        )
-            : base
-            (
-                id,
-                username,
-                discriminator,
-                avatar,
-                isBot,
-                isSystem,
-                isMFAEnabled,
-                locale,
-                isVerified,
-                email,
-                flags,
-                premiumType,
-                publicFlags
-            )
-        {
-        }
-    }
+    public record UserUpdate
+    (
+        Snowflake ID,
+        string Username,
+        ushort Discriminator,
+        IImageHash? Avatar,
+        Optional<bool> IsBot = default,
+        Optional<bool> IsSystem = default,
+        Optional<bool> IsMFAEnabled = default,
+        Optional<IImageHash?> Banner = default,
+        Optional<Color?> AccentColour = default,
+        Optional<string> Locale = default,
+        Optional<bool> IsVerified = default,
+        Optional<string?> Email = default,
+        Optional<UserFlags> Flags = default,
+        Optional<PremiumType> PremiumType = default,
+        Optional<UserFlags> PublicFlags = default
+    ) : User
+    (
+        ID,
+        Username,
+        Discriminator,
+        Avatar,
+        IsBot,
+        IsSystem,
+        IsMFAEnabled,
+        Banner,
+        AccentColour,
+        Locale,
+        IsVerified,
+        Email,
+        Flags,
+        PremiumType,
+        PublicFlags
+    ), IUserUpdate;
 }

@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.Core;
 
@@ -66,6 +67,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the user has multi-factor authentication enabled on their account.
         /// </summary>
         Optional<bool> IsMFAEnabled { get; }
+
+        /// <summary>
+        /// Gets the user's banner.
+        /// </summary>
+        Optional<IImageHash?> Banner { get; }
+
+        /// <summary>
+        /// Gets the user's banner colour.
+        /// </summary>
+        Optional<Color?> AccentColour { get; }
 
         /// <summary>
         /// Gets the user's chosen language option.

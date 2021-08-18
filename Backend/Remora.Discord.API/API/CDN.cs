@@ -418,6 +418,79 @@ namespace Remora.Discord.API
         }
 
         /// <summary>
+        /// Gets the CDN URI of the given user's banner.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserBannerUrl
+        (
+            IUser user,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!user.Banner.HasValue || user.Banner.Value is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetUserBannerUrl(user.ID, user.Banner.Value, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's banner.
+        /// </summary>
+        /// <param name="userID">The ID of the user.</param>
+        /// <param name="bannerHash">The image hash of the user's banner.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserBannerUrl
+        (
+            Snowflake userID,
+            IImageHash bannerHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            imageFormat = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"banners/{userID}/{bannerHash.Value}.{imageFormat.Value.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
         /// Gets the CDN URI of the given user's default avatar.
         /// </summary>
         /// <param name="user">The user.</param>
