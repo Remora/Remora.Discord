@@ -1915,7 +1915,16 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type, reason, isInvitable);
+                var result = await api.StartThreadWithoutMessageAsync
+                (
+                    channelId,
+                    name,
+                    duration,
+                    type,
+                    reason,
+                    isInvitable
+                );
+
                 ResultAssert.Successful(result);
             }
         }

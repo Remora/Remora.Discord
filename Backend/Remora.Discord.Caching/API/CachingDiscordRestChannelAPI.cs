@@ -468,7 +468,7 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             string name,
             AutoArchiveDuration autoArchiveDuration,
-            Optional<ChannelType> type,
+            Optional<ChannelType> type = default,
             Optional<string> reason = default,
             Optional<bool> isInvitable = default,
             CancellationToken ct = default

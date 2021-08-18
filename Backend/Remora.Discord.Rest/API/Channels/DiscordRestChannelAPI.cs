@@ -959,12 +959,34 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual Task<Result<IChannel>> StartThreadWithoutMessageAsync
+        (
+            Snowflake channelID,
+            string name,
+            AutoArchiveDuration autoArchiveDuration,
+            ChannelType type,
+            Optional<string> reason = default,
+            Optional<bool> isInvitable = default,
+            CancellationToken ct = default
+        ) =>
+            StartThreadWithoutMessageAsync
+            (
+                channelID,
+                name,
+                autoArchiveDuration,
+                new Optional<ChannelType>(type),
+                reason,
+                isInvitable,
+                ct
+            );
+
+        /// <inheritdoc />
         public virtual async Task<Result<IChannel>> StartThreadWithoutMessageAsync
         (
             Snowflake channelID,
             string name,
             AutoArchiveDuration autoArchiveDuration,
-            Optional<ChannelType> type,
+            Optional<ChannelType> type = default,
             Optional<string> reason = default,
             Optional<bool> isInvitable = default,
             CancellationToken ct = default
