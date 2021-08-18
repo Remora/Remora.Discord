@@ -70,7 +70,7 @@ namespace Remora.Discord.Commands.Conditions
                 return Result.FromError(getChannel);
             }
             var channel = getChannel.Entity;
-            if (!channel.GuildID.HasValue)
+            if (!channel.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError
                 (
@@ -78,34 +78,28 @@ namespace Remora.Discord.Commands.Conditions
                 );
             }
 
-            var guildId = channel.GuildID.Value;
-
-            var getGuildMember = await _guildApi.GetGuildMemberAsync(guildId, _context.User.ID, ct);
+            var getGuildMember = await _guildApi.GetGuildMemberAsync(guildID, _context.User.ID, ct);
             if (!getGuildMember.IsSuccess)
             {
                 return Result.FromError(getGuildMember);
             }
 
-            var getGuildRoles = await _guildApi.GetGuildRolesAsync(guildId, ct);
+            var getGuildRoles = await _guildApi.GetGuildRolesAsync(guildID, ct);
             if (!getGuildRoles.IsSuccess)
             {
                 return Result.FromError(getGuildRoles);
             }
 
             var guildRoles = getGuildRoles.Entity;
-            var everyoneRole = guildRoles.FirstOrDefault(r => r.ID == guildId);
+            var everyoneRole = guildRoles.FirstOrDefault(r => r.ID == guildID);
             if (everyoneRole is null)
             {
                 return new InvalidOperationError("No @everyone role found.");
             }
 
             var user = getGuildMember.Entity;
-            if (user is null)
-            {
-                return new InvalidOperationError("Executing user not found");
-            }
 
-            var getGuild = await _guildApi.GetGuildAsync(guildId, ct: ct);
+            var getGuild = await _guildApi.GetGuildAsync(guildID, ct: ct);
             if (!getGuild.IsSuccess)
             {
                 return Result.FromError(getGuild);
@@ -120,16 +114,23 @@ namespace Remora.Discord.Commands.Conditions
 
             var memberRoles = guildRoles.Where(r => user.Roles.Contains(r.ID)).ToList();
             IDiscordPermissionSet computedPermissions;
-            if (channel.PermissionOverwrites.HasValue)
+            if (channel.PermissionOverwrites.IsDefined(out var permissionOverwrites))
             {
-                computedPermissions = DiscordPermissionSet.ComputePermissions(
-                    _context.User.ID, everyoneRole, memberRoles, channel.PermissionOverwrites.Value
+                computedPermissions = DiscordPermissionSet.ComputePermissions
+                (
+                    _context.User.ID,
+                    everyoneRole,
+                    memberRoles,
+                    permissionOverwrites
                 );
             }
             else
             {
-                computedPermissions = DiscordPermissionSet.ComputePermissions(
-                    _context.User.ID, everyoneRole, memberRoles
+                computedPermissions = DiscordPermissionSet.ComputePermissions
+                (
+                    _context.User.ID,
+                    everyoneRole,
+                    memberRoles
                 );
             }
 

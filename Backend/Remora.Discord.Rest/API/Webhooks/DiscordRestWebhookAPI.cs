@@ -327,12 +327,12 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            if (content.HasValue && content.Value?.Length > 2000)
+            if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
             {
                 return new NotSupportedError("Message content is too long (max 2000).");
             }
 
-            if (embeds.HasValue && embeds.Value?.Count > 10)
+            if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
             {
                 return new NotSupportedError("Too many embeds (max 10).");
             }
@@ -342,7 +342,7 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
                 {
-                    if (file.HasValue && file.Value is not null)
+                    if (file.IsDefined())
                     {
                         b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
                     }

@@ -65,7 +65,7 @@ namespace Remora.Discord.API
             }
 
             // Prefer the animated version of emojis, if available
-            if (emoji.IsAnimated.HasValue && emoji.IsAnimated.Value)
+            if (emoji.IsAnimated.IsDefined(out var isAnimated) && isAnimated)
             {
                 imageFormat = CDNImageFormat.GIF;
             }
@@ -431,12 +431,9 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (!user.Banner.HasValue || user.Banner.Value is null)
-            {
-                return new ImageNotFoundError();
-            }
-
-            return GetUserBannerUrl(user.ID, user.Banner.Value, imageFormat, imageSize);
+            return user.Banner.IsDefined(out var banner)
+                ? GetUserBannerUrl(user.ID, banner, imageFormat, imageSize)
+                : new ImageNotFoundError();
         }
 
         /// <summary>
@@ -719,12 +716,9 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (!application.CoverImage.HasValue)
-            {
-                return new ImageNotFoundError();
-            }
-
-            return GetApplicationCoverUrl(application.ID, application.CoverImage.Value, imageFormat, imageSize);
+            return application.CoverImage.IsDefined(out var coverImage)
+                ? GetApplicationCoverUrl(application.ID, coverImage, imageFormat, imageSize)
+                : new ImageNotFoundError();
         }
 
         /// <summary>

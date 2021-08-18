@@ -77,13 +77,17 @@ namespace Remora.Discord.Rest.API
 
             await using var memoryStream = new MemoryStream();
 
-            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
-            if (!packIcon.IsSuccess)
+            var iconData = default(Optional<string?>);
+            if (icon.IsDefined(out var iconStream))
             {
-                return Result<IGuild>.FromError(packIcon);
-            }
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IGuild>.FromError(packIcon);
+                }
 
-            var iconData = packIcon.Entity;
+                iconData = packIcon.Entity;
+            }
 
             return await this.DiscordHttpClient.PostAsync<IGuild>
             (

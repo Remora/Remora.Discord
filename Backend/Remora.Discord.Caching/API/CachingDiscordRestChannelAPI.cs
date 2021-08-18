@@ -696,12 +696,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var threadMember in result.Entity)
             {
-                if (!threadMember.UserID.HasValue)
+                if (!threadMember.UserID.IsDefined(out var userID))
                 {
                     continue;
                 }
 
-                var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, threadMember.UserID.Value);
+                var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
                 _cacheService.Cache(memberKey, threadMember);
             }
 
