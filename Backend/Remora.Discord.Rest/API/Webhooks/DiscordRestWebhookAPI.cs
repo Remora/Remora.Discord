@@ -87,7 +87,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.WriteString("avatar", avatarData.Value);
+                        json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 ),
                 ct: ct
