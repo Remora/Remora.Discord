@@ -66,13 +66,6 @@ namespace Remora.Discord.API.Json
             }
 
             var operationCode = JsonSerializer.Deserialize<VoiceOperationCode>(operationCodeProperty.GetRawText(), options);
-
-            if (operationCode == (VoiceOperationCode)12)
-            {
-                System.Diagnostics.Debug.WriteLine(document.RootElement.GetRawText());
-                throw new JsonException();
-            }
-
             var obj = operationCode switch
             {
                 // Bidirectional
