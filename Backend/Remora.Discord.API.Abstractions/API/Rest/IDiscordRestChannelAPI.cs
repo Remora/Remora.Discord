@@ -740,6 +740,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
         /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
+        /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the thread.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         [Obsolete("Pass the channel type explicitly. This method will be removed in API v10.")]
@@ -750,6 +751,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
             Optional<string> reason = default,
+            Optional<bool> isInvitable = default,
             CancellationToken ct = default
         );
 

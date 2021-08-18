@@ -1890,6 +1890,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var duration = AutoArchiveDuration.Hour;
                 var type = ChannelType.GuildPrivateThread;
                 var reason = "test";
+                var isInvitable = true;
 
                 var api = CreateAPI
                 (
@@ -1908,12 +1909,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("auto_archive_duration", p => p.Is((int)duration))
                                     .WithProperty("type", p => p.Is((int)type))
+                                    .WithProperty("invitable", p => p.Is(isInvitable))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type, reason);
+                var result = await api.StartThreadWithoutMessageAsync(channelId, name, duration, type, reason, isInvitable);
                 ResultAssert.Successful(result);
             }
         }
