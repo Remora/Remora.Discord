@@ -1,5 +1,5 @@
 //
-//  MessageTests.cs
+//  LogicalOperator.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
+using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.Commands.Conditions
 {
-    /// <inheritdoc />
-    public class MessageTests : ObjectTestBase<IMessage>
+    /// <summary>
+    /// Enumerates various logical operators.
+    /// </summary>
+    [PublicAPI]
+    public enum LogicalOperator
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
-        {
-            AllowMissing = new[]
-            {
-                "hoisted_role"
-            }
-        };
+        /// <summary>
+        /// NOT, that is, all of the inputs must be logically false.
+        /// </summary>
+        Not,
+
+        /// <summary>
+        /// AND, that is, all of the inputs must be logically true.
+        /// </summary>
+        And,
+
+        /// <summary>
+        /// OR, that is, one or more of the inputs must be logically true.
+        /// </summary>
+        Or,
+
+        /// <summary>
+        /// XOR, that is, one and only one of the inputs must be logically true.
+        /// </summary>
+        Xor,
     }
 }

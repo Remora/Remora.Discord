@@ -1,5 +1,5 @@
 //
-//  MessageTests.cs
+//  PermissionDeniedError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
+using Remora.Results;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.Commands.Results
 {
-    /// <inheritdoc />
-    public class MessageTests : ObjectTestBase<IMessage>
-    {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
-        {
-            AllowMissing = new[]
-            {
-                "hoisted_role"
-            }
-        };
-    }
+    /// <summary>
+    /// Represents a failure to fulfill a set of requirements related to permissions.
+    /// </summary>
+    /// <param name="Message">The custom error message, if any.</param>
+    /// <param name="Permissions">The permissions which were checked.</param>
+    [PublicAPI]
+    public record PermissionDeniedError
+    (
+        string Message = "Permission denied.",
+        params DiscordPermission[] Permissions
+    ) : ResultError(Message);
 }

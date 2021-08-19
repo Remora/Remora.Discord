@@ -1,9 +1,9 @@
 {
-    "t": "GUILD_STICKERS_UPDATE",
-    "s": 5,
-    "op": 0,
-    "d": {
-        "guild_id": "999999999999999999",
-        "stickers": [ ]
-    }
+  "t": "GUILD_STICKERS_UPDATE",
+  "s": 5,
+  "op": 0,
+  "d": {
+    "guild_id": "999999999999999999",
+    "stickers": []
+  }
 }

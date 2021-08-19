@@ -123,7 +123,7 @@ namespace Remora.Discord.API.Objects
         }
 
         /// <summary>
-        /// Computes a full permission set, taking roles and overwrites into account.
+        /// Computes a full permission set for a user, taking roles and overwrites into account.
         /// </summary>
         /// <param name="memberID">The ID of the member.</param>
         /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
@@ -176,6 +176,46 @@ namespace Remora.Discord.API.Objects
             {
                 basePermissions &= ~memberOverwrite.Deny.Value;
                 basePermissions |= memberOverwrite.Allow.Value;
+            }
+
+            return new DiscordPermissionSet(basePermissions);
+        }
+
+        /// <summary>
+        /// Computes a full permission set for a role, taking overwrites into account.
+        /// </summary>
+        /// <param name="roleID">The ID of the role.</param>
+        /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
+        /// <param name="overwrites">The channel overwrites currently in effect, if any.</param>
+        /// <returns>The true permission set.</returns>
+        public static IDiscordPermissionSet ComputePermissions
+        (
+            Snowflake roleID,
+            IRole everyoneRole,
+            IReadOnlyList<IPermissionOverwrite>? overwrites = default
+        )
+        {
+            overwrites ??= Array.Empty<IPermissionOverwrite>();
+
+            // Start calculations with the everyone role
+            var basePermissions = everyoneRole.Permissions.Value;
+
+            // Apply the everyone role overwrites, if applicable
+            var everyoneOverwrite = overwrites.FirstOrDefault(o => o.ID == everyoneRole.ID);
+            if (everyoneOverwrite is not null)
+            {
+                basePermissions &= ~everyoneOverwrite.Deny.Value;
+                basePermissions |= everyoneOverwrite.Allow.Value;
+            }
+
+            // Apply role overwrites, if applicable
+            var roleOverwrite = overwrites.FirstOrDefault(o => o.ID == roleID);
+
+            // ReSharper disable once InvertIf
+            if (roleOverwrite is not null)
+            {
+                basePermissions &= ~roleOverwrite.Deny.Value;
+                basePermissions |= roleOverwrite.Allow.Value;
             }
 
             return new DiscordPermissionSet(basePermissions);
