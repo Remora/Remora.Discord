@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -43,12 +44,13 @@ namespace Remora.Discord.Commands.Conditions
     /// <see cref="Operator"/>.
     /// </remarks>
     [PublicAPI]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Parameter)]
     public class RequireDiscordPermissionAttribute : ConditionAttribute
     {
         /// <summary>
         /// Gets the logical operator used to combine the permissions.
         /// </summary>
-        public LogicalOperator Operator { get; }
+        public LogicalOperator Operator { get; init; } = LogicalOperator.And;
 
         /// <summary>
         /// Gets the permissions that should be checked.
@@ -61,18 +63,6 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="permissions">The permissions to require.</param>
         public RequireDiscordPermissionAttribute(params DiscordPermission[] permissions)
         {
-            this.Operator = LogicalOperator.And;
-            this.Permissions = permissions;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="logicalOperator">The logical operator to use.</param>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(LogicalOperator logicalOperator, params DiscordPermission[] permissions)
-        {
-            this.Operator = logicalOperator;
             this.Permissions = permissions;
         }
 
@@ -82,18 +72,6 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="permissions">The permissions to require.</param>
         public RequireDiscordPermissionAttribute(params DiscordTextPermission[] permissions)
         {
-            this.Operator = LogicalOperator.And;
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="logicalOperator">The logical operator to use.</param>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(LogicalOperator logicalOperator, params DiscordTextPermission[] permissions)
-        {
-            this.Operator = logicalOperator;
             this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
         }
 
@@ -103,18 +81,6 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="permissions">The permissions to require.</param>
         public RequireDiscordPermissionAttribute(params DiscordVoicePermission[] permissions)
         {
-            this.Operator = LogicalOperator.And;
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="logicalOperator">The logical operator to use.</param>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(LogicalOperator logicalOperator, params DiscordVoicePermission[] permissions)
-        {
-            this.Operator = logicalOperator;
             this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
         }
 
@@ -124,18 +90,6 @@ namespace Remora.Discord.Commands.Conditions
         /// <param name="permissions">The permissions to require.</param>
         public RequireDiscordPermissionAttribute(params DiscordStagePermission[] permissions)
         {
-            this.Operator = LogicalOperator.And;
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="logicalOperator">The logical operator to use.</param>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(LogicalOperator logicalOperator, params DiscordStagePermission[] permissions)
-        {
-            this.Operator = logicalOperator;
             this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
         }
     }
