@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Reflection;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
@@ -41,6 +42,41 @@ namespace Remora.Discord.Commands.Extensions
         {
             var attribute = node.CommandMethod.GetCustomAttribute<CommandTypeAttribute>();
             return attribute?.Type ?? ApplicationCommandType.ChatInput;
+        }
+
+        /// <summary>
+        /// Finds the first custom attribute on the given command or any of its ancestors.
+        /// </summary>
+        /// <typeparam name="T">The type of attribute to search for.</typeparam>
+        /// <param name="node">The command node.</param>
+        /// <returns>A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.</returns>
+        public static T? FindCustomAttributeOnLocalTree<T>(this CommandNode node) where T : Attribute
+        {
+            // Attempt to first check for ephemerailty on the command itself
+            T? attr = node.CommandMethod.GetCustomAttribute<T>();
+
+            if (attr is null)
+            {
+                // Traverse each parent group node, until we find the root node
+                IParentNode p = node.Parent;
+                while (p is GroupNode g && attr is null)
+                {
+                    p = g.Parent;
+
+                    // See if any of the types in this group have expressed ephemerality
+                    foreach (Type t in g.GroupTypes)
+                    {
+                        attr = t.GetCustomAttribute<T>();
+
+                        if (attr is not null)
+                        {
+                            return attr;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
