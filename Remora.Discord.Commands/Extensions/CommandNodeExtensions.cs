@@ -76,7 +76,7 @@ namespace Remora.Discord.Commands.Extensions
                 }
             }
 
-            return null;
+            return attr;
         }
     }
 }
