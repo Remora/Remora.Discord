@@ -37,7 +37,6 @@ using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
-using String = System.String;
 
 namespace Remora.Discord.Commands.Extensions
 {
