@@ -85,8 +85,4 @@
       </Compile>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="API\Voice\Gateway" />
-    </ItemGroup>
-
 </Project>
