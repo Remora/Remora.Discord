@@ -28,5 +28,5 @@ namespace Remora.Discord.API.Voice.Gateway.Commands
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Commands.IVoiceResume" />
     [PublicAPI]
-    public record VoiceResume(Snowflake GuildID, string SessionID, string Token) : IVoiceResume;
+    public record VoiceResume(Snowflake ServerID, string SessionID, string Token) : IVoiceResume;
 }

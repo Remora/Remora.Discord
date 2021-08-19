@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Commands
         /// <summary>
         /// Gets the ID of the guild to identify with.
         /// </summary>
-        Snowflake GuildID { get; }
+        Snowflake ServerID { get; }
 
         /// <summary>
         /// Gets the ID of the user that's trying to identify themselves.

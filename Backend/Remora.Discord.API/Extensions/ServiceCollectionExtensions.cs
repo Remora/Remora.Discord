@@ -394,11 +394,8 @@ namespace Remora.Discord.API.Extensions
         private static JsonSerializerOptions AddVoiceGatewayCommandConverters(this JsonSerializerOptions options)
         {
             // ConnectingResuming
-            options.AddDataObjectConverter<IVoiceIdentify, VoiceIdentify>()
-                .WithPropertyName(v => v.GuildID, "server_id");
-
-            options.AddDataObjectConverter<IVoiceResume, VoiceResume>()
-                .WithPropertyName(v => v.GuildID, "server_id");
+            options.AddDataObjectConverter<IVoiceIdentify, VoiceIdentify>();
+            options.AddDataObjectConverter<IVoiceResume, VoiceResume>();
 
             // Heartbeats
             options.AddDataObjectConverter<IVoiceHeartbeat, VoiceHeartbeat>();

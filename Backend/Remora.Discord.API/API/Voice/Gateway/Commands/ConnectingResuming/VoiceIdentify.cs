@@ -28,5 +28,5 @@ namespace Remora.Discord.API.Voice.Gateway.Commands
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Commands.IVoiceIdentify" />
     [PublicAPI]
-    public record VoiceIdentify(Snowflake GuildID, Snowflake UserID, string SessionID, string Token) : IVoiceIdentify;
+    public record VoiceIdentify(Snowflake ServerID, Snowflake UserID, string SessionID, string Token) : IVoiceIdentify;
 }
