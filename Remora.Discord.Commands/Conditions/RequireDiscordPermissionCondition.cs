@@ -32,7 +32,6 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Results;
-using Remora.Discord.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Conditions
