@@ -38,10 +38,17 @@ namespace Remora.Discord.API.Json
     internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     {
         /// <summary>
+        /// Holds a value indicating whether unknown events are allowed to be deserialized.
+        /// </summary>
+        private readonly bool _allowUnknownEvents;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="VoicePayloadConverter"/> class.
         /// </summary>
-        public VoicePayloadConverter()
+        /// <param name="allowUnknownEvents">Whether unknown events are allowed to be deserialized.</param>
+        public VoicePayloadConverter(bool allowUnknownEvents = true)
         {
+            _allowUnknownEvents = allowUnknownEvents;
         }
 
         /// <inheritdoc />
@@ -86,7 +93,7 @@ namespace Remora.Discord.API.Json
                 VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>(realDocument, options),
 
                 // Other
-                _ => throw new ArgumentOutOfRangeException(),
+                _ => DeserializeUnknownEventPayload(operationCode, realDocument),
             };
 
             return obj;
@@ -211,6 +218,19 @@ namespace Remora.Discord.API.Json
             }
 
             return new VoicePayload<TData>(data);
+        }
+
+        private IVoicePayload DeserializeUnknownEventPayload(VoiceOperationCode operationCode, JsonDocument document)
+        {
+            if (!_allowUnknownEvents)
+            {
+                throw new InvalidOperationException("No matching operation code implementation could be found.");
+            }
+
+            return new VoicePayload<UnknownVoiceEvent>
+            (
+                new UnknownVoiceEvent(operationCode, document.RootElement.GetRawText())
+            );
         }
     }
 }

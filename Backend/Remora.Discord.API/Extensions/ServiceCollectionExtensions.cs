@@ -68,7 +68,7 @@ namespace Remora.Discord.API.Extensions
                         var snakeCasePolicy = new SnakeCaseNamingPolicy();
 
                         options.Converters.Add(new PayloadConverter(allowUnknownEvents));
-                        options.Converters.Add(new VoicePayloadConverter());
+                        options.Converters.Add(new VoicePayloadConverter(allowUnknownEvents));
 
                         options
                             .AddGatewayBidirectionalConverters()
