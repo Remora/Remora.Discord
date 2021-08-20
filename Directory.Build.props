@@ -14,10 +14,6 @@
         <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <SolutionDir>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)/))</SolutionDir>
-    </PropertyGroup>
-
     <!-- NuGet-related properties -->
     <PropertyGroup>
         <Title>$(AssemblyName)</Title>
@@ -35,7 +31,7 @@
 
         <RepositoryUrl>https://github.com/Nihlus/Remora.Discord</RepositoryUrl>
         <RepositoryBranch>master</RepositoryBranch>
-        <PackageOutputPath>$(SolutionDir)/nuget</PackageOutputPath>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
         <PackageProjectUrl>https://github.com/Nihlus/Remora.Discord</PackageProjectUrl>
         <PackageTags>discord;bot;api;</PackageTags>
         <PackageIconUrl>https://cdn.gullberg.tk/remora/icon/shark.png</PackageIconUrl>
@@ -48,8 +44,8 @@
 
     <!-- Code inspection properties -->
     <PropertyGroup>
-        <StyleCopRuleset>$(SolutionDir)/stylecop.ruleset</StyleCopRuleset>
-        <StyleCopConfiguration>$(SolutionDir)/stylecop.json</StyleCopConfiguration>
+        <StyleCopRuleset>$(MSBuildThisFileDirectory)stylecop.ruleset</StyleCopRuleset>
+        <StyleCopConfiguration>$(MSBuildThisFileDirectory)stylecop.json</StyleCopConfiguration>
 
         <Nullable>enable</Nullable>
 
@@ -102,7 +98,7 @@
             <Link>stylecop.json</Link>
             <InProject>false</InProject>
         </AdditionalFiles>
-        <AdditionalFiles Include="$(StyleCopRuleset">
+        <AdditionalFiles Include="$(StyleCopRuleset)">
             <Link>stylecop.ruleset</Link>
             <InProject>false</InProject>
         </AdditionalFiles>
@@ -126,6 +122,6 @@
 
     <!-- NuGet Icon -->
     <ItemGroup>
-        <None Include="$(SolutionDir)/images/shark.png" Pack="true" PackagePath="/" />
+        <None Include="$(MSBuildThisFileDirectory)images/shark.png" Pack="true" PackagePath="/" />
     </ItemGroup>
 </Project>
