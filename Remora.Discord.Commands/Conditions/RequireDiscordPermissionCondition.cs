@@ -196,17 +196,17 @@ namespace Remora.Discord.Commands.Conditions
                 return result;
             }
 
-            if (result.Error is PermissionDeniedError permissionDeniedError)
+            if (result.Error is not PermissionDeniedError permissionDeniedError)
             {
-                var userDoes = _context.User.ID == member.User.Value.ID ? "You do" : "The given user does";
-                return permissionDeniedError with
-                {
-                    Message = $"{userDoes} not fulfill the permission requirements " +
-                              $"({Explain(permissionInformation, attribute.Operator)})."
-                };
+                return result;
             }
 
-            return result;
+            var userDoes = _context.User.ID == member.User.Value.ID ? "You do" : "The given user does";
+            return permissionDeniedError with
+            {
+                Message = $"{userDoes} not fulfill the permission requirements " +
+                          $"({Explain(permissionInformation, attribute.Operator)})."
+            };
         }
 
         /// <inheritdoc />
