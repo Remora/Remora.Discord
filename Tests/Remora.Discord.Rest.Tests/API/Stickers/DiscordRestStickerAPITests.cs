@@ -165,7 +165,7 @@ namespace Remora.Discord.Rest.Tests.API
                 var description = "bb";
                 var tags = "cc";
 
-                await using var fileStream = new MemoryStream();
+                var fileStream = new MemoryStream();
                 var file = new FileData("dd", fileStream);
                 var reason = "test";
 
