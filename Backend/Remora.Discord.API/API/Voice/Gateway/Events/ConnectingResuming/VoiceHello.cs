@@ -28,5 +28,5 @@ namespace Remora.Discord.API.Voice.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Events.IVoiceHello" />
     [PublicAPI]
-    public record VoiceHello(TimeSpan HeartbeatInterval) : IVoiceHello;
+    public record VoiceHello(int Version, TimeSpan HeartbeatInterval) : IVoiceHello;
 }

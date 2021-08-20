@@ -32,6 +32,11 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
     public interface IVoiceHello : IVoiceGatewayEvent
     {
         /// <summary>
+        /// Gets the voice gateway version.
+        /// </summary>
+        int Version { get; }
+
+        /// <summary>
         /// Gets the heartbeat interval (in milliseconds).
         /// </summary>
         TimeSpan HeartbeatInterval { get; }
