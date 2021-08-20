@@ -46,5 +46,12 @@ namespace Remora.Discord.Commands.Tests.Data.Ephemeral
         {
             throw new NotImplementedException();
         }
+
+        [Command("d")]
+        [Ephemeral(false)]
+        public Task<Result> D()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
