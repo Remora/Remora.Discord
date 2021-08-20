@@ -115,7 +115,6 @@ namespace Remora.Discord.Commands.Extensions
 
             serviceCollection.AddCondition<RequireContextCondition>();
             serviceCollection.AddCondition<RequireOwnerCondition>();
-            serviceCollection.AddCondition<RequireUserGuildPermissionCondition>();
             serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
 
             serviceCollection
