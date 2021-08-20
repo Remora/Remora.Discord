@@ -33,7 +33,6 @@ using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
 using Remora.Results;
-using WebSocketError = System.Net.WebSockets.WebSocketError;
 
 namespace Remora.Discord.Gateway.Transport
 {
@@ -92,7 +91,7 @@ namespace Remora.Discord.Gateway.Transport
                     default:
                     {
                         socket.Dispose();
-                        return new Remora.Discord.Gateway.Results.WebSocketError
+                        return new Results.WebSocketError
                         (
                             socket.State,
                             "Failed to connect to the endpoint."
