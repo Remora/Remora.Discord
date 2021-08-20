@@ -94,14 +94,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="$(StyleCopConfiguration)">
+        <AdditionalFiles Include="$(StyleCopConfiguration)">
             <Link>stylecop.json</Link>
             <InProject>false</InProject>
-        </None>
-        <None Include="$(StyleCopRuleset)">
+        </AdditionalFiles>
+        <AdditionalFiles Include="$(StyleCopRuleset)">
             <Link>stylecop.ruleset</Link>
             <InProject>false</InProject>
-        </None>
+        </AdditionalFiles>
     </ItemGroup>
 
     <ItemGroup>
