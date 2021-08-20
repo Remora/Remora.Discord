@@ -49,35 +49,45 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <typeparam name="T">The type of attribute to search for.</typeparam>
         /// <param name="node">The command node.</param>
-        /// <param name="includeAncestors">Indicates that ancestors of the command should also be search for the attribute.</param>
-        /// <returns>A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.</returns>
-        public static T? FindCustomAttributeOnLocalTree<T>(this CommandNode node, bool includeAncestors = true) where T : Attribute
+        /// <param name="includeAncestors">
+        /// Indicates that ancestors of the command should also be search for the attribute.
+        /// </param>
+        /// <returns>
+        /// A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.
+        /// </returns>
+        public static T? FindCustomAttributeOnLocalTree<T>
+        (
+            this CommandNode node,
+            bool includeAncestors = true
+        ) where T : Attribute
         {
             // Attempt to first find the attribute on the command itself
-            T? attr = node.CommandMethod.GetCustomAttribute<T>();
+            var attribute = node.CommandMethod.GetCustomAttribute<T>();
 
-            if (attr is null && includeAncestors)
+            if (attribute is not null || !includeAncestors)
             {
-                // Traverse each parent group node, until we find the root node
-                IParentNode p = node.Parent;
-                while (p is GroupNode g && attr is null)
+                return attribute;
+            }
+
+            // Traverse each parent group node, until we find the root node
+            var parent = node.Parent;
+            while (parent is GroupNode group && attribute is null)
+            {
+                parent = group.Parent;
+
+                // See if any of the types in this group been decorated with the attribute
+                foreach (var t in group.GroupTypes)
                 {
-                    p = g.Parent;
+                    attribute = t.GetCustomAttribute<T>();
 
-                    // See if any of the types in this group been decorated with the attribute
-                    foreach (Type t in g.GroupTypes)
+                    if (attribute is not null)
                     {
-                        attr = t.GetCustomAttribute<T>();
-
-                        if (attr is not null)
-                        {
-                            return attr;
-                        }
+                        return attribute;
                     }
                 }
             }
 
-            return attr;
+            return attribute;
         }
     }
 }

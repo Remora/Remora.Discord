@@ -29,7 +29,7 @@ namespace Remora.Discord.Commands.Attributes
     /// Marks a command as requiring an ephemeral response, when invoked by an interaction.
     /// </summary>
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class EphemeralAttribute : Attribute
     {
         /// <summary>
@@ -43,7 +43,7 @@ namespace Remora.Discord.Commands.Attributes
         /// <param name="isEphemeral">A value indicating whether this command should send ephemeral responses. Set this to override group-level <see cref="EphemeralAttribute"/>s.</param>
         public EphemeralAttribute(bool isEphemeral = true)
         {
-            IsEphemeral = isEphemeral;
+            this.IsEphemeral = isEphemeral;
         }
     }
 }

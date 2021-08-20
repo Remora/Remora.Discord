@@ -21,19 +21,13 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
-using Remora.Commands.Results;
 using Remora.Commands.Services;
-using Remora.Commands.Signatures;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
-using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -137,12 +131,10 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            interactionData.UnpackInteraction(out var command, out var parameters);
-
             var context = new InteractionContext
             (
                 gatewayEvent.GuildID,
-                gatewayEvent.ChannelID.Value,
+                channelID,
                 user,
                 gatewayEvent.Member,
                 gatewayEvent.Token,
@@ -154,34 +146,53 @@ namespace Remora.Discord.Commands.Responders
             // Provide the created context to any services inside this scope
             _contextInjection.Context = context;
 
-            // Run any user-provided pre execution events
+            interactionData.UnpackInteraction(out var command, out var parameters);
+
+            // Run any user-provided pre-execution events
             var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
             if (!preExecution.IsSuccess)
             {
                 return preExecution;
             }
 
-            Result<BoundCommandNode> findCommandResult = FindCommandNode(command, parameters);
-            if (!findCommandResult.IsSuccess)
+            var prepareCommand = await _commandService.TryPrepareCommandAsync
+            (
+                command,
+                parameters,
+                _services,
+                searchOptions: _treeSearchOptions,
+                tokenizerOptions: _tokenizerOptions,
+                ct: ct
+            );
+
+            if (!prepareCommand.IsSuccess)
             {
+                // Early bailout
                 return await _eventCollector.RunPostExecutionEvents
                 (
                     _services,
                     context,
-                    findCommandResult,
+                    prepareCommand,
                     ct
                 );
             }
 
+            var preparedCommand = prepareCommand.Entity;
             if (!_options.SuppressAutomaticResponses)
             {
                 // Signal Discord that we'll be handling this one asynchronously
                 var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
 
-                EphemeralAttribute? ephemeralAttribute = findCommandResult.Entity.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>();
-                if ((ephemeralAttribute is null && _options.UseGlobalEphemeralResponses) || ephemeralAttribute?.IsEphemeral == true)
+                var ephemeralAttribute = preparedCommand.Command.Node
+                    .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
+
+                var sendEphemeral = _options.UseGlobalEphemeralResponses || ephemeralAttribute?.IsEphemeral == true;
+                if (sendEphemeral)
                 {
-                    response = response with { Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral) };
+                    response = response with
+                    {
+                        Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral)
+                    };
                 }
 
                 var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
@@ -201,7 +212,7 @@ namespace Remora.Discord.Commands.Responders
             // Run the actual command
             var executeResult = await _commandService.TryExecuteAsync
             (
-                findCommandResult.Entity,
+                preparedCommand,
                 _services,
                 ct: ct
             );
@@ -215,30 +226,6 @@ namespace Remora.Discord.Commands.Responders
                 executeResult.IsSuccess ? executeResult.Entity : executeResult,
                 ct
             );
-        }
-
-        /// <summary>
-        /// Attempts to find a command in the command tree.
-        /// </summary>
-        /// <param name="commandName">The name of the command.</param>
-        /// <param name="commandParameters">The parameters of the command.</param>
-        /// <returns>A <see cref="Result{BoundCommandNode}"/> indicating if the command was successfully found, and containing the command node if so.</returns>
-        private Result<BoundCommandNode> FindCommandNode(string commandName, IReadOnlyDictionary<string, IReadOnlyList<string>> commandParameters)
-        {
-            TreeSearchOptions searchOptions = new(StringComparison.OrdinalIgnoreCase);
-            List<BoundCommandNode> commands = _commandService.Tree.Search(commandName, commandParameters, searchOptions: searchOptions).ToList();
-
-            if (commands.Count == 0)
-            {
-                return new CommandNotFoundError(commandName);
-            }
-
-            if (commands.Count > 1)
-            {
-                return new AmbiguousCommandInvocationError();
-            }
-
-            return commands.Single();
         }
     }
 }

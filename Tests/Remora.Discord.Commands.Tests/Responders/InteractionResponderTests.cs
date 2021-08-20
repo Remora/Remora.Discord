@@ -25,7 +25,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Remora.Commands.Extensions;
-using Remora.Commands.Results;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Contexts;
@@ -87,8 +86,10 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                _preExecutionEventMock
-                    .Verify(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()));
+                _preExecutionEventMock.Verify
+                (
+                    e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>())
+                );
             }
 
             /// <inheritdoc />
@@ -115,17 +116,16 @@ namespace Remora.Discord.Commands.Tests.Responders
             {
                 _postExecutionEventMock = new Mock<IPostExecutionEvent>();
 
-                _postExecutionEventMock
-                    .Setup
+                _postExecutionEventMock.Setup
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.IsAny<IResult>(),
-                            It.IsAny<CancellationToken>()
-                        )
+                        It.IsAny<ICommandContext>(),
+                        It.IsAny<IResult>(),
+                        It.IsAny<CancellationToken>()
                     )
-                    .Returns(Task.FromResult(Result.FromSuccess()));
+                )
+                .Returns(Task.FromResult(Result.FromSuccess()));
             }
 
             /// <summary>
@@ -150,16 +150,15 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                _postExecutionEventMock
-                    .Verify
+                _postExecutionEventMock.Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => r.IsSuccess),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => r.IsSuccess),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             /// <summary>
@@ -184,16 +183,15 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                _postExecutionEventMock
-                    .Verify
+                _postExecutionEventMock.Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => !r.IsSuccess),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => !r.IsSuccess),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             /// <summary>
@@ -219,14 +217,14 @@ namespace Remora.Discord.Commands.Tests.Responders
                 ResultAssert.Successful(result);
 
                 _postExecutionEventMock.Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => !r.IsSuccess),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => !r.IsSuccess),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             /// <inheritdoc />
@@ -265,22 +263,21 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                MockInteractionApi
-                    .Verify
+                this.MockInteractionApi.Verify
+                (
+                    e => e.CreateInteractionResponseAsync
                     (
-                        e => e.CreateInteractionResponseAsync
+                        It.IsAny<Snowflake>(),
+                        It.IsAny<string>(),
+                        It.Is<IInteractionResponse>
                         (
-                            It.IsAny<Snowflake>(),
-                            It.IsAny<string>(),
-                            It.Is<IInteractionResponse>
-                            (
-                                r => r.Data.HasValue &&
-                                r.Data.Value.Flags.HasValue &&
-                                (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
-                            ),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
+                            r => r.Data.HasValue &&
+                            r.Data.Value.Flags.HasValue &&
+                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             /// <summary>
@@ -305,22 +302,21 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                MockInteractionApi
-                    .Verify
+                this.MockInteractionApi.Verify
+                (
+                    e => e.CreateInteractionResponseAsync
                     (
-                        e => e.CreateInteractionResponseAsync
+                        It.IsAny<Snowflake>(),
+                        It.IsAny<string>(),
+                        It.Is<IInteractionResponse>
                         (
-                            It.IsAny<Snowflake>(),
-                            It.IsAny<string>(),
-                            It.Is<IInteractionResponse>
-                            (
-                                r => !r.Data.HasValue ||
-                                !r.Data.Value.Flags.HasValue ||
-                                (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
-                            ),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
+                            r => !r.Data.HasValue ||
+                            !r.Data.Value.Flags.HasValue ||
+                            (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
+                        ),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
             }
 
             /// <summary>
@@ -345,7 +341,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var result = await this.Responder.RespondAsync(eventMock.Object);
                 ResultAssert.Successful(result);
 
-                MockInteractionApi
+                this.MockInteractionApi
                     .Verify
                     (
                         e => e.CreateInteractionResponseAsync
