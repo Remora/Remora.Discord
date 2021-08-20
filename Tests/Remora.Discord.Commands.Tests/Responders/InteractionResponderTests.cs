@@ -216,12 +216,17 @@ namespace Remora.Discord.Commands.Tests.Responders
                 eventMock.Setup(e => e.Data).Returns(new Optional<IInteractionData>(dataMock.Object));
 
                 var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Unsuccessful(result);
-                Assert.IsType<CommandNotFoundError>(result.Error);
+                ResultAssert.Successful(result);
 
-                // The command is never run if the InteractionResponder cannot find it via a tree search
-                // Hence no post-execution events should have run
-                _postExecutionEventMock.VerifyNoOtherCalls();
+                _postExecutionEventMock.Verify
+                    (
+                        e => e.AfterExecutionAsync
+                        (
+                            It.IsAny<ICommandContext>(),
+                            It.Is<IResult>(r => !r.IsSuccess),
+                            It.IsAny<CancellationToken>()
+                        )
+                    );
             }
 
             /// <inheritdoc />

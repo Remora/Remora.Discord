@@ -140,10 +140,31 @@ namespace Remora.Discord.Commands.Responders
             var interactionData = gatewayEvent.Data.Value;
             interactionData.UnpackInteraction(out var command, out var parameters);
 
+            var context = new InteractionContext
+            (
+                gatewayEvent.GuildID,
+                gatewayEvent.ChannelID.Value,
+                user,
+                gatewayEvent.Member,
+                gatewayEvent.Token,
+                gatewayEvent.ID,
+                gatewayEvent.ApplicationID,
+                interactionData
+            );
+
+            // Provide the created context to any services inside this scope
+            _contextInjection.Context = context;
+
             Result<BoundCommandNode> findCommandResult = FindCommandNode(command, parameters);
             if (!findCommandResult.IsSuccess)
             {
-                return Result.FromError(findCommandResult);
+                return await _eventCollector.RunPostExecutionEvents
+                (
+                    _services,
+                    context,
+                    findCommandResult,
+                    ct
+                );
             }
 
             if (!_options.SuppressAutomaticResponses)
@@ -170,21 +191,6 @@ namespace Remora.Discord.Commands.Responders
                     return interactionResponse;
                 }
             }
-
-            var context = new InteractionContext
-            (
-                gatewayEvent.GuildID,
-                gatewayEvent.ChannelID.Value,
-                user,
-                gatewayEvent.Member,
-                gatewayEvent.Token,
-                gatewayEvent.ID,
-                gatewayEvent.ApplicationID,
-                interactionData
-            );
-
-            // Provide the created context to any services inside this scope
-            _contextInjection.Context = context;
 
             // Run any user-provided pre execution events
             var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
