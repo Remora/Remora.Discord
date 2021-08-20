@@ -22,10 +22,11 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Voice.Gateway.Bidirectional
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Bidirectional.IVoiceSpeaking" />
     [PublicAPI]
-    public record VoiceSpeaking(SpeakingFlags Speaking, uint SSRC) : IVoiceSpeaking;
+    public record VoiceSpeaking(Snowflake UserID, SpeakingFlags Speaking, uint SSRC) : IVoiceSpeaking;
 }

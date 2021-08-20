@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
 {
@@ -30,5 +31,9 @@ namespace Remora.Discord.API.Abstractions.Voice.Gateway.Events
     [PublicAPI]
     public interface IVoiceClientDisconnect : IVoiceGatewayEvent
     {
+        /// <summary>
+        /// Gets the ID of the user who disconnected.
+        /// </summary>
+        Snowflake UserID { get; }
     }
 }

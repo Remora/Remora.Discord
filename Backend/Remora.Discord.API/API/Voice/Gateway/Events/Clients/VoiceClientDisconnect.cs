@@ -22,10 +22,11 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Voice.Gateway.Events;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Voice.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Voice.Gateway.Events.IVoiceClientDisconnect" />
     [PublicAPI]
-    public record VoiceClientDisconnect() : IVoiceClientDisconnect;
+    public record VoiceClientDisconnect(Snowflake UserID) : IVoiceClientDisconnect;
 }
