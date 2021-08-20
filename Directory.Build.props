@@ -122,6 +122,9 @@
 
     <!-- NuGet Icon -->
     <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)images/shark.png" Pack="true" PackagePath="/" />
+        <None Include="$(MSBuildThisFileDirectory)images/shark.png" Pack="true" PackagePath="/">
+            <Link>shark.png</Link>
+            <InProject>false</InProject>
+        </None>
     </ItemGroup>
 </Project>
