@@ -223,6 +223,7 @@ namespace Remora.Discord.Rest.API
         /// <returns>The request message.</returns>
         public HttpRequestMessage Build()
         {
+            // Build the query parameters, if any
             var queryParameters = HttpUtility.ParseQueryString(string.Empty);
             foreach (var (queryName, queryValue) in _queryParameters)
             {
@@ -235,11 +236,72 @@ namespace Remora.Discord.Rest.API
                 _endpoint + (queryParameters.Count > 0 ? "?" + queryParameters : string.Empty)
             );
 
+            // Add headers
             foreach (var (headerName, headerValue) in _additionalHeaders)
             {
                 request.Headers.Add(headerName, headerValue);
             }
 
+            // Build the content of the request, if any
+            request.Content = BuildRequestContent();
+
+            // Set up the endpoint context for rate limiting purposes
+            var context = new Context { { "endpoint", _endpoint } };
+            request.SetPolicyExecutionContext(context);
+
+            return request;
+        }
+
+        private HttpContent? BuildRequestContent()
+        {
+            HttpContent? requestContent;
+
+            var jsonBody = BuildJsonPayload();
+            if (_additionalContent.Count > 0)
+            {
+                var multipartContent = new MultipartFormDataContent();
+
+                if (jsonBody is not null)
+                {
+                    multipartContent.Add(jsonBody, "payload_json");
+                }
+
+                foreach (var (name, (content, fileName)) in _additionalContent)
+                {
+                    if (fileName is null)
+                    {
+                        multipartContent.Add(content, name);
+                    }
+                    else
+                    {
+                        multipartContent.Add(content, name, fileName);
+                    }
+                }
+
+                requestContent = multipartContent;
+            }
+            else
+            {
+                if (jsonBody is null)
+                {
+                    // No content
+                    return null;
+                }
+
+                requestContent = jsonBody;
+            }
+
+            // Add content headers
+            foreach (var (headerName, headerValue) in _additionalContentHeaders)
+            {
+                requestContent.Headers.Add(headerName, headerValue);
+            }
+
+            return requestContent;
+        }
+
+        private StringContent? BuildJsonPayload()
+        {
             StringContent? jsonBody = null;
             if (_jsonObjectConfigurators.Count > 0)
             {
@@ -302,46 +364,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (_additionalContent.Count > 0)
-            {
-                var multipartContent = new MultipartFormDataContent();
-
-                if (jsonBody is not null)
-                {
-                    multipartContent.Add(jsonBody, "payload_json");
-                }
-
-                foreach (var (name, (content, fileName)) in _additionalContent)
-                {
-                    if (fileName is null)
-                    {
-                        multipartContent.Add(content, name);
-                    }
-                    else
-                    {
-                        multipartContent.Add(content, name, fileName);
-                    }
-                }
-
-                request.Content = multipartContent;
-            }
-            else
-            {
-                request.Content = jsonBody;
-            }
-
-            if (request.Content is not null)
-            {
-                foreach (var (headerName, headerValue) in _additionalContentHeaders)
-                {
-                    request.Content.Headers.Add(headerName, headerValue);
-                }
-            }
-
-            var context = new Context { { "endpoint", _endpoint } };
-            request.SetPolicyExecutionContext(context);
-
-            return request;
+            return jsonBody;
         }
     }
 }
