@@ -21,12 +21,14 @@
 //
 
 using System;
+using JetBrains.Annotations;
 
 namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
     /// Marks a command as requiring an ephemeral response, when invoked by an interaction.
     /// </summary>
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false)]
     public class EphemeralAttribute : Attribute
     {

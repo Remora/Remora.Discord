@@ -53,7 +53,7 @@ namespace Remora.Discord.Commands.Extensions
         /// <returns>A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.</returns>
         public static T? FindCustomAttributeOnLocalTree<T>(this CommandNode node, bool includeAncestors = true) where T : Attribute
         {
-            // Attempt to first check for ephemerailty on the command itself
+            // Attempt to first find the attribute on the command itself
             T? attr = node.CommandMethod.GetCustomAttribute<T>();
 
             if (attr is null && includeAncestors)
@@ -64,7 +64,7 @@ namespace Remora.Discord.Commands.Extensions
                 {
                     p = g.Parent;
 
-                    // See if any of the types in this group have expressed ephemerality
+                    // See if any of the types in this group been decorated with the attribute
                     foreach (Type t in g.GroupTypes)
                     {
                         attr = t.GetCustomAttribute<T>();
