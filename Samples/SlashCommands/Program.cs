@@ -56,7 +56,8 @@ namespace Remora.Discord.Samples.SlashCommands
             var configuration = services.GetRequiredService<IConfiguration>();
 
             Snowflake? debugServer = null;
-#if DEBUG
+
+            #if DEBUG
             var debugServerString = configuration.GetValue<string?>("REMORA_DEBUG_SERVER");
             if (debugServerString is not null)
             {
@@ -65,7 +66,7 @@ namespace Remora.Discord.Samples.SlashCommands
                     log.LogWarning("Failed to parse debug server from environment");
                 }
             }
-#endif
+            #endif
 
             var slashService = services.GetRequiredService<SlashService>();
 
