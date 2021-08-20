@@ -56,8 +56,8 @@ namespace Remora.Discord.Commands.Tests.TestBases
         /// </summary>
         public InteractionResponderTestBase()
         {
-            MockInteractionApi = new Mock<IDiscordRestInteractionAPI>();
-            MockInteractionApi.Setup
+            this.MockInteractionApi = new Mock<IDiscordRestInteractionAPI>();
+            this.MockInteractionApi.Setup
             (
                 i => i.CreateInteractionResponseAsync
                 (
