@@ -336,12 +336,16 @@ namespace Remora.Discord.Caching.API
             }
 
             var guildMember = getResult.Entity;
-            if (!guildMember.User.HasValue)
+            _cacheService.Cache(key, guildMember);
+
+            if (!guildMember.User.IsDefined(out var user))
             {
                 return getResult;
             }
 
-            _cacheService.Cache(key, guildMember);
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+            _cacheService.Cache(userKey, user);
+
             return getResult;
         }
 
@@ -371,12 +375,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var member in members)
             {
-                if (!member.User.HasValue)
+                if (!member.User.IsDefined(out var user))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(guildID, member.User.Value.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
                 _cacheService.Cache(key, member);
             }
 
@@ -867,12 +871,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var guildMember in result.Entity)
             {
-                if (!guildMember.User.HasValue)
+                if (!guildMember.User.IsDefined(out var user))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(guildID, guildMember.User.Value.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
                 _cacheService.Cache(key, guildMember);
             }
 

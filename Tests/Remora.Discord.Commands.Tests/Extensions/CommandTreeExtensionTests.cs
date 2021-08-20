@@ -315,7 +315,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
 
                     Assert.NotNull(commands);
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
 
                     var topLevelCommand = commands.FirstOrDefault(c => c.Name == "top-level-command");
                     Assert.NotNull(topLevelCommand);
@@ -358,7 +358,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
                     {
-                        var command = commands!.FirstOrDefault(c => c.Name == commandName);
+                        var command = commands.FirstOrDefault(c => c.Name == commandName);
                         Assert.NotNull(command);
 
                         var parameter = command!.Options.Value[0];
@@ -388,7 +388,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     AssertExistsWithType("member-value", User);
 
                     AssertExistsWithType("enum-value", String);
-                    var enumCommand = commands!.First(c => c.Name == "enum-value");
+                    var enumCommand = commands.First(c => c.Name == "enum-value");
                     var enumParameter = enumCommand.Options.Value[0];
                     Assert.True(enumParameter.Choices.HasValue);
 
@@ -431,12 +431,12 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var requiredCommand = commands!.First(c => c.Name == "required");
+                    var requiredCommand = commands.First(c => c.Name == "required");
                     var requiredParameter = requiredCommand.Options.Value[0];
                     Assert.True(requiredParameter.IsRequired.HasValue);
                     Assert.True(requiredParameter.IsRequired.Value);
 
-                    var optionalCommand = commands!.First(c => c.Name == "optional");
+                    var optionalCommand = commands.First(c => c.Name == "optional");
                     var optionalParameter = optionalCommand.Options.Value[0];
                     if (optionalParameter.IsRequired.HasValue)
                     {
@@ -461,7 +461,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var command = commands!.SingleOrDefault();
+                    var command = commands.SingleOrDefault();
                     Assert.True(command!.DefaultPermission.Value);
                 }
 
@@ -482,7 +482,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var command = commands!.SingleOrDefault();
+                    var command = commands.SingleOrDefault();
                     Assert.True(command!.DefaultPermission.Value);
                 }
 
@@ -503,7 +503,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var commands = result.Entity;
 
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
                     var a = commands[0];
                     var b = commands[1];
 
@@ -527,7 +527,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var commands = result.Entity;
 
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
 
                     var user = commands[0];
                     var message = commands[1];
@@ -552,7 +552,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     var commands = result.Entity;
 
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
 
                     var normal = commands[0];
                     var message = commands[1];
@@ -580,7 +580,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -610,7 +610,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -645,7 +645,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }
@@ -663,7 +663,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -692,7 +692,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }
@@ -709,7 +709,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }

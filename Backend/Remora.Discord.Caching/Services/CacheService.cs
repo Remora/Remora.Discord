@@ -105,12 +105,11 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, webhook);
 
-            if (!webhook.User.HasValue)
+            if (!webhook.User.IsDefined(out var user))
             {
                 return;
             }
 
-            var user = webhook.User.Value;
             var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
@@ -127,12 +126,11 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, integration);
 
-            if (!integration.User.HasValue)
+            if (!integration.User.IsDefined(out var user))
             {
                 return;
             }
 
-            var user = integration.User.Value;
             var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
@@ -149,12 +147,11 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, member);
 
-            if (!member.User.HasValue)
+            if (!member.User.IsDefined(out var user))
             {
                 return;
             }
 
-            var user = member.User.Value;
             var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
             Cache(userKey, user);
         }
@@ -179,9 +176,9 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, guild);
 
-            if (guild.Channels.HasValue)
+            if (guild.Channels.IsDefined(out var channels))
             {
-                foreach (var channel in guild.Channels.Value)
+                foreach (var channel in channels)
                 {
                     var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
 
@@ -212,19 +209,19 @@ namespace Remora.Discord.Caching.Services
                 Cache(emojiKey, emoji);
             }
 
-            if (guild.Members.HasValue)
+            if (guild.Members.IsDefined(out var members))
             {
                 var membersKey = KeyHelpers.CreateGuildMembersKey(guild.ID, default, default);
-                Cache(membersKey, guild.Members.Value);
+                Cache(membersKey, members);
 
-                foreach (var guildMember in guild.Members.Value)
+                foreach (var guildMember in members)
                 {
-                    if (!guildMember.User.HasValue)
+                    if (!guildMember.User.IsDefined(out var user))
                     {
                         continue;
                     }
 
-                    var memberKey = KeyHelpers.CreateGuildMemberKey(guild.ID, guildMember.User.Value.ID);
+                    var memberKey = KeyHelpers.CreateGuildMemberKey(guild.ID, user.ID);
                     Cache(memberKey, guildMember);
                 }
             }
@@ -243,12 +240,11 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, emoji);
 
-            if (!emoji.User.HasValue)
+            if (!emoji.User.IsDefined(out var creator))
             {
                 return;
             }
 
-            var creator = emoji.User.Value;
             var creatorKey = KeyHelpers.CreateUserCacheKey(creator.ID);
             Cache(creatorKey, creator);
         }
@@ -257,12 +253,11 @@ namespace Remora.Discord.Caching.Services
         {
             CacheInstance(key, invite);
 
-            if (!invite.Inviter.HasValue)
+            if (!invite.Inviter.IsDefined(out var inviter))
             {
                 return;
             }
 
-            var inviter = invite.Inviter.Value;
             var inviterKey = KeyHelpers.CreateUserCacheKey(inviter.ID);
             Cache(inviterKey, inviter);
         }
@@ -274,12 +269,11 @@ namespace Remora.Discord.Caching.Services
             var authorKey = KeyHelpers.CreateUserCacheKey(message.Author.ID);
             Cache(authorKey, message.Author);
 
-            if (!message.ReferencedMessage.HasValue || message.ReferencedMessage.Value is null)
+            if (!message.ReferencedMessage.IsDefined(out var referencedMessage))
             {
                 return;
             }
 
-            var referencedMessage = message.ReferencedMessage.Value;
             var referencedMessageKey = KeyHelpers.CreateMessageCacheKey
             (
                 referencedMessage.ChannelID,
@@ -292,12 +286,12 @@ namespace Remora.Discord.Caching.Services
         private void CacheChannel(object key, IChannel channel)
         {
             CacheInstance(key, channel);
-            if (!channel.Recipients.HasValue)
+            if (!channel.Recipients.IsDefined(out var recipients))
             {
                 return;
             }
 
-            foreach (var recipient in channel.Recipients.Value)
+            foreach (var recipient in recipients)
             {
                 var recipientKey = KeyHelpers.CreateUserCacheKey(recipient.ID);
                 Cache(recipientKey, recipient);

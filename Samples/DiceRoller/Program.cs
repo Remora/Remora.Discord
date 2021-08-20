@@ -21,17 +21,15 @@
 //
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Gateway;
-using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Gateway.Results;
+using Remora.Discord.Hosting.Extensions;
 using Remora.Discord.Samples.DiceRoller.Commands;
-using Remora.Results;
 
 namespace Remora.Discord.Samples.DiceRoller
 {
@@ -45,74 +43,45 @@ namespace Remora.Discord.Samples.DiceRoller
         /// </summary>
         /// <param name="args">The command-line arguments.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous program execution.</returns>
-        public static async Task Main(string[] args)
-        {
-            var cancellationSource = new CancellationTokenSource();
+        public static Task Main(string[] args) => CreateHostBuilder(args).RunConsoleAsync();
 
-            Console.CancelKeyPress += (_, eventArgs) =>
-            {
-                eventArgs.Cancel = true;
-                cancellationSource.Cancel();
-            };
-
-            var botToken =
-                Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN")
-                ?? throw new InvalidOperationException
-                (
-                    "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a valid token."
-                );
-
-            var serviceCollection = new ServiceCollection()
-                .AddLogging
-                (
-                    c => c
-                        .AddConsole()
-                        .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
-                        .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
-                )
-                .AddDiscordGateway(_ => botToken)
-                .AddDiscordCommands()
-                .AddCommandGroup<DiceRollCommands>();
-
-            serviceCollection.AddHttpClient();
-
-            var services = serviceCollection.BuildServiceProvider(true);
-
-            var log = services.GetRequiredService<ILogger<Program>>();
-
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-
-            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
-            if (!runResult.IsSuccess)
-            {
-                switch (runResult.Error)
+        /// <summary>
+        /// Creates a generic application host builder.
+        /// </summary>
+        /// <param name="args">The arguments passed to the application.</param>
+        /// <returns>The host builder.</returns>
+        private static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
+            .AddDiscordService
+            (
+                services =>
                 {
-                    case ExceptionError exe:
-                    {
-                        log.LogError
-                        (
-                            exe.Exception,
-                            "Exception during gateway connection: {ExceptionMessage}",
-                            exe.Message
-                        );
+                    var configuration = services.GetRequiredService<IConfiguration>();
 
-                        break;
-                    }
-                    case GatewayWebSocketError:
-                    case GatewayDiscordError:
-                    {
-                        log.LogError("Gateway error: {Message}", runResult.Error.Message);
-                        break;
-                    }
-                    default:
-                    {
-                        log.LogError("Unknown error: {Message}", runResult.Error.Message);
-                        break;
-                    }
+                    return configuration.GetValue<string?>("REMORA_BOT_TOKEN") ??
+                           throw new InvalidOperationException
+                           (
+                               "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a " +
+                               "valid token."
+                           );
                 }
-            }
+            )
+            .ConfigureServices
+            (
+                (_, services) =>
+                {
+                    services
+                        .AddDiscordCommands()
+                        .AddCommandGroup<DiceRollCommands>();
 
-            log.LogInformation("Bye bye");
-        }
+                    services.AddHttpClient();
+                }
+            )
+            .ConfigureLogging
+            (
+                c => c
+                    .AddConsole()
+                    .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
+                    .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
+            );
     }
 }

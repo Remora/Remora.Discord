@@ -120,12 +120,12 @@ namespace Remora.Discord.Caching.Responders
         /// <inheritdoc/>
         public Task<Result> RespondAsync(IGuildMemberAdd gatewayEvent, CancellationToken ct = default)
         {
-            if (!gatewayEvent.User.HasValue)
+            if (!gatewayEvent.User.IsDefined(out var user))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.Value.ID);
+            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, user.ID);
             _cacheService.Cache<IGuildMember>(key, gatewayEvent);
 
             return Task.FromResult(Result.FromSuccess());
@@ -136,28 +136,28 @@ namespace Remora.Discord.Caching.Responders
         {
             foreach (var member in gatewayEvent.Members)
             {
-                if (!member.User.HasValue)
+                if (!member.User.IsDefined(out var user))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, member.User.Value.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, user.ID);
                 _cacheService.Cache(key, member);
             }
 
-            if (!gatewayEvent.Presences.HasValue)
+            if (!gatewayEvent.Presences.IsDefined(out var presences))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            foreach (var presence in gatewayEvent.Presences.Value)
+            foreach (var presence in presences)
             {
-                if (!presence.User.ID.HasValue)
+                if (!presence.User.ID.IsDefined(out var userID))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreatePresenceCacheKey(gatewayEvent.GuildID, presence.User.ID.Value);
+                var key = KeyHelpers.CreatePresenceCacheKey(gatewayEvent.GuildID, userID);
                 _cacheService.Cache(key, presence);
             }
 
@@ -175,17 +175,17 @@ namespace Remora.Discord.Caching.Responders
                 cachedInstance = new GuildMember
                 (
                     new Optional<IUser>(gatewayEvent.User),
-                    gatewayEvent.Nickname.HasValue ? gatewayEvent.Nickname : cachedInstance.Nickname,
+                    gatewayEvent.Nickname.IsDefined(out var nickname) ? nickname : cachedInstance.Nickname,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt ?? cachedInstance.JoinedAt,
-                    gatewayEvent.PremiumSince.HasValue ? gatewayEvent.PremiumSince.Value : cachedInstance.PremiumSince,
-                    cachedInstance.IsDeafened,
-                    cachedInstance.IsMuted,
-                    cachedInstance.IsPending,
+                    gatewayEvent.PremiumSince.IsDefined(out var premiumSince) ? premiumSince : cachedInstance.PremiumSince,
+                    gatewayEvent.IsDeafened.IsDefined(out var isDeafened) ? isDeafened : cachedInstance.IsDeafened,
+                    gatewayEvent.IsMuted.IsDefined(out var isMuted) ? isMuted : cachedInstance.IsMuted,
+                    gatewayEvent.IsPending.IsDefined(out var isPending) ? isPending : cachedInstance.IsPending,
                     cachedInstance.Permissions
                 );
             }
-            else if (gatewayEvent.PremiumSince.HasValue && gatewayEvent.JoinedAt.HasValue)
+            else if (gatewayEvent.JoinedAt.HasValue)
             {
                 cachedInstance = new GuildMember
                 (
@@ -193,9 +193,10 @@ namespace Remora.Discord.Caching.Responders
                     gatewayEvent.Nickname,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt.Value,
-                    gatewayEvent.PremiumSince.Value,
-                    false,
-                    false
+                    gatewayEvent.PremiumSince,
+                    gatewayEvent.IsDeafened.IsDefined(out var isDeafened) && isDeafened,
+                    gatewayEvent.IsMuted.IsDefined(out var isMuted) && isMuted,
+                    gatewayEvent.IsPending.IsDefined(out var isPending) && isPending
                 );
             }
             else
@@ -238,23 +239,22 @@ namespace Remora.Discord.Caching.Responders
         /// <inheritdoc/>
         public Task<Result> RespondAsync(IMessageReactionAdd gatewayEvent, CancellationToken ct = default)
         {
-            if (!gatewayEvent.GuildID.HasValue)
+            if (!gatewayEvent.GuildID.IsDefined(out var guildID))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            if (!gatewayEvent.Member.HasValue)
+            if (!gatewayEvent.Member.IsDefined(out var member))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var member = gatewayEvent.Member.Value;
-            if (!member.User.HasValue)
+            if (!member.User.IsDefined(out var user))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID.Value, member.User.Value.ID);
+            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
             _cacheService.Cache(key, member);
 
             return Task.FromResult(Result.FromSuccess());
@@ -272,21 +272,18 @@ namespace Remora.Discord.Caching.Responders
         /// <inheritdoc />
         public Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
         {
-            if (!gatewayEvent.Data.HasValue)
+            if (!gatewayEvent.Data.IsDefined(out var data))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var data = gatewayEvent.Data.Value;
-            if (!data.Resolved.HasValue)
+            if (!data.Resolved.IsDefined(out var resolved))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var resolved = data.Resolved.Value;
-            if (resolved.Users.HasValue)
+            if (resolved.Users.IsDefined(out var users))
             {
-                var users = resolved.Users.Value;
                 foreach (var (key, value) in users)
                 {
                     var cacheKey = KeyHelpers.CreateUserCacheKey(key);
@@ -294,15 +291,14 @@ namespace Remora.Discord.Caching.Responders
                 }
             }
 
-            if (!resolved.Roles.HasValue || !gatewayEvent.GuildID.HasValue)
+            if (!resolved.Roles.IsDefined(out var roles) || !gatewayEvent.GuildID.IsDefined(out var guildID))
             {
                 return Task.FromResult(Result.FromSuccess());
             }
 
-            var roles = resolved.Roles.Value;
             foreach (var (key, value) in roles)
             {
-                var cacheKey = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID.Value, key);
+                var cacheKey = KeyHelpers.CreateGuildRoleCacheKey(guildID, key);
                 _cacheService.Cache(cacheKey, value);
             }
 

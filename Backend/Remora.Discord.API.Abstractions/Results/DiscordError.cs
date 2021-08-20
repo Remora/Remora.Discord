@@ -381,6 +381,11 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxStickersReached = 30039,
 
         /// <summary>
+        /// Maximum number of prune requests has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfPruneRequestsReached = 30040,
+
+        /// <summary>
         /// Unauthorized. Provide a valid token and try again.
         /// </summary>
         Unauthorized = 40001,

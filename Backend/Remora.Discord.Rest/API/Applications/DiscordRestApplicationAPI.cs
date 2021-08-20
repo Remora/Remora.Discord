@@ -136,8 +136,8 @@ namespace Remora.Discord.Rest.API
                 commands.Any
                 (
                     c =>
-                        (!c.Type.HasValue || c.Type.Value is ApplicationCommandType.ChatInput) &&
-                        c.Description.HasValue && c.Description.Value.Length is < 1 or > 100
+                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
                 )
             )
             {
@@ -161,7 +161,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteString("name", command.Name);
                             json.Write("type", command.Type, this.JsonOptions);
 
-                            if (!command.Type.HasValue || command.Type.Value is ApplicationCommandType.ChatInput)
+                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
                             {
                                 json.Write("description", command.Description, this.JsonOptions);
                             }
@@ -288,8 +288,8 @@ namespace Remora.Discord.Rest.API
                 commands.Any
                 (
                     c =>
-                        (!c.Type.HasValue || c.Type.Value is ApplicationCommandType.ChatInput) &&
-                        c.Description.HasValue && c.Description.Value.Length is < 1 or > 100
+                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
                 )
             )
             {
@@ -313,7 +313,7 @@ namespace Remora.Discord.Rest.API
                             json.WriteString("name", command.Name);
                             json.Write("type", command.Type, this.JsonOptions);
 
-                            if (!command.Type.HasValue || command.Type.Value is ApplicationCommandType.ChatInput)
+                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
                             {
                                 json.Write("description", command.Description, this.JsonOptions);
                             }
