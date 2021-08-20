@@ -28,6 +28,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Core;
+using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
 
@@ -151,11 +152,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var groupDMCondition = new RequireContextCondition(groupDMContextMock.Object, channelAPIMock.Object);
             var groupDMResult = await groupDMCondition.CheckAsync(attribute, default);
-            Assert.True(groupDMResult.IsSuccess);
+            ResultAssert.Successful(groupDMResult);
 
             var textCondition = new RequireContextCondition(textContextMock.Object, channelAPIMock.Object);
             var textResult = await textCondition.CheckAsync(attribute, default);
-            Assert.True(textResult.IsSuccess);
+            ResultAssert.Successful(textResult);
         }
 
         /// <summary>
@@ -190,11 +191,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var groupDMCondition = new RequireContextCondition(groupDMContextMock.Object, channelAPIMock.Object);
             var groupDMResult = await groupDMCondition.CheckAsync(attribute, default);
-            Assert.True(groupDMResult.IsSuccess);
+            ResultAssert.Successful(groupDMResult);
 
             var textCondition = new RequireContextCondition(textContextMock.Object, channelAPIMock.Object);
             var textResult = await textCondition.CheckAsync(attribute, default);
-            Assert.True(textResult.IsSuccess);
+            ResultAssert.Successful(textResult);
         }
     }
 }
