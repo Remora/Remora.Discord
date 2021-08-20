@@ -72,12 +72,12 @@ namespace Remora.Discord.Commands.Parsers
             }
 
             var channel = getChannel.Entity;
-            if (!channel.GuildID.HasValue)
+            if (!channel.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
             }
 
-            return await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);
+            return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
         }
     }
 }

@@ -114,12 +114,12 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.Data.HasValue)
+            if (!gatewayEvent.Data.IsDefined(out var interactionData))
             {
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.ChannelID.HasValue)
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
             {
                 return Result.FromSuccess();
             }
@@ -174,7 +174,7 @@ namespace Remora.Discord.Commands.Responders
             var context = new InteractionContext
             (
                 gatewayEvent.GuildID,
-                gatewayEvent.ChannelID.Value,
+                channelID,
                 user,
                 gatewayEvent.Member,
                 gatewayEvent.Token,

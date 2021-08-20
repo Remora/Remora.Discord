@@ -37,7 +37,6 @@ using Remora.Discord.Commands.Results;
 using Remora.Discord.Core;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
-using String = System.String;
 
 namespace Remora.Discord.Commands.Extensions
 {
@@ -481,9 +480,9 @@ namespace Remora.Discord.Commands.Extensions
             length += option.Name.Length;
             length += option.Description.Length;
 
-            if (option.Choices.HasValue)
+            if (option.Choices.IsDefined(out var choices))
             {
-                foreach (var choice in option.Choices.Value)
+                foreach (var choice in choices)
                 {
                     length += choice.Name.Length;
                     if (choice.Value.TryPickT0(out var choiceValue, out _))
@@ -493,9 +492,9 @@ namespace Remora.Discord.Commands.Extensions
                 }
             }
 
-            if (option.Options.HasValue)
+            if (option.Options.IsDefined(out var options))
             {
-                length += option.Options.Value.Sum(GetCommandStringifiedLength);
+                length += options.Sum(GetCommandStringifiedLength);
             }
 
             return length;

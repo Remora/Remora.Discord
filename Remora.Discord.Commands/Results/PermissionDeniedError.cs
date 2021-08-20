@@ -1,5 +1,5 @@
 //
-//  ThreadMetadata.cs
+//  PermissionDeniedError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Results;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Results
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMetadata" />
+    /// <summary>
+    /// Represents a failure to fulfill a set of requirements related to permissions.
+    /// </summary>
+    /// <param name="Message">The custom error message, if any.</param>
+    /// <param name="Permissions">The permissions which were checked.</param>
     [PublicAPI]
-    public record ThreadMetadata
+    public record PermissionDeniedError
     (
-        bool IsArchived,
-        AutoArchiveDuration AutoArchiveDuration,
-        DateTimeOffset ArchiveTimestamp,
-        bool IsLocked,
-        Optional<bool> IsInvitable
-    )
-    : IThreadMetadata;
+        string Message = "Permission denied.",
+        params DiscordPermission[] Permissions
+    ) : ResultError(Message);
 }

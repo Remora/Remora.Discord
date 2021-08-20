@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>21.0.2</Version>
+        <Version>22.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,8 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Add proper alternative method for StartThreadWithoutMessage.
+            Update Threads
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -1,5 +1,5 @@
 //
-//  ThreadMetadata.cs
+//  WebSocketError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
+using System.Net.WebSockets;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Results;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Gateway.Results
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMetadata" />
+    /// <summary>
+    /// Represents a failure to perform a websocket action.
+    /// </summary>
+    /// <param name="State">The state the socket ended up in.</param>
+    /// <param name="Message">The custom message, if any.</param>
     [PublicAPI]
-    public record ThreadMetadata
-    (
-        bool IsArchived,
-        AutoArchiveDuration AutoArchiveDuration,
-        DateTimeOffset ArchiveTimestamp,
-        bool IsLocked,
-        Optional<bool> IsInvitable
-    )
-    : IThreadMetadata;
+    public record WebSocketError(WebSocketState State, string Message = "The requested websocket operation failed.")
+        : ResultError(Message);
 }

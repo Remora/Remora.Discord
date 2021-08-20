@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;

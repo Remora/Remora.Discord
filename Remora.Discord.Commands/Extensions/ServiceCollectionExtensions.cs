@@ -116,13 +116,15 @@ namespace Remora.Discord.Commands.Extensions
             serviceCollection.AddCondition<RequireContextCondition>();
             serviceCollection.AddCondition<RequireOwnerCondition>();
             serviceCollection.AddCondition<RequireUserGuildPermissionCondition>();
+            serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
 
             serviceCollection
                 .AddParser<IChannel, ChannelParser>()
                 .AddParser<IGuildMember, GuildMemberParser>()
                 .AddParser<IRole, RoleParser>()
                 .AddParser<IUser, UserParser>()
-                .AddParser<Snowflake, SnowflakeParser>();
+                .AddParser<Snowflake, SnowflakeParser>()
+                .AddParser<IEmoji, EmojiParser>();
 
             serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 

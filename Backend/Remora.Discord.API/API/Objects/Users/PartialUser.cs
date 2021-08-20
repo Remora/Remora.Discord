@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -39,6 +40,8 @@ namespace Remora.Discord.API.Objects
         Optional<bool> IsBot = default,
         Optional<bool> IsSystem = default,
         Optional<bool> IsMFAEnabled = default,
+        Optional<IImageHash?> Banner = default,
+        Optional<Color?> AccentColour = default,
         Optional<string> Locale = default,
         Optional<bool> IsVerified = default,
         Optional<string?> Email = default,

@@ -1,5 +1,5 @@
 //
-//  ThreadMetadata.cs
+//  LogicalOperator.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.Commands.Conditions
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMetadata" />
+    /// <summary>
+    /// Enumerates various logical operators.
+    /// </summary>
     [PublicAPI]
-    public record ThreadMetadata
-    (
-        bool IsArchived,
-        AutoArchiveDuration AutoArchiveDuration,
-        DateTimeOffset ArchiveTimestamp,
-        bool IsLocked,
-        Optional<bool> IsInvitable
-    )
-    : IThreadMetadata;
+    public enum LogicalOperator
+    {
+        /// <summary>
+        /// NOT, that is, all of the inputs must be logically false.
+        /// </summary>
+        Not,
+
+        /// <summary>
+        /// AND, that is, all of the inputs must be logically true.
+        /// </summary>
+        And,
+
+        /// <summary>
+        /// OR, that is, one or more of the inputs must be logically true.
+        /// </summary>
+        Or,
+
+        /// <summary>
+        /// XOR, that is, one and only one of the inputs must be logically true.
+        /// </summary>
+        Xor,
+    }
 }

@@ -146,15 +146,12 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
             }
 
-            if (description.HasValue)
+            if (description.IsDefined(out var descriptionValue) && descriptionValue.Length is not 0 and (< 2 or > 30))
             {
-                if (description.Value is not null && description.Value.Length is not 0 and (< 2 or > 30))
-                {
-                    return new ArgumentOutOfRangeError
-                    (
-                        nameof(description), "The description must be either empty, or between 2 and 30 characters."
-                    );
-                }
+                return new ArgumentOutOfRangeError
+                (
+                    nameof(description), "The description must be either empty, or between 2 and 30 characters."
+                );
             }
 
             if (tags.HasValue && tags.Value.Length is < 2 or > 200)

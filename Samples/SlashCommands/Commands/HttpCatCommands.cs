@@ -68,18 +68,17 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
                 return Result.FromSuccess();
             }
 
-            if (!interactionContext.Data.Resolved.HasValue)
+            if (!interactionContext.Data.Resolved.IsDefined(out var resolved))
             {
                 return Result.FromSuccess();
             }
 
-            var resolved = interactionContext.Data.Resolved.Value;
-            if (!resolved.Users.HasValue)
+            if (!resolved.Users.IsDefined(out var users))
             {
                 return Result.FromSuccess();
             }
 
-            var user = resolved.Users.Value.First().Value;
+            var user = users.First().Value;
             return await PostUserHttpCatAsync(user);
         }
 
