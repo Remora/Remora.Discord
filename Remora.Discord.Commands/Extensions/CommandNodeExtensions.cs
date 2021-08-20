@@ -49,13 +49,14 @@ namespace Remora.Discord.Commands.Extensions
         /// </summary>
         /// <typeparam name="T">The type of attribute to search for.</typeparam>
         /// <param name="node">The command node.</param>
+        /// <param name="includeAncestors">Indicates that ancestors of the command should also be search for the attribute.</param>
         /// <returns>A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.</returns>
-        public static T? FindCustomAttributeOnLocalTree<T>(this CommandNode node) where T : Attribute
+        public static T? FindCustomAttributeOnLocalTree<T>(this CommandNode node, bool includeAncestors = true) where T : Attribute
         {
             // Attempt to first check for ephemerailty on the command itself
             T? attr = node.CommandMethod.GetCustomAttribute<T>();
 
-            if (attr is null)
+            if (attr is null && includeAncestors)
             {
                 // Traverse each parent group node, until we find the root node
                 IParentNode p = node.Parent;
