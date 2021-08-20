@@ -172,7 +172,7 @@ namespace Remora.Discord.Commands.Responders
                 var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
 
                 EphemeralAttribute? ephemeralAttribute = findCommandResult.Entity.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>();
-                if (ephemeralAttribute?.IsEphemeral == true)
+                if ((ephemeralAttribute is null && _options.UseGlobalEphemeralResponses) || ephemeralAttribute?.IsEphemeral == true)
                 {
                     response = response with { Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral) };
                 }
