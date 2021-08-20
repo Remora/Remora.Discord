@@ -154,6 +154,13 @@ namespace Remora.Discord.Commands.Responders
             // Provide the created context to any services inside this scope
             _contextInjection.Context = context;
 
+            // Run any user-provided pre execution events
+            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
+            if (!preExecution.IsSuccess)
+            {
+                return preExecution;
+            }
+
             Result<BoundCommandNode> findCommandResult = FindCommandNode(command, parameters);
             if (!findCommandResult.IsSuccess)
             {
@@ -189,13 +196,6 @@ namespace Remora.Discord.Commands.Responders
                 {
                     return interactionResponse;
                 }
-            }
-
-            // Run any user-provided pre execution events
-            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
-            if (!preExecution.IsSuccess)
-            {
-                return preExecution;
             }
 
             // Run the actual command
