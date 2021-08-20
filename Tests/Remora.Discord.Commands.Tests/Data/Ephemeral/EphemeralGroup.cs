@@ -1,5 +1,5 @@
 ﻿//
-//  InteractionResponderOptions.cs
+//  EphemeralGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,20 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
+using Remora.Discord.Commands.Attributes;
+using Remora.Results;
 
-namespace Remora.Discord.Commands.Responders
+#pragma warning disable CS1591, SA1600
+
+namespace Remora.Discord.Commands.Tests.Data.Ephemeral
 {
-    /// <summary>
-    /// Represents a set of options, controlling the behavior of a <see cref="InteractionResponder"/> instance.
-    /// </summary>
-    [PublicAPI]
-    public class InteractionResponderOptions : IInteractionResponderOptions
+    [Group("a")]
+    [Ephemeral]
+    public class EphemeralGroup : CommandGroup
     {
-        /// <inheritdoc />
-        public bool SuppressAutomaticResponses { get; set; }
-
-        /// <inheritdoc />
-        public bool UseGlobalEphemeralResponses { get; set; }
+        [Command("b")]
+        public Task<Result> B()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

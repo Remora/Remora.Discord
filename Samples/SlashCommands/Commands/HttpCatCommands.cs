@@ -84,11 +84,13 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
 
         /// <summary>
         /// Posts a HTTP error code cat.
+        /// This command will generate ephemeral responses.
         /// </summary>
         /// <param name="httpCode">The HTTP error code.</param>
         /// <returns>The result of the command.</returns>
         [Command("cat")]
         [Description("Posts a cat image that represents the given error code.")]
+        [Ephemeral]
         public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
