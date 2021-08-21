@@ -182,7 +182,8 @@ namespace Remora.Discord.Commands.Conditions
                 permissionOverwrites
             );
 
-            if (computedPermissions.HasPermission(DiscordPermission.Administrator))
+            var isCheckingInvoker = _context.User.ID == member.User.Value.ID;
+            if (isCheckingInvoker && computedPermissions.HasPermission(DiscordPermission.Administrator))
             {
                 // always allowed
                 return Result.FromSuccess();
@@ -207,7 +208,7 @@ namespace Remora.Discord.Commands.Conditions
                 return result;
             }
 
-            var userDoes = _context.User.ID == member.User.Value.ID ? "You do" : "The given user does";
+            var userDoes = isCheckingInvoker ? "You do" : "The given user does";
             return permissionDeniedError with
             {
                 Message = $"{userDoes} not fulfill the permission requirements " +
@@ -261,12 +262,6 @@ namespace Remora.Discord.Commands.Conditions
                 everyoneRole,
                 permissionOverwrites
             );
-
-            if (computedPermissions.HasPermission(DiscordPermission.Administrator))
-            {
-                // always allowed
-                return Result.FromSuccess();
-            }
 
             var permissionInformation = attribute.Permissions
                 .Distinct()
