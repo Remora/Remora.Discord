@@ -182,6 +182,12 @@ namespace Remora.Discord.Commands.Conditions
                 permissionOverwrites
             );
 
+            if (computedPermissions.HasPermission(DiscordPermission.Administrator))
+            {
+                // always allowed
+                return Result.FromSuccess();
+            }
+
             var permissionInformation = attribute.Permissions
                 .Distinct()
                 .ToDictionary
@@ -255,6 +261,12 @@ namespace Remora.Discord.Commands.Conditions
                 everyoneRole,
                 permissionOverwrites
             );
+
+            if (computedPermissions.HasPermission(DiscordPermission.Administrator))
+            {
+                // always allowed
+                return Result.FromSuccess();
+            }
 
             var permissionInformation = attribute.Permissions
                 .Distinct()
