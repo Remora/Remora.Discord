@@ -186,7 +186,9 @@ namespace Remora.Discord.Commands.Responders
                 var ephemeralAttribute = preparedCommand.Command.Node
                     .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
 
-                var sendEphemeral = _options.UseGlobalEphemeralResponses || ephemeralAttribute?.IsEphemeral == true;
+                var sendEphemeral = (ephemeralAttribute is null && _options.UseEphemeralResponses) ||
+                                    ephemeralAttribute?.IsEphemeral == true;
+
                 if (sendEphemeral)
                 {
                     response = response with
