@@ -322,7 +322,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         }
 
         /// <summary>
-        /// Tests whether the condition respects the administrator permission.
+        /// Tests whether the condition ignores the administrator permission for role targets.
         /// </summary>
         /// <typeparam name="TPermission">The required permissions.</typeparam>
         /// <param name="logicalOperator">The logical operator to apply.</param>
@@ -332,7 +332,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
         [Theory]
         [MemberData(nameof(Cases))]
-        public async Task RespectsAdministratorPermissionForRole<TPermission>
+        public async Task IgnoresAdministratorPermissionForRole<TPermission>
         (
             LogicalOperator logicalOperator,
             TPermission[] required,
@@ -341,8 +341,6 @@ namespace Remora.Discord.Commands.Tests.Conditions
         )
             where TPermission : struct, Enum
         {
-            _ = expected;
-
             effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
 
             _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
@@ -362,7 +360,93 @@ namespace Remora.Discord.Commands.Tests.Conditions
             );
 
             var result = await condition.CheckAsync(attribute, _everyoneRoleMock.Object);
-            ResultAssert.Successful(result);
+            Assert.Equal(expected, result.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the condition ignores the administrator permission for user targets.
+        /// </summary>
+        /// <typeparam name="TPermission">The required permissions.</typeparam>
+        /// <param name="logicalOperator">The logical operator to apply.</param>
+        /// <param name="required">The permissions required by the condition.</param>
+        /// <param name="effectivePermissions">The effective permissions.</param>
+        /// <param name="expected">The expected result.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Theory]
+        [MemberData(nameof(Cases))]
+        public async Task IgnoresAdministratorPermissionForUser<TPermission>
+        (
+            LogicalOperator logicalOperator,
+            TPermission[] required,
+            DiscordPermission[] effectivePermissions,
+            bool expected
+        )
+            where TPermission : struct, Enum
+        {
+            _contextMock.Setup(c => c.User.ID).Returns(new Snowflake(4));
+
+            effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
+            _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+
+            var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+            var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+            {
+                Operator = logicalOperator
+            };
+
+            var condition = new RequireDiscordPermissionCondition
+            (
+                _userAPIMock.Object,
+                _guildAPIMock.Object,
+                _channelAPIMock.Object,
+                _contextMock.Object
+            );
+
+            var result = await condition.CheckAsync(attribute, _userMock.Object);
+            Assert.Equal(expected, result.IsSuccess);
+        }
+
+        /// <summary>
+        /// Tests whether the condition ignores the administrator permission for member targets.
+        /// </summary>
+        /// <typeparam name="TPermission">The required permissions.</typeparam>
+        /// <param name="logicalOperator">The logical operator to apply.</param>
+        /// <param name="required">The permissions required by the condition.</param>
+        /// <param name="effectivePermissions">The effective permissions.</param>
+        /// <param name="expected">The expected result.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Theory]
+        [MemberData(nameof(Cases))]
+        public async Task IgnoresAdministratorPermissionForMember<TPermission>
+        (
+            LogicalOperator logicalOperator,
+            TPermission[] required,
+            DiscordPermission[] effectivePermissions,
+            bool expected
+        )
+            where TPermission : struct, Enum
+        {
+            _contextMock.Setup(c => c.User.ID).Returns(new Snowflake(4));
+
+            effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
+            _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
+
+            var requiredPermissions = required.Cast<DiscordPermission>().ToArray();
+            var attribute = new RequireDiscordPermissionAttribute(requiredPermissions)
+            {
+                Operator = logicalOperator
+            };
+
+            var condition = new RequireDiscordPermissionCondition
+            (
+                _userAPIMock.Object,
+                _guildAPIMock.Object,
+                _channelAPIMock.Object,
+                _contextMock.Object
+            );
+
+            var result = await condition.CheckAsync(attribute, _userMock.Object);
+            Assert.Equal(expected, result.IsSuccess);
         }
 
         /// <summary>
