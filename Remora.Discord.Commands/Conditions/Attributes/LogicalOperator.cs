@@ -31,14 +31,14 @@ namespace Remora.Discord.Commands.Conditions
     public enum LogicalOperator
     {
         /// <summary>
-        /// NOT, that is, all of the inputs must be logically false.
-        /// </summary>
-        Not,
-
-        /// <summary>
         /// AND, that is, all of the inputs must be logically true.
         /// </summary>
         And,
+
+        /// <summary>
+        /// NOT, that is, all of the inputs must be logically false.
+        /// </summary>
+        Not,
 
         /// <summary>
         /// OR, that is, one or more of the inputs must be logically true.
