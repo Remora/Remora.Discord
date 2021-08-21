@@ -52,6 +52,11 @@ namespace Remora.Discord.API.Objects
         /// <param name="permissions">The permissions in the set.</param>
         public DiscordPermissionSet(params DiscordPermission[] permissions)
         {
+            if (permissions.Length == 0)
+            {
+                return;
+            }
+
             var largestPermission = permissions.Max(p => (ulong)p);
             var largestByteIndex = (int)Math.Floor(largestPermission / 8.0);
 
