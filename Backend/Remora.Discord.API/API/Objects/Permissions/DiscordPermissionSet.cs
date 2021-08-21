@@ -34,6 +34,11 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public class DiscordPermissionSet : IDiscordPermissionSet
     {
+        /// <summary>
+        /// Gets an empty permission set.
+        /// </summary>
+        public static DiscordPermissionSet Empty { get; } = new(Array.Empty<DiscordPermission>());
+
         /// <inheritdoc />
         public BigInteger Value { get; }
 
