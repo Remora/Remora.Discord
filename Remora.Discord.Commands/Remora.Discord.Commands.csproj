@@ -5,14 +5,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.3.1</Version>
+        <Version>9.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Retire RequireUserGuildPermission.
+            Implement logic to send ephemeral responses.
+            Implement a permission condition.
         </PackageReleaseNotes>
     </PropertyGroup>
 
