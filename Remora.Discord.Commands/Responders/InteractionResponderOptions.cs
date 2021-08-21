@@ -34,6 +34,6 @@ namespace Remora.Discord.Commands.Responders
         public bool SuppressAutomaticResponses { get; set; }
 
         /// <inheritdoc />
-        public bool UseGlobalEphemeralResponses { get; set; }
+        public bool UseEphemeralResponses { get; set; }
     }
 }
