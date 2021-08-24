@@ -266,6 +266,10 @@ namespace Remora.Discord.Gateway.Transport
                     {
                         // Most likely due to some kind of premature or forced disconnection; we'll live with it
                     }
+                    catch (OperationCanceledException)
+                    {
+                        // We still need to cleanup the socket
+                    }
 
                     break;
                 }

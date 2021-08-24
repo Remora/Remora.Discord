@@ -231,7 +231,7 @@ namespace Remora.Discord.Gateway
 
                     if (_transportService.IsConnected)
                     {
-                        var disconnectResult = await _transportService.DisconnectAsync(stopRequested.IsCancellationRequested, stopRequested);
+                        var disconnectResult = await _transportService.DisconnectAsync(!stopRequested.IsCancellationRequested, stopRequested);
                         if (!disconnectResult.IsSuccess)
                         {
                             // Couldn't disconnect cleanly :(
@@ -525,17 +525,28 @@ namespace Remora.Discord.Gateway
                         }
                     }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // will cleanup below
+                    }
+
                     break;
                 }
             }
 
-            if (!_shouldReconnect)
+            if (!stopRequested.IsCancellationRequested)
             {
-                return Result.FromSuccess();
-            }
+                if (!_shouldReconnect)
+                {
+                    return Result.FromSuccess();
+                }
 
-            _log.LogInformation("Reconnection requested by the gateway; terminating session...");
+                _log.LogInformation("Reconnection requested by the gateway; terminating session...");
+            }
 
             // Terminate the send and receive tasks
             _disconnectRequestedSource.Cancel();
@@ -545,7 +556,7 @@ namespace Remora.Discord.Gateway
             _ = await _sendTask;
             _ = await _receiveTask;
 
-            var disconnectResult = await _transportService.DisconnectAsync(true, stopRequested);
+            var disconnectResult = await _transportService.DisconnectAsync(!stopRequested.IsCancellationRequested, stopRequested);
             if (!disconnectResult.IsSuccess)
             {
                 return disconnectResult;
