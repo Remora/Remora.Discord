@@ -1,8 +1,11 @@
 name: Wyam Documentation
 
 on:
-  release:
-    types: [ released ]
+  pushi:
+    branches:
+      - master
+    tags:
+      - '*'
   push:
     branches:
       - master
