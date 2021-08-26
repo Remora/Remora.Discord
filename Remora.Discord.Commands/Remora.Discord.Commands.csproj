@@ -5,13 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>9.1.0</Version>
+        <Version>9.1.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
+            Update Remora.Commands.
             Retain the ephemeral state for followup messages.
             Fix pin/unpin causing commands to run again.
         </PackageReleaseNotes>
