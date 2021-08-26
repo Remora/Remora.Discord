@@ -51,6 +51,12 @@ namespace Remora.Discord.Commands.Feedback.Services
         private readonly IDiscordRestInteractionAPI _interactionAPI;
 
         /// <summary>
+        /// Holds a value indicating whether the original message was ephemeral; if so, followup messages should also
+        /// be ephemeral.
+        /// </summary>
+        private bool _isEphemeral;
+
+        /// <summary>
         /// Gets the theme used by the feedback service.
         /// </summary>
         public IFeedbackTheme Theme { get; }
@@ -436,11 +442,18 @@ namespace Remora.Discord.Commands.Feedback.Services
                 }
                 case InteractionContext interactionContext:
                 {
+                    var messageFlags = default(Optional<MessageFlags>);
+                    if (this.HasEditedOriginalMessage && _isEphemeral)
+                    {
+                        messageFlags = MessageFlags.Ephemeral;
+                    }
+
                     var result = await _interactionAPI.CreateFollowupMessageAsync
                     (
                         interactionContext.ApplicationID,
                         interactionContext.Token,
                         embeds: new[] { embed },
+                        flags: messageFlags,
                         ct: ct
                     );
 
@@ -449,11 +462,15 @@ namespace Remora.Discord.Commands.Feedback.Services
                         return result;
                     }
 
-                    if (!this.HasEditedOriginalMessage)
+                    if (this.HasEditedOriginalMessage)
                     {
-                        this.HasEditedOriginalMessage = true;
+                        return result;
                     }
 
+                    var message = result.Entity;
+                    _isEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+                    this.HasEditedOriginalMessage = true;
                     return result;
                 }
                 default:
