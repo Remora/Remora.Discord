@@ -20,12 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.Commands.Tests.Conditions
 {

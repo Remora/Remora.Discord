@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using Moq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.Commands.Tests.Conditions
