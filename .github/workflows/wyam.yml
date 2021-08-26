@@ -1,16 +1,16 @@
 name: Wyam Documentation
 
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
-  push:
-    branches:
-      - master
-    paths:
-      - docs/**
+  - push:
+      branches:
+        - master
+      tags:
+        - '*'
+  - push:
+      branches:
+        - master
+      paths:
+        - docs/**
   workflow_dispatch:
 
 jobs:
