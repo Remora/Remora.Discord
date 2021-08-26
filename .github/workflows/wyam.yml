@@ -1,7 +1,7 @@
 name: Wyam Documentation
 
 on:
-  pushi:
+  push:
     branches:
       - master
     tags:
