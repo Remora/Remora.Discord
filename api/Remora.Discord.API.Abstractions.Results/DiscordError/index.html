@@ -432,6 +432,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/43DBAB24">File<wbr>Upload<wbr>Exceeds<wbr>Maximum<wbr>Size</a></td>
+								<td>50045</td>
+								<td>
+									<div>
+    The uploaded file is greater than the maximum size allowed.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/06BCC474">GeneralError</a></td>
 								<td>0</td>
 								<td>
@@ -502,12 +512,32 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3D027354">InvalidFileUploaded</a></td>
+								<td>50046</td>
+								<td>
+									<div>
+    The uploaded file is invalid.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B298DD5D">InvalidFormBody</a></td>
 								<td>50035</td>
 								<td>
 									<div>
     Invalid form body (returned for both application/json and multipart/form-data bodies), or invalid
     Content-Type provided.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F556B3B1">Invalid<wbr>Json<wbr>For<wbr>Uploaded<wbr>Lottie<wbr>File</a></td>
+								<td>170001</td>
+								<td>
+									<div>
+    The JSON in the uploaded Lottie-format file was invalid.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -613,6 +643,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/60A8A46A">Lottie<wbr>Animation<wbr>Dimensions<wbr>Exceeded</a></td>
+								<td>170005</td>
+								<td>
+									<div>
+    The maximum dimensions of an animated Lottie sticker has been exceeded.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8C287F6D">Max<wbr>Animated<wbr>Emojis<wbr>Reached</a></td>
 								<td>30018</td>
 								<td>
@@ -708,6 +748,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The maximum number of bans for non-guild members has been exceeded.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/BD166162">Max<wbr>Number<wbr>Of<wbr>Prune<wbr>Requests<wbr>Reached</a></td>
+								<td>30040</td>
+								<td>
+									<div>
+    Maximum number of prune requests has been reached. Try again later.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -973,6 +1023,26 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FC45FFEE">Server<wbr>Monetization<wbr>Required</a></td>
+								<td>50097</td>
+								<td>
+									<div>
+    This server must have monetization enabled to perform this action.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2C8C9DFF">Server<wbr>Unavailable<wbr>In<wbr>Your<wbr>Location</a></td>
+								<td>50095</td>
+								<td>
+									<div>
+    This server is not available in your location.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/1BF7DAC5">SlowMode</a></td>
 								<td>20016</td>
 								<td>
@@ -988,6 +1058,46 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     The stage channel is already open.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FF3F8995">Sticker<wbr>Animation<wbr>Duration<wbr>Too<wbr>Long</a></td>
+								<td>170007</td>
+								<td>
+									<div>
+    The sticker animation is too long (currently max 5 seconds).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/ACB32B18">Sticker<wbr>Frame<wbr>Count<wbr>Exceeded</a></td>
+								<td>170004</td>
+								<td>
+									<div>
+    The maximum number of frames in a sticker has been exceeded (currently 1000).
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/72F4AF2A">Sticker<wbr>Framerate<wbr>Exceeded</a></td>
+								<td>170003</td>
+								<td>
+									<div>
+    The maximum framerate for a sticker has been exceeded.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/04D981CE">Sticker<wbr>Framerate<wbr>Too<wbr>Small<wbr>Or<wbr>Too<wbr>Large</a></td>
+								<td>170006</td>
+								<td>
+									<div>
+    The framerate of the sticker is too small or too large.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1194,6 +1304,26 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/28A26711">Unknown<wbr>Guild<wbr>Scheduled<wbr>Event</a></td>
+								<td>10070</td>
+								<td>
+									<div>
+    Unknown guild scheduled event.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3AAAD7D2">Unknown<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></td>
+								<td>10071</td>
+								<td>
+									<div>
+    Unknown guild scheduled event user.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/37146DDD">UnknownGuildTemplate</a></td>
 								<td>10057</td>
 								<td>
@@ -1279,6 +1409,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     Unknown permission overwrite.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FEA7C66C">Unknown<wbr>Premium<wbr>Server<wbr>Subscription<wbr>Cooldown</a></td>
+								<td>10050</td>
+								<td>
+									<div>
+    Unknown premium server subscription cooldown.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -1374,6 +1514,16 @@ public enum DiscordError</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A2F1B62">UnknownStream</a></td>
+								<td>10049</td>
+								<td>
+									<div>
+    Unknown stream.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F72C287F">UnknownToken</a></td>
 								<td>10012</td>
 								<td>
@@ -1419,6 +1569,16 @@ public enum DiscordError</code></pre>
 								<td>
 									<div>
     You need to verify your account in order to perform this action.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/DEF50461">Uploaded<wbr>Lotties<wbr>Cannot<wbr>Be<wbr>Rasterized</a></td>
+								<td>170002</td>
+								<td>
+									<div>
+    Uploaded Lottie files cannot contain rasterized images such as PNG or JPEG.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

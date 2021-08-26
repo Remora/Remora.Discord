@@ -142,6 +142,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata/C622F86C">ArchiveTimestamp</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata/CB2B0D8C">AutoArchiveDuration</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata/F946C6E2">IsArchived</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata/8CB007DD">IsInvitable</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata/F7B2D691">IsLocked</a></li>
 
 
@@ -165,8 +166,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets a duration in minutes of inactivity after which the thread is automatically archived. Accepted values
-    are, at present, 60, 1440, 4320, and 10080.
+    Gets a time of inactivity after which the thread is automatically archived.
     </div>
 
 		<div class="panel panel-default">
@@ -184,7 +184,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>TimeSpan AutoArchiveDuration { get; }</code></pre>
+	<pre><code>AutoArchiveDuration AutoArchiveDuration { get; }</code></pre>
 
 
 
@@ -201,7 +201,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>TimeSpan</td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration">AutoArchiveDuration</a></td>
 					<td></td>
 				</tr>
 			</tbody></table>

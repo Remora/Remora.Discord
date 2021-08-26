@@ -143,6 +143,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI">Caching<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI">Caching<wbr>Discord<wbr>Rest<wbr>Emoji<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInteractionAPI">Caching<wbr>Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI">Caching<wbr>Discord<wbr>Rest<wbr>Invite<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestOAuth2API">Caching<wbr>Discord<wbr>Rest<wbr>O<wbr>Auth2<wbr>A<wbr>P<wbr>I</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestTemplateAPI">Caching<wbr>Discord<wbr>Rest<wbr>Template<wbr>A<wbr>P<wbr>I</a></li>
@@ -318,7 +319,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI, IDiscordRestEmoji
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/FDDF6EAE">Create<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Stream, <wbr>IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/779404C8">Create<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Stream, <wbr>IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji">IEmoji</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -327,7 +328,7 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI, IDiscordRestEmoji
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/58372A16">Delete<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/F9E71553">Delete<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -345,17 +346,16 @@ public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI, IDiscordRestEmoji
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI/A378ED53">ListGuildEmojisAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/257636FC">ListGuildEmojisAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji">IEmoji</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets a list of emojis for the given guild.
     </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI">DiscordRestEmojiAPI</a></em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/950FE8EC">Modify<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI/41B798E0">Modify<wbr>Guild<wbr>Emoji<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji">IEmoji</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>

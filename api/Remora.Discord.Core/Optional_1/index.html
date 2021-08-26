@@ -141,15 +141,15 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
 		<li role="separator" class="divider"></li>
+			<li class="header">Class Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></li>
 			<li class="header">Interface Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/IOptional">IOptional</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/ITokenStore">ITokenStore</a></li>
 			<li class="header">Struct Types</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional<wbr>&lt;TValue&gt;<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></li>
-			<li class="header">Class Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></li>
 
 
                     </ul>
@@ -223,7 +223,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[PublicAPI, DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
+	<pre><code>[PublicAPI]
 public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre>
 
 
@@ -240,10 +240,6 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 				</thead>
 					<tbody><tr>
 						<td>PublicAPI</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Debugger<wbr>Display<wbr>Attribute</td>
 						<td></td>
 					</tr>
 			</tbody></table>
@@ -357,6 +353,33 @@ public readonly struct Optional&lt;TValue&gt; : ValueType, IOptional</code></pre
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/AB80C2D6">GetHashCode<wbr>()<wbr></a></td>
 								<td>int</td>
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/66F5BEFB">IsDefined<wbr>()<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Determines whether the option has a defined value; that is, whether it both has a value and that value is
+    non-null.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/51C75368">IsDefined<wbr>(TValue?)<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Determines whether the option has a defined value; that is, whether it both has a value and that value is
+    non-null.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1/A88C3550">ToString<wbr>()<wbr></a></td>
+								<td>string</td>
 								<td>
 									<div></div>
 								</td>

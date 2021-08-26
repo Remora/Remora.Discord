@@ -155,6 +155,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/C43863B9">OwnerID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/AFA75069">ParentID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/927DE302">PermissionOverwrites</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/7330D46D">Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/7C2FFC04">Position</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/89D3F9B1">RTCRegion</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel/B243EC0B">RateLimitPerUser</a></li>
@@ -186,8 +187,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the default duration for newly created threads in this channel, in minutes. Can be set to 60, 1440,
-    4320, or 10080.
+    Gets the default duration for newly created threads in this channel.
     </div>
 
 		<div class="panel panel-default">
@@ -205,7 +205,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;TimeSpan&gt; DefaultAutoArchiveDuration { get; }</code></pre>
+	<pre><code>Optional&lt;AutoArchiveDuration&gt; DefaultAutoArchiveDuration { get; }</code></pre>
 
 
 
@@ -222,7 +222,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;TimeSpan&gt;<wbr></td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration">AutoArchiveDuration</a>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
