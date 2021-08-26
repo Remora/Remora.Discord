@@ -210,6 +210,22 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
+            if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
+            {
+                // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
+                // change made to the message object
+                var interval = DateTimeOffset.UtcNow - edited;
+                if (interval >= TimeSpan.FromSeconds(3))
+                {
+                    return Result.FromSuccess();
+                }
+            }
+            else
+            {
+                // No edit means no visible change to the command
+                return Result.FromSuccess();
+            }
+
             var context = new MessageContext
             (
                 channelID,
