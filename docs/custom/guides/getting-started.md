@@ -1,6 +1,4 @@
-Title: Getting Started
-----------------------
-
+# Getting Started
 This guide will walk you through setting up a basic ping-pong bot with
 Remora.Discord, showing you the basic concepts of the library. At the end of the
 tutorial, you should have the tools you need to start diving into more complex
@@ -32,6 +30,7 @@ release).
 
 Opening up the `Program.cs` file, we can start to set up our environment.
 
+## Setting up a gateway client
 Since we're writing a bot that's going to respond to a simple command, we need a
 connection to Discord's realtime gateway. This is facilitated through the
 `DiscordGatewayClient` class, as well as a bot account you'll need to create
@@ -95,6 +94,7 @@ provider we've created.
 var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
 ```
 
+## Connecting to the gateway
 At this point, the gateway client is fully functional, but has not connected to
 the gateway yet. To do this, we call the `RunAsync` method, and pass in the
 cancellation token from the source we created earlier.
@@ -184,6 +184,7 @@ info: Remora.Discord.Gateway.DiscordGatewayClient[0]
       Connected.
 ```
 
+## Creating a Responder
 Now, in its current state, our bot doesn't do much of anything. Sure, it runs
 and connects, but that's no fun! Let's add a simple `Responder` that can - as
 the name suggests - respond to events from Discord's gateway.
@@ -242,6 +243,7 @@ this is the same token that we passed to `RunAsync`, and we should respect it.
 If cancellation has been requested, we should bail out with a failed result as
 soon as we can.
 
+## Adding a command
 Now, our command will be *very* simple, and won't really be much more than a
 direct match against the message contents, but it gets the point across. In the
 future, we'll have a proper command framework available, but that's outside of
@@ -304,6 +306,7 @@ really only interested in the embed and channel parameters right now -
 therefore, we can skip over the other optional parameters and just pass in the
 ones we care about.
 
+## Adding the responder to the gateway client
 With that done, our responder is implemented and ready to go! There's only one
 final thing to do before we can run our bot and see it in action - we need to
 make it available to the gateway client via - say it with me - dependency
@@ -324,6 +327,7 @@ service for all of the `IResponder<T>` interfaces it implements. The responder
 service is a supporting type for event dispatching, and keeps track of which 
 responders are registered for which events.
 
+## Conclusion
 Now, running your bot, going into Discord, and running your command should net
 you the following.
 
