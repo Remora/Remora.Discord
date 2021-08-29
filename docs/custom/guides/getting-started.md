@@ -51,7 +51,7 @@ For simplicity's sake, we'll set up our program to respond to CTRL+C at the
 command line, and terminate the gateway client if it catches that keypress.
 
 ```csharp
-static async Task Main(string[] args)
+static async Task Main()
 {
     var cancellationSource = new CancellationTokenSource();
 
@@ -71,7 +71,7 @@ register and access various types and services from the library.
 var botToken = "YOUR_TOKEN_HERE";
 
 var services = new ServiceCollection()
-    .AddDiscordGateway(() => botToken)
+    .AddDiscordGateway(_ => botToken)
     .BuildServiceProvider();
 ```
 
@@ -117,6 +117,10 @@ contain some additional information about what caused the gateway client to stop
 running.
 
 Let's implement some error handling next.
+
+```csharp
+var log = services.GetRequiredService<ILogger<Program>>();
+```
 
 ```csharp
 if (!runResult.IsSuccess)
@@ -309,10 +313,9 @@ Back in our `Main` method, where we configure our services, we'll make a small
 addition.
 
 ```csharp
-var responderService = new ResponderService();
 var services = new ServiceCollection()
     .AddDiscordGateway(_ => botToken)
-    .AddResponder<PingPongResponder>(responderService)
+    .AddResponder<PingPongResponder>()
     .BuildServiceProvider();
 ```
 
