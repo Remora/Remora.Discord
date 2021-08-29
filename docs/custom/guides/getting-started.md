@@ -327,6 +327,126 @@ service for all of the `IResponder<T>` interfaces it implements. The responder
 service is a supporting type for event dispatching, and keeps track of which 
 responders are registered for which events.
 
+## Example program
+Putting everything together, your program should now look something like this.
+
+```csharp
+using System;
+using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
+using Remora.Discord.Gateway;
+using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Results;
+using Remora.Results;
+
+namespace Remora.Discord.Docs.Custom.Guides.Getting_Started
+{
+    class Program
+    {
+        static async Task Main()
+        {
+            var cancellationSource = new CancellationTokenSource();
+
+            Console.CancelKeyPress += (sender, eventArgs) =>
+            {
+                eventArgs.Cancel = true;
+                cancellationSource.Cancel();
+            };
+
+            var botToken = "YOUR_TOKEN_HERE";
+            // Do not place your bot token in the source code of your program
+            // when you write your real bot. It's a massive security risk,
+            // and is only done here for the sake of this guide. You should store
+            // your token outside of the program in some kind of database or file
+            // (appsettings, plaintext file, etc) that is not directly accessible
+            // from your source code.
+
+            var services = new ServiceCollection()
+                .AddDiscordGateway(_ => botToken)
+                .AddResponder<PingPongResponder>()
+                .BuildServiceProvider();
+
+            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+            var log = services.GetRequiredService<ILogger<Program>>();
+
+            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
+
+            if (!runResult.IsSuccess)
+            {
+                switch (runResult.Error)
+                {
+                    case ExceptionError exe:
+                        {
+                            log.LogError
+                            (
+                                exe.Exception,
+                                "Exception during gateway connection: {ExceptionMessage}",
+                                exe.Message
+                            );
+
+                            break;
+                        }
+                    case GatewayWebSocketError:
+                    case GatewayDiscordError:
+                        {
+                            log.LogError("Gateway error: {Message}", runResult.Error.Message);
+                            break;
+                        }
+                    default:
+                        {
+                            log.LogError("Unknown error: {Message}", runResult.Error.Message);
+                            break;
+                        }
+                }
+            }
+
+            Console.WriteLine("Bye bye");
+        }
+    }
+
+    public class PingPongResponder : IResponder<IMessageCreate>
+    {
+        private readonly IDiscordRestChannelAPI _channelAPI;
+
+        public PingPongResponder(IDiscordRestChannelAPI channelAPI)
+        {
+            _channelAPI = channelAPI;
+        }
+
+        public async Task<Result> RespondAsync
+        (
+            IMessageCreate gatewayEvent,
+            CancellationToken ct = default
+        )
+        {
+            if (gatewayEvent.Content != "!ping")
+            {
+                return Result.FromSuccess();
+            }
+
+            var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
+            var replyResult = await _channelAPI.CreateMessageAsync
+            (
+                gatewayEvent.ChannelID,
+                embeds: new[] { embed },
+                ct: ct
+            );
+
+            return !replyResult.IsSuccess 
+                ? Result.FromError(replyResult) 
+                : Result.FromSuccess();
+        }
+    }
+}
+```
+
 ## Conclusion
 Now, running your bot, going into Discord, and running your command should net
 you the following.
