@@ -323,9 +323,7 @@ var services = new ServiceCollection()
 ```
 
 And that's it! The `AddResponder<T>` method registers the responder as a scoped
-service for all of the `IResponder<T>` interfaces it implements. The responder 
-service is a supporting type for event dispatching, and keeps track of which 
-responders are registered for which events.
+service for all of the `IResponder<T>` interfaces it implements.
 
 ## Example program
 Putting everything together, your program should now look something like this.
