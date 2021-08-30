@@ -114,6 +114,6 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A markdown-formatted block quote string.
         /// </returns>
-        public static string BlockQuote(string text) => $">>> {text}";
+        public static string BlockQuote(string text) => $">>> {text}\n";
     }
 }
