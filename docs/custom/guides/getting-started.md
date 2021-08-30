@@ -1,4 +1,6 @@
-# Getting Started
+Title: Getting Started
+----------------------
+
 This guide will walk you through setting up a basic ping-pong bot with
 Remora.Discord, showing you the basic concepts of the library. At the end of the
 tutorial, you should have the tools you need to start diving into more complex
