@@ -91,7 +91,7 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A markdown-formatted block code string.
         /// </returns>
-        public static string BlockCode(string text) => $"```\n{text}\n```";
+        public static string BlockCode(string text) => BlockCode(text, string.Empty);
 
         /// <summary>
         /// Formats a string to use Markdown Block Code formatting with a specified
