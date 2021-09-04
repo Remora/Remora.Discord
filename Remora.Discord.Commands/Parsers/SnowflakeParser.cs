@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
@@ -41,7 +42,7 @@ namespace Remora.Discord.Commands.Parsers
         {
             return new
             (
-                !Snowflake.TryParse(value, out var snowflake)
+                !Snowflake.TryParse(value.Unmention(), out var snowflake)
                     ? new ParsingError<Snowflake>(value)
                     : snowflake.Value
             );
