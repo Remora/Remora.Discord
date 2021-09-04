@@ -128,7 +128,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// An application command.
         /// </summary>
-        ApplicationCommand = 20,
+        ChatInputCommand = 20,
 
         /// <summary>
         /// A message that starts a thread.
@@ -138,6 +138,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A reminder message about a guild invite.
         /// </summary>
-        GuildInviteReminder = 22
+        GuildInviteReminder = 22,
+
+        /// <summary>
+        /// A context menu command.
+        /// </summary>
+        ContextMenuCommand = 23
     }
 }
