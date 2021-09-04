@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Results
 {
@@ -656,6 +657,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The stage channel is already open.
         /// </summary>
         StageAlreadyOpen = 150006,
+
+        /// <summary>
+        /// The bot can't reply to a message without the <see cref="DiscordPermission.ReadMessageHistory"/> permission.
+        /// </summary>
+        CannotReplyWithoutReadMessageHistory = 160002,
 
         /// <summary>
         /// A thread has already been created for this message.
