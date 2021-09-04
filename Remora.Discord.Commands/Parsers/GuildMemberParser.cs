@@ -58,7 +58,11 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<Result<IGuildMember>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IGuildMember>> TryParseAsync
+        (
+            string value,
+            CancellationToken ct = default
+        )
         {
             if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
             {

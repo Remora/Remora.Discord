@@ -60,7 +60,7 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<Result<IRole>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
         {
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)

@@ -37,7 +37,7 @@ namespace Remora.Discord.Commands.Parsers
     public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         /// <inheritdoc />
-        public override ValueTask<Result<Snowflake>> TryParse(string value, CancellationToken ct)
+        public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
         {
             return new
             (
