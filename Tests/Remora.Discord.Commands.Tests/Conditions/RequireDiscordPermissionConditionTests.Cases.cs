@@ -21,10 +21,6 @@
 //
 
 using System.Collections.Generic;
-using Moq;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
 
 namespace Remora.Discord.Commands.Tests.Conditions
 {
@@ -57,15 +53,6 @@ namespace Remora.Discord.Commands.Tests.Conditions
                     yield return notCase;
                 }
             }
-        }
-
-        private static IRole CreateRole(Snowflake roleId, params DiscordPermission[] permissions)
-        {
-            var roleMock = new Mock<IRole>();
-            roleMock.Setup(r => r.ID).Returns(roleId);
-            roleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(permissions));
-
-            return roleMock.Object;
         }
     }
 }
