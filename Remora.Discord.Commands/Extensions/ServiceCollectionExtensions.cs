@@ -27,7 +27,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
@@ -35,7 +34,6 @@ using Remora.Discord.Commands.Feedback.Themes;
 using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Extensions.Options.Immutable;
 
