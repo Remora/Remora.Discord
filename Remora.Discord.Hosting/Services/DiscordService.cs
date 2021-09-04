@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -38,16 +39,24 @@ namespace Remora.Discord.Hosting.Services
     public class DiscordService : BackgroundService
     {
         private readonly DiscordGatewayClient _gatewayClient;
+        private readonly IHostApplicationLifetime _lifetime;
         private readonly ILogger<DiscordService> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordService"/> class.
         /// </summary>
         /// <param name="gatewayClient">The gateway client.</param>
+        /// <param name="lifetime">The application lifetime.</param>
         /// <param name="logger">The <see cref="ILogger"/>.</param>
-        public DiscordService(DiscordGatewayClient gatewayClient, ILogger<DiscordService> logger)
+        public DiscordService
+        (
+            DiscordGatewayClient gatewayClient,
+            IHostApplicationLifetime lifetime,
+            ILogger<DiscordService> logger
+        )
         {
             _gatewayClient = gatewayClient;
+            _lifetime = lifetime;
             _logger = logger;
         }
 
@@ -62,6 +71,12 @@ namespace Remora.Discord.Hosting.Services
                 {
                     case ExceptionError exe:
                     {
+                        if (exe.Exception is OperationCanceledException)
+                        {
+                            // No need for further cleanup
+                            return;
+                        }
+
                         _logger.LogError
                         (
                             exe.Exception,
@@ -73,6 +88,7 @@ namespace Remora.Discord.Hosting.Services
                     }
                     case GatewayWebSocketError:
                     case GatewayDiscordError:
+                    case GatewayError:
                     {
                         _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
                         break;
@@ -83,6 +99,8 @@ namespace Remora.Discord.Hosting.Services
                         break;
                     }
                 }
+
+                _lifetime.StopApplication();
             }
         }
     }

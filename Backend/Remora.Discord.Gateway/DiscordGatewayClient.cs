@@ -365,7 +365,13 @@ namespace Remora.Discord.Gateway
                 case GatewayError gae:
                 {
                     // We'll try reconnecting on non-critical internal errors
-                    return !gae.IsCritical;
+                    if (!gae.IsCritical)
+                    {
+                        return true;
+                    }
+
+                    shouldTerminate = true;
+                    return false;
                 }
                 case ExceptionError exe:
                 {
