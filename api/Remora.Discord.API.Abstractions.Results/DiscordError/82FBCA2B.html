@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordError.UnknownStoreListing Field</title>
+        <title>Remora.Discord Documentation - API - DiscordError.CannotReplyWithoutReadMessageHistory Field</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -148,7 +148,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/DDD446CD">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>Channel<wbr>Type</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/E5881875">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>D<wbr>M<wbr>Channel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/280D69AE">Cannot<wbr>Execute<wbr>Action<wbr>On<wbr>System<wbr>Message</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/82FBCA2B">Cannot<wbr>Reply<wbr>Without<wbr>Read<wbr>Message<wbr>History</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/82FBCA2B">Cannot<wbr>Reply<wbr>Without<wbr>Read<wbr>Message<wbr>History</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/205B1C39">CannotSelfRedeemGift</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/2AFCB810">Cannot<wbr>Send<wbr>Empty<wbr>Message</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/FCE3E234">Cannot<wbr>Send<wbr>Message<wbr>To<wbr>User</a></li>
@@ -265,7 +265,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B8347EB2">UnknownStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3DFBAB7B">UnknownSticker</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/56BDB0C4">Unknown<wbr>Store<wbr>Directory<wbr>Layout</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C95D8872">UnknownStoreListing</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/C95D8872">UnknownStoreListing</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A2F1B62">UnknownStream</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F72C287F">UnknownToken</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3CA99BFD">UnknownUser</a></li>
@@ -291,14 +291,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a>.</h3>
-	<h1>UnknownStoreListing <small>Field</small></h1>
+	<h1>Cannot<wbr>Reply<wbr>Without<wbr>Read<wbr>Message<wbr>History <small>Field</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Unknown store listing.
+    The bot can't reply to a message without the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/09D2EB90">ReadMessageHistory</a></code> permission.
     </div>
 
 		<div class="panel panel-default">
@@ -315,7 +315,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>UnknownStoreListing</code></pre>
+	<pre><code>CannotReplyWithoutReadMessageHistory</code></pre>
 
 
 
@@ -332,7 +332,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>10028</td>
+					<td>160002</td>
 					<td>Int32</td>
 				</tr>
 			</tbody></table>

@@ -145,10 +145,10 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/C9A1C7A6">GetEntryOptions<wbr>&lt;T&gt;<wbr><wbr>()<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/EAFE460E">Get<wbr>Sliding<wbr>Expiration<wbr>Or<wbr>Default<wbr>&lt;T&gt;<wbr><wbr>(TimeSpan?)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/E3F42467">Get<wbr>Sliding<wbr>Expiration<wbr>Or<wbr>Default<wbr>(Type, <wbr>TimeSpan?)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/02FEB32D">Set<wbr>Absolute<wbr>Expiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/75DE2F0F">Set<wbr>Default<wbr>Absolute<wbr>Expiration<wbr>(TimeSpan)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/EF9CE483">Set<wbr>Default<wbr>Sliding<wbr>Expiration<wbr>(TimeSpan)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/865A849B">SetSlidingExpiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/CAAFEC33">Set<wbr>Absolute<wbr>Expiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan?)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/EA1CEF03">Set<wbr>Default<wbr>Absolute<wbr>Expiration<wbr>(TimeSpan?)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/4811CEC6">Set<wbr>Default<wbr>Sliding<wbr>Expiration<wbr>(TimeSpan?)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings/C8D75AE2">SetSlidingExpiration<wbr>&lt;TCachedType&gt;<wbr><wbr>(TimeSpan?)<wbr></a></li>
 
 
                     </ul>
@@ -189,7 +189,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public TimeSpan GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)</code></pre>
+	<pre><code>public TimeSpan? GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)</code></pre>
 
 
 
@@ -231,7 +231,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>TimeSpan</td>
+					<td>TimeSpan?</td>
 					<td>The absolute expiration time.</td>
 				</tr>
 			</tbody></table>
