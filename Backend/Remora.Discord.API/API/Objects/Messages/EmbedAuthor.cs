@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record EmbedAuthor
     (
-        Optional<string> Name = default,
+        string Name,
         Optional<string> Url = default,
         Optional<string> IconUrl = default,
         Optional<string> ProxyIconUrl = default
