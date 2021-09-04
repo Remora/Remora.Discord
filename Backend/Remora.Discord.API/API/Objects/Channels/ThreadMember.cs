@@ -36,7 +36,7 @@ namespace Remora.Discord.API.Objects
         DateTimeOffset JoinTimestamp,
         ThreadMemberFlags Flags,
         Optional<IGuildMember> Member = default,
-        Optional<IPartialPresence> Presence = default
+        Optional<IPartialPresence?> Presence = default
     )
     : IThreadMember;
 }
