@@ -337,9 +337,6 @@ namespace Remora.Discord.API.Extensions
 
             // Interactions
             options.AddDataObjectConverter<IInteractionCreate, InteractionCreate>();
-            options.AddDataObjectConverter<IApplicationCommandCreate, ApplicationCommandCreate>();
-            options.AddDataObjectConverter<IApplicationCommandUpdate, ApplicationCommandUpdate>();
-            options.AddDataObjectConverter<IApplicationCommandDelete, ApplicationCommandDelete>();
 
             // Integrations
             options.AddDataObjectConverter<IIntegrationCreate, IntegrationCreate>()
