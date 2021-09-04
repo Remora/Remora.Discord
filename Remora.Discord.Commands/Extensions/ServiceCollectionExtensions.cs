@@ -121,7 +121,8 @@ namespace Remora.Discord.Commands.Extensions
                 .AddParser<RoleParser>()
                 .AddParser<UserParser>()
                 .AddParser<SnowflakeParser>()
-                .AddParser<EmojiParser>();
+                .AddParser<EmojiParser>()
+                .AddParser<OneOfParser>();
 
             serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
 
