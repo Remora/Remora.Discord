@@ -86,7 +86,7 @@ namespace Remora.Discord.Commands.Parsers
         {
             var unionTypes = type.GetGenericArguments();
 
-            var errors = new List<IResultError>();
+            var errors = new List<IResult>();
             for (var i = 0; i < unionTypes.Length; i++)
             {
                 var unionType = unionTypes[i];
@@ -95,7 +95,7 @@ namespace Remora.Discord.Commands.Parsers
                 var tryParse = await _typeParserService.TryParseAsync(_services, token, unionType, ct);
                 if (!tryParse.IsSuccess)
                 {
-                    errors.Add(tryParse.Error);
+                    errors.Add(tryParse);
                     continue;
                 }
 
