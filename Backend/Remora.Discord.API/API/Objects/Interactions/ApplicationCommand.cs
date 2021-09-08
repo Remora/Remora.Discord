@@ -39,8 +39,9 @@ namespace Remora.Discord.API.Objects
         Optional<Snowflake> GuildID,
         string Name,
         string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
+        Optional<IReadOnlyList<IApplicationCommandOption>> Options,
+        Optional<bool> DefaultPermission,
+        Snowflake Version
     )
     : IApplicationCommand;
 }
