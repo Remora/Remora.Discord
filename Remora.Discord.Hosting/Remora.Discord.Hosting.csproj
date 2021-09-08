@@ -5,15 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.0</Version>
+        <Version>3.1.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            Add a way to disable application termination.
-            Properly signal termination on critical errors.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
