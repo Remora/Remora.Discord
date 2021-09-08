@@ -5,14 +5,13 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>10.0.1</Version>
+        <Version>10.0.2</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement a OneOf parser.
             Update Remora.Commands.
         </PackageReleaseNotes>
     </PropertyGroup>

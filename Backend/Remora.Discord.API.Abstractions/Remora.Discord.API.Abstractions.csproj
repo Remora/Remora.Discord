@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>33.0.0</Version>
+        <Version>34.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,11 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Fix fields being incorrectly marked as optional.
-            Update the message types.
-            Remove unintentionally documented events. Shame, though.
-            Add a new error code.
-            Fix property nullability.
+            Correct the error model.
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.4</Version>
+        <Version>4.0.5</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Properly signal termination on critical errors.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
