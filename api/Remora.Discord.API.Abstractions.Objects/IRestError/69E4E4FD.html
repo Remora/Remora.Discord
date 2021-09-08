@@ -182,7 +182,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;IReadOnlyDictionary&lt;string, IPropertyErrorDetails&gt;&gt; Errors { get; }</code></pre>
+	<pre><code>Optional&lt;IReadOnlyDictionary&lt;string, OneOf&lt;IPropertyErrorDetails, IReadOnlyList&lt;IErrorDetails&gt;&gt;&gt;&gt; Errors { get; }</code></pre>
 
 
 
@@ -199,7 +199,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyDictionary<wbr>&lt;string, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPropertyErrorDetails">I<wbr>Property<wbr>Error<wbr>Details</a>&gt;<wbr>&gt;<wbr></td>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyDictionary<wbr>&lt;string, <wbr>OneOf<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPropertyErrorDetails">I<wbr>Property<wbr>Error<wbr>Details</a>, <wbr>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IErrorDetails">IErrorDetails</a>&gt;<wbr>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>

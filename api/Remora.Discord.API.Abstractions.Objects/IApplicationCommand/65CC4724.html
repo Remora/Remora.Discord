@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - ITokenStore Interface</title>
+        <title>Remora.Discord Documentation - API - IApplicationCommand.Version Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Attributes">Attributes</a></p>
-<p><a href="#Properties">Properties</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,17 +134,20 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand">IApplicationCommand</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Interface Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/IOptional">IOptional</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Core/ITokenStore">ITokenStore</a></li>
-			<li class="header">Struct Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional<wbr>&lt;TValue&gt;<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></li>
-			<li class="header">Class Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/15A2EFFB">ApplicationID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/A0225641">DefaultPermission</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/E12C0C2C">Description</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/7F61CFE9">GuildID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/9116AE00">ID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/D4208D93">Name</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/21E56E4B">Options</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/FB097041">Type</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/65CC4724">Version</a></li>
 
 
                     </ul>
@@ -160,57 +162,39 @@
 
 
 <section class="content-header">
-	<h1>ITokenStore <small>Interface</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand">IApplicationCommand</a>.</h3>
+	<h1>Version <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents a storage class for a single token.
+    Gets a value that increments on substantial changes.
     </div>
 
 		<div class="panel panel-default">
   			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-6">
-						<dl class="dl-horizontal">		
-
-								<dt>Namespace</dt>
-								<dd><a href="/Remora.Discord/api/Remora.Discord.Core">Remora<wbr>.Discord<wbr>.Core</a></dd>
-											
-							
-							
-							
-								<dt>Implementing Types</dt>
-								<dd>
-									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></li>								
-									</ul>
-								</dd>				
-						</dl>
-					</div>		
-					<div class="col-md-6">
-						<div class="mermaid">
-							graph BT
-	Type["ITokenStore"]
-class Type type-node
-	Implementing0["TokenStore"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Core/TokenStore"
-
-						</div>
-					</div>
-				</div>
+				<dl class="dl-horizontal">	
+						
+						<dt>Namespace</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand">IApplicationCommand</a></dd>		
+					
+				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[PublicAPI]
-public interface ITokenStore</code></pre>
+	<pre><code>Snowflake Version { get; }</code></pre>
 
 
 
-	<h1 id="Attributes">Attributes</h1>
+
+
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -220,46 +204,13 @@ public interface ITokenStore</code></pre>
 						<th>Description</th>
 					</tr>
 				</thead>
-					<tbody><tr>
-						<td>PublicAPI</td>
-						<td></td>
-					</tr>
+				<tbody><tr>
+					<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+					<td></td>
+				</tr>
 			</tbody></table>
 		</div>
 	</div>	
-
-
-
-
-
-
-
-			<h1 id="Properties">Properties</h1>
-			<div class="box">
-				<div class="box-body no-padding table-responsive">
-					<table class="table table-striped table-hover three-cols">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Value</th>
-								<th>Summary</th>
-							</tr>
-						</thead>
-							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/ITokenStore/3B5154BD">Token</a></td>
-								<td>string</td>
-								<td>
-									<div>
-    Gets the token.
-    </div>
-								</td>
-							</tr>
-					</tbody></table>
-				</div>
-			</div>
-		
-
-
 
 
 	
