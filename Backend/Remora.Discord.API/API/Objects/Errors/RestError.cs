@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
@@ -35,7 +36,7 @@ namespace Remora.Discord.API.Objects
     public record RestError
     (
         DiscordError Code,
-        Optional<IReadOnlyDictionary<string, IPropertyErrorDetails>> Errors,
+        Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors,
         string Message
     ) : IRestError;
 }
