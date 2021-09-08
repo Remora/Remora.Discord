@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Discord.Core;
 
@@ -41,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the per-property error details.
         /// </summary>
-        Optional<IReadOnlyDictionary<string, IPropertyErrorDetails>> Errors { get; }
+        Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors { get; }
 
         /// <summary>
         /// Gets a descriptive error message.
