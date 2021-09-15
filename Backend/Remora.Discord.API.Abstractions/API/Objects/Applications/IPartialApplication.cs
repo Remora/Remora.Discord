@@ -32,94 +32,58 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialApplication
     {
-        /// <summary>
-        /// Gets the application ID.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the application.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Name" />
         Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the icon hash of the application.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Icon" />
         Optional<IImageHash?> Icon { get; }
 
-        /// <summary>
-        /// Gets the description of the application.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Description" />
         Optional<string> Description { get; }
 
-        /// <summary>
-        /// Gets a list of RPC origin URLs.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.RPCOrigins" />
         Optional<IReadOnlyList<string>> RPCOrigins { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the bot is a public bot.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.IsBotPublic" />
         Optional<bool> IsBotPublic { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the bot will only join upon completion of a full OAuth2 flow.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.DoesBotRequireCodeGrant" />
         Optional<bool> DoesBotRequireCodeGrant { get; }
 
-        /// <summary>
-        /// Gets the URL to the application's terms of service.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.TermsOfServiceURL" />
         Optional<string> TermsOfServiceURL { get; }
 
-        /// <summary>
-        /// Gets the URL to the application's privacy policy.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.PrivacyPolicyURL" />
         Optional<string> PrivacyPolicyURL { get; }
 
-        /// <summary>
-        /// Gets the user information of the application owner.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Owner" />
         Optional<IPartialUser?> Owner { get; }
 
-        /// <summary>
-        /// Gets the summary of the game, if the application is a game sold on the Discord storefront.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Summary" />
         Optional<string> Summary { get; }
 
-        /// <summary>
-        /// Gets the base64-encoded key for GameSDK's GetTicket function.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.VerifyKey" />
         Optional<string> VerifyKey { get; }
 
-        /// <summary>
-        /// Gets the team the application belongs to, if any.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Team" />
         Optional<ITeam?> Team { get; }
 
-        /// <summary>
-        /// Gets the guild the game is linked to, if the application is a game sold on the Discord storefront.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the primary SKU ID of the game, if the application is a game sold on the Discord storefront.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.PrimarySKUID" />
         Optional<Snowflake> PrimarySKUID { get; }
 
-        /// <summary>
-        /// Gets the URL slug that links to the store page, if the application is a game sold on the Discord storefront.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Slug" />
         Optional<string> Slug { get; }
 
-        /// <summary>
-        /// Gets the cover image, if the application is a game sold on the Discord storefront.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.CoverImage" />
         Optional<IImageHash> CoverImage { get; }
 
-        /// <summary>
-        /// Gets the application's public flags.
-        /// </summary>
+        /// <inheritdoc cref="IApplication.Flags" />
         Optional<int> Flags { get; }
     }
 }

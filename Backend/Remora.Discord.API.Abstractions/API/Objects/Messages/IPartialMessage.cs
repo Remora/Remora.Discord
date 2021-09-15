@@ -33,165 +33,94 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialMessage
     {
-        /// <summary>
-        /// Gets the message ID.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel the message was sent in.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.ChannelID" />
         Optional<Snowflake> ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the message was sent in.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the author of the message. This author is not guaranteed to be a valid user; in the case of a webhook
-        /// message, the object corresponds to the webhook's ID, username, and avatar - this is the case when
-        /// <see cref="WebhookID"/> contains a valid value.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Author" />
         Optional<IUser> Author { get; }
 
-        /// <summary>
-        /// Gets the member properties for the author. The member object exists in MESSAGE_CREATE and
-        /// MESSAGE_UPDATE events from text-based guild channels. This allows bots to obtain real-time member data
-        /// without requiring bots to keep member state in memory.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Member" />
         Optional<IPartialGuildMember> Member { get; }
 
-        /// <summary>
-        /// Gets the contents of the message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Content" />
         Optional<string> Content { get; }
 
-        /// <summary>
-        /// Gets the time when the messages was sent.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Timestamp" />
         Optional<DateTimeOffset> Timestamp { get; }
 
-        /// <summary>
-        /// Gets the time when the message was last edited.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.EditedTimestamp" />
         Optional<DateTimeOffset?> EditedTimestamp { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this was a TTS message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.IsTTS" />
         Optional<bool> IsTTS { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this message mentions everyone.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.MentionsEveryone" />
         Optional<bool> MentionsEveryone { get; }
 
-        /// <summary>
-        /// Gets a list of users mentioned in the message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Mentions" />
         Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 
-        /// <summary>
-        /// Gets a list of mentioned roles.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.MentionedRoles" />
         Optional<IReadOnlyList<Snowflake>> MentionedRoles { get; }
 
-        /// <summary>
-        /// Gets a list of channel mentions.
-        /// <remarks>
-        /// Not all channel mentions in a message will appear in mention_channels. Only
-        /// textual channels that are visible to everyone in a lurkable guild will ever be included. Only crossposted
-        /// messages (via Channel Following) currently include mention_channels at all. If no mentions in the message
-        /// meet these requirements, this field will not be sent.
-        /// </remarks>
-        /// </summary>
+        /// <inheritdoc cref="IMessage.MentionedChannels" />
         Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
 
-        /// <summary>
-        /// Gets a list of attached files.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Attachments" />
         Optional<IReadOnlyList<IAttachment>> Attachments { get; }
 
-        /// <summary>
-        /// Gets a list of embeds.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Embeds" />
         Optional<IReadOnlyList<IEmbed>> Embeds { get; }
 
-        /// <summary>
-        /// Gets an array of reaction objects.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Reactions" />
         Optional<IReadOnlyList<IReaction>> Reactions { get; }
 
-        /// <summary>
-        /// Gets a nonce, used for validating a message was sent. Technically, this can be either an integer or a
-        /// string.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Nonce" />
         Optional<string> Nonce { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the messages is pinned.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.IsPinned" />
         Optional<bool> IsPinned { get; }
 
-        /// <summary>
-        /// Gets the ID of the webhook that sent this message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.WebhookID" />
         Optional<Snowflake> WebhookID { get; }
 
-        /// <summary>
-        /// Gets the message type.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Type" />
         Optional<MessageType> Type { get; }
 
-        /// <summary>
-        /// Gets the activity the message belongs to. Sent with rich presence-related chat embeds.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Activity" />
         Optional<IMessageActivity> Activity { get; }
 
-        /// <summary>
-        /// Gets the application the message belongs to. Sent with rich presence-related chat embeds.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Application" />
         Optional<IPartialApplication> Application { get; }
 
-        /// <summary>
-        /// Gets the ID of the application the message's interaction belongs to. Sent with interactions.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.ApplicationID" />
         Optional<Snowflake> ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the message reference. Sent with cross-posted messages.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.MessageReference" />
         Optional<IMessageReference> MessageReference { get;  }
 
-        /// <summary>
-        /// Gets a set of bitwise flags describing extra features of the message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Flags" />
         Optional<MessageFlags> Flags { get; }
 
-        /// <summary>
-        /// Gets the referenced message, if any. A null value in this context refers to a deleted message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.ReferencedMessage" />
         Optional<IMessage?> ReferencedMessage { get; }
 
-        /// <summary>
-        /// Gets the interaction associated with this message, if any.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Interaction" />
         Optional<IMessageInteraction> Interaction { get; }
 
-        /// <summary>
-        /// Gets the thread that was started from this message, if any.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Thread" />
         Optional<IChannel> Thread { get; }
 
-        /// <summary>
-        /// Gets the components in the message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.Components" />
         Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
-        /// <summary>
-        /// Gets the stickers sent with the message.
-        /// </summary>
+        /// <inheritdoc cref="IMessage.StickerItems" />
         Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
     }
 }

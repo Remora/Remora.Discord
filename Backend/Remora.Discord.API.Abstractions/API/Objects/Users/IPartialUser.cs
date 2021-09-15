@@ -32,80 +32,49 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialUser
     {
-        /// <summary>
-        /// Gets the ID of the user.
-        /// </summary>
+        /// <inheritdoc cref="IUser.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the username of the user. This is not a unique value.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Username" />
         Optional<string> Username { get; }
 
-        /// <summary>
-        /// Gets the user's 4-digit discord tag.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Discriminator" />
         Optional<ushort> Discriminator { get; }
 
-        /// <summary>
-        /// Gets the user's avatar hash.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Avatar" />
         Optional<IImageHash?> Avatar { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is a bot, belonging to an OAuth2 application.
-        /// </summary>
+        /// <inheritdoc cref="IUser.IsBot" />
         Optional<bool> IsBot { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is an official Discord system user (part of the urgent message
-        /// system).
-        /// </summary>
+        /// <inheritdoc cref="IUser.IsSystem" />
         Optional<bool> IsSystem { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user has multi-factor authentication enabled on their account.
-        /// </summary>
+        /// <inheritdoc cref="IUser.IsMFAEnabled" />
         Optional<bool> IsMFAEnabled { get; }
 
-        /// <summary>
-        /// Gets the user's banner.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Banner" />
         Optional<IImageHash?> Banner { get; }
 
-        /// <summary>
-        /// Gets the user's banner colour.
-        /// </summary>
+        /// <inheritdoc cref="IUser.AccentColour" />
         Optional<Color?> AccentColour { get; }
 
-        /// <summary>
-        /// Gets the user's chosen language option.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Locale" />
         Optional<string> Locale { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the email on the account has been verified.
-        /// </summary>
+        /// <inheritdoc cref="IUser.IsVerified" />
         Optional<bool> IsVerified { get; }
 
-        /// <summary>
-        /// Gets the user's email address.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Email" />
         Optional<string?> Email { get; }
 
-        /// <summary>
-        /// Gets the flags on the user's account.
-        /// </summary>
+        /// <inheritdoc cref="IUser.Flags" />
         Optional<UserFlags> Flags { get; }
 
-        /// <summary>
-        /// Gets the user's premium status.
-        /// </summary>
+        /// <inheritdoc cref="IUser.PremiumType" />
         Optional<PremiumType> PremiumType { get; }
 
-        /// <summary>
-        /// Gets the flags on a user's account.
-        /// </summary>
+        /// <inheritdoc cref="IUser.PublicFlags" />
         Optional<UserFlags> PublicFlags { get; }
     }
 }
