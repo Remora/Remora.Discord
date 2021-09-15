@@ -52,7 +52,8 @@ namespace Remora.Discord.API.Abstractions.Objects
         string? Description { get; }
 
         /// <summary>
-        /// Gets one or more comma-separated unicode emojis representing the sticker's expression.
+        /// Gets the autocomplete/suggestion tags for the sticker. By convention, this tends to be a comma-separated
+        /// list.
         /// </summary>
         string Tags { get; }
 
