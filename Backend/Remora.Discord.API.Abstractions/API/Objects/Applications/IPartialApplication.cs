@@ -84,6 +84,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IImageHash> CoverImage { get; }
 
         /// <inheritdoc cref="IApplication.Flags" />
-        Optional<int> Flags { get; }
+        Optional<ApplicationFlags> Flags { get; }
     }
 }
