@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>34.0.0</Version>
+        <Version>35.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,10 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Correct the error model.
+            Fix type of application flags.
+            Improve partial object documentation.
+            Document new permission.
+            Add new documented error code.
         </PackageReleaseNotes>
     </PropertyGroup>
 

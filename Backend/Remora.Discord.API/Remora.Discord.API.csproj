@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>31.0.0</Version>
+        <Version>32.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,10 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Correct the error model.
+            Fix type of application flags.
+            Improve partial object documentation.
+            Document new permission.
+            Add new documented error code.
         </PackageReleaseNotes>
     </PropertyGroup>
 

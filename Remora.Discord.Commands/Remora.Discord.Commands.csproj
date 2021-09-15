@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>10.0.2</Version>
+        <Version>10.0.3</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update Remora.Commands.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
