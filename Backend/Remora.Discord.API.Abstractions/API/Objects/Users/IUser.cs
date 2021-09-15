@@ -118,7 +118,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<ushort> IPartialUser.Discriminator => this.Discriminator;
 
         /// <inheritdoc/>
-        Optional<IImageHash?> IPartialUser.Avatar => throw new System.NotImplementedException();
+        Optional<IImageHash?> IPartialUser.Avatar => new(this.Avatar);
 
         /// <inheritdoc/>
         Optional<bool> IPartialUser.IsBot => this.IsBot;

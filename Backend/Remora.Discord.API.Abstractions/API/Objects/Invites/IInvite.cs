@@ -94,7 +94,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialGuild> IPartialInvite.Guild => this.Guild;
 
         /// <inheritdoc/>
-        Optional<IPartialChannel> IPartialInvite.Channel => throw new NotImplementedException();
+        Optional<IPartialChannel> IPartialInvite.Channel => new(this.Channel);
 
         /// <inheritdoc/>
         Optional<IUser> IPartialInvite.Inviter => this.Inviter;

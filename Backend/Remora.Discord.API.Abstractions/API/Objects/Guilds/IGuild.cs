@@ -282,13 +282,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<string> IPartialGuild.Name => this.Name;
 
         /// <inheritdoc/>
-        Optional<IImageHash?> IPartialGuild.Icon => throw new NotImplementedException();
+        Optional<IImageHash?> IPartialGuild.Icon => new(this.Icon);
 
         /// <inheritdoc/>
-        Optional<IImageHash?> IPartialGuild.Splash => throw new NotImplementedException();
+        Optional<IImageHash?> IPartialGuild.Splash => new(this.Splash);
 
         /// <inheritdoc/>
-        Optional<IImageHash?> IPartialGuild.DiscoverySplash => throw new NotImplementedException();
+        Optional<IImageHash?> IPartialGuild.DiscoverySplash => new(this.DiscoverySplash);
 
         /// <inheritdoc/>
         Optional<bool> IPartialGuild.IsOwner => this.IsOwner;
@@ -315,13 +315,13 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<ExplicitContentFilterLevel> IPartialGuild.ExplicitContentFilter => this.ExplicitContentFilter;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IRole>> IPartialGuild.Roles => throw new NotImplementedException();
+        Optional<IReadOnlyList<IRole>> IPartialGuild.Roles => new(this.Roles);
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IEmoji>> IPartialGuild.Emojis => throw new NotImplementedException();
+        Optional<IReadOnlyList<IEmoji>> IPartialGuild.Emojis => new(this.Emojis);
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<GuildFeature>> IPartialGuild.GuildFeatures => throw new NotImplementedException();
+        Optional<IReadOnlyList<GuildFeature>> IPartialGuild.GuildFeatures => new(this.GuildFeatures);
 
         /// <inheritdoc/>
         Optional<MultiFactorAuthenticationLevel> IPartialGuild.MFALevel => this.MFALevel;
@@ -384,7 +384,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<string?> IPartialGuild.Description => this.Description;
 
         /// <inheritdoc/>
-        Optional<IImageHash?> IPartialGuild.Banner => throw new NotImplementedException();
+        Optional<IImageHash?> IPartialGuild.Banner => new(this.Banner);
 
         /// <inheritdoc/>
         Optional<PremiumTier> IPartialGuild.PremiumTier => this.PremiumTier;

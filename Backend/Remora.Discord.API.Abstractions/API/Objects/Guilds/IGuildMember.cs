@@ -85,7 +85,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<string?> IPartialGuildMember.Nickname => this.Nickname;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<Snowflake>> IPartialGuildMember.Roles => throw new NotImplementedException();
+        Optional<IReadOnlyList<Snowflake>> IPartialGuildMember.Roles => new(this.Roles);
 
         /// <inheritdoc/>
         Optional<DateTimeOffset> IPartialGuildMember.JoinedAt => this.JoinedAt;

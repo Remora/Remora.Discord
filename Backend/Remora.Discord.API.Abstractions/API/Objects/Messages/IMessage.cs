@@ -204,7 +204,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<Snowflake> IPartialMessage.GuildID => this.GuildID;
 
         /// <inheritdoc/>
-        Optional<IUser> IPartialMessage.Author => throw new NotImplementedException();
+        Optional<IUser> IPartialMessage.Author => new(this.Author);
 
         /// <inheritdoc/>
         Optional<IPartialGuildMember> IPartialMessage.Member => this.Member;
@@ -225,19 +225,19 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<bool> IPartialMessage.MentionsEveryone => this.MentionsEveryone;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IUserMention>> IPartialMessage.Mentions => throw new NotImplementedException();
+        Optional<IReadOnlyList<IUserMention>> IPartialMessage.Mentions => new(this.Mentions);
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<Snowflake>> IPartialMessage.MentionedRoles => throw new NotImplementedException();
+        Optional<IReadOnlyList<Snowflake>> IPartialMessage.MentionedRoles => new(this.MentionedRoles);
 
         /// <inheritdoc/>
         Optional<IReadOnlyList<IChannelMention>> IPartialMessage.MentionedChannels => this.MentionedChannels;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IAttachment>> IPartialMessage.Attachments => throw new NotImplementedException();
+        Optional<IReadOnlyList<IAttachment>> IPartialMessage.Attachments => new(this.Attachments);
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IEmbed>> IPartialMessage.Embeds => throw new NotImplementedException();
+        Optional<IReadOnlyList<IEmbed>> IPartialMessage.Embeds => new(this.Embeds);
 
         /// <inheritdoc/>
         Optional<IReadOnlyList<IReaction>> IPartialMessage.Reactions => this.Reactions;

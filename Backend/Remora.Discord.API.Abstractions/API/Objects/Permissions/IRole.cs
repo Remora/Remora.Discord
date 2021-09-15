@@ -93,7 +93,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<int> IPartialRole.Position => this.Position;
 
         /// <inheritdoc/>
-        Optional<IDiscordPermissionSet> IPartialRole.Permissions => throw new System.NotImplementedException();
+        Optional<IDiscordPermissionSet> IPartialRole.Permissions => new(this.Permissions);
 
         /// <inheritdoc/>
         Optional<bool> IPartialRole.IsManaged => this.IsManaged;

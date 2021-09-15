@@ -138,7 +138,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IUser> IPartialIntegration.User => this.User;
 
         /// <inheritdoc/>
-        Optional<IAccount> IPartialIntegration.Account => throw new NotImplementedException();
+        Optional<IAccount> IPartialIntegration.Account => new(this.Account);
 
         /// <inheritdoc/>
         Optional<DateTimeOffset> IPartialIntegration.SyncedAt => this.SyncedAt;

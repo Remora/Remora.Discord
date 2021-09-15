@@ -62,6 +62,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<Snowflake> IPartialGuildApplicationCommandPermissions.GuildID => this.GuildID;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IApplicationCommandPermissions>> IPartialGuildApplicationCommandPermissions.Permissions => throw new System.NotImplementedException();
+        Optional<IReadOnlyList<IApplicationCommandPermissions>> IPartialGuildApplicationCommandPermissions.Permissions
+            => new(this.Permissions);
     }
 }

@@ -58,7 +58,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         new IClientStatuses ClientStatus { get; }
 
         /// <inheritdoc/>
-        Optional<IPartialUser> IPartialPresence.User => throw new System.NotImplementedException();
+        Optional<IPartialUser> IPartialPresence.User => new(this.User);
 
         /// <inheritdoc/>
         Optional<Snowflake> IPartialPresence.GuildID => this.GuildID;
@@ -67,9 +67,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<ClientStatus> IPartialPresence.Status => this.Status;
 
         /// <inheritdoc/>
-        Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => throw new System.NotImplementedException();
+        Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => new(this.Activities);
 
         /// <inheritdoc/>
-        Optional<IClientStatuses> IPartialPresence.ClientStatus => throw new System.NotImplementedException();
+        Optional<IClientStatuses> IPartialPresence.ClientStatus => new(this.ClientStatus);
     }
 }
