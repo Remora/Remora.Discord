@@ -216,6 +216,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows the user to use stickers from other servers.
         /// </summary>
-        UseExternalStickers = 37
+        UseExternalStickers = 37,
+
+        /// <summary>
+        /// Allows for launching activities in a voice channel.
+        /// </summary>
+        StartEmbeddedActivities = 39
     }
 }
