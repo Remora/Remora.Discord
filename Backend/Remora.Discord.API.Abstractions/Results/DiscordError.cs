@@ -387,6 +387,11 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxNumberOfPruneRequestsReached = 30040,
 
         /// <summary>
+        /// Maximum number of guild widget setting updates has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
+
+        /// <summary>
         /// Unauthorized. Provide a valid token and try again.
         /// </summary>
         Unauthorized = 40001,
