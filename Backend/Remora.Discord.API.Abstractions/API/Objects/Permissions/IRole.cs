@@ -30,51 +30,78 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a Discord role.
     /// </summary>
     [PublicAPI]
-    public interface IRole
+    public interface IRole : IPartialRole
     {
         /// <summary>
         /// Gets the ID of the role.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the name of the role.
         /// </summary>
-        string Name { get; }
+        new string Name { get; }
 
         /// <summary>
         /// Gets the colour of the role.
         /// </summary>
-        Color Colour { get; }
+        new Color Colour { get; }
 
         /// <summary>
         /// Gets a value indicating whether the role is displayed separately in the sidebar.
         /// </summary>
-        bool IsHoisted { get; }
+        new bool IsHoisted { get; }
 
         /// <summary>
         /// Gets the position of the role.
         /// </summary>
-        int Position { get; }
+        new int Position { get; }
 
         /// <summary>
         /// Gets the permission set for this role.
         /// </summary>
-        IDiscordPermissionSet Permissions { get; }
+        new IDiscordPermissionSet Permissions { get; }
 
         /// <summary>
         /// Gets a value indicating whether this role is managed by an integration.
         /// </summary>
-        bool IsManaged { get; }
+        new bool IsManaged { get; }
 
         /// <summary>
         /// Gets a value indicating whether this role is mentionable.
         /// </summary>
-        bool IsMentionable { get; }
+        new bool IsMentionable { get; }
 
         /// <summary>
         /// Gets the tags the role has.
         /// </summary>
-        Optional<IRoleTags> Tags { get; }
+        new Optional<IRoleTags> Tags { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialRole.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialRole.Name => this.Name;
+
+        /// <inheritdoc/>
+        Optional<Color> IPartialRole.Colour => this.Colour;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialRole.IsHoisted => this.IsHoisted;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialRole.Position => this.Position;
+
+        /// <inheritdoc/>
+        Optional<IDiscordPermissionSet> IPartialRole.Permissions => throw new System.NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialRole.IsManaged => this.IsManaged;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialRole.IsMentionable => this.IsMentionable;
+
+        /// <inheritdoc/>
+        Optional<IRoleTags> IPartialRole.Tags => this.Tags;
     }
 }

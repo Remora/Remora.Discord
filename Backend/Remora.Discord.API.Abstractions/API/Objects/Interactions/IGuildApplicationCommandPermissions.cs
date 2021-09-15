@@ -30,26 +30,38 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a set of permissions for a command in a guild.
     /// </summary>
     [PublicAPI]
-    public interface IGuildApplicationCommandPermissions
+    public interface IGuildApplicationCommandPermissions : IPartialGuildApplicationCommandPermissions
     {
         /// <summary>
         /// Gets the ID of the command.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the ID of the application the command belongs to.
         /// </summary>
-        Snowflake ApplicationID { get; }
+        new Snowflake ApplicationID { get; }
 
         /// <summary>
         /// Gets the ID of the guild.
         /// </summary>
-        Snowflake GuildID { get; }
+        new Snowflake GuildID { get; }
 
         /// <summary>
         /// Gets the permissions for the command in the guild.
         /// </summary>
-        IReadOnlyList<IApplicationCommandPermissions> Permissions { get; }
+        new IReadOnlyList<IApplicationCommandPermissions> Permissions { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.ApplicationID => this.ApplicationID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialGuildApplicationCommandPermissions.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IApplicationCommandPermissions>> IPartialGuildApplicationCommandPermissions.Permissions => throw new System.NotImplementedException();
     }
 }

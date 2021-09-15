@@ -31,51 +31,78 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents information about a guild member.
     /// </summary>
     [PublicAPI]
-    public interface IGuildMember
+    public interface IGuildMember : IPartialGuildMember
     {
         /// <summary>
         /// Gets the user this guild member represents.
         /// </summary>
-        Optional<IUser> User { get; }
+        new Optional<IUser> User { get; }
 
         /// <summary>
         /// Gets the user's guild nickname.
         /// </summary>
-        Optional<string?> Nickname { get; }
+        new Optional<string?> Nickname { get; }
 
         /// <summary>
         /// Gets the roles the user has.
         /// </summary>
-        IReadOnlyList<Snowflake> Roles { get; }
+        new IReadOnlyList<Snowflake> Roles { get; }
 
         /// <summary>
         /// Gets when the user joined the guild.
         /// </summary>
-        DateTimeOffset JoinedAt { get; }
+        new DateTimeOffset JoinedAt { get; }
 
         /// <summary>
         /// Gets when the user started boosting the guild.
         /// </summary>
-        Optional<DateTimeOffset?> PremiumSince { get; }
+        new Optional<DateTimeOffset?> PremiumSince { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is deafened in voice channels.
         /// </summary>
-        bool IsDeafened { get; }
+        new bool IsDeafened { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is muted in voice channels.
         /// </summary>
-        bool IsMuted { get; }
+        new bool IsMuted { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user has passed the guild membership screening requirements.
         /// </summary>
-        Optional<bool?> IsPending { get; }
+        new Optional<bool?> IsPending { get; }
 
         /// <summary>
         /// Gets the total permissions of the member in a channel, including overrides.
         /// </summary>
-        Optional<IDiscordPermissionSet> Permissions { get; }
+        new Optional<IDiscordPermissionSet> Permissions { get; }
+
+        /// <inheritdoc/>
+        Optional<IUser> IPartialGuildMember.User => this.User;
+
+        /// <inheritdoc/>
+        Optional<string?> IPartialGuildMember.Nickname => this.Nickname;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<Snowflake>> IPartialGuildMember.Roles => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset> IPartialGuildMember.JoinedAt => this.JoinedAt;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset?> IPartialGuildMember.PremiumSince => this.PremiumSince;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialGuildMember.IsDeafened => this.IsDeafened;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialGuildMember.IsMuted => this.IsMuted;
+
+        /// <inheritdoc/>
+        Optional<bool?> IPartialGuildMember.IsPending => this.IsPending;
+
+        /// <inheritdoc/>
+        Optional<IDiscordPermissionSet> IPartialGuildMember.Permissions => this.Permissions;
     }
 }

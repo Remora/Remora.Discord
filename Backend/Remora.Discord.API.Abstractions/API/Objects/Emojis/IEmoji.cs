@@ -30,46 +30,70 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents an emoji.
     /// </summary>
     [PublicAPI]
-    public interface IEmoji
+    public interface IEmoji : IPartialEmoji
     {
         /// <summary>
         /// Gets the ID of the emoji.
         /// </summary>
-        Snowflake? ID { get; }
+        new Snowflake? ID { get; }
 
         /// <summary>
         /// Gets the name of the emoji.
         /// </summary>
-        string? Name { get; }
+        new string? Name { get; }
 
         /// <summary>
         /// Gets a list of roles this emoji is whitelisted to.
         /// </summary>
-        Optional<IReadOnlyList<Snowflake>> Roles { get; }
+        new Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
         /// <summary>
         /// Gets the user that created this emoji.
         /// </summary>
-        Optional<IUser> User { get; }
+        new Optional<IUser> User { get; }
 
         /// <summary>
         /// Gets a value indicating whether this emoji must be wrapped in colons.
         /// </summary>
-        Optional<bool> RequireColons { get; }
+        new Optional<bool> RequireColons { get; }
 
         /// <summary>
         /// Gets a value indicating whether this emoji is managed.
         /// </summary>
-        Optional<bool> IsManaged { get; }
+        new Optional<bool> IsManaged { get; }
 
         /// <summary>
         /// Gets a value indicating whether this emoji is animated.
         /// </summary>
-        Optional<bool> IsAnimated { get; }
+        new Optional<bool> IsAnimated { get; }
 
         /// <summary>
         /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
         /// </summary>
-        Optional<bool> IsAvailable { get; }
+        new Optional<bool> IsAvailable { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake?> IPartialEmoji.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<string?> IPartialEmoji.Name => this.Name;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<Snowflake>> IPartialEmoji.Roles => this.Roles;
+
+        /// <inheritdoc/>
+        Optional<IUser> IPartialEmoji.User => this.User;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialEmoji.RequireColons => this.RequireColons;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialEmoji.IsManaged => this.IsManaged;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialEmoji.IsAnimated => this.IsAnimated;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialEmoji.IsAvailable => this.IsAvailable;
     }
 }

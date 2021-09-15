@@ -30,31 +30,46 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a user's presence.
     /// </summary>
     [PublicAPI]
-    public interface IPresence
+    public interface IPresence : IPartialPresence
     {
         /// <summary>
         /// Gets the user the presence is being updated for.
         /// </summary>
-        IPartialUser User { get; }
+        new IPartialUser User { get; }
 
         /// <summary>
         /// Gets the ID of the guild.
         /// </summary>
-        Snowflake GuildID { get; }
+        new Snowflake GuildID { get; }
 
         /// <summary>
         /// Gets the current status of the user.
         /// </summary>
-        ClientStatus Status { get; }
+        new ClientStatus Status { get; }
 
         /// <summary>
         /// Gets the user's current activities.
         /// </summary>
-        IReadOnlyList<IActivity>? Activities { get; }
+        new IReadOnlyList<IActivity>? Activities { get; }
 
         /// <summary>
         /// Gets the user's platform-dependent status.
         /// </summary>
-        IClientStatuses ClientStatus { get; }
+        new IClientStatuses ClientStatus { get; }
+
+        /// <inheritdoc/>
+        Optional<IPartialUser> IPartialPresence.User => throw new System.NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialPresence.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<ClientStatus> IPartialPresence.Status => this.Status;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => throw new System.NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IClientStatuses> IPartialPresence.ClientStatus => throw new System.NotImplementedException();
     }
 }

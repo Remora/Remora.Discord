@@ -31,71 +31,71 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a message.
     /// </summary>
     [PublicAPI]
-    public interface IMessage
+    public interface IMessage : IPartialMessage
     {
         /// <summary>
         /// Gets the message ID.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the ID of the channel the message was sent in.
         /// </summary>
-        Snowflake ChannelID { get; }
+        new Snowflake ChannelID { get; }
 
         /// <summary>
         /// Gets the ID of the guild the message was sent in.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        new Optional<Snowflake> GuildID { get; }
 
         /// <summary>
         /// Gets the author of the message. This author is not guaranteed to be a valid user; in the case of a webhook
         /// message, the object corresponds to the webhook's ID, username, and avatar - this is the case when
         /// <see cref="WebhookID"/> contains a valid value.
         /// </summary>
-        IUser Author { get; }
+        new IUser Author { get; }
 
         /// <summary>
         /// Gets the member properties for the author. The member object exists in MESSAGE_CREATE and
         /// MESSAGE_UPDATE events from text-based guild channels. This allows bots to obtain real-time member data
         /// without requiring bots to keep member state in memory.
         /// </summary>
-        Optional<IPartialGuildMember> Member { get; }
+        new Optional<IPartialGuildMember> Member { get; }
 
         /// <summary>
         /// Gets the contents of the message.
         /// </summary>
-        string Content { get; }
+        new string Content { get; }
 
         /// <summary>
         /// Gets the time when the messages was sent.
         /// </summary>
-        DateTimeOffset Timestamp { get; }
+        new DateTimeOffset Timestamp { get; }
 
         /// <summary>
         /// Gets the time when the message was last edited.
         /// </summary>
-        DateTimeOffset? EditedTimestamp { get; }
+        new DateTimeOffset? EditedTimestamp { get; }
 
         /// <summary>
         /// Gets a value indicating whether this was a TTS message.
         /// </summary>
-        bool IsTTS { get; }
+        new bool IsTTS { get; }
 
         /// <summary>
         /// Gets a value indicating whether this message mentions everyone.
         /// </summary>
-        bool MentionsEveryone { get; }
+        new bool MentionsEveryone { get; }
 
         /// <summary>
         /// Gets a list of users mentioned in the message.
         /// </summary>
-        IReadOnlyList<IUserMention> Mentions { get; }
+        new IReadOnlyList<IUserMention> Mentions { get; }
 
         /// <summary>
         /// Gets a list of mentioned roles.
         /// </summary>
-        IReadOnlyList<Snowflake> MentionedRoles { get; }
+        new IReadOnlyList<Snowflake> MentionedRoles { get; }
 
         /// <summary>
         /// Gets a list of channel mentions.
@@ -106,92 +106,182 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// meet these requirements, this field will not be sent.
         /// </remarks>
         /// </summary>
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
+        new Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
 
         /// <summary>
         /// Gets a list of attached files.
         /// </summary>
-        IReadOnlyList<IAttachment> Attachments { get; }
+        new IReadOnlyList<IAttachment> Attachments { get; }
 
         /// <summary>
         /// Gets a list of embeds.
         /// </summary>
-        IReadOnlyList<IEmbed> Embeds { get; }
+        new IReadOnlyList<IEmbed> Embeds { get; }
 
         /// <summary>
         /// Gets an array of reaction objects.
         /// </summary>
-        Optional<IReadOnlyList<IReaction>> Reactions { get; }
+        new Optional<IReadOnlyList<IReaction>> Reactions { get; }
 
         /// <summary>
         /// Gets a nonce, used for validating a message was sent. Technically, this can be either an integer or a
         /// string.
         /// </summary>
-        Optional<string> Nonce { get; }
+        new Optional<string> Nonce { get; }
 
         /// <summary>
         /// Gets a value indicating whether the messages is pinned.
         /// </summary>
-        bool IsPinned { get; }
+        new bool IsPinned { get; }
 
         /// <summary>
         /// Gets the ID of the webhook that sent this message.
         /// </summary>
-        Optional<Snowflake> WebhookID { get; }
+        new Optional<Snowflake> WebhookID { get; }
 
         /// <summary>
         /// Gets the message type.
         /// </summary>
-        MessageType Type { get; }
+        new MessageType Type { get; }
 
         /// <summary>
         /// Gets the activity the message belongs to. Sent with rich presence-related chat embeds.
         /// </summary>
-        Optional<IMessageActivity> Activity { get; }
+        new Optional<IMessageActivity> Activity { get; }
 
         /// <summary>
         /// Gets the application the message belongs to. Sent with rich presence-related chat embeds.
         /// </summary>
-        Optional<IPartialApplication> Application { get; }
+        new Optional<IPartialApplication> Application { get; }
 
         /// <summary>
         /// Gets the ID of the application the message's interaction belongs to. Sent with interactions.
         /// </summary>
-        Optional<Snowflake> ApplicationID { get; }
+        new Optional<Snowflake> ApplicationID { get; }
 
         /// <summary>
         /// Gets the message reference. Sent with cross-posted messages.
         /// </summary>
-        Optional<IMessageReference> MessageReference { get;  }
+        new Optional<IMessageReference> MessageReference { get;  }
 
         /// <summary>
         /// Gets a set of bitwise flags describing extra features of the message.
         /// </summary>
-        Optional<MessageFlags> Flags { get; }
+        new Optional<MessageFlags> Flags { get; }
 
         /// <summary>
         /// Gets the referenced message, if any. A null value in this context refers to a deleted message.
         /// </summary>
-        Optional<IMessage?> ReferencedMessage { get; }
+        new Optional<IMessage?> ReferencedMessage { get; }
 
         /// <summary>
         /// Gets the interaction associated with this message, if any.
         /// </summary>
-        Optional<IMessageInteraction> Interaction { get; }
+        new Optional<IMessageInteraction> Interaction { get; }
 
         /// <summary>
         /// Gets the thread that was started from this message, if any.
         /// </summary>
-        Optional<IChannel> Thread { get; }
+        new Optional<IChannel> Thread { get; }
 
         /// <summary>
         /// Gets the components in the message.
         /// </summary>
-        Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+        new Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
         /// <summary>
         /// Gets the stickers sent with the message.
         /// </summary>
-        Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
+        new Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialMessage.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialMessage.ChannelID => this.ChannelID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialMessage.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<IUser> IPartialMessage.Author => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IPartialGuildMember> IPartialMessage.Member => this.Member;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialMessage.Content => this.Content;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset> IPartialMessage.Timestamp => this.Timestamp;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset?> IPartialMessage.EditedTimestamp => this.EditedTimestamp;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialMessage.IsTTS => this.IsTTS;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialMessage.MentionsEveryone => this.MentionsEveryone;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IUserMention>> IPartialMessage.Mentions => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<Snowflake>> IPartialMessage.MentionedRoles => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IChannelMention>> IPartialMessage.MentionedChannels => this.MentionedChannels;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IAttachment>> IPartialMessage.Attachments => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IEmbed>> IPartialMessage.Embeds => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IReaction>> IPartialMessage.Reactions => this.Reactions;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialMessage.Nonce => this.Nonce;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialMessage.IsPinned => this.IsPinned;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialMessage.WebhookID => this.WebhookID;
+
+        /// <inheritdoc/>
+        Optional<MessageType> IPartialMessage.Type => this.Type;
+
+        /// <inheritdoc/>
+        Optional<IMessageActivity> IPartialMessage.Activity => this.Activity;
+
+        /// <inheritdoc/>
+        Optional<IPartialApplication> IPartialMessage.Application => this.Application;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialMessage.ApplicationID => this.ApplicationID;
+
+        /// <inheritdoc/>
+        Optional<IMessageReference> IPartialMessage.MessageReference => this.MessageReference;
+
+        /// <inheritdoc/>
+        Optional<MessageFlags> IPartialMessage.Flags => this.Flags;
+
+        /// <inheritdoc/>
+        Optional<IMessage?> IPartialMessage.ReferencedMessage => this.ReferencedMessage;
+
+        /// <inheritdoc/>
+        Optional<IMessageInteraction> IPartialMessage.Interaction => this.Interaction;
+
+        /// <inheritdoc/>
+        Optional<IChannel> IPartialMessage.Thread => this.Thread;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IMessageComponent>> IPartialMessage.Components => this.Components;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IStickerItem>> IPartialMessage.StickerItems => this.StickerItems;
     }
 }
