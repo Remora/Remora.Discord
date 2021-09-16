@@ -30,61 +30,94 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents an invite.
     /// </summary>
     [PublicAPI]
-    public interface IInvite
+    public interface IInvite : IPartialInvite
     {
         /// <summary>
         /// Gets the unique invite code.
         /// </summary>
-        string Code { get; }
+        new string Code { get; }
 
         /// <summary>
         /// Gets the guild this invite is for.
         /// </summary>
-        Optional<IPartialGuild> Guild { get; }
+        new Optional<IPartialGuild> Guild { get; }
 
         /// <summary>
         /// Gets the channel this invite is for.
         /// </summary>
-        IPartialChannel Channel { get; }
+        new IPartialChannel Channel { get; }
 
         /// <summary>
         /// Gets the user who created the invite.
         /// </summary>
-        Optional<IUser> Inviter { get; }
+        new Optional<IUser> Inviter { get; }
 
         /// <summary>
         /// Gets the type of target for this invite.
         /// </summary>
-        Optional<InviteTarget> TargetType { get; }
+        new Optional<InviteTarget> TargetType { get; }
 
         /// <summary>
         /// Gets the target user for this invite.
         /// </summary>
-        Optional<IPartialUser> TargetUser { get; }
+        new Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
         /// Gets the ID of the target embedded application.
         /// </summary>
-        Optional<Snowflake> TargetApplication { get; }
+        new Optional<Snowflake> TargetApplication { get; }
 
         /// <summary>
         /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
         /// </summary>
-        Optional<int> ApproximatePresenceCount { get; }
+        new Optional<int> ApproximatePresenceCount { get; }
 
         /// <summary>
         /// Gets the approximate count of total members.
         /// </summary>
-        Optional<int> ApproximateMemberCount { get; }
+        new Optional<int> ApproximateMemberCount { get; }
 
         /// <summary>
         /// Gets the expiration date of this invite.
         /// </summary>
-        Optional<DateTimeOffset?> ExpiresAt { get; }
+        new Optional<DateTimeOffset?> ExpiresAt { get; }
 
         /// <summary>
         /// Gets metadata about the stage instance the invite is for, if any.
         /// </summary>
-        Optional<IInviteStageInstance> StageInstance { get; }
+        new Optional<IInviteStageInstance> StageInstance { get; }
+
+        /// <inheritdoc/>
+        Optional<string> IPartialInvite.Code => this.Code;
+
+        /// <inheritdoc/>
+        Optional<IPartialGuild> IPartialInvite.Guild => this.Guild;
+
+        /// <inheritdoc/>
+        Optional<IPartialChannel> IPartialInvite.Channel => new(this.Channel);
+
+        /// <inheritdoc/>
+        Optional<IUser> IPartialInvite.Inviter => this.Inviter;
+
+        /// <inheritdoc/>
+        Optional<InviteTarget> IPartialInvite.TargetType => this.TargetType;
+
+        /// <inheritdoc/>
+        Optional<IPartialUser> IPartialInvite.TargetUser => this.TargetUser;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialInvite.TargetApplication => this.TargetApplication;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialInvite.ApproximatePresenceCount => this.ApproximatePresenceCount;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialInvite.ApproximateMemberCount => this.ApproximateMemberCount;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset?> IPartialInvite.ExpiresAt => this.ExpiresAt;
+
+        /// <inheritdoc/>
+        Optional<IInviteStageInstance> IPartialInvite.StageInstance => this.StageInstance;
     }
 }

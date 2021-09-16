@@ -30,81 +30,126 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents an integration object.
     /// </summary>
     [PublicAPI]
-    public interface IIntegration
+    public interface IIntegration : IPartialIntegration
     {
         /// <summary>
         /// Gets the ID of the integration.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the name of the integration.
         /// </summary>
-        string Name { get; }
+        new string Name { get; }
 
         /// <summary>
         /// Gets the type of integration.
         /// </summary>
-        string Type { get; }
+        new string Type { get; }
 
         /// <summary>
         /// Gets a value indicating whether the integration is enabled.
         /// </summary>
-        bool IsEnabled { get; }
+        new bool IsEnabled { get; }
 
         /// <summary>
         /// Gets a value indicating whether the integration is syncing.
         /// </summary>
-        bool IsSyncing { get; }
+        new bool IsSyncing { get; }
 
         /// <summary>
         /// Gets the ID of the role that this integration uses for subscribers.
         /// </summary>
-        Snowflake RoleID { get; }
+        new Snowflake RoleID { get; }
 
         /// <summary>
         /// Gets a value indicating whether emoticons should be synced for this integration (twitch only, currently).
         /// </summary>
-        Optional<bool> EnableEmoticons { get; }
+        new Optional<bool> EnableEmoticons { get; }
 
         /// <summary>
         /// Gets the behaviour of expiring subscribers.
         /// </summary>
-        IntegrationExpireBehaviour ExpireBehaviour { get; }
+        new IntegrationExpireBehaviour ExpireBehaviour { get; }
 
         /// <summary>
         /// Gets the grace period (in days) before expiring subscribers.
         /// </summary>
-        TimeSpan ExpireGracePeriod { get; }
+        new TimeSpan ExpireGracePeriod { get; }
 
         /// <summary>
         /// Gets the user for this integration.
         /// </summary>
-        Optional<IUser> User { get; }
+        new Optional<IUser> User { get; }
 
         /// <summary>
         /// Gets the integration's account information.
         /// </summary>
-        IAccount Account { get; }
+        new IAccount Account { get; }
 
         /// <summary>
         /// Gets the time when the integration was last synced.
         /// </summary>
-        DateTimeOffset SyncedAt { get; }
+        new DateTimeOffset SyncedAt { get; }
 
         /// <summary>
         /// Gets the number of subscribers this integration has.
         /// </summary>
-        int SubscriberCount { get; }
+        new int SubscriberCount { get; }
 
         /// <summary>
         /// Gets a value indicating whether this integration has been revoked.
         /// </summary>
-        bool IsRevoked { get; }
+        new bool IsRevoked { get; }
 
         /// <summary>
         /// Gets the bot/OAuth2 application for Discord integrations.
         /// </summary>
-        Optional<IIntegrationApplication> Application { get; }
+        new Optional<IIntegrationApplication> Application { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialIntegration.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialIntegration.Name => this.Name;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialIntegration.Type => this.Type;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialIntegration.IsEnabled => this.IsEnabled;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialIntegration.IsSyncing => this.IsSyncing;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialIntegration.RoleID => this.RoleID;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialIntegration.EnableEmoticons => this.EnableEmoticons;
+
+        /// <inheritdoc/>
+        Optional<IntegrationExpireBehaviour> IPartialIntegration.ExpireBehaviour => this.ExpireBehaviour;
+
+        /// <inheritdoc/>
+        Optional<TimeSpan> IPartialIntegration.ExpireGracePeriod => this.ExpireGracePeriod;
+
+        /// <inheritdoc/>
+        Optional<IUser> IPartialIntegration.User => this.User;
+
+        /// <inheritdoc/>
+        Optional<IAccount> IPartialIntegration.Account => new(this.Account);
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset> IPartialIntegration.SyncedAt => this.SyncedAt;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialIntegration.SubscriberCount => this.SubscriberCount;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialIntegration.IsRevoked => this.IsRevoked;
+
+        /// <inheritdoc/>
+        Optional<IIntegrationApplication> IPartialIntegration.Application => this.Application;
     }
 }
