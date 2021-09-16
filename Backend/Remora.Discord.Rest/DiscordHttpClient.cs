@@ -176,7 +176,12 @@ namespace Remora.Discord.Rest
                     return Result<Stream>.FromError(unpackedResponse);
                 }
 
+                #if NETSTANDARD
                 var responseContent = await response.Content.ReadAsStreamAsync();
+                #else
+                var responseContent = await response.Content.ReadAsStreamAsync(ct);
+                #endif
+
                 return Result<Stream>.FromSuccess(responseContent);
             }
             catch (Exception e)
@@ -583,9 +588,15 @@ namespace Remora.Discord.Rest
 
             try
             {
+                #if NETSTANDARD
+                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                #else
+                await using var contentStream = await response.Content.ReadAsStreamAsync(ct);
+                #endif
+
                 var jsonError = await JsonSerializer.DeserializeAsync<RestError>
                 (
-                    await response.Content.ReadAsStreamAsync(),
+                    contentStream,
                     _serializerOptions,
                     ct
                 );
@@ -632,9 +643,15 @@ namespace Remora.Discord.Rest
                     return Result<TEntity>.FromSuccess(default!);
                 }
 
+                #if NETSTANDARD
+                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                #else
+                await using var contentStream = await response.Content.ReadAsStreamAsync(ct);
+                #endif
+
                 var entity = await JsonSerializer.DeserializeAsync<TEntity>
                 (
-                    await response.Content.ReadAsStreamAsync(),
+                    contentStream,
                     _serializerOptions,
                     ct
                 );
@@ -661,9 +678,15 @@ namespace Remora.Discord.Rest
 
             try
             {
+                #if NETSTANDARD
+                await using var contentStream = await response.Content.ReadAsStreamAsync();
+                #else
+                await using var contentStream = await response.Content.ReadAsStreamAsync(ct);
+                #endif
+
                 var jsonError = await JsonSerializer.DeserializeAsync<RestError>
                 (
-                    await response.Content.ReadAsStreamAsync(),
+                    contentStream,
                     _serializerOptions,
                     ct
                 );

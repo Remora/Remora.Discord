@@ -221,5 +221,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Allows the user to send messages in threads.
         /// </summary>
         SendMessagesInThreads = 38
+        
+        /// <summary>
+        /// Allows for launching activities in a voice channel.
+        /// </summary>
+        StartEmbeddedActivities = 39
     }
 }

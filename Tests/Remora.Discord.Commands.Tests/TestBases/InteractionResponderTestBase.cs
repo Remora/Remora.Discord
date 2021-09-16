@@ -42,6 +42,11 @@ namespace Remora.Discord.Commands.Tests.TestBases
         private readonly IServiceScope _scope;
 
         /// <summary>
+        /// Gets the mocked <see cref="IDiscordRestInteractionAPI"/>.
+        /// </summary>
+        protected Mock<IDiscordRestInteractionAPI> MockInteractionApi { get; }
+
+        /// <summary>
         /// Gets the responder under test.
         /// </summary>
         protected InteractionResponder Responder { get; }
@@ -49,10 +54,10 @@ namespace Remora.Discord.Commands.Tests.TestBases
         /// <summary>
         /// Initializes a new instance of the <see cref="InteractionResponderTestBase"/> class.
         /// </summary>
-        public InteractionResponderTestBase()
+        protected InteractionResponderTestBase()
         {
-            var interactionRestMock = new Mock<IDiscordRestInteractionAPI>();
-            interactionRestMock.Setup
+            this.MockInteractionApi = new Mock<IDiscordRestInteractionAPI>();
+            this.MockInteractionApi.Setup
             (
                 i => i.CreateInteractionResponseAsync
                 (
@@ -65,7 +70,7 @@ namespace Remora.Discord.Commands.Tests.TestBases
             .Returns(Task.FromResult(Result.FromSuccess()));
 
             var serviceCollection = new ServiceCollection()
-                .AddSingleton(interactionRestMock.Object)
+                .AddSingleton(this.MockInteractionApi.Object)
                 .AddDiscordCommands(true);
 
             // ReSharper disable once VirtualMemberCallInConstructor

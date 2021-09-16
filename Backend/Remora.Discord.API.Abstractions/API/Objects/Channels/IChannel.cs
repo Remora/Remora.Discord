@@ -31,139 +31,217 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a channel.
     /// </summary>
     [PublicAPI]
-    public interface IChannel
+    public interface IChannel : IPartialChannel
     {
         /// <summary>
         /// Gets the ID of the channel.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the type of the channel.
         /// </summary>
-        ChannelType Type { get; }
+        new ChannelType Type { get; }
 
         /// <summary>
         /// Gets the ID of the guild the channel is in.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        new Optional<Snowflake> GuildID { get; }
 
         /// <summary>
         /// Gets the sorting position of the channel.
         /// </summary>
-        Optional<int> Position { get; }
+        new Optional<int> Position { get; }
 
         /// <summary>
         /// Gets a list of explicit permission overwrites for members and roles.
         /// </summary>
-        Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites { get; }
+        new Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites { get; }
 
         /// <summary>
         /// Gets the name of the channel.
         /// </summary>
-        Optional<string> Name { get; }
+        new Optional<string> Name { get; }
 
         /// <summary>
         /// Gets the topic of the channel.
         /// </summary>
-        Optional<string?> Topic { get; }
+        new Optional<string?> Topic { get; }
 
         /// <summary>
         /// Gets a value indicating whether the channel is NSFW.
         /// </summary>
-        Optional<bool> IsNsfw { get; }
+        new Optional<bool> IsNsfw { get; }
 
         /// <summary>
         /// Gets the ID of the last message sent in the channel.
         /// </summary>
-        Optional<Snowflake?> LastMessageID { get; }
+        new Optional<Snowflake?> LastMessageID { get; }
 
         /// <summary>
         /// Gets the bitrate (in bits) of the channel.
         /// </summary>
-        Optional<int> Bitrate { get; }
+        new Optional<int> Bitrate { get; }
 
         /// <summary>
         /// Gets the user limit of the voice channel.
         /// </summary>
-        Optional<int> UserLimit { get; }
+        new Optional<int> UserLimit { get; }
 
         /// <summary>
         /// Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as
         /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
         /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
         /// </summary>
-        Optional<TimeSpan> RateLimitPerUser { get; }
+        new Optional<TimeSpan> RateLimitPerUser { get; }
 
         /// <summary>
         /// Gets the recipients of the DM.
         /// </summary>
-        Optional<IReadOnlyList<IUser>> Recipients { get; }
+        new Optional<IReadOnlyList<IUser>> Recipients { get; }
 
         /// <summary>
         /// Gets the icon of the channel.
         /// </summary>
-        Optional<IImageHash?> Icon { get; }
+        new Optional<IImageHash?> Icon { get; }
 
         /// <summary>
         /// Gets the ID of the DM creator.
         /// </summary>
-        Optional<Snowflake> OwnerID { get; }
+        new Optional<Snowflake> OwnerID { get; }
 
         /// <summary>
         /// Gets the application ID of the group DM creator, if it is bot-created.
         /// </summary>
-        Optional<Snowflake> ApplicationID { get; }
+        new Optional<Snowflake> ApplicationID { get; }
 
         /// <summary>
         /// Gets the ID of the parent category for a channel. Each category can contain up to 50 channels.
         /// </summary>
-        Optional<Snowflake?> ParentID { get; }
+        new Optional<Snowflake?> ParentID { get; }
 
         /// <summary>
         /// Gets the time when the last pinned message was pinned.
         /// </summary>
-        Optional<DateTimeOffset?> LastPinTimestamp { get; }
+        new Optional<DateTimeOffset?> LastPinTimestamp { get; }
 
         /// <summary>
         /// Gets the ID of the voice channel region.
         /// </summary>
-        Optional<string?> RTCRegion { get; }
+        new Optional<string?> RTCRegion { get; }
 
         /// <summary>
         /// Gets the video quality mode of the channel.
         /// </summary>
-        Optional<VideoQualityMode> VideoQualityMode { get; }
+        new Optional<VideoQualityMode> VideoQualityMode { get; }
 
         /// <summary>
         /// Gets an approximate count of the messages in the channel. Stops counting at 50.
         /// </summary>
-        Optional<int> MessageCount { get; }
+        new Optional<int> MessageCount { get; }
 
         /// <summary>
         /// Gets an approximate count of the messages in the channel. Stops counting at 50.
         /// </summary>
-        Optional<int> MemberCount { get; }
+        new Optional<int> MemberCount { get; }
 
         /// <summary>
         /// Gets a set of thread-specific fields.
         /// </summary>
-        Optional<IThreadMetadata> ThreadMetadata { get; }
+        new Optional<IThreadMetadata> ThreadMetadata { get; }
 
         /// <summary>
         /// Gets the thread member object for the current user, if they have joined the thread.
         /// </summary>
-        Optional<IThreadMember> Member { get; }
+        new Optional<IThreadMember> Member { get; }
 
         /// <summary>
         /// Gets the default duration for newly created threads in this channel.
         /// </summary>
-        Optional<AutoArchiveDuration> DefaultAutoArchiveDuration { get; }
+        new Optional<AutoArchiveDuration> DefaultAutoArchiveDuration { get; }
 
         /// <summary>
         /// Gets the computed permission set for the invoking user in the channel. Typically present when the channel is
         /// resolved via a slash command interaction.
         /// </summary>
-        Optional<IDiscordPermissionSet> Permissions { get; }
+        new Optional<IDiscordPermissionSet> Permissions { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialChannel.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<ChannelType> IPartialChannel.Type => this.Type;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialChannel.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialChannel.Position => this.Position;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IPermissionOverwrite>> IPartialChannel.PermissionOverwrites => this.PermissionOverwrites;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialChannel.Name => this.Name;
+
+        /// <inheritdoc/>
+        Optional<string?> IPartialChannel.Topic => this.Topic;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialChannel.IsNsfw => this.IsNsfw;
+
+        /// <inheritdoc/>
+        Optional<Snowflake?> IPartialChannel.LastMessageID => this.LastMessageID;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialChannel.Bitrate => this.Bitrate;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialChannel.UserLimit => this.UserLimit;
+
+        /// <inheritdoc/>
+        Optional<TimeSpan> IPartialChannel.RateLimitPerUser => this.RateLimitPerUser;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IUser>> IPartialChannel.Recipients => this.Recipients;
+
+        /// <inheritdoc/>
+        Optional<IImageHash?> IPartialChannel.Icon => this.Icon;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialChannel.OwnerID => this.OwnerID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialChannel.ApplicationID => this.ApplicationID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake?> IPartialChannel.ParentID => this.ParentID;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset?> IPartialChannel.LastPinTimestamp => this.LastPinTimestamp;
+
+        /// <inheritdoc/>
+        Optional<string?> IPartialChannel.RTCRegion => this.RTCRegion;
+
+        /// <inheritdoc/>
+        Optional<VideoQualityMode> IPartialChannel.VideoQualityMode => this.VideoQualityMode;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialChannel.MessageCount => this.MessageCount;
+
+        /// <inheritdoc/>
+        Optional<int> IPartialChannel.MemberCount => this.MemberCount;
+
+        /// <inheritdoc/>
+        Optional<IThreadMetadata> IPartialChannel.ThreadMetadata => this.ThreadMetadata;
+
+        /// <inheritdoc/>
+        Optional<IThreadMember> IPartialChannel.Member => this.Member;
+
+        /// <inheritdoc/>
+        Optional<AutoArchiveDuration> IPartialChannel.DefaultAutoArchiveDuration => this.DefaultAutoArchiveDuration;
+
+        /// <inheritdoc/>
+        Optional<IDiscordPermissionSet> IPartialChannel.Permissions => this.Permissions;
     }
 }

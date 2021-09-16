@@ -32,49 +32,31 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialRole
     {
-        /// <summary>
-        /// Gets the ID of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Name" />
         Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the colour of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Colour" />
         Optional<Color> Colour { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the role is displayed separately in the sidebar.
-        /// </summary>
+        /// <inheritdoc cref="IRole.IsHoisted" />
         Optional<bool> IsHoisted { get; }
 
-        /// <summary>
-        /// Gets the position of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Position" />
         Optional<int> Position { get; }
 
-        /// <summary>
-        /// Gets the permission set for this role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this role is managed by an integration.
-        /// </summary>
+        /// <inheritdoc cref="IRole.IsManaged" />
         Optional<bool> IsManaged { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this role is mentionable.
-        /// </summary>
+        /// <inheritdoc cref="IRole.IsMentionable" />
         Optional<bool> IsMentionable { get; }
 
-        /// <summary>
-        /// Gets the tags the role has.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Tags" />
         Optional<IRoleTags> Tags { get; }
     }
 }

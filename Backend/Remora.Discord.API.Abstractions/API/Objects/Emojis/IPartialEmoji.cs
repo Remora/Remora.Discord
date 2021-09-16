@@ -32,44 +32,28 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialEmoji
     {
-        /// <summary>
-        /// Gets the ID of the emoji.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.ID" />
         Optional<Snowflake?> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the emoji.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.Name" />
         Optional<string?> Name { get; }
 
-        /// <summary>
-        /// Gets a list of roles this emoji is whitelisted to.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.Roles" />
         Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <summary>
-        /// Gets the user that created this emoji.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.User" />
         Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji must be wrapped in colons.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.RequireColons" />
         Optional<bool> RequireColons { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is managed.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.IsManaged" />
         Optional<bool> IsManaged { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is animated.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.IsAnimated" />
         Optional<bool> IsAnimated { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
-        /// </summary>
+        /// <inheritdoc cref="IEmoji.IsAvailable" />
         Optional<bool> IsAvailable { get; }
     }
 }

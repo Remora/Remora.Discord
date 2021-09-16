@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Reflection;
+using JetBrains.Annotations;
 using Remora.Discord.API.Extensions;
 using Xunit;
 
@@ -33,53 +34,74 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
     /// <summary>
     /// Tests the <see cref="Discord.API.Extensions.PropertyInfoExtensions"/> class.
     /// </summary>
-    public class PropertyInfoExtensionTests
+    public static class PropertyInfoExtensionTests
     {
         public class AllowsNull
         {
             /// <summary>
             /// Gets nothing. This field is used to get an annotated value type.
             /// </summary>
-            private int ValueType { get; } = 0;
+            [PublicAPI]
+            private int ValueType { get; }
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated nullable value type.
             /// </summary>
-            private int? NullableValueType { get; } = null!;
+            [PublicAPI]
+            private int? NullableValueType { get; }
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated reference type.
             /// </summary>
-            private string ReferenceType { get; } = null!;
+            [PublicAPI]
+            private string ReferenceType { get; } = string.Empty;
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated nullable reference type.
             /// </summary>
-            private string? NullableReferenceType { get; } = null!;
+            [PublicAPI]
+            private string? NullableReferenceType { get; }
 
             /// <summary>
-            /// Gets nothing. This field is used to get an annotated nullable generic value type-containing reference
-            /// type.
+            /// Gets nothing. This field is used to get an annotated generic value type-containing reference type.
             /// </summary>
-            private List<int>? NullableValueTypeList { get; } = null!;
+            [PublicAPI]
+            private List<int> ValueTypeList { get; } = new();
 
             /// <summary>
-            /// Gets nothing. This field is used to get an annotated generic nullable value type-containing reference
+            /// Gets nothing. This field is used to get an annotated nullable generic value type-containing
+            /// reference type.
+            /// </summary>
+            [PublicAPI]
+            private List<int>? NullableValueTypeList { get; }
+
+            /// <summary>
+            /// Gets nothing. This field is used to get an annotated generic nullable value type-containing
+            /// reference type.
+            /// </summary>
+            [PublicAPI]
+            private List<int?> NonNullableNullableValueTypeList { get; } = new();
+
+            /// <summary>
+            /// Gets nothing. This field is used to get an annotated generic reference type-containing reference
             /// type.
             /// </summary>
-            private List<int?> NonNullableNullableValueTypeList { get; } = null!;
+            [PublicAPI]
+            private List<string> ReferenceTypeList { get; } = new();
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated nullable generic reference type-containing
             /// reference type.
             /// </summary>
-            private List<string>? NullableReferenceTypeList { get; } = null!;
+            [PublicAPI]
+            private List<string>? NullableReferenceTypeList { get; }
 
             /// <summary>
             /// Gets nothing. This field is used to get an annotated generic nullable reference type-containing
             /// reference type.
             /// </summary>
-            private List<string?> NonNullableNullableReferenceTypeList { get; } = null!;
+            [PublicAPI]
+            private List<string?> NonNullableNullableReferenceTypeList { get; } = new();
 
             [Fact]
             public void ReturnsFalseForValueType()
@@ -87,19 +109,6 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
                 var property = GetType().GetProperty
                 (
                     nameof(this.ValueType),
-                    BindingFlags.Instance | BindingFlags.NonPublic
-                );
-
-                Assert.NotNull(property);
-                Assert.False(property!.AllowsNull());
-            }
-
-            [Fact]
-            public void ReturnsFalseForReferenceType()
-            {
-                var property = GetType().GetProperty
-                (
-                    nameof(this.ReferenceType),
                     BindingFlags.Instance | BindingFlags.NonPublic
                 );
 
@@ -121,6 +130,19 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
             }
 
             [Fact]
+            public void ReturnsFalseForReferenceType()
+            {
+                var property = GetType().GetProperty
+                (
+                    nameof(this.ReferenceType),
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                );
+
+                Assert.NotNull(property);
+                Assert.False(property!.AllowsNull());
+            }
+
+            [Fact]
             public void ReturnsTrueForNullableReferenceType()
             {
                 var property = GetType().GetProperty
@@ -131,6 +153,19 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
 
                 Assert.NotNull(property);
                 Assert.True(property!.AllowsNull());
+            }
+
+            [Fact]
+            public void ReturnsFalseForGenericTypeWithValueTypeArgument()
+            {
+                var property = GetType().GetProperty
+                (
+                    nameof(this.ValueTypeList),
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                );
+
+                Assert.NotNull(property);
+                Assert.False(property!.AllowsNull());
             }
 
             [Fact]
@@ -152,6 +187,19 @@ namespace Remora.Discord.Tests.Tests.API.Extensions
                 var property = GetType().GetProperty
                 (
                     nameof(this.NonNullableNullableValueTypeList),
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                );
+
+                Assert.NotNull(property);
+                Assert.False(property!.AllowsNull());
+            }
+
+            [Fact]
+            public void ReturnsFalseForGenericTypeWithReferenceTypeArgument()
+            {
+                var property = GetType().GetProperty
+                (
+                    nameof(this.ReferenceTypeList),
                     BindingFlags.Instance | BindingFlags.NonPublic
                 );
 

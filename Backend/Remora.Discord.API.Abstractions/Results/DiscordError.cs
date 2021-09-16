@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Results
 {
@@ -381,6 +382,16 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxStickersReached = 30039,
 
         /// <summary>
+        /// Maximum number of prune requests has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfPruneRequestsReached = 30040,
+
+        /// <summary>
+        /// Maximum number of guild widget setting updates has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
+
+        /// <summary>
         /// Unauthorized. Provide a valid token and try again.
         /// </summary>
         Unauthorized = 40001,
@@ -651,6 +662,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The stage channel is already open.
         /// </summary>
         StageAlreadyOpen = 150006,
+
+        /// <summary>
+        /// The bot can't reply to a message without the <see cref="DiscordPermission.ReadMessageHistory"/> permission.
+        /// </summary>
+        CannotReplyWithoutReadMessageHistory = 160002,
 
         /// <summary>
         /// A thread has already been created for this message.

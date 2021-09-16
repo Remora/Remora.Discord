@@ -60,7 +60,7 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<Result<IRole>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
         {
             var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
             if (!getChannel.IsSuccess)
@@ -69,12 +69,12 @@ namespace Remora.Discord.Commands.Parsers
             }
 
             var channel = getChannel.Entity;
-            if (!channel.GuildID.HasValue)
+            if (!channel.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
             }
 
-            var getRoles = await _guildAPI.GetGuildRolesAsync(channel.GuildID.Value, ct);
+            var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
             if (!getRoles.IsSuccess)
             {
                 return Result<IRole>.FromError(getRoles);

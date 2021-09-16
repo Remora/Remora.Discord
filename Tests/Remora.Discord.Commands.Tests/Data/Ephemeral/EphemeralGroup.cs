@@ -1,5 +1,5 @@
-//
-//  IApplicationCommandUpdate.cs
+﻿//
+//  EphemeralGroup.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,16 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using System;
+using System.Threading.Tasks;
+using Remora.Commands.Attributes;
+using Remora.Commands.Groups;
+using Remora.Discord.Commands.Attributes;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+#pragma warning disable CS1591, SA1600
+
+namespace Remora.Discord.Commands.Tests.Data.Ephemeral
 {
-    /// <summary>
-    /// Represents an update of a slash command.
-    /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandUpdate : IApplicationCommand, IGatewayEvent
+    [Group("a")]
+    [Ephemeral]
+    public class EphemeralGroup : CommandGroup
     {
+        [Command("b")]
+        public Task<Result> B()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

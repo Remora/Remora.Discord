@@ -21,20 +21,17 @@
 //
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
-using Remora.Discord.Caching.Extensions;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Core;
-using Remora.Discord.Gateway;
-using Remora.Discord.Gateway.Extensions;
-using Remora.Discord.Gateway.Results;
+using Remora.Discord.Hosting.Extensions;
 using Remora.Discord.Samples.SlashCommands.Commands;
-using Remora.Results;
 
 namespace Remora.Discord.Samples.SlashCommands
 {
@@ -50,42 +47,18 @@ namespace Remora.Discord.Samples.SlashCommands
         /// <returns>A <see cref="Task"/> representing the asynchronous program execution.</returns>
         public static async Task Main(string[] args)
         {
-            var cancellationSource = new CancellationTokenSource();
+            var host = CreateHostBuilder(args)
+                .UseConsoleLifetime()
+                .Build();
 
-            Console.CancelKeyPress += (_, eventArgs) =>
-            {
-                eventArgs.Cancel = true;
-                cancellationSource.Cancel();
-            };
-
-            var botToken =
-                Environment.GetEnvironmentVariable("REMORA_BOT_TOKEN")
-                ?? throw new InvalidOperationException
-                (
-                    "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a valid token."
-                );
-
-            var serviceCollection = new ServiceCollection()
-                .AddLogging
-                (
-                    c => c
-                        .AddConsole()
-                        .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
-                        .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
-                )
-                .AddDiscordGateway(_ => botToken)
-                .AddDiscordCommands(true)
-                .AddCommandGroup<HttpCatCommands>()
-                .AddDiscordCaching();
-
-            serviceCollection.AddHttpClient();
-
-            var services = serviceCollection.BuildServiceProvider(true);
+            var services = host.Services;
             var log = services.GetRequiredService<ILogger<Program>>();
+            var configuration = services.GetRequiredService<IConfiguration>();
 
             Snowflake? debugServer = null;
-#if DEBUG
-            var debugServerString = Environment.GetEnvironmentVariable("REMORA_DEBUG_SERVER");
+
+            #if DEBUG
+            var debugServerString = configuration.GetValue<string?>("REMORA_DEBUG_SERVER");
             if (debugServerString is not null)
             {
                 if (!Snowflake.TryParse(debugServerString, out debugServer))
@@ -93,7 +66,7 @@ namespace Remora.Discord.Samples.SlashCommands
                     log.LogWarning("Failed to parse debug server from environment");
                 }
             }
-#endif
+            #endif
 
             var slashService = services.GetRequiredService<SlashService>();
 
@@ -108,46 +81,51 @@ namespace Remora.Discord.Samples.SlashCommands
             }
             else
             {
-                var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer, cancellationSource.Token);
+                var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer);
                 if (!updateSlash.IsSuccess)
                 {
                     log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error.Message);
                 }
             }
 
-            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
-
-            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
-            if (!runResult.IsSuccess)
-            {
-                switch (runResult.Error)
-                {
-                    case ExceptionError exe:
-                    {
-                        log.LogError
-                        (
-                            exe.Exception,
-                            "Exception during gateway connection: {ExceptionMessage}",
-                            exe.Message
-                        );
-
-                        break;
-                    }
-                    case GatewayWebSocketError:
-                    case GatewayDiscordError:
-                    {
-                        log.LogError("Gateway error: {Message}", runResult.Error.Message);
-                        break;
-                    }
-                    default:
-                    {
-                        log.LogError("Unknown error: {Message}", runResult.Error.Message);
-                        break;
-                    }
-                }
-            }
-
-            log.LogInformation("Bye bye");
+            await host.RunAsync();
         }
+
+        /// <summary>
+        /// Creates a generic application host builder.
+        /// </summary>
+        /// <param name="args">The arguments passed to the application.</param>
+        /// <returns>The host builder.</returns>
+        private static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
+            .AddDiscordService
+            (
+                services =>
+                {
+                    var configuration = services.GetRequiredService<IConfiguration>();
+
+                    return configuration.GetValue<string?>("REMORA_BOT_TOKEN") ??
+                           throw new InvalidOperationException
+                           (
+                               "No bot token has been provided. Set the REMORA_BOT_TOKEN environment variable to a " +
+                               "valid token."
+                           );
+                }
+            )
+            .ConfigureServices
+            (
+                (_, services) =>
+                {
+                    services
+                        .AddDiscordCommands(true)
+                        .AddCommandGroup<HttpCatCommands>();
+                }
+            )
+            .ConfigureLogging
+            (
+                c => c
+                    .AddConsole()
+                    .AddFilter("System.Net.Http.HttpClient.*.LogicalHandler", LogLevel.Warning)
+                    .AddFilter("System.Net.Http.HttpClient.*.ClientHandler", LogLevel.Warning)
+            );
     }
 }

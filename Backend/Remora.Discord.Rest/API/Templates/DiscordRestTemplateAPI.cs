@@ -73,13 +73,17 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
-            if (!packIcon.IsSuccess)
+            Optional<string?> iconData = default;
+            if (icon.IsDefined(out var iconStream))
             {
-                return Result<IGuild>.FromError(packIcon);
-            }
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IGuild>.FromError(packIcon);
+                }
 
-            var iconData = packIcon.Entity;
+                iconData = packIcon.Entity;
+            }
 
             return await this.DiscordHttpClient.PostAsync<IGuild>
             (

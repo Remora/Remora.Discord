@@ -68,29 +68,50 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
                 return Result.FromSuccess();
             }
 
-            if (!interactionContext.Data.Resolved.HasValue)
+            if (!interactionContext.Data.Resolved.IsDefined(out var resolved))
             {
                 return Result.FromSuccess();
             }
 
-            var resolved = interactionContext.Data.Resolved.Value;
-            if (!resolved.Users.HasValue)
+            if (!resolved.Users.IsDefined(out var users))
             {
                 return Result.FromSuccess();
             }
 
-            var user = resolved.Users.Value.First().Value;
+            var user = users.First().Value;
             return await PostUserHttpCatAsync(user);
         }
 
         /// <summary>
         /// Posts a HTTP error code cat.
+        /// This command will generate ephemeral responses.
         /// </summary>
         /// <param name="httpCode">The HTTP error code.</param>
         /// <returns>The result of the command.</returns>
         [Command("cat")]
         [Description("Posts a cat image that represents the given error code.")]
         public async Task<IResult> PostHttpCatAsync([Description("The HTTP code.")] int httpCode)
+        {
+            var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
+            var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
+
+            var reply = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
+
+            return !reply.IsSuccess
+                ? Result.FromError(reply)
+                : Result.FromSuccess();
+        }
+
+        /// <summary>
+        /// Posts a HTTP error code cat.
+        /// This command will generate ephemeral responses.
+        /// </summary>
+        /// <param name="httpCode">The HTTP error code.</param>
+        /// <returns>The result of the command.</returns>
+        [Command("ephemeral-cat")]
+        [Description("Posts a cat image that represents the given error code.")]
+        [Ephemeral]
+        public async Task<IResult> PostEphemeralHttpCatAsync([Description("The HTTP code.")] int httpCode)
         {
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);

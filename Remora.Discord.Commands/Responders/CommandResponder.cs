@@ -107,12 +107,12 @@ namespace Remora.Discord.Commands.Responders
             }
 
             var author = gatewayEvent.Author;
-            if (author.IsBot.HasValue && author.IsBot.Value)
+            if (author.IsBot.IsDefined(out var isBot) && isBot)
             {
                 return Result.FromSuccess();
             }
 
-            if (author.IsSystem.HasValue && author.IsSystem.Value)
+            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
             {
                 return Result.FromSuccess();
             }
@@ -172,44 +172,69 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.Content.HasValue)
+            if (!gatewayEvent.ID.IsDefined(out var messageID))
+            {
+                return Result.FromSuccess();
+            }
+
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+            {
+                return Result.FromSuccess();
+            }
+
+            if (!gatewayEvent.Content.IsDefined(out var content))
             {
                 return Result.FromSuccess();
             }
 
             if (_options.Prefix is not null)
             {
-                if (!gatewayEvent.Content.Value.StartsWith(_options.Prefix))
+                if (!content.StartsWith(_options.Prefix))
                 {
                     return Result.FromSuccess();
                 }
             }
 
-            if (!gatewayEvent.Author.HasValue)
+            if (!gatewayEvent.Author.IsDefined(out var author))
             {
                 return Result.FromSuccess();
             }
 
-            var author = gatewayEvent.Author.Value;
-            if (author.IsBot.HasValue && author.IsBot.Value)
+            if (author.IsBot.IsDefined(out var isBot) && isBot)
             {
                 return Result.FromSuccess();
             }
 
-            if (author.IsSystem.HasValue && author.IsSystem.Value)
+            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
             {
+                return Result.FromSuccess();
+            }
+
+            if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
+            {
+                // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
+                // change made to the message object
+                var interval = DateTimeOffset.UtcNow - edited;
+                if (interval >= TimeSpan.FromSeconds(3))
+                {
+                    return Result.FromSuccess();
+                }
+            }
+            else
+            {
+                // No edit means no visible change to the command
                 return Result.FromSuccess();
             }
 
             var context = new MessageContext
             (
-                gatewayEvent.ChannelID.Value,
+                channelID,
                 author,
-                gatewayEvent.ID.Value,
+                messageID,
                 gatewayEvent
             );
 
-            return await ExecuteCommandAsync(gatewayEvent.Content.Value, context, ct);
+            return await ExecuteCommandAsync(content, context, ct);
         }
 
         /// <summary>

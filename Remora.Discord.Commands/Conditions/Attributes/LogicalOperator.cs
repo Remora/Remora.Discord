@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandUpdateTests.cs
+//  LogicalOperator.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,34 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Tests.TestBases;
+using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.Commands.Conditions
 {
     /// <summary>
-    /// Tests the Hello event.
+    /// Enumerates various logical operators.
     /// </summary>
-    public class ApplicationCommandUpdateTests : GatewayEventTestBase<IApplicationCommandUpdate>
+    [PublicAPI]
+    public enum LogicalOperator
     {
+        /// <summary>
+        /// AND, that is, all of the inputs must be logically true.
+        /// </summary>
+        And,
+
+        /// <summary>
+        /// NOT, that is, all of the inputs must be logically false.
+        /// </summary>
+        Not,
+
+        /// <summary>
+        /// OR, that is, one or more of the inputs must be logically true.
+        /// </summary>
+        Or,
+
+        /// <summary>
+        /// XOR, that is, one and only one of the inputs must be logically true.
+        /// </summary>
+        Xor,
     }
 }

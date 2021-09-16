@@ -317,7 +317,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
-                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
+                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
+                .WithPropertyName(u => u.AccentColour, "accent_color");
 
             // Voice
             options.AddDataObjectConverter<IVoiceStateUpdate, VoiceStateUpdate>()
@@ -336,9 +337,6 @@ namespace Remora.Discord.API.Extensions
 
             // Interactions
             options.AddDataObjectConverter<IInteractionCreate, InteractionCreate>();
-            options.AddDataObjectConverter<IApplicationCommandCreate, ApplicationCommandCreate>();
-            options.AddDataObjectConverter<IApplicationCommandUpdate, ApplicationCommandUpdate>();
-            options.AddDataObjectConverter<IApplicationCommandDelete, ApplicationCommandDelete>();
 
             // Integrations
             options.AddDataObjectConverter<IIntegrationCreate, IntegrationCreate>()
@@ -591,7 +589,8 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddMessageObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IAttachment, Attachment>();
+            options.AddDataObjectConverter<IAttachment, Attachment>()
+                .WithPropertyName(a => a.IsEphemeral, "ephemeral");
 
             options.AddDataObjectConverter<IEmbed, Embed>()
                 .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
@@ -705,21 +704,24 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
-                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
+                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
+                .WithPropertyName(u => u.AccentColour, "accent_color");
 
             options.AddDataObjectConverter<IPartialUser, PartialUser>()
                 .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(u => u.IsBot, "bot")
                 .WithPropertyName(u => u.IsSystem, "system")
                 .WithPropertyName(u => u.IsVerified, "verified")
-                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled");
+                .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
+                .WithPropertyName(u => u.AccentColour, "accent_color");
 
             options.AddDataObjectConverter<IUserMention, UserMention>()
                 .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
                 .WithPropertyName(m => m.IsBot, "bot")
                 .WithPropertyName(m => m.IsSystem, "system")
                 .WithPropertyName(m => m.IsVerified, "verified")
-                .WithPropertyName(m => m.IsMFAEnabled, "mfa_enabled");
+                .WithPropertyName(m => m.IsMFAEnabled, "mfa_enabled")
+                .WithPropertyName(u => u.AccentColour, "accent_color");
 
             options.AddDataObjectConverter<IConnection, Connection>()
                 .WithPropertyName(c => c.IsRevoked, "revoked")

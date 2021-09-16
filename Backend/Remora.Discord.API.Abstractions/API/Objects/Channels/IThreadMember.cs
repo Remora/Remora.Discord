@@ -63,6 +63,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the presence information related to the thread member.
         /// </summary>
         /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
-        Optional<IPartialPresence> Presence { get; }
+        Optional<IPartialPresence?> Presence { get; }
     }
 }

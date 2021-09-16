@@ -22,11 +22,20 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.Tests;
 
 namespace Remora.Discord.API.Tests.Objects
 {
     /// <inheritdoc />
     public class MessageTests : ObjectTestBase<IMessage>
     {
+        /// <inheritdoc />
+        protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
+        {
+            AllowMissing = new[]
+            {
+                "hoisted_role"
+            }
+        };
     }
 }

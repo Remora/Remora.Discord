@@ -48,7 +48,9 @@ namespace Remora.Discord.Commands.Extensions
                     GuildNews,
                     GuildStore,
                     GuildPrivateThread,
-                    GuildPublicThread
+                    GuildPublicThread,
+                    GuildNewsThread,
+                    GuildStageVoice
                 }
             },
             {

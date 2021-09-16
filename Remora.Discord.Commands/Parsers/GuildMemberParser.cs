@@ -58,7 +58,11 @@ namespace Remora.Discord.Commands.Parsers
         }
 
         /// <inheritdoc />
-        public override async ValueTask<Result<IGuildMember>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IGuildMember>> TryParseAsync
+        (
+            string value,
+            CancellationToken ct = default
+        )
         {
             if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
             {
@@ -72,12 +76,12 @@ namespace Remora.Discord.Commands.Parsers
             }
 
             var channel = getChannel.Entity;
-            if (!channel.GuildID.HasValue)
+            if (!channel.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
             }
 
-            return await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);
+            return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
         }
     }
 }

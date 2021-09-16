@@ -70,5 +70,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the width of the file (if image).
         /// </summary>
         Optional<int?> Width { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the attachment is ephemeral.
+        /// </summary>
+        Optional<bool> IsEphemeral { get; }
     }
 }

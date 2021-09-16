@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandUpdate.cs
+//  PermissionDeniedError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,30 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Results;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.API.Gateway.Events
+namespace Remora.Discord.Commands.Results
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IApplicationCommandUpdate" />
+    /// <summary>
+    /// Represents a failure to fulfill a set of requirements related to permissions.
+    /// </summary>
+    /// <param name="Message">The custom error message, if any.</param>
+    /// <param name="Permissions">The permissions which were checked.</param>
     [PublicAPI]
-    public record ApplicationCommandUpdate
+    public record PermissionDeniedError
     (
-        Snowflake ID,
-        Optional<ApplicationCommandType> Type,
-        Snowflake ApplicationID,
-        Optional<Snowflake> GuildID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
-    ) :
-        ApplicationCommand(ID, Type, ApplicationID, GuildID, Name, Description, Options, DefaultPermission),
-        IApplicationCommandUpdate;
+        string Message = "Permission denied.",
+        params DiscordPermission[] Permissions
+    ) : ResultError(Message);
 }

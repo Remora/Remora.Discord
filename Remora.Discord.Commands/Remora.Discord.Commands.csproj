@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.3.0</Version>
+        <Version>10.0.4</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Add a way of checking whether the feedback service has already edited the original message.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="5.1.0" />
+        <PackageReference Include="Remora.Commands" Version="7.0.2" />
         <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.0" />
     </ItemGroup>
 

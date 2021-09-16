@@ -1,5 +1,5 @@
 //
-//  IApplicationCommandDelete.cs
+//  WebSocketError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,16 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Net.WebSockets;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.Gateway.Results
 {
     /// <summary>
-    /// Represents the deletion of a slash command.
+    /// Represents a failure to perform a websocket action.
     /// </summary>
+    /// <param name="State">The state the socket ended up in.</param>
+    /// <param name="Message">The custom message, if any.</param>
     [PublicAPI]
-    public interface IApplicationCommandDelete : IApplicationCommand, IGatewayEvent
-    {
-    }
+    public record WebSocketError(WebSocketState State, string Message = "The requested websocket operation failed.")
+        : ResultError(Message);
 }

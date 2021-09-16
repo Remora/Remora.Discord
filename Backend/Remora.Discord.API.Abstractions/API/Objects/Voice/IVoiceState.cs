@@ -30,71 +30,110 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents a user's voice connection status.
     /// </summary>
     [PublicAPI]
-    public interface IVoiceState
+    public interface IVoiceState : IPartialVoiceState
     {
         /// <summary>
         /// Gets the guild ID this voice state is for.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        new Optional<Snowflake> GuildID { get; }
 
         /// <summary>
         /// Gets the channel ID this user is connected to.
         /// </summary>
-        Snowflake? ChannelID { get; }
+        new Snowflake? ChannelID { get; }
 
         /// <summary>
         /// Gets the user ID this voice state is for.
         /// </summary>
-        Snowflake UserID { get; }
+        new Snowflake UserID { get; }
 
         /// <summary>
         /// Gets the guild member this voice state is for.
         /// </summary>
-        Optional<IGuildMember> Member { get; }
+        new Optional<IGuildMember> Member { get; }
 
         /// <summary>
         /// Gets the session ID for this voice state.
         /// </summary>
-        string SessionID { get; }
+        new string SessionID { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is deafened by the server.
         /// </summary>
-        bool IsDeafened { get; }
+        new bool IsDeafened { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is muted by the server.
         /// </summary>
-        bool IsMuted { get; }
+        new bool IsMuted { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is locally deafened.
         /// </summary>
-        bool IsSelfDeafened { get; }
+        new bool IsSelfDeafened { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is locally muted.
         /// </summary>
-        bool IsSelfMuted { get; }
+        new bool IsSelfMuted { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is currently streaming using "Go Live".
         /// </summary>
-        Optional<bool> IsStreaming { get; }
+        new Optional<bool> IsStreaming { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user's camera is enabled.
         /// </summary>
-        bool IsVideoEnabled { get; }
+        new bool IsVideoEnabled { get; }
 
         /// <summary>
         /// Gets a value indicating whether the user is muted by the current user.
         /// </summary>
-        bool IsSuppressed { get; }
+        new bool IsSuppressed { get; }
 
         /// <summary>
         /// Gets the time at which the user requested to speak.
         /// </summary>
-        DateTimeOffset? RequestToSpeakTimestamp { get; }
+        new DateTimeOffset? RequestToSpeakTimestamp { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialVoiceState.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake?> IPartialVoiceState.ChannelID => this.ChannelID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialVoiceState.UserID => this.UserID;
+
+        /// <inheritdoc/>
+        Optional<IGuildMember> IPartialVoiceState.Member => this.Member;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialVoiceState.SessionID => this.SessionID;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsDeafened => this.IsDeafened;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsMuted => this.IsMuted;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsSelfDeafened => this.IsSelfDeafened;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsSelfMuted => this.IsSelfMuted;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsStreaming => this.IsStreaming;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsVideoEnabled => this.IsVideoEnabled;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialVoiceState.IsSuppressed => this.IsSuppressed;
+
+        /// <inheritdoc/>
+        Optional<DateTimeOffset?> IPartialVoiceState.RequestToSpeakTimestamp => this.RequestToSpeakTimestamp;
     }
 }

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.Core
@@ -70,6 +71,31 @@ namespace Remora.Discord.Core
         {
             _value = value;
             this.HasValue = true;
+        }
+
+        /// <inheritdoc />
+        [MemberNotNullWhen(true, nameof(Value))]
+        [MemberNotNullWhen(true, nameof(_value))]
+        public bool IsDefined() => this.HasValue && _value is not null;
+
+        /// <summary>
+        /// Determines whether the option has a defined value; that is, whether it both has a value and that value is
+        /// non-null.
+        /// </summary>
+        /// <param name="value">The defined value.</param>
+        /// <returns>true if the optional has a value and that value is non-null; otherwise, false.</returns>
+        [MemberNotNullWhen(true, nameof(Value))]
+        public bool IsDefined([NotNullWhen(true)] out TValue? value)
+        {
+            value = default;
+
+            if (!IsDefined())
+            {
+                return false;
+            }
+
+            value = _value;
+            return true;
         }
 
         /// <summary>

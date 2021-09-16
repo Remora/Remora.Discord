@@ -91,7 +91,11 @@ namespace Remora.Discord.Gateway.Transport
                     default:
                     {
                         socket.Dispose();
-                        return new GenericError("Failed to connect to the endpoint.");
+                        return new Results.WebSocketError
+                        (
+                            socket.State,
+                            "Failed to connect to the endpoint."
+                        );
                     }
                 }
             }
@@ -261,6 +265,10 @@ namespace Remora.Discord.Gateway.Transport
                     catch (WebSocketException)
                     {
                         // Most likely due to some kind of premature or forced disconnection; we'll live with it
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // We still need to cleanup the socket
                     }
 
                     break;

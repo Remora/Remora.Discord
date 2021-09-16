@@ -38,6 +38,6 @@ namespace Remora.Discord.API.Gateway.Events.Channels
         DateTimeOffset JoinTimestamp,
         ThreadMemberFlags Flags,
         Optional<IGuildMember> Member,
-        Optional<IPartialPresence> Presence
+        Optional<IPartialPresence?> Presence
     ) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;
 }

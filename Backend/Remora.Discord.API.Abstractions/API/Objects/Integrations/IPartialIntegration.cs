@@ -32,79 +32,49 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialIntegration
     {
-        /// <summary>
-        /// Gets the ID of the integration.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the integration.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.Name" />
         Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the type of integration.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.Type" />
         Optional<string> Type { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the integration is enabled.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.IsEnabled" />
         Optional<bool> IsEnabled { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the integration is syncing.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.IsSyncing" />
         Optional<bool> IsSyncing { get; }
 
-        /// <summary>
-        /// Gets the ID of the role that this integration uses for subscribers.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.RoleID" />
         Optional<Snowflake> RoleID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether emoticons should be synced for this integration (twitch only, currently).
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.EnableEmoticons" />
         Optional<bool> EnableEmoticons { get; }
 
-        /// <summary>
-        /// Gets the behaviour of expiring subscribers.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.ExpireBehaviour" />
         Optional<IntegrationExpireBehaviour> ExpireBehaviour { get; }
 
-        /// <summary>
-        /// Gets the grace period (in days) before expiring subscribers.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.ExpireGracePeriod" />
         Optional<TimeSpan> ExpireGracePeriod { get; }
 
-        /// <summary>
-        /// Gets the user for this integration.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.User" />
         Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets the integration's account information.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.Account" />
         Optional<IAccount> Account { get; }
 
-        /// <summary>
-        /// Gets the time when the integration was last synced.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.SyncedAt" />
         Optional<DateTimeOffset> SyncedAt { get; }
 
-        /// <summary>
-        /// Gets the number of subscribers this integration has.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.SubscriberCount" />
         Optional<int> SubscriberCount { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this integration has been revoked.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.IsRevoked" />
         Optional<bool> IsRevoked { get; }
 
-        /// <summary>
-        /// Gets the bot/OAuth2 application for Discord integrations.
-        /// </summary>
+        /// <inheritdoc cref="IIntegration.Application" />
         Optional<IIntegrationApplication> Application { get; }
     }
 }

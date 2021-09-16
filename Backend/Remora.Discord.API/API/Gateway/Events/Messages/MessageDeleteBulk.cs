@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Core;
@@ -31,6 +32,7 @@ namespace Remora.Discord.API.Gateway.Events
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageDeleteBulk" />
     [PublicAPI]
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Intentional.")]
     public record MessageDeleteBulk
     (
         IReadOnlyList<Snowflake> IDs,

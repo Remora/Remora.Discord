@@ -1,5 +1,5 @@
 //
-//  ApplicationCommandCreateTests.cs
+//  DiscordServiceOptions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Tests.TestBases;
-
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.Hosting.Options
 {
     /// <summary>
-    /// Tests the Hello event.
+    /// Defines a set of options used by the background gateway service.
     /// </summary>
-    public class ApplicationCommandCreateTests : GatewayEventTestBase<IApplicationCommandCreate>
-    {
-    }
+    /// <param name="TerminateApplicationOnCriticalGatewayErrors">
+    /// Whether the service should stop the application if a critical gateway error is encountered.
+    /// </param>
+    public record DiscordServiceOptions(bool TerminateApplicationOnCriticalGatewayErrors = true);
 }

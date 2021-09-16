@@ -1,5 +1,5 @@
-//
-//  RequireUserGuildPermissionAttribute.cs
+﻿//
+//  EphemeralAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,30 +22,28 @@
 
 using System;
 using JetBrains.Annotations;
-using Remora.Commands.Conditions;
-using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
-    /// Marks a command as requiring the requesting user to have a particular permission within the guild.
+    /// Marks a command as requiring an ephemeral response, when invoked by an interaction.
     /// </summary>
     [PublicAPI]
-    [AttributeUsage(AttributeTargets.Method)]
-    public class RequireUserGuildPermissionAttribute : ConditionAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class EphemeralAttribute : Attribute
     {
         /// <summary>
-        /// Gets the permission.
+        /// Gets a value indicating whether this command should send ephemeral responses.
         /// </summary>
-        public DiscordPermission Permission { get; }
+        public bool IsEphemeral { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequireUserGuildPermissionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="EphemeralAttribute"/> class.
         /// </summary>
-        /// <param name="permission">The permission.</param>
-        public RequireUserGuildPermissionAttribute(DiscordPermission permission)
+        /// <param name="isEphemeral">A value indicating whether this command should send ephemeral responses. Set this to override group-level <see cref="EphemeralAttribute"/>s.</param>
+        public EphemeralAttribute(bool isEphemeral = true)
         {
-           this.Permission = permission;
+            this.IsEphemeral = isEphemeral;
         }
     }
 }

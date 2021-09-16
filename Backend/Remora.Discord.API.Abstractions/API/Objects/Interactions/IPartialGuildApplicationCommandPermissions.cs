@@ -32,24 +32,16 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialGuildApplicationCommandPermissions
     {
-        /// <summary>
-        /// Gets the ID of the command.
-        /// </summary>
+        /// <inheritdoc cref="IGuildApplicationCommandPermissions.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the application the command belongs to.
-        /// </summary>
+        /// <inheritdoc cref="IGuildApplicationCommandPermissions.ApplicationID" />
         Optional<Snowflake> ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuildApplicationCommandPermissions.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the permissions for the command in the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuildApplicationCommandPermissions.Permissions" />
         Optional<IReadOnlyList<IApplicationCommandPermissions>> Permissions { get; }
     }
 }

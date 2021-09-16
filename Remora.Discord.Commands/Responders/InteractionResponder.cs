@@ -32,6 +32,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
@@ -107,12 +108,12 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.Data.HasValue)
+            if (!gatewayEvent.Data.IsDefined(out var interactionData))
             {
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.ChannelID.HasValue)
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
             {
                 return Result.FromSuccess();
             }
@@ -130,10 +131,72 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
+            var context = new InteractionContext
+            (
+                gatewayEvent.GuildID,
+                channelID,
+                user,
+                gatewayEvent.Member,
+                gatewayEvent.Token,
+                gatewayEvent.ID,
+                gatewayEvent.ApplicationID,
+                interactionData
+            );
+
+            // Provide the created context to any services inside this scope
+            _contextInjection.Context = context;
+
+            interactionData.UnpackInteraction(out var command, out var parameters);
+
+            // Run any user-provided pre-execution events
+            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
+            if (!preExecution.IsSuccess)
+            {
+                return preExecution;
+            }
+
+            var prepareCommand = await _commandService.TryPrepareCommandAsync
+            (
+                command,
+                parameters,
+                _services,
+                searchOptions: _treeSearchOptions,
+                tokenizerOptions: _tokenizerOptions,
+                ct: ct
+            );
+
+            if (!prepareCommand.IsSuccess)
+            {
+                // Early bailout
+                return await _eventCollector.RunPostExecutionEvents
+                (
+                    _services,
+                    context,
+                    prepareCommand,
+                    ct
+                );
+            }
+
+            var preparedCommand = prepareCommand.Entity;
             if (!_options.SuppressAutomaticResponses)
             {
                 // Signal Discord that we'll be handling this one asynchronously
                 var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
+
+                var ephemeralAttribute = preparedCommand.Command.Node
+                    .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
+
+                var sendEphemeral = (ephemeralAttribute is null && _options.UseEphemeralResponses) ||
+                                    ephemeralAttribute?.IsEphemeral == true;
+
+                if (sendEphemeral)
+                {
+                    response = response with
+                    {
+                        Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral)
+                    };
+                }
+
                 var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
                 (
                     gatewayEvent.ID,
@@ -148,39 +211,11 @@ namespace Remora.Discord.Commands.Responders
                 }
             }
 
-            var interactionData = gatewayEvent.Data.Value;
-            interactionData.UnpackInteraction(out var command, out var parameters);
-
-            var context = new InteractionContext
-            (
-                gatewayEvent.GuildID,
-                gatewayEvent.ChannelID.Value,
-                user,
-                gatewayEvent.Member,
-                gatewayEvent.Token,
-                gatewayEvent.ID,
-                gatewayEvent.ApplicationID,
-                interactionData
-            );
-
-            // Provide the created context to any services inside this scope
-            _contextInjection.Context = context;
-
-            // Run any user-provided pre execution events
-            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
-            if (!preExecution.IsSuccess)
-            {
-                return preExecution;
-            }
-
             // Run the actual command
             var executeResult = await _commandService.TryExecuteAsync
             (
-                command,
-                parameters,
+                preparedCommand,
                 _services,
-                tokenizerOptions: _tokenizerOptions,
-                searchOptions: _treeSearchOptions,
                 ct: ct
             );
 

@@ -48,12 +48,12 @@ namespace Remora.Discord.Commands.Extensions
             out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
         )
         {
-            if (!commandData.Name.HasValue)
+            if (!commandData.Name.IsDefined(out var dataName))
             {
                 throw new InvalidOperationException();
             }
 
-            if (!commandData.Options.HasValue)
+            if (!commandData.Options.IsDefined(out var options))
             {
                 commandName = commandData.Name.Value;
                 parameters = new Dictionary<string, IReadOnlyList<string>>();
@@ -61,11 +61,11 @@ namespace Remora.Discord.Commands.Extensions
                 return;
             }
 
-            UnpackInteractionOptions(commandData.Options.Value, out var nestedCommandName, out var nestedParameters);
+            UnpackInteractionOptions(options, out var nestedCommandName, out var nestedParameters);
 
             commandName = nestedCommandName is not null
-                ? $"{commandData.Name.Value} {nestedCommandName}"
-                : commandData.Name.Value;
+                ? $"{dataName} {nestedCommandName}"
+                : dataName;
 
             parameters = nestedParameters ?? new Dictionary<string, IReadOnlyList<string>>();
         }
@@ -109,11 +109,9 @@ namespace Remora.Discord.Commands.Extensions
                     { name, values }
                 };
             }
-            else if (singleOption.Options.HasValue)
+            else if (singleOption.Options.IsDefined(out var nestedOptions))
             {
                 // A nested group
-                var nestedOptions = singleOption.Options.Value;
-
                 UnpackInteractionOptions(nestedOptions, out var nestedCommandName, out parameters);
 
                 commandName = nestedCommandName is not null
@@ -132,13 +130,12 @@ namespace Remora.Discord.Commands.Extensions
             IApplicationCommandInteractionDataOption option
         )
         {
-            if (!option.Value.HasValue)
+            if (!option.Value.IsDefined(out var optionValue))
             {
                 throw new InvalidOperationException();
             }
 
             var values = new List<string>();
-            var optionValue = option.Value.Value;
             if (optionValue.Value is ICollection collection)
             {
                 values.AddRange(collection.Cast<object>().Select(o => o.ToString() ?? string.Empty));

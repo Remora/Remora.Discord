@@ -32,6 +32,7 @@ release).
 
 Opening up the `Program.cs` file, we can start to set up our environment.
 
+## Setting up a gateway client
 Since we're writing a bot that's going to respond to a simple command, we need a
 connection to Discord's realtime gateway. This is facilitated through the
 `DiscordGatewayClient` class, as well as a bot account you'll need to create
@@ -51,7 +52,7 @@ For simplicity's sake, we'll set up our program to respond to CTRL+C at the
 command line, and terminate the gateway client if it catches that keypress.
 
 ```csharp
-static async Task Main(string[] args)
+static async Task Main()
 {
     var cancellationSource = new CancellationTokenSource();
 
@@ -71,7 +72,7 @@ register and access various types and services from the library.
 var botToken = "YOUR_TOKEN_HERE";
 
 var services = new ServiceCollection()
-    .AddDiscordGateway(() => botToken)
+    .AddDiscordGateway(_ => botToken)
     .BuildServiceProvider();
 ```
 
@@ -95,6 +96,7 @@ provider we've created.
 var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
 ```
 
+## Connecting to the gateway
 At this point, the gateway client is fully functional, but has not connected to
 the gateway yet. To do this, we call the `RunAsync` method, and pass in the
 cancellation token from the source we created earlier.
@@ -117,6 +119,10 @@ contain some additional information about what caused the gateway client to stop
 running.
 
 Let's implement some error handling next.
+
+```csharp
+var log = services.GetRequiredService<ILogger<Program>>();
+```
 
 ```csharp
 if (!runResult.IsSuccess)
@@ -180,6 +186,7 @@ info: Remora.Discord.Gateway.DiscordGatewayClient[0]
       Connected.
 ```
 
+## Creating a Responder
 Now, in its current state, our bot doesn't do much of anything. Sure, it runs
 and connects, but that's no fun! Let's add a simple `Responder` that can - as
 the name suggests - respond to events from Discord's gateway.
@@ -238,6 +245,7 @@ this is the same token that we passed to `RunAsync`, and we should respect it.
 If cancellation has been requested, we should bail out with a failed result as
 soon as we can.
 
+## Adding a command
 Now, our command will be *very* simple, and won't really be much more than a
 direct match against the message contents, but it gets the point across. In the
 future, we'll have a proper command framework available, but that's outside of
@@ -300,6 +308,7 @@ really only interested in the embed and channel parameters right now -
 therefore, we can skip over the other optional parameters and just pass in the
 ones we care about.
 
+## Adding the responder to the gateway client
 With that done, our responder is implemented and ready to go! There's only one
 final thing to do before we can run our bot and see it in action - we need to
 make it available to the gateway client via - say it with me - dependency
@@ -309,18 +318,136 @@ Back in our `Main` method, where we configure our services, we'll make a small
 addition.
 
 ```csharp
-var responderService = new ResponderService();
 var services = new ServiceCollection()
     .AddDiscordGateway(_ => botToken)
-    .AddResponder<PingPongResponder>(responderService)
+    .AddResponder<PingPongResponder>()
     .BuildServiceProvider();
 ```
 
 And that's it! The `AddResponder<T>` method registers the responder as a scoped
-service for all of the `IResponder<T>` interfaces it implements. The responder 
-service is a supporting type for event dispatching, and keeps track of which 
-responders are registered for which events.
+service for all of the `IResponder<T>` interfaces it implements.
 
+## Example program
+Putting everything together, your program should now look something like this.
+
+```csharp
+using System;
+using System.Drawing;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
+using Remora.Discord.Gateway;
+using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Responders;
+using Remora.Discord.Gateway.Results;
+using Remora.Results;
+
+namespace Remora.Discord.Docs.Custom.Guides.Getting_Started
+{
+    class Program
+    {
+        static async Task Main()
+        {
+            var cancellationSource = new CancellationTokenSource();
+
+            Console.CancelKeyPress += (sender, eventArgs) =>
+            {
+                eventArgs.Cancel = true;
+                cancellationSource.Cancel();
+            };
+
+            var botToken = "YOUR_TOKEN_HERE";
+            // Do not place your bot token in the source code of your program
+            // when you write your real bot. It's a massive security risk,
+            // and is only done here for the sake of this guide. You should store
+            // your token outside of the program in some kind of database or file
+            // (appsettings, plaintext file, etc) that is not directly accessible
+            // from your source code.
+
+            var services = new ServiceCollection()
+                .AddDiscordGateway(_ => botToken)
+                .AddResponder<PingPongResponder>()
+                .BuildServiceProvider();
+
+            var gatewayClient = services.GetRequiredService<DiscordGatewayClient>();
+            var log = services.GetRequiredService<ILogger<Program>>();
+
+            var runResult = await gatewayClient.RunAsync(cancellationSource.Token);
+
+            if (!runResult.IsSuccess)
+            {
+                switch (runResult.Error)
+                {
+                    case ExceptionError exe:
+                        {
+                            log.LogError
+                            (
+                                exe.Exception,
+                                "Exception during gateway connection: {ExceptionMessage}",
+                                exe.Message
+                            );
+
+                            break;
+                        }
+                    case GatewayWebSocketError:
+                    case GatewayDiscordError:
+                        {
+                            log.LogError("Gateway error: {Message}", runResult.Error.Message);
+                            break;
+                        }
+                    default:
+                        {
+                            log.LogError("Unknown error: {Message}", runResult.Error.Message);
+                            break;
+                        }
+                }
+            }
+
+            Console.WriteLine("Bye bye");
+        }
+    }
+
+    public class PingPongResponder : IResponder<IMessageCreate>
+    {
+        private readonly IDiscordRestChannelAPI _channelAPI;
+
+        public PingPongResponder(IDiscordRestChannelAPI channelAPI)
+        {
+            _channelAPI = channelAPI;
+        }
+
+        public async Task<Result> RespondAsync
+        (
+            IMessageCreate gatewayEvent,
+            CancellationToken ct = default
+        )
+        {
+            if (gatewayEvent.Content != "!ping")
+            {
+                return Result.FromSuccess();
+            }
+
+            var embed = new Embed(Description: "Pong!", Colour: Color.LawnGreen);
+            var replyResult = await _channelAPI.CreateMessageAsync
+            (
+                gatewayEvent.ChannelID,
+                embeds: new[] { embed },
+                ct: ct
+            );
+
+            return !replyResult.IsSuccess 
+                ? Result.FromError(replyResult) 
+                : Result.FromSuccess();
+        }
+    }
+}
+```
+
+## Conclusion
 Now, running your bot, going into Discord, and running your command should net
 you the following.
 

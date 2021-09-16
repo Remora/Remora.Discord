@@ -73,5 +73,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the command is enabled by default when added to a guild.
         /// </summary>
         Optional<bool> DefaultPermission { get; }
+
+        /// <summary>
+        /// Gets a value that increments on substantial changes.
+        /// </summary>
+        Snowflake Version { get; }
     }
 }

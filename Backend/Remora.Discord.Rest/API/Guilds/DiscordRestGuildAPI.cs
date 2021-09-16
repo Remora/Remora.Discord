@@ -77,13 +77,17 @@ namespace Remora.Discord.Rest.API
 
             await using var memoryStream = new MemoryStream();
 
-            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
-            if (!packIcon.IsSuccess)
+            var iconData = default(Optional<string?>);
+            if (icon.IsDefined(out var iconStream))
             {
-                return Result<IGuild>.FromError(packIcon);
-            }
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IGuild>.FromError(packIcon);
+                }
 
-            var iconData = packIcon.Entity;
+                iconData = packIcon.Entity;
+            }
 
             return await this.DiscordHttpClient.PostAsync<IGuild>
             (
@@ -178,62 +182,29 @@ namespace Remora.Discord.Rest.API
         {
             await using var memoryStream = new MemoryStream();
 
-            Optional<string?> iconData = default;
-            if (icon.HasValue)
+            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+            if (!packIcon.IsSuccess)
             {
-                if (icon.Value is null)
-                {
-                    iconData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(icon.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
-
-                    iconData = packImage.Entity;
-                }
+                return Result<IGuild>.FromError(packIcon);
             }
 
-            Optional<string?> splashData = default;
-            if (splash.HasValue)
-            {
-                if (splash.Value is null)
-                {
-                    splashData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(splash.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
+            var iconData = packIcon.Entity;
 
-                    splashData = packImage.Entity;
-                }
+            var packSplash = await ImagePacker.PackImageAsync(splash, ct);
+            if (!packSplash.IsSuccess)
+            {
+                return Result<IGuild>.FromError(packSplash);
             }
 
-            Optional<string?> discoverySplashData = default;
-            if (discoverySplash.HasValue)
-            {
-                if (discoverySplash.Value is null)
-                {
-                    discoverySplashData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(discoverySplash.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
+            var splashData = packSplash.Entity;
 
-                    discoverySplashData = packImage.Entity;
-                }
+            var packDiscoverySplash = await ImagePacker.PackImageAsync(discoverySplash, ct);
+            if (!packDiscoverySplash.IsSuccess)
+            {
+                return Result<IGuild>.FromError(packDiscoverySplash);
             }
+
+            var discoverySplashData = packDiscoverySplash.Entity;
 
             var packBanner = await ImagePacker.PackImageAsync(banner, ct);
             if (!packBanner.IsSuccess)

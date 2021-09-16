@@ -33,49 +33,31 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialGuildMember
     {
-        /// <summary>
-        /// Gets the user this guild member represents.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.User" />
         Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets the user's guild nickname.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.Nickname" />
         Optional<string?> Nickname { get; }
 
-        /// <summary>
-        /// Gets the roles the user has.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.Roles" />
         Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <summary>
-        /// Gets when the user joined the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.JoinedAt" />
         Optional<DateTimeOffset> JoinedAt { get; }
 
-        /// <summary>
-        /// Gets when the user started boosting the guild.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.PremiumSince" />
         Optional<DateTimeOffset?> PremiumSince { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is deafened in voice channels.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.IsDeafened" />
         Optional<bool> IsDeafened { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is muted in voice channels.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.IsMuted" />
         Optional<bool> IsMuted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user has passed the guild membership screening requirements.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.IsPending" />
         Optional<bool?> IsPending { get; }
 
-        /// <summary>
-        /// Gets the total permissions of the member in a channel, including overrides.
-        /// </summary>
+        /// <inheritdoc cref="IGuildMember.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
     }
 }

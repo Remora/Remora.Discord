@@ -32,69 +32,43 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialVoiceState
     {
-        /// <summary>
-        /// Gets the guild ID this voice state is for.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the channel ID this user is connected to.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.ChannelID" />
         Optional<Snowflake?> ChannelID { get; }
 
-        /// <summary>
-        /// Gets the user ID this voice state is for.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.UserID" />
         Optional<Snowflake> UserID { get; }
 
-        /// <summary>
-        /// Gets the guild member this voice state is for.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.Member" />
         Optional<IGuildMember> Member { get; }
 
-        /// <summary>
-        /// Gets the session ID for this voice state.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.SessionID" />
         Optional<string> SessionID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is deafened by the server.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsDeafened" />
         Optional<bool> IsDeafened { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is muted by the server.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsMuted" />
         Optional<bool> IsMuted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is locally deafened.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsSelfDeafened" />
         Optional<bool> IsSelfDeafened { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is locally muted.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsSelfMuted" />
         Optional<bool> IsSelfMuted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is currently streaming using "Go Live".
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsStreaming" />
         Optional<bool> IsStreaming { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user's camera is enabled.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsVideoEnabled" />
         Optional<bool> IsVideoEnabled { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is muted by the current user.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.IsSuppressed" />
         Optional<bool> IsSuppressed { get; }
 
-        /// <summary>
-        /// Gets the time at which the user requested to speak.
-        /// </summary>
+        /// <inheritdoc cref="IVoiceState.RequestToSpeakTimestamp" />
         Optional<DateTimeOffset?> RequestToSpeakTimestamp { get; }
     }
 }

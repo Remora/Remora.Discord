@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the name of the author.
         /// </summary>
-        Optional<string> Name { get; }
+        string Name { get; }
 
         /// <summary>
         /// Gets the Url of the author.

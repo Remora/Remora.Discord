@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>28.0.0</Version>
+        <Version>33.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,8 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Rename type.
+            Implement `IsEphemeral` on attachments.
+            Explicitly implement partial variants of interfaces.
         </PackageReleaseNotes>
     </PropertyGroup>
 

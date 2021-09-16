@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
@@ -37,11 +38,11 @@ namespace Remora.Discord.Commands.Parsers
     public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         /// <inheritdoc />
-        public override ValueTask<Result<Snowflake>> TryParse(string value, CancellationToken ct)
+        public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
         {
             return new
             (
-                !Snowflake.TryParse(value, out var snowflake)
+                !Snowflake.TryParse(value.Unmention(), out var snowflake)
                     ? new ParsingError<Snowflake>(value)
                     : snowflake.Value
             );
