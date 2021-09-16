@@ -589,7 +589,8 @@ namespace Remora.Discord.API.Extensions
         /// <returns>The options, with the converters added.</returns>
         private static JsonSerializerOptions AddMessageObjectConverters(this JsonSerializerOptions options)
         {
-            options.AddDataObjectConverter<IAttachment, Attachment>();
+            options.AddDataObjectConverter<IAttachment, Attachment>()
+                .WithPropertyName(a => a.IsEphemeral, "ephemeral");
 
             options.AddDataObjectConverter<IEmbed, Embed>()
                 .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
