@@ -116,16 +116,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows the user to create public threads.
         /// </summary>
-        UsePublicThreads = 35,
+        CreatePublicThreads = 35,
 
         /// <summary>
         /// Allows the user to create private threads.
         /// </summary>
-        UsePrivateThreads = 36,
+        CreatePrivateThreads = 36,
 
         /// <summary>
         /// Allows the user to use stickers from other servers.
         /// </summary>
-        UseExternalStickers = 37
+        UseExternalStickers = 37,
+
+        /// <summary>
+        /// Allows the user to send messages in threads.
+        /// </summary>
+        SendMessagesInThreads = 38
     }
 }
