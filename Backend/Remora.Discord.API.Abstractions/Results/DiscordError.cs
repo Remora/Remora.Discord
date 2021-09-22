@@ -637,6 +637,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// This server must have monetization enabled to perform this action.
         /// </summary>
         ServerMonetizationRequired = 50097,
+        
+        /// <summary>
+        /// This server needs more boosts to perform this action.
+        /// </summary>
+        ServerNeedsMoreBoosts = 50101,
 
         /// <summary>
         /// Two factor is required for this operation.
