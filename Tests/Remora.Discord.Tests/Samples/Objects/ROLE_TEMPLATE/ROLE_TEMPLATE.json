@@ -1,8 +1,11 @@
 {
-  "id": 9,
-  "name": "none",
-  "color": 0,
-  "hoist": false,
-  "mentionable": false,
-  "permissions": "2146959351"
+    "id": 9,
+    "name": "none",
+    "color": 0,
+    "hoist": false,
+    "icon": "cf3ced8600b777c9486c6d8d84fb4327",
+    "unicode_emoji": null,
+    "position": 1,
+    "mentionable": false,
+    "permissions": "2146959351"
 }

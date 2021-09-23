@@ -53,6 +53,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         new bool IsHoisted { get; }
 
         /// <summary>
+        /// Gets the role's icon, if any.
+        /// </summary>
+        new IImageHash? Icon { get; }
+
+        /// <summary>
+        /// Gets the role's unicode emoji icon, if any.
+        /// </summary>
+        new string? UnicodeEmoji { get; }
+
+        /// <summary>
         /// Gets the position of the role.
         /// </summary>
         new int Position { get; }
@@ -88,6 +98,12 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<bool> IPartialRole.IsHoisted => this.IsHoisted;
+
+        /// <inheritdoc/>
+        Optional<IImageHash?> IPartialRole.Icon => new(this.Icon);
+
+        /// <inheritdoc/>
+        Optional<string?> IPartialRole.UnicodeEmoji => this.UnicodeEmoji;
 
         /// <inheritdoc/>
         Optional<int> IPartialRole.Position => this.Position;

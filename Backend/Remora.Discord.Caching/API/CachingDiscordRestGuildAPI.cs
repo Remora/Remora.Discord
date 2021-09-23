@@ -566,6 +566,8 @@ namespace Remora.Discord.Caching.API
             Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
+            Optional<Stream> icon = default,
+            Optional<string> unicodeEmoji = default,
             Optional<bool> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -578,6 +580,8 @@ namespace Remora.Discord.Caching.API
                 permissions,
                 colour,
                 isHoisted,
+                icon,
+                unicodeEmoji,
                 isMentionable,
                 reason,
                 ct
@@ -633,6 +637,8 @@ namespace Remora.Discord.Caching.API
             Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
+            Optional<Stream?> icon = default,
+            Optional<string?> unicodeEmoji = default,
             Optional<bool?> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -646,6 +652,8 @@ namespace Remora.Discord.Caching.API
                 permissions,
                 colour,
                 isHoisted,
+                icon,
+                unicodeEmoji,
                 isMentionable,
                 reason,
                 ct

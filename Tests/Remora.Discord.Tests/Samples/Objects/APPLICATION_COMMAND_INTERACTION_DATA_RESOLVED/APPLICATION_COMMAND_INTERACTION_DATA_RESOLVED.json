@@ -1,62 +1,64 @@
 {
-  "users": {
-    "54351326674432000": {
-      "id": "999999999999999999",
-      "username": "none",
-      "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+    "users": {
+        "54351326674432000": {
+            "id": "999999999999999999",
+            "username": "none",
+            "discriminator": "9999",
+            "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+            "bot": false,
+            "system": false,
+            "mfa_enabled": false,
+            "locale": "en-US",
+            "verified": true,
+            "email": "nobody@example.org",
+            "flags": 0,
+            "premium_type": 0,
+            "public_flags": 0
+        },
+        "54351326674432001": {
+            "id": "999999999999999999",
+            "username": "none",
+            "discriminator": "9999",
+            "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+            "bot": false,
+            "system": false,
+            "mfa_enabled": false,
+            "locale": "en-US",
+            "verified": true,
+            "email": "nobody@example.org",
+            "flags": 0,
+            "premium_type": 0,
+            "public_flags": 0
+        }
     },
-    "54351326674432001": {
-      "id": "999999999999999999",
-      "username": "none",
-      "discriminator": "9999",
-      "avatar": "68b329da9893e34099c7d8ad5cb9c940",
-      "bot": false,
-      "system": false,
-      "mfa_enabled": false,
-      "locale": "en-US",
-      "verified": true,
-      "email": "nobody@example.org",
-      "flags": 0,
-      "premium_type": 0,
-      "public_flags": 0
+    "members": {
+        "54351326674432001": {
+            "nick": "none",
+            "roles": [],
+            "joined_at": "1970-01-01T00:00:00.000000+00:00",
+            "premium_since": null,
+            "pending": false
+        }
+    },
+    "roles": {
+        "41771983423143936": {
+            "id": "999999999999999999",
+            "name": "none",
+            "color": 3447003,
+            "hoist": true,
+            "icon": "cf3ced8600b777c9486c6d8d84fb4327",
+            "unicode_emoji": null,
+            "position": 1,
+            "permissions": "66321471",
+            "managed": false,
+            "mentionable": false
+        }
+    },
+    "channels": {
+        "748969255210450984": {
+            "id": "999999999999999999",
+            "type": 0,
+            "name": "none"
+        }
     }
-  },
-  "members": {
-    "54351326674432001": {
-      "nick": "none",
-      "roles": [],
-      "joined_at": "1970-01-01T00:00:00.000000+00:00",
-      "premium_since": null,
-      "pending": false
-    }
-  },
-  "roles": {
-    "41771983423143936": {
-      "id": "999999999999999999",
-      "name": "none",
-      "color": 3447003,
-      "hoist": true,
-      "position": 1,
-      "permissions": "66321471",
-      "managed": false,
-      "mentionable": false
-    }
-  },
-  "channels": {
-    "748969255210450984": {
-      "id": "999999999999999999",
-      "type": 0,
-      "name": "none"
-    }
-  }
 }

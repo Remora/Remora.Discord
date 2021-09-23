@@ -1100,6 +1100,76 @@ namespace Remora.Discord.API
             return ub.Uri;
         }
 
+        /// <summary>
+        /// Gets the CDN URI of the given role's icon.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetRoleIconUrl
+        (
+            IRole role,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (role.Icon is null)
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetRoleIconUrl(role.Icon, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given role's icon.
+        /// </summary>
+        /// <param name="iconHash">The ID of the role.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetRoleIconUrl
+        (
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            var format = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"role-icons/{iconHash.Value}.{format.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
         private static Result<CDNImageFormat> ValidateOrDefaultImageFormat
         (
             Optional<CDNImageFormat> imageFormat,

@@ -866,5 +866,58 @@ namespace Remora.Discord.API.Tests
                 yield return CDN.GetTeamIconUrl(teamID, imageHash, imageFormat, imageSize);
             }
         }
+
+        /// <summary>
+        /// Tests the <see cref="CDN.GetRoleIconUrl(IRole, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// overloads.
+        /// </summary>
+        public class GetRoleIconUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetRoleIconUrl"/> class.
+            /// </summary>
+            public GetRoleIconUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/role-icons/1"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                )
+            {
+            }
+
+            /// <summary>
+            /// Tests whether the correct address is returned when the instance has no image set.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+            {
+                var mockedRole = new Mock<IRole>();
+                mockedRole.SetupGet(g => g.Icon).Returns((IImageHash?)null);
+
+                var role = mockedRole.Object;
+
+                var getActual = CDN.GetRoleIconUrl(role, CDNImageFormat.PNG);
+
+                Assert.False(getActual.IsSuccess);
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var imageHash = new ImageHash("1");
+
+                var mockedRole = new Mock<IRole>();
+                mockedRole.SetupGet(g => g.Icon).Returns(imageHash);
+
+                var role = mockedRole.Object;
+                yield return CDN.GetRoleIconUrl(role, imageFormat, imageSize);
+                yield return CDN.GetRoleIconUrl(imageHash, imageFormat, imageSize);
+            }
+        }
     }
 }

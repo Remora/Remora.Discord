@@ -1,30 +1,32 @@
 {
-  "t": "GUILD_ROLE_UPDATE",
-  "s": 5,
-  "op": 0,
-  "d": {
-    "role": {
-      "position": 1,
-      "permissions": "372624976",
-      "name": "none",
-      "mentionable": false,
-      "managed": false,
-      "id": "999999999999999999",
-      "hoist": true,
-      "color": 1146986
-    },
-    "guild_id": "999999999999999999",
-    "guild_hashes": {
-      "version": 1,
-      "roles": {
-        "hash": "3aTL2ZFTSxE"
-      },
-      "metadata": {
-        "hash": "38doHWQin94"
-      },
-      "channels": {
-        "hash": "icJytnZ2VDI"
-      }
+    "t": "GUILD_ROLE_UPDATE",
+    "s": 5,
+    "op": 0,
+    "d": {
+        "role": {
+            "position": 1,
+            "permissions": "372624976",
+            "name": "none",
+            "mentionable": false,
+            "managed": false,
+            "id": "999999999999999999",
+            "hoist": true,
+            "icon": "cf3ced8600b777c9486c6d8d84fb4327",
+            "unicode_emoji": null,
+            "color": 1146986
+        },
+        "guild_id": "999999999999999999",
+        "guild_hashes": {
+            "version": 1,
+            "roles": {
+                "hash": "3aTL2ZFTSxE"
+            },
+            "metadata": {
+                "hash": "38doHWQin94"
+            },
+            "channels": {
+                "hash": "icJytnZ2VDI"
+            }
+        }
     }
-  }
 }

@@ -78,6 +78,8 @@ namespace Remora.Discord.Rest.API
             await using var memoryStream = new MemoryStream();
 
             var iconData = default(Optional<string?>);
+
+            // ReSharper disable once InvertIf
             if (icon.IsDefined(out var iconStream))
             {
                 var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
@@ -689,19 +691,35 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IRole>> CreateGuildRoleAsync
+        public virtual async Task<Result<IRole>> CreateGuildRoleAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
             Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
+            Optional<Stream> icon = default,
+            Optional<string> unicodeEmoji = default,
             Optional<bool> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IRole>
+            var iconData = default(Optional<string>);
+
+            // ReSharper disable once InvertIf
+            if (icon.IsDefined(out var iconStream))
+            {
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IRole>.FromError(packIcon);
+                }
+
+                iconData = packIcon.Entity;
+            }
+
+            return await this.DiscordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
                 b => b
@@ -714,6 +732,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("permissions", permissions, this.JsonOptions);
                         json.Write("color", colour, this.JsonOptions);
                         json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("unicode_emoji", unicodeEmoji, this.JsonOptions);
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
@@ -755,7 +775,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IRole>> ModifyGuildRoleAsync
+        public virtual async Task<Result<IRole>> ModifyGuildRoleAsync
         (
             Snowflake guildID,
             Snowflake roleID,
@@ -763,12 +783,22 @@ namespace Remora.Discord.Rest.API
             Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
+            Optional<Stream?> icon = default,
+            Optional<string?> unicodeEmoji = default,
             Optional<bool?> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PatchAsync<IRole>
+            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+            if (!packIcon.IsSuccess)
+            {
+                return Result<IRole>.FromError(packIcon);
+            }
+
+            var iconData = packIcon.Entity;
+
+            return await this.DiscordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
                 b => b
@@ -781,6 +811,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("permissions", permissions, this.JsonOptions);
                         json.Write("color", colour, this.JsonOptions);
                         json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("unicode_emoji", unicodeEmoji, this.JsonOptions);
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),

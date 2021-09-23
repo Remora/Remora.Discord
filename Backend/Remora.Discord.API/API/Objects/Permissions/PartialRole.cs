@@ -37,6 +37,8 @@ namespace Remora.Discord.API.Objects
         Optional<string> Name = default,
         Optional<Color> Colour = default,
         Optional<bool> IsHoisted = default,
+        Optional<IImageHash?> Icon = default,
+        Optional<string?> UnicodeEmoji = default,
         Optional<int> Position = default,
         Optional<IDiscordPermissionSet> Permissions = default,
         Optional<bool> IsManaged = default,
