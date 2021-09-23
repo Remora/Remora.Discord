@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>22.0.5</Version>
+        <Version>23.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,9 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Implement support for role icons.
+            Reorder various elements.
+            Update thread-related permissions.
         </PackageReleaseNotes>
     </PropertyGroup>
 
