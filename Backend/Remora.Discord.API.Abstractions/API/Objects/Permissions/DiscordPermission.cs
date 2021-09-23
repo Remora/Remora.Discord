@@ -87,7 +87,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         ViewChannel = 10,
 
         /// <summary>
-        /// Allows for sending messages in a channel (does not allow sending messages in threads).
+        /// Allows for sending messages in a channel.
         /// </summary>
         SendMessages = 11,
 
