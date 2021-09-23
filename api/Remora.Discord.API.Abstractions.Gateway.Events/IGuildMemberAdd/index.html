@@ -230,6 +230,7 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildMember">IPartialGuildMember</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 									</ul>
@@ -244,10 +245,12 @@
 							graph BT
 	Type-.-&gt;Interface0["IGuildMember"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember"
-	Type-.-&gt;Interface1["IGatewayEvent"]
-	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent"
-	Type-.-&gt;Interface2["IGatewayPayloadData"]
-	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
+	Type-.-&gt;Interface1["IPartialGuildMember"]
+	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildMember"
+	Type-.-&gt;Interface2["IGatewayEvent"]
+	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent"
+	Type-.-&gt;Interface3["IGatewayPayloadData"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type["IGuildMemberAdd"]
 class Type type-node
 
@@ -259,7 +262,8 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IGuildMemberAdd : IGuildMember, IGatewayEvent, IGatewayPayloadData</code></pre>
+public interface IGuildMemberAdd : IGuildMember, IPartialGuildMember, IGatewayEvent, 
+    IGatewayPayloadData</code></pre>
 
 
 

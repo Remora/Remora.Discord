@@ -231,6 +231,7 @@
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState">IVoiceState</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a></li>								
 									</ul>
 								</dd>
 							
@@ -247,6 +248,8 @@
 	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type-.-&gt;Interface2["IVoiceState"]
 	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState"
+	Type-.-&gt;Interface3["IPartialVoiceState"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState"
 	Type["IVoiceStateUpdate"]
 class Type type-node
 
@@ -258,7 +261,8 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IVoiceStateUpdate : IGatewayEvent, IGatewayPayloadData, IVoiceState</code></pre>
+public interface IVoiceStateUpdate : IGatewayEvent, IGatewayPayloadData, IVoiceState, 
+    IPartialVoiceState</code></pre>
 
 
 

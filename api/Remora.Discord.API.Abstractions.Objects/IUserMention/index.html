@@ -334,6 +334,7 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser">IPartialUser</a></li>								
 									</ul>
 								</dd>
 							
@@ -346,6 +347,8 @@
 							graph BT
 	Type-.-&gt;Interface0["IUser"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser"
+	Type-.-&gt;Interface1["IPartialUser"]
+	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser"
 	Type["IUserMention"]
 class Type type-node
 
@@ -357,7 +360,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IUserMention : IUser</code></pre>
+public interface IUserMention : IUser, IPartialUser</code></pre>
 
 
 

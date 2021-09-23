@@ -330,14 +330,20 @@
 								<dt>Namespace</dt>
 								<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser">IPartialUser</a></li>								
+									</ul>
+								</dd>
 							
 							
 							
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -345,12 +351,14 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
+	Type-.-&gt;Interface0["IPartialUser"]
+	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser"
 	Type["IUser"]
 class Type type-node
-	Implementing0["IUserUpdate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
-	Implementing1["IUserMention"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing0["IUserMention"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
+	Implementing1["IUserUpdate"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
 
 						</div>
 					</div>
@@ -360,7 +368,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IUser</code></pre>
+public interface IUser : IPartialUser</code></pre>
 
 
 

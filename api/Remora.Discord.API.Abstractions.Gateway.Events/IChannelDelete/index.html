@@ -231,6 +231,7 @@
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>								
 									</ul>
 								</dd>
 							
@@ -247,6 +248,8 @@
 	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type-.-&gt;Interface2["IChannel"]
 	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel"
+	Type-.-&gt;Interface3["IPartialChannel"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel"
 	Type["IChannelDelete"]
 class Type type-node
 
@@ -258,7 +261,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IChannelDelete : IGatewayEvent, IGatewayPayloadData, IChannel</code></pre>
+public interface IChannelDelete : IGatewayEvent, IGatewayPayloadData, IChannel, IPartialChannel</code></pre>
 
 
 

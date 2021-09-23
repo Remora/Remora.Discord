@@ -333,6 +333,14 @@
 							
 							
 							
+								<dt>Implementing Types</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate">IIntegrationUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>								
+									</ul>
+								</dd>				
 						</dl>
 					</div>		
 					<div class="col-md-6">
@@ -340,6 +348,12 @@
 							graph BT
 	Type["IPartialIntegration"]
 class Type type-node
+	Implementing0["IIntegrationUpdate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate"
+	Implementing1["IIntegrationCreate"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate"
+	Implementing2["IIntegration"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
 
 						</div>
 					</div>

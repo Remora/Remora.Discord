@@ -230,6 +230,7 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration">IPartialIntegration</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 									</ul>
@@ -244,10 +245,12 @@
 							graph BT
 	Type-.-&gt;Interface0["IIntegration"]
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
-	Type-.-&gt;Interface1["IGatewayEvent"]
-	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent"
-	Type-.-&gt;Interface2["IGatewayPayloadData"]
-	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
+	Type-.-&gt;Interface1["IPartialIntegration"]
+	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration"
+	Type-.-&gt;Interface2["IGatewayEvent"]
+	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent"
+	Type-.-&gt;Interface3["IGatewayPayloadData"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type["IIntegrationUpdate"]
 class Type type-node
 
@@ -259,7 +262,8 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IIntegrationUpdate : IIntegration, IGatewayEvent, IGatewayPayloadData</code></pre>
+public interface IIntegrationUpdate : IIntegration, IPartialIntegration, IGatewayEvent, 
+    IGatewayPayloadData</code></pre>
 
 
 

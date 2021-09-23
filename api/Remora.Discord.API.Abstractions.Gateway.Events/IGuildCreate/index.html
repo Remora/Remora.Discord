@@ -235,6 +235,7 @@
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild">IGuild</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a></li>								
 									</ul>
 								</dd>
 							
@@ -251,6 +252,8 @@
 	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type-.-&gt;Interface2["IGuild"]
 	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild"
+	Type-.-&gt;Interface3["IPartialGuild"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild"
 	Type["IGuildCreate"]
 class Type type-node
 
@@ -262,7 +265,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild</code></pre>
+public interface IGuildCreate : IGatewayEvent, IGatewayPayloadData, IGuild, IPartialGuild</code></pre>
 
 
 

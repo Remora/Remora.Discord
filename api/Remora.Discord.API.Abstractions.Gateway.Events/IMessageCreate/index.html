@@ -231,6 +231,7 @@
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent">IGatewayEvent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData">IGatewayPayloadData</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessage">IPartialMessage</a></li>								
 									</ul>
 								</dd>
 							
@@ -247,6 +248,8 @@
 	click Interface1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IGatewayPayloadData"
 	Type-.-&gt;Interface2["IMessage"]
 	click Interface2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage"
+	Type-.-&gt;Interface3["IPartialMessage"]
+	click Interface3 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessage"
 	Type["IMessageCreate"]
 class Type type-node
 
@@ -258,7 +261,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IMessageCreate : IGatewayEvent, IGatewayPayloadData, IMessage</code></pre>
+public interface IMessageCreate : IGatewayEvent, IGatewayPayloadData, IMessage, IPartialMessage</code></pre>
 
 
 

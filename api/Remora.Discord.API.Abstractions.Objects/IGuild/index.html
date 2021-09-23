@@ -330,6 +330,12 @@
 								<dt>Namespace</dt>
 								<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a></li>								
+									</ul>
+								</dd>
 							
 							
 							
@@ -345,6 +351,8 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
+	Type-.-&gt;Interface0["IPartialGuild"]
+	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild"
 	Type["IGuild"]
 class Type type-node
 	Implementing0["IGuildUpdate"]-.-&gt;Type
@@ -360,7 +368,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IGuild</code></pre>
+public interface IGuild : IPartialGuild</code></pre>
 
 
 
