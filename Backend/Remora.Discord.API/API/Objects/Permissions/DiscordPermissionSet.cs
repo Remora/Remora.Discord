@@ -135,12 +135,12 @@ namespace Remora.Discord.API.Objects
         /// <inheritdoc />
         public IReadOnlyList<DiscordPermission> GetPermissions()
         {
-            BigInteger value = this.Value;
-            List<DiscordPermission> permissions = new();
+            var value = this.Value;
+            var permissions = new List<DiscordPermission>();
 
-            for (int index = 0; value != 0; index++)
+            for (var index = 0; value != 0; index++)
             {
-                int bit = (int)value & 0x1;
+                var bit = (int)value & 0x1;
                 if (bit == 1)
                 {
                     permissions.Add((DiscordPermission)index);
