@@ -132,6 +132,26 @@ namespace Remora.Discord.API.Objects
             return isBitSet;
         }
 
+        /// <inheritdoc />
+        public IReadOnlyList<DiscordPermission> GetPermissions()
+        {
+            BigInteger value = this.Value;
+            List<DiscordPermission> permissions = new();
+
+            for (int index = 0; value != 0; index++)
+            {
+                int bit = (int)value & 0x1;
+                if (bit == 1)
+                {
+                    permissions.Add((DiscordPermission)index);
+                }
+
+                value >>= 1;
+            }
+
+            return permissions;
+        }
+
         /// <summary>
         /// Computes a full permission set for a user, taking roles and overwrites into account.
         /// </summary>
