@@ -87,34 +87,34 @@ namespace Remora.Discord.Rest.Extensions
             var clientBuilder = serviceCollection
                 .AddHttpClient
                 (
-                    "Discord",
-                    (services, client) =>
-                    {
-                        var assemblyName = Assembly.GetExecutingAssembly().GetName();
-                        var name = assemblyName.Name ?? "Remora.Discord";
-                        var version = assemblyName.Version ?? new Version(1, 0, 0);
-
-                        var tokenStore = services.GetRequiredService<ITokenStore>();
-
-                        client.BaseAddress = Constants.BaseURL;
-                        client.DefaultRequestHeaders.UserAgent.Add
-                        (
-                            new ProductInfoHeaderValue(name, version.ToString())
-                        );
-
-                        var token = tokenStore.Token;
-                        if (string.IsNullOrWhiteSpace(token))
-                        {
-                            throw new InvalidOperationException("The authentication token has to contain something.");
-                        }
-
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
-                        (
-                            "Bot",
-                            token
-                        );
-                    }
+                    "Discord"
                 )
+                .ConfigureHttpClient((services, client) =>
+                {
+                    var assemblyName = Assembly.GetExecutingAssembly().GetName();
+                    var name = assemblyName.Name ?? "Remora.Discord";
+                    var version = assemblyName.Version ?? new Version(1, 0, 0);
+
+                    var tokenStore = services.GetRequiredService<ITokenStore>();
+
+                    client.BaseAddress = Constants.BaseURL;
+                    client.DefaultRequestHeaders.UserAgent.Add
+                    (
+                        new ProductInfoHeaderValue(name, version.ToString())
+                    );
+
+                    var token = tokenStore.Token;
+                    if (string.IsNullOrWhiteSpace(token))
+                    {
+                        throw new InvalidOperationException("The authentication token has to contain something.");
+                    }
+
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
+                    (
+                        "Bot",
+                        token
+                    );
+                })
                 .AddTransientHttpErrorPolicy
                 (
                     b => b
