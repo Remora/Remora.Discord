@@ -39,7 +39,8 @@ namespace Remora.Discord.API.Objects
         Optional<bool> IsDefault = default,
         Optional<bool> IsRequired = default,
         Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default
+        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
+        Optional<IReadOnlyList<ChannelType>> ChannelTypes = default
     )
     : IApplicationCommandOption;
 }
