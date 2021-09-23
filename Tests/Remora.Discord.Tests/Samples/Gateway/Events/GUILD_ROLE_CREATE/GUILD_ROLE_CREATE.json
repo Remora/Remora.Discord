@@ -1,32 +1,32 @@
 {
-    "t": "GUILD_ROLE_CREATE",
-    "s": 7,
-    "op": 0,
-    "d": {
-        "role": {
-            "position": 1,
-            "permissions": "372624976",
-            "name": "none",
-            "mentionable": false,
-            "managed": false,
-            "id": "999999999999999999",
-            "hoist": false,
-            "icon": "cf3ced8600b777c9486c6d8d84fb4327",
-            "unicode_emoji": null,
-            "color": 0
-        },
-        "guild_id": "999999999999999999",
-        "guild_hashes": {
-            "version": 1,
-            "roles": {
-                "hash": "Dg5ZElpe27k"
-            },
-            "metadata": {
-                "hash": "38doHWQin94"
-            },
-            "channels": {
-                "hash": "icJytnZ2VDI"
-            }
-        }
+  "t": "GUILD_ROLE_CREATE",
+  "s": 7,
+  "op": 0,
+  "d": {
+    "role": {
+      "position": 1,
+      "permissions": "372624976",
+      "name": "none",
+      "mentionable": false,
+      "managed": false,
+      "id": "999999999999999999",
+      "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "color": 0
+    },
+    "guild_id": "999999999999999999",
+    "guild_hashes": {
+      "version": 1,
+      "roles": {
+        "hash": "Dg5ZElpe27k"
+      },
+      "metadata": {
+        "hash": "38doHWQin94"
+      },
+      "channels": {
+        "hash": "icJytnZ2VDI"
+      }
     }
+  }
 }
