@@ -32,10 +32,10 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public record AuditLog
     (
-        IReadOnlyList<IWebhook> Webhooks,
-        IReadOnlyList<IUser> Users,
         IReadOnlyList<IAuditLogEntry> AuditLogEntries,
         IReadOnlyList<IPartialIntegration> Integrations,
-        IReadOnlyList<IChannel> Threads
+        IReadOnlyList<IChannel> Threads,
+        IReadOnlyList<IUser> Users,
+        IReadOnlyList<IWebhook> Webhooks
     ) : IAuditLog;
 }
