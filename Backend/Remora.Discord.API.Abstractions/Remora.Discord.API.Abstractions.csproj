@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>37.0.0</Version>
+        <Version>38.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,9 +14,7 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Implement support for role icons.
-            Reorder various elements.
-            Update thread-related permissions.
+            Fix IRole::Icon and IRole::UnicodeEmoji being optional.
         </PackageReleaseNotes>
     </PropertyGroup>
 
