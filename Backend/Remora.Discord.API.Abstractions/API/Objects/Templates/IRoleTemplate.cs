@@ -47,10 +47,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         bool IsHoisted { get; }
 
         /// <inheritdoc cref="IRole.Icon"/>
-        IImageHash? Icon { get; }
+        Optional<IImageHash?> Icon { get; }
 
         /// <inheritdoc cref="IRole.UnicodeEmoji"/>
-        string? UnicodeEmoji { get; }
+        Optional<string?> UnicodeEmoji { get; }
 
         /// <inheritdoc cref="IRole.Position"/>
         int Position { get; }

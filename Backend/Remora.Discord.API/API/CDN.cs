@@ -1114,12 +1114,12 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (role.Icon is null)
+            if (!role.Icon.IsDefined(out var icon))
             {
                 return new ImageNotFoundError();
             }
 
-            return GetRoleIconUrl(role.Icon, imageFormat, imageSize);
+            return GetRoleIconUrl(icon, imageFormat, imageSize);
         }
 
         /// <summary>

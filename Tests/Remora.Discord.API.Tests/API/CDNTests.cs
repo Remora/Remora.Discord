@@ -892,7 +892,7 @@ namespace Remora.Discord.API.Tests
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
                 var mockedRole = new Mock<IRole>();
-                mockedRole.SetupGet(g => g.Icon).Returns((IImageHash?)null);
+                mockedRole.SetupGet(g => g.Icon).Returns(default(Optional<IImageHash?>));
 
                 var role = mockedRole.Object;
 
