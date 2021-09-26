@@ -312,7 +312,7 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanGetPermissions()
         {
-            var permissions = new DiscordPermission[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity };
+            var permissions = new DiscordPermission[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
             var permissionSet = new DiscordPermissionSet(permissions);
 
             Assert.Equal(permissions, permissionSet.GetPermissions());
