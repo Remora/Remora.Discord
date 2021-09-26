@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -435,26 +436,72 @@ namespace Remora.Discord.Commands.Extensions
             Type parameterType
         )
         {
-            var enumNames = Enum.GetNames(parameterType);
-            if (enumNames.Any(n => n.Length > MaxChoiceValueLength))
-            {
-                return new UnsupportedFeatureError
+            var values = Enum.GetValues(parameterType);
+            var choiceConversions = values.Cast<object>().Select
+            (
+                v => CreateApplicationCommandOptionChoice
                 (
-                    $"One or more enumeration members is too long (max {MaxChoiceValueLength})."
+                    parameterType,
+                    Enum.GetName(parameterType, v) ?? throw new InvalidOperationException(),
+                    v
+                )
+            )
+            .ToList();
+
+            if (choiceConversions.Any(c => !c.IsSuccess))
+            {
+                return Result<IReadOnlyList<IApplicationCommandOptionChoice>>.FromError
+                (
+                    choiceConversions.First(c => !c.IsSuccess)
                 );
             }
 
-            if (enumNames.Any(n => n.Length > MaxChoiceNameLength))
+            if (choiceConversions.Count > MaxChoiceValues)
+            {
+                return new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
+            }
+
+            return choiceConversions.Select(c => c.Entity).ToList();
+        }
+
+        private static Result<IApplicationCommandOptionChoice> CreateApplicationCommandOptionChoice
+        (
+            Type enumType,
+            string enumName,
+            object enumValue
+        )
+        {
+            var member = enumType.GetMember(enumName).Single();
+            var name = member.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumName;
+
+            if (name.Length > MaxChoiceNameLength)
             {
                 return new UnsupportedFeatureError
                 (
-                    $"One or more enumeration members is too long (max {MaxChoiceNameLength})."
+                    $"The name of the enumeration member {enumType.Name}::{enumName} is too long " +
+                    $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
+                    $"[{nameof(DescriptionAttribute)}], or rename the member."
                 );
             }
 
-            return enumNames.Length <= MaxChoiceValues
-                ? enumNames.Select(n => new ApplicationCommandOptionChoice(n, n)).ToList()
-                : new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
+            var valueString = enumName;
+            if (valueString.Length <= MaxChoiceValueLength)
+            {
+                return new ApplicationCommandOptionChoice(name, valueString);
+            }
+
+            // Try converting the enum's value representation
+            valueString = enumValue.ToString() ?? throw new InvalidOperationException();
+            if (valueString.Length > MaxChoiceValueLength)
+            {
+                return new UnsupportedFeatureError
+                (
+                    $"The length of the enumeration member {enumType.Name}::{enumName} value is too long " +
+                    $"(max {MaxChoiceValueLength})."
+                );
+            }
+
+            return new ApplicationCommandOptionChoice(name, valueString);
         }
 
         private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)
