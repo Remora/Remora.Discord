@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Objects
                 currentValue |= (byte)(1 << bitIndex);
             }
 
-            this.Value = new BigInteger(bytes);
+            this.Value = new BigInteger(bytes, true);
         }
 
         /// <summary>
@@ -135,18 +135,23 @@ namespace Remora.Discord.API.Objects
         /// <inheritdoc />
         public IReadOnlyList<DiscordPermission> GetPermissions()
         {
-            var value = this.Value;
             var permissions = new List<DiscordPermission>();
+            var valueBytes = this.Value.ToByteArray(true);
 
-            for (var index = 0; value != 0; index++)
+            for (var byteIndex = 0; byteIndex < valueBytes.Length; byteIndex++)
             {
-                var bit = (int)value & 0x1;
-                if (bit == 1)
-                {
-                    permissions.Add((DiscordPermission)index);
-                }
+                byte b = valueBytes[byteIndex];
 
-                value >>= 1;
+                for (var bitIndex = 0; b != 0; bitIndex++)
+                {
+                    var bitValue = b & 0x1;
+                    if (bitValue == 1)
+                    {
+                        permissions.Add((DiscordPermission)((byteIndex * 8) + bitIndex));
+                    }
+
+                    b >>= 1;
+                }
             }
 
             return permissions;
