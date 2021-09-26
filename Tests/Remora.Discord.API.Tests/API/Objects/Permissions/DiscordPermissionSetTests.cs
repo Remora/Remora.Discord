@@ -99,6 +99,20 @@ namespace Remora.Discord.API.Tests.Objects
             Assert.False(permissions.HasPermission(permission));
         }
 
+        /// <summary>
+        /// Tests that <see cref="DiscordPermissionSet.HasPermission(DiscordPermission)"/> works correctly for large integers that are considered signed as default by <see cref="BigInteger"/>.
+        /// </summary>
+        [Fact]
+        public void HasPermissionReturnsTrueForLargeIntegers()
+        {
+            var permissions = new DiscordPermission[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
+
+            var permissionSet = new DiscordPermissionSet(permissions);
+            var permission = DiscordPermission.StartEmbeddedActivities;
+
+            Assert.True(permissionSet.HasPermission(permission));
+        }
+
         [Fact]
         public void CanComputeMemberPermissions()
         {
