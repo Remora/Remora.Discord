@@ -43,33 +43,23 @@ namespace Remora.Discord.Commands.Parsers
     public class RoleParser : AbstractTypeParser<IRole>
     {
         private readonly ICommandContext _context;
-        private readonly IDiscordRestChannelAPI _channelAPI;
         private readonly IDiscordRestGuildAPI _guildAPI;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoleParser"/> class.
         /// </summary>
         /// <param name="context">The command context.</param>
-        /// <param name="channelAPI">The channel API.</param>
         /// <param name="guildAPI">The guild API.</param>
-        public RoleParser(ICommandContext context, IDiscordRestChannelAPI channelAPI, IDiscordRestGuildAPI guildAPI)
+        public RoleParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
         {
             _guildAPI = guildAPI;
             _context = context;
-            _channelAPI = channelAPI;
         }
 
         /// <inheritdoc />
         public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
         {
-            var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
-            if (!getChannel.IsSuccess)
-            {
-                return Result<IRole>.FromError(getChannel);
-            }
-
-            var channel = getChannel.Entity;
-            if (!channel.GuildID.IsDefined(out var guildID))
+            if (!_context.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
             }
