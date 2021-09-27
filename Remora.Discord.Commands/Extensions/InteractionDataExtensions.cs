@@ -39,12 +39,14 @@ namespace Remora.Discord.Commands.Extensions
         /// Unpacks an interaction into a command name string and a set of parameters.
         /// </summary>
         /// <param name="commandData">The interaction to unpack.</param>
-        /// <param name="commandName">The command name.</param>
+        /// <param name="commandPath">
+        /// The command path, that is, the sequential components of the full command name.
+        /// </param>
         /// <param name="parameters">The parameters supplied to the command.</param>
         public static void UnpackInteraction
         (
             this IInteractionData commandData,
-            out string commandName,
+            out IReadOnlyList<string> commandPath,
             out IReadOnlyDictionary<string, IReadOnlyList<string>> parameters
         )
         {
@@ -55,29 +57,29 @@ namespace Remora.Discord.Commands.Extensions
 
             if (!commandData.Options.IsDefined(out var options))
             {
-                commandName = commandData.Name.Value;
+                commandPath = new[] { commandData.Name.Value };
                 parameters = new Dictionary<string, IReadOnlyList<string>>();
 
                 return;
             }
 
-            UnpackInteractionOptions(options, out var nestedCommandName, out var nestedParameters);
+            UnpackInteractionOptions(options, out var nestedCommandPath, out var nestedParameters);
 
-            commandName = nestedCommandName is not null
-                ? $"{dataName} {nestedCommandName}"
-                : dataName;
+            var path = new List<string> { dataName };
+            path.AddRange(nestedCommandPath);
 
+            commandPath = path;
             parameters = nestedParameters ?? new Dictionary<string, IReadOnlyList<string>>();
         }
 
         private static void UnpackInteractionOptions
         (
             IReadOnlyCollection<IApplicationCommandInteractionDataOption> options,
-            out string? commandName,
+            out IReadOnlyList<string> commandPath,
             out IReadOnlyDictionary<string, IReadOnlyList<string>>? parameters
         )
         {
-            commandName = null;
+            commandPath = Array.Empty<string>();
             parameters = null;
 
             if (options.Count > 1)
@@ -112,16 +114,17 @@ namespace Remora.Discord.Commands.Extensions
             else if (singleOption.Options.IsDefined(out var nestedOptions))
             {
                 // A nested group
-                UnpackInteractionOptions(nestedOptions, out var nestedCommandName, out parameters);
+                UnpackInteractionOptions(nestedOptions, out var nestedCommandPath, out parameters);
 
-                commandName = nestedCommandName is not null
-                    ? $"{singleOption.Name} {nestedCommandName}"
-                    : singleOption.Name;
+                var path = new List<string> { singleOption.Name };
+                path.AddRange(nestedCommandPath);
+
+                commandPath = path;
             }
             else
             {
                 // A parameterless command
-                commandName = singleOption.Name;
+                commandPath = new[] { singleOption.Name };
             }
         }
 

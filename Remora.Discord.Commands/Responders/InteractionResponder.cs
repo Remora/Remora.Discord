@@ -146,7 +146,7 @@ namespace Remora.Discord.Commands.Responders
             // Provide the created context to any services inside this scope
             _contextInjection.Context = context;
 
-            interactionData.UnpackInteraction(out var command, out var parameters);
+            interactionData.UnpackInteraction(out var commandPath, out var parameters);
 
             // Run any user-provided pre-execution events
             var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
@@ -157,7 +157,7 @@ namespace Remora.Discord.Commands.Responders
 
             var prepareCommand = await _commandService.TryPrepareCommandAsync
             (
-                command,
+                commandPath,
                 parameters,
                 _services,
                 searchOptions: _treeSearchOptions,

@@ -52,8 +52,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     default
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a" }, commandPath);
                 Assert.Empty(parameters);
             }
 
@@ -79,8 +79,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     }
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a" }, commandPath);
 
                 Assert.Single(parameters);
                 Assert.True(parameters.ContainsKey("b"));
@@ -117,8 +117,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     }
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a" }, commandPath);
 
                 Assert.Equal(2, parameters.Count);
                 Assert.True(parameters.ContainsKey("b"));
@@ -152,8 +152,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     }
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a b", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a", "b" }, commandPath);
                 Assert.Empty(parameters);
             }
 
@@ -188,8 +188,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     }
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a b", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a", "b" }, commandPath);
 
                 Assert.Single(parameters);
                 Assert.True(parameters.ContainsKey("c"));
@@ -235,8 +235,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     }
                 );
 
-                command.UnpackInteraction(out var commandName, out var parameters);
-                Assert.Equal("a b", commandName);
+                command.UnpackInteraction(out var commandPath, out var parameters);
+                Assert.Equal(new[] { "a", "b" }, commandPath);
 
                 Assert.Equal(2, parameters.Count);
                 Assert.True(parameters.ContainsKey("c"));
