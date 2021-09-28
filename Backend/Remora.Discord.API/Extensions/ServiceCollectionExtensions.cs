@@ -850,7 +850,8 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>())
                 .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>())
                 .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>())
-                .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>());
+                .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>())
+                .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>());
 
             options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
             options.AddDataObjectConverter
