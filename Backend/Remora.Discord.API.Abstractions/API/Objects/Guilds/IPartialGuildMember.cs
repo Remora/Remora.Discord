@@ -39,6 +39,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <inheritdoc cref="IGuildMember.Nickname" />
         Optional<string?> Nickname { get; }
 
+        /// <inheritdoc cref="IGuildMember.Avatar"/>
+        Optional<IImageHash?> Avatar { get; }
+
         /// <inheritdoc cref="IGuildMember.Roles" />
         Optional<IReadOnlyList<Snowflake>> Roles { get; }
 

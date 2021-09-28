@@ -39,6 +39,7 @@ namespace Remora.Discord.API.Gateway.Events
         IReadOnlyList<Snowflake> Roles,
         IUser User,
         Optional<string?> Nickname = default,
+        Optional<IImageHash?> Avatar = default,
         DateTimeOffset? JoinedAt = default,
         Optional<DateTimeOffset?> PremiumSince = default,
         Optional<bool> IsPending = default,

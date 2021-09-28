@@ -44,6 +44,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         new Optional<string?> Nickname { get; }
 
         /// <summary>
+        /// Gets the member's guild avatar hash.
+        /// </summary>
+        new Optional<IImageHash?> Avatar { get; }
+
+        /// <summary>
         /// Gets the roles the user has.
         /// </summary>
         new IReadOnlyList<Snowflake> Roles { get; }
@@ -83,6 +88,9 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<string?> IPartialGuildMember.Nickname => this.Nickname;
+
+        /// <inheritdoc />
+        Optional<IImageHash?> IPartialGuildMember.Avatar => this.Avatar;
 
         /// <inheritdoc/>
         Optional<IReadOnlyList<Snowflake>> IPartialGuildMember.Roles => new(this.Roles);

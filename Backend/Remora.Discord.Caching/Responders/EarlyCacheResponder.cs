@@ -176,6 +176,7 @@ namespace Remora.Discord.Caching.Responders
                 (
                     new Optional<IUser>(gatewayEvent.User),
                     gatewayEvent.Nickname.IsDefined(out var nickname) ? nickname : cachedInstance.Nickname,
+                    gatewayEvent.Avatar,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt ?? cachedInstance.JoinedAt,
                     gatewayEvent.PremiumSince.IsDefined(out var premiumSince) ? premiumSince : cachedInstance.PremiumSince,
@@ -191,6 +192,7 @@ namespace Remora.Discord.Caching.Responders
                 (
                     new Optional<IUser>(gatewayEvent.User),
                     gatewayEvent.Nickname,
+                    gatewayEvent.Avatar,
                     gatewayEvent.Roles,
                     gatewayEvent.JoinedAt.Value,
                     gatewayEvent.PremiumSince,

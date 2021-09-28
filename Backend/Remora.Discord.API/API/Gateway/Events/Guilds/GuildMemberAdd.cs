@@ -42,6 +42,7 @@ namespace Remora.Discord.API.Gateway.Events
         (
             Optional<IUser> user,
             Optional<string?> nickname,
+            Optional<IImageHash?> avatar,
             IReadOnlyList<Snowflake> roles,
             DateTimeOffset joinedAt,
             Optional<DateTimeOffset?> premiumSince,
@@ -55,6 +56,7 @@ namespace Remora.Discord.API.Gateway.Events
             (
                 user,
                 nickname,
+                avatar,
                 roles,
                 joinedAt,
                 premiumSince,
