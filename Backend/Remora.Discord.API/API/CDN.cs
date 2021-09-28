@@ -628,6 +628,89 @@ namespace Remora.Discord.API
         }
 
         /// <summary>
+        /// Gets the CDN URI of the given guild member's avatar.
+        /// </summary>
+        /// <param name="guildID">The guild to retrieve the member avatar of.</param>
+        /// <param name="member">The guild member.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildMemberAvatarUrl
+        (
+            Snowflake guildID,
+            IGuildMember member,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!member.Avatar.HasValue || member.Avatar.Value is null || !member.User.HasValue)
+            {
+                return new ImageNotFoundError();
+            }
+
+            // Prefer the animated version, if available
+            if (member.Avatar.Value.HasGif && !imageFormat.HasValue)
+            {
+                imageFormat = CDNImageFormat.GIF;
+            }
+
+            return GetGuildMemberAvatarUrl(guildID, member.User.Value.ID, member.Avatar.Value, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild members's avatar.
+        /// </summary>
+        /// <param name="guildID">The guild to retrieve the member avatar of.</param>
+        /// <param name="userID">The user ID of the guild member.</param>
+        /// <param name="avatarHash">The image hash of the guild member's avatar.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildMemberAvatarUrl
+        (
+            Snowflake guildID,
+            Snowflake userID,
+            IImageHash avatarHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            var format = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"guilds/{guildID}/users/{userID}/avatars/{avatarHash.Value}.{format.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
         /// Gets the CDN URI of the given application's icon.
         /// </summary>
         /// <param name="application">The application.</param>
