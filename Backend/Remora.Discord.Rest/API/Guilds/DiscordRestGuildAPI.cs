@@ -550,7 +550,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        [Obsolete($"Deprecated in favour of {nameof(ModifyCurrentMemberAsync)}.")]
+        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
         public virtual Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,

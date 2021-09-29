@@ -357,7 +357,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
-        [Obsolete($"Deprecated in favour of {nameof(ModifyCurrentMemberAsync)}.")]
+        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
         Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
