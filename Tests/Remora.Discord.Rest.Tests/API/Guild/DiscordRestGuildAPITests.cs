@@ -1143,11 +1143,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             {
                 var guildId = new Snowflake(0);
                 var nick = "cdd";
+                var reason = "test";
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/@me")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
                         .WithJson
                         (
                             j => j.IsObject
@@ -1162,7 +1164,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var result = await api.ModifyCurrentMemberAsync
                 (
                     guildId,
-                    nick
+                    nick,
+                    reason
                 );
 
                 ResultAssert.Successful(result);

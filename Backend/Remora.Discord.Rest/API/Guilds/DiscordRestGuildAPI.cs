@@ -537,6 +537,7 @@ namespace Remora.Discord.Rest.API
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -544,6 +545,7 @@ namespace Remora.Discord.Rest.API
             (
                 $"guilds/{guildID}/members/@me",
                 b => b
+                    .AddAuditLogReason(reason)
                     .WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
                 ct: ct
             );

@@ -340,12 +340,14 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
         /// <param name="nickname">The new nickname.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded, containing the updated member.</returns>
         Task<Result<IGuildMember>> ModifyCurrentMemberAsync
         (
             Snowflake guildID,
             Optional<string?> nickname = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
