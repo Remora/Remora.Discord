@@ -251,7 +251,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a b");
+                dataMock.Setup(d => d.Name).Returns("a");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -290,7 +290,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a c");
+                dataMock.Setup(d => d.Name).Returns("b");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -329,7 +329,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a d");
+                dataMock.Setup(d => d.Name).Returns("c");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -370,7 +370,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a d");
+                dataMock.Setup(d => d.Name).Returns("c");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -423,7 +423,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a b");
+                dataMock.Setup(d => d.Name).Returns("a");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -462,7 +462,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a c");
+                dataMock.Setup(d => d.Name).Returns("b");
 
                 var eventMock = new Mock<IInteractionCreate>();
 
@@ -501,7 +501,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                 var userMock = new Mock<IUser>();
                 var dataMock = new Mock<IInteractionData>();
 
-                dataMock.Setup(d => d.Name).Returns("a d");
+                dataMock.Setup(d => d.Name).Returns("c");
 
                 var eventMock = new Mock<IInteractionCreate>();
 

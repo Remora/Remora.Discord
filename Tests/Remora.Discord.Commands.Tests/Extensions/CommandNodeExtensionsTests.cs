@@ -20,6 +20,8 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Remora.Commands.Groups;
 using Remora.Commands.Signatures;
@@ -48,7 +50,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             public void FindsAttributeOnCommand()
             {
                 CommandTree tree = BuildCommandTree<EphemeralCommand>();
-                BoundCommandNode node = tree.Search("a b").Single();
+                BoundCommandNode node = tree.Search("a").Single();
 
                 Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
             }
@@ -60,7 +62,11 @@ namespace Remora.Discord.Commands.Tests.Extensions
             public void FindsAttributeOnGroup()
             {
                 CommandTree tree = BuildCommandTree<EphemeralGroup>();
-                BoundCommandNode node = tree.Search("a b").Single();
+                BoundCommandNode node = tree.Search
+                (
+                    new[] { "a", "b" },
+                    new Dictionary<string, IReadOnlyList<string>>()
+                ).Single();
 
                 Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
             }
@@ -72,7 +78,11 @@ namespace Remora.Discord.Commands.Tests.Extensions
             public void IgnoresAttributeOnAncestorWhenSpecified()
             {
                 CommandTree tree = BuildCommandTree<EphemeralGroup>();
-                BoundCommandNode node = tree.Search("a b").Single();
+                BoundCommandNode node = tree.Search
+                (
+                    new[] { "a", "b" },
+                    new Dictionary<string, IReadOnlyList<string>>()
+                ).Single();
 
                 Assert.Null(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>(false));
             }

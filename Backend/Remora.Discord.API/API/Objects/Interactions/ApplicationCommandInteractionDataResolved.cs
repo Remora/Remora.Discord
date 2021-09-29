@@ -36,7 +36,8 @@ namespace Remora.Discord.API.Objects
         Optional<IReadOnlyDictionary<Snowflake, IUser>> Users,
         Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
         Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
-        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels
+        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels,
+        Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages
     )
     : IApplicationCommandInteractionDataResolved;
 }

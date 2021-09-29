@@ -31,25 +31,24 @@ using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.Data.Ephemeral
 {
-    [Group("a")]
     public class EphemeralCommand : CommandGroup
     {
-        [Command("b")]
+        [Command("a")]
         [Ephemeral]
+        public Task<Result> A()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Command("b")]
         public Task<Result> B()
         {
             throw new NotImplementedException();
         }
 
         [Command("c")]
-        public Task<Result> C()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Command("d")]
         [Ephemeral(false)]
-        public Task<Result> D()
+        public Task<Result> C()
         {
             throw new NotImplementedException();
         }

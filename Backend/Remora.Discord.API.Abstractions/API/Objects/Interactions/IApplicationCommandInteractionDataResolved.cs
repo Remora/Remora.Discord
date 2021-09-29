@@ -49,5 +49,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the resolved channels, if any.
         /// </summary>
         Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels { get; }
+
+        /// <summary>
+        /// Gets the resolved messages, if any.
+        /// </summary>
+        Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages { get; }
     }
 }
