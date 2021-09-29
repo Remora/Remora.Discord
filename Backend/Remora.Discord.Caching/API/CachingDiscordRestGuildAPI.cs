@@ -429,6 +429,37 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
+        public override async Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+        (
+            Snowflake guildID,
+            Optional<string?> nickname = default,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ModifyCurrentMemberAsync(guildID, nickname, reason, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            var guildMember = getResult.Entity;
+
+            if (!guildMember.User.IsDefined(out var user))
+            {
+                return getResult;
+            }
+
+            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+            _cacheService.Cache(key, guildMember);
+
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+            _cacheService.Cache(userKey, user);
+
+            return getResult;
+        }
+
+        /// <inheritdoc />
         public override async Task<Result> RemoveGuildMemberAsync
         (
             Snowflake guildID,
