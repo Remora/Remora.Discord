@@ -95,7 +95,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
 
-            var reply = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
+            var reply = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
 
             return !reply.IsSuccess
                 ? Result.FromError(reply)
@@ -116,7 +116,7 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             var embedImage = new EmbedImage($"https://http.cat/{httpCode}");
             var embed = new Embed(Colour: _feedbackService.Theme.Secondary, Image: embedImage);
 
-            var reply = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
+            var reply = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
 
             return !reply.IsSuccess
                 ? Result.FromError(reply)

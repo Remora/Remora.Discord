@@ -134,7 +134,7 @@ namespace Remora.Discord.Samples.DiceRoller.Commands
             var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
             var embed = new Embed("Rolls", Fields: fields, Colour: _feedbackService.Theme.Success);
 
-            var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, this.CancellationToken);
+            var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
 
             return !replyRolls.IsSuccess
                 ? Result.FromError(replyRolls)
