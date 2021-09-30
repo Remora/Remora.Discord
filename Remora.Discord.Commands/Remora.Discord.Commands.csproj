@@ -5,14 +5,15 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>10.2.0</Version>
+        <Version>10.2.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement support for context menu commands with spaces.
+            Update dependencies.
+            Remove deprecated PackageIconUrl property.
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -21,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="7.1.0" />
-        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.0" />
+        <PackageReference Include="Remora.Commands" Version="7.1.1" />
+        <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.1" />
     </ItemGroup>
 
 </Project>
