@@ -72,9 +72,9 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#ClassTypes">Class Types</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#StructTypes">Struct Types</a></p>
 <p><a href="#InterfaceTypes">Interface Types</a></p>
-<p><a href="#StructTypes">Struct Types</a></p>
+<p><a href="#ClassTypes">Class Types</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -220,26 +220,31 @@
 	
 
 
-			<h1 id="ClassTypes">Class Types</h1>
+			<h1 id="StructTypes">Struct Types</h1>
 			<div class="box">
 				<div class="box-body no-padding table-responsive">
 					<table class="table table-striped table-hover two-cols">
 						<thead>
 							<tr>
-								<th>Class</th>
+								<th>Struct</th>
 									<th>Summary</th>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1#typeparam-TValue">TValue</a>&gt;<wbr></td>
 									<td>
-    Represents a file.
-    </td>
+     Represents an optional value. This is mainly used for JSON de/serializalization where a value can be either
+     present, null, or completely missing.
+    
+     While a <code class="cs">System.Nullable`1</code> allows for a value to be logically present but contain a null value,
+     <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional&lt;TValue&gt;</a></code> allows for a value to be logically missing. For example, an optional without a
+     value would never be serialized, but a nullable with a null value would (albeit as "null").
+     </td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
 									<td>
-    Represents a storage class for a single token.
+    Represents a Twitter snowflake, used as a unique ID.
     </td>
 							</tr>
 					</tbody></table>
@@ -274,31 +279,26 @@
 			</div>
 		
 
-			<h1 id="StructTypes">Struct Types</h1>
+			<h1 id="ClassTypes">Class Types</h1>
 			<div class="box">
 				<div class="box-body no-padding table-responsive">
 					<table class="table table-striped table-hover two-cols">
 						<thead>
 							<tr>
-								<th>Struct</th>
+								<th>Class</th>
 									<th>Summary</th>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1#typeparam-TValue">TValue</a>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/FileData">FileData</a></td>
 									<td>
-     Represents an optional value. This is mainly used for JSON de/serializalization where a value can be either
-     present, null, or completely missing.
-    
-     While a <code class="cs">System.Nullable`1</code> allows for a value to be logically present but contain a null value,
-     <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional&lt;TValue&gt;</a></code> allows for a value to be logically missing. For example, an optional without a
-     value would never be serialized, but a nullable with a null value would (albeit as "null").
-     </td>
+    Represents a file.
+    </td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/TokenStore">TokenStore</a></td>
 									<td>
-    Represents a Twitter snowflake, used as a unique ID.
+    Represents a storage class for a single token.
     </td>
 							</tr>
 					</tbody></table>
