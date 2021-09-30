@@ -1,5 +1,5 @@
 ﻿//
-//  ChannelTypeAttribute.cs
+//  ChannelTypesAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,30 +21,31 @@
 //
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.Commands.Attributes
 {
     /// <summary>
-    /// Marks a channel parameter with a type requirement for Discord slash commands, controlling what channel autocompletion is presented to the user.
+    /// Marks a channel parameter with type requirements for Discord slash commands, controlling what channel autocompletion is presented to the user.
     /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
-    public class ChannelTypeAttribute : Attribute
+    public class ChannelTypesAttribute : Attribute
     {
         /// <summary>
-        /// Gets the configured type hint.
+        /// Gets the types of channel that are allowed to be presented as an autocomplete option.
         /// </summary>
-        public ChannelType Type { get; }
+        public IReadOnlyList<ChannelType> Types { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelTypeAttribute"/> class.
+        /// Initializes a new instance of the <see cref="ChannelTypesAttribute"/> class.
         /// </summary>
-        /// <param name="type">The type hint.</param>
-        public ChannelTypeAttribute(ChannelType type)
+        /// <param name="type">The types of channel that are allowed to be presented as an autocomplete option.</param>
+        public ChannelTypesAttribute(params ChannelType[] type)
         {
-            this.Type = type;
+            this.Types = type;
         }
     }
 }

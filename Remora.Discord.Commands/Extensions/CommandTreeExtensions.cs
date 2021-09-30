@@ -394,6 +394,11 @@ namespace Remora.Discord.Commands.Extensions
                     ? ToApplicationCommandOptionType(parameterType)
                     : (ApplicationCommandOptionType)typeHint.TypeHint;
 
+                var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
+                var channelTypes = channelTypesAttribute is null
+                    ? default(Optional<IReadOnlyList<ChannelType>>)
+                    : new Optional<IReadOnlyList<ChannelType>>(channelTypesAttribute.Types);
+
                 Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
                 if (parameterType.IsEnum)
                 {
@@ -413,7 +418,8 @@ namespace Remora.Discord.Commands.Extensions
                     parameter.Description,
                     default,
                     !parameter.IsOmissible(),
-                    choices
+                    choices,
+                    ChannelTypes: channelTypes
                 );
 
                 parameterOptions.Add(parameterOption);
