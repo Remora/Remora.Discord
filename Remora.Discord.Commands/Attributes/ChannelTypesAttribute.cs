@@ -42,10 +42,10 @@ namespace Remora.Discord.Commands.Attributes
         /// <summary>
         /// Initializes a new instance of the <see cref="ChannelTypesAttribute"/> class.
         /// </summary>
-        /// <param name="type">The types of channel that are allowed to be presented as an autocomplete option.</param>
-        public ChannelTypesAttribute(params ChannelType[] type)
+        /// <param name="types">The types of channel that are allowed to be presented as an autocomplete option.</param>
+        public ChannelTypesAttribute(params ChannelType[] types)
         {
-            this.Types = type;
+            this.Types = types;
         }
     }
 }

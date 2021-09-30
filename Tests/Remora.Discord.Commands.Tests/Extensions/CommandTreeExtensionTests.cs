@@ -276,6 +276,36 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfChannelTypesAttributeAppliedOnNonChannelParameter()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ChannelTypesAttributeOnlyOnChannelParameter>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfChannelTypesAttributeHasZeroValues()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ChannelTypesAttributeRequiresAtLeastOneValue>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
@@ -384,7 +414,19 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     AssertExistsWithType("role-value", Role);
                     AssertExistsWithType("user-value", User);
+
                     AssertExistsWithType("channel-value", Channel);
+                    var channelCommand = commands.First(c => c.Name == "channel-value");
+                    var channelParameter = channelCommand.Options.Value[0];
+                    Assert.False(channelParameter.ChannelTypes.HasValue);
+
+                    AssertExistsWithType("typed-channel-value", Channel);
+                    var typedChannelCommand = commands.First(c => c.Name == "typed-channel-value");
+                    var typedChannelParameter = typedChannelCommand.Options.Value[0];
+                    Assert.True(typedChannelParameter.ChannelTypes.HasValue);
+                    Assert.True(typedChannelParameter.ChannelTypes.Value.Count == 1);
+                    Assert.True(typedChannelParameter.ChannelTypes.Value[0] == ChannelType.GuildText);
+
                     AssertExistsWithType("member-value", User);
 
                     AssertExistsWithType("enum-value", String);

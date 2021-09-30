@@ -394,10 +394,11 @@ namespace Remora.Discord.Commands.Extensions
                     ? ToApplicationCommandOptionType(parameterType)
                     : (ApplicationCommandOptionType)typeHint.TypeHint;
 
-                var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
-                var channelTypes = channelTypesAttribute is null
-                    ? default(Optional<IReadOnlyList<ChannelType>>)
-                    : new Optional<IReadOnlyList<ChannelType>>(channelTypesAttribute.Types);
+                var getChannelTypes = CreateChannelTypesOption(command, parameter, discordType);
+                if (!getChannelTypes.IsSuccess)
+                {
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(getChannelTypes);
+                }
 
                 Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
                 if (parameterType.IsEnum)
@@ -419,7 +420,7 @@ namespace Remora.Discord.Commands.Extensions
                     default,
                     !parameter.IsOmissible(),
                     choices,
-                    ChannelTypes: channelTypes
+                    ChannelTypes: getChannelTypes.Entity
                 );
 
                 parameterOptions.Add(parameterOption);
@@ -435,6 +436,37 @@ namespace Remora.Discord.Commands.Extensions
             }
 
             return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
+        }
+
+        private static Result<Optional<IReadOnlyList<ChannelType>>> CreateChannelTypesOption(
+            CommandNode command, IParameterShape parameter, ApplicationCommandOptionType parameterType)
+        {
+            var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
+            if (channelTypesAttribute is not null && parameterType != ApplicationCommandOptionType.Channel)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    $"The {nameof(ChannelTypesAttribute)} can only be used on a parameter of type {nameof(IChannel)}.",
+                    command,
+                    parameter
+                );
+            }
+
+            var channelTypes = channelTypesAttribute is null
+                ? default
+                : new Optional<IReadOnlyList<ChannelType>>(channelTypesAttribute.Types);
+
+            if (channelTypes.HasValue && channelTypes.Value.Count == 0)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    $"Using {nameof(ChannelTypesAttribute)} requires at least one {nameof(ChannelType)} to be provided.",
+                    command,
+                    parameter
+                );
+            }
+
+            return channelTypes;
         }
 
         private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
