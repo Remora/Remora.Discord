@@ -29,26 +29,15 @@ namespace Remora.Discord.Commands.Feedback.Messages
     /// <summary>
     /// Defines options to customise a feedback message response.
     /// </summary>
+    /// <param name="IsTTS">Indicates whether the message should use text-to-speech.</param>
+    /// <param name="File">A file to send with the message.</param>
+    /// <param name="AllowedMentions">The allowed mentions for the message.</param>
+    /// <param name="MessageComponents">A list of message components to include with the message.</param>
     public record FeedbackMessageOptions
-    {
-        /// <summary>
-        /// Gets a value indicating whether the message should use text-to-speech.
-        /// </summary>
-        public Optional<bool> IsTTS { get; init; }
-
-        /// <summary>
-        /// Gets a file to send with the message.
-        /// </summary>
-        public Optional<FileData> File { get; init; }
-
-        /// <summary>
-        /// Gets the allowed mentions for the message.
-        /// </summary>
-        public Optional<IAllowedMentions> AllowedMentions { get; init; }
-
-        /// <summary>
-        /// Gets a list of message components to include with the message.
-        /// </summary>
-        public Optional<IReadOnlyList<IMessageComponent>> MessageComponents { get; init; }
-    }
+    (
+        Optional<bool> IsTTS,
+        Optional<FileData> File,
+        Optional<IAllowedMentions> AllowedMentions,
+        Optional<IReadOnlyList<IMessageComponent>> MessageComponents
+    );
 }
