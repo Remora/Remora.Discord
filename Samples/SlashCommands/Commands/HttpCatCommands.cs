@@ -139,6 +139,27 @@ namespace Remora.Discord.Samples.SlashCommands.Commands
             return PostHttpCatAsync((int)code);
         }
 
+        /// <summary>
+        /// Posts a HTTP error code cat that mathematically 'matches' a channel.
+        /// The clientside autocompletion of channel selections is restricted to guild text channels
+        /// by the <see cref="ChannelTypesAttribute"/> on the <paramref name="channel"/> parameter.
+        /// </summary>
+        /// <param name="channel">The channel to cattify.</param>
+        /// <returns>The result of the command.</returns>
+        [Command("channel-cat")]
+        [Description("Posts a cat image that matches the provided channel.")]
+        public Task<IResult> PostChannelHttpCatAsync
+        (
+            [Description("The channel to cattify")][ChannelTypes(ChannelType.GuildText)] IChannel channel
+        )
+        {
+            var values = Enum.GetValues<HttpStatusCode>();
+            var index = Map(channel.ID.Value, 0, ulong.MaxValue, 0, (ulong)(values.Length - 1));
+
+            var code = values[index];
+            return PostHttpCatAsync((int)code);
+        }
+
         private static ulong Map(ulong value, ulong fromSource, ulong toSource, ulong fromTarget, ulong toTarget)
         {
             return ((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget)) + fromTarget;
