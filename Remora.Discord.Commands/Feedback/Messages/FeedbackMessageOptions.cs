@@ -35,9 +35,9 @@ namespace Remora.Discord.Commands.Feedback.Messages
     /// <param name="MessageComponents">A list of message components to include with the message.</param>
     public record FeedbackMessageOptions
     (
-        Optional<bool> IsTTS,
-        Optional<FileData> File,
-        Optional<IAllowedMentions> AllowedMentions,
-        Optional<IReadOnlyList<IMessageComponent>> MessageComponents
+        Optional<bool> IsTTS = default,
+        Optional<FileData> File = default,
+        Optional<IAllowedMentions> AllowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> MessageComponents = default
     );
 }
