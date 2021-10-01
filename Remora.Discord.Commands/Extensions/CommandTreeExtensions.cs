@@ -438,11 +438,15 @@ namespace Remora.Discord.Commands.Extensions
             return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
         }
 
-        private static Result<Optional<IReadOnlyList<ChannelType>>> CreateChannelTypesOption(
-            CommandNode command, IParameterShape parameter, ApplicationCommandOptionType parameterType)
+        private static Result<Optional<IReadOnlyList<ChannelType>>> CreateChannelTypesOption
+        (
+            CommandNode command,
+            IParameterShape parameter,
+            ApplicationCommandOptionType parameterType
+        )
         {
             var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
-            if (channelTypesAttribute is not null && parameterType != ApplicationCommandOptionType.Channel)
+            if (channelTypesAttribute is not null && parameterType is not ApplicationCommandOptionType.Channel)
             {
                 return new UnsupportedParameterFeatureError
                 (
