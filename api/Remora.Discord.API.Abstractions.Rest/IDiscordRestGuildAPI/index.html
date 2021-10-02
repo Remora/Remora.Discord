@@ -192,8 +192,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI">DiscordRestGuildAPI</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI">Caching<wbr>Discord<wbr>Rest<wbr>Guild<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -203,10 +203,10 @@
 							graph BT
 	Type["IDiscordRestGuildAPI"]
 class Type type-node
-	Implementing0["CachingDiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
-	Implementing1["DiscordRestGuildAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
+	Implementing0["DiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI"
+	Implementing1["CachingDiscordRestGuildAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI"
 
 						</div>
 					</div>
@@ -490,6 +490,15 @@ public interface IDiscordRestGuildAPI</code></pre>
 								<td>
 									<div>
     Gets a list of guild members.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI/1BE0A4B3">Modify<wbr>Current<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
+								<td>
+									<div>
+    Modifies the current member.
     </div>
 								</td>
 							</tr>
