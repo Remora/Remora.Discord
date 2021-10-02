@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>36.0.0</Version>
+        <Version>37.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,9 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Remove deprecated PackageIconUrl property.
-            Add Messages property to IApplicationCommandInteractionDataResolved.
+            Implement support for per-guild avatars.
         </PackageReleaseNotes>
     </PropertyGroup>
 

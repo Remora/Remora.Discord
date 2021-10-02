@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.0.3</Version>
+        <Version>13.0.4</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Remove deprecated PackageIconUrl property.
         </PackageReleaseNotes>
     </PropertyGroup>
 
