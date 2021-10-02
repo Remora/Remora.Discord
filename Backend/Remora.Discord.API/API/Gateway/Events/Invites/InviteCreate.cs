@@ -42,7 +42,8 @@ namespace Remora.Discord.API.Gateway.Events
         TimeSpan MaxAge,
         int MaxUses,
         Optional<IPartialUser> TargetUser,
-        Optional<InviteTarget> TargetUserType,
+        Optional<InviteTarget> TargetType,
+        Optional<IPartialApplication> TargetApplication,
         bool IsTemporary,
         int Uses
     ) : IInviteCreate;

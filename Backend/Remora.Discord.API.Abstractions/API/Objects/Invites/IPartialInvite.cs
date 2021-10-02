@@ -51,7 +51,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialUser> TargetUser { get; }
 
         /// <inheritdoc cref="IInvite.TargetApplication" />
-        Optional<Snowflake> TargetApplication { get; }
+        Optional<IPartialApplication> TargetApplication { get; }
 
         /// <inheritdoc cref="IInvite.ApproximatePresenceCount" />
         Optional<int> ApproximatePresenceCount { get; }
