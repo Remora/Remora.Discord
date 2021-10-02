@@ -618,6 +618,127 @@ namespace Remora.Discord.API.Tests
         }
 
         /// <summary>
+        /// Tests the <see cref="CDN.GetGuildMemberAvatarUrl(Snowflake, IGuildMember, Optional{CDNImageFormat}, Optional{ushort})"/> method and
+        /// its overloads.
+        /// </summary>
+        public class GetGuildMemberAvatarUrl : CDNTestBase
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="GetGuildMemberAvatarUrl"/> class.
+            /// </summary>
+            public GetGuildMemberAvatarUrl()
+                : base
+                (
+                    new Uri("https://cdn.discordapp.com/guilds/0/users/1/avatars/2"),
+                    new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP, CDNImageFormat.GIF }
+                )
+            {
+            }
+
+            /// <summary>
+            /// Tests whether the correct address is returned when the instance has an animated image.
+            /// </summary>
+            [Fact]
+            public void ReturnsCorrectAddressWithAnimatedImage()
+            {
+                var expected = new Uri("https://cdn.discordapp.com/guilds/0/users/1/avatars/a_2.gif");
+
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var imageHash = new ImageHash("a_2");
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+                var mockedMember = new Mock<IGuildMember>();
+                mockedMember.SetupGet(g => g.Avatar).Returns(imageHash);
+                mockedMember.SetupGet(g => g.User).Returns(new Optional<IUser>(mockedUser.Object));
+
+                var member = mockedMember.Object;
+
+                var getActual = CDN.GetGuildMemberAvatarUrl(guildID, member);
+
+                Assert.True(getActual.IsSuccess);
+                Assert.Equal(expected, getActual.Entity);
+            }
+
+            /// <summary>
+            /// Tests whether the correct address is returned when the instance has an animated image, but a custom
+            /// format is explicitly requested.
+            /// </summary>
+            [Fact]
+            public void ReturnsCorrectAddressWithAnimatedImageAndCustomFormat()
+            {
+                var expected = new Uri("https://cdn.discordapp.com/guilds/0/users/1/avatars/a_2.png");
+
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var imageHash = new ImageHash("a_2");
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+                var mockedMember = new Mock<IGuildMember>();
+                mockedMember.SetupGet(g => g.Avatar).Returns(imageHash);
+                mockedMember.SetupGet(g => g.User).Returns(new Optional<IUser>(mockedUser.Object));
+
+                var member = mockedMember.Object;
+
+                var getActual = CDN.GetGuildMemberAvatarUrl(guildID, member, CDNImageFormat.PNG);
+
+                Assert.True(getActual.IsSuccess);
+                Assert.Equal(expected, getActual.Entity);
+            }
+
+            /// <summary>
+            /// Tests whether the correct address is returned when the instance has no image set.
+            /// </summary>
+            [Fact]
+            public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+            {
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+                var mockedMember = new Mock<IGuildMember>();
+                mockedMember.SetupGet(g => g.Avatar).Returns(new Optional<IImageHash?>(null));
+                mockedMember.SetupGet(g => g.User).Returns(new Optional<IUser>(mockedUser.Object));
+
+                var member = mockedMember.Object;
+
+                var getActual = CDN.GetGuildMemberAvatarUrl(guildID, member, CDNImageFormat.PNG);
+
+                Assert.False(getActual.IsSuccess);
+                Assert.IsType<ImageNotFoundError>(getActual.Error);
+            }
+
+            /// <inheritdoc />
+            protected override IEnumerable<Result<Uri>> GetImageUris
+            (
+                Optional<CDNImageFormat> imageFormat = default,
+                Optional<ushort> imageSize = default
+            )
+            {
+                var guildID = new Snowflake(0);
+                var userID = new Snowflake(1);
+                var imageHash = new ImageHash("2");
+
+                var mockedUser = new Mock<IUser>();
+                mockedUser.SetupGet(g => g.ID).Returns(userID);
+
+                var mockedMember = new Mock<IGuildMember>();
+                mockedMember.SetupGet(g => g.Avatar).Returns(imageHash);
+                mockedMember.SetupGet(g => g.User).Returns(new Optional<IUser>(mockedUser.Object));
+
+                var member = mockedMember.Object;
+                yield return CDN.GetGuildMemberAvatarUrl(guildID, member, imageFormat, imageSize);
+                yield return CDN.GetGuildMemberAvatarUrl(guildID, userID, imageHash, imageFormat, imageSize);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="CDN.GetApplicationIconUrl(IApplication, Optional{CDNImageFormat}, Optional{ushort})"/>
         /// method and its overloads.
         /// </summary>

@@ -80,7 +80,7 @@ namespace Remora.Discord.Samples.UnknownEventLogger.Responders
             }
 
             var sequenceNumber = eventSequenceElement.GetInt64();
-            var logTime = $"{DateTime.UtcNow:u}";
+            var logTime = DateTimeOffset.UtcNow.ToString("yyyy-MM-dd");
 
             _log.LogInformation("Received an event of type \"{EventType}\"", eventType);
 

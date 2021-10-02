@@ -533,6 +533,26 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+        (
+            Snowflake guildID,
+            Optional<string?> nickname = default,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        )
+        {
+            return this.DiscordHttpClient.PatchAsync<IGuildMember>
+            (
+                $"guilds/{guildID}/members/@me",
+                b => b
+                    .AddAuditLogReason(reason)
+                    .WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
         public virtual Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,

@@ -55,6 +55,11 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         Optional<string?> Nickname { get; }
 
         /// <summary>
+        /// Gets the member's guild avatar hash.
+        /// </summary>
+        Optional<IImageHash?> Avatar { get; }
+
+        /// <summary>
         /// Gets the date when the user joined the guild.
         /// </summary>
         DateTimeOffset? JoinedAt { get; }
