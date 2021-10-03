@@ -63,9 +63,9 @@ namespace Remora.Discord.API.Abstractions.Objects
         new Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
-        /// Gets the ID of the target embedded application.
+        /// Gets the embedded application this invite is for.
         /// </summary>
-        new Optional<Snowflake> TargetApplication { get; }
+        new Optional<IPartialApplication> TargetApplication { get; }
 
         /// <summary>
         /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
@@ -106,7 +106,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialUser> IPartialInvite.TargetUser => this.TargetUser;
 
         /// <inheritdoc/>
-        Optional<Snowflake> IPartialInvite.TargetApplication => this.TargetApplication;
+        Optional<IPartialApplication> IPartialInvite.TargetApplication => this.TargetApplication;
 
         /// <inheritdoc/>
         Optional<int> IPartialInvite.ApproximatePresenceCount => this.ApproximatePresenceCount;
