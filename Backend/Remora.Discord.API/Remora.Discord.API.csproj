@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>37.0.0</Version>
+        <Version>38.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement support for per-guild avatars.
+            Add support for TargetApplication.
         </PackageReleaseNotes>
     </PropertyGroup>
 
