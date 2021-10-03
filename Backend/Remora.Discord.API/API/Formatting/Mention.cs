@@ -32,13 +32,22 @@ namespace Remora.Discord.API.Formatting
     public static class Mention
     {
         /// <summary>
-        /// Creates a mention string for a user.
+        /// Creates a mention string for a user, displaying their username.
         /// </summary>
         /// <param name="snowflake">The user Snowflake ID.</param>
         /// <returns>
         /// A user mention string.
         /// </returns>
-        public static string User(Snowflake snowflake) => $"<@{snowflake.Value}>";
+        public static string Username(Snowflake snowflake) => $"<@{snowflake.Value}>";
+
+        /// <summary>
+        /// Creates a mention string for a user, displaying their nickname.
+        /// </summary>
+        /// <param name="snowflake">The user Snowflake ID.</param>
+        /// <returns>
+        /// A user mention string.
+        /// </returns>
+        public static string Nickname(Snowflake snowflake) => $"<@!{snowflake.Value}>";
 
         /// <summary>
         /// Creates a mention string for a channel.
