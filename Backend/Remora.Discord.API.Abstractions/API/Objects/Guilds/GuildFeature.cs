@@ -71,6 +71,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         MemberVerificationGateEnabled,
 
         /// <summary>
+        /// The guild has enabled monetization.
+        /// </summary>
+        MonetizationEnabled,
+
+        /// <summary>
+        /// The guild has increased custom sticker slots.
+        /// </summary>
+        MoreStickers,
+
+        /// <summary>
         /// The guild has access to creating news channels.
         /// </summary>
         News,
@@ -84,6 +94,31 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// The guild can be previewed before joining.
         /// </summary>
         PreviewEnabled,
+
+        /// <summary>
+        /// Private threads may be created in the guild.
+        /// </summary>
+        PrivateThreads,
+
+        /// <summary>
+        /// The guild is able to set role icons.
+        /// </summary>
+        RoleIcons,
+
+        /// <summary>
+        /// The guild has access to the seven-day archival time for threads.
+        /// </summary>
+        SevenDayThreadArchive,
+
+        /// <summary>
+        /// The guild has access to the three-day archival time for threads.
+        /// </summary>
+        ThreeDayThreadArchive,
+
+        /// <summary>
+        /// The guild has enabled ticketed events.
+        /// </summary>
+        TicketedEventsEnabled,
 
         /// <summary>
         /// The server has access to set a vanity URL.
@@ -103,36 +138,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The guild has enabled a welcome screen.
         /// </summary>
-        WelcomeScreenEnabled,
-
-        /// <summary>
-        /// The guild has enabled ticketed events.
-        /// </summary>
-        TicketedEventsEnabled,
-
-        /// <summary>
-        /// The guild has enabled monetization features.
-        /// </summary>
-        MonetizationEnabled,
-
-        /// <summary>
-        /// The guild has increased custom sticker slots.
-        /// </summary>
-        MoreStickers,
-
-        /// <summary>
-        /// The guild has access to the three-day archival time for threads.
-        /// </summary>
-        ThreeDayThreadArchive,
-
-        /// <summary>
-        /// The guild has access to the seven-day archival time for threads.
-        /// </summary>
-        SevenDayThreadArchive,
-
-        /// <summary>
-        /// Private threads may be created in the guild.
-        /// </summary>
-        PrivateThreads
+        WelcomeScreenEnabled
     }
 }

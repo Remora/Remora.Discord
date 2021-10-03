@@ -160,7 +160,8 @@ namespace Remora.Discord.API.Json
         /// <inheritdoc />
         public override void Write(Utf8JsonWriter writer, TOneOf value, JsonSerializerOptions options)
         {
-            JsonSerializer.Serialize(writer, value.Value, value.Value.GetType(), options);
+            var declaredType = typeof(TOneOf).GetGenericArguments()[value.Index];
+            JsonSerializer.Serialize(writer, value.Value, declaredType, options);
         }
     }
 }

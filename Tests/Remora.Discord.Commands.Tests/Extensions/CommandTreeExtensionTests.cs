@@ -231,6 +231,81 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var result = tree.CreateApplicationCommands();
                     ResultAssert.Unsuccessful(result);
                 }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuHasDescription()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ContextMenusWithDescriptionsAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuIsNested()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<NestedContextMenusAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfContextMenuHasParameters()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ContextMenusWithParametersAreNotSupported>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfChannelTypesAttributeAppliedOnNonChannelParameter()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ChannelTypesAttributeOnlyOnChannelParameter>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
+
+                /// <summary>
+                /// Tests whether method responds appropriately to a failure case.
+                /// </summary>
+                [Fact]
+                public void ReturnsUnsuccessfulIfChannelTypesAttributeHasZeroValues()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<ChannelTypesAttributeRequiresAtLeastOneValue>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Unsuccessful(result);
+                }
             }
 
             /// <summary>
@@ -270,7 +345,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
 
                     Assert.NotNull(commands);
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
 
                     var topLevelCommand = commands.FirstOrDefault(c => c.Name == "top-level-command");
                     Assert.NotNull(topLevelCommand);
@@ -313,7 +388,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
                     {
-                        var command = commands!.FirstOrDefault(c => c.Name == commandName);
+                        var command = commands.FirstOrDefault(c => c.Name == commandName);
                         Assert.NotNull(command);
 
                         var parameter = command!.Options.Value[0];
@@ -339,11 +414,23 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                     AssertExistsWithType("role-value", Role);
                     AssertExistsWithType("user-value", User);
+
                     AssertExistsWithType("channel-value", Channel);
+                    var channelCommand = commands.First(c => c.Name == "channel-value");
+                    var channelParameter = channelCommand.Options.Value[0];
+                    Assert.False(channelParameter.ChannelTypes.HasValue);
+
+                    AssertExistsWithType("typed-channel-value", Channel);
+                    var typedChannelCommand = commands.First(c => c.Name == "typed-channel-value");
+                    var typedChannelParameter = typedChannelCommand.Options.Value[0];
+                    Assert.True(typedChannelParameter.ChannelTypes.HasValue);
+                    Assert.True(typedChannelParameter.ChannelTypes.Value.Count == 1);
+                    Assert.True(typedChannelParameter.ChannelTypes.Value[0] == ChannelType.GuildText);
+
                     AssertExistsWithType("member-value", User);
 
                     AssertExistsWithType("enum-value", String);
-                    var enumCommand = commands!.First(c => c.Name == "enum-value");
+                    var enumCommand = commands.First(c => c.Name == "enum-value");
                     var enumParameter = enumCommand.Options.Value[0];
                     Assert.True(enumParameter.Choices.HasValue);
 
@@ -373,6 +460,58 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 /// Tests whether the method responds appropriately to a successful case.
                 /// </summary>
                 [Fact]
+                public void CreatesDescriptionOverriddenEnumOptionsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupWithEnumParameterWithDescriptionOverrides>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    var commands = result.Entity;
+
+                    ResultAssert.Successful(result);
+                    Assert.NotNull(commands);
+
+                    void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
+                    {
+                        var command = commands.FirstOrDefault(c => c.Name == commandName);
+                        Assert.NotNull(command);
+
+                        var parameter = command!.Options.Value[0];
+                        Assert.Equal(type, parameter.Type);
+                    }
+
+                    AssertExistsWithType("description-enum", String);
+                    var enumCommand = commands.First(c => c.Name == "description-enum");
+
+                    var enumParameter = enumCommand.Options.Value[0];
+                    Assert.True(enumParameter.Choices.HasValue);
+
+                    var enumChoices = enumParameter.Choices.Value;
+                    Assert.Equal(2, enumChoices.Count);
+                    Assert.Collection
+                    (
+                        enumChoices,
+                        choice =>
+                        {
+                            Assert.Equal("A longer description", choice.Name);
+                            Assert.True(choice.Value.IsT0);
+                            Assert.Equal(nameof(DescriptionEnum.A), choice.Value.AsT0);
+                        },
+                        choice =>
+                        {
+                            Assert.Equal(nameof(DescriptionEnum.B), choice.Name);
+                            Assert.True(choice.Value.IsT0);
+                            Assert.Equal(nameof(DescriptionEnum.B), choice.Value.AsT0);
+                        }
+                    );
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
                 public void CreatesRequiredOptionsCorrectly()
                 {
                     var builder = new CommandTreeBuilder();
@@ -386,12 +525,12 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var requiredCommand = commands!.First(c => c.Name == "required");
+                    var requiredCommand = commands.First(c => c.Name == "required");
                     var requiredParameter = requiredCommand.Options.Value[0];
                     Assert.True(requiredParameter.IsRequired.HasValue);
                     Assert.True(requiredParameter.IsRequired.Value);
 
-                    var optionalCommand = commands!.First(c => c.Name == "optional");
+                    var optionalCommand = commands.First(c => c.Name == "optional");
                     var optionalParameter = optionalCommand.Options.Value[0];
                     if (optionalParameter.IsRequired.HasValue)
                     {
@@ -416,7 +555,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var command = commands!.SingleOrDefault();
+                    var command = commands.SingleOrDefault();
                     Assert.True(command!.DefaultPermission.Value);
                 }
 
@@ -437,7 +576,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     ResultAssert.Successful(result);
                     Assert.NotNull(commands);
 
-                    var command = commands!.SingleOrDefault();
+                    var command = commands.SingleOrDefault();
                     Assert.True(command!.DefaultPermission.Value);
                 }
 
@@ -454,17 +593,66 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
+                    ResultAssert.Successful(result);
+
                     var commands = result.Entity;
 
-                    ResultAssert.Successful(result);
-                    Assert.NotNull(commands);
-
-                    Assert.Equal(2, commands!.Count);
+                    Assert.Equal(2, commands.Count);
                     var a = commands[0];
                     var b = commands[1];
 
                     Assert.True(a.DefaultPermission.Value);
                     Assert.False(b.DefaultPermission.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesContextMenuCommandsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupWithContextMenus>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Successful(result);
+
+                    var commands = result.Entity;
+
+                    Assert.Equal(2, commands.Count);
+
+                    var user = commands[0];
+                    var message = commands[1];
+
+                    Assert.Equal(ApplicationCommandType.User, user.Type.Value);
+                    Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
+                }
+
+                /// <summary>
+                /// Tests whether the method responds appropriately to a successful case.
+                /// </summary>
+                [Fact]
+                public void CreatesCombinedContextMenuCommandsCorrectly()
+                {
+                    var builder = new CommandTreeBuilder();
+                    builder.RegisterModule<GroupWithContextMenuAndCommand>();
+
+                    var tree = builder.Build();
+
+                    var result = tree.CreateApplicationCommands();
+                    ResultAssert.Successful(result);
+
+                    var commands = result.Entity;
+
+                    Assert.Equal(2, commands.Count);
+
+                    var normal = commands[0];
+                    var message = commands[1];
+
+                    Assert.Equal(ApplicationCommandType.ChatInput, normal.Type.Value);
+                    Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
                 }
             }
 
@@ -486,7 +674,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -516,7 +704,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -551,7 +739,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }
@@ -569,7 +757,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     var group = commands.Single();
 
@@ -598,7 +786,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }
@@ -615,7 +803,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                     var tree = builder.Build();
 
                     var result = tree.CreateApplicationCommands();
-                    var commands = result.Entity!;
+                    var commands = result.Entity;
 
                     Assert.Empty(commands);
                 }

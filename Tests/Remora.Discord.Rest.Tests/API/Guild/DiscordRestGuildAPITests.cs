@@ -1130,6 +1130,49 @@ namespace Remora.Discord.Rest.Tests.API.Guild
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentMemberAsync"/> method.
+        /// </summary>
+        public class ModifyCurrentMemberAsync : RestAPITestBase<IDiscordRestGuildAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+                var nick = "cdd";
+                var reason = "test";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/members/@me")
+                        .WithHeaders(Constants.AuditLogHeaderName, reason)
+                        .WithJson
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("nick", p => p.Is(nick))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                );
+
+                var result = await api.ModifyCurrentMemberAsync
+                (
+                    guildId,
+                    nick,
+                    reason
+                );
+
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestGuildAPI.ModifyCurrentUserNickAsync"/> method.
         /// </summary>
         public class ModifyCurrentUserNickAsync : RestAPITestBase<IDiscordRestGuildAPI>
@@ -1474,6 +1517,15 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var color = Color.Aqua;
                 var hoist = true;
+
+                // Create a dummy PNG image
+                await using var icon = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(icon);
+                binaryWriter.Write(9894494448401390090);
+                icon.Position = 0;
+
+                var unicodeEmoji = "🦈";
+
                 var mentionable = true;
                 var reason = "test";
 
@@ -1491,6 +1543,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                     .WithProperty("permissions", p => p.Is(permissions.Value.ToString()))
                                     .WithProperty("color", p => p.Is((uint)(color.ToArgb() & 0x00FFFFFF)))
                                     .WithProperty("hoist", p => p.Is(hoist))
+                                    .WithProperty("icon", p => p.IsString())
+                                    .WithProperty("unicode_emoji", p => p.Is(unicodeEmoji))
                                     .WithProperty("mentionable", p => p.Is(mentionable))
                             )
                         )
@@ -1504,6 +1558,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     permissions,
                     color,
                     hoist,
+                    icon,
+                    unicodeEmoji,
                     mentionable,
                     reason
                 );
@@ -1619,6 +1675,15 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var color = Color.Aqua;
                 var hoist = true;
+
+                // Create a dummy PNG image
+                await using var icon = new MemoryStream();
+                await using var binaryWriter = new BinaryWriter(icon);
+                binaryWriter.Write(9894494448401390090);
+                icon.Position = 0;
+
+                var unicodeEmoji = "🦈";
+
                 var mentionable = true;
                 var reason = "test";
 
@@ -1636,6 +1701,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                     .WithProperty("permissions", p => p.Is(permissions.Value.ToString()))
                                     .WithProperty("color", p => p.Is(color.ToArgb() & 0x00FFFFFF))
                                     .WithProperty("hoist", p => p.Is(hoist))
+                                    .WithProperty("icon", p => p.IsString())
+                                    .WithProperty("unicode_emoji", p => p.Is(unicodeEmoji))
                                     .WithProperty("mentionable", p => p.Is(mentionable))
                             )
                         )
@@ -1650,6 +1717,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     permissions,
                     color,
                     hoist,
+                    icon,
+                    unicodeEmoji,
                     mentionable,
                     reason
                 );

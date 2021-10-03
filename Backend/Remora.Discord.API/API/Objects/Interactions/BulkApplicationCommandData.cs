@@ -32,9 +32,10 @@ namespace Remora.Discord.API.Objects
     public record BulkApplicationCommandData
     (
         string Name,
-        string Description,
+        Optional<string> Description = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
+        Optional<bool> DefaultPermission = default,
+        Optional<ApplicationCommandType> Type = default
     )
     : IBulkApplicationCommandData;
 }

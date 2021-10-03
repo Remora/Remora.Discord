@@ -468,8 +468,9 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             string name,
             AutoArchiveDuration autoArchiveDuration,
-            Optional<ChannelType> type,
+            Optional<ChannelType> type = default,
             Optional<string> reason = default,
+            Optional<bool> isInvitable = default,
             CancellationToken ct = default
         )
         {
@@ -480,6 +481,7 @@ namespace Remora.Discord.Caching.API
                 autoArchiveDuration,
                 type,
                 reason,
+                isInvitable,
                 ct
             );
 
@@ -694,12 +696,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var threadMember in result.Entity)
             {
-                if (!threadMember.UserID.HasValue)
+                if (!threadMember.UserID.IsDefined(out var userID))
                 {
                     continue;
                 }
 
-                var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, threadMember.UserID.Value);
+                var memberKey = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
                 _cacheService.Cache(memberKey, threadMember);
             }
 

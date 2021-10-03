@@ -336,12 +336,16 @@ namespace Remora.Discord.Caching.API
             }
 
             var guildMember = getResult.Entity;
-            if (!guildMember.User.HasValue)
+            _cacheService.Cache(key, guildMember);
+
+            if (!guildMember.User.IsDefined(out var user))
             {
                 return getResult;
             }
 
-            _cacheService.Cache(key, guildMember);
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+            _cacheService.Cache(userKey, user);
+
             return getResult;
         }
 
@@ -371,12 +375,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var member in members)
             {
-                if (!member.User.HasValue)
+                if (!member.User.IsDefined(out var user))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(guildID, member.User.Value.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
                 _cacheService.Cache(key, member);
             }
 
@@ -421,6 +425,37 @@ namespace Remora.Discord.Caching.API
 
             var key = KeyHelpers.CreateGuildMemberKey(guildID, userID);
             _cacheService.Cache(key, member);
+            return getResult;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+        (
+            Snowflake guildID,
+            Optional<string?> nickname = default,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        )
+        {
+            var getResult = await base.ModifyCurrentMemberAsync(guildID, nickname, reason, ct);
+            if (!getResult.IsSuccess)
+            {
+                return getResult;
+            }
+
+            var guildMember = getResult.Entity;
+
+            if (!guildMember.User.IsDefined(out var user))
+            {
+                return getResult;
+            }
+
+            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+            _cacheService.Cache(key, guildMember);
+
+            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+            _cacheService.Cache(userKey, user);
+
             return getResult;
         }
 
@@ -562,6 +597,8 @@ namespace Remora.Discord.Caching.API
             Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
+            Optional<Stream> icon = default,
+            Optional<string> unicodeEmoji = default,
             Optional<bool> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -574,6 +611,8 @@ namespace Remora.Discord.Caching.API
                 permissions,
                 colour,
                 isHoisted,
+                icon,
+                unicodeEmoji,
                 isMentionable,
                 reason,
                 ct
@@ -629,6 +668,8 @@ namespace Remora.Discord.Caching.API
             Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
+            Optional<Stream?> icon = default,
+            Optional<string?> unicodeEmoji = default,
             Optional<bool?> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -642,6 +683,8 @@ namespace Remora.Discord.Caching.API
                 permissions,
                 colour,
                 isHoisted,
+                icon,
+                unicodeEmoji,
                 isMentionable,
                 reason,
                 ct
@@ -867,12 +910,12 @@ namespace Remora.Discord.Caching.API
 
             foreach (var guildMember in result.Entity)
             {
-                if (!guildMember.User.HasValue)
+                if (!guildMember.User.IsDefined(out var user))
                 {
                     continue;
                 }
 
-                var key = KeyHelpers.CreateGuildMemberKey(guildID, guildMember.User.Value.ID);
+                var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
                 _cacheService.Cache(key, guildMember);
             }
 

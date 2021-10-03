@@ -69,5 +69,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the options of the nested command or group.
         /// </summary>
         Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
+
+        /// <summary>
+        /// Gets the channel types allowed for options.
+        /// </summary>
+        Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
     }
 }

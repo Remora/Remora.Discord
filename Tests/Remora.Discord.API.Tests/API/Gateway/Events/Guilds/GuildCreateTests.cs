@@ -38,6 +38,8 @@ namespace Remora.Discord.API.Tests.Gateway.Events
             AllowMissing = new[]
             {
                 "application_command_count", // undocumented value
+                "guild_scheduled_events", // undocumented value
+                "application_command_counts", // undocumented value
                 "avatar", // undocumented value upon "members[]" objects
                 "hoisted_role", // internal discord value
                 "guild_hashes", // internal discord value
@@ -46,9 +48,13 @@ namespace Remora.Discord.API.Tests.Gateway.Events
                 "lazy", // undocumented value
                 "nsfw", // undocumented value, presumably duplicate of "nsfw_level"
                 "region", // deprecated value
-                "stickers" // undocumented value
+                "stickers", // undocumented value
+                "sync_id", // undocumented value
+                "session_id", // undocumented value
+                "platform" // undocumented value
             },
-            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_FEATURE"
+            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString()
+                is "REMORA_UNKNOWN_FEATURE" or "NEW_THREAD_PERMISSIONS" or "THREADS_ENABLED"
         };
     }
 }

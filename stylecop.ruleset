@@ -87,7 +87,6 @@
     <Rule Id="SA1208" Action="Error" /> <!-- System using directives must be placed before other using directives -->
     <Rule Id="SA1209" Action="Error" /> <!-- Using alias directives must be placed after other using directives -->
     <Rule Id="SA1210" Action="Error" /> <!-- Using directives must be ordered alphabetically by namespace -->
-    <Rule Id="SA1210" Action="Error" /> <!-- Using directives must be ordered alphabetically by namespace -->
     <Rule Id="SA1211" Action="Error" /> <!-- Using alias directives must be ordered alphabetically by alias name -->
     <Rule Id="SA1212" Action="Error" /> <!-- Property accessors must follow order -->
     <Rule Id="SA1213" Action="Error" /> <!-- Event accessors must follow order -->

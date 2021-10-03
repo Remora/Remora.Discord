@@ -34,12 +34,14 @@ namespace Remora.Discord.API.Objects
     public record ApplicationCommand
     (
         Snowflake ID,
+        Optional<ApplicationCommandType> Type,
         Snowflake ApplicationID,
         Optional<Snowflake> GuildID,
         string Name,
         string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default
+        Optional<IReadOnlyList<IApplicationCommandOption>> Options,
+        Optional<bool> DefaultPermission,
+        Snowflake Version
     )
     : IApplicationCommand;
 }

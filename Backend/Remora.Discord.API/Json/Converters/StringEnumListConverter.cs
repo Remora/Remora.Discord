@@ -70,17 +70,21 @@ namespace Remora.Discord.API.Json
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.String:
+                    {
                         if (_enumValuesByJsonValue.TryGetValue(reader.GetString()!, out var enumValue))
                         {
                             enumValues.Add(enumValue);
                         }
                         break;
-
+                    }
                     case JsonTokenType.EndArray:
+                    {
                         return enumValues;
-
+                    }
                     default:
+                    {
                         throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
+                    }
                 }
             }
 

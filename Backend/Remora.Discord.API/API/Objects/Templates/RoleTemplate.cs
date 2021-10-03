@@ -23,6 +23,7 @@
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
@@ -36,7 +37,11 @@ namespace Remora.Discord.API.Objects
         string Name,
         Color Colour,
         bool IsHoisted,
+        Optional<IImageHash?> Icon,
+        Optional<string?> UnicodeEmoji,
+        int Position,
+        IDiscordPermissionSet Permissions,
         bool IsMentionable,
-        IDiscordPermissionSet Permissions
+        Optional<IRoleTags> Tags
     ) : IRoleTemplate;
 }

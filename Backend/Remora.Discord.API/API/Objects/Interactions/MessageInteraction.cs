@@ -28,5 +28,11 @@ namespace Remora.Discord.API.Objects
 {
     /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageInteraction" />
     [PublicAPI]
-    public record MessageInteraction(Snowflake ID, InteractionType Type) : IMessageInteraction;
+    public record MessageInteraction
+    (
+        Snowflake ID,
+        InteractionType Type,
+        string Name,
+        IUser User
+    ) : IMessageInteraction;
 }

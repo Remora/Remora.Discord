@@ -50,6 +50,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets a value indicating whether the thread has been locked.
         /// </summary>
-        Optional<bool> IsLocked { get; }
+        bool IsLocked { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether non-moderators can add other non-moderators.
+        /// </summary>
+        Optional<bool> IsInvitable { get; }
     }
 }

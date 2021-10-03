@@ -77,13 +77,19 @@ namespace Remora.Discord.Rest.API
 
             await using var memoryStream = new MemoryStream();
 
-            var packIcon = await ImagePacker.PackImageAsync(new Optional<Stream?>(icon.Value), ct);
-            if (!packIcon.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packIcon);
-            }
+            var iconData = default(Optional<string?>);
 
-            var iconData = packIcon.Entity;
+            // ReSharper disable once InvertIf
+            if (icon.IsDefined(out var iconStream))
+            {
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IGuild>.FromError(packIcon);
+                }
+
+                iconData = packIcon.Entity;
+            }
 
             return await this.DiscordHttpClient.PostAsync<IGuild>
             (
@@ -178,62 +184,29 @@ namespace Remora.Discord.Rest.API
         {
             await using var memoryStream = new MemoryStream();
 
-            Optional<string?> iconData = default;
-            if (icon.HasValue)
+            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+            if (!packIcon.IsSuccess)
             {
-                if (icon.Value is null)
-                {
-                    iconData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(icon.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
-
-                    iconData = packImage.Entity;
-                }
+                return Result<IGuild>.FromError(packIcon);
             }
 
-            Optional<string?> splashData = default;
-            if (splash.HasValue)
-            {
-                if (splash.Value is null)
-                {
-                    splashData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(splash.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
+            var iconData = packIcon.Entity;
 
-                    splashData = packImage.Entity;
-                }
+            var packSplash = await ImagePacker.PackImageAsync(splash, ct);
+            if (!packSplash.IsSuccess)
+            {
+                return Result<IGuild>.FromError(packSplash);
             }
 
-            Optional<string?> discoverySplashData = default;
-            if (discoverySplash.HasValue)
-            {
-                if (discoverySplash.Value is null)
-                {
-                    discoverySplashData = new Optional<string?>(null);
-                }
-                else
-                {
-                    var packImage = await ImagePacker.PackImageAsync(discoverySplash.Value, ct);
-                    if (!packImage.IsSuccess)
-                    {
-                        return Result<IGuild>.FromError(packImage);
-                    }
+            var splashData = packSplash.Entity;
 
-                    discoverySplashData = packImage.Entity;
-                }
+            var packDiscoverySplash = await ImagePacker.PackImageAsync(discoverySplash, ct);
+            if (!packDiscoverySplash.IsSuccess)
+            {
+                return Result<IGuild>.FromError(packDiscoverySplash);
             }
+
+            var discoverySplashData = packDiscoverySplash.Entity;
 
             var packBanner = await ImagePacker.PackImageAsync(banner, ct);
             if (!packBanner.IsSuccess)
@@ -560,6 +533,26 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+        (
+            Snowflake guildID,
+            Optional<string?> nickname = default,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        )
+        {
+            return this.DiscordHttpClient.PatchAsync<IGuildMember>
+            (
+                $"guilds/{guildID}/members/@me",
+                b => b
+                    .AddAuditLogReason(reason)
+                    .WithJson(json => json.Write("nick", nickname, this.JsonOptions)),
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
+        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
         public virtual Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
@@ -718,19 +711,35 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IRole>> CreateGuildRoleAsync
+        public virtual async Task<Result<IRole>> CreateGuildRoleAsync
         (
             Snowflake guildID,
             Optional<string> name = default,
             Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
+            Optional<Stream> icon = default,
+            Optional<string> unicodeEmoji = default,
             Optional<bool> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IRole>
+            var iconData = default(Optional<string>);
+
+            // ReSharper disable once InvertIf
+            if (icon.IsDefined(out var iconStream))
+            {
+                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+                if (!packIcon.IsSuccess)
+                {
+                    return Result<IRole>.FromError(packIcon);
+                }
+
+                iconData = packIcon.Entity;
+            }
+
+            return await this.DiscordHttpClient.PostAsync<IRole>
             (
                 $"guilds/{guildID}/roles",
                 b => b
@@ -743,6 +752,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("permissions", permissions, this.JsonOptions);
                         json.Write("color", colour, this.JsonOptions);
                         json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("unicode_emoji", unicodeEmoji, this.JsonOptions);
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),
@@ -784,7 +795,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IRole>> ModifyGuildRoleAsync
+        public virtual async Task<Result<IRole>> ModifyGuildRoleAsync
         (
             Snowflake guildID,
             Snowflake roleID,
@@ -792,12 +803,22 @@ namespace Remora.Discord.Rest.API
             Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> colour = default,
             Optional<bool?> isHoisted = default,
+            Optional<Stream?> icon = default,
+            Optional<string?> unicodeEmoji = default,
             Optional<bool?> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PatchAsync<IRole>
+            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+            if (!packIcon.IsSuccess)
+            {
+                return Result<IRole>.FromError(packIcon);
+            }
+
+            var iconData = packIcon.Entity;
+
+            return await this.DiscordHttpClient.PatchAsync<IRole>
             (
                 $"guilds/{guildID}/roles/{roleID}",
                 b => b
@@ -810,6 +831,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("permissions", permissions, this.JsonOptions);
                         json.Write("color", colour, this.JsonOptions);
                         json.Write("hoist", isHoisted, this.JsonOptions);
+                        json.Write("icon", iconData, this.JsonOptions);
+                        json.Write("unicode_emoji", unicodeEmoji, this.JsonOptions);
                         json.Write("mentionable", isMentionable, this.JsonOptions);
                     }
                 ),

@@ -75,6 +75,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            Optional<ApplicationCommandType> type,
             CancellationToken ct
         )
         {
@@ -104,6 +105,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
@@ -129,7 +131,15 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            if
+            (
+                commands.Any
+                (
+                    c =>
+                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
+                )
+            )
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -149,7 +159,13 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
-                            json.WriteString("description", command.Description);
+                            json.Write("type", command.Type, this.JsonOptions);
+
+                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
+                            {
+                                json.Write("description", command.Description, this.JsonOptions);
+                            }
+
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
@@ -267,7 +283,15 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (commands.Any(c => c.Description.Length is < 1 or > 100))
+            if
+            (
+                commands.Any
+                (
+                    c =>
+                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
+                )
+            )
             {
                 return new ArgumentOutOfRangeError
                 (
@@ -287,7 +311,13 @@ namespace Remora.Discord.Rest.API
                         {
                             json.WriteStartObject();
                             json.WriteString("name", command.Name);
-                            json.WriteString("description", command.Description);
+                            json.Write("type", command.Type, this.JsonOptions);
+
+                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
+                            {
+                                json.Write("description", command.Description, this.JsonOptions);
+                            }
+
                             json.Write("options", command.Options, this.JsonOptions);
                             json.Write("default_permission", command.DefaultPermission);
                             json.WriteEndObject();
@@ -307,6 +337,7 @@ namespace Remora.Discord.Rest.API
             string description,
             Optional<IReadOnlyList<IApplicationCommandOption>> options,
             Optional<bool> defaultPermission,
+            Optional<ApplicationCommandType> type,
             CancellationToken ct
         )
         {
@@ -336,6 +367,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
+                        json.Write("type", type, this.JsonOptions);
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);

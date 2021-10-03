@@ -46,6 +46,8 @@
       "name": "none",
       "color": 3447003,
       "hoist": true,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
       "position": 1,
       "permissions": "66321471",
       "managed": false,
@@ -57,6 +59,32 @@
       "id": "999999999999999999",
       "type": 0,
       "name": "none"
+    }
+  },
+  "messages": {
+    "867793854505943041": {
+      "attachments": [],
+      "author": {
+        "avatar": "68b329da9893e34099c7d8ad5cb9c940",
+        "discriminator": "9999",
+        "id": "999999999999999999",
+        "public_flags": 1,
+        "username": "none"
+      },
+      "channel_id": "999999999999999999",
+      "components": [],
+      "content": "none",
+      "edited_timestamp": null,
+      "embeds": [],
+      "flags": 0,
+      "id": "999999999999999999",
+      "mention_everyone": false,
+      "mention_roles": [],
+      "mentions": [],
+      "pinned": false,
+      "timestamp": "1970-01-01T00:00:00.000000+00:00",
+      "tts": false,
+      "type": 0
     }
   }
 }

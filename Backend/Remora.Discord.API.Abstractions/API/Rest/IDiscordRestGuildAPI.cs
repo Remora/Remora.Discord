@@ -336,6 +336,22 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Modifies the current member.
+        /// </summary>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="nickname">The new nickname.</param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A modification result which may or may not have succeeded, containing the updated member.</returns>
+        Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+        (
+            Snowflake guildID,
+            Optional<string?> nickname = default,
+            Optional<string> reason = default,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Modifies the nickname of the current user.
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
@@ -343,6 +359,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
+        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
         Task<Result<string>> ModifyCurrentUserNickAsync
         (
             Snowflake guildID,
@@ -483,6 +500,8 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="permissions">The permissions of the new role.</param>
         /// <param name="colour">The colour of the new role.</param>
         /// <param name="isHoisted">Whether the new role is displayed separately in the sidebar.</param>
+        /// <param name="icon">The role's icon image.</param>
+        /// <param name="unicodeEmoji">The role's unicode emoji icon.</param>
         /// <param name="isMentionable">Whether the new role is mentionable.</param>
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
@@ -494,6 +513,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IDiscordPermissionSet> permissions = default,
             Optional<Color> colour = default,
             Optional<bool> isHoisted = default,
+            Optional<Stream> icon = default,
+            Optional<string> unicodeEmoji = default,
             Optional<bool> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default
@@ -524,6 +545,8 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="permissions">The new permissions of the role.</param>
         /// <param name="color">The new color of the role.</param>
         /// <param name="isHoisted">Whether the role is displayed separately in the sidebar.</param>
+        /// <param name="icon">The role's icon image.</param>
+        /// <param name="unicodeEmoji">The role's unicode emoji icon.</param>
         /// <param name="isMentionable">Whether the role is mentionable.</param>
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
@@ -536,6 +559,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IDiscordPermissionSet?> permissions = default,
             Optional<Color?> color = default,
             Optional<bool?> isHoisted = default,
+            Optional<Stream?> icon = default,
+            Optional<string?> unicodeEmoji = default,
             Optional<bool?> isMentionable = default,
             Optional<string> reason = default,
             CancellationToken ct = default

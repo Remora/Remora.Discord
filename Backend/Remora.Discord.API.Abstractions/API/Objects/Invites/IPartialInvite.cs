@@ -32,59 +32,37 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialInvite
     {
-        /// <summary>
-        /// Gets the unique invite code.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.Code" />
         Optional<string> Code { get; }
 
-        /// <summary>
-        /// Gets the guild this invite is for.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.Guild" />
         Optional<IPartialGuild> Guild { get; }
 
-        /// <summary>
-        /// Gets the channel this invite is for.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.Channel" />
         Optional<IPartialChannel> Channel { get; }
 
-        /// <summary>
-        /// Gets the user who created the invite.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.Inviter" />
         Optional<IUser> Inviter { get; }
 
-        /// <summary>
-        /// Gets the type of target for this invite.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.TargetType" />
         Optional<InviteTarget> TargetType { get; }
 
-        /// <summary>
-        /// Gets the target user for this invite.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.TargetUser" />
         Optional<IPartialUser> TargetUser { get; }
 
-        /// <summary>
-        /// Gets the ID of the target embedded application.
-        /// </summary>
-        Optional<Snowflake> TargetApplication { get; }
+        /// <inheritdoc cref="IInvite.TargetApplication" />
+        Optional<IPartialApplication> TargetApplication { get; }
 
-        /// <summary>
-        /// Gets the approximate count of online members. Only present when <see cref="TargetUser"/> is set.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.ApproximatePresenceCount" />
         Optional<int> ApproximatePresenceCount { get; }
 
-        /// <summary>
-        /// Gets the approximate count of total members.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.ApproximateMemberCount" />
         Optional<int> ApproximateMemberCount { get; }
 
-        /// <summary>
-        /// Gets the expiration date of this invite.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.ExpiresAt" />
         Optional<DateTimeOffset?> ExpiresAt { get; }
 
-        /// <summary>
-        /// Gets metadata about the stage instance the invite is for, if any.
-        /// </summary>
+        /// <inheritdoc cref="IInvite.StageInstance" />
         Optional<IInviteStageInstance> StageInstance { get; }
     }
 }

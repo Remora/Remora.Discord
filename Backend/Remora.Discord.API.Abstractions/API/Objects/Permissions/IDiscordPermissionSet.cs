@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Numerics;
 using JetBrains.Annotations;
 
@@ -56,5 +57,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <param name="permission">The permission.</param>
         /// <returns>true if the given permission is in the set; otherwise, false.</returns>
         bool HasPermission(DiscordVoicePermission permission);
+
+        /// <summary>
+        /// Gets a list of the <see cref="DiscordPermission"/> values contained within the set.
+        /// </summary>
+        /// <returns>A list of <see cref="DiscordPermission"/> value.</returns>
+        IReadOnlyList<DiscordPermission> GetPermissions();
     }
 }

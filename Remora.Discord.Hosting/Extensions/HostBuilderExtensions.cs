@@ -26,7 +26,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Hosting.Options;
 using Remora.Discord.Hosting.Services;
+using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Hosting.Extensions
 {
@@ -46,6 +48,8 @@ namespace Remora.Discord.Hosting.Extensions
         {
             hostBuilder.ConfigureServices((_, serviceCollection) =>
             {
+                serviceCollection.Configure(() => new DiscordServiceOptions());
+
                 serviceCollection
                     .AddDiscordGateway(tokenFactory);
 

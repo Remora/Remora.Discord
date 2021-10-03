@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Commands.Services;
+using Remora.Commands.Tokenization;
+using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
@@ -50,6 +52,9 @@ namespace Remora.Discord.Commands.Responders
         private readonly IServiceProvider _services;
         private readonly ContextInjectionService _contextInjection;
 
+        private readonly TokenizerOptions _tokenizerOptions;
+        private readonly TreeSearchOptions _treeSearchOptions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandResponder"/> class.
         /// </summary>
@@ -58,13 +63,17 @@ namespace Remora.Discord.Commands.Responders
         /// <param name="eventCollector">The event collector.</param>
         /// <param name="services">The available services.</param>
         /// <param name="contextInjection">The injection service.</param>
+        /// <param name="tokenizerOptions">The tokenizer options.</param>
+        /// <param name="treeSearchOptions">The tree search options.</param>
         public CommandResponder
         (
             CommandService commandService,
             IOptions<CommandResponderOptions> options,
             ExecutionEventCollectorService eventCollector,
             IServiceProvider services,
-            ContextInjectionService contextInjection
+            ContextInjectionService contextInjection,
+            IOptions<TokenizerOptions> tokenizerOptions,
+            IOptions<TreeSearchOptions> treeSearchOptions
         )
         {
             _commandService = commandService;
@@ -72,6 +81,9 @@ namespace Remora.Discord.Commands.Responders
             _contextInjection = contextInjection;
             _eventCollector = eventCollector;
             _options = options.Value;
+
+            _tokenizerOptions = tokenizerOptions.Value;
+            _treeSearchOptions = treeSearchOptions.Value;
         }
 
         /// <inheritdoc/>
@@ -95,12 +107,12 @@ namespace Remora.Discord.Commands.Responders
             }
 
             var author = gatewayEvent.Author;
-            if (author.IsBot.HasValue && author.IsBot.Value)
+            if (author.IsBot.IsDefined(out var isBot) && isBot)
             {
                 return Result.FromSuccess();
             }
 
-            if (author.IsSystem.HasValue && author.IsSystem.Value)
+            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
             {
                 return Result.FromSuccess();
             }
@@ -160,44 +172,69 @@ namespace Remora.Discord.Commands.Responders
                 return Result.FromSuccess();
             }
 
-            if (!gatewayEvent.Content.HasValue)
+            if (!gatewayEvent.ID.IsDefined(out var messageID))
+            {
+                return Result.FromSuccess();
+            }
+
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+            {
+                return Result.FromSuccess();
+            }
+
+            if (!gatewayEvent.Content.IsDefined(out var content))
             {
                 return Result.FromSuccess();
             }
 
             if (_options.Prefix is not null)
             {
-                if (!gatewayEvent.Content.Value.StartsWith(_options.Prefix))
+                if (!content.StartsWith(_options.Prefix))
                 {
                     return Result.FromSuccess();
                 }
             }
 
-            if (!gatewayEvent.Author.HasValue)
+            if (!gatewayEvent.Author.IsDefined(out var author))
             {
                 return Result.FromSuccess();
             }
 
-            var author = gatewayEvent.Author.Value;
-            if (author.IsBot.HasValue && author.IsBot.Value)
+            if (author.IsBot.IsDefined(out var isBot) && isBot)
             {
                 return Result.FromSuccess();
             }
 
-            if (author.IsSystem.HasValue && author.IsSystem.Value)
+            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
             {
+                return Result.FromSuccess();
+            }
+
+            if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
+            {
+                // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
+                // change made to the message object
+                var interval = DateTimeOffset.UtcNow - edited;
+                if (interval >= TimeSpan.FromSeconds(3))
+                {
+                    return Result.FromSuccess();
+                }
+            }
+            else
+            {
+                // No edit means no visible change to the command
                 return Result.FromSuccess();
             }
 
             var context = new MessageContext
             (
-                gatewayEvent.ChannelID.Value,
+                channelID,
                 author,
-                gatewayEvent.ID.Value,
+                messageID,
                 gatewayEvent
             );
 
-            return await ExecuteCommandAsync(gatewayEvent.Content.Value, context, ct);
+            return await ExecuteCommandAsync(content, context, ct);
         }
 
         /// <summary>
@@ -238,6 +275,8 @@ namespace Remora.Discord.Commands.Responders
             (
                 content,
                 _services,
+                tokenizerOptions: _tokenizerOptions,
+                searchOptions: _treeSearchOptions,
                 ct: ct
             );
 

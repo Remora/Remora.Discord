@@ -48,7 +48,13 @@ namespace Remora.Discord.Commands.Feedback.Services
         private readonly ContextInjectionService _contextInjection;
         private readonly IDiscordRestChannelAPI _channelAPI;
         private readonly IDiscordRestUserAPI _userAPI;
-        private readonly IDiscordRestWebhookAPI _webhookAPI;
+        private readonly IDiscordRestInteractionAPI _interactionAPI;
+
+        /// <summary>
+        /// Holds a value indicating whether the original message was ephemeral; if so, followup messages should also
+        /// be ephemeral.
+        /// </summary>
+        private bool _isEphemeral;
 
         /// <summary>
         /// Gets the theme used by the feedback service.
@@ -56,26 +62,33 @@ namespace Remora.Discord.Commands.Feedback.Services
         public IFeedbackTheme Theme { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the service, in the context of an interaction, has edited the original
+        /// message.
+        /// </summary>
+        /// <remarks>This method always returns false in a message context.</remarks>
+        public bool HasEditedOriginalMessage { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FeedbackService"/> class.
         /// </summary>
         /// <param name="channelAPI">The channel API.</param>
         /// <param name="userAPI">The user API.</param>
         /// <param name="contextInjection">The context injection service.</param>
-        /// <param name="webhookAPI">The webhook API.</param>
+        /// <param name="interactionAPI">The webhook API.</param>
         /// <param name="feedbackTheme">The feedback theme to use.</param>
         public FeedbackService
         (
             IDiscordRestChannelAPI channelAPI,
             IDiscordRestUserAPI userAPI,
             ContextInjectionService contextInjection,
-            IDiscordRestWebhookAPI webhookAPI,
+            IDiscordRestInteractionAPI interactionAPI,
             IFeedbackTheme feedbackTheme
         )
         {
             _channelAPI = channelAPI;
             _userAPI = userAPI;
             _contextInjection = contextInjection;
-            _webhookAPI = webhookAPI;
+            _interactionAPI = interactionAPI;
 
             this.Theme = feedbackTheme;
         }
@@ -86,6 +99,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendInfoAsync
@@ -93,9 +107,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Primary), target, ct);
+            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Primary), target, options, ct);
 
         /// <summary>
         /// Send an informational message wherever is most appropriate to the current context.
@@ -106,30 +121,34 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </remarks>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualInfoAsync
         (
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Primary), target, ct);
+            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Primary), target, options, ct);
 
         /// <summary>
         /// Send an informational message to the given user as a direct message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateInfoAsync
         (
             Snowflake user,
             string contents,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Primary), ct);
+            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Primary), options, ct);
 
         /// <summary>
         /// Send a positive, successful message.
@@ -137,6 +156,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendSuccessAsync
@@ -144,9 +164,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Success), target, ct);
+            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Success), target, options, ct);
 
         /// <summary>
         /// Send a positive, successful message wherever is most appropriate to the current context.
@@ -157,30 +178,34 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </remarks>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualSuccessAsync
         (
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Success), target, ct);
+            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Success), target, options, ct);
 
         /// <summary>
         /// Send a positive, successful message to the given user as a direct message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateSuccessAsync
         (
             Snowflake user,
             string contents,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Success), ct);
+            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Success), options, ct);
 
         /// <summary>
         /// Send a neutral message.
@@ -188,6 +213,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendNeutralAsync
@@ -195,9 +221,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Secondary), target, ct);
+            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Secondary), target, options, ct);
 
         /// <summary>
         /// Send a neutral message wherever is most appropriate to the current context.
@@ -208,30 +235,34 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </remarks>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualNeutralAsync
         (
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Secondary), target, ct);
+            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Secondary), target, options, ct);
 
         /// <summary>
         /// Send a neutral message to the given user as a direct message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateNeutralAsync
         (
             Snowflake user,
             string contents,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Secondary), ct);
+            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Secondary), options, ct);
 
         /// <summary>
         /// Send a warning message.
@@ -239,6 +270,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendWarningAsync
@@ -246,9 +278,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Warning), target, ct);
+            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.Warning), target, options, ct);
 
         /// <summary>
         /// Send a warning message wherever is most appropriate to the current context.
@@ -259,30 +292,34 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </remarks>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualWarningAsync
         (
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Warning), target, ct);
+            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.Warning), target, options, ct);
 
         /// <summary>
         /// Send a warning message to the given user as a direct message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateWarningAsync
         (
             Snowflake user,
             string contents,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Warning), ct);
+            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.Warning), options, ct);
 
         /// <summary>
         /// Send a negative error message.
@@ -290,6 +327,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendErrorAsync
@@ -297,9 +335,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.FaultOrDanger), target, ct);
+            => SendMessageAsync(channel, new FeedbackMessage(contents, this.Theme.FaultOrDanger), target, options, ct);
 
         /// <summary>
         /// Send a negative error message wherever is most appropriate to the current context.
@@ -310,30 +349,34 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </remarks>
         /// <param name="contents">The contents of the message.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualErrorAsync
         (
             string contents,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.FaultOrDanger), target, ct);
+            => SendContextualMessageAsync(new FeedbackMessage(contents, this.Theme.FaultOrDanger), target, options, ct);
 
         /// <summary>
         /// Send a negative error message to the given user as a direct message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="contents">The contents of the message.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateErrorAsync
         (
             Snowflake user,
             string contents,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.FaultOrDanger), ct);
+            => SendPrivateMessageAsync(user, new FeedbackMessage(contents, this.Theme.FaultOrDanger), options, ct);
 
         /// <summary>
         /// Send a message.
@@ -341,6 +384,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="channel">The channel to send the message to.</param>
         /// <param name="message">The message to send.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendMessageAsync
@@ -348,66 +392,84 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake channel,
             FeedbackMessage message,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContentAsync(channel, message.Message, message.Colour, target, ct);
+            => SendContentAsync(channel, message.Message, message.Colour, target, options, ct);
 
         /// <summary>
         /// Send a contextual message.
         /// </summary>
         /// <param name="message">The message to send.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendContextualMessageAsync
         (
             FeedbackMessage message,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendContextualContentAsync(message.Message, message.Colour, target, ct);
+            => SendContextualContentAsync(message.Message, message.Colour, target, options, ct);
 
         /// <summary>
         /// Send a private message.
         /// </summary>
         /// <param name="user">The user to send the message to.</param>
         /// <param name="message">The message to send.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IReadOnlyList<IMessage>>> SendPrivateMessageAsync
         (
             Snowflake user,
             FeedbackMessage message,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
-            => SendPrivateContentAsync(user, message.Message, message.Colour, ct);
+            => SendPrivateContentAsync(user, message.Message, message.Colour, options, ct);
 
         /// <summary>
         /// Sends the given embed to the given channel.
         /// </summary>
         /// <param name="channel">The channel to send the embed to.</param>
         /// <param name="embed">The embed.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public Task<Result<IMessage>> SendEmbedAsync
         (
             Snowflake channel,
             Embed embed,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
-            return _channelAPI.CreateMessageAsync(channel, embeds: new[] { embed }, ct: ct);
+            return _channelAPI.CreateMessageAsync
+            (
+                channel,
+                isTTS: options?.IsTTS ?? default,
+                file: options?.File ?? default,
+                embeds: new[] { embed },
+                allowedMentions: options?.AllowedMentions ?? default,
+                components: options?.MessageComponents ?? default,
+                ct: ct
+            );
         }
 
         /// <summary>
         /// Sends the given embed to current context.
         /// </summary>
         /// <param name="embed">The embed.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result<IMessage>> SendContextualEmbedAsync
         (
             Embed embed,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
@@ -416,23 +478,54 @@ namespace Remora.Discord.Commands.Feedback.Services
                 return new InvalidOperationError("Contextual sends require a context to be available.");
             }
 
-            return _contextInjection.Context switch
+            switch (_contextInjection.Context)
             {
-                MessageContext messageContext => await _channelAPI.CreateMessageAsync
-                (
-                    messageContext.ChannelID,
-                    embeds: new[] { embed },
-                    ct: ct
-                ),
-                InteractionContext interactionContext => await _webhookAPI.CreateFollowupMessageAsync
-                (
-                    interactionContext.ApplicationID,
-                    interactionContext.Token,
-                    embeds: new[] { embed },
-                    ct: ct
-                ),
-                _ => throw new InvalidOperationException()
-            };
+                case MessageContext messageContext:
+                {
+                    return await SendEmbedAsync(messageContext.ChannelID, embed, options, ct);
+                }
+                case InteractionContext interactionContext:
+                {
+                    var messageFlags = default(Optional<MessageFlags>);
+                    if (this.HasEditedOriginalMessage && _isEphemeral)
+                    {
+                        messageFlags = MessageFlags.Ephemeral;
+                    }
+
+                    var result = await _interactionAPI.CreateFollowupMessageAsync
+                    (
+                        interactionContext.ApplicationID,
+                        interactionContext.Token,
+                        isTTS: options?.IsTTS ?? default,
+                        file: options?.File ?? default,
+                        embeds: new[] { embed },
+                        allowedMentions: options?.AllowedMentions ?? default,
+                        components: options?.MessageComponents ?? default,
+                        flags: messageFlags,
+                        ct: ct
+                    );
+
+                    if (!result.IsSuccess)
+                    {
+                        return result;
+                    }
+
+                    if (this.HasEditedOriginalMessage)
+                    {
+                        return result;
+                    }
+
+                    var message = result.Entity;
+                    _isEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+
+                    this.HasEditedOriginalMessage = true;
+                    return result;
+                }
+                default:
+                {
+                    throw new InvalidOperationException();
+                }
+            }
         }
 
         /// <summary>
@@ -440,12 +533,14 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// </summary>
         /// <param name="user">The ID of the user to send the embed to.</param>
         /// <param name="embed">The embed.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result<IMessage>> SendPrivateEmbedAsync
         (
             Snowflake user,
             Embed embed,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
@@ -457,7 +552,7 @@ namespace Remora.Discord.Commands.Feedback.Services
 
             var dm = getUserDM.Entity;
 
-            return await SendEmbedAsync(dm.ID, embed, ct);
+            return await SendEmbedAsync(dm.ID, embed, options, ct);
         }
 
         /// <summary>
@@ -467,6 +562,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="contents">The contents to send.</param>
         /// <param name="color">The embed colour.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result<IReadOnlyList<IMessage>>> SendContentAsync
@@ -475,13 +571,14 @@ namespace Remora.Discord.Commands.Feedback.Services
             string contents,
             Color color,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
             var sendResults = new List<IMessage>();
             foreach (var chunk in CreateContentChunks(target, color, contents))
             {
-                var send = await SendEmbedAsync(channel, chunk, ct);
+                var send = await SendEmbedAsync(channel, chunk, options, ct);
                 if (!send.IsSuccess)
                 {
                     return Result<IReadOnlyList<IMessage>>.FromError(send);
@@ -499,6 +596,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="contents">The contents to send.</param>
         /// <param name="color">The embed colour.</param>
         /// <param name="target">The target user to mention, if any.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result<IReadOnlyList<IMessage>>> SendContextualContentAsync
@@ -506,13 +604,14 @@ namespace Remora.Discord.Commands.Feedback.Services
             string contents,
             Color color,
             Snowflake? target = null,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
             var sendResults = new List<IMessage>();
             foreach (var chunk in CreateContentChunks(target, color, contents))
             {
-                var send = await SendContextualEmbedAsync(chunk, ct);
+                var send = await SendContextualEmbedAsync(chunk, options, ct);
                 if (!send.IsSuccess)
                 {
                     return Result<IReadOnlyList<IMessage>>.FromError(send);
@@ -531,6 +630,7 @@ namespace Remora.Discord.Commands.Feedback.Services
         /// <param name="user">The ID of the user to send the content to.</param>
         /// <param name="contents">The contents to send.</param>
         /// <param name="color">The embed colour.</param>
+        /// <param name="options">The message options to use.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         public async Task<Result<IReadOnlyList<IMessage>>> SendPrivateContentAsync
@@ -538,6 +638,7 @@ namespace Remora.Discord.Commands.Feedback.Services
             Snowflake user,
             string contents,
             Color color,
+            FeedbackMessageOptions? options = null,
             CancellationToken ct = default
         )
         {
@@ -548,7 +649,7 @@ namespace Remora.Discord.Commands.Feedback.Services
             }
 
             var dm = getUserDM.Entity;
-            return await SendContentAsync(dm.ID, contents, color, null, ct);
+            return await SendContentAsync(dm.ID, contents, color, null, options, ct);
         }
 
         /// <summary>

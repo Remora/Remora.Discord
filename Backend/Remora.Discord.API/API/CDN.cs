@@ -65,7 +65,7 @@ namespace Remora.Discord.API
             }
 
             // Prefer the animated version of emojis, if available
-            if (emoji.IsAnimated.HasValue && emoji.IsAnimated.Value)
+            if (emoji.IsAnimated.IsDefined(out var isAnimated) && isAnimated)
             {
                 imageFormat = CDNImageFormat.GIF;
             }
@@ -101,7 +101,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -111,7 +111,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"emojis/{emojiID}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"emojis/{emojiID}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -180,7 +180,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -190,7 +190,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"icons/{guildID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"icons/{guildID}/{iconHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -252,7 +252,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -262,7 +262,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"splashes/{guildID}/{splashHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"splashes/{guildID}/{splashHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -324,7 +324,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -334,7 +334,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"discovery-splashes/{guildID}/{discoverySplashHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -359,12 +359,9 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (guild.Banner is null)
-            {
-                return new ImageNotFoundError();
-            }
-
-            return GetGuildBannerUrl(guild.ID, guild.Banner, imageFormat, imageSize);
+            return guild.Banner is not null
+                ? GetGuildBannerUrl(guild.ID, guild.Banner, imageFormat, imageSize)
+                : new ImageNotFoundError();
         }
 
         /// <summary>
@@ -396,7 +393,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -406,7 +403,77 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"banners/{guildID}/{bannerHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"banners/{guildID}/{bannerHash.Value}.{format.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's banner.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserBannerUrl
+        (
+            IUser user,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            return user.Banner.IsDefined(out var banner)
+                ? GetUserBannerUrl(user.ID, banner, imageFormat, imageSize)
+                : new ImageNotFoundError();
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given user's banner.
+        /// </summary>
+        /// <param name="userID">The ID of the user.</param>
+        /// <param name="bannerHash">The image hash of the user's banner.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetUserBannerUrl
+        (
+            Snowflake userID,
+            IImageHash bannerHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            var format = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"banners/{userID}/{bannerHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -459,7 +526,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -470,7 +537,7 @@ namespace Remora.Discord.API
             var discriminatorModulus = userDiscriminator % 5;
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"embed/avatars/{discriminatorModulus}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"embed/avatars/{discriminatorModulus}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -539,7 +606,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -549,7 +616,90 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"avatars/{userID}/{avatarHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"avatars/{userID}/{avatarHash.Value}.{format.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild member's avatar.
+        /// </summary>
+        /// <param name="guildID">The guild to retrieve the member avatar of.</param>
+        /// <param name="member">The guild member.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildMemberAvatarUrl
+        (
+            Snowflake guildID,
+            IGuildMember member,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!member.Avatar.HasValue || member.Avatar.Value is null || !member.User.HasValue)
+            {
+                return new ImageNotFoundError();
+            }
+
+            // Prefer the animated version, if available
+            if (member.Avatar.Value.HasGif && !imageFormat.HasValue)
+            {
+                imageFormat = CDNImageFormat.GIF;
+            }
+
+            return GetGuildMemberAvatarUrl(guildID, member.User.Value.ID, member.Avatar.Value, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given guild members's avatar.
+        /// </summary>
+        /// <param name="guildID">The guild to retrieve the member avatar of.</param>
+        /// <param name="userID">The user ID of the guild member.</param>
+        /// <param name="avatarHash">The image hash of the guild member's avatar.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetGuildMemberAvatarUrl
+        (
+            Snowflake guildID,
+            Snowflake userID,
+            IImageHash avatarHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP,
+                CDNImageFormat.GIF
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            var format = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"guilds/{guildID}/users/{userID}/avatars/{avatarHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -611,7 +761,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -621,7 +771,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-icons/{applicationID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-icons/{applicationID}/{iconHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -646,12 +796,9 @@ namespace Remora.Discord.API
             Optional<ushort> imageSize = default
         )
         {
-            if (!application.CoverImage.HasValue)
-            {
-                return new ImageNotFoundError();
-            }
-
-            return GetApplicationCoverUrl(application.ID, application.CoverImage.Value, imageFormat, imageSize);
+            return application.CoverImage.IsDefined(out var coverImage)
+                ? GetApplicationCoverUrl(application.ID, coverImage, imageFormat, imageSize)
+                : new ImageNotFoundError();
         }
 
         /// <summary>
@@ -683,7 +830,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -693,7 +840,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-icons/{applicationID}/{coverHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-icons/{applicationID}/{coverHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -749,7 +896,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -759,7 +906,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-assets/{applicationID}/{assetID}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-assets/{applicationID}/{assetID}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -819,7 +966,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -829,7 +976,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-assets/{applicationID}/achievements/{achievementID}/icons/{iconHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -881,7 +1028,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -892,7 +1039,7 @@ namespace Remora.Discord.API
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
                 // Yes, all stickers are stored under this hardcoded application. This is intentional.
-                Path = $"app-assets/710982414301790216/store/{bannerAssetId}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"app-assets/710982414301790216/store/{bannerAssetId}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -954,7 +1101,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -964,7 +1111,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"team-icons/{teamID}/{iconHash.Value}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"team-icons/{teamID}/{iconHash.Value}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -1015,7 +1162,7 @@ namespace Remora.Discord.API
                 return Result<Uri>.FromError(formatValidation);
             }
 
-            imageFormat = formatValidation.Entity;
+            var format = formatValidation.Entity;
 
             var checkImageSize = CheckImageSize(imageSize);
             if (!checkImageSize.IsSuccess)
@@ -1025,7 +1172,7 @@ namespace Remora.Discord.API
 
             var ub = new UriBuilder(Constants.CDNBaseURL)
             {
-                Path = $"stickers/{stickerId}.{imageFormat.Value.ToFileExtension()}"
+                Path = $"stickers/{stickerId}.{format.ToFileExtension()}"
             };
 
             if (imageSize.HasValue)
@@ -1036,20 +1183,90 @@ namespace Remora.Discord.API
             return ub.Uri;
         }
 
-        private static Result<Optional<CDNImageFormat>> ValidateOrDefaultImageFormat
+        /// <summary>
+        /// Gets the CDN URI of the given role's icon.
+        /// </summary>
+        /// <param name="role">The role.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetRoleIconUrl
+        (
+            IRole role,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            if (!role.Icon.IsDefined(out var icon))
+            {
+                return new ImageNotFoundError();
+            }
+
+            return GetRoleIconUrl(icon, imageFormat, imageSize);
+        }
+
+        /// <summary>
+        /// Gets the CDN URI of the given role's icon.
+        /// </summary>
+        /// <param name="iconHash">The ID of the role.</param>
+        /// <param name="imageFormat">The requested image format.</param>
+        /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        public static Result<Uri> GetRoleIconUrl
+        (
+            IImageHash iconHash,
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var formatValidation = ValidateOrDefaultImageFormat
+            (
+                imageFormat,
+                CDNImageFormat.PNG,
+                CDNImageFormat.JPEG,
+                CDNImageFormat.WebP
+            );
+
+            if (!formatValidation.IsSuccess)
+            {
+                return Result<Uri>.FromError(formatValidation);
+            }
+
+            var format = formatValidation.Entity;
+
+            var checkImageSize = CheckImageSize(imageSize);
+            if (!checkImageSize.IsSuccess)
+            {
+                return Result<Uri>.FromError(checkImageSize);
+            }
+
+            var ub = new UriBuilder(Constants.CDNBaseURL)
+            {
+                Path = $"role-icons/{iconHash.Value}.{format.ToFileExtension()}"
+            };
+
+            if (imageSize.HasValue)
+            {
+                ub.Query = $"size={imageSize.Value}";
+            }
+
+            return ub.Uri;
+        }
+
+        private static Result<CDNImageFormat> ValidateOrDefaultImageFormat
         (
             Optional<CDNImageFormat> imageFormat,
             params CDNImageFormat[] acceptedFormats
         )
         {
-            if (!imageFormat.HasValue)
+            if (!imageFormat.IsDefined(out var format))
             {
-                imageFormat = CDNImageFormat.PNG;
+                format = CDNImageFormat.PNG;
             }
 
-            if (acceptedFormats.Contains(imageFormat.Value))
+            if (acceptedFormats.Contains(format))
             {
-                return imageFormat;
+                return format;
             }
 
             return new UnsupportedImageFormatError(acceptedFormats);
@@ -1057,17 +1274,17 @@ namespace Remora.Discord.API
 
         private static Result CheckImageSize(Optional<ushort> imageSize)
         {
-            if (!imageSize.HasValue)
+            if (!imageSize.IsDefined(out var size))
             {
                 return Result.FromSuccess();
             }
 
-            if (imageSize.Value is < 16 or > 4096)
+            if (size is < 16 or > 4096)
             {
                 return new ImageSizeOutOfRangeError();
             }
 
-            var isPowerOfTwo = (imageSize.Value & (imageSize.Value - 1)) == 0;
+            var isPowerOfTwo = (size & (size - 1)) == 0;
             if (!isPowerOfTwo)
             {
                 return new ImageSizeNotPowerOfTwoError();

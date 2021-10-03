@@ -199,6 +199,60 @@ namespace Remora.Discord.Tests.Tests.Core
         }
 
         /// <summary>
+        /// Tests the <see cref="Optional{TValue}.IsDefined()"/> method and its overloads.
+        /// </summary>
+        public class IsDefined
+        {
+            [Fact]
+            public void ReturnsFalseIfNullableOptionalHasNoValue()
+            {
+                Optional<int?> noValue = default;
+                Assert.False(noValue.IsDefined());
+
+                Assert.False(noValue.IsDefined(out var value));
+                Assert.Null(value);
+            }
+
+            [Fact]
+            public void ReturnsFalseIfNullableOptionalHasNullValue()
+            {
+                Optional<int?> noValue = null;
+                Assert.False(noValue.IsDefined());
+
+                Assert.False(noValue.IsDefined(out var value));
+                Assert.Null(value);
+            }
+
+            [Fact]
+            public void ReturnsTrueIfNullableOptionalHasNonNullValue()
+            {
+                Optional<int?> noValue = 1;
+                Assert.True(noValue.IsDefined());
+
+                Assert.True(noValue.IsDefined(out var value));
+                Assert.NotNull(value);
+            }
+
+            [Fact]
+            public void ReturnsFalseIfOptionalHasNoValue()
+            {
+                Optional<int> noValue = default;
+                Assert.False(noValue.IsDefined());
+                Assert.False(noValue.IsDefined(out _));
+            }
+
+            [Fact]
+            public void ReturnsTrueIfOptionalHasNonNullValue()
+            {
+                Optional<int> noValue = 1;
+                Assert.True(noValue.IsDefined());
+
+                Assert.True(noValue.IsDefined(out var value));
+                Assert.Equal(1, value);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="Optional{TValue}.ToString"/> method.
         /// </summary>
         public new class ToString

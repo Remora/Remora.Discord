@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -57,7 +58,7 @@ namespace Remora.Discord.Commands.Extensions
         private const int MaxCommandStringifiedLength = 4000;
         private const int MaxChoiceNameLength = 100;
         private const int MaxChoiceValueLength = 100;
-        private const int MaxDescriptionLength = 100;
+        private const int MaxCommandDescriptionLength = 100;
         private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
         private const string NameRegexPattern = "^[a-z0-9_-]{1,32}$";
@@ -81,8 +82,8 @@ namespace Remora.Discord.Commands.Extensions
             this CommandTree tree
         )
         {
-            var commands = new List<IBulkApplicationCommandData>();
-            var commandNames = new HashSet<string>();
+            var commands = new List<BulkApplicationCommandData>();
+            var commandNames = new Dictionary<int, HashSet<string>>();
             foreach (var node in tree.Root.Children)
             {
                 // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it
@@ -98,7 +99,19 @@ namespace Remora.Discord.Commands.Extensions
                     continue;
                 }
 
-                if (!commandNames.Add(translationResult.Entity.Name))
+                var option = translationResult.Entity;
+
+                // Perform validations
+
+                // int is used as a lookup here because dictionaries can't have null keys
+                var type = node is CommandNode command ? (int)command.GetCommandType() : -1;
+                if (!commandNames.TryGetValue(type, out var names))
+                {
+                    names = new HashSet<string>();
+                    commandNames.Add(type, names);
+                }
+
+                if (!names.Add(option.Name))
                 {
                     return new UnsupportedFeatureError("Overloads are not supported.");
                 }
@@ -113,6 +126,8 @@ namespace Remora.Discord.Commands.Extensions
                     );
                 }
 
+                // Translate from options to bulk data
+                Optional<ApplicationCommandType> commandType = default;
                 Optional<bool> defaultPermission = default;
                 switch (node)
                 {
@@ -143,6 +158,8 @@ namespace Remora.Discord.Commands.Extensions
                     }
                     case CommandNode commandNode:
                     {
+                        commandType = commandNode.GetCommandType();
+
                         // Top-level command outside of a group
                         var permissionAttribute = commandNode.GroupType
                             .GetCustomAttribute<DiscordDefaultPermissionAttribute>();
@@ -160,14 +177,16 @@ namespace Remora.Discord.Commands.Extensions
                 (
                     new BulkApplicationCommandData
                     (
-                        translationResult.Entity.Name,
-                        translationResult.Entity.Description,
-                        translationResult.Entity.Options,
-                        defaultPermission
+                        option.Name,
+                        option.Description,
+                        option.Options,
+                        defaultPermission,
+                        commandType
                     )
                 );
             }
 
+            // Perform validations
             if (commands.Count > MaxRootCommandsOrGroups)
             {
                 return new UnsupportedFeatureError
@@ -204,16 +223,38 @@ namespace Remora.Discord.Commands.Extensions
                         return Result<IApplicationCommandOption?>.FromSuccess(null);
                     }
 
-                    var validateNameResult = ValidateCommandName(command.Key, command);
+                    var validateNameResult = ValidateNodeName(command.Key, command);
                     if (!validateNameResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
-                    var validateDescriptionResult = ValidateCommandDescription(command.Shape.Description, command);
+                    var validateDescriptionResult = ValidateNodeDescription(command.Shape.Description, command);
                     if (!validateDescriptionResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
+                    }
+
+                    var commandType = command.GetCommandType();
+                    if (commandType is not ApplicationCommandType.ChatInput)
+                    {
+                        if (treeDepth > 1)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                "Context menu commands may not be nested.",
+                                command
+                            );
+                        }
+
+                        if (command.CommandMethod.GetParameters().Length > 0)
+                        {
+                            return new UnsupportedFeatureError
+                            (
+                                "Context menu commands may not have parameters.",
+                                command
+                            );
+                        }
                     }
 
                     var buildOptionsResult = CreateCommandParameterOptions(command);
@@ -222,23 +263,27 @@ namespace Remora.Discord.Commands.Extensions
                         return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
                     }
 
+                    var key = commandType is not ApplicationCommandType.ChatInput
+                        ? command.Key
+                        : command.Key.ToLowerInvariant();
+
                     return new ApplicationCommandOption
                     (
                         SubCommand, // Might not actually be a sub-command, but the caller will handle that
-                        command.Key.ToLowerInvariant(),
+                        key,
                         command.Shape.Description,
                         Options: new(buildOptionsResult.Entity)
                     );
                 }
                 case GroupNode group:
                 {
-                    var validateNameResult = ValidateCommandName(group.Key, group);
+                    var validateNameResult = ValidateNodeName(group.Key, group);
                     if (!validateNameResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                     }
 
-                    var validateDescriptionResult = ValidateCommandDescription(group.Description, group);
+                    var validateDescriptionResult = ValidateNodeDescription(group.Description, group);
                     if (!validateDescriptionResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(validateDescriptionResult);
@@ -314,7 +359,7 @@ namespace Remora.Discord.Commands.Extensions
             var parameterOptions = new List<IApplicationCommandOption>();
             foreach (var parameter in command.Shape.Parameters)
             {
-                var validateDescriptionResult = ValidateCommandDescription(parameter.Description, command);
+                var validateDescriptionResult = ValidateNodeDescription(parameter.Description, command);
                 if (!validateDescriptionResult.IsSuccess)
                 {
                     return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(validateDescriptionResult);
@@ -349,6 +394,12 @@ namespace Remora.Discord.Commands.Extensions
                     ? ToApplicationCommandOptionType(parameterType)
                     : (ApplicationCommandOptionType)typeHint.TypeHint;
 
+                var getChannelTypes = CreateChannelTypesOption(command, parameter, discordType);
+                if (!getChannelTypes.IsSuccess)
+                {
+                    return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(getChannelTypes);
+                }
+
                 Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
                 if (parameterType.IsEnum)
                 {
@@ -368,7 +419,8 @@ namespace Remora.Discord.Commands.Extensions
                     parameter.Description,
                     default,
                     !parameter.IsOmissible(),
-                    choices
+                    choices,
+                    ChannelTypes: getChannelTypes.Entity
                 );
 
                 parameterOptions.Add(parameterOption);
@@ -386,31 +438,112 @@ namespace Remora.Discord.Commands.Extensions
             return Result<IReadOnlyList<IApplicationCommandOption>>.FromSuccess(parameterOptions);
         }
 
+        private static Result<Optional<IReadOnlyList<ChannelType>>> CreateChannelTypesOption
+        (
+            CommandNode command,
+            IParameterShape parameter,
+            ApplicationCommandOptionType parameterType
+        )
+        {
+            var channelTypesAttribute = parameter.Parameter.GetCustomAttribute<ChannelTypesAttribute>();
+            if (channelTypesAttribute is not null && parameterType is not ApplicationCommandOptionType.Channel)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    $"The {nameof(ChannelTypesAttribute)} can only be used on a parameter of type {nameof(IChannel)}.",
+                    command,
+                    parameter
+                );
+            }
+
+            var channelTypes = channelTypesAttribute is null
+                ? default
+                : new Optional<IReadOnlyList<ChannelType>>(channelTypesAttribute.Types);
+
+            if (channelTypes.HasValue && channelTypes.Value.Count == 0)
+            {
+                return new UnsupportedParameterFeatureError
+                (
+                    $"Using {nameof(ChannelTypesAttribute)} requires at least one {nameof(ChannelType)} to be provided.",
+                    command,
+                    parameter
+                );
+            }
+
+            return channelTypes;
+        }
+
         private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
         (
             Type parameterType
         )
         {
-            var enumNames = Enum.GetNames(parameterType);
-            if (enumNames.Any(n => n.Length > MaxChoiceValueLength))
-            {
-                return new UnsupportedFeatureError
+            var values = Enum.GetValues(parameterType);
+            var choiceConversions = values.Cast<object>().Select
+            (
+                v => CreateApplicationCommandOptionChoice
                 (
-                    $"One or more enumeration members is too long (max {MaxChoiceValueLength})."
+                    parameterType,
+                    Enum.GetName(parameterType, v) ?? throw new InvalidOperationException(),
+                    v
+                )
+            )
+            .ToList();
+
+            if (choiceConversions.Any(c => !c.IsSuccess))
+            {
+                return Result<IReadOnlyList<IApplicationCommandOptionChoice>>.FromError
+                (
+                    choiceConversions.First(c => !c.IsSuccess)
                 );
             }
 
-            if (enumNames.Any(n => n.Length > MaxChoiceNameLength))
+            if (choiceConversions.Count > MaxChoiceValues)
+            {
+                return new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
+            }
+
+            return choiceConversions.Select(c => c.Entity).ToList();
+        }
+
+        private static Result<IApplicationCommandOptionChoice> CreateApplicationCommandOptionChoice
+        (
+            Type enumType,
+            string enumName,
+            object enumValue
+        )
+        {
+            var member = enumType.GetMember(enumName).Single();
+            var name = member.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumName;
+
+            if (name.Length > MaxChoiceNameLength)
             {
                 return new UnsupportedFeatureError
                 (
-                    $"One or more enumeration members is too long (max {MaxChoiceNameLength})."
+                    $"The name of the enumeration member {enumType.Name}::{enumName} is too long " +
+                    $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
+                    $"[{nameof(DescriptionAttribute)}], or rename the member."
                 );
             }
 
-            return enumNames.Length <= MaxChoiceValues
-                ? enumNames.Select(n => new ApplicationCommandOptionChoice(n, n)).ToList()
-                : new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
+            var valueString = enumName;
+            if (valueString.Length <= MaxChoiceValueLength)
+            {
+                return new ApplicationCommandOptionChoice(name, valueString);
+            }
+
+            // Try converting the enum's value representation
+            valueString = enumValue.ToString() ?? throw new InvalidOperationException();
+            if (valueString.Length > MaxChoiceValueLength)
+            {
+                return new UnsupportedFeatureError
+                (
+                    $"The length of the enumeration member {enumType.Name}::{enumName} value is too long " +
+                    $"(max {MaxChoiceValueLength})."
+                );
+            }
+
+            return new ApplicationCommandOptionChoice(name, valueString);
         }
 
         private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)
@@ -436,9 +569,9 @@ namespace Remora.Discord.Commands.Extensions
             length += option.Name.Length;
             length += option.Description.Length;
 
-            if (option.Choices.HasValue)
+            if (option.Choices.IsDefined(out var choices))
             {
-                foreach (var choice in option.Choices.Value)
+                foreach (var choice in choices)
                 {
                     length += choice.Name.Length;
                     if (choice.Value.TryPickT0(out var choiceValue, out _))
@@ -448,16 +581,22 @@ namespace Remora.Discord.Commands.Extensions
                 }
             }
 
-            if (option.Options.HasValue)
+            if (option.Options.IsDefined(out var options))
             {
-                length += option.Options.Value.Sum(GetCommandStringifiedLength);
+                length += options.Sum(GetCommandStringifiedLength);
             }
 
             return length;
         }
 
-        private static Result ValidateCommandName(string name, IChildNode node)
+        private static Result ValidateNodeName(string name, IChildNode node)
         {
+            if (node is CommandNode commandNode && commandNode.GetCommandType() is not ApplicationCommandType.ChatInput)
+            {
+                // These can be anything, basically
+                return Result.FromSuccess();
+            }
+
             return NameRegex.IsMatch(name)
                 ? Result.FromSuccess()
                 : new UnsupportedFeatureError
@@ -468,16 +607,42 @@ namespace Remora.Discord.Commands.Extensions
                 );
         }
 
-        private static Result ValidateCommandDescription(string description, IChildNode node)
+        private static Result ValidateNodeDescription(string description, IChildNode node)
         {
-            return description.Length <= MaxDescriptionLength
-                ? Result.FromSuccess()
-                : new UnsupportedFeatureError
-                (
-                    $"A command, group, or parameter description was too long (length {description.Length}, max " +
-                    $"{MaxDescriptionLength}).",
-                    node
-                );
+            switch (node)
+            {
+                case CommandNode command:
+                {
+                    var type = command.GetCommandType();
+                    if (type is ApplicationCommandType.ChatInput)
+                    {
+                        return description.Length <= MaxCommandDescriptionLength
+                            ? Result.FromSuccess()
+                            : new UnsupportedFeatureError
+                            (
+                                $"A command description was too long (length {description.Length}, " +
+                                $"max {MaxCommandDescriptionLength}).",
+                                node
+                            );
+                    }
+
+                    return description == string.Empty || description == Remora.Commands.Constants.DefaultDescription
+                        ? Result.FromSuccess()
+                        : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
+                }
+                default:
+                {
+                    // Assume it uses the default limits
+                    return description.Length <= MaxCommandDescriptionLength
+                        ? Result.FromSuccess()
+                        : new UnsupportedFeatureError
+                        (
+                            $"A group or parameter description was too long (length {description.Length}, " +
+                            $"max {MaxCommandDescriptionLength}).",
+                            node
+                        );
+                }
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the source URL of the thumbnail. Only supports http(s) and attachments.
         /// </summary>
-        Optional<string> Url { get; }
+        string Url { get; }
 
         /// <summary>
         /// Gets the proxied URL of the thumbnail.

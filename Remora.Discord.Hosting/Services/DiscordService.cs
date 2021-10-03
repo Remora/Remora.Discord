@@ -20,13 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Results;
+using Remora.Discord.Hosting.Options;
 using Remora.Results;
 
 namespace Remora.Discord.Hosting.Services
@@ -38,16 +41,28 @@ namespace Remora.Discord.Hosting.Services
     public class DiscordService : BackgroundService
     {
         private readonly DiscordGatewayClient _gatewayClient;
+        private readonly IHostApplicationLifetime _lifetime;
+        private readonly DiscordServiceOptions _options;
         private readonly ILogger<DiscordService> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordService"/> class.
         /// </summary>
         /// <param name="gatewayClient">The gateway client.</param>
+        /// <param name="lifetime">The application lifetime.</param>
+        /// <param name="options">The service options.</param>
         /// <param name="logger">The <see cref="ILogger"/>.</param>
-        public DiscordService(DiscordGatewayClient gatewayClient, ILogger<DiscordService> logger)
+        public DiscordService
+        (
+            DiscordGatewayClient gatewayClient,
+            IHostApplicationLifetime lifetime,
+            IOptions<DiscordServiceOptions> options,
+            ILogger<DiscordService> logger
+        )
         {
             _gatewayClient = gatewayClient;
+            _lifetime = lifetime;
+            _options = options.Value;
             _logger = logger;
         }
 
@@ -62,6 +77,12 @@ namespace Remora.Discord.Hosting.Services
                 {
                     case ExceptionError exe:
                     {
+                        if (exe.Exception is OperationCanceledException)
+                        {
+                            // No need for further cleanup
+                            return;
+                        }
+
                         _logger.LogError
                         (
                             exe.Exception,
@@ -73,6 +94,7 @@ namespace Remora.Discord.Hosting.Services
                     }
                     case GatewayWebSocketError:
                     case GatewayDiscordError:
+                    case GatewayError:
                     {
                         _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
                         break;
@@ -82,6 +104,11 @@ namespace Remora.Discord.Hosting.Services
                         _logger.LogError("Unknown error: {Message}", runResult.Error.Message);
                         break;
                     }
+                }
+
+                if (_options.TerminateApplicationOnCriticalGatewayErrors)
+                {
+                    _lifetime.StopApplication();
                 }
             }
         }

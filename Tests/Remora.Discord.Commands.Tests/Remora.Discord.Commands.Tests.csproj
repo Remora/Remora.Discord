@@ -15,4 +15,22 @@
       <PackageReference Include="Moq" Version="4.16.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.cs">
+        <DependentUpon>RequireDiscordPermissionConditionTests.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.And.cs">
+        <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.Not.cs">
+        <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.Or.cs">
+        <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.Xor.cs">
+        <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

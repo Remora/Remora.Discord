@@ -13,6 +13,9 @@
       "name": "none",
       "color": 0,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "372624976"
     },
@@ -21,6 +24,9 @@
       "name": "none",
       "color": 16713222,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "372624976"
     },
@@ -29,6 +35,9 @@
       "name": "none",
       "color": 2123412,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "372624976"
     },
@@ -37,6 +46,9 @@
       "name": "none",
       "color": 2067276,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "372624976"
     },
@@ -45,6 +57,9 @@
       "name": "none",
       "color": 0,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": true,
       "permissions": "372624976"
     },
@@ -53,6 +68,9 @@
       "name": "none",
       "color": 0,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": true,
       "permissions": "372624976"
     },
@@ -61,6 +79,9 @@
       "name": "none",
       "color": 15844367,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": true,
       "permissions": "372624976"
     },
@@ -69,6 +90,9 @@
       "name": "none",
       "color": 0,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "372624976"
     },
@@ -77,6 +101,9 @@
       "name": "none",
       "color": 0,
       "hoist": false,
+      "icon": "68b329da9893e34099c7d8ad5cb9c940",
+      "unicode_emoji": null,
+      "position": 1,
       "mentionable": false,
       "permissions": "2146959351"
     }

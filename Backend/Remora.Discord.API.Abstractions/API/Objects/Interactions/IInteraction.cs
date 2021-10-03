@@ -49,7 +49,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the command data payload.
         /// </summary>
-        Optional<IApplicationCommandInteractionData> Data { get; }
+        Optional<IInteractionData> Data { get; }
 
         /// <summary>
         /// Gets the ID of the guild the interaction was sent from.

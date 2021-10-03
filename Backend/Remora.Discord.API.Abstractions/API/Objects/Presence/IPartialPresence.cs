@@ -32,29 +32,19 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialPresence
     {
-        /// <summary>
-        /// Gets the user the presence is being updated for.
-        /// </summary>
+        /// <inheritdoc cref="IPresence.User" />
         Optional<IPartialUser> User { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
+        /// <inheritdoc cref="IPresence.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the current status of the user.
-        /// </summary>
+        /// <inheritdoc cref="IPresence.Status" />
         Optional<ClientStatus> Status { get; }
 
-        /// <summary>
-        /// Gets the user's current activities.
-        /// </summary>
+        /// <inheritdoc cref="IPresence.Activities" />
         Optional<IReadOnlyList<IActivity>?> Activities { get; }
 
-        /// <summary>
-        /// Gets the user's platform-dependent status.
-        /// </summary>
+        /// <inheritdoc cref="IPresence.ClientStatus" />
         Optional<IClientStatuses> ClientStatus { get; }
     }
 }

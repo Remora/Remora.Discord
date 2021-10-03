@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -28,7 +27,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// <summary>
     /// Enumerates the various permissions in Discord.
     /// </summary>
-    [PublicAPI, Flags]
+    [PublicAPI]
     public enum DiscordPermission
     {
         /// <summary>
@@ -206,16 +205,26 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows the user to create public threads.
         /// </summary>
-        UsePublicThreads = 35,
+        CreatePublicThreads = 35,
 
         /// <summary>
         /// Allows the user to create private threads.
         /// </summary>
-        UsePrivateThreads = 36,
+        CreatePrivateThreads = 36,
 
         /// <summary>
         /// Allows the user to use stickers from other servers.
         /// </summary>
-        UseExternalStickers = 37
+        UseExternalStickers = 37,
+
+        /// <summary>
+        /// Allows the user to send messages in threads.
+        /// </summary>
+        SendMessagesInThreads = 38,
+
+        /// <summary>
+        /// Allows for launching activities in a voice channel.
+        /// </summary>
+        StartEmbeddedActivities = 39
     }
 }

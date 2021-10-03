@@ -30,96 +30,150 @@ namespace Remora.Discord.API.Abstractions.Objects
     /// Represents information about an OAuth2 application.
     /// </summary>
     [PublicAPI]
-    public interface IApplication
+    public interface IApplication : IPartialApplication
     {
         /// <summary>
         /// Gets the application ID.
         /// </summary>
-        Snowflake ID { get; }
+        new Snowflake ID { get; }
 
         /// <summary>
         /// Gets the name of the application.
         /// </summary>
-        string Name { get; }
+        new string Name { get; }
 
         /// <summary>
         /// Gets the icon hash of the application.
         /// </summary>
-        IImageHash? Icon { get; }
+        new IImageHash? Icon { get; }
 
         /// <summary>
         /// Gets the description of the application.
         /// </summary>
-        string Description { get; }
+        new string Description { get; }
 
         /// <summary>
         /// Gets a list of RPC origin URLs.
         /// </summary>
-        Optional<IReadOnlyList<string>> RPCOrigins { get; }
+        new Optional<IReadOnlyList<string>> RPCOrigins { get; }
 
         /// <summary>
         /// Gets a value indicating whether the bot is a public bot.
         /// </summary>
-        bool IsBotPublic { get; }
+        new bool IsBotPublic { get; }
 
         /// <summary>
         /// Gets a value indicating whether the bot will only join upon completion of a full OAuth2 flow.
         /// </summary>
-        bool DoesBotRequireCodeGrant { get; }
+        new bool DoesBotRequireCodeGrant { get; }
 
         /// <summary>
         /// Gets the URL to the application's terms of service.
         /// </summary>
-        Optional<string> TermsOfServiceURL { get; }
+        new Optional<string> TermsOfServiceURL { get; }
 
         /// <summary>
         /// Gets the URL to the application's privacy policy.
         /// </summary>
-        Optional<string> PrivacyPolicyURL { get; }
+        new Optional<string> PrivacyPolicyURL { get; }
 
         /// <summary>
         /// Gets the user information of the application owner.
         /// </summary>
-        IPartialUser? Owner { get; }
+        new IPartialUser? Owner { get; }
 
         /// <summary>
         /// Gets the summary of the game, if the application is a game sold on the Discord storefront.
         /// </summary>
-        string Summary { get; }
+        new string Summary { get; }
 
         /// <summary>
         /// Gets the hex-encoded key for GameSDK's GetTicket function.
         /// </summary>
-        string VerifyKey { get; }
+        new string VerifyKey { get; }
 
         /// <summary>
         /// Gets the team the application belongs to, if any.
         /// </summary>
-        ITeam? Team { get; }
+        new ITeam? Team { get; }
 
         /// <summary>
         /// Gets the guild the game is linked to, if the application is a game sold on the Discord storefront.
         /// </summary>
-        Optional<Snowflake> GuildID { get; }
+        new Optional<Snowflake> GuildID { get; }
 
         /// <summary>
         /// Gets the primary SKU ID of the game, if the application is a game sold on the Discord storefront.
         /// </summary>
-        Optional<Snowflake> PrimarySKUID { get; }
+        new Optional<Snowflake> PrimarySKUID { get; }
 
         /// <summary>
         /// Gets the URL slug that links to the store page, if the application is a game sold on the Discord storefront.
         /// </summary>
-        Optional<string> Slug { get; }
+        new Optional<string> Slug { get; }
 
         /// <summary>
         /// Gets the cover image, if the application is a game sold on the Discord storefront.
         /// </summary>
-        Optional<IImageHash> CoverImage { get; }
+        new Optional<IImageHash> CoverImage { get; }
 
         /// <summary>
         /// Gets the application's public flags.
         /// </summary>
-        Optional<ApplicationFlags> Flags { get; }
+        new Optional<ApplicationFlags> Flags { get; }
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialApplication.ID => this.ID;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.Name => this.Name;
+
+        /// <inheritdoc/>
+        Optional<IImageHash?> IPartialApplication.Icon => new(this.Icon);
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.Description => this.Description;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<string>> IPartialApplication.RPCOrigins => this.RPCOrigins;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialApplication.IsBotPublic => this.IsBotPublic;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialApplication.DoesBotRequireCodeGrant => this.DoesBotRequireCodeGrant;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.TermsOfServiceURL => this.TermsOfServiceURL;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.PrivacyPolicyURL => this.PrivacyPolicyURL;
+
+        /// <inheritdoc/>
+        Optional<IPartialUser?> IPartialApplication.Owner => new(this.Owner);
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.Summary => this.Summary;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.VerifyKey => this.VerifyKey;
+
+        /// <inheritdoc/>
+        Optional<ITeam?> IPartialApplication.Team => new(this.Team);
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialApplication.GuildID => this.GuildID;
+
+        /// <inheritdoc/>
+        Optional<Snowflake> IPartialApplication.PrimarySKUID => this.PrimarySKUID;
+
+        /// <inheritdoc/>
+        Optional<string> IPartialApplication.Slug => this.Slug;
+
+        /// <inheritdoc/>
+        Optional<IImageHash> IPartialApplication.CoverImage => this.CoverImage;
+
+        /// <inheritdoc/>
+        Optional<ApplicationFlags> IPartialApplication.Flags => this.Flags;
     }
 }

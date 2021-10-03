@@ -49,8 +49,8 @@ namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
         /// <inheritdoc />
         public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
         {
-            if ((gatewayEvent.Author.IsBot.HasValue && gatewayEvent.Author.IsBot.Value) ||
-                (gatewayEvent.Author.IsSystem.HasValue && gatewayEvent.Author.IsSystem.Value))
+            if ((gatewayEvent.Author.IsBot.IsDefined(out var isBot) && isBot) ||
+                (gatewayEvent.Author.IsSystem.IsDefined(out var isSystem) && isSystem))
             {
                 return Result.FromSuccess();
             }

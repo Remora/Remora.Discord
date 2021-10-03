@@ -22,6 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Attributes;
 
 namespace Remora.Discord.Commands.Responders
 {
@@ -32,8 +33,19 @@ namespace Remora.Discord.Commands.Responders
     public interface IInteractionResponderOptions
     {
         /// <summary>
-        /// Gets a value indicating whether <see cref="InteractionResponder"/> should automatically issue a <see cref="InteractionCallbackType.DeferredChannelMessageWithSource"/> response to interactions, before attempting to identify and invoke the command, or whether all interaction responses should be handled by the consumer.
+        /// Gets a value indicating whether <see cref="InteractionResponder"/> should automatically issue a
+        /// <see cref="InteractionCallbackType.DeferredChannelMessageWithSource"/> response to interactions, before
+        /// attempting to identify and invoke the command, or whether all interaction responses should be handled by the
+        /// consumer.
         /// </summary>
         public bool SuppressAutomaticResponses { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="InteractionResponder"/> should automatically respond to
+        /// interactions with the <see cref="InteractionCallbackDataFlags.Ephemeral"/> flag.
+        /// Ephemeral responses can still be explicitly disabled for a given command/group through use of
+        /// <see cref="EphemeralAttribute"/>.
+        /// </summary>
+        public bool UseEphemeralResponses { get; }
     }
 }

@@ -32,7 +32,7 @@ namespace Remora.Discord.API.Abstractions.Objects
     public interface ISelectOption
     {
         /// <summary>
-        /// Gets the user-facing name of the option. Max 25 characters.
+        /// Gets the user-facing name of the option. Max 100 characters.
         /// </summary>
         string Label { get; }
 
@@ -42,7 +42,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Value { get; }
 
         /// <summary>
-        /// Gets an additional description of the option. Max 50 characters.
+        /// Gets an additional description of the option. Max 100 characters.
         /// </summary>
         Optional<string> Description { get; }
 

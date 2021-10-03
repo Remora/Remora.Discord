@@ -32,16 +32,6 @@ namespace Remora.Discord.API.Abstractions.Objects
     public interface IAuditLog
     {
         /// <summary>
-        /// Gets a list of webhooks found in the audit log.
-        /// </summary>
-        IReadOnlyList<IWebhook> Webhooks { get; }
-
-        /// <summary>
-        /// Gets a list of users found in the audit log.
-        /// </summary>
-        IReadOnlyList<IUser> Users { get; }
-
-        /// <summary>
         /// Gets a list of audit log entries.
         /// </summary>
         IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
@@ -55,5 +45,15 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a list of threads found in the audit log.
         /// </summary>
         IReadOnlyList<IChannel> Threads { get; }
+
+        /// <summary>
+        /// Gets a list of users found in the audit log.
+        /// </summary>
+        IReadOnlyList<IUser> Users { get; }
+
+        /// <summary>
+        /// Gets a list of webhooks found in the audit log.
+        /// </summary>
+        IReadOnlyList<IWebhook> Webhooks { get; }
     }
 }

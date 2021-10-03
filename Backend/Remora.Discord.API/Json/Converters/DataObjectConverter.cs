@@ -556,7 +556,7 @@ namespace Remora.Discord.API.Json
                     }
                 }
 
-                var propertyValue = propertyGetter.Invoke(value, new object?[] { });
+                var propertyValue = propertyGetter.Invoke(value, null);
 
                 if (propertyValue is IOptional { HasValue: false })
                 {

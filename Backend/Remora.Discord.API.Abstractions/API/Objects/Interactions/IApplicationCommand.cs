@@ -38,6 +38,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Snowflake ID { get; }
 
         /// <summary>
+        /// Gets the type of the command.
+        /// </summary>
+        Optional<ApplicationCommandType> Type { get; }
+
+        /// <summary>
         /// Gets the ID of the application.
         /// </summary>
         Snowflake ApplicationID { get; }
@@ -68,5 +73,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets a value indicating whether the command is enabled by default when added to a guild.
         /// </summary>
         Optional<bool> DefaultPermission { get; }
+
+        /// <summary>
+        /// Gets a value that increments on substantial changes.
+        /// </summary>
+        Snowflake Version { get; }
     }
 }

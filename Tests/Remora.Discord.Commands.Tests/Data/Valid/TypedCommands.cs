@@ -130,6 +130,12 @@ namespace Remora.Discord.Commands.Tests.Data.Valid
             throw new NotImplementedException();
         }
 
+        [Command("typed-channel-value")]
+        public Task<IResult> CommandWithTypedChannelValue([ChannelTypes(ChannelType.GuildText)] IChannel value)
+        {
+            throw new NotImplementedException();
+        }
+
         [Command("member-value")]
         public Task<IResult> CommandWithMemberValue(IGuildMember value)
         {

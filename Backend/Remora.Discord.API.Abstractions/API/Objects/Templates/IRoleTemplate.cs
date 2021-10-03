@@ -22,6 +22,7 @@
 
 using System.Drawing;
 using JetBrains.Annotations;
+using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
@@ -36,29 +37,31 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// </summary>
         int ID { get; }
 
-        /// <summary>
-        /// Gets the name of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Name"/>
         string Name { get; }
 
-        /// <summary>
-        /// Gets the colour of the role.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Colour"/>
         Color Colour { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the role is displayed separately in the sidebar.
-        /// </summary>
+        /// <inheritdoc cref="IRole.IsHoisted"/>
         bool IsHoisted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this role is mentionable.
-        /// </summary>
+        /// <inheritdoc cref="IRole.Icon"/>
+        Optional<IImageHash?> Icon { get; }
+
+        /// <inheritdoc cref="IRole.UnicodeEmoji"/>
+        Optional<string?> UnicodeEmoji { get; }
+
+        /// <inheritdoc cref="IRole.Position"/>
+        int Position { get; }
+
+        /// <inheritdoc cref="IRole.Permissions"/>
+        IDiscordPermissionSet Permissions { get; }
+
+        /// <inheritdoc cref="IRole.IsMentionable"/>
         bool IsMentionable { get; }
 
-        /// <summary>
-        /// Gets the permission set for this role.
-        /// </summary>
-        IDiscordPermissionSet Permissions { get; }
+        /// <inheritdoc cref="IRole.Name"/>
+        Optional<IRoleTags> Tags { get; }
     }
 }

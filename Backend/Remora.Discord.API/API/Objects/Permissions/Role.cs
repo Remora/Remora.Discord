@@ -37,6 +37,8 @@ namespace Remora.Discord.API.Objects
         string Name,
         Color Colour,
         bool IsHoisted,
+        Optional<IImageHash?> Icon,
+        Optional<string?> UnicodeEmoji,
         int Position,
         IDiscordPermissionSet Permissions,
         bool IsManaged,

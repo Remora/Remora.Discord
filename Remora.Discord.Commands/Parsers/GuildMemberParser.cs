@@ -41,43 +41,37 @@ namespace Remora.Discord.Commands.Parsers
     public class GuildMemberParser : AbstractTypeParser<IGuildMember>
     {
         private readonly ICommandContext _context;
-        private readonly IDiscordRestChannelAPI _channelAPI;
         private readonly IDiscordRestGuildAPI _guildAPI;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GuildMemberParser"/> class.
         /// </summary>
         /// <param name="context">The command context.</param>
-        /// <param name="channelAPI">The channel API.</param>
         /// <param name="guildAPI">The guild API.</param>
-        public GuildMemberParser(ICommandContext context, IDiscordRestChannelAPI channelAPI, IDiscordRestGuildAPI guildAPI)
+        public GuildMemberParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
         {
             _guildAPI = guildAPI;
             _context = context;
-            _channelAPI = channelAPI;
         }
 
         /// <inheritdoc />
-        public override async ValueTask<Result<IGuildMember>> TryParse(string value, CancellationToken ct)
+        public override async ValueTask<Result<IGuildMember>> TryParseAsync
+        (
+            string value,
+            CancellationToken ct = default
+        )
         {
             if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
             {
                 return new ParsingError<IGuildMember>(value);
             }
 
-            var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
-            if (!getChannel.IsSuccess)
-            {
-                return Result<IGuildMember>.FromError(getChannel);
-            }
-
-            var channel = getChannel.Entity;
-            if (!channel.GuildID.HasValue)
+            if (!_context.GuildID.IsDefined(out var guildID))
             {
                 return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
             }
 
-            return await _guildAPI.GetGuildMemberAsync(channel.GuildID.Value, guildMemberID.Value, ct);
+            return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
         }
     }
 }

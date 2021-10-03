@@ -33,137 +33,82 @@ namespace Remora.Discord.API.Abstractions.Objects
     [PublicAPI]
     public interface IPartialChannel
     {
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.ID" />
         Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the type of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Type" />
         Optional<ChannelType> Type { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the channel is in.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.GuildID" />
         Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the sorting position of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Position" />
         Optional<int> Position { get; }
 
-        /// <summary>
-        /// Gets a list of explicit permission overwrites for members and roles.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.PermissionOverwrites" />
         Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites { get; }
 
-        /// <summary>
-        /// Gets the name of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Name" />
         Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the topic of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Topic" />
         Optional<string?> Topic { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the channel is NSFW.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.IsNsfw" />
         Optional<bool> IsNsfw { get; }
 
-        /// <summary>
-        /// Gets the ID of the last message sent in the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.LastMessageID" />
         Optional<Snowflake?> LastMessageID { get; }
 
-        /// <summary>
-        /// Gets the bitrate (in bits) of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Bitrate" />
         Optional<int> Bitrate { get; }
 
-        /// <summary>
-        /// Gets the user limit of the voice channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.UserLimit" />
         Optional<int> UserLimit { get; }
 
-        /// <summary>
-        /// Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as
-        /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
-        /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
-        /// </summary>
+        /// <inheritdoc cref="IChannel.RateLimitPerUser" />
         Optional<TimeSpan> RateLimitPerUser { get; }
 
-        /// <summary>
-        /// Gets the recipients of the DM.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Recipients" />
         Optional<IReadOnlyList<IUser>> Recipients { get; }
 
-        /// <summary>
-        /// Gets the icon of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Icon" />
         Optional<IImageHash?> Icon { get; }
 
-        /// <summary>
-        /// Gets the ID of the DM creator.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.OwnerID" />
         Optional<Snowflake> OwnerID { get; }
 
-        /// <summary>
-        /// Gets the application ID of the group DM creator, if it is bot-created.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.ApplicationID" />
         Optional<Snowflake> ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the ID of the parent category for a channel. Each category can contain up to 50 channels.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.ParentID" />
         Optional<Snowflake?> ParentID { get; }
 
-        /// <summary>
-        /// Gets the time when the last pinned message was pinned.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.LastPinTimestamp" />
         Optional<DateTimeOffset?> LastPinTimestamp { get; }
 
-        /// <summary>
-        /// Gets the ID of the voice channel region.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.RTCRegion" />
         Optional<string?> RTCRegion { get; }
 
-        /// <summary>
-        /// Gets the video quality mode of the channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.VideoQualityMode" />
         Optional<VideoQualityMode> VideoQualityMode { get; }
 
-        /// <summary>
-        /// Gets an approximate count of the messages in the channel. Stops counting at 50.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.MessageCount" />
         Optional<int> MessageCount { get; }
 
-        /// <summary>
-        /// Gets an approximate count of the messages in the channel. Stops counting at 50.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.MemberCount" />
         Optional<int> MemberCount { get; }
 
-        /// <summary>
-        /// Gets a set of thread-specific fields.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.ThreadMetadata" />
         Optional<IThreadMetadata> ThreadMetadata { get; }
 
-        /// <summary>
-        /// Gets the thread member object for the current user, if they have joined the thread.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Member" />
         Optional<IThreadMember> Member { get; }
 
-        /// <summary>
-        /// Gets the default duration for newly created threads in this channel.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.DefaultAutoArchiveDuration" />
         Optional<AutoArchiveDuration> DefaultAutoArchiveDuration { get; }
 
-        /// <summary>
-        /// Gets the computed permission set for the invoking user in the channel. Typically present when the channel is
-        /// resolved via a slash command interaction.
-        /// </summary>
+        /// <inheritdoc cref="IChannel.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
     }
 }

@@ -61,6 +61,7 @@ namespace Remora.Discord.Caching.Extensions
                 .Replace(ServiceDescriptor.Transient<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())
                 .Replace(ServiceDescriptor.Transient<IDiscordRestEmojiAPI, CachingDiscordRestEmojiAPI>())
                 .Replace(ServiceDescriptor.Transient<IDiscordRestGuildAPI, CachingDiscordRestGuildAPI>())
+                .Replace(ServiceDescriptor.Transient<IDiscordRestInteractionAPI, CachingDiscordRestInteractionAPI>())
                 .Replace(ServiceDescriptor.Transient<IDiscordRestInviteAPI, CachingDiscordRestInviteAPI>())
                 .Replace(ServiceDescriptor.Transient<IDiscordRestOAuth2API, CachingDiscordRestOAuth2API>())
                 .Replace(ServiceDescriptor.Transient<IDiscordRestTemplateAPI, CachingDiscordRestTemplateAPI>())

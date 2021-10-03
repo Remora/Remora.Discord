@@ -36,12 +36,15 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Name { get; }
 
         /// <inheritdoc cref="IApplicationCommand.Description"/>
-        string Description { get; }
+        Optional<string> Description { get; }
 
         /// <inheritdoc cref="IApplicationCommand.Options"/>
         Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
 
         /// <inheritdoc cref="IApplicationCommand.DefaultPermission"/>
         Optional<bool> DefaultPermission { get; }
+
+        /// <inheritdoc cref="IApplicationCommand.Type"/>
+        Optional<ApplicationCommandType> Type { get; }
     }
 }

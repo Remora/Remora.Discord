@@ -36,6 +36,7 @@ namespace Remora.Discord.API.Objects
     (
         Optional<IUser> User = default,
         Optional<string?> Nickname = default,
+        Optional<IImageHash?> Avatar = default,
         Optional<IReadOnlyList<Snowflake>> Roles = default,
         Optional<DateTimeOffset> JoinedAt = default,
         Optional<DateTimeOffset?> PremiumSince = default,

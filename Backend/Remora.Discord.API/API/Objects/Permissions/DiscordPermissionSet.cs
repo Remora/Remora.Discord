@@ -34,6 +34,11 @@ namespace Remora.Discord.API.Objects
     [PublicAPI]
     public class DiscordPermissionSet : IDiscordPermissionSet
     {
+        /// <summary>
+        /// Gets an empty permission set.
+        /// </summary>
+        public static DiscordPermissionSet Empty { get; } = new(Array.Empty<DiscordPermission>());
+
         /// <inheritdoc />
         public BigInteger Value { get; }
 
@@ -52,6 +57,11 @@ namespace Remora.Discord.API.Objects
         /// <param name="permissions">The permissions in the set.</param>
         public DiscordPermissionSet(params DiscordPermission[] permissions)
         {
+            if (permissions.Length == 0)
+            {
+                return;
+            }
+
             var largestPermission = permissions.Max(p => (ulong)p);
             var largestByteIndex = (int)Math.Floor(largestPermission / 8.0);
 
@@ -76,7 +86,7 @@ namespace Remora.Discord.API.Objects
                 currentValue |= (byte)(1 << bitIndex);
             }
 
-            this.Value = new BigInteger(bytes);
+            this.Value = new BigInteger(bytes, true);
         }
 
         /// <summary>
@@ -122,8 +132,33 @@ namespace Remora.Discord.API.Objects
             return isBitSet;
         }
 
+        /// <inheritdoc />
+        public IReadOnlyList<DiscordPermission> GetPermissions()
+        {
+            var permissions = new List<DiscordPermission>();
+            var valueBytes = this.Value.ToByteArray(true);
+
+            for (var byteIndex = 0; byteIndex < valueBytes.Length; byteIndex++)
+            {
+                byte b = valueBytes[byteIndex];
+
+                for (var bitIndex = 0; b != 0; bitIndex++)
+                {
+                    var bitValue = b & 0x1;
+                    if (bitValue == 1)
+                    {
+                        permissions.Add((DiscordPermission)((byteIndex * 8) + bitIndex));
+                    }
+
+                    b >>= 1;
+                }
+            }
+
+            return permissions;
+        }
+
         /// <summary>
-        /// Computes a full permission set, taking roles and overwrites into account.
+        /// Computes a full permission set for a user, taking roles and overwrites into account.
         /// </summary>
         /// <param name="memberID">The ID of the member.</param>
         /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
@@ -176,6 +211,46 @@ namespace Remora.Discord.API.Objects
             {
                 basePermissions &= ~memberOverwrite.Deny.Value;
                 basePermissions |= memberOverwrite.Allow.Value;
+            }
+
+            return new DiscordPermissionSet(basePermissions);
+        }
+
+        /// <summary>
+        /// Computes a full permission set for a role, taking overwrites into account.
+        /// </summary>
+        /// <param name="roleID">The ID of the role.</param>
+        /// <param name="everyoneRole">The @everyone role, assigned to every user.</param>
+        /// <param name="overwrites">The channel overwrites currently in effect, if any.</param>
+        /// <returns>The true permission set.</returns>
+        public static IDiscordPermissionSet ComputePermissions
+        (
+            Snowflake roleID,
+            IRole everyoneRole,
+            IReadOnlyList<IPermissionOverwrite>? overwrites = default
+        )
+        {
+            overwrites ??= Array.Empty<IPermissionOverwrite>();
+
+            // Start calculations with the everyone role
+            var basePermissions = everyoneRole.Permissions.Value;
+
+            // Apply the everyone role overwrites, if applicable
+            var everyoneOverwrite = overwrites.FirstOrDefault(o => o.ID == everyoneRole.ID);
+            if (everyoneOverwrite is not null)
+            {
+                basePermissions &= ~everyoneOverwrite.Deny.Value;
+                basePermissions |= everyoneOverwrite.Allow.Value;
+            }
+
+            // Apply role overwrites, if applicable
+            var roleOverwrite = overwrites.FirstOrDefault(o => o.ID == roleID);
+
+            // ReSharper disable once InvertIf
+            if (roleOverwrite is not null)
+            {
+                basePermissions &= ~roleOverwrite.Deny.Value;
+                basePermissions |= roleOverwrite.Allow.Value;
             }
 
             return new DiscordPermissionSet(basePermissions);

@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
 namespace Remora.Discord.API.Abstractions.Results
 {
@@ -176,6 +177,16 @@ namespace Remora.Discord.API.Abstractions.Results
         UnknownGiftCode = 10038,
 
         /// <summary>
+        /// Unknown stream.
+        /// </summary>
+        UnknownStream = 10049,
+
+        /// <summary>
+        /// Unknown premium server subscription cooldown.
+        /// </summary>
+        UnknownPremiumServerSubscriptionCooldown = 10050,
+
+        /// <summary>
         /// Unknown guild template.
         /// </summary>
         UnknownGuildTemplate = 10057,
@@ -219,6 +230,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Unknown guild welcome screen.
         /// </summary>
         UnknownGuildWelcomeScreen = 10069,
+
+        /// <summary>
+        /// Unknown guild scheduled event.
+        /// </summary>
+        UnknownGuildScheduledEvent = 10070,
+
+        /// <summary>
+        /// Unknown guild scheduled event user.
+        /// </summary>
+        UnknownGuildScheduledEventUser = 10071,
 
         /// <summary>
         /// Bots cannot use this endpoint.
@@ -359,6 +380,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// Maximum number of stickers reached.
         /// </summary>
         MaxStickersReached = 30039,
+
+        /// <summary>
+        /// Maximum number of prune requests has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfPruneRequestsReached = 30040,
+
+        /// <summary>
+        /// Maximum number of guild widget setting updates has been reached. Try again later.
+        /// </summary>
+        MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
 
         /// <summary>
         /// Unauthorized. Provide a valid token and try again.
@@ -598,6 +629,21 @@ namespace Remora.Discord.API.Abstractions.Results
         BeforeIsEarlierThanThreadCreation = 50085,
 
         /// <summary>
+        /// This server is not available in your location.
+        /// </summary>
+        ServerUnavailableInYourLocation = 50095,
+
+        /// <summary>
+        /// This server must have monetization enabled to perform this action.
+        /// </summary>
+        ServerMonetizationRequired = 50097,
+
+        /// <summary>
+        /// This server needs more boosts to perform this action.
+        /// </summary>
+        ServerNeedsMoreBoosts = 50101,
+
+        /// <summary>
         /// Two factor is required for this operation.
         /// </summary>
         TwoFactorRequired = 60003,
@@ -621,6 +667,11 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The stage channel is already open.
         /// </summary>
         StageAlreadyOpen = 150006,
+
+        /// <summary>
+        /// The bot can't reply to a message without the <see cref="DiscordPermission.ReadMessageHistory"/> permission.
+        /// </summary>
+        CannotReplyWithoutReadMessageHistory = 160002,
 
         /// <summary>
         /// A thread has already been created for this message.

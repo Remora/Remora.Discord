@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Objects
         Optional<IUser> Inviter = default,
         Optional<InviteTarget> TargetType = default,
         Optional<IPartialUser> TargetUser = default,
-        Optional<Snowflake> TargetApplication = default,
+        Optional<IPartialApplication> TargetApplication = default,
         Optional<int> ApproximatePresenceCount = default,
         Optional<int> ApproximateMemberCount = default,
         Optional<DateTimeOffset?> ExpiresAt = default,
