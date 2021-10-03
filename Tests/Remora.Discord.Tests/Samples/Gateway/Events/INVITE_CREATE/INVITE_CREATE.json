@@ -39,7 +39,7 @@
       "premium_type": 0,
       "public_flags": 0
     },
-    "target_user_type": 1,
+    "target_type": 1,
     "temporary": true,
     "uses": 1
   }

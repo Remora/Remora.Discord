@@ -69,14 +69,14 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         int MaxUses { get; }
 
         /// <summary>
-        /// Gets the target user for this invite.
-        /// </summary>
-        Optional<IPartialUser> TargetUser { get; }
-
-        /// <summary>
         /// Gets the type of user target for this invite.
         /// </summary>
         Optional<InviteTarget> TargetType { get; }
+
+        /// <summary>
+        /// Gets the target user for this invite.
+        /// </summary>
+        Optional<IPartialUser> TargetUser { get; }
 
         /// <summary>
         /// Gets the embedded application this invite is for.
