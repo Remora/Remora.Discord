@@ -758,7 +758,6 @@ namespace Remora.Discord.API.Extensions
                 .WithPropertyName(v => v.IsSuppressed, "suppress");
 
             options.AddDataObjectConverter<IVoiceRegion, VoiceRegion>()
-                .WithPropertyName(r => r.IsVIP, "vip")
                 .WithPropertyName(r => r.IsDeprecated, "deprecated")
                 .WithPropertyName(r => r.IsOptimal, "optimal")
                 .WithPropertyName(r => r.IsCustom, "custom");
