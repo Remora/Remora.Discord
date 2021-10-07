@@ -33,7 +33,6 @@ namespace Remora.Discord.API.Objects
     (
         string ID,
         string Name,
-        bool IsVIP,
         bool IsOptimal,
         bool IsDeprecated,
         bool IsCustom

@@ -41,11 +41,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         string Name { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the region is VIP-only (i.e, offers larger bitrates).
-        /// </summary>
-        bool IsVIP { get; }
-
-        /// <summary>
         /// Gets a value indicating whether this server is the one closest to the current user's client.
         /// </summary>
         bool IsOptimal { get; }
