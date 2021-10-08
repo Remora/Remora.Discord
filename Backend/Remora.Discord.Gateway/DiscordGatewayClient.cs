@@ -181,7 +181,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="commandPayload">The command to send.</param>
         /// <typeparam name="TCommand">The type of command to send.</typeparam>
-        public void SubmitCommandAsync<TCommand>(TCommand commandPayload) where TCommand : IGatewayCommand
+        public void SubmitCommand<TCommand>(TCommand commandPayload) where TCommand : IGatewayCommand
         {
             var payload = new Payload<TCommand>(commandPayload);
             _payloadsToSend.Enqueue(payload);
@@ -800,7 +800,7 @@ namespace Remora.Discord.Gateway
                 ? default
                 : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
 
-            SubmitCommandAsync
+            SubmitCommand
             (
                 new Identify
                 (
@@ -858,7 +858,7 @@ namespace Remora.Discord.Gateway
 
             _log.LogInformation("Resuming existing session...");
 
-            SubmitCommandAsync
+            SubmitCommand
             (
                 new Resume
                 (
@@ -1076,7 +1076,7 @@ namespace Remora.Discord.Gateway
                         }
                         case IPayload<IHeartbeat>:
                         {
-                            SubmitCommandAsync(new HeartbeatAcknowledge());
+                            SubmitCommand(new HeartbeatAcknowledge());
                             continue;
                         }
                         default:
