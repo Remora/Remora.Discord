@@ -725,7 +725,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            AutoArchiveDuration autoArchiveDuration,
+            Optional<AutoArchiveDuration> autoArchiveDuration,
             Optional<string> reason = default,
             CancellationToken ct = default
         );

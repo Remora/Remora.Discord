@@ -436,7 +436,7 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            AutoArchiveDuration autoArchiveDuration,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )

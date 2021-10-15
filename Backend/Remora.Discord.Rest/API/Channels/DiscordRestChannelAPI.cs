@@ -931,7 +931,7 @@ namespace Remora.Discord.Rest.API
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            AutoArchiveDuration autoArchiveDuration,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -951,7 +951,7 @@ namespace Remora.Discord.Rest.API
                     json =>
                     {
                         json.WriteString("name", name);
-                        json.WriteNumber("auto_archive_duration", (int)autoArchiveDuration);
+                        json.Write("auto_archive_duration", autoArchiveDuration, this.JsonOptions);
                     }
                 ),
                 ct: ct
