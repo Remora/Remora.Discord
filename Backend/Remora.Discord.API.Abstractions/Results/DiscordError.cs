@@ -367,7 +367,7 @@ namespace Remora.Discord.API.Abstractions.Results
         GuildAlreadyHasATemplate = 30031,
 
         /// <summary>
-        /// The maximum number of participants in a thread has been reached.
+        /// The maximum number of participants in a thread has been reached (1000).
         /// </summary>
         MaxNumberOfThreadParticipantsReached = 30033,
 
