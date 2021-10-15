@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>42.0.0</Version>
+        <Version>43.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,7 +14,8 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Remove VoiceRegion::IsVIP. Yay, breaking changes...
+            Update Remora.Results.
+            Make auto_archive_duration optional.
         </PackageReleaseNotes>
     </PropertyGroup>
 

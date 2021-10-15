@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>11.0.3</Version>
+        <Version>11.0.4</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add FeedbackMessageOptions and implement support in FeedbackService
         </PackageReleaseNotes>
     </PropertyGroup>
 
