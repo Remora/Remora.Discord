@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="7.1.1" />
+        <PackageReference Include="Remora.Commands" Version="7.1.2" />
         <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.1" />
     </ItemGroup>
 
