@@ -80,11 +80,97 @@ namespace Remora.Discord.Rest.Tests.API.Applications
         public class CreateGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
         {
             /// <summary>
-            /// Tests whether the API method performs its request correctly.
+            /// Tests whether the API method performs its request correctly for chat command.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
-            public async Task PerformsRequestCorrectly()
+            public async Task PerformsRequestCorrectlyForChatCommand()
+            {
+                var applicationID = new Snowflake(0);
+                var type = ApplicationCommandType.ChatInput;
+                var name = "aaa";
+                var description = "wwww";
+                var options = new List<ApplicationCommandOption>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
+                                    .WithProperty("description", p => p.Is(description))
+                                    .WithProperty("options", p => p.IsArray())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.CreateGlobalApplicationCommandAsync
+                (
+                    applicationID,
+                    name,
+                    description,
+                    options,
+                    type: type
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly for user commands.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectlyForUserCommand()
+            {
+                var applicationID = new Snowflake(0);
+                var type = ApplicationCommandType.User;
+                var name = "aaa";
+                var description = "wwww";
+                var options = new List<ApplicationCommandOption>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
+                                    .WithProperty("description", p => p.Is(string.Empty))
+                                    .WithProperty("options", p => p.IsArray())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.CreateGlobalApplicationCommandAsync
+                (
+                    applicationID,
+                    name,
+                    description,
+                    options,
+                    type: type
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly for message commands.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectlyForMessageCommand()
             {
                 var applicationID = new Snowflake(0);
                 var type = ApplicationCommandType.Message;
@@ -103,7 +189,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(description))
+                                    .WithProperty("description", p => p.Is(string.Empty))
                                     .WithProperty("options", p => p.IsArray())
                             )
                         )
@@ -847,11 +933,111 @@ namespace Remora.Discord.Rest.Tests.API.Applications
         public class CreateGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
         {
             /// <summary>
-            /// Tests whether the API method performs its request correctly.
+            /// Tests whether the API method performs its request correctly for chat commands.
             /// </summary>
             /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
             [Fact]
-            public async Task PerformsRequestCorrectly()
+            public async Task PerformsRequestCorrectlyForChatCommands()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+
+                var type = ApplicationCommandType.ChatInput;
+                var name = "aaa";
+                var description = "wwww";
+                var options = new List<ApplicationCommandOption>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
+                                    .WithProperty("description", p => p.Is(description))
+                                    .WithProperty("options", p => p.IsArray())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.CreateGuildApplicationCommandAsync
+                (
+                    applicationID,
+                    guildID,
+                    name,
+                    description,
+                    options,
+                    type: type
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly for user commands.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectlyForUserCommands()
+            {
+                var applicationID = new Snowflake(0);
+                var guildID = new Snowflake(1);
+
+                var type = ApplicationCommandType.User;
+                var name = "aaa";
+                var description = "wwww";
+                var options = new List<ApplicationCommandOption>();
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Post,
+                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                        )
+                        .WithJson
+                        (
+                            json => json.IsObject
+                            (
+                                o => o
+                                    .WithProperty("name", p => p.Is(name))
+                                    .WithProperty("type", p => p.Is((int)type))
+                                    .WithProperty("description", p => p.Is(string.Empty))
+                                    .WithProperty("options", p => p.IsArray())
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+                );
+
+                var result = await api.CreateGuildApplicationCommandAsync
+                (
+                    applicationID,
+                    guildID,
+                    name,
+                    description,
+                    options,
+                    type: type
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly for message commands.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectlyForMessageCommands()
             {
                 var applicationID = new Snowflake(0);
                 var guildID = new Snowflake(1);
@@ -876,7 +1062,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(description))
+                                    .WithProperty("description", p => p.Is(string.Empty))
                                     .WithProperty("options", p => p.IsArray())
                             )
                         )

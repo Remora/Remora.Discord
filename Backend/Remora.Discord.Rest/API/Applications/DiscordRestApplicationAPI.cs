@@ -88,13 +88,20 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.Length is < 1 or > 100)
+            if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
             {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(description),
-                    "The description must be between 1 and 100 characters."
-                );
+                if (description.Length is < 1 or > 100)
+                {
+                    return new ArgumentOutOfRangeError
+                    (
+                        nameof(description),
+                        "The description must be between 1 and 100 characters."
+                    );
+                }
+            }
+            else
+            {
+                description = string.Empty;
             }
 
             return await this.DiscordHttpClient.PostAsync<IApplicationCommand>
@@ -350,13 +357,20 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            if (description.Length is < 1 or > 100)
+            if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
             {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(description),
-                    "The description must be between 1 and 100 characters."
-                );
+                if (description.Length is < 1 or > 100)
+                {
+                    return new ArgumentOutOfRangeError
+                    (
+                        nameof(description),
+                        "The description must be between 1 and 100 characters."
+                    );
+                }
+            }
+            else
+            {
+                description = string.Empty;
             }
 
             return await this.DiscordHttpClient.PostAsync<IApplicationCommand>
