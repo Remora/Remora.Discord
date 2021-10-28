@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>40.0.0</Version>
+        <Version>41.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,10 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Make auto_archive_duration optional.
+            Implement support for autocomplete.
+            Implement support for threads in webhooks.
+            Implement GetThreadMember.
+            Implement support for multi-file uploads.
         </PackageReleaseNotes>
     </PropertyGroup>
 
