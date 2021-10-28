@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -61,5 +62,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the components attached to the message.
         /// </summary>
         Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+
+        /// <summary>
+        /// Gets the attachments attached to the message.
+        /// </summary>
+        Optional<IReadOnlyList<IPartialAttachment>> Attachments { get; }
     }
 }

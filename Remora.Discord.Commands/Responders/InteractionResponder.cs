@@ -202,7 +202,7 @@ namespace Remora.Discord.Commands.Responders
                     gatewayEvent.ID,
                     gatewayEvent.Token,
                     response,
-                    ct
+                    ct: ct
                 );
 
                 if (!interactionResponse.IsSuccess)

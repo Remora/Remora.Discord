@@ -1,5 +1,5 @@
 //
-//  InteractionCallbackData.cs
+//  PartialAttachment.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
@@ -29,16 +28,19 @@ using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Objects
 {
-    /// <inheritdoc cref="IInteractionCallbackData" />
+    /// <inheritdoc cref="IPartialAttachment" />
     [PublicAPI]
-    public record InteractionCallbackData
+    public record PartialAttachment
     (
-        Optional<bool> IsTTS = default,
-        Optional<string> Content = default,
-        Optional<IReadOnlyList<IEmbed>> Embeds = default,
-        Optional<IAllowedMentions> AllowedMentions = default,
-        Optional<InteractionCallbackDataFlags> Flags = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IPartialAttachment>> Attachments = default
-    ) : IInteractionCallbackData;
+        Optional<Snowflake> ID = default,
+        Optional<string> Filename = default,
+        Optional<string> Description = default,
+        Optional<string> ContentType = default,
+        Optional<int> Size = default,
+        Optional<string> Url = default,
+        Optional<string> ProxyUrl = default,
+        Optional<int?> Height = default,
+        Optional<int?> Width = default,
+        Optional<bool> IsEphemeral = default
+    ) : IPartialAttachment;
 }

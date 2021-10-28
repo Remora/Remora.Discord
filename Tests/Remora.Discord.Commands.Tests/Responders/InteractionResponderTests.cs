@@ -20,10 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using OneOf;
 using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
@@ -275,6 +277,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             r.Data.Value.Flags.HasValue &&
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -314,6 +317,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             !r.Data.Value.Flags.HasValue ||
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -354,6 +358,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                 !r.Data.Value.Flags.HasValue ||
                                 (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );
@@ -395,6 +400,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                      !r.Data.Value.Flags.HasValue ||
                                      (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );
@@ -447,6 +453,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             r.Data.Value.Flags.HasValue &&
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -486,6 +493,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             !r.Data.Value.Flags.HasValue ||
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -526,6 +534,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                 !r.Data.Value.Flags.HasValue ||
                                 (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );

@@ -26,6 +26,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -84,6 +85,307 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
 
                 ResultAssert.Successful(result);
             }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var interactionID = new Snowflake(0);
+                var token = "aa";
+                var interactionResponse = new InteractionResponse
+                (
+                    InteractionCallbackType.ChannelMessageWithSource,
+                    new InteractionCallbackData()
+                );
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o.WithProperty
+                                (
+                                    "data",
+                                    dp => dp.IsObject(dd => dd.WithProperty
+                                    (
+                                        "attachments",
+                                        p => p.IsArray
+                                        (
+                                            a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
+                                            )
+                                        )
+                                    ))
+                                )
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateInteractionResponseAsync
+                (
+                    interactionID,
+                    token,
+                    interactionResponse,
+                    new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsMultiFileUploadRequestCorrectly()
+            {
+                var interactionID = new Snowflake(0);
+                var token = "aa";
+                var interactionResponse = new InteractionResponse
+                (
+                    InteractionCallbackType.ChannelMessageWithSource,
+                    new InteractionCallbackData()
+                );
+
+                await using var file1 = new MemoryStream();
+                await using var file2 = new MemoryStream();
+                var fileName1 = "file1.bin";
+                var fileName2 = "file2.bin";
+
+                var description1 = "wooga";
+                var description2 = "booga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName1))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[1]", fileName2))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o.WithProperty
+                                (
+                                    "data",
+                                    dp => dp.IsObject(dd => dd.WithProperty
+                                    (
+                                        "attachments",
+                                        p => p.IsArray
+                                        (
+                                            a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
+                                            )
+                                        )
+                                    ))
+                                )
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateInteractionResponseAsync
+                (
+                    interactionID,
+                    token,
+                    interactionResponse,
+                    new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName1, file1, description1),
+                        new FileData(fileName2, file2, description2)
+                    }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRetainingFileUploadRequestCorrectly()
+            {
+                var interactionID = new Snowflake(0);
+                var token = "aa";
+                var interactionResponse = new InteractionResponse
+                (
+                    InteractionCallbackType.ChannelMessageWithSource,
+                    new InteractionCallbackData()
+                );
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}interactions/{interactionID}/{token}/callback")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o.WithProperty
+                                (
+                                    "data",
+                                    dp => dp.IsObject(dd => dd.WithProperty
+                                    (
+                                        "attachments",
+                                        p => p.IsArray
+                                        (
+                                            a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
+                                            )
+                                        )
+                                    ))
+                                )
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateInteractionResponseAsync
+                (
+                    interactionID,
+                    token,
+                    interactionResponse,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName, file, description),
+                        new PartialAttachment(new Snowflake(999))
+                    }
+                );
+
+                ResultAssert.Successful(result);
+            }
         }
 
         /// <summary>
@@ -136,6 +438,280 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     embeds,
                     allowedMentions,
                     components
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                    .WithProperty("description", ep => ep.Is(description))
+                                            )
+                                        )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditOriginalInteractionResponseAsync
+                (
+                    applicationID,
+                    token,
+                    attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsMultiFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                await using var file1 = new MemoryStream();
+                await using var file2 = new MemoryStream();
+                var fileName1 = "file1.bin";
+                var fileName2 = "file2.bin";
+
+                var description1 = "wooga";
+                var description2 = "booga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName1))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[1]", fileName2))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
+                                            )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditOriginalInteractionResponseAsync
+                (
+                    applicationID,
+                    token,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName1, file1, description1),
+                        new FileData(fileName2, file2, description2)
+                    }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRetainingFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/@original"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
+                                            )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditOriginalInteractionResponseAsync
+                (
+                    applicationID,
+                    token,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName, file, description),
+                        new PartialAttachment(new Snowflake(999))
+                    }
                 );
 
                 ResultAssert.Successful(result);
@@ -297,10 +873,87 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                 var applicationID = new Snowflake(0);
                 var token = "aa";
 
-                var tts = false;
-
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b.Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                    .WithProperty("description", ep => ep.Is(description))
+                                            )
+                                        )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsMultiFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                await using var file1 = new MemoryStream();
+                await using var file2 = new MemoryStream();
+                var fileName1 = "file1.bin";
+                var fileName2 = "file2.bin";
+
+                var description1 = "wooga";
+                var description2 = "booga";
 
                 var api = CreateAPI
                 (
@@ -315,24 +968,56 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                                     return false;
                                 }
 
-                                var streamContent = multipart.FirstOrDefault(x => x is StreamContent);
-                                if (streamContent?.Headers.ContentDisposition is null)
+                                if (!multipart.ContainsContent("files[0]", fileName1))
                                 {
                                     return false;
                                 }
 
-                                if (streamContent.Headers.ContentDisposition.FileName != fileName)
+                                if (!multipart.ContainsContent("files[1]", fileName2))
                                 {
                                     return false;
                                 }
 
-                                if (!multipart.Any(c => c is StringContent))
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
                                 {
                                     return false;
                                 }
 
                                 return true;
                             }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
+                                            )
+                                    ))
+                            )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
@@ -341,8 +1026,99 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                 (
                     applicationID,
                     token,
-                    isTTS: tts,
-                    file: new FileData(fileName, file)
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName1, file1, description1),
+                        new FileData(fileName2, file2, description2)
+                    }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRetainingFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}webhooks/{applicationID}/{token}")
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
+                                            )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.CreateFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName, file, description),
+                        new PartialAttachment(new Snowflake(999))
+                    }
                 );
 
                 ResultAssert.Successful(result);
@@ -440,6 +1216,286 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     embeds,
                     allowedMentions,
                     components
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                        .WithElement
+                                        (
+                                            0,
+                                            e => e.IsObject
+                                            (
+                                                eo => eo
+                                                    .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                    .WithProperty("filename", ep => ep.Is(fileName))
+                                                    .WithProperty("description", ep => ep.Is(description))
+                                            )
+                                        )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID,
+                    attachments: new OneOf<FileData, IPartialAttachment>[] { new FileData(fileName, file, description) }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsMultiFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                await using var file1 = new MemoryStream();
+                await using var file2 = new MemoryStream();
+                var fileName1 = "file1.bin";
+                var fileName2 = "file2.bin";
+
+                var description1 = "wooga";
+                var description2 = "booga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName1))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[1]", fileName2))
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName1))
+                                                        .WithProperty("description", ep => ep.Is(description1))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(1.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName2))
+                                                        .WithProperty("description", ep => ep.Is(description2))
+                                                )
+                                            )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName1, file1, description1),
+                        new FileData(fileName2, file2, description2)
+                    }
+                );
+
+                ResultAssert.Successful(result);
+            }
+
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRetainingFileUploadRequestCorrectly()
+            {
+                var applicationID = new Snowflake(0);
+                var token = "aa";
+                var messageID = new Snowflake(1);
+
+                await using var file = new MemoryStream();
+                var fileName = "file.bin";
+
+                var description = "wooga";
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Patch,
+                            $"{Constants.BaseURL}webhooks/{applicationID}/{token}/messages/{messageID}"
+                        )
+                        .With
+                        (
+                            m =>
+                            {
+                                if (m.Content is not MultipartFormDataContent multipart)
+                                {
+                                    return false;
+                                }
+
+                                if (!multipart.ContainsContent("files[0]", fileName))
+                                {
+                                    return false;
+                                }
+                                if (!multipart.ContainsContent<StringContent>("payload_json"))
+                                {
+                                    return false;
+                                }
+
+                                return true;
+                            }
+                        )
+                        .WithMultipartJsonPayload
+                        (
+                            j => j.IsObject
+                            (
+                                o => o
+                                    .WithProperty("attachments", p => p.IsArray
+                                    (
+                                        a => a
+                                            .WithElement
+                                            (
+                                                0,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(0.ToString()))
+                                                        .WithProperty("filename", ep => ep.Is(fileName))
+                                                        .WithProperty("description", ep => ep.Is(description))
+                                                )
+                                            )
+                                            .WithElement
+                                            (
+                                                1,
+                                                e => e.IsObject
+                                                (
+                                                    eo => eo
+                                                        .WithProperty("id", ep => ep.Is(999.ToString()))
+                                                )
+                                            )
+                                    ))
+                            )
+                        )
+                        .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
+                );
+
+                var result = await api.EditFollowupMessageAsync
+                (
+                    applicationID,
+                    token,
+                    messageID,
+                    attachments: new OneOf<FileData, IPartialAttachment>[]
+                    {
+                        new FileData(fileName, file, description),
+                        new PartialAttachment(new Snowflake(999))
+                    }
                 );
 
                 ResultAssert.Successful(result);

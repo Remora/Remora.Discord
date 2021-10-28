@@ -25,6 +25,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 using Remora.Results;
@@ -164,31 +165,31 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Executes the given webhook.
         /// </summary>
+        /// <remarks>
+        /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
+        /// present.
+        /// </remarks>
         /// <param name="webhookID">The ID of the webhook.</param>
         /// <param name="token">The token for the webhook.</param>
         /// <param name="shouldWait">
         /// Whether the call should block until the server has confirmed that the message was sent.
         /// </param>
-        /// <param name="content">
-        /// The content of the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
+        /// <param name="content">The content of the message.</param>
         /// <param name="username">The username to use for this message.</param>
         /// <param name="avatarUrl">The avatar to use for this message.</param>
         /// <param name="isTTS">Whether this message is a TTS message.</param>
-        /// <param name="file">
-        /// The file attached to message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
-        /// <param name="embeds">
-        /// The embeds in the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
+        /// <param name="embeds">The embeds in the message.</param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
         /// <param name="threadID">Send a message to the specified thread within a webhook's channel.</param>
         /// <param name="components">
         /// The components that should be included with the message. The webhook must be application-owned to use this
         /// parameter.
+        /// </param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
+        /// mentioned in this parameter will be deleted.
         /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>
@@ -204,11 +205,11 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<Snowflake> threadID = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 
@@ -231,17 +232,25 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Edits a message posted by a webhook.
         /// </summary>
+        /// <remarks>
+        /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
+        /// present.
+        /// </remarks>
         /// <param name="webhookID">The ID of the webhook.</param>
         /// <param name="token">The token for the webhook.</param>
         /// <param name="messageID">The ID of the message.</param>
         /// <param name="content">The new content, if any.</param>
         /// <param name="embeds">The new embeds, if any.</param>
         /// <param name="allowedMentions">The new allowed mentions, if any.</param>
-        /// <param name="file">The new file, if any.</param>
-        /// <param name="attachments">The attachments to keep, if any.</param>
         /// <param name="components">
         /// The components that should be included with the message. The webhook must be application-owned to use this
         /// parameter.
+        /// </param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
+        /// mentioned in this parameter will be deleted.
         /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
@@ -253,9 +262,8 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<FileData?> file = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 

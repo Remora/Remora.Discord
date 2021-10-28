@@ -26,30 +26,11 @@ using JetBrains.Annotations;
 namespace Remora.Discord.Core
 {
     /// <summary>
-    /// Represents a file.
+    /// Represents a file with its associated information.
     /// </summary>
+    /// <param name="Name">The name of the file.</param>
+    /// <param name="Content">The contents of the file.</param>
+    /// <param name="Description">The file description.</param>
     [PublicAPI]
-    public class FileData
-    {
-        /// <summary>
-        /// Gets the name of the file.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the content of the file.
-        /// </summary>
-        public Stream Content { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FileData"/> class.
-        /// </summary>
-        /// <param name="name">The file name.</param>
-        /// <param name="content">The file content.</param>
-        public FileData(string name, Stream content)
-        {
-            this.Name = name;
-            this.Content = content;
-        }
-    }
+    public record FileData(string Name, Stream Content, string Description = "No description set.");
 }

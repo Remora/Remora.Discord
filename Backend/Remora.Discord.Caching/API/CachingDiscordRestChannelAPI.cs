@@ -28,6 +28,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
@@ -196,12 +197,12 @@ namespace Remora.Discord.Caching.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -211,12 +212,12 @@ namespace Remora.Discord.Caching.API
                 content,
                 nonce,
                 isTTS,
-                file,
                 embeds,
                 allowedMentions,
                 messageReference,
                 components,
                 stickerIds,
+                attachments,
                 ct
             );
 
@@ -241,8 +242,8 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -254,8 +255,8 @@ namespace Remora.Discord.Caching.API
                 embeds,
                 flags,
                 allowedMentions,
-                attachments,
                 components,
+                attachments,
                 ct
             );
 

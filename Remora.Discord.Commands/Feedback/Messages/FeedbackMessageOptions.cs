@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -30,13 +31,13 @@ namespace Remora.Discord.Commands.Feedback.Messages
     /// Defines options to customise a feedback message response.
     /// </summary>
     /// <param name="IsTTS">Indicates whether the message should use text-to-speech.</param>
-    /// <param name="File">A file to send with the message.</param>
+    /// <param name="Attachments">The attachments to send with the message.</param>
     /// <param name="AllowedMentions">The allowed mentions for the message.</param>
     /// <param name="MessageComponents">A list of message components to include with the message.</param>
     public record FeedbackMessageOptions
     (
         Optional<bool> IsTTS = default,
-        Optional<FileData> File = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> Attachments = default,
         Optional<IAllowedMentions> AllowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>> MessageComponents = default
     );

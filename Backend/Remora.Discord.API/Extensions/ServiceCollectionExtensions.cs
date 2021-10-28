@@ -592,6 +592,9 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IAttachment, Attachment>()
                 .WithPropertyName(a => a.IsEphemeral, "ephemeral");
 
+            options.AddDataObjectConverter<IPartialAttachment, PartialAttachment>()
+                .WithPropertyName(a => a.IsEphemeral, "ephemeral");
+
             options.AddDataObjectConverter<IEmbed, Embed>()
                 .WithPropertyConverter(e => e.Type, new StringEnumConverter<EmbedType>(new SnakeCaseNamingPolicy()))
                 .WithPropertyConverter(e => e.Colour, new ColorConverter())

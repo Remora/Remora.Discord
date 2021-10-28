@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 using Remora.Results;
@@ -42,6 +43,12 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="interactionID">The ID of the interaction.</param>
         /// <param name="interactionToken">The interaction token.</param>
         /// <param name="response">The response.</param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IAttachment"/>. If this request edits the original message, then any attachments not mentioned in
+        /// this parameter will be deleted.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A creation result which may or may not have succeeded.</returns>
         Task<Result> CreateInteractionResponseAsync
@@ -49,6 +56,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake interactionID,
             string interactionToken,
             IInteractionResponse response,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 
@@ -75,6 +83,12 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="embeds">The new embeds, if any.</param>
         /// <param name="allowedMentions">The new allowed mentions, if any.</param>
         /// <param name="components">The components, if any.</param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
+        /// mentioned in this parameter will be deleted.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditOriginalInteractionResponseAsync
@@ -85,6 +99,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 
@@ -105,26 +120,26 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <summary>
         /// Creates a followup message.
         /// </summary>
+        /// <remarks>
+        /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
+        /// present.
+        /// </remarks>
         /// <param name="applicationID">The ID of the bot application.</param>
         /// <param name="token">The interaction token.</param>
-        /// <param name="content">
-        /// The content of the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
+        /// <param name="content">The content of the message.</param>
         /// <param name="username">The username to use for this message.</param>
         /// <param name="avatarUrl">The avatar to use for this message.</param>
         /// <param name="isTTS">Whether this message is a TTS message.</param>
-        /// <param name="file">
-        /// The file attached to message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
-        /// <param name="embeds">
-        /// The embeds in the message. At least one of <paramref name="content"/>, <paramref name="file"/>, or
-        /// <paramref name="embeds"/> is required.
-        /// </param>
+        /// <param name="embeds">The embeds in the message.</param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
         /// <param name="components">The components that should be included with the message.</param>
         /// <param name="flags">The message flags to use.</param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
+        /// mentioned in this parameter will be deleted.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> CreateFollowupMessageAsync
@@ -135,11 +150,11 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<MessageFlags> flags = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 
@@ -169,6 +184,12 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="embeds">The new embeds, if any.</param>
         /// <param name="allowedMentions">The new allowed mentions, if any.</param>
         /// <param name="components">The components, if any.</param>
+        /// <param name="attachments">
+        /// The attachments to associate with the response. Each file may be a new file in the form of
+        /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
+        /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
+        /// mentioned in this parameter will be deleted.
+        /// </param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A modification result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditFollowupMessageAsync
@@ -180,6 +201,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         );
 

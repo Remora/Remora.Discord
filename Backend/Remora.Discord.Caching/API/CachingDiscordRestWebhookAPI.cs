@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Core;
@@ -106,11 +107,11 @@ namespace Remora.Discord.Caching.API
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<Snowflake> threadID = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -123,11 +124,11 @@ namespace Remora.Discord.Caching.API
                 username,
                 avatarUrl,
                 isTTS,
-                file,
                 embeds,
                 allowedMentions,
                 threadID,
                 components,
+                attachments,
                 ct
             );
 
@@ -337,9 +338,8 @@ namespace Remora.Discord.Caching.API
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<FileData?> file = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -351,9 +351,8 @@ namespace Remora.Discord.Caching.API
                 content,
                 embeds,
                 allowedMentions,
-                file,
-                attachments,
                 components,
+                attachments,
                 ct
             );
 

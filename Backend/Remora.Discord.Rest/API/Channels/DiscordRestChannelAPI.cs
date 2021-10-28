@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -30,8 +31,10 @@ using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Results;
@@ -96,7 +99,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
             }
 
-            if (topic.HasValue && (topic.Value?.Length is > 1024 or < 0))
+            if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
             {
                 return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
             }
@@ -414,12 +417,12 @@ namespace Remora.Discord.Rest.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -428,12 +431,12 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
             }
 
-            if (!content.HasValue && !file.HasValue && !embeds.HasValue && !stickerIds.HasValue)
+            if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIds.HasValue)
             {
                 return new InvalidOperationError
                 (
-                    $"At least one of {nameof(content)}, {nameof(file)}, {nameof(embeds)}, or {nameof(stickerIds)} " +
-                    "is required."
+                    $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, or " +
+                    $"{nameof(stickerIds)} is required."
                 );
             }
 
@@ -442,9 +445,31 @@ namespace Remora.Discord.Rest.API
                 $"channels/{channelID}/messages",
                 b =>
                 {
-                    if (file.HasValue)
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
                     }
 
                     b.WithJson
@@ -459,6 +484,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("message_reference", messageReference, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("sticker_ids", stickerIds, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     );
                 },
@@ -597,7 +623,7 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result<IMessage>> EditMessageAsync
+        public virtual async Task<Result<IMessage>> EditMessageAsync
         (
             Snowflake channelID,
             Snowflake messageID,
@@ -605,26 +631,64 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PatchAsync<IMessage>
+            if (!content.HasValue && !attachments.HasValue && !embeds.HasValue)
+            {
+                return new InvalidOperationError
+                (
+                    $"At least one of {nameof(content)}, {nameof(attachments)}, or {nameof(embeds)} is required."
+                );
+            }
+
+            return await this.DiscordHttpClient.PatchAsync<IMessage>
             (
                 $"channels/{channelID}/messages/{messageID}",
-                b => b.WithJson
-                (
-                    json =>
+                b =>
+                {
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
                     {
-                        json.Write("content", content, this.JsonOptions);
-                        json.Write("embeds", embeds, this.JsonOptions);
-                        json.Write("flags", flags, this.JsonOptions);
-                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                        json.Write("attachments", attachments, this.JsonOptions);
-                        json.Write("components", components, this.JsonOptions);
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
                     }
-                ),
+
+                    b.WithJson
+                    (
+                        json =>
+                        {
+                            json.Write("content", content, this.JsonOptions);
+                            json.Write("embeds", embeds, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
+                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                            json.Write("components", components, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
+                        }
+                    );
+                },
                 ct: ct
             );
         }

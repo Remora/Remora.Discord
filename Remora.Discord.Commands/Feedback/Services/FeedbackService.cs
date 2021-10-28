@@ -451,10 +451,10 @@ namespace Remora.Discord.Commands.Feedback.Services
             (
                 channel,
                 isTTS: options?.IsTTS ?? default,
-                file: options?.File ?? default,
                 embeds: new[] { embed },
                 allowedMentions: options?.AllowedMentions ?? default,
                 components: options?.MessageComponents ?? default,
+                attachments: options?.Attachments ?? default,
                 ct: ct
             );
         }
@@ -497,11 +497,11 @@ namespace Remora.Discord.Commands.Feedback.Services
                         interactionContext.ApplicationID,
                         interactionContext.Token,
                         isTTS: options?.IsTTS ?? default,
-                        file: options?.File ?? default,
                         embeds: new[] { embed },
                         allowedMentions: options?.AllowedMentions ?? default,
                         components: options?.MessageComponents ?? default,
                         flags: messageFlags,
+                        attachments: options?.Attachments ?? default,
                         ct: ct
                     );
 

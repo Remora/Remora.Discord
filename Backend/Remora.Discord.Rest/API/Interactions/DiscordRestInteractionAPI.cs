@@ -20,15 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Results;
@@ -54,27 +58,82 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
-        public virtual Task<Result> CreateInteractionResponseAsync
+        public virtual async Task<Result> CreateInteractionResponseAsync
         (
             Snowflake interactionID,
             string interactionToken,
             IInteractionResponse response,
-            CancellationToken ct
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+            CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync
-            (
-                $"interactions/{interactionID}/{interactionToken}/callback",
-                b => b.WithJson
+            Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+            if (attachments.HasValue)
+            {
+                // build attachment list
+                attachmentList = attachments.Value.Select
                 (
-                    json =>
-                    {
-                        JsonSerializer.Serialize(json, response, this.JsonOptions);
-                    },
-                    false
+                    (f, i) => f.Match
+                    (
+                        data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                        attachment => attachment
+                    )
+                ).ToList();
+            }
+
+            return attachments.HasValue switch
+            {
+                true when !response.Data.HasValue => new InvalidOperationError
+                (
+                    "Response data must be provided with the interaction response if attachments are to be " +
+                    "uploaded or retained."
                 ),
-                ct
-            );
+                true when response.Data.HasValue && response.Data.Value.Attachments.HasValue => new InvalidOperationError
+                (
+                    "The response data may not contain user-supplied attachments; they would be overwritten by this " +
+                    $"call. Pass your desired attachments in the {nameof(attachments)} parameter instead."
+                ),
+                _ => await this.DiscordHttpClient.PostAsync
+                (
+                    $"interactions/{interactionID}/{interactionToken}/callback",
+                    b =>
+                    {
+                        if (attachmentList.HasValue)
+                        {
+                            for (var i = 0; i < attachments.Value.Count; i++)
+                            {
+                                if (!attachments.Value[i].IsT0)
+                                {
+                                    continue;
+                                }
+
+                                var (name, stream, _) = attachments.Value[i].AsT0;
+                                var contentName = $"files[{i}]";
+
+                                b.AddContent(new StreamContent(stream), contentName, name);
+                            }
+
+                            if (response is not InteractionResponse
+                            {
+                                Data: { Value: InteractionCallbackData dataRecord }
+                            } responseRecord)
+                            {
+                                throw new InvalidOperationException
+                                (
+                                    "Currently, Remora doesn't support uploading attachments when the interaction " +
+                                    "response or callback data types don't derive from Remora's own record types. " +
+                                    "Sorry!"
+                                );
+                            }
+
+                            response = responseRecord with { Data = dataRecord with { Attachments = attachmentList } };
+                        }
+
+                        b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
+                    },
+                    ct
+                )
+            };
         }
 
         /// <inheritdoc />
@@ -101,6 +160,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -119,6 +179,33 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{applicationID}/{token}/messages/@original",
                 b =>
                 {
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
+                    {
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
+                    }
+
                     b.WithJson
                     (
                         json =>
@@ -127,6 +214,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     );
                 },
@@ -158,11 +246,11 @@ namespace Remora.Discord.Rest.API
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<MessageFlags> flags = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -171,9 +259,31 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{applicationID}/{token}",
                 b =>
                 {
-                    if (file.HasValue)
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
                     }
 
                     b.WithJson
@@ -188,6 +298,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("flags", flags, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     );
                 },
@@ -221,6 +332,7 @@ namespace Remora.Discord.Rest.API
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -239,6 +351,33 @@ namespace Remora.Discord.Rest.API
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
                 b =>
                 {
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
+                    {
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
+                    }
+
                     b.WithJson
                     (
                         json =>
@@ -247,6 +386,7 @@ namespace Remora.Discord.Rest.API
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     );
                 },
