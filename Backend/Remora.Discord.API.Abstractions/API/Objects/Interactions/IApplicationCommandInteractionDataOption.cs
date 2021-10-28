@@ -52,5 +52,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the options supplied to the subcommand or subgroup.
         /// </summary>
         Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the option is currently focused.
+        /// </summary>
+        Optional<bool> IsFocused { get; }
     }
 }

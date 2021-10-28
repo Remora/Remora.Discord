@@ -59,6 +59,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <remarks>
         /// Only relevant for component-based interactions.
         /// </remarks>
-        UpdateMessage = 7
+        UpdateMessage = 7,
+
+        /// <summary>
+        /// Respond to an autocomplete request with suggested choices.
+        /// </summary>
+        ApplicationCommandAutocompleteResult = 8
     }
 }

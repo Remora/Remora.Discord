@@ -826,7 +826,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter
             <
                 IApplicationCommandInteractionDataOption, ApplicationCommandInteractionDataOption
-            >();
+            >()
+                .WithPropertyName(o => o.IsFocused, "focused");
 
             options.AddDataObjectConverter<IInteraction, Interaction>();
             options.AddDataObjectConverter
@@ -840,7 +841,8 @@ namespace Remora.Discord.API.Extensions
             options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
             options.AddDataObjectConverter<IApplicationCommandOption, ApplicationCommandOption>()
                 .WithPropertyName(o => o.IsDefault, "default")
-                .WithPropertyName(o => o.IsRequired, "required");
+                .WithPropertyName(o => o.IsRequired, "required")
+                .WithPropertyName(o => o.EnableAutocomplete, "autocomplete");
             options.AddDataObjectConverter<IApplicationCommandOptionChoice, ApplicationCommandOptionChoice>();
             options.AddDataObjectConverter<IMessageInteraction, MessageInteraction>();
 

@@ -66,6 +66,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices { get; }
 
         /// <summary>
+        /// Gets a value indicating whether autocompletion should be enabled for this option.
+        /// </summary>
+        Optional<bool> EnableAutocomplete { get; }
+
+        /// <summary>
         /// Gets the options of the nested command or group.
         /// </summary>
         Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }

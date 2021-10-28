@@ -37,7 +37,8 @@ namespace Remora.Discord.API.Objects
         string Name,
         ApplicationCommandOptionType Type,
         Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value = default,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default
+        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+        Optional<bool> IsFocused = default
     )
     : IApplicationCommandInteractionDataOption;
 }
