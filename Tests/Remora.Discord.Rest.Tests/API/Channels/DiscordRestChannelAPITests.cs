@@ -2536,6 +2536,38 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestChannelAPI.GetThreadMemberAsync"/> method.
+        /// </summary>
+        public class GetThreadMemberAsync : RestAPITestBase<IDiscordRestChannelAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var channelId = new Snowflake(0);
+                var userId = new Snowflake(1);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect
+                        (
+                            HttpMethod.Get,
+                            $"{Constants.BaseURL}channels/{channelId}/thread-members/{userId}"
+                        )
+                        .WithNoContent()
+                        .Respond("application/json", SampleRepository.Samples[typeof(IThreadMember)])
+                );
+
+                var result = await api.GetThreadMemberAsync(channelId, userId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestChannelAPI.ListThreadMembersAsync"/> method.
         /// </summary>
         public class ListThreadMembersAsync : RestAPITestBase<IDiscordRestChannelAPI>

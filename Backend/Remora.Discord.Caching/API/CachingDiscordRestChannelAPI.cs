@@ -677,6 +677,32 @@ namespace Remora.Discord.Caching.API
         }
 
         /// <inheritdoc />
+        public override async Task<Result<IThreadMember>> GetThreadMemberAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
+            if (_cacheService.TryGetValue<IThreadMember>(key, out var cachedInstance))
+            {
+                return Result<IThreadMember>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetThreadMemberAsync(channelID, userID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var threadMember = result.Entity;
+            _cacheService.Cache(key, threadMember);
+
+            return result;
+        }
+
+        /// <inheritdoc />
         public override async Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
         (
             Snowflake channelID,

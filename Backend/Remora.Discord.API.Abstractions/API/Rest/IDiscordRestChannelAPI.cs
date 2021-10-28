@@ -848,6 +848,20 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a thread member object for the specified user if they're a member of the thread.
+        /// </summary>
+        /// <param name="channelID">The ID of the thread.</param>
+        /// <param name="userID">The ID of the user.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A result which may or may not have succeeded.</returns>
+        Task<Result<IThreadMember>> GetThreadMemberAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        );
+
+        /// <summary>
         /// Lists the members of the given thread. Restricted to bots with with GuildMembers intent.
         /// </summary>
         /// <param name="channelID">The thread to list the members of.</param>

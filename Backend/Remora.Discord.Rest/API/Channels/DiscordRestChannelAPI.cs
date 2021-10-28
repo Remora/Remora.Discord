@@ -1123,6 +1123,21 @@ namespace Remora.Discord.Rest.API
         }
 
         /// <inheritdoc />
+        public virtual Task<Result<IThreadMember>> GetThreadMemberAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            return this.DiscordHttpClient.GetAsync<IThreadMember>
+            (
+                $"channels/{channelID}/thread-members/{userID}",
+                ct: ct
+            );
+        }
+
+        /// <inheritdoc />
         public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
         (
             Snowflake channelID,
