@@ -192,8 +192,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInteractionAPI">Caching<wbr>Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI">Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInteractionAPI">Caching<wbr>Discord<wbr>Rest<wbr>Interaction<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -203,10 +203,10 @@
 							graph BT
 	Type["IDiscordRestInteractionAPI"]
 class Type type-node
-	Implementing0["CachingDiscordRestInteractionAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInteractionAPI"
-	Implementing1["DiscordRestInteractionAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI"
+	Implementing0["DiscordRestInteractionAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI"
+	Implementing1["CachingDiscordRestInteractionAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInteractionAPI"
 
 						</div>
 					</div>
@@ -257,7 +257,7 @@ public interface IDiscordRestInteractionAPI</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/1EF6061E">Create<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;FileData&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;MessageFlags&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/5AE04E69">Create<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;MessageFlags&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr>I<wbr>Partial<wbr>Attachment&gt;<wbr>&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -266,7 +266,7 @@ public interface IDiscordRestInteractionAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/DBE660F2">Create<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>I<wbr>Interaction<wbr>Response, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/015F6F1A">Create<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>I<wbr>Interaction<wbr>Response, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr>I<wbr>Partial<wbr>Attachment&gt;<wbr>&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result&gt;<wbr></td>
 								<td>
 									<div>
@@ -293,7 +293,7 @@ public interface IDiscordRestInteractionAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/63443562">Edit<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/119E4D80">Edit<wbr>Followup<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr>I<wbr>Partial<wbr>Attachment&gt;<wbr>&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
@@ -302,7 +302,7 @@ public interface IDiscordRestInteractionAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/B0C33764">Edit<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI/FCA8F988">Edit<wbr>Original<wbr>Interaction<wbr>Response<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;IEmbed&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Allowed<wbr>Mentions?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Message<wbr>Component&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr>I<wbr>Partial<wbr>Attachment&gt;<wbr>&gt;<wbr>&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>

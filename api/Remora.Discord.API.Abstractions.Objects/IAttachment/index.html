@@ -206,6 +206,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/INitroStickerPacks">INitroStickerPacks</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo">I<wbr>Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication">IPartialApplication</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji">IPartialEmoji</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a></li>
@@ -330,6 +331,12 @@
 								<dt>Namespace</dt>
 								<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></li>								
+									</ul>
+								</dd>
 							
 							
 							
@@ -338,6 +345,8 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
+	Type-.-&gt;Interface0["IPartialAttachment"]
+	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment"
 	Type["IAttachment"]
 class Type type-node
 
@@ -349,7 +358,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IAttachment</code></pre>
+public interface IAttachment : IPartialAttachment</code></pre>
 
 
 
@@ -394,6 +403,15 @@ public interface IAttachment</code></pre>
 								<td>
 									<div>
     Gets the attachment's media type (e.g, "application/text" or similar).
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAttachment/054EA414">Description</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the description of the attachment.
     </div>
 								</td>
 							</tr>

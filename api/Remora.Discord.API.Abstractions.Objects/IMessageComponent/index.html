@@ -205,6 +205,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/INitroStickerPacks">INitroStickerPacks</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo">I<wbr>Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication">IPartialApplication</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji">IPartialEmoji</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a></li>
@@ -335,8 +336,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent">IButtonComponent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent">IButtonComponent</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent">IActionRowComponent</a></li>								
 									</ul>
 								</dd>				
@@ -347,10 +348,10 @@
 							graph BT
 	Type["IMessageComponent"]
 class Type type-node
-	Implementing0["IButtonComponent"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent"
-	Implementing1["ISelectMenuComponent"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent"
+	Implementing0["ISelectMenuComponent"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent"
+	Implementing1["IButtonComponent"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent"
 	Implementing2["IActionRowComponent"]-.-&gt;Type
 	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent"
 
