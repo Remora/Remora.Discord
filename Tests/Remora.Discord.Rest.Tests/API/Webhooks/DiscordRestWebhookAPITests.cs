@@ -1049,6 +1049,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var webhookID = new Snowflake(0);
                 var token = "aa";
                 var messageID = new Snowflake(1);
+                var threadID = new Snowflake(2);
 
                 var content = "booga";
                 var allowedMentions = new AllowedMentions();
@@ -1072,6 +1073,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                                     .WithProperty("components", p => p.IsArray())
                             )
                         )
+                        .WithQueryString("thread_id", threadID.ToString())
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
@@ -1082,7 +1084,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     messageID,
                     content,
                     allowedMentions: allowedMentions,
-                    components: components
+                    components: components,
+                    threadID: threadID
                 );
 
                 ResultAssert.Successful(result);
@@ -1430,11 +1433,13 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var webhookID = new Snowflake(0);
                 var token = "token";
                 var messageID = new Snowflake(1);
+                var threadID = new Snowflake(2);
 
                 var api = CreateAPI
                 (
                     b => b
                         .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}")
+                        .WithQueryString("thread_id", threadID.ToString())
                         .Respond(HttpStatusCode.NoContent)
                 );
 
@@ -1442,7 +1447,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     webhookID,
                     token,
-                    messageID
+                    messageID,
+                    threadID
                 );
 
                 ResultAssert.Successful(result);
@@ -1464,6 +1470,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var webhookID = new Snowflake(0);
                 var token = "aaa";
                 var messageID = new Snowflake(1);
+                var threadID = new Snowflake(2);
 
                 var api = CreateAPI
                 (
@@ -1474,6 +1481,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                             $"{Constants.BaseURL}webhooks/{webhookID}/{token}/messages/{messageID}"
                         )
                         .WithNoContent()
+                        .WithQueryString("thread_id", threadID.ToString())
                         .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
                 );
 
@@ -1481,7 +1489,8 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 (
                     webhookID,
                     token,
-                    messageID
+                    messageID,
+                    threadID
                 );
 
                 ResultAssert.Successful(result);

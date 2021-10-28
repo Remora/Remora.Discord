@@ -340,6 +340,7 @@ namespace Remora.Discord.Caching.API
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -353,6 +354,7 @@ namespace Remora.Discord.Caching.API
                 allowedMentions,
                 components,
                 attachments,
+                threadID,
                 ct
             );
 
@@ -373,10 +375,11 @@ namespace Remora.Discord.Caching.API
             Snowflake webhookID,
             string token,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
-            var result = await base.DeleteWebhookMessageAsync(webhookID, token, messageID, ct);
+            var result = await base.DeleteWebhookMessageAsync(webhookID, token, messageID, threadID, ct);
             if (!result.IsSuccess)
             {
                 return result;
@@ -394,6 +397,7 @@ namespace Remora.Discord.Caching.API
             Snowflake webhookID,
             string webhookToken,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -403,7 +407,7 @@ namespace Remora.Discord.Caching.API
                 return Result<IMessage>.FromSuccess(cachedInstance);
             }
 
-            var result = await base.GetWebhookMessageAsync(webhookID, webhookToken, messageID, ct);
+            var result = await base.GetWebhookMessageAsync(webhookID, webhookToken, messageID, threadID, ct);
             if (!result.IsSuccess)
             {
                 return result;

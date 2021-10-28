@@ -328,12 +328,20 @@ namespace Remora.Discord.Rest.API
             Snowflake webhookID,
             string webhookToken,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
+                b =>
+                {
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    }
+                },
                 ct: ct
             );
         }
@@ -349,6 +357,7 @@ namespace Remora.Discord.Rest.API
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -394,6 +403,11 @@ namespace Remora.Discord.Rest.API
                         }
                     }
 
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    }
+
                     b.WithJson
                     (
                         json =>
@@ -416,13 +430,21 @@ namespace Remora.Discord.Rest.API
             Snowflake webhookID,
             string token,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
             return this.DiscordHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
-                ct: ct
+                b =>
+                {
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    }
+                },
+                ct
             );
         }
     }

@@ -219,6 +219,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="webhookID">The ID of the webhook.</param>
         /// <param name="webhookToken">The webhook token.</param>
         /// <param name="messageID">The ID of the message.</param>
+        /// <param name="threadID">The ID of the thread the message is in.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> GetWebhookMessageAsync
@@ -226,6 +227,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake webhookID,
             string webhookToken,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         );
 
@@ -252,6 +254,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
         /// mentioned in this parameter will be deleted.
         /// </param>
+        /// <param name="threadID">The ID of the thread the message is in.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IMessage>> EditWebhookMessageAsync
@@ -264,6 +267,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         );
 
@@ -273,6 +277,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="webhookID">The ID of the webhook.</param>
         /// <param name="token">The token for the webhook.</param>
         /// <param name="messageID">The ID of the message.</param>
+        /// <param name="threadID">The ID of the thread the message is in.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result> DeleteWebhookMessageAsync
@@ -280,6 +285,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake webhookID,
             string token,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         );
     }
