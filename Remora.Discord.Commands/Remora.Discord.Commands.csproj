@@ -5,17 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>12.0.1</Version>
+        <Version>12.1.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement support for autocomplete.
-            Implement support for threads in webhooks.
-            Implement GetThreadMember.
-            Implement support for multi-file uploads.
+            Implement support for autocompletion in Remora.Commands.
         </PackageReleaseNotes>
     </PropertyGroup>
 
