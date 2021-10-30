@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.73</Version>
+        <Version>3.0.74</Version>
         <Description>
             $(BaseDescription)
 
