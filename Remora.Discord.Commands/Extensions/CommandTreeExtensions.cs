@@ -27,6 +27,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
@@ -71,6 +72,72 @@ namespace Remora.Discord.Commands.Extensions
             NameRegexPattern,
             RegexOptions.Compiled
         );
+
+        /// <summary>
+        /// Maps a set of Discord application commands to their respective command nodes.
+        /// </summary>
+        /// <param name="commandTree">The command tree.</param>
+        /// <param name="discordTree">The Discord commands.</param>
+        /// <returns>The node mapping.</returns>
+        public static Dictionary<Snowflake, OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>> MapDiscordCommands
+        (
+            this CommandTree commandTree,
+            IReadOnlyList<IApplicationCommand> discordTree
+        )
+        {
+            var map = new Dictionary<Snowflake, OneOf<Dictionary<string, CommandNode>, CommandNode>>();
+            foreach (var node in discordTree)
+            {
+                var isContextMenuOrRootCommand = !node.Options.IsDefined(out var options) ||
+                                                 options.All(o => o.Type is not (SubCommand or SubCommandGroup));
+                if (isContextMenuOrRootCommand)
+                {
+                    // Context menu command
+                    var commandNode = commandTree.Root.Children.OfType<CommandNode>().First
+                    (
+                        c => c.Key.Equals(node.Name, StringComparison.OrdinalIgnoreCase)
+                    );
+
+                    map.Add(node.ID, commandNode);
+                    continue;
+                }
+
+                if (!node.Options.IsDefined(out options))
+                {
+                    // Group without children?
+                    throw new InvalidOperationException();
+                }
+
+                foreach (var nodeOption in options)
+                {
+                    var subcommands = MapDiscordOptions(commandTree, new List<string> { node.Name }, nodeOption);
+                    if (!map.TryGetValue(node.ID, out var value))
+                    {
+                        var subMap = new Dictionary<string, CommandNode>();
+                        map.Add(node.ID, subMap);
+                        value = subMap;
+                    }
+
+                    var groupMap = value.AsT0;
+                    foreach (var (path, subNode) in subcommands)
+                    {
+                        groupMap.Add(string.Join("::", path), subNode);
+                    }
+                }
+            }
+
+            return map.ToDictionary
+            (
+                kvp => kvp.Key,
+                kvp =>
+                {
+                    var (_, value) = kvp;
+                    return value.IsT0
+                        ? OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>.FromT0(value.AsT0)
+                        : OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>.FromT1(value.AsT1);
+                }
+            );
+        }
 
         /// <summary>
         /// Converts the command tree to a set of Discord application commands.
@@ -401,15 +468,32 @@ namespace Remora.Discord.Commands.Extensions
                 }
 
                 Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
+                Optional<bool> enableAutocomplete = default;
                 if (parameterType.IsEnum)
                 {
-                    var createChoices = CreateApplicationCommandOptionChoices(parameterType);
-                    if (!createChoices.IsSuccess)
+                    // Add the choices directly
+                    if (Enum.GetValues(parameterType).Length <= MaxChoiceValues)
                     {
-                        return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
-                    }
+                        var createChoices = CreateApplicationCommandEnumOptionChoices(parameterType);
+                        if (!createChoices.IsSuccess)
+                        {
+                            return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
+                        }
 
-                    choices = new(createChoices.Entity);
+                        choices = new(createChoices.Entity);
+                    }
+                    else
+                    {
+                        // Enable autocomplete for this enum type
+                        enableAutocomplete = true;
+                    }
+                }
+                else
+                {
+                    if (parameter.Parameter.GetCustomAttribute<AutocompleteAttribute>() is not null)
+                    {
+                        enableAutocomplete = true;
+                    }
                 }
 
                 var parameterOption = new ApplicationCommandOption
@@ -420,7 +504,8 @@ namespace Remora.Discord.Commands.Extensions
                     default,
                     !parameter.IsOmissible(),
                     choices,
-                    ChannelTypes: getChannelTypes.Entity
+                    ChannelTypes: getChannelTypes.Entity,
+                    EnableAutocomplete: enableAutocomplete
                 );
 
                 parameterOptions.Add(parameterOption);
@@ -473,7 +558,7 @@ namespace Remora.Discord.Commands.Extensions
             return channelTypes;
         }
 
-        private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandOptionChoices
+        private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandEnumOptionChoices
         (
             Type parameterType
         )
@@ -496,11 +581,6 @@ namespace Remora.Discord.Commands.Extensions
                 (
                     choiceConversions.First(c => !c.IsSuccess)
                 );
-            }
-
-            if (choiceConversions.Count > MaxChoiceValues)
-            {
-                return new UnsupportedFeatureError($"The enumeration contains too many members (max {MaxChoiceValues}");
             }
 
             return choiceConversions.Select(c => c.Entity).ToList();
@@ -642,6 +722,60 @@ namespace Remora.Discord.Commands.Extensions
                             node
                         );
                 }
+            }
+        }
+
+        private static IEnumerable<(List<string> Path, CommandNode Node)> MapDiscordOptions
+        (
+            CommandTree commandTree,
+            List<string> outerPath,
+            IApplicationCommandOption commandOption
+        )
+        {
+            if (commandOption.Type is SubCommand)
+            {
+                // Find the node
+                var pathComponent = outerPath.First();
+                var depth = 0;
+
+                IParentNode currentNode = commandTree.Root;
+                while (true)
+                {
+                    var nodeByPath = currentNode.Children.First
+                    (
+                        c => c.Key.Equals(pathComponent ?? commandOption.Name, StringComparison.OrdinalIgnoreCase)
+                    );
+
+                    if (nodeByPath is IParentNode groupNode)
+                    {
+                        ++depth;
+
+                        pathComponent = outerPath.Skip(depth).FirstOrDefault();
+                        currentNode = groupNode;
+                        continue;
+                    }
+
+                    if (nodeByPath is not CommandNode commandNode)
+                    {
+                        throw new InvalidOperationException("Unknown node type.");
+                    }
+
+                    yield return (outerPath.Append(commandNode.Key).ToList(), commandNode);
+                    yield break;
+                }
+            }
+
+            if (commandOption.Type is not SubCommandGroup)
+            {
+                throw new InvalidOperationException("Unknown option type.");
+            }
+
+            var subcommands = commandOption.Options.Value
+                .Select(o => MapDiscordOptions(commandTree, outerPath.Append(commandOption.Name).ToList(), o));
+
+            foreach (var subcommand in subcommands.SelectMany(x => x))
+            {
+                yield return subcommand;
             }
         }
     }

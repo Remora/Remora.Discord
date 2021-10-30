@@ -20,14 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Commands.Trees;
+using Remora.Commands.Trees.Nodes;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
+using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
 namespace Remora.Discord.Commands.Services
 {
@@ -40,6 +48,20 @@ namespace Remora.Discord.Commands.Services
         private readonly CommandTree _commandTree;
         private readonly IDiscordRestOAuth2API _oauth2API;
         private readonly IDiscordRestApplicationAPI _applicationAPI;
+
+        /// <summary>
+        /// Gets a mapping of Discord's assigned snowflakes to their corresponding command nodes.
+        /// </summary>
+        /// <remarks>
+        /// The snowflake maps to the top-level entity, which may be a group or a command. If the top-level entity is
+        /// a group, then any subcommands in that group will be provided in a sub-dictionary, with keys in the form
+        /// <value>subgroup-name::command-name</value>, nested as required.
+        /// </remarks>
+        public IReadOnlyDictionary
+        <
+            Snowflake,
+            OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+        > CommandMap { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SlashService"/> class.
@@ -57,6 +79,8 @@ namespace Remora.Discord.Commands.Services
             _commandTree = commandTree;
             _applicationAPI = applicationAPI;
             _oauth2API = oauth2API;
+
+            this.CommandMap = new Dictionary<Snowflake, OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>>();
         }
 
         /// <summary>
@@ -118,9 +142,16 @@ namespace Remora.Discord.Commands.Services
                     )
             );
 
-            return updateResult.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(updateResult);
+            if (!updateResult.IsSuccess)
+            {
+                return Result.FromError(updateResult);
+            }
+
+            // Update our command mapping
+            var discordTree = updateResult.Entity;
+            this.CommandMap = _commandTree.MapDiscordCommands(discordTree);
+
+            return Result.FromSuccess();
         }
     }
 }

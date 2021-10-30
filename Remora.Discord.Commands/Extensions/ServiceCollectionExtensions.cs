@@ -21,12 +21,15 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.Commands.Autocomplete;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
@@ -138,6 +141,9 @@ namespace Remora.Discord.Commands.Extensions
             serviceCollection.TryAddSingleton<SlashService>();
             serviceCollection.AddInteractionResponder();
 
+            serviceCollection.AddResponder<AutocompleteResponder>()
+                .AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+
             return serviceCollection;
         }
 
@@ -213,6 +219,63 @@ namespace Remora.Discord.Commands.Extensions
             serviceCollection
                 .AddPreExecutionEvent<TEvent>()
                 .AddPostExecutionEvent<TEvent>();
+
+            return serviceCollection;
+        }
+
+        /// <summary>
+        /// Adds an autocomplete provider to the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="TProvider">The autocomplete provider.</typeparam>
+        /// <returns>The collection, with the provider.</returns>
+        public static IServiceCollection AddAutocompleteProvider<TProvider>(this IServiceCollection serviceCollection)
+            where TProvider : class, IAutocompleteProvider
+        {
+            return serviceCollection.AddAutocompleteProvider(typeof(TProvider));
+        }
+
+        /// <summary>
+        /// Adds an autocomplete provider to the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="providerType">The autocomplete provider type.</param>
+        /// <returns>The collection, with the provider.</returns>
+        public static IServiceCollection AddAutocompleteProvider
+        (
+            this IServiceCollection serviceCollection,
+            Type providerType
+        )
+        {
+            if (!typeof(IAutocompleteProvider).IsAssignableFrom(providerType))
+            {
+                throw new InvalidOperationException
+                (
+                    $"Autocomplete providers must implement {nameof(IAutocompleteProvider)}."
+                );
+            }
+
+            IEnumerable<Type> autocompleteInterfaces;
+            if (!providerType.IsGenericTypeDefinition)
+            {
+                serviceCollection.TryAddScoped(providerType);
+
+                autocompleteInterfaces = providerType.GetInterfaces()
+                    .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i));
+            }
+            else
+            {
+                autocompleteInterfaces = providerType.GetInterfaces()
+                    .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i))
+                    .Where(i => i.IsGenericType)
+                    .Select(i => i.GetGenericTypeDefinition())
+                    .Distinct();
+            }
+
+            foreach (var implementedInterface in autocompleteInterfaces)
+            {
+                serviceCollection.AddScoped(implementedInterface, providerType);
+            }
 
             return serviceCollection;
         }
