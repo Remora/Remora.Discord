@@ -180,7 +180,7 @@ namespace Remora.Discord.Commands.Responders
                 new InteractionResponse
                 (
                     InteractionCallbackType.ApplicationCommandAutocompleteResult,
-                    new InteractionCallbackData(Choices: new(suggestions))
+                    new InteractionCallbackData(Choices: new(suggestions.Take(25).ToList()))
                 ),
                 ct: ct
             );
