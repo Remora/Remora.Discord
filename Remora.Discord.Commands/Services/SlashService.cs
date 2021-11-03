@@ -20,22 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
-using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
 namespace Remora.Discord.Commands.Services
 {
@@ -59,7 +54,7 @@ namespace Remora.Discord.Commands.Services
         /// </remarks>
         public IReadOnlyDictionary
         <
-            Snowflake,
+            (Optional<Snowflake> GuildID, Snowflake CommandID),
             OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
         > CommandMap { get; private set; }
 
@@ -80,7 +75,11 @@ namespace Remora.Discord.Commands.Services
             _applicationAPI = applicationAPI;
             _oauth2API = oauth2API;
 
-            this.CommandMap = new Dictionary<Snowflake, OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>>();
+            this.CommandMap = new Dictionary
+            <
+                (Optional<Snowflake> GuildID, Snowflake CommandID),
+                OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+            >();
         }
 
         /// <summary>
@@ -149,7 +148,19 @@ namespace Remora.Discord.Commands.Services
 
             // Update our command mapping
             var discordTree = updateResult.Entity;
-            this.CommandMap = _commandTree.MapDiscordCommands(discordTree);
+            var mergedDictionary = new Dictionary
+            <
+                (Optional<Snowflake> GuildID, Snowflake CommandID),
+                OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+            >(this.CommandMap);
+
+            var newMappings = _commandTree.MapDiscordCommands(discordTree);
+            foreach (var (key, value) in newMappings)
+            {
+                mergedDictionary[key] = value;
+            }
+
+            this.CommandMap = mergedDictionary;
 
             return Result.FromSuccess();
         }

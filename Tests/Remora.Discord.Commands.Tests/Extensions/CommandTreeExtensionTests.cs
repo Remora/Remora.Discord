@@ -855,7 +855,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 Assert.Single(map);
                 var (id, node) = map.Single();
 
-                Assert.Equal(commandID, id);
+                Assert.Equal((default, commandID), id);
                 Assert.Same(commandNode, node.AsT1);
             }
 
@@ -909,10 +909,10 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var (nodeAID, nodeA) = map.ToList()[0];
                 var (nodeBID, nodeB) = map.ToList()[1];
 
-                Assert.Equal(commandAID, nodeAID);
+                Assert.Equal((default, commandAID), nodeAID);
                 Assert.Same(commandNodeA, nodeA.AsT1);
 
-                Assert.Equal(commandBID, nodeBID);
+                Assert.Equal((default, commandBID), nodeBID);
                 Assert.Same(commandNodeB, nodeB.AsT1);
             }
 
@@ -955,7 +955,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 Assert.Single(map);
                 var (id, value) = map.Single();
 
-                Assert.Equal(commandID, id);
+                Assert.Equal((default, commandID), id);
 
                 var subMap = value.AsT0;
                 Assert.Single(subMap);
@@ -1006,7 +1006,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 Assert.Single(map);
                 var (id, value) = map.Single();
 
-                Assert.Equal(commandID, id);
+                Assert.Equal((default, commandID), id);
 
                 var subMap = value.AsT0;
                 Assert.Equal(2, subMap.Count);
@@ -1064,7 +1064,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 Assert.Single(map);
                 var (id, value) = map.Single();
 
-                Assert.Equal(commandID, id);
+                Assert.Equal((default, commandID), id);
 
                 var subMap = value.AsT0;
                 Assert.Single(subMap);
@@ -1138,7 +1138,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                 var (mappedGroupID, groupMap) = map.ToList()[0];
 
-                Assert.Equal(mappedGroupID, groupID);
+                Assert.Equal(mappedGroupID.CommandID, groupID);
                 var (pathC, mappedCommandNodeC) = groupMap.AsT0.ToList()[0];
                 var (pathD, mappedCommandNodeD) = groupMap.AsT0.ToList()[1];
                 var (pathE, mappedCommandNodeE) = groupMap.AsT0.ToList()[2];
@@ -1156,7 +1156,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                 var (mappedCommandID, mappedCommandNode) = map.ToList()[1];
 
-                Assert.Equal(mappedCommandID, commandGID);
+                Assert.Equal(mappedCommandID.CommandID, commandGID);
                 Assert.Same(commandNodeG, mappedCommandNode.AsT1);
             }
         }

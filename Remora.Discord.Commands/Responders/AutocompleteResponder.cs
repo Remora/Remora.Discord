@@ -93,12 +93,17 @@ namespace Remora.Discord.Commands.Responders
                 return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
             }
 
-            if (!_slashService.CommandMap.TryGetValue(id, out var value))
+            // Check for a global command
+            if (!_slashService.CommandMap.TryGetValue((default, id), out var value))
             {
-                return new InvalidOperationError
-                (
-                    "Corresponding command node or submap not found when responding to an autocomplete request. Desync?"
-                );
+                // Check for a guild command
+                if (!_slashService.CommandMap.TryGetValue((gatewayEvent.GuildID, id), out value))
+                {
+                    return new InvalidOperationError
+                    (
+                        "Corresponding command node or submap not found when responding to an autocomplete request. Desync?"
+                    );
+                }
             }
 
             data.UnpackInteraction(out var path, out _);

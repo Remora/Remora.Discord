@@ -79,13 +79,22 @@ namespace Remora.Discord.Commands.Extensions
         /// <param name="commandTree">The command tree.</param>
         /// <param name="discordTree">The Discord commands.</param>
         /// <returns>The node mapping.</returns>
-        public static Dictionary<Snowflake, OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>> MapDiscordCommands
+        public static Dictionary
+        <
+            (Optional<Snowflake> GuildID, Snowflake CommandID),
+            OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+        > MapDiscordCommands
         (
             this CommandTree commandTree,
             IReadOnlyList<IApplicationCommand> discordTree
         )
         {
-            var map = new Dictionary<Snowflake, OneOf<Dictionary<string, CommandNode>, CommandNode>>();
+            var map = new Dictionary
+            <
+                (Optional<Snowflake> GuildID, Snowflake CommandID),
+                OneOf<Dictionary<string, CommandNode>, CommandNode>
+            >();
+
             foreach (var node in discordTree)
             {
                 var isContextMenuOrRootCommand = !node.Options.IsDefined(out var options) ||
@@ -98,7 +107,7 @@ namespace Remora.Discord.Commands.Extensions
                         c => c.Key.Equals(node.Name, StringComparison.OrdinalIgnoreCase)
                     );
 
-                    map.Add(node.ID, commandNode);
+                    map.Add((node.GuildID, node.ID), commandNode);
                     continue;
                 }
 
@@ -111,10 +120,10 @@ namespace Remora.Discord.Commands.Extensions
                 foreach (var nodeOption in options)
                 {
                     var subcommands = MapDiscordOptions(commandTree, new List<string> { node.Name }, nodeOption);
-                    if (!map.TryGetValue(node.ID, out var value))
+                    if (!map.TryGetValue((node.GuildID, node.ID), out var value))
                     {
                         var subMap = new Dictionary<string, CommandNode>();
-                        map.Add(node.ID, subMap);
+                        map.Add((node.GuildID, node.ID), subMap);
                         value = subMap;
                     }
 
