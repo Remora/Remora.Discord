@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -39,9 +40,11 @@ namespace Remora.Discord.API.Objects
         Optional<bool> IsDefault = default,
         Optional<bool> IsRequired = default,
         Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default,
-        Optional<bool> EnableAutocomplete = default,
         Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<IReadOnlyList<ChannelType>> ChannelTypes = default
+        Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
+        Optional<OneOf<ulong, long, float, double>> MinValue = default,
+        Optional<OneOf<ulong, long, float, double>> MaxValue = default,
+        Optional<bool> EnableAutocomplete = default
     )
     : IApplicationCommandOption;
 }

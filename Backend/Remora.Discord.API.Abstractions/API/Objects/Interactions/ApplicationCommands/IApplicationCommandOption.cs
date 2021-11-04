@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
@@ -66,11 +67,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices { get; }
 
         /// <summary>
-        /// Gets a value indicating whether autocompletion should be enabled for this option.
-        /// </summary>
-        Optional<bool> EnableAutocomplete { get; }
-
-        /// <summary>
         /// Gets the options of the nested command or group.
         /// </summary>
         Optional<IReadOnlyList<IApplicationCommandOption>> Options { get; }
@@ -79,5 +75,24 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the channel types allowed for options.
         /// </summary>
         Optional<IReadOnlyList<ChannelType>> ChannelTypes { get; }
+
+        /// <summary>
+        /// Gets the minimum value permitted.
+        /// </summary>
+        /// <remarks>Only relevant for <see cref="ApplicationCommandOptionType.Integer"/> or
+        /// <see cref="ApplicationCommandOptionType.Number"/> options.</remarks>
+        Optional<OneOf<ulong, long, float, double>> MinValue { get; }
+
+        /// <summary>
+        /// Gets the minimum value permitted.
+        /// </summary>
+        /// <remarks>Only relevant for <see cref="ApplicationCommandOptionType.Integer"/> or
+        /// <see cref="ApplicationCommandOptionType.Number"/> options.</remarks>
+        Optional<OneOf<ulong, long, float, double>> MaxValue { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether autocompletion should be enabled for this option.
+        /// </summary>
+        Optional<bool> EnableAutocomplete { get; }
     }
 }

@@ -505,6 +505,19 @@ namespace Remora.Discord.Commands.Extensions
                     }
                 }
 
+                var minValue = parameter.Parameter.GetCustomAttribute<MinValueAttribute>();
+                var maxValue = parameter.Parameter.GetCustomAttribute<MaxValueAttribute>();
+
+                if (discordType is not Integer or Number && (minValue is not null || maxValue is not null))
+                {
+                    return new UnsupportedParameterFeatureError
+                    (
+                        "A non-numerical parameter may not specify a minimum or maximum value.",
+                        command,
+                        parameter
+                    );
+                }
+
                 var parameterOption = new ApplicationCommandOption
                 (
                     discordType,
@@ -514,7 +527,9 @@ namespace Remora.Discord.Commands.Extensions
                     !parameter.IsOmissible(),
                     choices,
                     ChannelTypes: getChannelTypes.Entity,
-                    EnableAutocomplete: enableAutocomplete
+                    EnableAutocomplete: enableAutocomplete,
+                    MinValue: minValue?.Value ?? default,
+                    MaxValue: maxValue?.Value ?? default
                 );
 
                 parameterOptions.Add(parameterOption);
