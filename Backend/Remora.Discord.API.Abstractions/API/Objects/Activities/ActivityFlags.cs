@@ -59,6 +59,21 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The activity is currently ongoing? Discord's documentation is unclear.
         /// </summary>
-        Play = 1 << 5
+        Play = 1 << 5,
+
+        /// <summary>
+        /// The activity is restricted to friends only.
+        /// </summary>
+        PartyPrivacyFriends = 1 << 6,
+
+        /// <summary>
+        /// The activity is restricted to members of the same voice channel.
+        /// </summary>
+        PartyPrivacyVoiceChannel = 1 << 7,
+
+        /// <summary>
+        /// The activity is embedded.
+        /// </summary>
+        Embedded = 1 << 8
     }
 }
