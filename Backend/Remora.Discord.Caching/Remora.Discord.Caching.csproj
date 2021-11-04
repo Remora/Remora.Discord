@@ -5,17 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>15.0.1</Version>
+        <Version>15.0.2</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Implement support for autocomplete.
-            Implement support for threads in webhooks.
-            Implement GetThreadMember.
-            Implement support for multi-file uploads.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

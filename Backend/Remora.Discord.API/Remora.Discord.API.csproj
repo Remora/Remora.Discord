@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>41.0.1</Version>
+        <Version>42.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,10 +13,11 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement support for autocomplete.
-            Implement support for threads in webhooks.
-            Implement GetThreadMember.
-            Implement support for multi-file uploads.
+            Add new channel flags.
+            Add another user flag.
+            Add more application flags.
+            Implement more activity flags.
+            Implement MinValue and MaxValue.
         </PackageReleaseNotes>
     </PropertyGroup>
 
