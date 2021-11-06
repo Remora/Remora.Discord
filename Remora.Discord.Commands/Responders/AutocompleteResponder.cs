@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Autocomplete;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -93,6 +94,24 @@ namespace Remora.Discord.Commands.Responders
                 return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
             }
 
+            if (!gatewayEvent.User.IsDefined(out var user))
+            {
+                if (!gatewayEvent.Member.IsDefined(out var member))
+                {
+                    return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
+                }
+
+                if (!member.User.IsDefined(out user))
+                {
+                    return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
+                }
+            }
+
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+            {
+                return new InvalidOperationError("Autocomplete interaction without channel ID received. Bug?");
+            }
+
             // Check for a global command
             if (!_slashService.CommandMap.TryGetValue((default, id), out var value))
             {
@@ -123,6 +142,21 @@ namespace Remora.Discord.Commands.Responders
             (
                 p => p.Name is not null && p.Name.Equals(focusedOption.Name, StringComparison.OrdinalIgnoreCase)
             );
+
+            var context = new InteractionContext
+            (
+                gatewayEvent.GuildID,
+                channelID,
+                user,
+                gatewayEvent.Member,
+                gatewayEvent.Token,
+                gatewayEvent.ID,
+                gatewayEvent.ApplicationID,
+                data
+            );
+
+            var contextInjector = _services.GetRequiredService<ContextInjectionService>();
+            contextInjector.Context = context;
 
             // Time to look up our provider
             IAutocompleteProvider? autocompleteProvider;
