@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.1.0</Version>
+        <Version>13.2.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Implement MinValue and MaxValue.
+            Enable context injection for autocomplete providers.
         </PackageReleaseNotes>
     </PropertyGroup>
 
