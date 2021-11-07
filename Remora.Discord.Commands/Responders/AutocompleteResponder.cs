@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -132,15 +134,14 @@ namespace Remora.Discord.Commands.Responders
                 node => node
             );
 
-            var focusedOption = options.FirstOrDefault(o => o.IsFocused.IsDefined(out var isFocused) && isFocused);
-            if (focusedOption is null)
+            if (!TryFindFocusedParameter(data, out var focusedParameter))
             {
                 return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
             }
 
             var realParameter = commandNode.CommandMethod.GetParameters().First
             (
-                p => p.Name is not null && p.Name.Equals(focusedOption.Name, StringComparison.OrdinalIgnoreCase)
+                p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
             );
 
             var context = new InteractionContext
@@ -199,7 +200,7 @@ namespace Remora.Discord.Commands.Responders
                 }
             }
 
-            var userInput = focusedOption.Value.IsDefined(out var inputValue)
+            var userInput = focusedParameter.Value.IsDefined(out var inputValue)
                 ? inputValue.Value.ToString() ?? string.Empty
                 : string.Empty;
 
@@ -218,6 +219,46 @@ namespace Remora.Discord.Commands.Responders
                 ),
                 ct: ct
             );
+        }
+
+        private static bool TryFindFocusedParameter
+        (
+            IInteractionData data,
+            [NotNullWhen(true)] out IApplicationCommandInteractionDataOption? focusedParameter
+        )
+        {
+            focusedParameter = null;
+
+            if (!data.Options.IsDefined(out var options))
+            {
+                return false;
+            }
+
+            while (true)
+            {
+                if (options.Count is 0)
+                {
+                    return false;
+                }
+
+                focusedParameter = options.FirstOrDefault(o => o.IsFocused.HasValue && o.IsFocused.Value);
+                if (focusedParameter is not null)
+                {
+                    // Found it
+                    return true;
+                }
+
+                // More than one path through this; no go
+                if (options.Count > 1)
+                {
+                    return false;
+                }
+
+                if (!options[0].Options.IsDefined(out options))
+                {
+                    return false;
+                }
+            }
         }
     }
 }
