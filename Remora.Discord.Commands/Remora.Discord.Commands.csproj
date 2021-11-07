@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.2.0</Version>
+        <Version>13.2.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Enable context injection for autocomplete providers.
+            Fix an issue where nested autocompletion requests would fail to properly parse.
         </PackageReleaseNotes>
     </PropertyGroup>
 
