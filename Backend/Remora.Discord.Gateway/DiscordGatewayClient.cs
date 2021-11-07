@@ -426,6 +426,67 @@ namespace Remora.Discord.Gateway
                         );
                     }
 
+                    var endpointInformation = getGatewayEndpoint.Entity;
+                    if (endpointInformation.Shards.IsDefined(out var shards))
+                    {
+                        if (shards > 1 && _gatewayOptions.ShardIdentification?.ShardCount != shards)
+                        {
+                            _log.LogInformation
+                            (
+                                "Discord suggests {Shards} shards for this bot, but your sharding configuration does " +
+                                "not match this. Consider switching to a sharded topology of at least that many shards",
+                                shards
+                            );
+                        }
+                    }
+
+                    if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
+                    {
+                        if (_sessionID is null)
+                        {
+                            if (startLimit.Remaining <= 0)
+                            {
+                                _log.LogWarning
+                                (
+                                    "No further sessions may be started right now for this bot. Waiting {Time} for " +
+                                    "the limits to reset...",
+                                    startLimit.ResetAfter
+                                );
+
+                                await Task.Delay(startLimit.ResetAfter, stopRequested);
+                                return new GatewayError("Session start limits reached; retrying...", false);
+                            }
+
+                            _log.LogInformation
+                            (
+                                "Starting a new session ({Remaining} session starts remaining of {Total}; limits " +
+                                "reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
+                                startLimit.ResetAfter
+                            );
+                        }
+                        else
+                        {
+                            _log.LogInformation
+                            (
+                                "Resuming an existing session ({Remaining} new session starts remaining of {Total}; " +
+                                "limits reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
+                                startLimit.ResetAfter
+                            );
+                        }
+                    }
+                    else
+                    {
+                        _log.LogWarning
+                        (
+                            "There's no session start limits available for this connection. Rate limits may be " +
+                            "unexpectedly hit"
+                        );
+                    }
+
                     var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=9&encoding=json";
                     if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                     {
