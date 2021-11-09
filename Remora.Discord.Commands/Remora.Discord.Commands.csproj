@@ -5,14 +5,15 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.2.1</Version>
+        <Version>13.2.2</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Fix an issue where nested autocompletion requests would fail to properly parse.
+            Update dependencies.
+            Target .NET 6.0.
         </PackageReleaseNotes>
     </PropertyGroup>
 

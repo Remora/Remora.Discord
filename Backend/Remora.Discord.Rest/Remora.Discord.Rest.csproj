@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>24.0.2</Version>
+        <Version>24.0.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,6 +14,7 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
+            Target .NET 6.0.
         </PackageReleaseNotes>
     </PropertyGroup>
 
