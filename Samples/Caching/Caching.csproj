@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <OutputType>Exe</OutputType>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
         <RootNamespace>Remora.Discord.Samples.Caching</RootNamespace>
     </PropertyGroup>
 
