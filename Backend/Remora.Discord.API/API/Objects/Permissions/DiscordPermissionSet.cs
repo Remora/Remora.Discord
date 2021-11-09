@@ -140,7 +140,7 @@ public class DiscordPermissionSet : IDiscordPermissionSet
 
         for (var byteIndex = 0; byteIndex < valueBytes.Length; byteIndex++)
         {
-            byte b = valueBytes[byteIndex];
+            var b = valueBytes[byteIndex];
 
             for (var bitIndex = 0; b != 0; bitIndex++)
             {
