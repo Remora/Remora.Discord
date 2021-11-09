@@ -27,17 +27,15 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved" />
-    [PublicAPI]
-    public record ApplicationCommandInteractionDataResolved
-    (
-        Optional<IReadOnlyDictionary<Snowflake, IUser>> Users,
-        Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
-        Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
-        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels,
-        Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages
-    )
-    : IApplicationCommandInteractionDataResolved;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandInteractionDataResolved" />
+[PublicAPI]
+public record ApplicationCommandInteractionDataResolved
+(
+    Optional<IReadOnlyDictionary<Snowflake, IUser>> Users,
+    Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members,
+    Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles,
+    Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels,
+    Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages
+) : IApplicationCommandInteractionDataResolved;

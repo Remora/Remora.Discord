@@ -26,22 +26,21 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IInteraction" />
-    [PublicAPI]
-    public record Interaction
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        InteractionType Type,
-        Optional<IInteractionData> Data,
-        Optional<Snowflake> GuildID,
-        Optional<Snowflake> ChannelID,
-        Optional<IGuildMember> Member,
-        Optional<IUser> User,
-        string Token,
-        int Version,
-        Optional<IMessage> Message = default
-    ) : IInteraction;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IInteraction" />
+[PublicAPI]
+public record Interaction
+(
+    Snowflake ID,
+    Snowflake ApplicationID,
+    InteractionType Type,
+    Optional<IInteractionData> Data,
+    Optional<Snowflake> GuildID,
+    Optional<Snowflake> ChannelID,
+    Optional<IGuildMember> Member,
+    Optional<IUser> User,
+    string Token,
+    int Version,
+    Optional<IMessage> Message = default
+) : IInteraction;

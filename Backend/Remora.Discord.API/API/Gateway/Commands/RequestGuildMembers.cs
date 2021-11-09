@@ -27,19 +27,18 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents a command used to request guild members.
-    /// </summary>
-    [PublicAPI]
-    public record RequestGuildMembers
-    (
-        Snowflake GuildID,
-        int Limit,
-        Optional<bool> Presences = default,
-        Optional<string> Query = default,
-        Optional<IReadOnlyCollection<Snowflake>> UserIDs = default,
-        Optional<string> Nonce = default
-    ) : IRequestGuildMembers;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a command used to request guild members.
+/// </summary>
+[PublicAPI]
+public record RequestGuildMembers
+(
+    Snowflake GuildID,
+    int Limit,
+    Optional<bool> Presences = default,
+    Optional<string> Query = default,
+    Optional<IReadOnlyCollection<Snowflake>> UserIDs = default,
+    Optional<string> Nonce = default
+) : IRequestGuildMembers;

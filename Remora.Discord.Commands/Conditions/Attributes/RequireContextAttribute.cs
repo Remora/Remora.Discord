@@ -26,35 +26,34 @@ using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Extensions;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Marks a command as requiring execution within a particular context.
+/// </summary>
+[PublicAPI]
+public class RequireContextAttribute : ConditionAttribute
 {
     /// <summary>
-    /// Marks a command as requiring execution within a particular context.
+    /// Gets the channel types command execution is permitted in.
     /// </summary>
-    [PublicAPI]
-    public class RequireContextAttribute : ConditionAttribute
+    public ChannelType[] ChannelTypes { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
+    /// </summary>
+    /// <param name="channelContexts">The grouped channel contexts.</param>
+    public RequireContextAttribute(params ChannelContext[] channelContexts)
     {
-        /// <summary>
-        /// Gets the channel types command execution is permitted in.
-        /// </summary>
-        public ChannelType[] ChannelTypes { get; }
+        this.ChannelTypes = channelContexts.SelectMany(x => x.ToChannelTypes()).ToArray();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
-        /// </summary>
-        /// <param name="channelContexts">The grouped channel contexts.</param>
-        public RequireContextAttribute(params ChannelContext[] channelContexts)
-        {
-            this.ChannelTypes = channelContexts.SelectMany(x => x.ToChannelTypes()).ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
-        /// </summary>
-        /// <param name="channelType">The individual channel types.</param>
-        public RequireContextAttribute(params ChannelType[] channelType)
-        {
-            this.ChannelTypes = channelType;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireContextAttribute"/> class.
+    /// </summary>
+    /// <param name="channelType">The individual channel types.</param>
+    public RequireContextAttribute(params ChannelType[] channelType)
+    {
+        this.ChannelTypes = channelType;
     }
 }

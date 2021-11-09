@@ -22,13 +22,12 @@
 
 using System;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a parameter as being considered for autocompletion.
+/// </summary>
+[AttributeUsage(AttributeTargets.Parameter)]
+public class AutocompleteAttribute : Attribute
 {
-    /// <summary>
-    /// Marks a parameter as being considered for autocompletion.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class AutocompleteAttribute : Attribute
-    {
-    }
 }

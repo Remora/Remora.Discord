@@ -25,32 +25,31 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts instances of the <see cref="Color"/> struct to and from JSON.
+/// </summary>
+internal class ColorConverter : JsonConverter<Color>
 {
-    /// <summary>
-    /// Converts instances of the <see cref="Color"/> struct to and from JSON.
-    /// </summary>
-    internal class ColorConverter : JsonConverter<Color>
+    /// <inheritdoc />
+    public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType != JsonTokenType.Number)
         {
-            if (reader.TokenType != JsonTokenType.Number)
-            {
-                throw new JsonException();
-            }
-
-            var value = reader.GetUInt32();
-            var clrValue = value ^ 0xFF000000;
-
-            return Color.FromArgb((int)clrValue);
+            throw new JsonException();
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
-        {
-            var val = value.ToArgb() & 0x00FFFFFF;
-            writer.WriteNumberValue((uint)val);
-        }
+        var value = reader.GetUInt32();
+        var clrValue = value ^ 0xFF000000;
+
+        return Color.FromArgb((int)clrValue);
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+    {
+        var val = value.ToArgb() & 0x00FFFFFF;
+        writer.WriteNumberValue((uint)val);
     }
 }

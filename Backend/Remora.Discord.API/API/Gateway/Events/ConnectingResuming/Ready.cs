@@ -29,17 +29,16 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IReady" />
-    [PublicAPI]
-    public record Ready
-    (
-        int Version,
-        IUser User,
-        IReadOnlyList<IUnavailableGuild> Guilds,
-        string SessionID,
-        Optional<IShardIdentification> Shard,
-        IPartialApplication Application
-    ) : IReady;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IReady" />
+[PublicAPI]
+public record Ready
+(
+    int Version,
+    IUser User,
+    IReadOnlyList<IUnavailableGuild> Guilds,
+    string SessionID,
+    Optional<IShardIdentification> Shard,
+    IPartialApplication Application
+) : IReady;

@@ -41,223 +41,222 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Responders
+namespace Remora.Discord.Commands.Responders;
+
+/// <summary>
+/// Responds to autocompletion interactions, routing the request to the appropriate provider.
+/// </summary>
+public class AutocompleteResponder : IResponder<IInteractionCreate>
 {
+    private readonly SlashService _slashService;
+    private readonly IServiceProvider _services;
+    private readonly IDiscordRestInteractionAPI _interactionAPI;
+    private readonly ILogger<AutocompleteResponder> _log;
+
     /// <summary>
-    /// Responds to autocompletion interactions, routing the request to the appropriate provider.
+    /// Initializes a new instance of the <see cref="AutocompleteResponder"/> class.
     /// </summary>
-    public class AutocompleteResponder : IResponder<IInteractionCreate>
+    /// <param name="slashService">The slash command service.</param>
+    /// <param name="services">The available services.</param>
+    /// <param name="interactionAPI">The interaction API.</param>
+    /// <param name="log">The logging instance.</param>
+    public AutocompleteResponder
+    (
+        SlashService slashService,
+        IServiceProvider services,
+        IDiscordRestInteractionAPI interactionAPI,
+        ILogger<AutocompleteResponder> log)
     {
-        private readonly SlashService _slashService;
-        private readonly IServiceProvider _services;
-        private readonly IDiscordRestInteractionAPI _interactionAPI;
-        private readonly ILogger<AutocompleteResponder> _log;
+        _slashService = slashService;
+        _log = log;
+        _services = services;
+        _interactionAPI = interactionAPI;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutocompleteResponder"/> class.
-        /// </summary>
-        /// <param name="slashService">The slash command service.</param>
-        /// <param name="services">The available services.</param>
-        /// <param name="interactionAPI">The interaction API.</param>
-        /// <param name="log">The logging instance.</param>
-        public AutocompleteResponder
-        (
-            SlashService slashService,
-            IServiceProvider services,
-            IDiscordRestInteractionAPI interactionAPI,
-            ILogger<AutocompleteResponder> log)
+    /// <inheritdoc />
+    public async Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
+    {
+        if (gatewayEvent.Type is not InteractionType.ApplicationCommandAutocomplete)
         {
-            _slashService = slashService;
-            _log = log;
-            _services = services;
-            _interactionAPI = interactionAPI;
+            return Result.FromSuccess();
         }
 
-        /// <inheritdoc />
-        public async Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
+        if (!gatewayEvent.Data.IsDefined(out var data))
         {
-            if (gatewayEvent.Type is not InteractionType.ApplicationCommandAutocomplete)
+            return new InvalidOperationError("Autocomplete interaction without data received. Bug?");
+        }
+
+        if (!data.ID.IsDefined(out var id))
+        {
+            return new InvalidOperationError("Autocomplete interaction without command ID received. Bug?");
+        }
+
+        if (!data.Options.IsDefined(out var options))
+        {
+            return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
+        }
+
+        if (!gatewayEvent.User.IsDefined(out var user))
+        {
+            if (!gatewayEvent.Member.IsDefined(out var member))
             {
-                return Result.FromSuccess();
+                return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
             }
 
-            if (!gatewayEvent.Data.IsDefined(out var data))
+            if (!member.User.IsDefined(out user))
             {
-                return new InvalidOperationError("Autocomplete interaction without data received. Bug?");
+                return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
             }
+        }
 
-            if (!data.ID.IsDefined(out var id))
+        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+        {
+            return new InvalidOperationError("Autocomplete interaction without channel ID received. Bug?");
+        }
+
+        // Check for a global command
+        if (!_slashService.CommandMap.TryGetValue((default, id), out var value))
+        {
+            // Check for a guild command
+            if (!_slashService.CommandMap.TryGetValue((gatewayEvent.GuildID, id), out value))
             {
-                return new InvalidOperationError("Autocomplete interaction without command ID received. Bug?");
-            }
-
-            if (!data.Options.IsDefined(out var options))
-            {
-                return new InvalidOperationError("Autocomplete interaction without options received. Bug?");
-            }
-
-            if (!gatewayEvent.User.IsDefined(out var user))
-            {
-                if (!gatewayEvent.Member.IsDefined(out var member))
-                {
-                    return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
-                }
-
-                if (!member.User.IsDefined(out user))
-                {
-                    return new InvalidOperationError("Autocomplete interaction without user received. Bug?");
-                }
-            }
-
-            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-            {
-                return new InvalidOperationError("Autocomplete interaction without channel ID received. Bug?");
-            }
-
-            // Check for a global command
-            if (!_slashService.CommandMap.TryGetValue((default, id), out var value))
-            {
-                // Check for a guild command
-                if (!_slashService.CommandMap.TryGetValue((gatewayEvent.GuildID, id), out value))
-                {
-                    return new InvalidOperationError
-                    (
-                        "Corresponding command node or submap not found when responding to an autocomplete request. Desync?"
-                    );
-                }
-            }
-
-            data.UnpackInteraction(out var path, out _);
-            var commandNode = value.Match
-            (
-                map => map[string.Join("::", path)],
-                node => node
-            );
-
-            if (!TryFindFocusedParameter(data, out var focusedParameter))
-            {
-                return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
-            }
-
-            var realParameter = commandNode.CommandMethod.GetParameters().First
-            (
-                p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
-            );
-
-            var context = new InteractionContext
-            (
-                gatewayEvent.GuildID,
-                channelID,
-                user,
-                gatewayEvent.Member,
-                gatewayEvent.Token,
-                gatewayEvent.ID,
-                gatewayEvent.ApplicationID,
-                data
-            );
-
-            var contextInjector = _services.GetRequiredService<ContextInjectionService>();
-            contextInjector.Context = context;
-
-            // Time to look up our provider
-            IAutocompleteProvider? autocompleteProvider;
-
-            // First, check if the parameter wants a specific provider
-            var providerAttribute = realParameter.GetCustomAttribute<AutocompleteProviderAttribute>();
-            if (providerAttribute is not null)
-            {
-                // look up the requested provider
-                autocompleteProvider = _services.GetServices<IAutocompleteProvider>().FirstOrDefault
+                return new InvalidOperationError
                 (
-                    p => p.Identity == providerAttribute.ProviderIdentity
+                    "Corresponding command node or submap not found when responding to an autocomplete request. Desync?"
                 );
-
-                if (autocompleteProvider is null)
-                {
-                    _log.LogWarning
-                    (
-                        "No autocomplete provider could be found for a parameter that had autocompletion enabled " +
-                        "(requested a provider with the identity \"{Identity}\")",
-                        providerAttribute.ProviderIdentity
-                    );
-                }
             }
-            else
-            {
-                // see if there's an autocomplete provider registered for the parameter type
-                var parameterType = realParameter.ParameterType;
-                var autocompleteProviderType = typeof(IAutocompleteProvider<>).MakeGenericType(parameterType);
-                autocompleteProvider = (IAutocompleteProvider?)_services.GetService(autocompleteProviderType);
-
-                if (autocompleteProvider is null)
-                {
-                    _log.LogWarning
-                    (
-                        "No autocomplete provider could be found for a parameter that had autocompletion enabled " +
-                        "(requested a provider for the type \"{Type}\")",
-                        parameterType.Name
-                    );
-                }
-            }
-
-            var userInput = focusedParameter.Value.IsDefined(out var inputValue)
-                ? inputValue.Value.ToString() ?? string.Empty
-                : string.Empty;
-
-            var suggestions = autocompleteProvider is null
-                ? Array.Empty<IApplicationCommandOptionChoice>()
-                : await autocompleteProvider.GetSuggestionsAsync(options, userInput, ct);
-
-            return await _interactionAPI.CreateInteractionResponseAsync
-            (
-                gatewayEvent.ID,
-                gatewayEvent.Token,
-                new InteractionResponse
-                (
-                    InteractionCallbackType.ApplicationCommandAutocompleteResult,
-                    new InteractionCallbackData(Choices: new(suggestions.Take(25).ToList()))
-                ),
-                ct: ct
-            );
         }
 
-        private static bool TryFindFocusedParameter
+        data.UnpackInteraction(out var path, out _);
+        var commandNode = value.Match
         (
-            IInteractionData data,
-            [NotNullWhen(true)] out IApplicationCommandInteractionDataOption? focusedParameter
-        )
-        {
-            focusedParameter = null;
+            map => map[string.Join("::", path)],
+            node => node
+        );
 
-            if (!data.Options.IsDefined(out var options))
+        if (!TryFindFocusedParameter(data, out var focusedParameter))
+        {
+            return new InvalidOperationError("Autocomplete interaction without focused option received. Desync?");
+        }
+
+        var realParameter = commandNode.CommandMethod.GetParameters().First
+        (
+            p => p.Name is not null && p.Name.Equals(focusedParameter.Name, StringComparison.OrdinalIgnoreCase)
+        );
+
+        var context = new InteractionContext
+        (
+            gatewayEvent.GuildID,
+            channelID,
+            user,
+            gatewayEvent.Member,
+            gatewayEvent.Token,
+            gatewayEvent.ID,
+            gatewayEvent.ApplicationID,
+            data
+        );
+
+        var contextInjector = _services.GetRequiredService<ContextInjectionService>();
+        contextInjector.Context = context;
+
+        // Time to look up our provider
+        IAutocompleteProvider? autocompleteProvider;
+
+        // First, check if the parameter wants a specific provider
+        var providerAttribute = realParameter.GetCustomAttribute<AutocompleteProviderAttribute>();
+        if (providerAttribute is not null)
+        {
+            // look up the requested provider
+            autocompleteProvider = _services.GetServices<IAutocompleteProvider>().FirstOrDefault
+            (
+                p => p.Identity == providerAttribute.ProviderIdentity
+            );
+
+            if (autocompleteProvider is null)
+            {
+                _log.LogWarning
+                (
+                    "No autocomplete provider could be found for a parameter that had autocompletion enabled " +
+                    "(requested a provider with the identity \"{Identity}\")",
+                    providerAttribute.ProviderIdentity
+                );
+            }
+        }
+        else
+        {
+            // see if there's an autocomplete provider registered for the parameter type
+            var parameterType = realParameter.ParameterType;
+            var autocompleteProviderType = typeof(IAutocompleteProvider<>).MakeGenericType(parameterType);
+            autocompleteProvider = (IAutocompleteProvider?)_services.GetService(autocompleteProviderType);
+
+            if (autocompleteProvider is null)
+            {
+                _log.LogWarning
+                (
+                    "No autocomplete provider could be found for a parameter that had autocompletion enabled " +
+                    "(requested a provider for the type \"{Type}\")",
+                    parameterType.Name
+                );
+            }
+        }
+
+        var userInput = focusedParameter.Value.IsDefined(out var inputValue)
+            ? inputValue.Value.ToString() ?? string.Empty
+            : string.Empty;
+
+        var suggestions = autocompleteProvider is null
+            ? Array.Empty<IApplicationCommandOptionChoice>()
+            : await autocompleteProvider.GetSuggestionsAsync(options, userInput, ct);
+
+        return await _interactionAPI.CreateInteractionResponseAsync
+        (
+            gatewayEvent.ID,
+            gatewayEvent.Token,
+            new InteractionResponse
+            (
+                InteractionCallbackType.ApplicationCommandAutocompleteResult,
+                new InteractionCallbackData(Choices: new(suggestions.Take(25).ToList()))
+            ),
+            ct: ct
+        );
+    }
+
+    private static bool TryFindFocusedParameter
+    (
+        IInteractionData data,
+        [NotNullWhen(true)] out IApplicationCommandInteractionDataOption? focusedParameter
+    )
+    {
+        focusedParameter = null;
+
+        if (!data.Options.IsDefined(out var options))
+        {
+            return false;
+        }
+
+        while (true)
+        {
+            if (options.Count is 0)
             {
                 return false;
             }
 
-            while (true)
+            focusedParameter = options.FirstOrDefault(o => o.IsFocused.HasValue && o.IsFocused.Value);
+            if (focusedParameter is not null)
             {
-                if (options.Count is 0)
-                {
-                    return false;
-                }
+                // Found it
+                return true;
+            }
 
-                focusedParameter = options.FirstOrDefault(o => o.IsFocused.HasValue && o.IsFocused.Value);
-                if (focusedParameter is not null)
-                {
-                    // Found it
-                    return true;
-                }
+            // More than one path through this; no go
+            if (options.Count > 1)
+            {
+                return false;
+            }
 
-                // More than one path through this; no go
-                if (options.Count > 1)
-                {
-                    return false;
-                }
-
-                if (!options[0].Options.IsDefined(out options))
-                {
-                    return false;
-                }
+            if (!options[0].Options.IsDefined(out options))
+            {
+                return false;
             }
         }
     }

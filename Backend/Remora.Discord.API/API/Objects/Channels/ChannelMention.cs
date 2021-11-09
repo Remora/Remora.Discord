@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IChannelMention" />
-    [PublicAPI]
-    public record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IChannelMention" />
+[PublicAPI]
+public record ChannelMention(Snowflake ID, Snowflake GuildID, ChannelType Type, string Name) : IChannelMention;

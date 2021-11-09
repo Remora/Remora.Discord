@@ -23,11 +23,10 @@
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.API.Errors
-{
-    /// <summary>
-    /// Represents an error produced by requesting an image size that's not a power of two.
-    /// </summary>
-    [PublicAPI]
-    public record ImageSizeNotPowerOfTwoError() : ResultError("The image size must be a power of two.");
-}
+namespace Remora.Discord.API.Errors;
+
+/// <summary>
+/// Represents an error produced by requesting an image size that's not a power of two.
+/// </summary>
+[PublicAPI]
+public record ImageSizeNotPowerOfTwoError() : ResultError("The image size must be a power of two.");

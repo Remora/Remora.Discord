@@ -26,54 +26,53 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <inheritdoc />
+internal class SnowflakeDictionaryConverter<TElement> : JsonConverter<IReadOnlyDictionary<Snowflake, TElement>>
 {
     /// <inheritdoc />
-    internal class SnowflakeDictionaryConverter<TElement> : JsonConverter<IReadOnlyDictionary<Snowflake, TElement>>
+    public override IReadOnlyDictionary<Snowflake, TElement>? Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        /// <inheritdoc />
-        public override IReadOnlyDictionary<Snowflake, TElement>? Read
-        (
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions options
-        )
+        var dictionary = JsonSerializer.Deserialize<IReadOnlyDictionary<string, TElement>>(ref reader, options);
+        if (dictionary is null)
         {
-            var dictionary = JsonSerializer.Deserialize<IReadOnlyDictionary<string, TElement>>(ref reader, options);
-            if (dictionary is null)
-            {
-                return null;
-            }
-
-            var mappedDictionary = new Dictionary<Snowflake, TElement>();
-            foreach (var (key, element) in dictionary)
-            {
-                if (!Snowflake.TryParse(key, out var snowflakeKey))
-                {
-                    throw new JsonException();
-                }
-
-                mappedDictionary.Add(snowflakeKey.Value, element);
-            }
-
-            return mappedDictionary;
+            return null;
         }
 
-        /// <inheritdoc />
-        public override void Write
-        (
-            Utf8JsonWriter writer,
-            IReadOnlyDictionary<Snowflake, TElement> value,
-            JsonSerializerOptions options
-        )
+        var mappedDictionary = new Dictionary<Snowflake, TElement>();
+        foreach (var (key, element) in dictionary)
         {
-            var mappedDictionary = new Dictionary<string, TElement>();
-            foreach (var (key, element) in value)
+            if (!Snowflake.TryParse(key, out var snowflakeKey))
             {
-                mappedDictionary.Add(key.ToString(), element);
+                throw new JsonException();
             }
 
-            JsonSerializer.Serialize(writer, mappedDictionary, options);
+            mappedDictionary.Add(snowflakeKey.Value, element);
         }
+
+        return mappedDictionary;
+    }
+
+    /// <inheritdoc />
+    public override void Write
+    (
+        Utf8JsonWriter writer,
+        IReadOnlyDictionary<Snowflake, TElement> value,
+        JsonSerializerOptions options
+    )
+    {
+        var mappedDictionary = new Dictionary<string, TElement>();
+        foreach (var (key, element) in value)
+        {
+            mappedDictionary.Add(key.ToString(), element);
+        }
+
+        JsonSerializer.Serialize(writer, mappedDictionary, options);
     }
 }

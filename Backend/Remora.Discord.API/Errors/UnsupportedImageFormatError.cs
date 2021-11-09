@@ -25,16 +25,14 @@ using System.Linq;
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.API.Errors
-{
-    /// <summary>
-    /// Represents an error produced by requesting an unsupported image format.
-    /// </summary>
-    [PublicAPI]
-    public record UnsupportedImageFormatError(IReadOnlyList<CDNImageFormat> SupportedFormats)
-        : ResultError
-        (
-            "Unsupported image format. The endpoint supports the following formats: " +
-            $"{string.Join(", ", SupportedFormats.Select(f => f.ToString()))}"
-        );
-}
+namespace Remora.Discord.API.Errors;
+
+/// <summary>
+/// Represents an error produced by requesting an unsupported image format.
+/// </summary>
+[PublicAPI]
+public record UnsupportedImageFormatError(IReadOnlyList<CDNImageFormat> SupportedFormats) : ResultError
+(
+    "Unsupported image format. The endpoint supports the following formats: " +
+    $"{string.Join(", ", SupportedFormats.Select(f => f.ToString()))}"
+);

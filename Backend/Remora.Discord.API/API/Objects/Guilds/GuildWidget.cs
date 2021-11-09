@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IGuildWidget" />
-    [PublicAPI]
-    public record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IGuildWidget" />
+[PublicAPI]
+public record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;

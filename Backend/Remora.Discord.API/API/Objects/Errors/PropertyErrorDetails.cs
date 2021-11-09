@@ -26,13 +26,12 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPropertyErrorDetails" />
-    [PublicAPI]
-    public record PropertyErrorDetails
-    (
-        IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors = null,
-        IReadOnlyList<IErrorDetails>? Errors = null
-    ) : IPropertyErrorDetails;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPropertyErrorDetails" />
+[PublicAPI]
+public record PropertyErrorDetails
+(
+    IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors = null,
+    IReadOnlyList<IErrorDetails>? Errors = null
+) : IPropertyErrorDetails;

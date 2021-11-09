@@ -27,22 +27,21 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IInvite" />
-    [PublicAPI]
-    public record Invite
-    (
-        string Code,
-        Optional<IPartialGuild> Guild,
-        IPartialChannel Channel,
-        Optional<IUser> Inviter = default,
-        Optional<InviteTarget> TargetType = default,
-        Optional<IPartialUser> TargetUser = default,
-        Optional<IPartialApplication> TargetApplication = default,
-        Optional<int> ApproximatePresenceCount = default,
-        Optional<int> ApproximateMemberCount = default,
-        Optional<DateTimeOffset?> ExpiresAt = default,
-        Optional<IInviteStageInstance> StageInstance = default
-    ) : IInvite;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IInvite" />
+[PublicAPI]
+public record Invite
+(
+    string Code,
+    Optional<IPartialGuild> Guild,
+    IPartialChannel Channel,
+    Optional<IUser> Inviter = default,
+    Optional<InviteTarget> TargetType = default,
+    Optional<IPartialUser> TargetUser = default,
+    Optional<IPartialApplication> TargetApplication = default,
+    Optional<int> ApproximatePresenceCount = default,
+    Optional<int> ApproximateMemberCount = default,
+    Optional<DateTimeOffset?> ExpiresAt = default,
+    Optional<IInviteStageInstance> StageInstance = default
+) : IInvite;

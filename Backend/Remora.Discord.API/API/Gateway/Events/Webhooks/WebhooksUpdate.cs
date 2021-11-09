@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IWebhooksUpdate" />
-    [PublicAPI]
-    public record WebhooksUpdate(Snowflake GuildID, Snowflake ChannelID) : IWebhooksUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IWebhooksUpdate" />
+[PublicAPI]
+public record WebhooksUpdate(Snowflake GuildID, Snowflake ChannelID) : IWebhooksUpdate;

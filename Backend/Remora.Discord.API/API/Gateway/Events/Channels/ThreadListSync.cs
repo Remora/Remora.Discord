@@ -26,16 +26,14 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadListSync" />
-    [PublicAPI]
-    public record ThreadListSync
-    (
-        Snowflake GuildID,
-        Optional<IReadOnlyList<Snowflake>> ChannelIDs,
-        IReadOnlyList<IChannel> Threads,
-        IReadOnlyList<IThreadMember> Members
-    )
-    : IThreadListSync;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadListSync" />
+[PublicAPI]
+public record ThreadListSync
+(
+    Snowflake GuildID,
+    Optional<IReadOnlyList<Snowflake>> ChannelIDs,
+    IReadOnlyList<IChannel> Threads,
+    IReadOnlyList<IThreadMember> Members
+) : IThreadListSync;

@@ -26,14 +26,13 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IClientStatuses" />
-    [PublicAPI]
-    public record ClientStatuses
-    (
-        Optional<ClientStatus> Desktop = default,
-        Optional<ClientStatus> Mobile = default,
-        Optional<ClientStatus> Web = default
-    ) : IClientStatuses;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IClientStatuses" />
+[PublicAPI]
+public record ClientStatuses
+(
+    Optional<ClientStatus> Desktop = default,
+    Optional<ClientStatus> Mobile = default,
+    Optional<ClientStatus> Web = default
+) : IClientStatuses;

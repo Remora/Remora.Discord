@@ -25,11 +25,10 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Bidirectional
-{
-    /// <summary>
-    /// Represents a heartbeat command to or from Discord.
-    /// </summary>
-    [PublicAPI]
-    public record Heartbeat(long? LastSequenceNumber) : IHeartbeat;
-}
+namespace Remora.Discord.API.Gateway.Bidirectional;
+
+/// <summary>
+/// Represents a heartbeat command to or from Discord.
+/// </summary>
+[PublicAPI]
+public record Heartbeat(long? LastSequenceNumber) : IHeartbeat;

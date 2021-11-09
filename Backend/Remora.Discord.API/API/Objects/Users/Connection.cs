@@ -27,20 +27,19 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IConnection" />
-    [PublicAPI]
-    public record Connection
-    (
-        string ID,
-        string Name,
-        string Type,
-        Optional<bool> IsRevoked,
-        Optional<IReadOnlyList<IPartialIntegration>> Integrations,
-        bool IsVerified,
-        bool IsFriendSyncEnabled,
-        bool ShouldShowActivity,
-        ConnectionVisibility Visibility
-    ) : IConnection;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IConnection" />
+[PublicAPI]
+public record Connection
+(
+    string ID,
+    string Name,
+    string Type,
+    Optional<bool> IsRevoked,
+    Optional<IReadOnlyList<IPartialIntegration>> Integrations,
+    bool IsVerified,
+    bool IsFriendSyncEnabled,
+    bool ShouldShowActivity,
+    ConnectionVisibility Visibility
+) : IConnection;

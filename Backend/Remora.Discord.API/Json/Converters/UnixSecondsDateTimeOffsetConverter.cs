@@ -25,36 +25,35 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts a <see cref="DateTimeOffset"/> to and from unix time, in seconds.
+/// </summary>
+[PublicAPI]
+public class UnixSecondsDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 {
-    /// <summary>
-    /// Converts a <see cref="DateTimeOffset"/> to and from unix time, in seconds.
-    /// </summary>
-    [PublicAPI]
-    public class UnixSecondsDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+    /// <inheritdoc />
+    public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        switch (reader.TokenType)
         {
-            switch (reader.TokenType)
+            case JsonTokenType.Number:
             {
-                case JsonTokenType.Number:
-                {
-                    var milliseconds = reader.GetInt64();
-                    return DateTimeOffset.FromUnixTimeSeconds(milliseconds);
-                }
-                default:
-                {
-                    throw new JsonException();
-                }
+                var milliseconds = reader.GetInt64();
+                return DateTimeOffset.FromUnixTimeSeconds(milliseconds);
+            }
+            default:
+            {
+                throw new JsonException();
             }
         }
+    }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
-        {
-            var milliseconds = value.ToUnixTimeSeconds();
-            writer.WriteNumberValue(milliseconds);
-        }
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
+    {
+        var milliseconds = value.ToUnixTimeSeconds();
+        writer.WriteNumberValue(milliseconds);
     }
 }

@@ -32,137 +32,136 @@ using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Services
-{
-    /// <summary>
-    /// Handles updating and verifying of slash commands.
-    /// </summary>
-    [PublicAPI]
-    public class SlashService
-    {
-        private readonly CommandTree _commandTree;
-        private readonly IDiscordRestOAuth2API _oauth2API;
-        private readonly IDiscordRestApplicationAPI _applicationAPI;
+namespace Remora.Discord.Commands.Services;
 
-        /// <summary>
-        /// Gets a mapping of Discord's assigned snowflakes to their corresponding command nodes.
-        /// </summary>
-        /// <remarks>
-        /// The snowflake maps to the top-level entity, which may be a group or a command. If the top-level entity is
-        /// a group, then any subcommands in that group will be provided in a sub-dictionary, with keys in the form
-        /// <value>subgroup-name::command-name</value>, nested as required.
-        /// </remarks>
-        public IReadOnlyDictionary
+/// <summary>
+/// Handles updating and verifying of slash commands.
+/// </summary>
+[PublicAPI]
+public class SlashService
+{
+    private readonly CommandTree _commandTree;
+    private readonly IDiscordRestOAuth2API _oauth2API;
+    private readonly IDiscordRestApplicationAPI _applicationAPI;
+
+    /// <summary>
+    /// Gets a mapping of Discord's assigned snowflakes to their corresponding command nodes.
+    /// </summary>
+    /// <remarks>
+    /// The snowflake maps to the top-level entity, which may be a group or a command. If the top-level entity is
+    /// a group, then any subcommands in that group will be provided in a sub-dictionary, with keys in the form
+    /// <value>subgroup-name::command-name</value>, nested as required.
+    /// </remarks>
+    public IReadOnlyDictionary
+    <
+        (Optional<Snowflake> GuildID, Snowflake CommandID),
+        OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+    > CommandMap { get; private set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SlashService"/> class.
+    /// </summary>
+    /// <param name="commandTree">The command tree.</param>
+    /// <param name="oauth2API">The OAuth2 API.</param>
+    /// <param name="applicationAPI">The application API.</param>
+    public SlashService
+    (
+        CommandTree commandTree,
+        IDiscordRestOAuth2API oauth2API,
+        IDiscordRestApplicationAPI applicationAPI
+    )
+    {
+        _commandTree = commandTree;
+        _applicationAPI = applicationAPI;
+        _oauth2API = oauth2API;
+
+        this.CommandMap = new Dictionary
         <
             (Optional<Snowflake> GuildID, Snowflake CommandID),
             OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
-        > CommandMap { get; private set; }
+        >();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SlashService"/> class.
-        /// </summary>
-        /// <param name="commandTree">The command tree.</param>
-        /// <param name="oauth2API">The OAuth2 API.</param>
-        /// <param name="applicationAPI">The application API.</param>
-        public SlashService
+    /// <summary>
+    /// Determines whether the application's commands support being bound to Discord slash commands.
+    /// </summary>
+    /// <returns>true if slash commands are supported; otherwise, false.</returns>
+    public Result SupportsSlashCommands()
+    {
+        // TODO: Improve
+        // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
+        var couldCreate = _commandTree.CreateApplicationCommands();
+
+        return couldCreate.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(couldCreate);
+    }
+
+    /// <summary>
+    /// Updates the application's slash commands.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild to update slash commands in, if any.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public async Task<Result> UpdateSlashCommandsAsync
+    (
+        Snowflake? guildID = null,
+        CancellationToken ct = default
+    )
+    {
+        var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
+        if (!getApplication.IsSuccess)
+        {
+            return Result.FromError(getApplication);
+        }
+
+        var application = getApplication.Entity;
+        var createCommands = _commandTree.CreateApplicationCommands();
+        if (!createCommands.IsSuccess)
+        {
+            return Result.FromError(createCommands);
+        }
+
+        // Upsert the current valid command set
+        var updateResult = await
         (
-            CommandTree commandTree,
-            IDiscordRestOAuth2API oauth2API,
-            IDiscordRestApplicationAPI applicationAPI
-        )
-        {
-            _commandTree = commandTree;
-            _applicationAPI = applicationAPI;
-            _oauth2API = oauth2API;
+            guildID is null
+                ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
+                (
+                    application.ID,
+                    createCommands.Entity,
+                    ct
+                )
+                : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
+                (
+                    application.ID,
+                    guildID.Value,
+                    createCommands.Entity,
+                    ct
+                )
+        );
 
-            this.CommandMap = new Dictionary
-            <
-                (Optional<Snowflake> GuildID, Snowflake CommandID),
-                OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
-            >();
+        if (!updateResult.IsSuccess)
+        {
+            return Result.FromError(updateResult);
         }
 
-        /// <summary>
-        /// Determines whether the application's commands support being bound to Discord slash commands.
-        /// </summary>
-        /// <returns>true if slash commands are supported; otherwise, false.</returns>
-        public Result SupportsSlashCommands()
-        {
-            // TODO: Improve
-            // Yes, this is inefficient. Generally, this method is only expected to be called once on startup.
-            var couldCreate = _commandTree.CreateApplicationCommands();
+        // Update our command mapping
+        var discordTree = updateResult.Entity;
+        var mergedDictionary = new Dictionary
+        <
+            (Optional<Snowflake> GuildID, Snowflake CommandID),
+            OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
+        >(this.CommandMap);
 
-            return couldCreate.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(couldCreate);
+        var newMappings = _commandTree.MapDiscordCommands(discordTree);
+        foreach (var (key, value) in newMappings)
+        {
+            mergedDictionary[key] = value;
         }
 
-        /// <summary>
-        /// Updates the application's slash commands.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild to update slash commands in, if any.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        public async Task<Result> UpdateSlashCommandsAsync
-        (
-            Snowflake? guildID = null,
-            CancellationToken ct = default
-        )
-        {
-            var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
-            if (!getApplication.IsSuccess)
-            {
-                return Result.FromError(getApplication);
-            }
+        this.CommandMap = mergedDictionary;
 
-            var application = getApplication.Entity;
-            var createCommands = _commandTree.CreateApplicationCommands();
-            if (!createCommands.IsSuccess)
-            {
-                return Result.FromError(createCommands);
-            }
-
-            // Upsert the current valid command set
-            var updateResult = await
-            (
-                guildID is null
-                    ? _applicationAPI.BulkOverwriteGlobalApplicationCommandsAsync
-                    (
-                        application.ID,
-                        createCommands.Entity,
-                        ct
-                    )
-                    : _applicationAPI.BulkOverwriteGuildApplicationCommandsAsync
-                    (
-                        application.ID,
-                        guildID.Value,
-                        createCommands.Entity,
-                        ct
-                    )
-            );
-
-            if (!updateResult.IsSuccess)
-            {
-                return Result.FromError(updateResult);
-            }
-
-            // Update our command mapping
-            var discordTree = updateResult.Entity;
-            var mergedDictionary = new Dictionary
-            <
-                (Optional<Snowflake> GuildID, Snowflake CommandID),
-                OneOf<IReadOnlyDictionary<string, CommandNode>, CommandNode>
-            >(this.CommandMap);
-
-            var newMappings = _commandTree.MapDiscordCommands(discordTree);
-            foreach (var (key, value) in newMappings)
-            {
-                mergedDictionary[key] = value;
-            }
-
-            this.CommandMap = mergedDictionary;
-
-            return Result.FromSuccess();
-        }
+        return Result.FromSuccess();
     }
 }

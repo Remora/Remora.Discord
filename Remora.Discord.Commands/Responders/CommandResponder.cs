@@ -38,257 +38,256 @@ using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Responders
+namespace Remora.Discord.Commands.Responders;
+
+/// <summary>
+/// Responds to commands.
+/// </summary>
+[PublicAPI]
+public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageUpdate>
 {
+    private readonly CommandService _commandService;
+    private readonly ICommandResponderOptions _options;
+    private readonly ExecutionEventCollectorService _eventCollector;
+    private readonly IServiceProvider _services;
+    private readonly ContextInjectionService _contextInjection;
+
+    private readonly TokenizerOptions _tokenizerOptions;
+    private readonly TreeSearchOptions _treeSearchOptions;
+
     /// <summary>
-    /// Responds to commands.
+    /// Initializes a new instance of the <see cref="CommandResponder"/> class.
     /// </summary>
-    [PublicAPI]
-    public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageUpdate>
+    /// <param name="commandService">The command service.</param>
+    /// <param name="options">The command responder options.</param>
+    /// <param name="eventCollector">The event collector.</param>
+    /// <param name="services">The available services.</param>
+    /// <param name="contextInjection">The injection service.</param>
+    /// <param name="tokenizerOptions">The tokenizer options.</param>
+    /// <param name="treeSearchOptions">The tree search options.</param>
+    public CommandResponder
+    (
+        CommandService commandService,
+        IOptions<CommandResponderOptions> options,
+        ExecutionEventCollectorService eventCollector,
+        IServiceProvider services,
+        ContextInjectionService contextInjection,
+        IOptions<TokenizerOptions> tokenizerOptions,
+        IOptions<TreeSearchOptions> treeSearchOptions
+    )
     {
-        private readonly CommandService _commandService;
-        private readonly ICommandResponderOptions _options;
-        private readonly ExecutionEventCollectorService _eventCollector;
-        private readonly IServiceProvider _services;
-        private readonly ContextInjectionService _contextInjection;
+        _commandService = commandService;
+        _services = services;
+        _contextInjection = contextInjection;
+        _eventCollector = eventCollector;
+        _options = options.Value;
 
-        private readonly TokenizerOptions _tokenizerOptions;
-        private readonly TreeSearchOptions _treeSearchOptions;
+        _tokenizerOptions = tokenizerOptions.Value;
+        _treeSearchOptions = treeSearchOptions.Value;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommandResponder"/> class.
-        /// </summary>
-        /// <param name="commandService">The command service.</param>
-        /// <param name="options">The command responder options.</param>
-        /// <param name="eventCollector">The event collector.</param>
-        /// <param name="services">The available services.</param>
-        /// <param name="contextInjection">The injection service.</param>
-        /// <param name="tokenizerOptions">The tokenizer options.</param>
-        /// <param name="treeSearchOptions">The tree search options.</param>
-        public CommandResponder
-        (
-            CommandService commandService,
-            IOptions<CommandResponderOptions> options,
-            ExecutionEventCollectorService eventCollector,
-            IServiceProvider services,
-            ContextInjectionService contextInjection,
-            IOptions<TokenizerOptions> tokenizerOptions,
-            IOptions<TreeSearchOptions> treeSearchOptions
-        )
+    /// <inheritdoc/>
+    public virtual async Task<Result> RespondAsync
+    (
+        IMessageCreate? gatewayEvent,
+        CancellationToken ct = default
+    )
+    {
+        if (gatewayEvent is null)
         {
-            _commandService = commandService;
-            _services = services;
-            _contextInjection = contextInjection;
-            _eventCollector = eventCollector;
-            _options = options.Value;
-
-            _tokenizerOptions = tokenizerOptions.Value;
-            _treeSearchOptions = treeSearchOptions.Value;
+            return Result.FromSuccess();
         }
 
-        /// <inheritdoc/>
-        public virtual async Task<Result> RespondAsync
-        (
-            IMessageCreate? gatewayEvent,
-            CancellationToken ct = default
-        )
+        if (_options.Prefix is not null)
         {
-            if (gatewayEvent is null)
+            if (!gatewayEvent.Content.StartsWith(_options.Prefix))
             {
                 return Result.FromSuccess();
             }
+        }
 
-            if (_options.Prefix is not null)
-            {
-                if (!gatewayEvent.Content.StartsWith(_options.Prefix))
-                {
-                    return Result.FromSuccess();
-                }
-            }
+        var author = gatewayEvent.Author;
+        if (author.IsBot.IsDefined(out var isBot) && isBot)
+        {
+            return Result.FromSuccess();
+        }
 
-            var author = gatewayEvent.Author;
-            if (author.IsBot.IsDefined(out var isBot) && isBot)
-            {
-                return Result.FromSuccess();
-            }
+        if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
+        {
+            return Result.FromSuccess();
+        }
 
-            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
-            {
-                return Result.FromSuccess();
-            }
-
-            var context = new MessageContext
+        var context = new MessageContext
+        (
+            gatewayEvent.ChannelID,
+            author,
+            gatewayEvent.ID,
+            new PartialMessage
             (
-                gatewayEvent.ChannelID,
-                author,
                 gatewayEvent.ID,
-                new PartialMessage
-                (
-                    gatewayEvent.ID,
-                    gatewayEvent.ChannelID,
-                    gatewayEvent.GuildID,
-                    new Optional<IUser>(gatewayEvent.Author),
-                    gatewayEvent.Member,
-                    gatewayEvent.Content,
-                    gatewayEvent.Timestamp,
-                    gatewayEvent.EditedTimestamp,
-                    gatewayEvent.IsTTS,
-                    gatewayEvent.MentionsEveryone,
-                    new Optional<IReadOnlyList<IUserMention>>(gatewayEvent.Mentions),
-                    new Optional<IReadOnlyList<Snowflake>>(gatewayEvent.MentionedRoles),
-                    gatewayEvent.MentionedChannels,
-                    new Optional<IReadOnlyList<IAttachment>>(gatewayEvent.Attachments),
-                    new Optional<IReadOnlyList<IEmbed>>(gatewayEvent.Embeds),
-                    gatewayEvent.Reactions,
-                    gatewayEvent.Nonce,
-                    gatewayEvent.IsPinned,
-                    gatewayEvent.WebhookID,
-                    gatewayEvent.Type,
-                    gatewayEvent.Activity,
-                    gatewayEvent.Application,
-                    gatewayEvent.ApplicationID,
-                    gatewayEvent.MessageReference,
-                    gatewayEvent.Flags,
-                    gatewayEvent.ReferencedMessage,
-                    gatewayEvent.Interaction,
-                    gatewayEvent.Thread,
-                    gatewayEvent.Components,
-                    gatewayEvent.StickerItems
-                )
-            );
+                gatewayEvent.ChannelID,
+                gatewayEvent.GuildID,
+                new Optional<IUser>(gatewayEvent.Author),
+                gatewayEvent.Member,
+                gatewayEvent.Content,
+                gatewayEvent.Timestamp,
+                gatewayEvent.EditedTimestamp,
+                gatewayEvent.IsTTS,
+                gatewayEvent.MentionsEveryone,
+                new Optional<IReadOnlyList<IUserMention>>(gatewayEvent.Mentions),
+                new Optional<IReadOnlyList<Snowflake>>(gatewayEvent.MentionedRoles),
+                gatewayEvent.MentionedChannels,
+                new Optional<IReadOnlyList<IAttachment>>(gatewayEvent.Attachments),
+                new Optional<IReadOnlyList<IEmbed>>(gatewayEvent.Embeds),
+                gatewayEvent.Reactions,
+                gatewayEvent.Nonce,
+                gatewayEvent.IsPinned,
+                gatewayEvent.WebhookID,
+                gatewayEvent.Type,
+                gatewayEvent.Activity,
+                gatewayEvent.Application,
+                gatewayEvent.ApplicationID,
+                gatewayEvent.MessageReference,
+                gatewayEvent.Flags,
+                gatewayEvent.ReferencedMessage,
+                gatewayEvent.Interaction,
+                gatewayEvent.Thread,
+                gatewayEvent.Components,
+                gatewayEvent.StickerItems
+            )
+        );
 
-            return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
-        }
+        return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
+    }
 
-        /// <inheritdoc/>
-        public virtual async Task<Result> RespondAsync
-        (
-            IMessageUpdate? gatewayEvent,
-            CancellationToken ct = default
-        )
+    /// <inheritdoc/>
+    public virtual async Task<Result> RespondAsync
+    (
+        IMessageUpdate? gatewayEvent,
+        CancellationToken ct = default
+    )
+    {
+        if (gatewayEvent is null)
         {
-            if (gatewayEvent is null)
-            {
-                return Result.FromSuccess();
-            }
-
-            if (!gatewayEvent.ID.IsDefined(out var messageID))
-            {
-                return Result.FromSuccess();
-            }
-
-            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-            {
-                return Result.FromSuccess();
-            }
-
-            if (!gatewayEvent.Content.IsDefined(out var content))
-            {
-                return Result.FromSuccess();
-            }
-
-            if (_options.Prefix is not null)
-            {
-                if (!content.StartsWith(_options.Prefix))
-                {
-                    return Result.FromSuccess();
-                }
-            }
-
-            if (!gatewayEvent.Author.IsDefined(out var author))
-            {
-                return Result.FromSuccess();
-            }
-
-            if (author.IsBot.IsDefined(out var isBot) && isBot)
-            {
-                return Result.FromSuccess();
-            }
-
-            if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
-            {
-                return Result.FromSuccess();
-            }
-
-            if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
-            {
-                // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
-                // change made to the message object
-                var interval = DateTimeOffset.UtcNow - edited;
-                if (interval >= TimeSpan.FromSeconds(3))
-                {
-                    return Result.FromSuccess();
-                }
-            }
-            else
-            {
-                // No edit means no visible change to the command
-                return Result.FromSuccess();
-            }
-
-            var context = new MessageContext
-            (
-                channelID,
-                author,
-                messageID,
-                gatewayEvent
-            );
-
-            return await ExecuteCommandAsync(content, context, ct);
+            return Result.FromSuccess();
         }
 
-        /// <summary>
-        /// Executes the actual command.
-        /// </summary>
-        /// <param name="content">The contents of the message.</param>
-        /// <param name="commandContext">The command context.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        protected virtual async Task<Result> ExecuteCommandAsync
-        (
-            string content,
-            ICommandContext commandContext,
-            CancellationToken ct = default
-        )
+        if (!gatewayEvent.ID.IsDefined(out var messageID))
         {
-            // Provide the created context to any services inside this scope
-            _contextInjection.Context = commandContext;
-
-            // Strip off the prefix
-            if (_options.Prefix is not null)
-            {
-                content = content
-                [
-                    (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
-                ];
-            }
-
-            // Run any user-provided pre execution events
-            var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
-            if (!preExecution.IsSuccess)
-            {
-                return preExecution;
-            }
-
-            // Run the actual command
-            var executeResult = await _commandService.TryExecuteAsync
-            (
-                content,
-                _services,
-                tokenizerOptions: _tokenizerOptions,
-                searchOptions: _treeSearchOptions,
-                ct: ct
-            );
-
-            // Run any user-provided post execution events, passing along either the result of the command itself, or if
-            // execution failed, the reason why
-            return await _eventCollector.RunPostExecutionEvents
-            (
-                _services,
-                commandContext,
-                executeResult.IsSuccess ? executeResult.Entity : executeResult,
-                ct
-            );
+            return Result.FromSuccess();
         }
+
+        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+        {
+            return Result.FromSuccess();
+        }
+
+        if (!gatewayEvent.Content.IsDefined(out var content))
+        {
+            return Result.FromSuccess();
+        }
+
+        if (_options.Prefix is not null)
+        {
+            if (!content.StartsWith(_options.Prefix))
+            {
+                return Result.FromSuccess();
+            }
+        }
+
+        if (!gatewayEvent.Author.IsDefined(out var author))
+        {
+            return Result.FromSuccess();
+        }
+
+        if (author.IsBot.IsDefined(out var isBot) && isBot)
+        {
+            return Result.FromSuccess();
+        }
+
+        if (author.IsSystem.IsDefined(out var isSystem) && isSystem)
+        {
+            return Result.FromSuccess();
+        }
+
+        if (gatewayEvent.EditedTimestamp.IsDefined(out var edited))
+        {
+            // Check if the edit happened in the last three seconds; if so, we'll assume this isn't some other
+            // change made to the message object
+            var interval = DateTimeOffset.UtcNow - edited;
+            if (interval >= TimeSpan.FromSeconds(3))
+            {
+                return Result.FromSuccess();
+            }
+        }
+        else
+        {
+            // No edit means no visible change to the command
+            return Result.FromSuccess();
+        }
+
+        var context = new MessageContext
+        (
+            channelID,
+            author,
+            messageID,
+            gatewayEvent
+        );
+
+        return await ExecuteCommandAsync(content, context, ct);
+    }
+
+    /// <summary>
+    /// Executes the actual command.
+    /// </summary>
+    /// <param name="content">The contents of the message.</param>
+    /// <param name="commandContext">The command context.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    protected virtual async Task<Result> ExecuteCommandAsync
+    (
+        string content,
+        ICommandContext commandContext,
+        CancellationToken ct = default
+    )
+    {
+        // Provide the created context to any services inside this scope
+        _contextInjection.Context = commandContext;
+
+        // Strip off the prefix
+        if (_options.Prefix is not null)
+        {
+            content = content
+            [
+                (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
+            ];
+        }
+
+        // Run any user-provided pre execution events
+        var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
+        if (!preExecution.IsSuccess)
+        {
+            return preExecution;
+        }
+
+        // Run the actual command
+        var executeResult = await _commandService.TryExecuteAsync
+        (
+            content,
+            _services,
+            tokenizerOptions: _tokenizerOptions,
+            searchOptions: _treeSearchOptions,
+            ct: ct
+        );
+
+        // Run any user-provided post execution events, passing along either the result of the command itself, or if
+        // execution failed, the reason why
+        return await _eventCollector.RunPostExecutionEvents
+        (
+            _services,
+            commandContext,
+            executeResult.IsSuccess ? executeResult.Entity : executeResult,
+            ct
+        );
     }
 }

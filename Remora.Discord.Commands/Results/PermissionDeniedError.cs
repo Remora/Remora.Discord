@@ -24,17 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Results
-{
-    /// <summary>
-    /// Represents a failure to fulfill a set of requirements related to permissions.
-    /// </summary>
-    /// <param name="Message">The custom error message, if any.</param>
-    /// <param name="Permissions">The permissions which were checked.</param>
-    [PublicAPI]
-    public record PermissionDeniedError
-    (
-        string Message = "Permission denied.",
-        params DiscordPermission[] Permissions
-    ) : ResultError(Message);
-}
+namespace Remora.Discord.Commands.Results;
+
+/// <summary>
+/// Represents a failure to fulfill a set of requirements related to permissions.
+/// </summary>
+/// <param name="Message">The custom error message, if any.</param>
+/// <param name="Permissions">The permissions which were checked.</param>
+[PublicAPI]
+public record PermissionDeniedError
+(
+    string Message = "Permission denied.",
+    params DiscordPermission[] Permissions
+) : ResultError(Message);

@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IUnavailableGuild" />
-    [PublicAPI]
-    public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable = default) : IUnavailableGuild;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IUnavailableGuild" />
+[PublicAPI]
+public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable = default) : IUnavailableGuild;

@@ -28,15 +28,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuthorizationInformation" />
-    [PublicAPI]
-    public record AuthorizationInformation
-    (
-        IPartialApplication Application,
-        IReadOnlyList<string> Scopes,
-        DateTimeOffset Expires,
-        Optional<IUser> User = default
-    ) : IAuthorizationInformation;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuthorizationInformation" />
+[PublicAPI]
+public record AuthorizationInformation
+(
+    IPartialApplication Application,
+    IReadOnlyList<string> Scopes,
+    DateTimeOffset Expires,
+    Optional<IUser> User = default
+) : IAuthorizationInformation;

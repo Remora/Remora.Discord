@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IAccount" />
-    [PublicAPI]
-    public record Account(Snowflake ID, string Name) : IAccount;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IAccount" />
+[PublicAPI]
+public record Account(Snowflake ID, string Name) : IAccount;

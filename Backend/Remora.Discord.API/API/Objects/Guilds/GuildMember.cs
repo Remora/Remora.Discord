@@ -28,21 +28,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IGuildMember" />
-    [PublicAPI]
-    public record GuildMember
-    (
-        Optional<IUser> User,
-        Optional<string?> Nickname,
-        Optional<IImageHash?> Avatar,
-        IReadOnlyList<Snowflake> Roles,
-        DateTimeOffset JoinedAt,
-        Optional<DateTimeOffset?> PremiumSince,
-        bool IsDeafened,
-        bool IsMuted,
-        Optional<bool?> IsPending = default,
-        Optional<IDiscordPermissionSet> Permissions = default
-    ) : IGuildMember;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IGuildMember" />
+[PublicAPI]
+public record GuildMember
+(
+    Optional<IUser> User,
+    Optional<string?> Nickname,
+    Optional<IImageHash?> Avatar,
+    IReadOnlyList<Snowflake> Roles,
+    DateTimeOffset JoinedAt,
+    Optional<DateTimeOffset?> PremiumSince,
+    bool IsDeafened,
+    bool IsMuted,
+    Optional<bool?> IsPending = default,
+    Optional<IDiscordPermissionSet> Permissions = default
+) : IGuildMember;

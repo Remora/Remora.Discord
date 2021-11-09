@@ -26,39 +26,38 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Creates converters for <see cref="Optional{TValue}"/>.
+/// </summary>
+internal class OptionalConverterFactory : JsonConverterFactory
 {
-    /// <summary>
-    /// Creates converters for <see cref="Optional{TValue}"/>.
-    /// </summary>
-    internal class OptionalConverterFactory : JsonConverterFactory
+    /// <inheritdoc />
+    public override bool CanConvert(Type typeToConvert)
     {
-        /// <inheritdoc />
-        public override bool CanConvert(Type typeToConvert)
+        var typeInfo = typeToConvert.GetTypeInfo();
+        if (!typeInfo.IsGenericType || typeInfo.IsGenericTypeDefinition)
         {
-            var typeInfo = typeToConvert.GetTypeInfo();
-            if (!typeInfo.IsGenericType || typeInfo.IsGenericTypeDefinition)
-            {
-                return false;
-            }
-
-            var genericType = typeInfo.GetGenericTypeDefinition();
-            return genericType == typeof(Optional<>);
+            return false;
         }
 
-        /// <inheritdoc />
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        var genericType = typeInfo.GetGenericTypeDefinition();
+        return genericType == typeof(Optional<>);
+    }
+
+    /// <inheritdoc />
+    public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+    {
+        var typeInfo = typeToConvert.GetTypeInfo();
+
+        var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
+
+        if (Activator.CreateInstance(optionalType) is not JsonConverter createdConverter)
         {
-            var typeInfo = typeToConvert.GetTypeInfo();
-
-            var optionalType = typeof(OptionalConverter<>).MakeGenericType(typeInfo.GenericTypeArguments);
-
-            if (Activator.CreateInstance(optionalType) is not JsonConverter createdConverter)
-            {
-                throw new JsonException();
-            }
-
-            return createdConverter;
+            throw new JsonException();
         }
+
+        return createdConverter;
     }
 }

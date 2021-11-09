@@ -27,18 +27,17 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IInteractionData" />
-    [PublicAPI]
-    public record InteractionData
-    (
-        Optional<Snowflake> ID,
-        Optional<string> Name,
-        Optional<IApplicationCommandInteractionDataResolved> Resolved,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
-        Optional<string> CustomID = default,
-        Optional<ComponentType> ComponentType = default,
-        Optional<IReadOnlyList<string>> Values = default)
-    : IInteractionData;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IInteractionData" />
+[PublicAPI]
+public record InteractionData
+(
+    Optional<Snowflake> ID,
+    Optional<string> Name,
+    Optional<IApplicationCommandInteractionDataResolved> Resolved,
+    Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+    Optional<string> CustomID = default,
+    Optional<ComponentType> ComponentType = default,
+    Optional<IReadOnlyList<string>> Values = default
+) : IInteractionData;

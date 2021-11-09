@@ -27,16 +27,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ITeamMember" />
-    [PublicAPI]
-    public record TeamMember
-    (
-        MembershipState MembershipState,
-        IReadOnlyList<string> Permissions,
-        Snowflake TeamID,
-        IPartialUser User
-    )
-    : ITeamMember;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ITeamMember" />
+[PublicAPI]
+public record TeamMember
+(
+    MembershipState MembershipState,
+    IReadOnlyList<string> Permissions,
+    Snowflake TeamID,
+    IPartialUser User
+) : ITeamMember;

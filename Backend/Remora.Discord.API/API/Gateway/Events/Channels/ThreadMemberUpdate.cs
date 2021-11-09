@@ -27,17 +27,16 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadMemberUpdate" />
-    [PublicAPI]
-    public record ThreadMemberUpdate
-    (
-        Optional<Snowflake> ID,
-        Optional<Snowflake> UserID,
-        DateTimeOffset JoinTimestamp,
-        ThreadMemberFlags Flags,
-        Optional<IGuildMember> Member,
-        Optional<IPartialPresence?> Presence
-    ) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadMemberUpdate" />
+[PublicAPI]
+public record ThreadMemberUpdate
+(
+    Optional<Snowflake> ID,
+    Optional<Snowflake> UserID,
+    DateTimeOffset JoinTimestamp,
+    ThreadMemberFlags Flags,
+    Optional<IGuildMember> Member,
+    Optional<IPartialPresence?> Presence
+) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;

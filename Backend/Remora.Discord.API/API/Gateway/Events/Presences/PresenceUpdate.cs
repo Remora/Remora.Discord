@@ -27,23 +27,15 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IPresenceUpdate" />
-    [PublicAPI]
-    public record PresenceUpdate : Presence, IPresenceUpdate
-    {
-        /// <inheritdoc cref="Presence"/>
-        public PresenceUpdate
-        (
-            IPartialUser user,
-            Snowflake guildID,
-            ClientStatus status,
-            IReadOnlyList<IActivity>? activities,
-            IClientStatuses clientStatus
-        )
-            : base(user, guildID, status, activities, clientStatus)
-        {
-        }
-    }
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IPresenceUpdate" />
+[PublicAPI]
+public record PresenceUpdate
+(
+    IPartialUser User,
+    Snowflake GuildID,
+    ClientStatus Status,
+    IReadOnlyList<IActivity>? Activities,
+    IClientStatuses ClientStatus
+) : Presence(User, GuildID, Status, Activities, ClientStatus), IPresenceUpdate;

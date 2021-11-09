@@ -28,17 +28,16 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents a command to update the presence of a user.
-    /// </summary>
-    [PublicAPI]
-    public record UpdatePresence
-    (
-        ClientStatus Status,
-        bool IsAFK,
-        DateTimeOffset? Since,
-        IReadOnlyList<IActivity> Activities
-    ) : IUpdatePresence;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a command to update the presence of a user.
+/// </summary>
+[PublicAPI]
+public record UpdatePresence
+(
+    ClientStatus Status,
+    bool IsAFK,
+    DateTimeOffset? Since,
+    IReadOnlyList<IActivity> Activities
+) : IUpdatePresence;

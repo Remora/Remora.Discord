@@ -24,61 +24,60 @@ using System;
 using OneOf;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Defines an allowed range for a marked parameter.
+/// </summary>
+[AttributeUsage(AttributeTargets.Parameter)]
+public class MaxValueAttribute : Attribute
 {
     /// <summary>
-    /// Defines an allowed range for a marked parameter.
+    /// Gets the maximum allowed value.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class MaxValueAttribute : Attribute
+    public Optional<OneOf<ulong, long, float, double>> Value { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
+    /// </summary>
+    /// <param name="maxValue">The maximum value.</param>
+    public MaxValueAttribute(long? maxValue = default)
     {
-        /// <summary>
-        /// Gets the maximum allowed value.
-        /// </summary>
-        public Optional<OneOf<ulong, long, float, double>> Value { get; }
+        this.Value = maxValue is null
+            ? default
+            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
-        /// </summary>
-        /// <param name="maxValue">The maximum value.</param>
-        public MaxValueAttribute(long? maxValue = default)
-        {
-            this.Value = maxValue is null
-                ? default
-                : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
+    /// </summary>
+    /// <param name="maxValue">The maximum value.</param>
+    public MaxValueAttribute(ulong? maxValue = default)
+    {
+        this.Value = maxValue is null
+            ? default
+            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
-        /// </summary>
-        /// <param name="maxValue">The maximum value.</param>
-        public MaxValueAttribute(ulong? maxValue = default)
-        {
-            this.Value = maxValue is null
-                ? default
-                : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
+    /// </summary>
+    /// <param name="maxValue">The maximum value.</param>
+    public MaxValueAttribute(float? maxValue = default)
+    {
+        this.Value = maxValue is null
+            ? default
+            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
-        /// </summary>
-        /// <param name="maxValue">The maximum value.</param>
-        public MaxValueAttribute(float? maxValue = default)
-        {
-            this.Value = maxValue is null
-                ? default
-                : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
-        /// </summary>
-        /// <param name="maxValue">The maximum value.</param>
-        public MaxValueAttribute(double? maxValue = default)
-        {
-            this.Value = maxValue is null
-                ? default
-                : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
+    /// </summary>
+    /// <param name="maxValue">The maximum value.</param>
+    public MaxValueAttribute(double? maxValue = default)
+    {
+        this.Value = maxValue is null
+            ? default
+            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
     }
 }

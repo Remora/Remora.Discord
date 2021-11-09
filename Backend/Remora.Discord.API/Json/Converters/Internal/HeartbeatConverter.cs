@@ -26,38 +26,37 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Bidirectional;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <inheritdoc />
+internal class HeartbeatConverter : JsonConverter<IHeartbeat?>
 {
     /// <inheritdoc />
-    internal class HeartbeatConverter : JsonConverter<IHeartbeat?>
+    public override IHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override IHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        return reader.TokenType switch
         {
-            return reader.TokenType switch
-            {
-                JsonTokenType.Number => new Heartbeat(reader.GetInt64()),
-                JsonTokenType.Null => new Heartbeat(null),
-                _ => throw new JsonException()
-            };
+            JsonTokenType.Number => new Heartbeat(reader.GetInt64()),
+            JsonTokenType.Null => new Heartbeat(null),
+            _ => throw new JsonException()
+        };
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IHeartbeat? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IHeartbeat? value, JsonSerializerOptions options)
+        if (value.LastSequenceNumber is null)
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            if (value.LastSequenceNumber is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteNumberValue(value.LastSequenceNumber.Value);
+            writer.WriteNullValue();
+            return;
         }
+
+        writer.WriteNumberValue(value.LastSequenceNumber.Value);
     }
 }

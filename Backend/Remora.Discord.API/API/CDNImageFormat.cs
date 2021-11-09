@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API;
+
+/// <summary>
+/// Enumerates the image formats supported by the CDN.
+/// </summary>
+[PublicAPI]
+public enum CDNImageFormat
 {
     /// <summary>
-    /// Enumerates the image formats supported by the CDN.
+    /// Requests a JPEG image.
     /// </summary>
-    [PublicAPI]
-    public enum CDNImageFormat
-    {
-        /// <summary>
-        /// Requests a JPEG image.
-        /// </summary>
-        JPEG,
+    JPEG,
 
-        /// <summary>
-        /// Requests a PNG image.
-        /// </summary>
-        PNG,
+    /// <summary>
+    /// Requests a PNG image.
+    /// </summary>
+    PNG,
 
-        /// <summary>
-        /// Requests a WebP image.
-        /// </summary>
-        WebP,
+    /// <summary>
+    /// Requests a WebP image.
+    /// </summary>
+    WebP,
 
-        /// <summary>
-        /// Requests a GIF image.
-        /// </summary>
-        GIF,
+    /// <summary>
+    /// Requests a GIF image.
+    /// </summary>
+    GIF,
 
-        /// <summary>
-        /// Requests a JSON-formatted image description.
-        /// </summary>
-        Lottie
-    }
+    /// <summary>
+    /// Requests a JSON-formatted image description.
+    /// </summary>
+    Lottie
 }

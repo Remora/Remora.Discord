@@ -26,14 +26,13 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IGatewayEndpoint" />
-    [PublicAPI]
-    public record GatewayEndpoint
-    (
-        string Url,
-        Optional<int> Shards = default,
-        Optional<ISessionStartLimit> SessionStartLimit = default
-    ) : IGatewayEndpoint;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IGatewayEndpoint" />
+[PublicAPI]
+public record GatewayEndpoint
+(
+    string Url,
+    Optional<int> Shards = default,
+    Optional<ISessionStartLimit> SessionStartLimit = default
+) : IGatewayEndpoint;

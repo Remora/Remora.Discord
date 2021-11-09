@@ -29,50 +29,49 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Checks required contexts before allowing execution.
+/// </summary>
+[PublicAPI]
+public class RequireContextCondition : ICondition<RequireContextAttribute>
 {
+    private readonly ICommandContext _context;
+    private readonly IDiscordRestChannelAPI _channelAPI;
+
     /// <summary>
-    /// Checks required contexts before allowing execution.
+    /// Initializes a new instance of the <see cref="RequireContextCondition"/> class.
     /// </summary>
-    [PublicAPI]
-    public class RequireContextCondition : ICondition<RequireContextAttribute>
+    /// <param name="context">The command context.</param>
+    /// <param name="channelAPI">The channel API.</param>
+    public RequireContextCondition
+    (
+        ICommandContext context,
+        IDiscordRestChannelAPI channelAPI
+    )
     {
-        private readonly ICommandContext _context;
-        private readonly IDiscordRestChannelAPI _channelAPI;
+        _context = context;
+        _channelAPI = channelAPI;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireContextCondition"/> class.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="channelAPI">The channel API.</param>
-        public RequireContextCondition
-        (
-            ICommandContext context,
-            IDiscordRestChannelAPI channelAPI
-        )
+    /// <inheritdoc />
+    public async ValueTask<Result> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
+    {
+        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!getChannel.IsSuccess)
         {
-            _context = context;
-            _channelAPI = channelAPI;
+            return Result.FromError(getChannel);
         }
 
-        /// <inheritdoc />
-        public async ValueTask<Result> CheckAsync(RequireContextAttribute attribute, CancellationToken ct)
-        {
-            var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
-            if (!getChannel.IsSuccess)
-            {
-                return Result.FromError(getChannel);
-            }
+        var channel = getChannel.Entity;
 
-            var channel = getChannel.Entity;
-
-            return attribute.ChannelTypes.Contains(channel.Type)
-                ? Result.FromSuccess()
-                : new InvalidOperationError
-                (
-                    $"This command was invoked in a channel of type '{channel.Type}', but it can only be used " +
-                    $"in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'"
-                );
-        }
+        return attribute.ChannelTypes.Contains(channel.Type)
+            ? Result.FromSuccess()
+            : new InvalidOperationError
+            (
+                $"This command was invoked in a channel of type '{channel.Type}', but it can only be used " +
+                $"in '{string.Join(", ", attribute.ChannelTypes.Select(x => x.ToString()))}'"
+            );
     }
 }

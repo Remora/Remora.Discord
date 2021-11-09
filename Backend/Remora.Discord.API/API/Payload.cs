@@ -25,12 +25,11 @@ using Remora.Discord.API.Abstractions.Gateway;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API
-{
-    /// <summary>
-    /// Represents a payload from the Discord gateway.
-    /// </summary>
-    /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-    [PublicAPI]
-    public record Payload<TData>(TData Data) : IPayload<TData> where TData : IGatewayPayloadData;
-}
+namespace Remora.Discord.API;
+
+/// <summary>
+/// Represents a payload from the Discord gateway.
+/// </summary>
+/// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
+[PublicAPI]
+public record Payload<TData>(TData Data) : IPayload<TData> where TData : IGatewayPayloadData;

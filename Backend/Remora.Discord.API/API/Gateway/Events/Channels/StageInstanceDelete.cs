@@ -26,19 +26,16 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IStageInstanceDelete" />
-    [PublicAPI]
-    public record StageInstanceDelete
-    (
-        Snowflake ID,
-        Snowflake GuildID,
-        Snowflake ChannelID,
-        string Topic,
-        StagePrivacyLevel PrivacyLevel,
-        bool IsDiscoveryDisabled
-    ) :
-        StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled),
-        IStageInstanceDelete;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IStageInstanceDelete" />
+[PublicAPI]
+public record StageInstanceDelete
+(
+    Snowflake ID,
+    Snowflake GuildID,
+    Snowflake ChannelID,
+    string Topic,
+    StagePrivacyLevel PrivacyLevel,
+    bool IsDiscoveryDisabled
+) : StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled), IStageInstanceDelete;

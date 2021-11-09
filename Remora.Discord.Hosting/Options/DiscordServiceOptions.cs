@@ -20,13 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.Hosting.Options
-{
-    /// <summary>
-    /// Defines a set of options used by the background gateway service.
-    /// </summary>
-    /// <param name="TerminateApplicationOnCriticalGatewayErrors">
-    /// Whether the service should stop the application if a critical gateway error is encountered.
-    /// </param>
-    public record DiscordServiceOptions(bool TerminateApplicationOnCriticalGatewayErrors = true);
-}
+namespace Remora.Discord.Hosting.Options;
+
+/// <summary>
+/// Defines a set of options used by the background gateway service.
+/// </summary>
+/// <param name="TerminateApplicationOnCriticalGatewayErrors">
+/// Whether the service should stop the application if a critical gateway error is encountered.
+/// </param>
+public record DiscordServiceOptions(bool TerminateApplicationOnCriticalGatewayErrors = true);

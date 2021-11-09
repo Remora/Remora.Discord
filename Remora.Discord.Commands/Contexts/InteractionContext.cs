@@ -26,22 +26,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Commands.Contexts
-{
-    /// <summary>
-    /// Represents contextual information about an interaction.
-    /// </summary>
-    [PublicAPI]
-    public record InteractionContext
-    (
-        Optional<Snowflake> GuildID,
-        Snowflake ChannelID,
-        IUser User,
-        Optional<IGuildMember> Member,
-        string Token,
-        Snowflake ID,
-        Snowflake ApplicationID,
-        IInteractionData Data
-    )
-    : CommandContext(GuildID, ChannelID, User);
-}
+namespace Remora.Discord.Commands.Contexts;
+
+/// <summary>
+/// Represents contextual information about an interaction.
+/// </summary>
+[PublicAPI]
+public record InteractionContext
+(
+    Optional<Snowflake> GuildID,
+    Snowflake ChannelID,
+    IUser User,
+    Optional<IGuildMember> Member,
+    string Token,
+    Snowflake ID,
+    Snowflake ApplicationID,
+    IInteractionData Data
+) : CommandContext(GuildID, ChannelID, User);

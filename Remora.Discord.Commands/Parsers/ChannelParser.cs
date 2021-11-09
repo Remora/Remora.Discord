@@ -31,34 +31,33 @@ using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses instances of <see cref="IChannel"/> from command-line inputs.
+/// </summary>
+[PublicAPI]
+public class ChannelParser : AbstractTypeParser<IChannel>
 {
+    private readonly IDiscordRestChannelAPI _channelAPI;
+
     /// <summary>
-    /// Parses instances of <see cref="IChannel"/> from command-line inputs.
+    /// Initializes a new instance of the <see cref="ChannelParser"/> class.
     /// </summary>
-    [PublicAPI]
-    public class ChannelParser : AbstractTypeParser<IChannel>
+    /// <param name="channelAPI">The channel API.</param>
+    public ChannelParser(IDiscordRestChannelAPI channelAPI)
     {
-        private readonly IDiscordRestChannelAPI _channelAPI;
+        _channelAPI = channelAPI;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelParser"/> class.
-        /// </summary>
-        /// <param name="channelAPI">The channel API.</param>
-        public ChannelParser(IDiscordRestChannelAPI channelAPI)
+    /// <inheritdoc />
+    public override async ValueTask<Result<IChannel>> TryParseAsync(string value, CancellationToken ct = default)
+    {
+        if (!Snowflake.TryParse(value.Unmention(), out var channelID))
         {
-            _channelAPI = channelAPI;
+            return new ParsingError<IChannel>(value.Unmention());
         }
 
-        /// <inheritdoc />
-        public override async ValueTask<Result<IChannel>> TryParseAsync(string value, CancellationToken ct = default)
-        {
-            if (!Snowflake.TryParse(value.Unmention(), out var channelID))
-            {
-                return new ParsingError<IChannel>(value.Unmention());
-            }
-
-            return await _channelAPI.GetChannelAsync(channelID.Value, ct);
-        }
+        return await _channelAPI.GetChannelAsync(channelID.Value, ct);
     }
 }

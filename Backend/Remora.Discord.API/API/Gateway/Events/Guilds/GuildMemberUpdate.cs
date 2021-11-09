@@ -29,21 +29,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate" />
-    [PublicAPI]
-    public record GuildMemberUpdate
-    (
-        Snowflake GuildID,
-        IReadOnlyList<Snowflake> Roles,
-        IUser User,
-        Optional<string?> Nickname = default,
-        Optional<IImageHash?> Avatar = default,
-        DateTimeOffset? JoinedAt = default,
-        Optional<DateTimeOffset?> PremiumSince = default,
-        Optional<bool> IsPending = default,
-        Optional<bool> IsDeafened = default,
-        Optional<bool> IsMuted = default
-    ) : IGuildMemberUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberUpdate" />
+[PublicAPI]
+public record GuildMemberUpdate
+(
+    Snowflake GuildID,
+    IReadOnlyList<Snowflake> Roles,
+    IUser User,
+    Optional<string?> Nickname = default,
+    Optional<IImageHash?> Avatar = default,
+    DateTimeOffset? JoinedAt = default,
+    Optional<DateTimeOffset?> PremiumSince = default,
+    Optional<bool> IsPending = default,
+    Optional<bool> IsDeafened = default,
+    Optional<bool> IsMuted = default
+) : IGuildMemberUpdate;

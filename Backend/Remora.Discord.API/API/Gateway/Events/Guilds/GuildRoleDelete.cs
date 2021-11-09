@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleDelete" />
-    [PublicAPI]
-    public record GuildRoleDelete(Snowflake GuildID, Snowflake RoleID) : IGuildRoleDelete;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildRoleDelete" />
+[PublicAPI]
+public record GuildRoleDelete(Snowflake GuildID, Snowflake RoleID) : IGuildRoleDelete;

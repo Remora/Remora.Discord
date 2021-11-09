@@ -27,23 +27,21 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IInteractionCreate" />
-    [PublicAPI]
-    public record InteractionCreate
-    (
-        Snowflake ID,
-        Snowflake ApplicationID,
-        InteractionType Type,
-        Optional<IInteractionData> Data,
-        Optional<Snowflake> GuildID,
-        Optional<Snowflake> ChannelID,
-        Optional<IGuildMember> Member,
-        Optional<IUser> User,
-        string Token,
-        int Version,
-        Optional<IMessage> Message = default
-    )
-    : IInteractionCreate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IInteractionCreate" />
+[PublicAPI]
+public record InteractionCreate
+(
+    Snowflake ID,
+    Snowflake ApplicationID,
+    InteractionType Type,
+    Optional<IInteractionData> Data,
+    Optional<Snowflake> GuildID,
+    Optional<Snowflake> ChannelID,
+    Optional<IGuildMember> Member,
+    Optional<IUser> User,
+    string Token,
+    int Version,
+    Optional<IMessage> Message = default
+) : IInteractionCreate;

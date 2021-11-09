@@ -25,17 +25,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
-    [PublicAPI]
-    public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
-        : IActionRowComponent, IDefaultedComponent
-    {
-        /// <inheritdoc/>
-        ComponentType IComponent.Type => ComponentType.ActionRow;
+namespace Remora.Discord.API.Objects;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => new(this.Components);
-    }
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
+[PublicAPI]
+public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
+    : IActionRowComponent, IDefaultedComponent
+{
+    /// <inheritdoc/>
+    ComponentType IComponent.Type => ComponentType.ActionRow;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => new(this.Components);
 }

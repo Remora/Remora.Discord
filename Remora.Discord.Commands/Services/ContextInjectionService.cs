@@ -23,17 +23,16 @@
 using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 
-namespace Remora.Discord.Commands.Services
+namespace Remora.Discord.Commands.Services;
+
+/// <summary>
+/// Assists with injection of an <see cref="ICommandContext"/> into a service provider.
+/// </summary>
+[PublicAPI]
+public class ContextInjectionService
 {
     /// <summary>
-    /// Assists with injection of an <see cref="ICommandContext"/> into a service provider.
+    /// Gets or sets the command context.
     /// </summary>
-    [PublicAPI]
-    public class ContextInjectionService
-    {
-        /// <summary>
-        /// Gets or sets the command context.
-        /// </summary>
-        public ICommandContext? Context { get; set; }
-    }
+    public ICommandContext? Context { get; set; }
 }

@@ -27,21 +27,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IRoleTemplate" />
-    [PublicAPI]
-    public record RoleTemplate
-    (
-        int ID,
-        string Name,
-        Color Colour,
-        bool IsHoisted,
-        Optional<IImageHash?> Icon,
-        Optional<string?> UnicodeEmoji,
-        int Position,
-        IDiscordPermissionSet Permissions,
-        bool IsMentionable,
-        Optional<IRoleTags> Tags
-    ) : IRoleTemplate;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IRoleTemplate" />
+[PublicAPI]
+public record RoleTemplate
+(
+    int ID,
+    string Name,
+    Color Colour,
+    bool IsHoisted,
+    Optional<IImageHash?> Icon,
+    Optional<string?> UnicodeEmoji,
+    int Position,
+    IDiscordPermissionSet Permissions,
+    bool IsMentionable,
+    Optional<IRoleTags> Tags
+) : IRoleTemplate;

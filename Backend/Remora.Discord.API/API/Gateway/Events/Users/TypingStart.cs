@@ -28,16 +28,15 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.ITypingStart" />
-    [PublicAPI]
-    public record TypingStart
-    (
-        Snowflake ChannelID,
-        Optional<Snowflake> GuildID,
-        Snowflake UserID,
-        DateTimeOffset Timestamp,
-        Optional<IGuildMember> Member = default
-    ) : ITypingStart;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.ITypingStart" />
+[PublicAPI]
+public record TypingStart
+(
+    Snowflake ChannelID,
+    Optional<Snowflake> GuildID,
+    Snowflake UserID,
+    DateTimeOffset Timestamp,
+    Optional<IGuildMember> Member = default
+) : ITypingStart;

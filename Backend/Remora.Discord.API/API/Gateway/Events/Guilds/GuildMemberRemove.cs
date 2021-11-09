@@ -27,9 +27,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberRemove" />
-    [PublicAPI]
-    public record GuildMemberRemove(Snowflake GuildID, IUser User) : IGuildMemberRemove;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMemberRemove" />
+[PublicAPI]
+public record GuildMemberRemove(Snowflake GuildID, IUser User) : IGuildMemberRemove;

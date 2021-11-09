@@ -25,17 +25,15 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMetadata" />
-    [PublicAPI]
-    public record ThreadMetadata
-    (
-        bool IsArchived,
-        AutoArchiveDuration AutoArchiveDuration,
-        DateTimeOffset ArchiveTimestamp,
-        bool IsLocked,
-        Optional<bool> IsInvitable
-    )
-    : IThreadMetadata;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMetadata" />
+[PublicAPI]
+public record ThreadMetadata
+(
+    bool IsArchived,
+    AutoArchiveDuration AutoArchiveDuration,
+    DateTimeOffset ArchiveTimestamp,
+    bool IsLocked,
+    Optional<bool> IsInvitable
+) : IThreadMetadata;

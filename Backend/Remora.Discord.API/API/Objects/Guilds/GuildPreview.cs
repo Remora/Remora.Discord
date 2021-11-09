@@ -27,21 +27,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IGuildPreview" />
-    [PublicAPI]
-    public record GuildPreview
-    (
-        Snowflake ID,
-        string Name,
-        IImageHash? Icon,
-        IImageHash? Splash,
-        IImageHash? DiscoverySplash,
-        IReadOnlyList<IEmoji> Emojis,
-        IReadOnlyList<GuildFeature> Features,
-        Optional<int> ApproximatePresenceCount,
-        Optional<int> ApproximateMemberCount,
-        string? Description
-    ) : IGuildPreview;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IGuildPreview" />
+[PublicAPI]
+public record GuildPreview
+(
+    Snowflake ID,
+    string Name,
+    IImageHash? Icon,
+    IImageHash? Splash,
+    IImageHash? DiscoverySplash,
+    IReadOnlyList<IEmoji> Emojis,
+    IReadOnlyList<GuildFeature> Features,
+    Optional<int> ApproximatePresenceCount,
+    Optional<int> ApproximateMemberCount,
+    string? Description
+) : IGuildPreview;

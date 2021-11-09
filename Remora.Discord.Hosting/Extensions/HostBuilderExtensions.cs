@@ -30,38 +30,37 @@ using Remora.Discord.Hosting.Options;
 using Remora.Discord.Hosting.Services;
 using Remora.Extensions.Options.Immutable;
 
-namespace Remora.Discord.Hosting.Extensions
+namespace Remora.Discord.Hosting.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="IHostBuilder"/> interface.
+/// </summary>
+[PublicAPI]
+public static class HostBuilderExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="IHostBuilder"/> interface.
+    /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation.
     /// </summary>
-    [PublicAPI]
-    public static class HostBuilderExtensions
+    /// <param name="hostBuilder">The host builder.</param>
+    /// <param name="tokenFactory">A function that retrieves the bot token.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory)
     {
-        /// <summary>
-        /// Adds the required services for Remora Discord and a <see cref="IHostedService"/> implementation.
-        /// </summary>
-        /// <param name="hostBuilder">The host builder.</param>
-        /// <param name="tokenFactory">A function that retrieves the bot token.</param>
-        /// <returns>The service collection, with the services added.</returns>
-        public static IHostBuilder AddDiscordService(this IHostBuilder hostBuilder, Func<IServiceProvider, string> tokenFactory)
+        hostBuilder.ConfigureServices((_, serviceCollection) =>
         {
-            hostBuilder.ConfigureServices((_, serviceCollection) =>
-            {
-                serviceCollection.Configure(() => new DiscordServiceOptions());
+            serviceCollection.Configure(() => new DiscordServiceOptions());
 
-                serviceCollection
-                    .AddDiscordGateway(tokenFactory);
+            serviceCollection
+                .AddDiscordGateway(tokenFactory);
 
-                serviceCollection
-                    .TryAddSingleton<DiscordService>();
+            serviceCollection
+                .TryAddSingleton<DiscordService>();
 
-                serviceCollection
-                    .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
-                        serviceProvider.GetRequiredService<DiscordService>());
-            });
+            serviceCollection
+                .AddSingleton<IHostedService, DiscordService>(serviceProvider =>
+                    serviceProvider.GetRequiredService<DiscordService>());
+        });
 
-            return hostBuilder;
-        }
+        return hostBuilder;
     }
 }

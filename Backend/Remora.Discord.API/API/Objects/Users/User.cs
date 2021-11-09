@@ -27,26 +27,25 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IUser"/>
-    [PublicAPI]
-    public record User
-    (
-        Snowflake ID,
-        string Username,
-        ushort Discriminator,
-        IImageHash? Avatar,
-        Optional<bool> IsBot = default,
-        Optional<bool> IsSystem = default,
-        Optional<bool> IsMFAEnabled = default,
-        Optional<IImageHash?> Banner = default,
-        Optional<Color?> AccentColour = default,
-        Optional<string> Locale = default,
-        Optional<bool> IsVerified = default,
-        Optional<string?> Email = default,
-        Optional<UserFlags> Flags = default,
-        Optional<PremiumType> PremiumType = default,
-        Optional<UserFlags> PublicFlags = default
-    ) : IUser;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IUser"/>
+[PublicAPI]
+public record User
+(
+    Snowflake ID,
+    string Username,
+    ushort Discriminator,
+    IImageHash? Avatar,
+    Optional<bool> IsBot = default,
+    Optional<bool> IsSystem = default,
+    Optional<bool> IsMFAEnabled = default,
+    Optional<IImageHash?> Banner = default,
+    Optional<Color?> AccentColour = default,
+    Optional<string> Locale = default,
+    Optional<bool> IsVerified = default,
+    Optional<string?> Email = default,
+    Optional<UserFlags> Flags = default,
+    Optional<PremiumType> PremiumType = default,
+    Optional<UserFlags> PublicFlags = default
+) : IUser;

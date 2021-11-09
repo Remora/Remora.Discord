@@ -40,244 +40,243 @@ using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Extensions.Options.Immutable;
 
-namespace Remora.Discord.Commands.Extensions
+namespace Remora.Discord.Commands.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="IServiceCollection"/> interface.
+/// </summary>
+[PublicAPI]
+public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="IServiceCollection"/> interface.
+    /// Adds all services required for Discord-integrated commands.
     /// </summary>
-    [PublicAPI]
-    public static class ServiceCollectionExtensions
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="enableSlash">Whether to enable slash commands.</param>
+    /// <returns>The service collection, with slash commands.</returns>
+    public static IServiceCollection AddDiscordCommands
+    (
+        this IServiceCollection serviceCollection,
+        bool enableSlash = false
+    )
     {
-        /// <summary>
-        /// Adds all services required for Discord-integrated commands.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="enableSlash">Whether to enable slash commands.</param>
-        /// <returns>The service collection, with slash commands.</returns>
-        public static IServiceCollection AddDiscordCommands
-        (
-            this IServiceCollection serviceCollection,
-            bool enableSlash = false
-        )
-        {
-            // Add the helpers used for context injection.
-            serviceCollection
-                .TryAddScoped<ContextInjectionService>();
+        // Add the helpers used for context injection.
+        serviceCollection
+            .TryAddScoped<ContextInjectionService>();
 
-            // Set up context injection
-            serviceCollection
-                .TryAddTransient<ICommandContext>
-                (
-                    s =>
-                    {
-                        var injectionService = s.GetRequiredService<ContextInjectionService>();
-                        return injectionService.Context ?? throw new InvalidOperationException
-                        (
-                            "No context has been set for this scope."
-                        );
-                    }
-                );
-
-            serviceCollection
-                .TryAddTransient
-                (
-                    s =>
-                    {
-                        var injectionService = s.GetRequiredService<ContextInjectionService>();
-                        return injectionService.Context as MessageContext ?? throw new InvalidOperationException
-                        (
-                            "No message context has been set for this scope."
-                        );
-                    }
-                );
-
-            serviceCollection
-                .TryAddTransient
-                (
-                    s =>
-                    {
-                        var injectionService = s.GetRequiredService<ContextInjectionService>();
-                        return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
-                        (
-                            "No interaction context has been set for this scope."
-                        );
-                    }
-                );
-
-            // Configure option types
-            serviceCollection.Configure<TokenizerOptions>(opt => opt);
-            serviceCollection.Configure<TreeSearchOptions>
+        // Set up context injection
+        serviceCollection
+            .TryAddTransient<ICommandContext>
             (
-                opt => opt with { KeyComparison = StringComparison.OrdinalIgnoreCase }
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context ?? throw new InvalidOperationException
+                    (
+                        "No context has been set for this scope."
+                    );
+                }
             );
 
-            serviceCollection.AddCommands();
-            serviceCollection.AddCommandResponder();
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context as MessageContext ?? throw new InvalidOperationException
+                    (
+                        "No message context has been set for this scope."
+                    );
+                }
+            );
 
-            serviceCollection.AddCondition<RequireContextCondition>();
-            serviceCollection.AddCondition<RequireOwnerCondition>();
-            serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
+        serviceCollection
+            .TryAddTransient
+            (
+                s =>
+                {
+                    var injectionService = s.GetRequiredService<ContextInjectionService>();
+                    return injectionService.Context as InteractionContext ?? throw new InvalidOperationException
+                    (
+                        "No interaction context has been set for this scope."
+                    );
+                }
+            );
 
-            serviceCollection
-                .AddParser<ChannelParser>()
-                .AddParser<GuildMemberParser>()
-                .AddParser<RoleParser>()
-                .AddParser<UserParser>()
-                .AddParser<SnowflakeParser>()
-                .AddParser<EmojiParser>()
-                .AddParser<OneOfParser>();
-
-            serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
-
-            serviceCollection.TryAddScoped<FeedbackService>();
-            serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
-            serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
-
-            if (!enableSlash)
-            {
-                return serviceCollection;
-            }
-
-            serviceCollection.TryAddSingleton<SlashService>();
-            serviceCollection.AddInteractionResponder();
-
-            serviceCollection.AddResponder<AutocompleteResponder>()
-                .AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
-
-            return serviceCollection;
-        }
-
-        /// <summary>
-        /// Adds the command responder to the system.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <returns>The collection, with the command responder.</returns>
-        public static IServiceCollection AddCommandResponder
+        // Configure option types
+        serviceCollection.Configure<TokenizerOptions>(opt => opt);
+        serviceCollection.Configure<TreeSearchOptions>
         (
-            this IServiceCollection serviceCollection
-        )
+            opt => opt with { KeyComparison = StringComparison.OrdinalIgnoreCase }
+        );
+
+        serviceCollection.AddCommands();
+        serviceCollection.AddCommandResponder();
+
+        serviceCollection.AddCondition<RequireContextCondition>();
+        serviceCollection.AddCondition<RequireOwnerCondition>();
+        serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
+
+        serviceCollection
+            .AddParser<ChannelParser>()
+            .AddParser<GuildMemberParser>()
+            .AddParser<RoleParser>()
+            .AddParser<UserParser>()
+            .AddParser<SnowflakeParser>()
+            .AddParser<EmojiParser>()
+            .AddParser<OneOfParser>();
+
+        serviceCollection.TryAddSingleton<ExecutionEventCollectorService>();
+
+        serviceCollection.TryAddScoped<FeedbackService>();
+        serviceCollection.AddSingleton(FeedbackTheme.DiscordLight);
+        serviceCollection.AddSingleton(FeedbackTheme.DiscordDark);
+
+        if (!enableSlash)
         {
-            serviceCollection.AddResponder<CommandResponder>();
             return serviceCollection;
         }
 
-        /// <summary>
-        /// Adds the interaction responder to the system.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="optionsConfigurator">The option configurator.</param>
-        /// <returns>The collection, with the interaction responder.</returns>
-        public static IServiceCollection AddInteractionResponder
-        (
-            this IServiceCollection serviceCollection,
-            Action<InteractionResponderOptions>? optionsConfigurator = null
-        )
+        serviceCollection.TryAddSingleton<SlashService>();
+        serviceCollection.AddInteractionResponder();
+
+        serviceCollection.AddResponder<AutocompleteResponder>()
+            .AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds the command responder to the system.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <returns>The collection, with the command responder.</returns>
+    public static IServiceCollection AddCommandResponder
+    (
+        this IServiceCollection serviceCollection
+    )
+    {
+        serviceCollection.AddResponder<CommandResponder>();
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds the interaction responder to the system.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="optionsConfigurator">The option configurator.</param>
+    /// <returns>The collection, with the interaction responder.</returns>
+    public static IServiceCollection AddInteractionResponder
+    (
+        this IServiceCollection serviceCollection,
+        Action<InteractionResponderOptions>? optionsConfigurator = null
+    )
+    {
+        optionsConfigurator ??= _ => { };
+
+        serviceCollection.AddResponder<InteractionResponder>();
+        serviceCollection.Configure(optionsConfigurator);
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds a pre-execution event to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEvent">The event type.</typeparam>
+    /// <returns>The collection, with the event.</returns>
+    public static IServiceCollection AddPreExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+        where TEvent : class, IPreExecutionEvent
+    {
+        serviceCollection.AddScoped<IPreExecutionEvent, TEvent>();
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds a post-execution event to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEvent">The event type.</typeparam>
+    /// <returns>The collection, with the event.</returns>
+    public static IServiceCollection AddPostExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+        where TEvent : class, IPostExecutionEvent
+    {
+        serviceCollection.AddScoped<IPostExecutionEvent, TEvent>();
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds a pre- and post-execution event to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEvent">The event type.</typeparam>
+    /// <returns>The collection, with the event.</returns>
+    public static IServiceCollection AddExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
+        where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
+    {
+        serviceCollection
+            .AddPreExecutionEvent<TEvent>()
+            .AddPostExecutionEvent<TEvent>();
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds an autocomplete provider to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TProvider">The autocomplete provider.</typeparam>
+    /// <returns>The collection, with the provider.</returns>
+    public static IServiceCollection AddAutocompleteProvider<TProvider>(this IServiceCollection serviceCollection)
+        where TProvider : class, IAutocompleteProvider
+    {
+        return serviceCollection.AddAutocompleteProvider(typeof(TProvider));
+    }
+
+    /// <summary>
+    /// Adds an autocomplete provider to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="providerType">The autocomplete provider type.</param>
+    /// <returns>The collection, with the provider.</returns>
+    public static IServiceCollection AddAutocompleteProvider
+    (
+        this IServiceCollection serviceCollection,
+        Type providerType
+    )
+    {
+        if (!typeof(IAutocompleteProvider).IsAssignableFrom(providerType))
         {
-            optionsConfigurator ??= _ => { };
-
-            serviceCollection.AddResponder<InteractionResponder>();
-            serviceCollection.Configure(optionsConfigurator);
-
-            return serviceCollection;
+            throw new InvalidOperationException
+            (
+                $"Autocomplete providers must implement {nameof(IAutocompleteProvider)}."
+            );
         }
 
-        /// <summary>
-        /// Adds a pre-execution event to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <typeparam name="TEvent">The event type.</typeparam>
-        /// <returns>The collection, with the event.</returns>
-        public static IServiceCollection AddPreExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
-            where TEvent : class, IPreExecutionEvent
+        IEnumerable<Type> autocompleteInterfaces;
+        if (!providerType.IsGenericTypeDefinition)
         {
-            serviceCollection.AddScoped<IPreExecutionEvent, TEvent>();
-            return serviceCollection;
+            serviceCollection.TryAddScoped(providerType);
+
+            autocompleteInterfaces = providerType.GetInterfaces()
+                .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i));
+        }
+        else
+        {
+            autocompleteInterfaces = providerType.GetInterfaces()
+                .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i))
+                .Where(i => i.IsGenericType)
+                .Select(i => i.GetGenericTypeDefinition())
+                .Distinct();
         }
 
-        /// <summary>
-        /// Adds a post-execution event to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <typeparam name="TEvent">The event type.</typeparam>
-        /// <returns>The collection, with the event.</returns>
-        public static IServiceCollection AddPostExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
-            where TEvent : class, IPostExecutionEvent
+        foreach (var implementedInterface in autocompleteInterfaces)
         {
-            serviceCollection.AddScoped<IPostExecutionEvent, TEvent>();
-            return serviceCollection;
+            serviceCollection.AddScoped(implementedInterface, providerType);
         }
 
-        /// <summary>
-        /// Adds a pre- and post-execution event to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <typeparam name="TEvent">The event type.</typeparam>
-        /// <returns>The collection, with the event.</returns>
-        public static IServiceCollection AddExecutionEvent<TEvent>(this IServiceCollection serviceCollection)
-            where TEvent : class, IPreExecutionEvent, IPostExecutionEvent
-        {
-            serviceCollection
-                .AddPreExecutionEvent<TEvent>()
-                .AddPostExecutionEvent<TEvent>();
-
-            return serviceCollection;
-        }
-
-        /// <summary>
-        /// Adds an autocomplete provider to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <typeparam name="TProvider">The autocomplete provider.</typeparam>
-        /// <returns>The collection, with the provider.</returns>
-        public static IServiceCollection AddAutocompleteProvider<TProvider>(this IServiceCollection serviceCollection)
-            where TProvider : class, IAutocompleteProvider
-        {
-            return serviceCollection.AddAutocompleteProvider(typeof(TProvider));
-        }
-
-        /// <summary>
-        /// Adds an autocomplete provider to the service collection.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="providerType">The autocomplete provider type.</param>
-        /// <returns>The collection, with the provider.</returns>
-        public static IServiceCollection AddAutocompleteProvider
-        (
-            this IServiceCollection serviceCollection,
-            Type providerType
-        )
-        {
-            if (!typeof(IAutocompleteProvider).IsAssignableFrom(providerType))
-            {
-                throw new InvalidOperationException
-                (
-                    $"Autocomplete providers must implement {nameof(IAutocompleteProvider)}."
-                );
-            }
-
-            IEnumerable<Type> autocompleteInterfaces;
-            if (!providerType.IsGenericTypeDefinition)
-            {
-                serviceCollection.TryAddScoped(providerType);
-
-                autocompleteInterfaces = providerType.GetInterfaces()
-                    .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i));
-            }
-            else
-            {
-                autocompleteInterfaces = providerType.GetInterfaces()
-                    .Where(i => typeof(IAutocompleteProvider).IsAssignableFrom(i))
-                    .Where(i => i.IsGenericType)
-                    .Select(i => i.GetGenericTypeDefinition())
-                    .Distinct();
-            }
-
-            foreach (var implementedInterface in autocompleteInterfaces)
-            {
-                serviceCollection.AddScoped(implementedInterface, providerType);
-            }
-
-            return serviceCollection;
-        }
+        return serviceCollection;
     }
 }

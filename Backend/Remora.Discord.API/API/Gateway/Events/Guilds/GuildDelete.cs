@@ -25,16 +25,9 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IGuildDelete"/>
-    [PublicAPI]
-    public record GuildDelete : UnavailableGuild, IGuildDelete
-    {
-        /// <inheritdoc cref="UnavailableGuild" />
-        public GuildDelete(Snowflake guildID, Optional<bool> isUnavailable = default)
-            : base(guildID, isUnavailable)
-        {
-        }
-    }
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IGuildDelete"/>
+[PublicAPI]
+public record GuildDelete(Snowflake GuildID, Optional<bool> IsUnavailable = default)
+    : UnavailableGuild(GuildID, IsUnavailable), IGuildDelete;

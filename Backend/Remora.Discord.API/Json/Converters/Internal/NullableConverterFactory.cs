@@ -25,33 +25,32 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Extensions;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Creates instances of <see cref="NullableConverter{TValue}"/>.
+/// </summary>
+internal class NullableConverterFactory : JsonConverterFactory
 {
-    /// <summary>
-    /// Creates instances of <see cref="NullableConverter{TValue}"/>.
-    /// </summary>
-    internal class NullableConverterFactory : JsonConverterFactory
+    /// <inheritdoc />
+    public override bool CanConvert(Type typeToConvert)
     {
-        /// <inheritdoc />
-        public override bool CanConvert(Type typeToConvert)
+        return typeToConvert.IsNullable();
+    }
+
+    /// <inheritdoc />
+    public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+    {
+        var converter = (JsonConverter?)Activator.CreateInstance
+        (
+            typeof(NullableConverter<>).MakeGenericType(typeToConvert.GetGenericArguments())
+        );
+
+        if (converter is null)
         {
-            return typeToConvert.IsNullable();
+            throw new InvalidOperationException();
         }
 
-        /// <inheritdoc />
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            var converter = (JsonConverter?)Activator.CreateInstance
-            (
-                typeof(NullableConverter<>).MakeGenericType(typeToConvert.GetGenericArguments())
-            );
-
-            if (converter is null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            return converter;
-        }
+        return converter;
     }
 }

@@ -27,16 +27,15 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPresence" />
-    [PublicAPI]
-    public record Presence
-    (
-        IPartialUser User,
-        Snowflake GuildID,
-        ClientStatus Status,
-        IReadOnlyList<IActivity>? Activities,
-        IClientStatuses ClientStatus
-    ) : IPresence;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPresence" />
+[PublicAPI]
+public record Presence
+(
+    IPartialUser User,
+    Snowflake GuildID,
+    ClientStatus Status,
+    IReadOnlyList<IActivity>? Activities,
+    IClientStatuses ClientStatus
+) : IPresence;

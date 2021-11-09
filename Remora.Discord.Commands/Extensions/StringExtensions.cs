@@ -23,37 +23,36 @@
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Extensions
+namespace Remora.Discord.Commands.Extensions;
+
+/// <summary>
+/// Defines extension methods to the <see cref="string"/> type.
+/// </summary>
+[PublicAPI]
+public static class StringExtensions
 {
+    private static readonly Regex UnmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);
+
     /// <summary>
-    /// Defines extension methods to the <see cref="string"/> type.
+    /// Removes Discord mention markdown from a string.
     /// </summary>
-    [PublicAPI]
-    public static class StringExtensions
+    /// <param name="value">The value.</param>
+    /// <returns>The unmentioned string.</returns>
+    public static string Unmention(this string value)
     {
-        private static readonly Regex UnmentionRegex = new("(\\d+)>$", RegexOptions.Compiled);
-
-        /// <summary>
-        /// Removes Discord mention markdown from a string.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The unmentioned string.</returns>
-        public static string Unmention(this string value)
+        if (value.Length <= 0)
         {
-            if (value.Length <= 0)
-            {
-                return value;
-            }
-
-            if (char.IsDigit(value[0]))
-            {
-                return value;
-            }
-
-            var regexMatches = UnmentionRegex.Match(value);
-            return !regexMatches.Success
-                ? value
-                : regexMatches.Groups[1].Value;
+            return value;
         }
+
+        if (char.IsDigit(value[0]))
+        {
+            return value;
+        }
+
+        var regexMatches = UnmentionRegex.Match(value);
+        return !regexMatches.Success
+            ? value
+            : regexMatches.Groups[1].Value;
     }
 }

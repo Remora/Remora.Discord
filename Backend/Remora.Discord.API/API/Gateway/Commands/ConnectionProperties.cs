@@ -26,49 +26,48 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a set of connection properties sent to the Discord gateway.
+/// </summary>
+[PublicAPI]
+public record ConnectionProperties(string OperatingSystem, string Browser, string Device) : IConnectionProperties
 {
     /// <summary>
-    /// Represents a set of connection properties sent to the Discord gateway.
+    /// Initializes a new instance of the <see cref="ConnectionProperties"/> class.
     /// </summary>
-    [PublicAPI]
-    public record ConnectionProperties(string OperatingSystem, string Browser, string Device) : IConnectionProperties
+    /// <param name="libraryName">The name of the library.</param>
+    public ConnectionProperties(string libraryName)
+        : this(GetCurrentOSPlatformName(), libraryName, libraryName)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionProperties"/> class.
-        /// </summary>
-        /// <param name="libraryName">The name of the library.</param>
-        public ConnectionProperties(string libraryName)
-            : this(GetCurrentOSPlatformName(), libraryName, libraryName)
+    }
+
+    /// <summary>
+    /// Gets the name of the current operating system.
+    /// </summary>
+    /// <returns>The name of the current operating system.</returns>
+    private static string GetCurrentOSPlatformName()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
+            return "linux";
         }
 
-        /// <summary>
-        /// Gets the name of the current operating system.
-        /// </summary>
-        /// <returns>The name of the current operating system.</returns>
-        private static string GetCurrentOSPlatformName()
+        #if NET5_0
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return "linux";
-            }
-
-            #if NET5_0
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
-            {
-                return "freebsd";
-            }
-            #endif
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return "osx";
-            }
-
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? "windows"
-                : "unknown";
+            return "freebsd";
         }
+        #endif
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            return "osx";
+        }
+
+        return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? "windows"
+            : "unknown";
     }
 }

@@ -27,18 +27,17 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IAuditLogEntry" />
-    [PublicAPI]
-    public record AuditLogEntry
-    (
-        string? TargetID,
-        Optional<IReadOnlyList<IAuditLogChange>> Changes,
-        Snowflake? UserID,
-        Snowflake ID,
-        AuditLogEvent ActionType,
-        Optional<IOptionalAuditEntryInfo> Options = default,
-        Optional<string> Reason = default
-    ) : IAuditLogEntry;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IAuditLogEntry" />
+[PublicAPI]
+public record AuditLogEntry
+(
+    string? TargetID,
+    Optional<IReadOnlyList<IAuditLogChange>> Changes,
+    Snowflake? UserID,
+    Snowflake ID,
+    AuditLogEvent ActionType,
+    Optional<IOptionalAuditEntryInfo> Options = default,
+    Optional<string> Reason = default
+) : IAuditLogEntry;

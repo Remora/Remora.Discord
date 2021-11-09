@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Enumerates various units of time.
+/// </summary>
+[PublicAPI]
+public enum TimeUnit
 {
     /// <summary>
-    /// Enumerates various units of time.
+    /// A unit of days.
     /// </summary>
-    [PublicAPI]
-    public enum TimeUnit
-    {
-        /// <summary>
-        /// A unit of days.
-        /// </summary>
-        Days,
+    Days,
 
-        /// <summary>
-        /// A unit of hours.
-        /// </summary>
-        Hours,
+    /// <summary>
+    /// A unit of hours.
+    /// </summary>
+    Hours,
 
-        /// <summary>
-        /// A unit of minutes.
-        /// </summary>
-        Minutes,
+    /// <summary>
+    /// A unit of minutes.
+    /// </summary>
+    Minutes,
 
-        /// <summary>
-        /// A unit of seconds.
-        /// </summary>
-        Seconds,
+    /// <summary>
+    /// A unit of seconds.
+    /// </summary>
+    Seconds,
 
-        /// <summary>
-        /// A unit of milliseconds.
-        /// </summary>
-        Milliseconds
-    }
+    /// <summary>
+    /// A unit of milliseconds.
+    /// </summary>
+    Milliseconds
 }

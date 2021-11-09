@@ -23,30 +23,29 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Extensions
+namespace Remora.Discord.API.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="CDNImageFormat"/> enumeration.
+/// </summary>
+[PublicAPI]
+public static class CDNImageFormatExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="CDNImageFormat"/> enumeration.
+    /// Maps the image format to a file extension.
     /// </summary>
-    [PublicAPI]
-    public static class CDNImageFormatExtensions
+    /// <param name="format">The format.</param>
+    /// <returns>The extension.</returns>
+    public static string ToFileExtension(this CDNImageFormat format)
     {
-        /// <summary>
-        /// Maps the image format to a file extension.
-        /// </summary>
-        /// <param name="format">The format.</param>
-        /// <returns>The extension.</returns>
-        public static string ToFileExtension(this CDNImageFormat format)
+        return format switch
         {
-            return format switch
-            {
-                CDNImageFormat.JPEG => "jpeg",
-                CDNImageFormat.PNG => "png",
-                CDNImageFormat.WebP => "webp",
-                CDNImageFormat.GIF => "gif",
-                CDNImageFormat.Lottie => "json",
-                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
-            };
-        }
+            CDNImageFormat.JPEG => "jpeg",
+            CDNImageFormat.PNG => "png",
+            CDNImageFormat.WebP => "webp",
+            CDNImageFormat.GIF => "gif",
+            CDNImageFormat.Lottie => "json",
+            _ => throw new ArgumentOutOfRangeException(nameof(format), format, null)
+        };
     }
 }

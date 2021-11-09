@@ -27,15 +27,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveEmoji" />
-    [PublicAPI]
-    public record MessageReactionRemoveEmoji
-    (
-        Snowflake ChannelID,
-        Snowflake MessageID,
-        Optional<Snowflake> GuildID,
-        IPartialEmoji Emoji
-    ) : IMessageReactionRemoveEmoji;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveEmoji" />
+[PublicAPI]
+public record MessageReactionRemoveEmoji
+(
+    Snowflake ChannelID,
+    Snowflake MessageID,
+    Optional<Snowflake> GuildID,
+    IPartialEmoji Emoji
+) : IMessageReactionRemoveEmoji;

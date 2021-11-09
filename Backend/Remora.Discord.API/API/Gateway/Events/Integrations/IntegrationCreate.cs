@@ -27,46 +27,43 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IIntegrationCreate" />
-    [PublicAPI]
-    public record IntegrationCreate
-    (
-        Snowflake ID,
-        string Name,
-        string Type,
-        bool IsEnabled,
-        bool IsSyncing,
-        Snowflake RoleID,
-        Optional<bool> EnableEmoticons,
-        IntegrationExpireBehaviour ExpireBehaviour,
-        TimeSpan ExpireGracePeriod,
-        Optional<IUser> User,
-        IAccount Account,
-        DateTimeOffset SyncedAt,
-        int SubscriberCount,
-        bool IsRevoked,
-        Optional<IIntegrationApplication> Application,
-        Snowflake GuildID
-    ) :
-        Integration
-        (
-            ID,
-            Name,
-            Type,
-            IsEnabled,
-            IsSyncing,
-            RoleID,
-            EnableEmoticons,
-            ExpireBehaviour,
-            ExpireGracePeriod,
-            User,
-            Account,
-            SyncedAt,
-            SubscriberCount,
-            IsRevoked,
-            Application
-        ),
-        IIntegrationCreate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IIntegrationCreate" />
+[PublicAPI]
+public record IntegrationCreate
+(
+    Snowflake ID,
+    string Name,
+    string Type,
+    bool IsEnabled,
+    bool IsSyncing,
+    Snowflake RoleID,
+    Optional<bool> EnableEmoticons,
+    IntegrationExpireBehaviour ExpireBehaviour,
+    TimeSpan ExpireGracePeriod,
+    Optional<IUser> User,
+    IAccount Account,
+    DateTimeOffset SyncedAt,
+    int SubscriberCount,
+    bool IsRevoked,
+    Optional<IIntegrationApplication> Application,
+    Snowflake GuildID
+) : Integration
+(
+    ID,
+    Name,
+    Type,
+    IsEnabled,
+    IsSyncing,
+    RoleID,
+    EnableEmoticons,
+    ExpireBehaviour,
+    ExpireGracePeriod,
+    User,
+    Account,
+    SyncedAt,
+    SubscriberCount,
+    IsRevoked,
+    Application
+), IIntegrationCreate;

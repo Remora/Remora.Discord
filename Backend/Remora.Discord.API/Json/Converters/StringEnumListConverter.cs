@@ -27,86 +27,85 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts string array values into corresponding enum lists.
+/// </summary>
+/// <typeparam name="TEnum">The type of enum values to be converted.</typeparam>
+[PublicAPI]
+public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>>
+    where TEnum : struct, Enum
 {
     /// <summary>
-    /// Converts string array values into corresponding enum lists.
+    /// Initializes a new instance of the <see cref="StringEnumListConverter{TEnum}"/> class.
     /// </summary>
-    /// <typeparam name="TEnum">The type of enum values to be converted.</typeparam>
-    [PublicAPI]
-    public class StringEnumListConverter<TEnum> : JsonConverter<IReadOnlyList<TEnum>>
-        where TEnum : struct, Enum
+    /// <param name="namingPolicy">The naming policy to be used to translate JSON values into enum values, and vice-versa.</param>
+    public StringEnumListConverter(JsonNamingPolicy namingPolicy)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringEnumListConverter{TEnum}"/> class.
-        /// </summary>
-        /// <param name="namingPolicy">The naming policy to be used to translate JSON values into enum values, and vice-versa.</param>
-        public StringEnumListConverter(JsonNamingPolicy namingPolicy)
+        _enumValuesByJsonValue = new Dictionary<string, TEnum>();
+        _jsonValuesByEnumValue = new Dictionary<TEnum, string>();
+
+        foreach (var enumValue in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
         {
-            _enumValuesByJsonValue = new Dictionary<string, TEnum>();
-            _jsonValuesByEnumValue = new Dictionary<TEnum, string>();
+            var jsonValue = namingPolicy.ConvertName(enumValue.ToString());
 
-            foreach (var enumValue in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
-            {
-                var jsonValue = namingPolicy.ConvertName(enumValue.ToString());
-
-                _enumValuesByJsonValue.Add(jsonValue, enumValue);
-                _jsonValuesByEnumValue.Add(enumValue, jsonValue);
-            }
+            _enumValuesByJsonValue.Add(jsonValue, enumValue);
+            _jsonValuesByEnumValue.Add(enumValue, jsonValue);
         }
-
-        /// <inheritdoc />
-        public override IReadOnlyList<TEnum> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var enumValues = new List<TEnum>();
-
-            if (reader.TokenType is not JsonTokenType.StartArray)
-            {
-                throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.StartArray)}");
-            }
-
-            while (reader.Read())
-            {
-                switch (reader.TokenType)
-                {
-                    case JsonTokenType.String:
-                    {
-                        if (_enumValuesByJsonValue.TryGetValue(reader.GetString()!, out var enumValue))
-                        {
-                            enumValues.Add(enumValue);
-                        }
-                        break;
-                    }
-                    case JsonTokenType.EndArray:
-                    {
-                        return enumValues;
-                    }
-                    default:
-                    {
-                        throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
-                    }
-                }
-            }
-
-            throw new JsonException("Unexpected end of document");
-        }
-
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IReadOnlyList<TEnum> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var enumValue in value)
-            {
-                if (!_jsonValuesByEnumValue.TryGetValue(enumValue, out var jsonValue))
-                {
-                    throw new ArgumentException($"{enumValue} is not a valid {typeof(TEnum).Name} value");
-                }
-                writer.WriteStringValue(jsonValue);
-            }
-            writer.WriteEndArray();
-        }
-
-        private readonly Dictionary<string, TEnum> _enumValuesByJsonValue;
-        private readonly Dictionary<TEnum, string> _jsonValuesByEnumValue;
     }
+
+    /// <inheritdoc />
+    public override IReadOnlyList<TEnum> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var enumValues = new List<TEnum>();
+
+        if (reader.TokenType is not JsonTokenType.StartArray)
+        {
+            throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.StartArray)}");
+        }
+
+        while (reader.Read())
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.String:
+                {
+                    if (_enumValuesByJsonValue.TryGetValue(reader.GetString()!, out var enumValue))
+                    {
+                        enumValues.Add(enumValue);
+                    }
+                    break;
+                }
+                case JsonTokenType.EndArray:
+                {
+                    return enumValues;
+                }
+                default:
+                {
+                    throw new JsonException($"Unexpected token {reader.TokenType}: Expected {nameof(JsonTokenType.String)} or {nameof(JsonTokenType.EndArray)}");
+                }
+            }
+        }
+
+        throw new JsonException("Unexpected end of document");
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IReadOnlyList<TEnum> value, JsonSerializerOptions options)
+    {
+        writer.WriteStartArray();
+        foreach (var enumValue in value)
+        {
+            if (!_jsonValuesByEnumValue.TryGetValue(enumValue, out var jsonValue))
+            {
+                throw new ArgumentException($"{enumValue} is not a valid {typeof(TEnum).Name} value");
+            }
+            writer.WriteStringValue(jsonValue);
+        }
+        writer.WriteEndArray();
+    }
+
+    private readonly Dictionary<string, TEnum> _enumValuesByJsonValue;
+    private readonly Dictionary<TEnum, string> _jsonValuesByEnumValue;
 }

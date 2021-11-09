@@ -26,15 +26,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IEmbedThumbnail" />
-    [PublicAPI]
-    public record EmbedThumbnail
-    (
-        string Url,
-        Optional<string> ProxyUrl = default,
-        Optional<int> Height = default,
-        Optional<int> Width = default
-    ) : IEmbedThumbnail;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IEmbedThumbnail" />
+[PublicAPI]
+public record EmbedThumbnail
+(
+    string Url,
+    Optional<string> ProxyUrl = default,
+    Optional<int> Height = default,
+    Optional<int> Width = default
+) : IEmbedThumbnail;

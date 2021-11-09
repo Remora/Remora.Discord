@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IFollowedChannel" />
-    [PublicAPI]
-    public record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IFollowedChannel" />
+[PublicAPI]
+public record FollowedChannel(Snowflake ChannelID, Snowflake WebhookID) : IFollowedChannel;

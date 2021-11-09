@@ -27,24 +27,23 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IVoiceState" />
-    [PublicAPI]
-    public record VoiceState
-    (
-        Optional<Snowflake> GuildID,
-        Snowflake? ChannelID,
-        Snowflake UserID,
-        Optional<IGuildMember> Member,
-        string SessionID,
-        bool IsDeafened,
-        bool IsMuted,
-        bool IsSelfDeafened,
-        bool IsSelfMuted,
-        Optional<bool> IsStreaming,
-        bool IsVideoEnabled,
-        bool IsSuppressed,
-        DateTimeOffset? RequestToSpeakTimestamp
-    ) : IVoiceState;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IVoiceState" />
+[PublicAPI]
+public record VoiceState
+(
+    Optional<Snowflake> GuildID,
+    Snowflake? ChannelID,
+    Snowflake UserID,
+    Optional<IGuildMember> Member,
+    string SessionID,
+    bool IsDeafened,
+    bool IsMuted,
+    bool IsSelfDeafened,
+    bool IsSelfMuted,
+    Optional<bool> IsStreaming,
+    bool IsVideoEnabled,
+    bool IsSuppressed,
+    DateTimeOffset? RequestToSpeakTimestamp
+) : IVoiceState;

@@ -28,17 +28,15 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
-    [PublicAPI]
-    public record ApplicationCommandInteractionDataOption
-    (
-        string Name,
-        ApplicationCommandOptionType Type,
-        Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value = default,
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
-        Optional<bool> IsFocused = default
-    )
-    : IApplicationCommandInteractionDataOption;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IApplicationCommandInteractionDataOption" />
+[PublicAPI]
+public record ApplicationCommandInteractionDataOption
+(
+    string Name,
+    ApplicationCommandOptionType Type,
+    Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value = default,
+    Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
+    Optional<bool> IsFocused = default
+) : IApplicationCommandInteractionDataOption;

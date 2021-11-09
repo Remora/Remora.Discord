@@ -25,81 +25,80 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts a <see cref="TimeSpan"/> to and from a specified time unit in JSON.
+/// </summary>
+/// <remarks>
+/// This converter does not take fractions into account, and only serializes whole integers.
+/// </remarks>
+[PublicAPI]
+public class UnitTimeSpanConverter : JsonConverter<TimeSpan>
 {
+    private readonly TimeUnit _unit;
+
     /// <summary>
-    /// Converts a <see cref="TimeSpan"/> to and from a specified time unit in JSON.
+    /// Initializes a new instance of the <see cref="UnitTimeSpanConverter"/> class.
     /// </summary>
-    /// <remarks>
-    /// This converter does not take fractions into account, and only serializes whole integers.
-    /// </remarks>
-    [PublicAPI]
-    public class UnitTimeSpanConverter : JsonConverter<TimeSpan>
+    /// <param name="unit">The unit to convert to and from.</param>
+    public UnitTimeSpanConverter(TimeUnit unit)
     {
-        private readonly TimeUnit _unit;
+        _unit = unit;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnitTimeSpanConverter"/> class.
-        /// </summary>
-        /// <param name="unit">The unit to convert to and from.</param>
-        public UnitTimeSpanConverter(TimeUnit unit)
+    /// <inheritdoc />
+    public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (!reader.TryGetDouble(out var value))
         {
-            _unit = unit;
+            throw new JsonException();
         }
 
-        /// <inheritdoc />
-        public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        return _unit switch
         {
-            if (!reader.TryGetDouble(out var value))
+            TimeUnit.Days => TimeSpan.FromDays(value),
+            TimeUnit.Hours => TimeSpan.FromHours(value),
+            TimeUnit.Minutes => TimeSpan.FromMinutes(value),
+            TimeUnit.Seconds => TimeSpan.FromSeconds(value),
+            TimeUnit.Milliseconds => TimeSpan.FromMilliseconds(value),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
+    {
+        switch (_unit)
+        {
+            case TimeUnit.Days:
             {
-                throw new JsonException();
+                writer.WriteNumberValue((int)value.TotalDays);
+                break;
             }
-
-            return _unit switch
+            case TimeUnit.Hours:
             {
-                TimeUnit.Days => TimeSpan.FromDays(value),
-                TimeUnit.Hours => TimeSpan.FromHours(value),
-                TimeUnit.Minutes => TimeSpan.FromMinutes(value),
-                TimeUnit.Seconds => TimeSpan.FromSeconds(value),
-                TimeUnit.Milliseconds => TimeSpan.FromMilliseconds(value),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
-        {
-            switch (_unit)
+                writer.WriteNumberValue((int)value.TotalHours);
+                break;
+            }
+            case TimeUnit.Minutes:
             {
-                case TimeUnit.Days:
-                {
-                    writer.WriteNumberValue((int)value.TotalDays);
-                    break;
-                }
-                case TimeUnit.Hours:
-                {
-                    writer.WriteNumberValue((int)value.TotalHours);
-                    break;
-                }
-                case TimeUnit.Minutes:
-                {
-                    writer.WriteNumberValue((int)value.TotalMinutes);
-                    break;
-                }
-                case TimeUnit.Seconds:
-                {
-                    writer.WriteNumberValue((int)value.TotalSeconds);
-                    break;
-                }
-                case TimeUnit.Milliseconds:
-                {
-                    writer.WriteNumberValue((int)value.TotalMilliseconds);
-                    break;
-                }
-                default:
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
+                writer.WriteNumberValue((int)value.TotalMinutes);
+                break;
+            }
+            case TimeUnit.Seconds:
+            {
+                writer.WriteNumberValue((int)value.TotalSeconds);
+                break;
+            }
+            case TimeUnit.Milliseconds:
+            {
+                writer.WriteNumberValue((int)value.TotalMilliseconds);
+                break;
+            }
+            default:
+            {
+                throw new ArgumentOutOfRangeException();
             }
         }
     }

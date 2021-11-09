@@ -27,17 +27,15 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ITeam" />
-    [PublicAPI]
-    public record Team
-    (
-        IImageHash? Icon,
-        Snowflake ID,
-        IReadOnlyList<ITeamMember> Members,
-        string Name,
-        Snowflake OwnerUserID
-    )
-    : ITeam;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ITeam" />
+[PublicAPI]
+public record Team
+(
+    IImageHash? Icon,
+    Snowflake ID,
+    IReadOnlyList<ITeamMember> Members,
+    string Name,
+    Snowflake OwnerUserID
+) : ITeam;

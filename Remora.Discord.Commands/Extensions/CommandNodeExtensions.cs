@@ -26,68 +26,67 @@ using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
 
-namespace Remora.Discord.Commands.Extensions
+namespace Remora.Discord.Commands.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="CommandNode"/> type.
+/// </summary>
+public static class CommandNodeExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="CommandNode"/> type.
+    /// Gets the command type of the given node.
     /// </summary>
-    public static class CommandNodeExtensions
+    /// <param name="node">The node.</param>
+    /// <returns>The command type.</returns>
+    public static ApplicationCommandType GetCommandType(this CommandNode node)
     {
-        /// <summary>
-        /// Gets the command type of the given node.
-        /// </summary>
-        /// <param name="node">The node.</param>
-        /// <returns>The command type.</returns>
-        public static ApplicationCommandType GetCommandType(this CommandNode node)
+        var attribute = node.CommandMethod.GetCustomAttribute<CommandTypeAttribute>();
+        return attribute?.Type ?? ApplicationCommandType.ChatInput;
+    }
+
+    /// <summary>
+    /// Finds the first custom attribute on the given command or any of its ancestors.
+    /// </summary>
+    /// <typeparam name="T">The type of attribute to search for.</typeparam>
+    /// <param name="node">The command node.</param>
+    /// <param name="includeAncestors">
+    /// Indicates that ancestors of the command should also be search for the attribute.
+    /// </param>
+    /// <returns>
+    /// A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.
+    /// </returns>
+    public static T? FindCustomAttributeOnLocalTree<T>
+    (
+        this CommandNode node,
+        bool includeAncestors = true
+    ) where T : Attribute
+    {
+        // Attempt to first find the attribute on the command itself
+        var attribute = node.CommandMethod.GetCustomAttribute<T>();
+
+        if (attribute is not null || !includeAncestors)
         {
-            var attribute = node.CommandMethod.GetCustomAttribute<CommandTypeAttribute>();
-            return attribute?.Type ?? ApplicationCommandType.ChatInput;
-        }
-
-        /// <summary>
-        /// Finds the first custom attribute on the given command or any of its ancestors.
-        /// </summary>
-        /// <typeparam name="T">The type of attribute to search for.</typeparam>
-        /// <param name="node">The command node.</param>
-        /// <param name="includeAncestors">
-        /// Indicates that ancestors of the command should also be search for the attribute.
-        /// </param>
-        /// <returns>
-        /// A custom attribute that matches <typeparamref name="T"/>, or <c>null</c> if no such attribute is found.
-        /// </returns>
-        public static T? FindCustomAttributeOnLocalTree<T>
-        (
-            this CommandNode node,
-            bool includeAncestors = true
-        ) where T : Attribute
-        {
-            // Attempt to first find the attribute on the command itself
-            var attribute = node.CommandMethod.GetCustomAttribute<T>();
-
-            if (attribute is not null || !includeAncestors)
-            {
-                return attribute;
-            }
-
-            // Traverse each parent group node, until we find the root node
-            var parent = node.Parent;
-            while (parent is GroupNode group && attribute is null)
-            {
-                parent = group.Parent;
-
-                // See if any of the types in this group been decorated with the attribute
-                foreach (var t in group.GroupTypes)
-                {
-                    attribute = t.GetCustomAttribute<T>();
-
-                    if (attribute is not null)
-                    {
-                        return attribute;
-                    }
-                }
-            }
-
             return attribute;
         }
+
+        // Traverse each parent group node, until we find the root node
+        var parent = node.Parent;
+        while (parent is GroupNode group && attribute is null)
+        {
+            parent = group.Parent;
+
+            // See if any of the types in this group been decorated with the attribute
+            foreach (var t in group.GroupTypes)
+            {
+                attribute = t.GetCustomAttribute<T>();
+
+                if (attribute is not null)
+                {
+                    return attribute;
+                }
+            }
+        }
+
+        return attribute;
     }
 }

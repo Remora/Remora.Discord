@@ -24,15 +24,14 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageInteraction" />
-    [PublicAPI]
-    public record MessageInteraction
-    (
-        Snowflake ID,
-        InteractionType Type,
-        string Name,
-        IUser User
-    ) : IMessageInteraction;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IMessageInteraction" />
+[PublicAPI]
+public record MessageInteraction
+(
+    Snowflake ID,
+    InteractionType Type,
+    string Name,
+    IUser User
+) : IMessageInteraction;

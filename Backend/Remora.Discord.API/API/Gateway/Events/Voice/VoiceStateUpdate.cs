@@ -27,46 +27,38 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IVoiceStateUpdate" />
-    [PublicAPI]
-    public record VoiceStateUpdate : VoiceState, IVoiceStateUpdate
-    {
-        /// <inheritdoc cref="VoiceState" />
-        public VoiceStateUpdate
-        (
-            Optional<Snowflake> guildID,
-            Snowflake? channelID,
-            Snowflake userID,
-            Optional<IGuildMember> member,
-            string sessionID,
-            bool isDeafened,
-            bool isMuted,
-            bool isSelfDeafened,
-            bool isSelfMuted,
-            Optional<bool> isStreaming,
-            bool isVideoEnabled,
-            bool isSuppressed,
-            DateTimeOffset? requestToSpeakTimestamp
-        )
-            : base
-            (
-                guildID,
-                channelID,
-                userID,
-                member,
-                sessionID,
-                isDeafened,
-                isMuted,
-                isSelfDeafened,
-                isSelfMuted,
-                isStreaming,
-                isVideoEnabled,
-                isSuppressed,
-                requestToSpeakTimestamp
-            )
-        {
-        }
-    }
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IVoiceStateUpdate" />
+[PublicAPI]
+public record VoiceStateUpdate
+(
+    Optional<Snowflake> GuildID,
+    Snowflake? ChannelID,
+    Snowflake UserID,
+    Optional<IGuildMember> Member,
+    string SessionID,
+    bool IsDeafened,
+    bool IsMuted,
+    bool IsSelfDeafened,
+    bool IsSelfMuted,
+    Optional<bool> IsStreaming,
+    bool IsVideoEnabled,
+    bool IsSuppressed,
+    DateTimeOffset? RequestToSpeakTimestamp
+) : VoiceState
+(
+    GuildID,
+    ChannelID,
+    UserID,
+    Member,
+    SessionID,
+    IsDeafened,
+    IsMuted,
+    IsSelfDeafened,
+    IsSelfMuted,
+    IsStreaming,
+    IsVideoEnabled,
+    IsSuppressed,
+    RequestToSpeakTimestamp
+), IVoiceStateUpdate;

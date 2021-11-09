@@ -26,15 +26,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWelcomeScreenChannel" />
-    [PublicAPI]
-    public record WelcomeScreenChannel
-    (
-        Snowflake ChannelID,
-        string Description,
-        Snowflake? EmojiID,
-        string? EmojiName
-    ) : IWelcomeScreenChannel;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWelcomeScreenChannel" />
+[PublicAPI]
+public record WelcomeScreenChannel
+(
+    Snowflake ChannelID,
+    string Description,
+    Snowflake? EmojiID,
+    string? EmojiName
+) : IWelcomeScreenChannel;

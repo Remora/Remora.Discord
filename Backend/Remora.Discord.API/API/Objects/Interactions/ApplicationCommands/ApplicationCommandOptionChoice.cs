@@ -26,14 +26,12 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IApplicationCommandOptionChoice" />
-    [PublicAPI]
-    public record ApplicationCommandOptionChoice
-    (
-        string Name,
-        OneOf<string, int, double> Value
-    )
-    : IApplicationCommandOptionChoice;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IApplicationCommandOptionChoice" />
+[PublicAPI]
+public record ApplicationCommandOptionChoice
+(
+    string Name,
+    OneOf<string, int, double> Value
+) : IApplicationCommandOptionChoice;

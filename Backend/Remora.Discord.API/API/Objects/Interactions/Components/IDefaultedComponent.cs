@@ -24,47 +24,46 @@ using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Objects;
+
+/// <summary>
+/// Acts as a shim for concrete subcomponent types, providing default implementations for inaccessible properties.
+/// </summary>
+internal interface IDefaultedComponent : IComponent
 {
-    /// <summary>
-    /// Acts as a shim for concrete subcomponent types, providing default implementations for inaccessible properties.
-    /// </summary>
-    internal interface IDefaultedComponent : IComponent
-    {
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
 
-        /// <inheritdoc/>
-        ComponentType IComponent.Type => default;
+    /// <inheritdoc/>
+    ComponentType IComponent.Type => default;
 
-        /// <inheritdoc/>
-        Optional<ButtonComponentStyle> IComponent.Style => default;
+    /// <inheritdoc/>
+    Optional<ButtonComponentStyle> IComponent.Style => default;
 
-        /// <inheritdoc/>
-        Optional<string> IComponent.Label => default;
+    /// <inheritdoc/>
+    Optional<string> IComponent.Label => default;
 
-        /// <inheritdoc/>
-        Optional<IPartialEmoji> IComponent.Emoji => default;
+    /// <inheritdoc/>
+    Optional<IPartialEmoji> IComponent.Emoji => default;
 
-        /// <inheritdoc/>
-        Optional<string> IComponent.CustomID => default;
+    /// <inheritdoc/>
+    Optional<string> IComponent.CustomID => default;
 
-        /// <inheritdoc/>
-        Optional<string> IComponent.URL => default;
+    /// <inheritdoc/>
+    Optional<string> IComponent.URL => default;
 
-        /// <inheritdoc/>
-        Optional<bool> IComponent.IsDisabled => default;
+    /// <inheritdoc/>
+    Optional<bool> IComponent.IsDisabled => default;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<ISelectOption>> IComponent.Options => default;
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<ISelectOption>> IComponent.Options => default;
 
-        /// <inheritdoc/>
-        Optional<string> IComponent.Placeholder => default;
+    /// <inheritdoc/>
+    Optional<string> IComponent.Placeholder => default;
 
-        /// <inheritdoc/>
-        Optional<int> IComponent.MinValues => default;
+    /// <inheritdoc/>
+    Optional<int> IComponent.MinValues => default;
 
-        /// <inheritdoc/>
-        Optional<int> IComponent.MaxValues => default;
-    }
+    /// <inheritdoc/>
+    Optional<int> IComponent.MaxValues => default;
 }

@@ -28,74 +28,72 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IMessageCreate"/>
-    [PublicAPI]
-    public record MessageCreate
-    (
-        Snowflake ID,
-        Snowflake ChannelID,
-        Optional<Snowflake> GuildID,
-        IUser Author,
-        Optional<IPartialGuildMember> Member,
-        string Content,
-        DateTimeOffset Timestamp,
-        DateTimeOffset? EditedTimestamp,
-        bool IsTTS,
-        bool MentionsEveryone,
-        IReadOnlyList<IUserMention> Mentions,
-        IReadOnlyList<Snowflake> MentionedRoles,
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels,
-        IReadOnlyList<IAttachment> Attachments,
-        IReadOnlyList<IEmbed> Embeds,
-        Optional<IReadOnlyList<IReaction>> Reactions,
-        Optional<string> Nonce,
-        bool IsPinned,
-        Optional<Snowflake> WebhookID,
-        MessageType Type,
-        Optional<IMessageActivity> Activity = default,
-        Optional<IPartialApplication> Application = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<IMessageReference> MessageReference = default,
-        Optional<MessageFlags> Flags = default,
-        Optional<IMessage?> ReferencedMessage = default,
-        Optional<IMessageInteraction> Interaction = default,
-        Optional<IChannel> Thread = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IStickerItem>> StickerItems = default
-    )
-    : Message
-    (
-        ID,
-        ChannelID,
-        GuildID,
-        Author,
-        Member,
-        Content,
-        Timestamp,
-        EditedTimestamp,
-        IsTTS,
-        MentionsEveryone,
-        Mentions,
-        MentionedRoles,
-        MentionedChannels,
-        Attachments,
-        Embeds,
-        Reactions,
-        Nonce,
-        IsPinned,
-        WebhookID,
-        Type,
-        Activity,
-        Application,
-        ApplicationID,
-        MessageReference,
-        Flags,
-        ReferencedMessage,
-        Interaction,
-        Thread,
-        Components,
-        StickerItems
-    ), IMessageCreate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IMessageCreate"/>
+[PublicAPI]
+public record MessageCreate
+(
+    Snowflake ID,
+    Snowflake ChannelID,
+    Optional<Snowflake> GuildID,
+    IUser Author,
+    Optional<IPartialGuildMember> Member,
+    string Content,
+    DateTimeOffset Timestamp,
+    DateTimeOffset? EditedTimestamp,
+    bool IsTTS,
+    bool MentionsEveryone,
+    IReadOnlyList<IUserMention> Mentions,
+    IReadOnlyList<Snowflake> MentionedRoles,
+    Optional<IReadOnlyList<IChannelMention>> MentionedChannels,
+    IReadOnlyList<IAttachment> Attachments,
+    IReadOnlyList<IEmbed> Embeds,
+    Optional<IReadOnlyList<IReaction>> Reactions,
+    Optional<string> Nonce,
+    bool IsPinned,
+    Optional<Snowflake> WebhookID,
+    MessageType Type,
+    Optional<IMessageActivity> Activity = default,
+    Optional<IPartialApplication> Application = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<IMessageReference> MessageReference = default,
+    Optional<MessageFlags> Flags = default,
+    Optional<IMessage?> ReferencedMessage = default,
+    Optional<IMessageInteraction> Interaction = default,
+    Optional<IChannel> Thread = default,
+    Optional<IReadOnlyList<IMessageComponent>> Components = default,
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+) : Message
+(
+    ID,
+    ChannelID,
+    GuildID,
+    Author,
+    Member,
+    Content,
+    Timestamp,
+    EditedTimestamp,
+    IsTTS,
+    MentionsEveryone,
+    Mentions,
+    MentionedRoles,
+    MentionedChannels,
+    Attachments,
+    Embeds,
+    Reactions,
+    Nonce,
+    IsPinned,
+    WebhookID,
+    Type,
+    Activity,
+    Application,
+    ApplicationID,
+    MessageReference,
+    Flags,
+    ReferencedMessage,
+    Interaction,
+    Thread,
+    Components,
+    StickerItems
+), IMessageCreate;

@@ -26,15 +26,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPermissionOverwrite" />
-    [PublicAPI]
-    public record PermissionOverwrite
-    (
-        Snowflake ID,
-        PermissionOverwriteType Type,
-        IDiscordPermissionSet Allow,
-        IDiscordPermissionSet Deny
-    ) : IPermissionOverwrite;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPermissionOverwrite" />
+[PublicAPI]
+public record PermissionOverwrite
+(
+    Snowflake ID,
+    PermissionOverwriteType Type,
+    IDiscordPermissionSet Allow,
+    IDiscordPermissionSet Deny
+) : IPermissionOverwrite;

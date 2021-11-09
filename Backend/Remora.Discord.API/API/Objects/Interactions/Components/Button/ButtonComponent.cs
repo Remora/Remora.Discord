@@ -24,24 +24,23 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
-    [PublicAPI]
-    public record ButtonComponent
-    (
-        ButtonComponentStyle Style,
-        Optional<string> Label = default,
-        Optional<IPartialEmoji> Emoji = default,
-        Optional<string> CustomID = default,
-        Optional<string> URL = default,
-        Optional<bool> IsDisabled = default
-    ) : IButtonComponent, IDefaultedComponent
-    {
-        /// <inheritdoc/>
-        ComponentType IComponent.Type => ComponentType.Button;
+namespace Remora.Discord.API.Objects;
 
-        /// <inheritdoc/>
-        Optional<ButtonComponentStyle> IComponent.Style => this.Style;
-    }
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
+[PublicAPI]
+public record ButtonComponent
+(
+    ButtonComponentStyle Style,
+    Optional<string> Label = default,
+    Optional<IPartialEmoji> Emoji = default,
+    Optional<string> CustomID = default,
+    Optional<string> URL = default,
+    Optional<bool> IsDisabled = default
+) : IButtonComponent, IDefaultedComponent
+{
+    /// <inheritdoc/>
+    ComponentType IComponent.Type => ComponentType.Button;
+
+    /// <inheritdoc/>
+    Optional<ButtonComponentStyle> IComponent.Style => this.Style;
 }

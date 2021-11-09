@@ -28,23 +28,21 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IApplicationCommandOption" />
-    [PublicAPI]
-    public record ApplicationCommandOption
-    (
-        ApplicationCommandOptionType Type,
-        string Name,
-        string Description,
-        Optional<bool> IsDefault = default,
-        Optional<bool> IsRequired = default,
-        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
-        Optional<OneOf<ulong, long, float, double>> MinValue = default,
-        Optional<OneOf<ulong, long, float, double>> MaxValue = default,
-        Optional<bool> EnableAutocomplete = default
-    )
-    : IApplicationCommandOption;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IApplicationCommandOption" />
+[PublicAPI]
+public record ApplicationCommandOption
+(
+    ApplicationCommandOptionType Type,
+    string Name,
+    string Description,
+    Optional<bool> IsDefault = default,
+    Optional<bool> IsRequired = default,
+    Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default,
+    Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
+    Optional<IReadOnlyList<ChannelType>> ChannelTypes = default,
+    Optional<OneOf<ulong, long, float, double>> MinValue = default,
+    Optional<OneOf<ulong, long, float, double>> MaxValue = default,
+    Optional<bool> EnableAutocomplete = default
+) : IApplicationCommandOption;

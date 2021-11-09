@@ -23,17 +23,16 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API
+namespace Remora.Discord.API;
+
+/// <summary>
+/// Holds various constants.
+/// </summary>
+[PublicAPI]
+public static class Constants
 {
     /// <summary>
-    /// Holds various constants.
+    /// Gets the base CDN URL.
     /// </summary>
-    [PublicAPI]
-    public static class Constants
-    {
-        /// <summary>
-        /// Gets the base CDN URL.
-        /// </summary>
-        public static Uri CDNBaseURL { get; } = new("https://cdn.discordapp.com/");
-    }
+    public static Uri CDNBaseURL { get; } = new("https://cdn.discordapp.com/");
 }

@@ -26,19 +26,18 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IOptionalAuditEntryInfo" />
-    [PublicAPI]
-    public record OptionalAuditEntryInfo
-    (
-        Optional<Snowflake> ChannelID = default,
-        Optional<string> Count = default,
-        Optional<string> DeleteMemberDays = default,
-        Optional<Snowflake> ID = default,
-        Optional<string> MembersRemoved = default,
-        Optional<Snowflake> MessageID = default,
-        Optional<string> RoleName = default,
-        Optional<PermissionOverwriteType> Type = default
-    ) : IOptionalAuditEntryInfo;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IOptionalAuditEntryInfo" />
+[PublicAPI]
+public record OptionalAuditEntryInfo
+(
+    Optional<Snowflake> ChannelID = default,
+    Optional<string> Count = default,
+    Optional<string> DeleteMemberDays = default,
+    Optional<Snowflake> ID = default,
+    Optional<string> MembersRemoved = default,
+    Optional<Snowflake> MessageID = default,
+    Optional<string> RoleName = default,
+    Optional<PermissionOverwriteType> Type = default
+) : IOptionalAuditEntryInfo;

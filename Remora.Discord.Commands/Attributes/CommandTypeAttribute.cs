@@ -24,26 +24,25 @@ using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a command as being of a specific type (chat input, context menu, etc).
+/// </summary>
+[PublicAPI, AttributeUsage(AttributeTargets.Method)]
+public class CommandTypeAttribute : Attribute
 {
     /// <summary>
-    /// Marks a command as being of a specific type (chat input, context menu, etc).
+    /// Gets the command type.
     /// </summary>
-    [PublicAPI, AttributeUsage(AttributeTargets.Method)]
-    public class CommandTypeAttribute : Attribute
-    {
-        /// <summary>
-        /// Gets the command type.
-        /// </summary>
-        public ApplicationCommandType Type { get; }
+    public ApplicationCommandType Type { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommandTypeAttribute"/> class.
-        /// </summary>
-        /// <param name="type">The command type.</param>
-        public CommandTypeAttribute(ApplicationCommandType type)
-        {
-            this.Type = type;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CommandTypeAttribute"/> class.
+    /// </summary>
+    /// <param name="type">The command type.</param>
+    public CommandTypeAttribute(ApplicationCommandType type)
+    {
+        this.Type = type;
     }
 }

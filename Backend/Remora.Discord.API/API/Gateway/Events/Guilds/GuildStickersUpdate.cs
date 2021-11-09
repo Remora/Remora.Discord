@@ -26,9 +26,8 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildStickersUpdate" />
-    [PublicAPI]
-    public record GuildStickersUpdate(Snowflake GuildID, IReadOnlyList<ISticker> Stickers) : IGuildStickersUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildStickersUpdate" />
+[PublicAPI]
+public record GuildStickersUpdate(Snowflake GuildID, IReadOnlyList<ISticker> Stickers) : IGuildStickersUpdate;

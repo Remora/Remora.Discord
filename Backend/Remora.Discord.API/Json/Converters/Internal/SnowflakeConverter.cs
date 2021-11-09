@@ -25,46 +25,45 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <inheritdoc />
+internal class SnowflakeConverter : JsonConverter<Snowflake>
 {
     /// <inheritdoc />
-    internal class SnowflakeConverter : JsonConverter<Snowflake>
+    public override Snowflake Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override Snowflake Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        switch (reader.TokenType)
         {
-            switch (reader.TokenType)
+            case JsonTokenType.String:
             {
-                case JsonTokenType.String:
-                {
-                    var value = reader.GetString();
-                    if (value is null)
-                    {
-                        throw new JsonException();
-                    }
-
-                    if (!Snowflake.TryParse(value, out var snowflake))
-                    {
-                        throw new JsonException();
-                    }
-
-                    return snowflake.Value;
-                }
-                case JsonTokenType.Number:
-                {
-                    return new Snowflake(reader.GetUInt64());
-                }
-                default:
+                var value = reader.GetString();
+                if (value is null)
                 {
                     throw new JsonException();
                 }
+
+                if (!Snowflake.TryParse(value, out var snowflake))
+                {
+                    throw new JsonException();
+                }
+
+                return snowflake.Value;
+            }
+            case JsonTokenType.Number:
+            {
+                return new Snowflake(reader.GetUInt64());
+            }
+            default:
+            {
+                throw new JsonException();
             }
         }
+    }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Snowflake value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.Value.ToString());
-        }
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, Snowflake value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.Value.ToString());
     }
 }

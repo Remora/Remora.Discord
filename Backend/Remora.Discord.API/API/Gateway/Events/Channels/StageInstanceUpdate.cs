@@ -26,19 +26,16 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IStageInstanceUpdate" />
-    [PublicAPI]
-    public record StageInstanceUpdate
-    (
-        Snowflake ID,
-        Snowflake GuildID,
-        Snowflake ChannelID,
-        string Topic,
-        StagePrivacyLevel PrivacyLevel,
-        bool IsDiscoveryDisabled
-    ) :
-        StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled),
-        IStageInstanceUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IStageInstanceUpdate" />
+[PublicAPI]
+public record StageInstanceUpdate
+(
+    Snowflake ID,
+    Snowflake GuildID,
+    Snowflake ChannelID,
+    string Topic,
+    StagePrivacyLevel PrivacyLevel,
+    bool IsDiscoveryDisabled
+) : StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled), IStageInstanceUpdate;

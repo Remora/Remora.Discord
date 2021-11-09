@@ -28,110 +28,109 @@ using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Remora.Discord.API.Extensions;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts enum values to or from JSON.
+/// </summary>
+/// <typeparam name="TEnum">The enum to read.</typeparam>
+[PublicAPI]
+public class StringEnumConverter<TEnum> : JsonConverter<TEnum>
+    where TEnum : struct, Enum
 {
+    private readonly Dictionary<TEnum, string> _enumsToNames;
+    private readonly Dictionary<string, TEnum> _namesToEnums;
+
+    private readonly bool _asInteger;
+
     /// <summary>
-    /// Converts enum values to or from JSON.
+    /// Initializes a new instance of the <see cref="StringEnumConverter{TEnum}"/> class.
     /// </summary>
-    /// <typeparam name="TEnum">The enum to read.</typeparam>
-    [PublicAPI]
-    public class StringEnumConverter<TEnum> : JsonConverter<TEnum>
-        where TEnum : struct, Enum
+    /// <param name="namingPolicy">The naming policy to use.</param>
+    /// <param name="asInteger">Whether to convert the value as a string-serialized integer.</param>
+    public StringEnumConverter
+    (
+        JsonNamingPolicy? namingPolicy = null,
+        bool asInteger = false
+    )
     {
-        private readonly Dictionary<TEnum, string> _enumsToNames;
-        private readonly Dictionary<string, TEnum> _namesToEnums;
+        _enumsToNames = new Dictionary<TEnum, string>();
+        _namesToEnums = new Dictionary<string, TEnum>();
 
-        private readonly bool _asInteger;
+        _asInteger = asInteger;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringEnumConverter{TEnum}"/> class.
-        /// </summary>
-        /// <param name="namingPolicy">The naming policy to use.</param>
-        /// <param name="asInteger">Whether to convert the value as a string-serialized integer.</param>
-        public StringEnumConverter
-        (
-            JsonNamingPolicy? namingPolicy = null,
-            bool asInteger = false
-        )
+        foreach (var value in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
         {
-            _enumsToNames = new Dictionary<TEnum, string>();
-            _namesToEnums = new Dictionary<string, TEnum>();
+            var name = namingPolicy?.ConvertName(value.ToString()) ?? value.ToString();
 
-            _asInteger = asInteger;
-
-            foreach (var value in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
-            {
-                var name = namingPolicy?.ConvertName(value.ToString()) ?? value.ToString();
-
-                _enumsToNames.Add(value, name);
-                _namesToEnums.Add(name, value);
-            }
+            _enumsToNames.Add(value, name);
+            _namesToEnums.Add(name, value);
         }
+    }
 
-        /// <inheritdoc />
-        public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    /// <inheritdoc />
+    public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        TEnum result;
+
+        switch (reader.TokenType)
         {
-            TEnum result;
-
-            switch (reader.TokenType)
+            case JsonTokenType.String:
             {
-                case JsonTokenType.String:
+                var value = reader.GetString();
+                if (value is null)
                 {
-                    var value = reader.GetString();
-                    if (value is null)
-                    {
-                        throw new JsonException();
-                    }
+                    throw new JsonException();
+                }
 
-                    if (Enum.TryParse(value, out result))
-                    {
-                        break;
-                    }
-
-                    if (!_namesToEnums.TryGetValue(value, out result))
-                    {
-                        var caseInsensitiveKey = _namesToEnums.Keys.FirstOrDefault
-                        (
-                            s => s.Equals(value, StringComparison.OrdinalIgnoreCase)
-                        );
-
-                        if (caseInsensitiveKey is null)
-                        {
-                            throw new JsonException("Failed to deserialize an enumeration value.");
-                        }
-
-                        result = _namesToEnums[caseInsensitiveKey];
-                    }
-
+                if (Enum.TryParse(value, out result))
+                {
                     break;
                 }
-                default:
+
+                if (!_namesToEnums.TryGetValue(value, out result))
                 {
-                    throw new JsonException("Invalid type for enum deserialization.");
+                    var caseInsensitiveKey = _namesToEnums.Keys.FirstOrDefault
+                    (
+                        s => s.Equals(value, StringComparison.OrdinalIgnoreCase)
+                    );
+
+                    if (caseInsensitiveKey is null)
+                    {
+                        throw new JsonException("Failed to deserialize an enumeration value.");
+                    }
+
+                    result = _namesToEnums[caseInsensitiveKey];
                 }
-            }
 
-            if (!reader.IsFinalBlock && !reader.Read())
+                break;
+            }
+            default:
             {
-                throw new JsonException();
+                throw new JsonException("Invalid type for enum deserialization.");
             }
-
-            return result;
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
+        if (!reader.IsFinalBlock && !reader.Read())
         {
-            if (_asInteger)
-            {
-                writer.WriteStringValue(Enum.GetUnderlyingType(typeof(TEnum)).IsUnsigned()
-                    ? Convert.ToUInt64(value).ToString()
-                    : Convert.ToInt64(value).ToString());
-
-                return;
-            }
-
-            writer.WriteStringValue(_enumsToNames[value]);
+            throw new JsonException();
         }
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
+    {
+        if (_asInteger)
+        {
+            writer.WriteStringValue(Enum.GetUnderlyingType(typeof(TEnum)).IsUnsigned()
+                ? Convert.ToUInt64(value).ToString()
+                : Convert.ToInt64(value).ToString());
+
+            return;
+        }
+
+        writer.WriteStringValue(_enumsToNames[value]);
     }
 }

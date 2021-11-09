@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Enumerates various channel contexts.
+/// </summary>
+[PublicAPI]
+public enum ChannelContext
 {
     /// <summary>
-    /// Enumerates various channel contexts.
+    /// The command was executed in a guild.
     /// </summary>
-    [PublicAPI]
-    public enum ChannelContext
-    {
-        /// <summary>
-        /// The command was executed in a guild.
-        /// </summary>
-        Guild,
+    Guild,
 
-        /// <summary>
-        /// The command was executed in a DM.
-        /// </summary>
-        DM,
+    /// <summary>
+    /// The command was executed in a DM.
+    /// </summary>
+    DM,
 
-        /// <summary>
-        /// The command was executed in a group DM.
-        /// </summary>
-        GroupDM
-    }
+    /// <summary>
+    /// The command was executed in a group DM.
+    /// </summary>
+    GroupDM
 }

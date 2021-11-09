@@ -27,19 +27,18 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IInteractionCallbackData" />
-    [PublicAPI]
-    public record InteractionCallbackData
-    (
-        Optional<bool> IsTTS = default,
-        Optional<string> Content = default,
-        Optional<IReadOnlyList<IEmbed>> Embeds = default,
-        Optional<IAllowedMentions> AllowedMentions = default,
-        Optional<InteractionCallbackDataFlags> Flags = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IPartialAttachment>> Attachments = default,
-        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default
-    ) : IInteractionCallbackData;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IInteractionCallbackData" />
+[PublicAPI]
+public record InteractionCallbackData
+(
+    Optional<bool> IsTTS = default,
+    Optional<string> Content = default,
+    Optional<IReadOnlyList<IEmbed>> Embeds = default,
+    Optional<IAllowedMentions> AllowedMentions = default,
+    Optional<InteractionCallbackDataFlags> Flags = default,
+    Optional<IReadOnlyList<IMessageComponent>> Components = default,
+    Optional<IReadOnlyList<IPartialAttachment>> Attachments = default,
+    Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default
+) : IInteractionCallbackData;

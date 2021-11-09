@@ -31,34 +31,33 @@ using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses instances of <see cref="IUser"/> from command-line inputs.
+/// </summary>
+[PublicAPI]
+public class UserParser : AbstractTypeParser<IUser>
 {
+    private readonly IDiscordRestUserAPI _userAPI;
+
     /// <summary>
-    /// Parses instances of <see cref="IUser"/> from command-line inputs.
+    /// Initializes a new instance of the <see cref="UserParser"/> class.
     /// </summary>
-    [PublicAPI]
-    public class UserParser : AbstractTypeParser<IUser>
+    /// <param name="userAPI">The user API.</param>
+    public UserParser(IDiscordRestUserAPI userAPI)
     {
-        private readonly IDiscordRestUserAPI _userAPI;
+        _userAPI = userAPI;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserParser"/> class.
-        /// </summary>
-        /// <param name="userAPI">The user API.</param>
-        public UserParser(IDiscordRestUserAPI userAPI)
+    /// <inheritdoc />
+    public override async ValueTask<Result<IUser>> TryParseAsync(string value, CancellationToken ct = default)
+    {
+        if (!Snowflake.TryParse(value.Unmention(), out var userID))
         {
-            _userAPI = userAPI;
+            return new ParsingError<IUser>(value.Unmention());
         }
 
-        /// <inheritdoc />
-        public override async ValueTask<Result<IUser>> TryParseAsync(string value, CancellationToken ct = default)
-        {
-            if (!Snowflake.TryParse(value.Unmention(), out var userID))
-            {
-                return new ParsingError<IUser>(value.Unmention());
-            }
-
-            return await _userAPI.GetUserAsync(userID.Value, ct);
-        }
+        return await _userAPI.GetUserAsync(userID.Value, ct);
     }
 }

@@ -29,26 +29,25 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivity" />
-    [PublicAPI]
-    public record Activity
-    (
-        string Name,
-        ActivityType Type,
-        Optional<Uri?> Url = default,
-        Optional<DateTimeOffset> CreatedAt = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<IActivityTimestamps> Timestamps = default,
-        Optional<string?> Details = default,
-        Optional<string?> State = default,
-        Optional<IActivityEmoji?> Emoji = default,
-        Optional<IActivityParty> Party = default,
-        Optional<IActivityAssets> Assets = default,
-        Optional<IActivitySecrets> Secrets = default,
-        Optional<bool> Instance = default,
-        Optional<ActivityFlags> Flags = default,
-        Optional<OneOf<IReadOnlyList<string>, IReadOnlyList<IActivityButton>>> Buttons = default
-    ) : IActivity;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivity" />
+[PublicAPI]
+public record Activity
+(
+    string Name,
+    ActivityType Type,
+    Optional<Uri?> Url = default,
+    Optional<DateTimeOffset> CreatedAt = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<IActivityTimestamps> Timestamps = default,
+    Optional<string?> Details = default,
+    Optional<string?> State = default,
+    Optional<IActivityEmoji?> Emoji = default,
+    Optional<IActivityParty> Party = default,
+    Optional<IActivityAssets> Assets = default,
+    Optional<IActivitySecrets> Secrets = default,
+    Optional<bool> Instance = default,
+    Optional<ActivityFlags> Flags = default,
+    Optional<OneOf<IReadOnlyList<string>, IReadOnlyList<IActivityButton>>> Buttons = default
+) : IActivity;

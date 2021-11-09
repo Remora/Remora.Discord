@@ -26,20 +26,19 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents an identification command sent to the Discord gateway.
-    /// </summary>
-    [PublicAPI]
-    public record Identify
-    (
-        string Token,
-        IConnectionProperties Properties,
-        Optional<bool> Compress = default,
-        Optional<byte> LargeThreshold = default,
-        Optional<IShardIdentification> Shard = default,
-        Optional<IUpdatePresence> Presence = default,
-        GatewayIntents Intents = default
-    ) : IIdentify;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents an identification command sent to the Discord gateway.
+/// </summary>
+[PublicAPI]
+public record Identify
+(
+    string Token,
+    IConnectionProperties Properties,
+    Optional<bool> Compress = default,
+    Optional<byte> LargeThreshold = default,
+    Optional<IShardIdentification> Shard = default,
+    Optional<IUpdatePresence> Presence = default,
+    GatewayIntents Intents = default
+) : IIdentify;

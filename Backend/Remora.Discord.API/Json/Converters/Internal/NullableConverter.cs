@@ -24,35 +24,34 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts from to and from <see cref="Nullable{T}"/>.
+/// </summary>
+/// <typeparam name="TValue">The inner nullable value.</typeparam>
+internal class NullableConverter<TValue> : JsonConverter<TValue?>
+    where TValue : struct
 {
-    /// <summary>
-    /// Converts from to and from <see cref="Nullable{T}"/>.
-    /// </summary>
-    /// <typeparam name="TValue">The inner nullable value.</typeparam>
-    internal class NullableConverter<TValue> : JsonConverter<TValue?>
-        where TValue : struct
+    /// <inheritdoc />
+    public override TValue? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override TValue? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        return reader.TokenType switch
         {
-            return reader.TokenType switch
-            {
-                JsonTokenType.Null => null,
-                _ => JsonSerializer.Deserialize<TValue>(ref reader, options)
-            };
+            JsonTokenType.Null => null,
+            _ => JsonSerializer.Deserialize<TValue>(ref reader, options)
+        };
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, TValue? value, JsonSerializerOptions options)
+    {
+        if (!value.HasValue)
+        {
+            writer.WriteNullValue();
+            return;
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, TValue? value, JsonSerializerOptions options)
-        {
-            if (!value.HasValue)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            JsonSerializer.Serialize(writer, value.Value, options);
-        }
+        JsonSerializer.Serialize(writer, value.Value, options);
     }
 }

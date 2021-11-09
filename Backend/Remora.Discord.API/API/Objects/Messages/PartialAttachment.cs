@@ -26,21 +26,20 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialAttachment" />
-    [PublicAPI]
-    public record PartialAttachment
-    (
-        Optional<Snowflake> ID = default,
-        Optional<string> Filename = default,
-        Optional<string> Description = default,
-        Optional<string> ContentType = default,
-        Optional<int> Size = default,
-        Optional<string> Url = default,
-        Optional<string> ProxyUrl = default,
-        Optional<int?> Height = default,
-        Optional<int?> Width = default,
-        Optional<bool> IsEphemeral = default
-    ) : IPartialAttachment;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialAttachment" />
+[PublicAPI]
+public record PartialAttachment
+(
+    Optional<Snowflake> ID = default,
+    Optional<string> Filename = default,
+    Optional<string> Description = default,
+    Optional<string> ContentType = default,
+    Optional<int> Size = default,
+    Optional<string> Url = default,
+    Optional<string> ProxyUrl = default,
+    Optional<int?> Height = default,
+    Optional<int?> Width = default,
+    Optional<bool> IsEphemeral = default
+) : IPartialAttachment;

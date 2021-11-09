@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivityParty" />
-    [PublicAPI]
-    public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivityParty" />
+[PublicAPI]
+public record ActivityParty(Optional<string> ID = default, Optional<IPartySize> Size = default) : IActivityParty;

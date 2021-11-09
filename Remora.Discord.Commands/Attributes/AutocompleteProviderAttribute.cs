@@ -22,27 +22,26 @@
 
 using System;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a parameter as having an associated autocomplete provider, which will dynamically suggest values as the
+/// user is typing.
+/// </summary>
+[AttributeUsage(AttributeTargets.Parameter)]
+public class AutocompleteProviderAttribute : AutocompleteAttribute
 {
     /// <summary>
-    /// Marks a parameter as having an associated autocomplete provider, which will dynamically suggest values as the
-    /// user is typing.
+    /// Gets the desired autocomplete provider's identity.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class AutocompleteProviderAttribute : AutocompleteAttribute
-    {
-        /// <summary>
-        /// Gets the desired autocomplete provider's identity.
-        /// </summary>
-        public string ProviderIdentity { get; }
+    public string ProviderIdentity { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutocompleteProviderAttribute"/> class.
-        /// </summary>
-        /// <param name="providerIdentity">The identity string of the provider.</param>
-        public AutocompleteProviderAttribute(string providerIdentity)
-        {
-            this.ProviderIdentity = providerIdentity;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AutocompleteProviderAttribute"/> class.
+    /// </summary>
+    /// <param name="providerIdentity">The identity string of the provider.</param>
+    public AutocompleteProviderAttribute(string providerIdentity)
+    {
+        this.ProviderIdentity = providerIdentity;
     }
 }

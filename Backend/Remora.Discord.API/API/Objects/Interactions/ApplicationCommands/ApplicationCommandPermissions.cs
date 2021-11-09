@@ -24,10 +24,13 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandPermissions" />
-    [PublicAPI]
-    public record ApplicationCommandPermissions(Snowflake ID, ApplicationCommandPermissionType Type, bool HasPermission)
-        : IApplicationCommandPermissions;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IApplicationCommandPermissions" />
+[PublicAPI]
+public record ApplicationCommandPermissions
+(
+    Snowflake ID,
+    ApplicationCommandPermissionType Type,
+    bool HasPermission
+) : IApplicationCommandPermissions;

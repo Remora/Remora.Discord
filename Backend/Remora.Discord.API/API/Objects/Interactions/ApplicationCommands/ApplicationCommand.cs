@@ -27,21 +27,19 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IApplicationCommand" />
-    [PublicAPI]
-    public record ApplicationCommand
-    (
-        Snowflake ID,
-        Optional<ApplicationCommandType> Type,
-        Snowflake ApplicationID,
-        Optional<Snowflake> GuildID,
-        string Name,
-        string Description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options,
-        Optional<bool> DefaultPermission,
-        Snowflake Version
-    )
-    : IApplicationCommand;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IApplicationCommand" />
+[PublicAPI]
+public record ApplicationCommand
+(
+    Snowflake ID,
+    Optional<ApplicationCommandType> Type,
+    Snowflake ApplicationID,
+    Optional<Snowflake> GuildID,
+    string Name,
+    string Description,
+    Optional<IReadOnlyList<IApplicationCommandOption>> Options,
+    Optional<bool> DefaultPermission,
+    Snowflake Version
+) : IApplicationCommand;

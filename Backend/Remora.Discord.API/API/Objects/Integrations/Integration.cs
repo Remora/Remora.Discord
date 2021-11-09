@@ -27,26 +27,25 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IIntegration" />
-    [PublicAPI]
-    public record Integration
-    (
-        Snowflake ID,
-        string Name,
-        string Type,
-        bool IsEnabled,
-        bool IsSyncing,
-        Snowflake RoleID,
-        Optional<bool> EnableEmoticons,
-        IntegrationExpireBehaviour ExpireBehaviour,
-        TimeSpan ExpireGracePeriod,
-        Optional<IUser> User,
-        IAccount Account,
-        DateTimeOffset SyncedAt,
-        int SubscriberCount,
-        bool IsRevoked,
-        Optional<IIntegrationApplication> Application = default
-    ) : IIntegration;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IIntegration" />
+[PublicAPI]
+public record Integration
+(
+    Snowflake ID,
+    string Name,
+    string Type,
+    bool IsEnabled,
+    bool IsSyncing,
+    Snowflake RoleID,
+    Optional<bool> EnableEmoticons,
+    IntegrationExpireBehaviour ExpireBehaviour,
+    TimeSpan ExpireGracePeriod,
+    Optional<IUser> User,
+    IAccount Account,
+    DateTimeOffset SyncedAt,
+    int SubscriberCount,
+    bool IsRevoked,
+    Optional<IIntegrationApplication> Application = default
+) : IIntegration;

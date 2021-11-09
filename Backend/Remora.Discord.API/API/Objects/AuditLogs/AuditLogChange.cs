@@ -26,9 +26,8 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IAuditLogChange" />
-    [PublicAPI]
-    public record AuditLogChange(Optional<object?> NewValue, Optional<object?> OldValue, string Key) : IAuditLogChange;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IAuditLogChange" />
+[PublicAPI]
+public record AuditLogChange(Optional<object?> NewValue, Optional<object?> OldValue, string Key) : IAuditLogChange;

@@ -26,15 +26,14 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivityAssets" />
-    [PublicAPI]
-    public record ActivityAssets
-    (
-        Optional<string> LargeImage = default,
-        Optional<string> LargeText = default,
-        Optional<string> SmallImage = default,
-        Optional<string> SmallText = default
-    ) : IActivityAssets;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivityAssets" />
+[PublicAPI]
+public record ActivityAssets
+(
+    Optional<string> LargeImage = default,
+    Optional<string> LargeText = default,
+    Optional<string> SmallImage = default,
+    Optional<string> SmallText = default
+) : IActivityAssets;

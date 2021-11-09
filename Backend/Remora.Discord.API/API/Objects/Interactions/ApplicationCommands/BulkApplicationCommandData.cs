@@ -25,17 +25,15 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IBulkApplicationCommandData" />
-    [PublicAPI]
-    public record BulkApplicationCommandData
-    (
-        string Name,
-        Optional<string> Description = default,
-        Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
-        Optional<bool> DefaultPermission = default,
-        Optional<ApplicationCommandType> Type = default
-    )
-    : IBulkApplicationCommandData;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IBulkApplicationCommandData" />
+[PublicAPI]
+public record BulkApplicationCommandData
+(
+    string Name,
+    Optional<string> Description = default,
+    Optional<IReadOnlyList<IApplicationCommandOption>> Options = default,
+    Optional<bool> DefaultPermission = default,
+    Optional<ApplicationCommandType> Type = default
+) : IBulkApplicationCommandData;

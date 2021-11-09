@@ -28,41 +28,40 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IMessage" />
-    [PublicAPI]
-    public record Message
-    (
-        Snowflake ID,
-        Snowflake ChannelID,
-        Optional<Snowflake> GuildID,
-        IUser Author,
-        Optional<IPartialGuildMember> Member,
-        string Content,
-        DateTimeOffset Timestamp,
-        DateTimeOffset? EditedTimestamp,
-        bool IsTTS,
-        bool MentionsEveryone,
-        IReadOnlyList<IUserMention> Mentions,
-        IReadOnlyList<Snowflake> MentionedRoles,
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels,
-        IReadOnlyList<IAttachment> Attachments,
-        IReadOnlyList<IEmbed> Embeds,
-        Optional<IReadOnlyList<IReaction>> Reactions,
-        Optional<string> Nonce,
-        bool IsPinned,
-        Optional<Snowflake> WebhookID,
-        MessageType Type,
-        Optional<IMessageActivity> Activity = default,
-        Optional<IPartialApplication> Application = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<IMessageReference> MessageReference = default,
-        Optional<MessageFlags> Flags = default,
-        Optional<IMessage?> ReferencedMessage = default,
-        Optional<IMessageInteraction> Interaction = default,
-        Optional<IChannel> Thread = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IStickerItem>> StickerItems = default
-    ) : IMessage;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IMessage" />
+[PublicAPI]
+public record Message
+(
+    Snowflake ID,
+    Snowflake ChannelID,
+    Optional<Snowflake> GuildID,
+    IUser Author,
+    Optional<IPartialGuildMember> Member,
+    string Content,
+    DateTimeOffset Timestamp,
+    DateTimeOffset? EditedTimestamp,
+    bool IsTTS,
+    bool MentionsEveryone,
+    IReadOnlyList<IUserMention> Mentions,
+    IReadOnlyList<Snowflake> MentionedRoles,
+    Optional<IReadOnlyList<IChannelMention>> MentionedChannels,
+    IReadOnlyList<IAttachment> Attachments,
+    IReadOnlyList<IEmbed> Embeds,
+    Optional<IReadOnlyList<IReaction>> Reactions,
+    Optional<string> Nonce,
+    bool IsPinned,
+    Optional<Snowflake> WebhookID,
+    MessageType Type,
+    Optional<IMessageActivity> Activity = default,
+    Optional<IPartialApplication> Application = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<IMessageReference> MessageReference = default,
+    Optional<MessageFlags> Flags = default,
+    Optional<IMessage?> ReferencedMessage = default,
+    Optional<IMessageInteraction> Interaction = default,
+    Optional<IChannel> Thread = default,
+    Optional<IReadOnlyList<IMessageComponent>> Components = default,
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+) : IMessage;

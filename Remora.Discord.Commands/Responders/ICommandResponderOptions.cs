@@ -22,17 +22,16 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Responders
+namespace Remora.Discord.Commands.Responders;
+
+/// <summary>
+/// Represents a read-only view of command responder options.
+/// </summary>
+[PublicAPI]
+public interface ICommandResponderOptions
 {
     /// <summary>
-    /// Represents a read-only view of command responder options.
+    /// Gets the prefix that commands must start with.
     /// </summary>
-    [PublicAPI]
-    public interface ICommandResponderOptions
-    {
-        /// <summary>
-        /// Gets the prefix that commands must start with.
-        /// </summary>
-        string? Prefix { get; }
-    }
+    string? Prefix { get; }
 }

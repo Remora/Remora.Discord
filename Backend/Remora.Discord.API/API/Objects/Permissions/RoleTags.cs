@@ -26,14 +26,13 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IRoleTags" />
-    [PublicAPI]
-    public record RoleTags
-    (
-        Optional<Snowflake> BotID = default,
-        Optional<Snowflake> IntegrationID = default,
-        Optional<bool?> IsPremiumSubscriberRole = default
-    ) : IRoleTags;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IRoleTags" />
+[PublicAPI]
+public record RoleTags
+(
+    Optional<Snowflake> BotID = default,
+    Optional<Snowflake> IntegrationID = default,
+    Optional<bool?> IsPremiumSubscriberRole = default
+) : IRoleTags;

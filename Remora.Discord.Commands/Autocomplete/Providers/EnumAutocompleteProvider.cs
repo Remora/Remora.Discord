@@ -30,33 +30,32 @@ using Humanizer;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
-namespace Remora.Discord.Commands.Autocomplete
-{
-    /// <summary>
-    /// Provides autocompletion suggestions for enums.
-    /// </summary>
-    /// <typeparam name="TEnum">The enumeration type.</typeparam>
-    public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
-        where TEnum : struct, Enum
-    {
-        private static readonly string[] Names = Enum.GetNames(typeof(TEnum));
+namespace Remora.Discord.Commands.Autocomplete;
 
-        /// <inheritdoc />
-        public ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>> GetSuggestionsAsync
+/// <summary>
+/// Provides autocompletion suggestions for enums.
+/// </summary>
+/// <typeparam name="TEnum">The enumeration type.</typeparam>
+public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
+    where TEnum : struct, Enum
+{
+    private static readonly string[] Names = Enum.GetNames(typeof(TEnum));
+
+    /// <inheritdoc />
+    public ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>> GetSuggestionsAsync
+    (
+        IReadOnlyList<IApplicationCommandInteractionDataOption> options,
+        string userInput,
+        CancellationToken ct = default
+    )
+    {
+        return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
         (
-            IReadOnlyList<IApplicationCommandInteractionDataOption> options,
-            string userInput,
-            CancellationToken ct = default
-        )
-        {
-            return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
-            (
-                Names
-                    .OrderByDescending(n => Fuzz.Ratio(userInput, n))
-                    .Take(25)
-                    .Select(n => new ApplicationCommandOptionChoice(n.Humanize().Transform(To.TitleCase), n))
-                    .ToList()
-            );
-        }
+            Names
+                .OrderByDescending(n => Fuzz.Ratio(userInput, n))
+                .Take(25)
+                .Select(n => new ApplicationCommandOptionChoice(n.Humanize().Transform(To.TitleCase), n))
+                .ToList()
+        );
     }
 }

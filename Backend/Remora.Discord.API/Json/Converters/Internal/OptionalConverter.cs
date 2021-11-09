@@ -25,30 +25,29 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts optional fields to their JSON representation.
+/// </summary>
+/// <typeparam name="TValue">The underlying type.</typeparam>
+internal class OptionalConverter<TValue> : JsonConverter<Optional<TValue?>>
 {
-    /// <summary>
-    /// Converts optional fields to their JSON representation.
-    /// </summary>
-    /// <typeparam name="TValue">The underlying type.</typeparam>
-    internal class OptionalConverter<TValue> : JsonConverter<Optional<TValue?>>
+    /// <inheritdoc />
+    public override Optional<TValue?> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override Optional<TValue?> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        return new(JsonSerializer.Deserialize<TValue>(ref reader, options));
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, Optional<TValue?> value, JsonSerializerOptions options)
+    {
+        if (value.Value is null)
         {
-            return new(JsonSerializer.Deserialize<TValue>(ref reader, options));
+            writer.WriteNullValue();
+            return;
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Optional<TValue?> value, JsonSerializerOptions options)
-        {
-            if (value.Value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            JsonSerializer.Serialize(writer, value.Value, options);
-        }
+        JsonSerializer.Serialize(writer, value.Value, options);
     }
 }

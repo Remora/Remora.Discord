@@ -26,49 +26,48 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Creates OneOf converters.
+/// </summary>
+internal class OneOfConverterFactory : JsonConverterFactory
 {
-    /// <summary>
-    /// Creates OneOf converters.
-    /// </summary>
-    internal class OneOfConverterFactory : JsonConverterFactory
+    /// <inheritdoc />
+    public override bool CanConvert(Type typeToConvert)
     {
-        /// <inheritdoc />
-        public override bool CanConvert(Type typeToConvert)
+        if (!typeToConvert.IsGenericType)
         {
-            if (!typeToConvert.IsGenericType)
-            {
-                return false;
-            }
-
-            var genericType = typeToConvert.GetGenericTypeDefinition();
-            return genericType switch
-            {
-                var t when t == typeof(OneOf<>) => true,
-                var t when t == typeof(OneOf<,>) => true,
-                var t when t == typeof(OneOf<,,>) => true,
-                var t when t == typeof(OneOf<,,,>) => true,
-                var t when t == typeof(OneOf<,,,,>) => true,
-                var t when t == typeof(OneOf<,,,,,>) => true,
-                var t when t == typeof(OneOf<,,,,,,>) => true,
-                var t when t == typeof(OneOf<,,,,,,,>) => true,
-                var t when t == typeof(OneOf<,,,,,,,,>) => true,
-                _ => false
-            };
+            return false;
         }
 
-        /// <inheritdoc />
-        public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+        var genericType = typeToConvert.GetGenericTypeDefinition();
+        return genericType switch
         {
-            var typeInfo = typeToConvert.GetTypeInfo();
-            var optionalType = typeof(OneOfConverter<>).MakeGenericType(typeInfo);
+            var t when t == typeof(OneOf<>) => true,
+            var t when t == typeof(OneOf<,>) => true,
+            var t when t == typeof(OneOf<,,>) => true,
+            var t when t == typeof(OneOf<,,,>) => true,
+            var t when t == typeof(OneOf<,,,,>) => true,
+            var t when t == typeof(OneOf<,,,,,>) => true,
+            var t when t == typeof(OneOf<,,,,,,>) => true,
+            var t when t == typeof(OneOf<,,,,,,,>) => true,
+            var t when t == typeof(OneOf<,,,,,,,,>) => true,
+            _ => false
+        };
+    }
 
-            if (Activator.CreateInstance(optionalType) is not JsonConverter createdConverter)
-            {
-                throw new JsonException();
-            }
+    /// <inheritdoc />
+    public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
+    {
+        var typeInfo = typeToConvert.GetTypeInfo();
+        var optionalType = typeof(OneOfConverter<>).MakeGenericType(typeInfo);
 
-            return createdConverter;
+        if (Activator.CreateInstance(optionalType) is not JsonConverter createdConverter)
+        {
+            throw new JsonException();
         }
+
+        return createdConverter;
     }
 }

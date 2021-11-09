@@ -26,45 +26,44 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts an image hash to and from JSON.
+/// </summary>
+internal class ImageHashConverter : JsonConverter<IImageHash?>
 {
-    /// <summary>
-    /// Converts an image hash to and from JSON.
-    /// </summary>
-    internal class ImageHashConverter : JsonConverter<IImageHash?>
+    /// <inheritdoc />
+    public override IImageHash? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override IImageHash? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType == JsonTokenType.Null)
         {
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-
-            if (reader.TokenType != JsonTokenType.String)
-            {
-                throw new JsonException();
-            }
-
-            var value = reader.GetString();
-            if (value is null)
-            {
-                throw new JsonException();
-            }
-
-            return new ImageHash(value);
+            return null;
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IImageHash? value, JsonSerializerOptions options)
+        if (reader.TokenType != JsonTokenType.String)
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteStringValue(value.Value);
+            throw new JsonException();
         }
+
+        var value = reader.GetString();
+        if (value is null)
+        {
+            throw new JsonException();
+        }
+
+        return new ImageHash(value);
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IImageHash? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        writer.WriteStringValue(value.Value);
     }
 }

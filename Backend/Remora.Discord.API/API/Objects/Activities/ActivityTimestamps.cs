@@ -27,13 +27,12 @@ using Remora.Discord.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivityTimestamps" />
-    [PublicAPI]
-    public record ActivityTimestamps
-    (
-        Optional<DateTimeOffset> Start = default,
-        Optional<DateTimeOffset> End = default
-    ) : IActivityTimestamps;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivityTimestamps" />
+[PublicAPI]
+public record ActivityTimestamps
+(
+    Optional<DateTimeOffset> Start = default,
+    Optional<DateTimeOffset> End = default
+) : IActivityTimestamps;

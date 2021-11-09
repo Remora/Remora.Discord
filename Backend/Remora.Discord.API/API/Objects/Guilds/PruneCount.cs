@@ -25,9 +25,8 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPruneCount" />
-    [PublicAPI]
-    public record PruneCount(int? Pruned) : IPruneCount;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPruneCount" />
+[PublicAPI]
+public record PruneCount(int? Pruned) : IPruneCount;
