@@ -79,7 +79,9 @@ public static class JsonSerializerOptionsExtensions
             DefaultBufferSize = options.DefaultBufferSize,
             DictionaryKeyPolicy = options.DictionaryKeyPolicy,
             Encoder = options.Encoder,
+            #if !NET6_0
             IgnoreNullValues = options.IgnoreNullValues,
+            #endif
             IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties,
             MaxDepth = options.MaxDepth,
             PropertyNameCaseInsensitive = options.PropertyNameCaseInsensitive,
@@ -92,7 +94,7 @@ public static class JsonSerializerOptionsExtensions
             NumberHandling = options.NumberHandling,
             ReferenceHandler = options.ReferenceHandler,
             #if NET6_0
-            UnknownTypeHandling = options.UnknownTypeHandling
+            UnknownTypeHandling = options.UnknownTypeHandling,
             #endif
         };
 
