@@ -32,6 +32,9 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -43,10 +46,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestEmojiAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestEmojiAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestEmojiAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -57,9 +60,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IEmoji>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IEmoji>>
             (
                 $"guilds/{guildID}/emojis",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -72,9 +76,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IEmoji>
+            return this.RestHttpClient.GetAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -103,7 +108,7 @@ namespace Remora.Discord.Rest.API
 
             var emojiData = packImage.Entity;
 
-            return await this.DiscordHttpClient.PostAsync<IEmoji>
+            return await this.RestHttpClient.PostAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis",
                 b => b
@@ -118,7 +123,8 @@ namespace Remora.Discord.Rest.API
                         json.WritePropertyName("roles");
                         JsonSerializer.Serialize(json, roles, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -134,7 +140,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PatchAsync<IEmoji>
+            return this.RestHttpClient.PatchAsync<IEmoji>
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
                 b => b
@@ -146,7 +152,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("name", name, this.JsonOptions);
                         json.Write("roles", roles, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -160,10 +167,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"guilds/{guildID}/emojis/{emojiID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }

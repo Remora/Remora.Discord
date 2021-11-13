@@ -35,6 +35,7 @@ using Remora.Discord.Commands.Tests.Data.Valid;
 using Remora.Discord.Commands.Tests.Data.Valid.Basics;
 using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Xunit;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 

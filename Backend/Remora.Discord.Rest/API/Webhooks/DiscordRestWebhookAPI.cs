@@ -37,6 +37,9 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -48,10 +51,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestWebhookAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -82,7 +85,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PostAsync<IWebhook>
+            return await this.RestHttpClient.PostAsync<IWebhook>
             (
                 $"channels/{channelID}/webhooks",
                 b => b.WithJson
@@ -92,7 +95,8 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("name", name);
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -104,9 +108,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"channels/{channelID}/webhooks",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -118,9 +123,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"guilds/{guildID}/webhooks",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -132,9 +138,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IWebhook>
+            return this.RestHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -147,9 +154,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IWebhook>
+            return this.RestHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -172,7 +180,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PatchAsync<IWebhook>
+            return await this.RestHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
                 b => b.WithJson
@@ -183,7 +191,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("avatar", avatarData, this.JsonOptions);
                         json.Write("channel_id", channelID, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -206,7 +215,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PatchAsync<IWebhook>
+            return await this.RestHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
                 b => b.WithJson
@@ -216,7 +225,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("name", name, this.JsonOptions);
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -224,9 +234,10 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -239,9 +250,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -264,7 +276,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IMessage?>
+            return this.RestHttpClient.PostAsync<IMessage?>
             (
                 $"webhooks/{webhookID}/{token}",
                 b =>
@@ -315,7 +327,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 true,
                 ct
@@ -332,7 +345,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IMessage>
+            return this.RestHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
                 b =>
@@ -341,6 +354,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("thread_id", threadID.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -371,7 +386,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IMessage>
+            return await this.RestHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
@@ -418,7 +433,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -434,7 +450,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
@@ -443,6 +459,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("thread_id", threadID.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct
             );

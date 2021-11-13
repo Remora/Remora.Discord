@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Remora.Discord.API.Errors;
 using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 

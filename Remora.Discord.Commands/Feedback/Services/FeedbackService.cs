@@ -34,7 +34,7 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Themes;
 using Remora.Discord.Commands.Services;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Feedback.Services;

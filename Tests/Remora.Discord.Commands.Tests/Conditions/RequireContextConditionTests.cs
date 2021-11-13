@@ -29,6 +29,7 @@ using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -141,11 +142,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0, 0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(textChannelMock.Object));
 
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1, 0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(groupDMMock.Object));
 
             var attribute = new RequireContextAttribute(ChannelContext.Guild, ChannelContext.GroupDM);
@@ -180,11 +181,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0, 0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(textChannelMock.Object));
 
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1, 0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(groupDMMock.Object));
 
             var attribute = new RequireContextAttribute(ChannelType.GuildText, ChannelType.GroupDM);

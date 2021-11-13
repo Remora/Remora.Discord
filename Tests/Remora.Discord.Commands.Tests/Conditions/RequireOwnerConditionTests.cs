@@ -29,6 +29,7 @@ using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 

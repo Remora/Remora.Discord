@@ -30,6 +30,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API
@@ -40,14 +41,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestVoiceAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestVoiceAPI(IRestHttpClient, IOptions{JsonSerializerOptions})" />
         public CachingDiscordRestVoiceAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }

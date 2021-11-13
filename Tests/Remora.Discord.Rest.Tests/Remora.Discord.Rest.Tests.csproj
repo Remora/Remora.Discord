@@ -9,21 +9,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest.Xunit\Remora.Rest.Xunit.csproj" />
+      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest\Remora.Rest.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Json\JsonArrayMatcherBuilder.cs">
-        <DependentUpon>JsonArrayMatcher.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Json\JsonObjectMatcherBuilder.cs">
-        <DependentUpon>JsonObjectMatcher.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Json\JsonElementMatcherBuilder.cs">
-        <DependentUpon>JsonElementMatcher.cs</DependentUpon>
-      </Compile>
     </ItemGroup>
 
 </Project>

@@ -31,6 +31,8 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Rest.Json;
+using Remora.Rest.Json.Policies;
 using Remora.Results;
 
 namespace Remora.Discord.API.Json;

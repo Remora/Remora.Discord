@@ -35,4 +35,9 @@ public static class Constants
     /// Gets the base CDN URL.
     /// </summary>
     public static Uri CDNBaseURL { get; } = new("https://cdn.discordapp.com/");
+
+    /// <summary>
+    /// Gets the Discord epoch, used for timestamp offsetting.
+    /// </summary>
+    public static ulong DiscordEpoch => 1420070400000;
 }

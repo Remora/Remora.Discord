@@ -32,6 +32,9 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -43,19 +46,20 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestUserAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestUserAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestUserAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<IUser>
+            return this.RestHttpClient.GetAsync<IUser>
             (
                 "users/@me",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -67,9 +71,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IUser>
+            return this.RestHttpClient.GetAsync<IUser>
             (
                 $"users/{userID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -90,7 +95,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PatchAsync<IUser>
+            return await this.RestHttpClient.PatchAsync<IUser>
             (
                 "users/@me",
                 b => b.WithJson
@@ -100,7 +105,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("username", username, this.JsonOptions);
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -123,7 +129,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IPartialGuild>>
+            return await this.RestHttpClient.GetAsync<IReadOnlyList<IPartialGuild>>
             (
                 "users/@me/guilds",
                 b =>
@@ -142,6 +148,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -150,9 +158,10 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"users/@me/guilds/{guildID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -163,9 +172,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IChannel>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IChannel>>
             (
                 "users/@me/channels",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -177,7 +187,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IChannel>
+            return this.RestHttpClient.PostAsync<IChannel>
             (
                 "users/@me/channels",
                 b => b.WithJson
@@ -186,7 +196,8 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("recipient_id", recipientID.ToString());
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -197,9 +208,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IConnection>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IConnection>>
             (
                 "users/@me/connections",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }

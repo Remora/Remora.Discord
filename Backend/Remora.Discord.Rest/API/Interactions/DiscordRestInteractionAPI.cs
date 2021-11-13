@@ -35,6 +35,9 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -46,14 +49,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestInteractionAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestInteractionAPI
-        (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions
-        )
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -93,7 +92,7 @@ namespace Remora.Discord.Rest.API
                     "The response data may not contain user-supplied attachments; they would be overwritten by this " +
                     $"call. Pass your desired attachments in the {nameof(attachments)} parameter instead."
                 ),
-                _ => await this.DiscordHttpClient.PostAsync
+                _ => await this.RestHttpClient.PostAsync
                 (
                     $"interactions/{interactionID}/{interactionToken}/callback",
                     b =>
@@ -130,6 +129,7 @@ namespace Remora.Discord.Rest.API
                         }
 
                         b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
+                        b.WithRateLimitContext();
                     },
                     ct
                 )
@@ -144,9 +144,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IMessage>
+            return this.RestHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{interactionToken}/messages/@original",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -174,7 +175,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IMessage>
+            return await this.RestHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}/messages/@original",
                 b =>
@@ -216,7 +217,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -230,9 +232,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{applicationID}/{token}/messages/@original",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -254,7 +257,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IMessage>
+            return this.RestHttpClient.PostAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}",
                 b =>
@@ -300,7 +303,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("flags", flags, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -315,9 +319,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IMessage>
+            return this.RestHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -346,7 +351,7 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IMessage>
+            return await this.RestHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
                 b =>
@@ -388,7 +393,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -403,9 +409,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{applicationID}/{token}/messages/{messageID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }

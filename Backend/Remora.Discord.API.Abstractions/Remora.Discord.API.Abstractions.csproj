@@ -20,6 +20,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest.Core\Remora.Rest.Core.csproj" />
       <ProjectReference Include="..\Remora.Discord.Core\Remora.Discord.Core.csproj" />
     </ItemGroup>
 

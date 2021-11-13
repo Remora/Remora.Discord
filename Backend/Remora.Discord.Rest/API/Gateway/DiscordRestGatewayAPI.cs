@@ -27,6 +27,8 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -38,23 +40,33 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The specialized Discord Http client.</param>
+        /// <param name="restHttpClient">The specialized Discord Http client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestGatewayAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestGatewayAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway", ct: ct);
+            return this.RestHttpClient.GetAsync<IGatewayEndpoint>
+            (
+                "gateway",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<IGatewayEndpoint>("gateway/bot", ct: ct);
+            return this.RestHttpClient.GetAsync<IGatewayEndpoint>
+            (
+                "gateway/bot",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
     }
 }

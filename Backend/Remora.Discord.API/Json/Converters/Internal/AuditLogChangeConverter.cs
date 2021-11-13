@@ -30,6 +30,8 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Core;
+using Remora.Rest.Core;
+using Remora.Rest.Json;
 
 namespace Remora.Discord.API.Json;
 
@@ -143,7 +145,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
 
         if (KeyConverters.TryGetValue(key, out var keyConverter))
         {
-            options = options.Clone();
+            options = new(options);
             options.Converters.Add(keyConverter);
         }
 

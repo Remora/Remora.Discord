@@ -37,6 +37,7 @@ using Remora.Discord.Commands.Tests.Data.Events;
 using Remora.Discord.Commands.Tests.TestBases;
 using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 

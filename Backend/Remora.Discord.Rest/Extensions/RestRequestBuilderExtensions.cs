@@ -21,8 +21,10 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.Core;
-using Remora.Discord.Rest.API;
+using Polly;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 
 namespace Remora.Discord.Rest.Extensions
 {
@@ -44,20 +46,15 @@ namespace Remora.Discord.Rest.Extensions
         }
 
         /// <summary>
-        /// Adds a header to the request, provided the value is defined.
+        /// Sets up a Polly context with an endpoint for rate limiting purposes.
         /// </summary>
         /// <param name="builder">The request builder.</param>
-        /// <param name="name">The name of the header.</param>
-        /// <param name="value">The value of the header.</param>
-        /// <returns>The builder, potentially with the header.</returns>
-        public static RestRequestBuilder AddHeader(this RestRequestBuilder builder, string name, Optional<string> value)
+        /// <returns>The builder, with the context.</returns>
+        public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder)
         {
-            if (!value.HasValue)
-            {
-                return builder;
-            }
+            var context = new Context { { "endpoint", builder.Endpoint } };
+            builder.With(r => r.SetPolicyExecutionContext(context));
 
-            builder.AddHeader(name, value.Value);
             return builder;
         }
     }

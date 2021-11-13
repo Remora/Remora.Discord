@@ -52,7 +52,7 @@ namespace Remora.Discord.Gateway.Tests.Tests
             /// Tests whether a type not implementing IResponder returns true.
             /// </summary>
             [Fact]
-            public void ReturnsFalseForTypeImplementingIResponder()
+            public void ReturnsFalseForTypeNotImplementingIResponder()
             {
                 var type = typeof(string);
                 var doesImplementResponder = type.IsResponder();

@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest\Remora.Rest.csproj" />
       <ProjectReference Include="..\Remora.Discord.API\Remora.Discord.API.csproj" />
     </ItemGroup>
 

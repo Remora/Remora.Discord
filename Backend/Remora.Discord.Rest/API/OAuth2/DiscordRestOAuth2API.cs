@@ -27,6 +27,8 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -38,10 +40,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestOAuth2API"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestOAuth2API(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestOAuth2API(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -51,9 +53,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IApplication>
+            return this.RestHttpClient.GetAsync<IApplication>
             (
                 "oauth2/applications/@me",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -64,9 +67,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IAuthorizationInformation>
+            return this.RestHttpClient.GetAsync<IAuthorizationInformation>
             (
                 "oauth2/@me",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }

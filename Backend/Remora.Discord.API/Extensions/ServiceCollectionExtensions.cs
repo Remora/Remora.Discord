@@ -23,6 +23,7 @@
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -33,6 +34,9 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Rest.Extensions;
+using Remora.Rest.Json;
+using Remora.Rest.Json.Policies;
 
 namespace Remora.Discord.API.Extensions;
 
@@ -43,23 +47,32 @@ namespace Remora.Discord.API.Extensions;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Adds supporting services for the Discord API.
+    /// Configures Discord-specific JSON converters.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="optionsName">The name of the serializer options, if any.</param>
     /// <param name="allowUnknownEvents">Whether the API will deserialize unknown events.</param>
     /// <returns>The service collection, with the services.</returns>
-    public static IServiceCollection AddDiscordApi
+    public static IServiceCollection ConfigureDiscordJsonConverters
     (
         this IServiceCollection serviceCollection,
+        string? optionsName = "Discord",
         bool allowUnknownEvents = true
     )
     {
+        var snakeCase = new SnakeCaseNamingPolicy();
+
+        serviceCollection.TryAddSingleton(snakeCase);
+        serviceCollection.ConfigureRestJsonConverters(optionsName);
+
         serviceCollection
             .Configure<JsonSerializerOptions>
             (
+                optionsName,
                 options =>
                 {
-                    var snakeCasePolicy = new SnakeCaseNamingPolicy();
+                    options.PropertyNamingPolicy = snakeCase;
+                    options.DictionaryKeyPolicy = snakeCase;
 
                     options.Converters.Add(new PayloadConverter(allowUnknownEvents));
 
@@ -92,18 +105,9 @@ public static class ServiceCollectionExtensions
                         .AddStickerObjectConverters();
 
                     options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
+                    options.AddConverter<PropertyErrorDetailsConverter>();
 
-                    options
-                        .AddConverter<OptionalConverterFactory>()
-                        .AddConverter<NullableConverterFactory>()
-                        .AddConverter<SnowflakeConverter>()
-                        .AddConverter<ColorConverter>()
-                        .AddConverter<PropertyErrorDetailsConverter>()
-                        .AddConverter<OneOfConverterFactory>()
-                        .AddConverter<ISO8601DateTimeOffsetConverter>();
-
-                    options.PropertyNamingPolicy = snakeCasePolicy;
-                    options.DictionaryKeyPolicy = snakeCasePolicy;
+                    options.Converters.Insert(0, new SnowflakeConverter(Constants.DiscordEpoch));
                 }
             );
 

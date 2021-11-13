@@ -24,6 +24,7 @@ using System;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using Remora.Rest;
 
 namespace Remora.Discord.Rest.API
 {
@@ -34,9 +35,9 @@ namespace Remora.Discord.Rest.API
     public abstract class AbstractDiscordRestAPI
     {
         /// <summary>
-        /// Gets the <see cref="Remora.Discord.Rest.DiscordHttpClient"/> available to the API instance.
+        /// Gets the <see cref="RestHttpClient{TError}"/> available to the API instance.
         /// </summary>
-        protected DiscordHttpClient DiscordHttpClient { get; }
+        protected IRestHttpClient RestHttpClient { get; }
 
         /// <summary>
         /// Gets the <see cref="System.Text.Json.JsonSerializerOptions"/> available to the API instance.
@@ -46,22 +47,22 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractDiscordRestAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord-specialized Http client.</param>
+        /// <param name="restHttpClient">The Discord-specialized Http client.</param>
         /// <param name="jsonOptions">The Remora-specialized JSON options.</param>
         protected AbstractDiscordRestAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions
         )
         {
-            this.DiscordHttpClient = discordHttpClient;
-            this.JsonOptions = jsonOptions.Value;
+            this.RestHttpClient = restHttpClient;
+            this.JsonOptions = jsonOptions;
         }
 
-        /// <inheritdoc cref="Remora.Discord.Rest.DiscordHttpClient.WithCustomization"/>
-        public DiscordRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
+        /// <inheritdoc cref="RestHttpClient{TError}.WithCustomization"/>
+        public RestRequestCustomization WithCustomization(Action<RestRequestBuilder> requestCustomizer)
         {
-            return this.DiscordHttpClient.WithCustomization(requestCustomizer);
+            return this.RestHttpClient.WithCustomization(requestCustomizer);
         }
     }
 }

@@ -46,6 +46,7 @@ using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
+using Remora.Rest.Core;
 using Remora.Results;
 using static System.Net.WebSockets.WebSocketCloseStatus;
 

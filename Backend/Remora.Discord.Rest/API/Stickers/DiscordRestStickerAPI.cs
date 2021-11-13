@@ -31,6 +31,9 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -42,27 +45,33 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestStickerAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestStickerAPI
-        (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions
-        )
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
         /// <inheritdoc />
         public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<ISticker>($"stickers/{id}", ct: ct);
+            return this.RestHttpClient.GetAsync<ISticker>
+            (
+                $"stickers/{id}",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
         public virtual Task<Result<INitroStickerPacks>> ListNitroStickerPacksAsync(CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<INitroStickerPacks>("sticker-packs", ct: ct);
+            return this.RestHttpClient.GetAsync<INitroStickerPacks>
+            (
+                "sticker-packs",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -72,7 +81,12 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<ISticker>>($"guilds/{guildId}/stickers", ct: ct);
+            return this.RestHttpClient.GetAsync<IReadOnlyList<ISticker>>
+            (
+                $"guilds/{guildId}/stickers",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -83,7 +97,12 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<ISticker>($"guilds/{guildId}/stickers/{stickerId}", ct: ct);
+            return this.RestHttpClient.GetAsync<ISticker>
+            (
+                $"guilds/{guildId}/stickers/{stickerId}",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -116,7 +135,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
             }
 
-            return await this.DiscordHttpClient.PostAsync<ISticker>
+            return await this.RestHttpClient.PostAsync<ISticker>
             (
                 $"guilds/{guildId}/stickers",
                 b => b
@@ -124,7 +143,8 @@ namespace Remora.Discord.Rest.API
                     .AddContent(new StringContent(name), nameof(name))
                     .AddContent(new StringContent(description), nameof(description))
                     .AddContent(new StringContent(tags), nameof(tags))
-                    .AddContent(new StreamContent(file.Content), nameof(file), file.Name),
+                    .AddContent(new StreamContent(file.Content), nameof(file), file.Name)
+                    .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -159,7 +179,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
             }
 
-            return await this.DiscordHttpClient.PatchAsync<ISticker>
+            return await this.RestHttpClient.PatchAsync<ISticker>
             (
                 $"guilds/{guildId}/stickers/{stickerId}",
                 b => b
@@ -172,7 +192,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("description", description, this.JsonOptions);
                             json.Write("tags", tags, this.JsonOptions);
                         }
-                    ),
+                    )
+                    .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -186,10 +207,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"guilds/{guildId}/stickers/{stickerId}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
