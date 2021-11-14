@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Core;
 using Remora.Rest.Core;
 

@@ -23,7 +23,7 @@
 using System.IO;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Core
+namespace Remora.Discord.API.Abstractions.Rest
 {
     /// <summary>
     /// Represents a file with its associated information.
