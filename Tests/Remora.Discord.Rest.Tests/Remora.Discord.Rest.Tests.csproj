@@ -6,11 +6,10 @@
 
     <ItemGroup>
         <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
+        <PackageReference Include="Remora.Rest.Xunit" Version="1.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest.Xunit\Remora.Rest.Xunit.csproj" />
-      <ProjectReference Include="..\..\..\Remora.Rest\Remora.Rest\Remora.Rest.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
