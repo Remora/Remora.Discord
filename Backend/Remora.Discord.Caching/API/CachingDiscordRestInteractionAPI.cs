@@ -30,7 +30,6 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;

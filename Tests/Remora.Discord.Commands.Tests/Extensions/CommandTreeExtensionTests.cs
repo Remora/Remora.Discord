@@ -33,7 +33,6 @@ using Remora.Discord.Commands.Tests.Data.Exclusion;
 using Remora.Discord.Commands.Tests.Data.InternalLimits;
 using Remora.Discord.Commands.Tests.Data.Valid;
 using Remora.Discord.Commands.Tests.Data.Valid.Basics;
-using Remora.Discord.Core;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
 using Xunit;

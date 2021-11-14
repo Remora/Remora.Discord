@@ -25,7 +25,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;

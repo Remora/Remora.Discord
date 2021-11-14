@@ -31,7 +31,6 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Contexts;
-using Remora.Discord.Core;
 using Remora.Discord.Tests;
 using Remora.Rest.Core;
 using Xunit;

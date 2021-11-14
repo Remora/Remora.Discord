@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Core
+namespace Remora.Discord.Rest
 {
     /// <summary>
     /// Represents a storage class for a single token.

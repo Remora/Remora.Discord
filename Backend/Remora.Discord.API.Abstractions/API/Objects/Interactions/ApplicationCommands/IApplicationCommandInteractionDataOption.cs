@@ -23,7 +23,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
-using Remora.Discord.Core;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects

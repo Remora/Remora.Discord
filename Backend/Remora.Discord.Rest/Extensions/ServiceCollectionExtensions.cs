@@ -36,7 +36,6 @@ using Polly.Contrib.WaitAndRetry;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Polly;
 using Remora.Rest;

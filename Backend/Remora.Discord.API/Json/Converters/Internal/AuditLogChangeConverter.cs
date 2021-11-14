@@ -29,7 +29,6 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
 using Remora.Rest.Core;
 using Remora.Rest.Json;
 
