@@ -996,6 +996,7 @@ namespace Remora.Discord.Rest.API
             Snowflake messageID,
             string name,
             Optional<AutoArchiveDuration> autoArchiveDuration = default,
+            Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -1016,6 +1017,7 @@ namespace Remora.Discord.Rest.API
                     {
                         json.WriteString("name", name);
                         json.Write("auto_archive_duration", autoArchiveDuration, this.JsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
                 ),
                 ct: ct
@@ -1029,8 +1031,9 @@ namespace Remora.Discord.Rest.API
             string name,
             AutoArchiveDuration autoArchiveDuration,
             ChannelType type,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         ) =>
             StartThreadWithoutMessageAsync
@@ -1039,8 +1042,9 @@ namespace Remora.Discord.Rest.API
                 name,
                 autoArchiveDuration,
                 new Optional<ChannelType>(type),
-                reason,
                 isInvitable,
+                rateLimitPerUser,
+                reason,
                 ct
             );
 
@@ -1051,8 +1055,9 @@ namespace Remora.Discord.Rest.API
             string name,
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -1074,6 +1079,7 @@ namespace Remora.Discord.Rest.API
                         json.WriteNumber("auto_archive_duration", (int)autoArchiveDuration);
                         json.Write("type", type, this.JsonOptions);
                         json.Write("invitable", isInvitable, this.JsonOptions);
+                        json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
                 ),
                 ct: ct

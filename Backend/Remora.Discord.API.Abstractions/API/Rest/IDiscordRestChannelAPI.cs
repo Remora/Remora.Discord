@@ -733,6 +733,9 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="messageID">The message to start the thread from.</param>
         /// <param name="name">The name of the thread.</param>
         /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
+        /// <param name="rateLimitPerUser">
+        /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
+        /// </param>
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
@@ -742,6 +745,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake messageID,
             string name,
             Optional<AutoArchiveDuration> autoArchiveDuration,
+            Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         );
@@ -755,8 +759,11 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="type">
         /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
         /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the thread.</param>
+        /// <param name="rateLimitPerUser">
+        /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
+        /// </param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         [Obsolete("Pass the channel type explicitly. This method will be removed in API v10.")]
@@ -766,8 +773,9 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 
@@ -780,8 +788,11 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="type">
         /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
         /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the thread.</param>
+        /// <param name="rateLimitPerUser">
+        /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
+        /// </param>
+        /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A result which may or may not have succeeded.</returns>
         Task<Result<IChannel>> StartThreadWithoutMessageAsync
@@ -790,8 +801,9 @@ namespace Remora.Discord.API.Abstractions.Rest
             string name,
             AutoArchiveDuration autoArchiveDuration,
             ChannelType type,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         );
 

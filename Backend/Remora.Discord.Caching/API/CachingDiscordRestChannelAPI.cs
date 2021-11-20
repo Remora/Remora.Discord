@@ -438,6 +438,7 @@ namespace Remora.Discord.Caching.API
             Snowflake messageID,
             string name,
             Optional<AutoArchiveDuration> autoArchiveDuration = default,
+            Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -448,6 +449,7 @@ namespace Remora.Discord.Caching.API
                 messageID,
                 name,
                 autoArchiveDuration,
+                rateLimitPerUser,
                 reason,
                 ct
             );
@@ -470,8 +472,9 @@ namespace Remora.Discord.Caching.API
             string name,
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -481,8 +484,9 @@ namespace Remora.Discord.Caching.API
                 name,
                 autoArchiveDuration,
                 type,
-                reason,
                 isInvitable,
+                rateLimitPerUser,
+                reason,
                 ct
             );
 

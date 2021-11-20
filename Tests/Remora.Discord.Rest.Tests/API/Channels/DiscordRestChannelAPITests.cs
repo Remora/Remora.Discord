@@ -2326,6 +2326,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var name = "abba";
                 var duration = AutoArchiveDuration.Hour;
                 var reason = "test";
+                var rateLimit = 1;
 
                 var api = CreateAPI
                 (
@@ -2343,12 +2344,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
                                     .WithProperty("auto_archive_duration", p => p.Is((int)duration))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimit))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
                 );
 
-                var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration, reason);
+                var result = await api.StartThreadWithMessageAsync(channelId, messageId, name, duration, rateLimit, reason);
                 ResultAssert.Successful(result);
             }
         }
@@ -2369,8 +2371,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var name = "abba";
                 var duration = AutoArchiveDuration.Hour;
                 var type = ChannelType.GuildPrivateThread;
-                var reason = "test";
                 var isInvitable = true;
+                var rateLimit = 1;
+                var reason = "test";
 
                 var api = CreateAPI
                 (
@@ -2390,6 +2393,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                                     .WithProperty("auto_archive_duration", p => p.Is((int)duration))
                                     .WithProperty("type", p => p.Is((int)type))
                                     .WithProperty("invitable", p => p.Is(isInvitable))
+                                    .WithProperty("rate_limit_per_user", p => p.Is(rateLimit))
                             )
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
@@ -2401,8 +2405,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     name,
                     duration,
                     type,
-                    reason,
-                    isInvitable
+                    isInvitable,
+                    rateLimit,
+                    reason
                 );
 
                 ResultAssert.Successful(result);
