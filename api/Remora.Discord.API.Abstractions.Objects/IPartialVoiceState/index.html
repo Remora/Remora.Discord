@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -402,7 +408,7 @@ public interface IPartialVoiceState</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/A82EE01F">ChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the channel ID this user is connected to.
@@ -411,7 +417,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/D9CB19AD">GuildID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the guild ID this voice state is for.
@@ -420,7 +426,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/9C378AB0">IsDeafened</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is deafened by the server.
@@ -429,7 +435,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/5E2A562C">IsMuted</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is muted by the server.
@@ -438,7 +444,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/67C2EBBA">IsSelfDeafened</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is locally deafened.
@@ -447,7 +453,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/B11DF4BA">IsSelfMuted</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is locally muted.
@@ -456,7 +462,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/1EBC0F44">IsStreaming</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is currently streaming using "Go Live".
@@ -465,7 +471,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/EA0670AE">IsSuppressed</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is muted by the current user.
@@ -474,7 +480,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/0F9E8CB4">IsVideoEnabled</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user's camera is enabled.
@@ -483,7 +489,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/D439BE9D">Member</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the guild member this voice state is for.
@@ -492,7 +498,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/E11D448B">Request<wbr>To<wbr>Speak<wbr>Timestamp</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;DateTimeOffset?&gt;<wbr></td>
+								<td>Optional<wbr>&lt;DateTimeOffset?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the time at which the user requested to speak.
@@ -501,7 +507,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/B00D35B9">SessionID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the session ID for this voice state.
@@ -510,7 +516,7 @@ public interface IPartialVoiceState</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState/A8AE82B2">UserID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user ID this voice state is for.

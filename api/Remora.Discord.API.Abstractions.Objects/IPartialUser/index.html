@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -338,8 +344,8 @@
 								<dd>
 									<ul class="list-unstyled">
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate">IUserUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -351,10 +357,10 @@
 class Type type-node
 	Implementing0["IUser"]-.-&gt;Type
 	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser"
-	Implementing1["IUserMention"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
-	Implementing2["IUserUpdate"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
+	Implementing1["IUserUpdate"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate"
+	Implementing2["IUserMention"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention"
 
 						</div>
 					</div>
@@ -405,7 +411,7 @@ public interface IPartialUser</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/CDC45EE3">AccentColour</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;Color?&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Color?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's banner colour.
@@ -414,7 +420,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/63C1EDF9">Avatar</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash?</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash?</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's avatar hash.
@@ -423,7 +429,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/AB0B0780">Banner</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash?</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash?</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's banner.
@@ -432,7 +438,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/91E6EF5D">Discriminator</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;ushort&gt;<wbr></td>
+								<td>Optional<wbr>&lt;ushort&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's 4-digit discord tag.
@@ -441,7 +447,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/371A31A8">Email</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string?&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's email address.
@@ -450,7 +456,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/F927A644">Flags</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/UserFlags">UserFlags</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/UserFlags">UserFlags</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the flags on the user's account.
@@ -459,7 +465,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/3FC275C8">ID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the user.
@@ -468,7 +474,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/F3103AA2">IsBot</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is a bot, belonging to an OAuth2 application.
@@ -477,7 +483,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/02E383D7">IsMFAEnabled</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user has multi-factor authentication enabled on their account.
@@ -486,7 +492,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/F4168106">IsSystem</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the user is an official Discord system user (part of the urgent message
@@ -496,7 +502,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/4FC08639">IsVerified</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the email on the account has been verified.
@@ -505,7 +511,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/D4751AAE">Locale</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's chosen language option.
@@ -514,7 +520,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/B1406EA8">PremiumType</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumType">PremiumType</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumType">PremiumType</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user's premium status.
@@ -523,7 +529,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/4DDA1A57">PublicFlags</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/UserFlags">UserFlags</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/UserFlags">UserFlags</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the flags on a user's account.
@@ -532,7 +538,7 @@ public interface IPartialUser</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser/D20BFAF6">Username</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the username of the user. This is not a unique value.

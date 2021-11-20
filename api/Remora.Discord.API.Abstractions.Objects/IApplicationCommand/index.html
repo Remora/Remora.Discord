@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -391,7 +397,7 @@ public interface IApplicationCommand</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/15A2EFFB">ApplicationID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the application.
@@ -400,7 +406,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/A0225641">DefaultPermission</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the command is enabled by default when added to a guild.
@@ -418,7 +424,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/7F61CFE9">GuildID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the guild the command belongs to.
@@ -427,7 +433,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/9116AE00">ID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the command.
@@ -445,7 +451,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/21E56E4B">Options</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption">I<wbr>Application<wbr>Command<wbr>Option</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption">I<wbr>Application<wbr>Command<wbr>Option</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the parameters of the command.
@@ -454,7 +460,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/FB097041">Type</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandType">Application<wbr>Command<wbr>Type</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandType">Application<wbr>Command<wbr>Type</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the type of the command.
@@ -463,7 +469,7 @@ public interface IApplicationCommand</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand/65CC4724">Version</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets a value that increments on substantial changes.

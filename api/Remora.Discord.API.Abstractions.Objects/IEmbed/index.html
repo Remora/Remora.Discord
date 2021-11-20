@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -391,7 +397,7 @@ public interface IEmbed</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/704A92C8">Author</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedAuthor">IEmbedAuthor</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedAuthor">IEmbedAuthor</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the author information.
@@ -400,7 +406,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/76F7C58F">Colour</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;Color&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Color&gt;<wbr></td>
 								<td>
 									<div>
     Gets the colour code of the embed.
@@ -409,7 +415,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/ACD1E124">Description</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the description of the embed.
@@ -418,7 +424,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/3071D80B">Fields</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedField">IEmbedField</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedField">IEmbedField</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the embed fields.
@@ -427,7 +433,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/EB970C97">Footer</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedFooter">IEmbedFooter</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedFooter">IEmbedFooter</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the footer information.
@@ -436,7 +442,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/9D200C92">Image</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedImage">IEmbedImage</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedImage">IEmbedImage</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the image information.
@@ -445,7 +451,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/79D0D9A0">Provider</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedProvider">IEmbedProvider</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedProvider">IEmbedProvider</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the provider information.
@@ -454,7 +460,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/B22D0513">Thumbnail</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedThumbnail">IEmbedThumbnail</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedThumbnail">IEmbedThumbnail</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the thumbnail information.
@@ -463,7 +469,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/6AED8475">Timestamp</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;DateTimeOffset&gt;<wbr></td>
+								<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
 								<td>
 									<div>
     Gets the timestamp of the embed content.
@@ -472,7 +478,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/A95C077C">Title</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the title of the embed.
@@ -481,7 +487,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/5DB04FD5">Type</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/EmbedType">EmbedType</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/EmbedType">EmbedType</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the type of the embed.
@@ -490,7 +496,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/D226ACD6">Url</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the URL of the embed.
@@ -499,7 +505,7 @@ public interface IEmbed</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed/EEFEF62B">Video</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedVideo">IEmbedVideo</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedVideo">IEmbedVideo</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the video information.

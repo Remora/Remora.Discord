@@ -140,7 +140,6 @@
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions">Service<wbr>Collection<wbr>Extensions</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/Utf8JsonWriterExtensions">Utf8<wbr>Json<wbr>Writer<wbr>Extensions</a></li>
 
 
                     </ul>
@@ -162,7 +161,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Defines extensions to the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></code> class.
+    Defines extensions to the <code class="cs">RestRequestBuilder</code> class.
     </div>
 
 		<div class="panel panel-default">
@@ -241,8 +240,8 @@ public static class RestRequestBuilderExtensions</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/B78D731B">AddAuditLogReason<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/3FE58F61">AddAuditLogReason<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></td>
+								<td>RestRequestBuilder</td>
 								<td>
 									<div>
     Adds an audit log reason header to the request, provided the value is defined.
@@ -251,11 +250,11 @@ public static class RestRequestBuilderExtensions</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/3C645E1D">AddHeader<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>string, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/RestRequestBuilder">RestRequestBuilder</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/756BC3D5">WithRateLimitContext<wbr>(RestRequestBuilder)<wbr></a></td>
+								<td>RestRequestBuilder</td>
 								<td>
 									<div>
-    Adds a header to the request, provided the value is defined.
+    Sets up a Polly context with an endpoint for rate limiting purposes.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

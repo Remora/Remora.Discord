@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -506,6 +512,36 @@ public enum AuditLogEvent</code></pre>
 								<td>
 									<div>
     An emoji was edited.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/FD6AC68B">Guild<wbr>Scheduled<wbr>Event<wbr>Create</a></td>
+								<td>100</td>
+								<td>
+									<div>
+    A scheduled guild event was created.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/81F6023E">Guild<wbr>Scheduled<wbr>Event<wbr>Delete</a></td>
+								<td>102</td>
+								<td>
+									<div>
+    A scheduled guild event was deleted.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/7EBF359C">Guild<wbr>Scheduled<wbr>Event<wbr>Update</a></td>
+								<td>101</td>
+								<td>
+									<div>
+    A scheduled guild event was updated.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -786,6 +822,36 @@ public enum AuditLogEvent</code></pre>
 								<td>
 									<div>
     A sticker was updated.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/1BC10157">ThreadCreate</a></td>
+								<td>110</td>
+								<td>
+									<div>
+    A thread was created.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/675DC5E2">ThreadDelete</a></td>
+								<td>112</td>
+								<td>
+									<div>
+    A thread was deleted.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent/9814F240">ThreadUpdate</a></td>
+								<td>111</td>
+								<td>
+									<div>
+    A thread was updated.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>

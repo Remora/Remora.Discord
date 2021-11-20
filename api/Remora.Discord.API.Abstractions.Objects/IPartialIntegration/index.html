@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -337,9 +343,9 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate">IIntegrationUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -349,12 +355,12 @@
 							graph BT
 	Type["IPartialIntegration"]
 class Type type-node
-	Implementing0["IIntegrationCreate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate"
-	Implementing1["IIntegrationUpdate"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate"
-	Implementing2["IIntegration"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
+	Implementing0["IIntegrationUpdate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate"
+	Implementing1["IIntegration"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
+	Implementing2["IIntegrationCreate"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate"
 
 						</div>
 					</div>
@@ -405,7 +411,7 @@ public interface IPartialIntegration</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/1E05CDDF">Account</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAccount">IAccount</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAccount">IAccount</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the integration's account information.
@@ -414,7 +420,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/6419FE77">Application</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the bot/OAuth2 application for Discord integrations.
@@ -423,7 +429,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/52237745">EnableEmoticons</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether emoticons should be synced for this integration (twitch only, currently).
@@ -432,7 +438,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/F5A0804D">ExpireBehaviour</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the behaviour of expiring subscribers.
@@ -441,7 +447,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/0C008ABE">ExpireGracePeriod</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;TimeSpan&gt;<wbr></td>
+								<td>Optional<wbr>&lt;TimeSpan&gt;<wbr></td>
 								<td>
 									<div>
     Gets the grace period (in days) before expiring subscribers.
@@ -450,7 +456,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/6CC97358">ID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the integration.
@@ -459,7 +465,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/C30C76DA">IsEnabled</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the integration is enabled.
@@ -468,7 +474,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/8ADB2D37">IsRevoked</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether this integration has been revoked.
@@ -477,7 +483,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/3A2D7186">IsSyncing</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the integration is syncing.
@@ -486,7 +492,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/BC28F324">Name</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the name of the integration.
@@ -495,7 +501,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/63158E1F">RoleID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the role that this integration uses for subscribers.
@@ -504,7 +510,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/342826F7">SubscriberCount</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the number of subscribers this integration has.
@@ -513,7 +519,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/38B15B04">SyncedAt</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;DateTimeOffset&gt;<wbr></td>
+								<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
 								<td>
 									<div>
     Gets the time when the integration was last synced.
@@ -522,7 +528,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/93010EF6">Type</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the type of integration.
@@ -531,7 +537,7 @@ public interface IPartialIntegration</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration/F38043F7">User</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the user for this integration.

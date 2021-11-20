@@ -186,6 +186,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions">I<wbr>Guild<wbr>Application<wbr>Command<wbr>Permissions</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview">IGuildPreview</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
@@ -273,6 +276,9 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel">Explicit<wbr>Content<wbr>Filter<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature">GuildFeature</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel">GuildNSFWLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
@@ -410,7 +416,7 @@ public interface IGuild : IPartialGuild</code></pre>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/C5078E85">AFKChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the ID of the AFK channel.
@@ -428,7 +434,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/30FB8358">ApplicationID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the application ID of the guild creator if it is bot-created.
@@ -437,7 +443,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/6F877E7A">Approximate<wbr>Member<wbr>Count</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the approximate number of members in the guild.
@@ -446,7 +452,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/C84D5F57">Approximate<wbr>Presence<wbr>Count</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the approximate number of non-offline members in the guild.
@@ -464,7 +470,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/C26ABCC4">Channels</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the channels in the guild.
@@ -527,7 +533,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/48C5E12D">ID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the guild.
@@ -545,7 +551,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/6BDCCF20">IsLarge</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether this is considered a large guild.
@@ -554,7 +560,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/A913C4B6">IsOwner</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the current user is the guild's owner.
@@ -563,7 +569,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/89445433">IsUnavailable</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the guild is unavailable due to an outage.
@@ -572,7 +578,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/D32A0C9C">IsWidgetEnabled</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether the server widget is enabled.
@@ -581,7 +587,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/70EF8A9A">JoinedAt</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;DateTimeOffset&gt;<wbr></td>
+								<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
 								<td>
 									<div>
     Gets the time when the current user joined the guild.
@@ -599,7 +605,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/214C7F4C">MaxMembers</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the maximum number of members for the guild.
@@ -608,7 +614,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/A6B0D7B5">MaxPresences</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int?&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the maximum number of presences for the guild. This is null for all but the largest of guilds.
@@ -617,7 +623,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/1A861779">MaxVideoChannelUsers</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the maximum number of users in a video channel.
@@ -626,7 +632,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/03CE1A9D">MemberCount</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the number of members in the guild.
@@ -635,7 +641,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/14561335">Members</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the members in the guild.
@@ -662,7 +668,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/065983AB">OwnerID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the owner.
@@ -671,7 +677,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/4D354255">Permissions</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the permissions for the current user in the guild.
@@ -689,7 +695,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/420E07EC">Premium<wbr>Subscription<wbr>Count</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;int&gt;<wbr></td>
+								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
     Gets the number of boosts the guild currently has.
@@ -707,7 +713,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/06F284EA">Presences</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence">IPartialPresence</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence">IPartialPresence</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the presences of the members in the guild.
@@ -716,7 +722,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/936332E8">Public<wbr>Updates<wbr>Channel<wbr>I<wbr>D</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the ID of the channel where admins and moderators of community-enabled guilds receive notices from
@@ -735,7 +741,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/80B20914">RulesChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the ID of the rules channel, if any. This is the channel where community-enabled guilds can display
@@ -754,7 +760,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/BC752F66">StageInstances</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the stage instances in the guild.
@@ -763,7 +769,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/622425EF">Stickers</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker">ISticker</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the stickers in the guild.
@@ -781,7 +787,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/A5B65FA6">SystemChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the ID of the channel that system messages are sent to.
@@ -790,7 +796,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/36B93D1F">Threads</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the threads in the guild.
@@ -817,7 +823,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/BEAFD5D5">VoiceStates</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the states of members currently in voice channels.
@@ -826,7 +832,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/05B55703">WelcomeScreen</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen">IWelcomeScreen</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen">IWelcomeScreen</a>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the welcome screen shown to new members.
@@ -835,7 +841,7 @@ public interface IGuild : IPartialGuild</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/06DAD823">WidgetChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;Snowflake?&gt;<wbr></td>
 								<td>
 									<div>
     Gets the ID of the channel the widget generates invites to.

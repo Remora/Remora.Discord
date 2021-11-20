@@ -137,8 +137,6 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Commands</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Enum Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 			<li class="header">Interface Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IConnectionProperties">I<wbr>Connection<wbr>Properties</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IGatewayCommand">IGatewayCommand</a></li>
@@ -148,6 +146,8 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification">IShardIdentification</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence">IUpdatePresence</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState">IUpdateVoiceState</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 
 
                     </ul>
@@ -252,7 +252,7 @@ public interface IUpdateVoiceState : IGatewayCommand, IGatewayPayloadData</code>
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState/F18D294E">ChannelID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake?</a></td>
+								<td>Snowflake?</td>
 								<td>
 									<div>
     Gets the channel the client wants to join, or null if disconnecting.
@@ -261,7 +261,7 @@ public interface IUpdateVoiceState : IGatewayCommand, IGatewayPayloadData</code>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState/47B9C4B9">GuildID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the guild that the status should be updated in.

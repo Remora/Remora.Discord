@@ -137,8 +137,6 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Commands</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Enum Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 			<li class="header">Interface Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IConnectionProperties">I<wbr>Connection<wbr>Properties</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IGatewayCommand">IGatewayCommand</a></li>
@@ -148,6 +146,8 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification">IShardIdentification</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence">IUpdatePresence</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState">IUpdateVoiceState</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents">GatewayIntents</a></li>
 
 
                     </ul>
@@ -252,7 +252,7 @@ public interface IRequestGuildMembers : IGatewayCommand, IGatewayPayloadData</co
 						</thead>
 							<tbody><tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers/11768CCE">GuildID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the guild that members should be requested from.
@@ -270,7 +270,7 @@ public interface IRequestGuildMembers : IGatewayCommand, IGatewayPayloadData</co
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers/F09E8A88">Nonce</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets a nonce (unique string) to identify the incoming guild member chunks after the request has been accepted.
@@ -279,7 +279,7 @@ public interface IRequestGuildMembers : IGatewayCommand, IGatewayPayloadData</co
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers/C78623B0">Presences</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;bool&gt;<wbr></td>
+								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
     Gets a value indicating whether we want to fetch the presences of the users.
@@ -288,7 +288,7 @@ public interface IRequestGuildMembers : IGatewayCommand, IGatewayPayloadData</co
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers/E6B9131E">Query</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets a query string that the requested usernames should start with.
@@ -297,7 +297,7 @@ public interface IRequestGuildMembers : IGatewayCommand, IGatewayPayloadData</co
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers/B7DB24A0">UserIDs</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyCollection<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyCollection<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets a collection of user IDs that should be fetched.

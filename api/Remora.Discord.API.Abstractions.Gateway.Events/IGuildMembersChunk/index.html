@@ -156,6 +156,11 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleCreate">IGuildRoleCreate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleDelete">IGuildRoleDelete</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleUpdate">IGuildRoleUpdate</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventCreate">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Create</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventDelete">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Delete</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUpdate">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Update</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserAdd">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User<wbr>Add</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserRemove">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>User<wbr>Remove</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildStickersUpdate">IGuildStickersUpdate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate">IGuildUpdate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IHello">IHello</a></li>
@@ -315,7 +320,7 @@ public interface IGuildMembersChunk : IGatewayEvent, IGatewayPayloadData</code><
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk/BD0A3A27">GuildID</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
     Gets the ID of the guild.
@@ -333,7 +338,7 @@ public interface IGuildMembersChunk : IGatewayEvent, IGatewayPayloadData</code><
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk/D27C5231">Nonce</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;string&gt;<wbr></td>
+								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
     Gets the nonce used in the original request.
@@ -342,7 +347,7 @@ public interface IGuildMembersChunk : IGatewayEvent, IGatewayPayloadData</code><
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk/6116E950">NotFound</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Core/Snowflake">Snowflake</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets a list of guild members that were not found.
@@ -351,7 +356,7 @@ public interface IGuildMembersChunk : IGatewayEvent, IGatewayPayloadData</code><
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk/83A122EB">Presences</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Core/Optional_1">Optional</a><wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPresence">IPresence</a>&gt;<wbr>&gt;<wbr></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPresence">IPresence</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
     Gets the presences of the returned members.
