@@ -736,6 +736,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// <summary>
         /// The sticker animation is too long (currently max 5 seconds).
         /// </summary>
-        StickerAnimationDurationTooLong = 170007
+        StickerAnimationDurationTooLong = 170007,
+
+        /// <summary>
+        /// A finished scheduled event cannot be updated.
+        /// </summary>
+        CannotUpdateFinishedEvent = 180000,
+
+        /// <summary>
+        /// For whatever reason, the system failed to create a stage for the stage event.
+        /// </summary>
+        FailedToCreatedStageForEvent = 180002
     }
 }
