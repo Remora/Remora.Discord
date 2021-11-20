@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IGuildScheduledEventEntityMetadata
 {
     /// <summary>
-    /// Gets the location of the event.
+    /// Gets the location of the event (1-100 characters).
     /// </summary>
     Optional<string> Location { get; }
 }

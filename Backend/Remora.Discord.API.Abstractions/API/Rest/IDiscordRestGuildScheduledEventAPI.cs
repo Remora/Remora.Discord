@@ -57,11 +57,11 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// The channel ID of the scheduled event, if it is for a stage instance or voice channel.
     /// </param>
     /// <param name="entityMetadata">The entity metadata, if any.</param>
-    /// <param name="name">The name of the event.</param>
+    /// <param name="name">The name of the event (1-100 characters).</param>
     /// <param name="privacyLevel">The privacy level of the event.</param>
     /// <param name="scheduledStartTime">The time at which the event is scheduled to start.</param>
     /// <param name="scheduledEndTime">The time at which the event is scheduled to end, if any.</param>
-    /// <param name="description">The description of the event, if any.</param>
+    /// <param name="description">The description of the event, if any (1-100 characters).</param>
     /// <param name="entityType">The entity type of the event.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
@@ -100,11 +100,11 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// <param name="eventID">The ID of the event.</param>
     /// <param name="channelID">The new channel ID associated with the event.</param>
     /// <param name="entityMetadata">The new entity metadata.</param>
-    /// <param name="name">The new name of the event.</param>
+    /// <param name="name">The new name of the event (1-100 characters).</param>
     /// <param name="privacyLevel">The new privacy level of the event.</param>
     /// <param name="scheduledStartTime">The new start time of the event.</param>
     /// <param name="scheduledEndTime">The new end time of the event.</param>
-    /// <param name="description">The new description of the event.</param>
+    /// <param name="description">The new description of the event (1-100 characters).</param>
     /// <param name="entityType">The new entity type associated with the event.</param>
     /// <param name="status">The new status of the event.</param>
     /// <param name="ct">The cancellation token for this operation.</param>

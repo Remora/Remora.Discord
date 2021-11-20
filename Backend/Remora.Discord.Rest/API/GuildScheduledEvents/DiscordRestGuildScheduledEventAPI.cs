@@ -74,7 +74,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result<IGuildScheduledEvent>> CreateGuildScheduledEventAsync
+    public async Task<Result<IGuildScheduledEvent>> CreateGuildScheduledEventAsync
     (
         Snowflake guildID,
         Optional<Snowflake> channelID,
@@ -88,7 +88,39 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.PostAsync<IGuildScheduledEvent>
+        if (name.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The name must be between 1 and 100 characters in length."
+            );
+        }
+
+        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The description must be between 1 and 100 characters in length."
+            );
+        }
+
+        if
+        (
+            entityMetadata.HasValue &&
+            entityMetadata.Value.Location.HasValue &&
+            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+        )
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The location metadata must be between 1 and 100 characters in length."
+            );
+        }
+
+        return await this.DiscordHttpClient.PostAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events",
             b => b.WithJson
@@ -125,7 +157,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result<IGuildScheduledEvent>> ModifyGuildScheduledEventAsync
+    public async Task<Result<IGuildScheduledEvent>> ModifyGuildScheduledEventAsync
     (
         Snowflake guildID,
         Snowflake eventID,
@@ -141,7 +173,39 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.PatchAsync<IGuildScheduledEvent>
+        if (name.HasValue && name.Value.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The name must be between 1 and 100 characters in length."
+            );
+        }
+
+        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The description must be between 1 and 100 characters in length."
+            );
+        }
+
+        if
+        (
+            entityMetadata.HasValue &&
+            entityMetadata.Value.Location.HasValue &&
+            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+        )
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The location metadata must be between 1 and 100 characters in length."
+            );
+        }
+
+        return await this.DiscordHttpClient.PatchAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
             b => b.WithJson
