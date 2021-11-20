@@ -1,5 +1,5 @@
 //
-//  ServiceCollectionExtensions.cs
+//  GuildScheduledEventStatus.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Unstable.Extensions
+/// <summary>
+/// Enumerates various states a scheduled event can be in.
+/// </summary>
+public enum GuildScheduledEventStatus
 {
     /// <summary>
-    /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
+    /// The event is scheduled, but hasn't begun yet.
     /// </summary>
-    [PublicAPI]
-    public static class ServiceCollectionExtensions
-    {
-        /// <summary>
-        /// Adds experimental features from the Discord API.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <returns>The service collection, with the services.</returns>
-        public static IServiceCollection AddExperimentalDiscordApi
-        (
-            this IServiceCollection serviceCollection
-        )
-        {
-            return serviceCollection;
-        }
-    }
+    Scheduled = 1,
+
+    /// <summary>
+    /// The event is currently ongoing.
+    /// </summary>
+    Active = 2,
+
+    /// <summary>
+    /// The event has completed.
+    /// </summary>
+    Completed = 3,
+
+    /// <summary>
+    /// The event has been canceled.
+    /// </summary>
+    Canceled = 4
 }

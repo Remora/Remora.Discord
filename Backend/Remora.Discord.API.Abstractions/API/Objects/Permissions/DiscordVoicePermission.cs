@@ -88,6 +88,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         RequestToSpeak = 32,
 
         /// <summary>
+        /// Allows the user to manage scheduled events.
+        /// </summary>
+        ManageEvents = 33,
+
+        /// <summary>
         /// Allows for launching activities in a voice channel.
         /// </summary>
         StartEmbeddedActivities = 39

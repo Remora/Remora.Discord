@@ -58,6 +58,7 @@ namespace Remora.Discord.Caching.API
             string inviteCode,
             Optional<bool> withCounts = default,
             Optional<bool> withExpiration = default,
+            Optional<Snowflake> guildScheduledEventID = default,
             CancellationToken ct = default
         )
         {
@@ -67,7 +68,15 @@ namespace Remora.Discord.Caching.API
                 return Result<IInvite>.FromSuccess(cachedInstance);
             }
 
-            var getInvite = await base.GetInviteAsync(inviteCode, withCounts, withExpiration, ct);
+            var getInvite = await base.GetInviteAsync
+            (
+                inviteCode,
+                withCounts,
+                withExpiration,
+                guildScheduledEventID,
+                ct
+            );
+
             if (!getInvite.IsSuccess)
             {
                 return getInvite;

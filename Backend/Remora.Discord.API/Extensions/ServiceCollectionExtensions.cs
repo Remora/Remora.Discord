@@ -23,6 +23,7 @@
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -73,6 +74,7 @@ public static class ServiceCollectionExtensions
                         .AddEmojiObjectConverters()
                         .AddGatewayObjectConverters()
                         .AddGuildObjectConverters()
+                        .AddGuildScheduledEventObjectConverters()
                         .AddImageObjectConverters()
                         .AddIntegrationObjectConverters()
                         .AddInviteObjectConverters()
@@ -271,6 +273,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildRoleCreate, GuildRoleCreate>();
         options.AddDataObjectConverter<IGuildRoleUpdate, GuildRoleUpdate>();
         options.AddDataObjectConverter<IGuildRoleDelete, GuildRoleDelete>();
+
+        // Guild scheduled events
+        options.AddDataObjectConverter<IGuildScheduledEventCreate, GuildScheduledEventCreate>();
+        options.AddDataObjectConverter<IGuildScheduledEventDelete, GuildScheduledEventDelete>();
+        options.AddDataObjectConverter<IGuildScheduledEventUpdate, GuildScheduledEventUpdate>();
 
         // Invites
         options.AddDataObjectConverter<IInviteCreate, InviteCreate>()
@@ -524,6 +531,31 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
         options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
         options.AddDataObjectConverter<IGuildThreadQueryResponse, GuildThreadQueryResponse>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle guild objects.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddGuildScheduledEventObjectConverters(this JsonSerializerOptions options)
+    {
+        options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
+        options.AddDataObjectConverter<IGuildScheduledEventEntityMetadata, GuildScheduledEventEntityMetadata>()
+            .WithPropertyName(m => m.SpeakerIDs, "speaker_ids");
+
+        options.AddDataObjectConverter<IGuildScheduledEventSubscribedUser, GuildScheduledEventSubscribedUser>()
+            .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
+            .WithPropertyName(u => u.IsBot, "bot")
+            .WithPropertyName(u => u.IsSystem, "system")
+            .WithPropertyName(u => u.IsVerified, "verified")
+            .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
+            .WithPropertyName(u => u.AccentColour, "accent_color");
+
+        options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
+        options.AddDataObjectConverter<IGuildScheduledEventUsersResponse, GuildScheduledEventUsersResponse>();
 
         return options;
     }

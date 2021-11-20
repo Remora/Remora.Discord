@@ -45,6 +45,23 @@ namespace Remora.Discord.Rest.Extensions
         (
             this Utf8JsonWriter json,
             string name,
+            in T value,
+            JsonSerializerOptions? jsonOptions = default
+        ) => json.Write(name, new Optional<T>(value), jsonOptions);
+
+        /// <summary>
+        /// Writes the given optional to the json writer as its serialized representation. If the value is null, a null
+        /// is written.
+        /// </summary>
+        /// <param name="json">The JSON writer.</param>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="jsonOptions">The json options, if any.</param>
+        /// <typeparam name="T">The underlying type.</typeparam>
+        public static void Write<T>
+        (
+            this Utf8JsonWriter json,
+            string name,
             in Optional<T> value,
             JsonSerializerOptions? jsonOptions = default
         )

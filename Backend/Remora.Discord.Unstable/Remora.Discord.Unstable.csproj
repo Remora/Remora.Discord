@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
+        <RootNamespace>Remora.Discord</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -30,6 +31,11 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
       <PackageReference Include="System.Text.Json" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="API\Abstractions" />
+      <Folder Include="Unstable" />
     </ItemGroup>
 
 </Project>

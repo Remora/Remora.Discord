@@ -64,5 +64,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IInvite.StageInstance" />
         Optional<IInviteStageInstance> StageInstance { get; }
+
+        /// <inheritdoc cref="IInvite.GuildScheduledEvent" />
+        Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
     }
 }

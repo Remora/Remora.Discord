@@ -43,5 +43,6 @@ public record Invite
     Optional<int> ApproximatePresenceCount = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<DateTimeOffset?> ExpiresAt = default,
-    Optional<IInviteStageInstance> StageInstance = default
+    Optional<IInviteStageInstance> StageInstance = default,
+    Optional<IGuildScheduledEvent> GuildScheduledEvent = default
 ) : IInvite;

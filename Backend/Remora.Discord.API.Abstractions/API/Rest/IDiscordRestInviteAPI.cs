@@ -41,6 +41,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="inviteCode">The invite code.</param>
         /// <param name="withCounts">Whether the invite should contain approximate member counts.</param>
         /// <param name="withExpiration">Whether the invite should contain the expiration date.</param>
+        /// <param name="guildScheduledEventID">The scheduled event to include with the invite.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         Task<Result<IInvite>> GetInviteAsync
@@ -48,6 +49,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             string inviteCode,
             Optional<bool> withCounts = default,
             Optional<bool> withExpiration = default,
+            Optional<Snowflake> guildScheduledEventID = default,
             CancellationToken ct = default
         );
 

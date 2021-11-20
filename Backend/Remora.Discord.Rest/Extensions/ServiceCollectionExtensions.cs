@@ -71,6 +71,7 @@ namespace Remora.Discord.Rest.Extensions
             serviceCollection.TryAddTransient<IDiscordRestEmojiAPI, DiscordRestEmojiAPI>();
             serviceCollection.TryAddTransient<IDiscordRestGatewayAPI, DiscordRestGatewayAPI>();
             serviceCollection.TryAddTransient<IDiscordRestGuildAPI, DiscordRestGuildAPI>();
+            serviceCollection.TryAddTransient<IDiscordRestGuildScheduledEventAPI, DiscordRestGuildScheduledEventAPI>();
             serviceCollection.TryAddTransient<IDiscordRestInviteAPI, DiscordRestInviteAPI>();
             serviceCollection.TryAddTransient<IDiscordRestUserAPI, DiscordRestUserAPI>();
             serviceCollection.TryAddTransient<IDiscordRestVoiceAPI, DiscordRestVoiceAPI>();

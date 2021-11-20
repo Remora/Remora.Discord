@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
@@ -61,6 +62,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "description", typeof(string) },
         { "discovery_splash_hash", typeof(IImageHash) },
         { "enable_emoticons", typeof(bool) },
+        { "entity_type", typeof(GuildScheduledEventEntityType) },
         { "expire_behaviour", typeof(IntegrationExpireBehaviour) },
         { "expire_grace_period", typeof(TimeSpan) },
         { "explicit_content_filter", typeof(ExplicitContentFilterLevel) },
@@ -70,6 +72,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "icon_hash", typeof(IImageHash) },
         { "id", typeof(Snowflake) },
         { "inviter_id", typeof(Snowflake) },
+        { "location", typeof(string) },
         { "locked", typeof(bool) },
         { "max_age", typeof(TimeSpan) },
         { "max_uses", typeof(int) },
@@ -91,6 +94,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "region", typeof(string) },
         { "rules_channel_id", typeof(Snowflake) },
         { "splash_hash", typeof(IImageHash) },
+        { "status", typeof(GuildScheduledEventStatus) },
         { "system_channel_id", typeof(Snowflake) },
         { "tags", typeof(string) },
         { "temporary", typeof(bool) },

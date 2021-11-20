@@ -53,6 +53,7 @@ namespace Remora.Discord.Rest.API
             string inviteCode,
             Optional<bool> withCounts = default,
             Optional<bool> withExpiration = default,
+            Optional<Snowflake> guildScheduledEventID = default,
             CancellationToken ct = default
         )
         {
@@ -69,6 +70,11 @@ namespace Remora.Discord.Rest.API
                     if (withExpiration.HasValue)
                     {
                         b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
+                    }
+
+                    if (guildScheduledEventID.HasValue)
+                    {
+                        b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
                     }
                 },
                 ct: ct
