@@ -31,11 +31,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IGuildScheduledEventEntityMetadata
 {
     /// <summary>
-    /// Gets the speakers of the stage channel.
-    /// </summary>
-    Optional<IReadOnlyList<Snowflake>> SpeakerIDs { get; }
-
-    /// <summary>
     /// Gets the location of the event.
     /// </summary>
     Optional<string> Location { get; }

@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Core;
 
@@ -29,6 +28,5 @@ namespace Remora.Discord.API.Objects;
 /// <inheritdoc cref="IGuildScheduledEventEntityMetadata"/>
 public record GuildScheduledEventEntityMetadata
 (
-    Optional<IReadOnlyList<Snowflake>> SpeakerIDs = default,
     Optional<string> Location = default
 ) : IGuildScheduledEventEntityMetadata;

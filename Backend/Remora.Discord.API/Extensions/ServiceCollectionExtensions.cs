@@ -543,9 +543,7 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddGuildScheduledEventObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
-        options.AddDataObjectConverter<IGuildScheduledEventEntityMetadata, GuildScheduledEventEntityMetadata>()
-            .WithPropertyName(m => m.SpeakerIDs, "speaker_ids");
-
+        options.AddDataObjectConverter<IGuildScheduledEventEntityMetadata, GuildScheduledEventEntityMetadata>();
         options.AddDataObjectConverter<IGuildScheduledEventSubscribedUser, GuildScheduledEventSubscribedUser>()
             .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
             .WithPropertyName(u => u.IsBot, "bot")
