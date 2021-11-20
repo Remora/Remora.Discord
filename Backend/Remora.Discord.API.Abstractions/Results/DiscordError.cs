@@ -377,6 +377,16 @@ namespace Remora.Discord.API.Abstractions.Results
         MaxNumberOfNonMemberBansReached = 30035,
 
         /// <summary>
+        /// The maximum number of ban fetches has been exceeded.
+        /// </summary>
+        MaxNumberOfBanFetchesReached = 30037,
+
+        /// <summary>
+        /// The maximum number of uncompleted scheduled events has been reached (100).
+        /// </summary>
+        MaxNumberOfUncompletedGuildScheduledEventsReached = 30038,
+
+        /// <summary>
         /// Maximum number of stickers reached.
         /// </summary>
         MaxStickersReached = 30039,
