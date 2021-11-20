@@ -5,15 +5,27 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.1.16</Version>
+        <Version>4.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Target .NET 6.0.
+            Update the scheduled event portion with regards to Remora.Rest.
+            Remove reference to Remora.Discord.Core.
+            Remove Remora.Discord.Core.
+            Move TokenStore to Remora.Discord.Rest.
+            Move FileData out of Remora.Discord.Core.
+            Use Remora.Rest nuget packages.
+            Port a load of stuff over to Remora.Rest.
+            More error codes.
+            Implement new error code.
+            Implement pleasingly sane changes to the API.
+            Implement name/description/location limits.
+            Remove "SpeakerIDs".
+            Implement support for scheduled events.
+            Add "rate_limit_per_user" to thread creation endpoints.
         </PackageReleaseNotes>
     </PropertyGroup>
 
