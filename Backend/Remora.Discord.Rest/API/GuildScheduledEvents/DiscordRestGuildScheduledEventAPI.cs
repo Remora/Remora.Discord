@@ -25,11 +25,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API;
@@ -40,14 +41,10 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordRestGuildScheduledEventAPI"/> class.
     /// </summary>
-    /// <param name="discordHttpClient">The Discord HTTP client.</param>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestGuildScheduledEventAPI
-    (
-        DiscordHttpClient discordHttpClient,
-        IOptions<JsonSerializerOptions> jsonOptions
-    )
-        : base(discordHttpClient, jsonOptions)
+    public DiscordRestGuildScheduledEventAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
     }
 
@@ -59,7 +56,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEvent>>
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEvent>>
         (
             $"guilds/{guildID}/scheduled-events",
             b =>
@@ -68,6 +65,8 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 {
                     b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
                 }
+
+                b.WithRateLimitContext();
             },
             ct: ct
         );
@@ -120,23 +119,28 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        return await this.DiscordHttpClient.PostAsync<IGuildScheduledEvent>
+        return await this.RestHttpClient.PostAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events",
-            b => b.WithJson
-            (
-                json =>
-                {
-                    json.Write("channel_id", channelID, this.JsonOptions);
-                    json.Write("entity_metadata", entityMetadata, this.JsonOptions);
-                    json.Write("name", name, this.JsonOptions);
-                    json.Write("privacy_level", privacyLevel, this.JsonOptions);
-                    json.Write("scheduled_start_time", scheduledStartTime, this.JsonOptions);
-                    json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
-                    json.Write("description", description, this.JsonOptions);
-                    json.Write("entity_type", entityType, this.JsonOptions);
-                }
-            ),
+            b =>
+            {
+                b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("channel_id", channelID, this.JsonOptions);
+                        json.Write("entity_metadata", entityMetadata, this.JsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
+                        json.Write("scheduled_start_time", scheduledStartTime, this.JsonOptions);
+                        json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write("entity_type", entityType, this.JsonOptions);
+                    }
+                );
+
+                b.WithRateLimitContext();
+            },
             ct: ct
         );
     }
@@ -150,7 +154,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.GetAsync<IGuildScheduledEvent>
+        return this.RestHttpClient.GetAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
             b =>
@@ -159,6 +163,8 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 {
                     b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
                 }
+
+                b.WithRateLimitContext();
             },
             ct: ct
         );
@@ -213,24 +219,29 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        return await this.DiscordHttpClient.PatchAsync<IGuildScheduledEvent>
+        return await this.RestHttpClient.PatchAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
-            b => b.WithJson
-            (
-                json =>
-                {
-                    json.Write("channel_id", channelID, this.JsonOptions);
-                    json.Write("entity_metadata", entityMetadata, this.JsonOptions);
-                    json.Write("name", name, this.JsonOptions);
-                    json.Write("privacy_level", privacyLevel, this.JsonOptions);
-                    json.Write("scheduled_start_time", scheduledStartTime, this.JsonOptions);
-                    json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
-                    json.Write("description", description, this.JsonOptions);
-                    json.Write("entity_type", entityType, this.JsonOptions);
-                    json.Write("status", status, this.JsonOptions);
-                }
-            ),
+            b =>
+            {
+                b.WithJson
+                (
+                    json =>
+                    {
+                        json.Write("channel_id", channelID, this.JsonOptions);
+                        json.Write("entity_metadata", entityMetadata, this.JsonOptions);
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
+                        json.Write("scheduled_start_time", scheduledStartTime, this.JsonOptions);
+                        json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write("entity_type", entityType, this.JsonOptions);
+                        json.Write("status", status, this.JsonOptions);
+                    }
+                );
+
+                b.WithRateLimitContext();
+            },
             ct: ct
         );
     }
@@ -238,7 +249,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     /// <inheritdoc />
     public Task<Result> DeleteGuildScheduledEventAsync(Snowflake guildID, Snowflake eventID, CancellationToken ct = default)
     {
-        return this.DiscordHttpClient.DeleteAsync($"guilds/{guildID}/scheduled-events/{eventID}", ct: ct);
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"guilds/{guildID}/scheduled-events/{eventID}",
+            b => b.WithRateLimitContext(),
+            ct
+        );
     }
 
     /// <inheritdoc />
@@ -253,7 +269,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>
@@ -277,6 +293,8 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 {
                     b.AddQueryParameter("after", after.Value.ToString());
                 }
+
+                b.WithRateLimitContext();
             },
             ct: ct
         );

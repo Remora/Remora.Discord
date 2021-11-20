@@ -26,6 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Rest.Extensions;
 
 namespace Remora.Discord.Unstable.Extensions
 {

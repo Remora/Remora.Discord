@@ -23,7 +23,6 @@
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.API.Abstractions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
