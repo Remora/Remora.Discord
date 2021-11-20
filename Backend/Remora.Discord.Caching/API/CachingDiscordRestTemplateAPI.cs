@@ -29,9 +29,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API
@@ -42,14 +43,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestTemplateAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestTemplateAPI(IRestHttpClient, IOptions{JsonSerializerOptions})" />
         public CachingDiscordRestTemplateAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }

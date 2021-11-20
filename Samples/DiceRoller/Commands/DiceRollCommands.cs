@@ -31,6 +31,7 @@ using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Samples.DiceRoller.API;
+using Remora.Rest.Json.Policies;
 using Remora.Results;
 
 namespace Remora.Discord.Samples.DiceRoller.Commands

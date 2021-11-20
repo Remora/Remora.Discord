@@ -23,6 +23,7 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Xunit;
 
 namespace Remora.Discord.API.Tests.Objects
 {

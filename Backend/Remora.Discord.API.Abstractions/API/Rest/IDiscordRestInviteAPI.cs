@@ -24,7 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.API.Abstractions.Rest

@@ -61,11 +61,11 @@ namespace Remora.Discord.Gateway.Transport
         public WebSocketPayloadTransportService
         (
             IServiceProvider services,
-            IOptions<JsonSerializerOptions> jsonOptions
+            JsonSerializerOptions jsonOptions
         )
         {
             _services = services;
-            _jsonOptions = jsonOptions.Value;
+            _jsonOptions = jsonOptions;
         }
 
         /// <inheritdoc />

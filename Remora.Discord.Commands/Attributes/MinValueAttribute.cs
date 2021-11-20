@@ -22,7 +22,7 @@
 
 using System;
 using OneOf;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.Commands.Attributes;
 

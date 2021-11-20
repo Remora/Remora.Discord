@@ -32,11 +32,11 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.API;
-using Remora.Discord.Rest.Tests.Extensions;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
+using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
@@ -2356,7 +2356,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestChannelAPI.StartThreadWithoutMessageAsync"/> method.
+        /// Tests the <see cref="StartThreadWithoutMessageAsync"/> method.
         /// </summary>
         public class StartThreadWithoutMessageAsync : RestAPITestBase<IDiscordRestChannelAPI>
         {

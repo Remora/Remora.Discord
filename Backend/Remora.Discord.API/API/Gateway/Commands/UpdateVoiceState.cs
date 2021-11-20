@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 

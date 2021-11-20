@@ -29,14 +29,15 @@ using OneOf;
 using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Ephemeral;
 using Remora.Discord.Commands.Tests.Data.Events;
 using Remora.Discord.Commands.Tests.TestBases;
-using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 

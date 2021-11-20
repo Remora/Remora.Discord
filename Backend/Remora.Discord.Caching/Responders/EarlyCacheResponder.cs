@@ -27,8 +27,8 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.Responders

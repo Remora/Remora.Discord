@@ -105,7 +105,7 @@ public record SomeUndocumentedEvent(int SomeName) : ISomeUndocumentedEvent;
 ## REST
 Features that relate to the REST API is customized through one of two methods.
 
-The first is the `DiscordHttpClient` type, which can be accessed and used 
+The first is the `RestHttpClient` type, which can be accessed and used 
 through DI. It's a named, transient `HttpClient`, which takes care of minutia 
 like authorization headers and respecting rate limits for you. You would mainly
 use this type when you want to make requests to completely undocumented
@@ -114,9 +114,9 @@ endpoints, or to take complete control over a call to a known endpoint.
 ```cs
 public class Somewhere
 {
-    private readonly DiscordHttpClient _client;
+    private readonly RestHttpClient _client;
 
-    public Somewhere(DiscordHttpClient client)
+    public Somewhere(RestHttpClient client)
     {
         _client = client;
     }
@@ -128,7 +128,7 @@ allow you to perform smaller tweaks or changes to existing API methods, such as
 adding headers or JSON payload fields.
 
 ### Undocumented Endpoints
-To access an undocumented endpoint, you may use the `DiscordHttpClient` directly
+To access an undocumented endpoint, you may use the `RestHttpClient` directly
 to make any kind of HTTP request, similar to how you might use a normal 
 `HttpClient`. All requests made by this client are prepended with the most 
 recently versioned Discord API base endpoint, which typically looks like this: 

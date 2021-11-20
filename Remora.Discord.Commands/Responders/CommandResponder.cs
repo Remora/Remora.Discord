@@ -34,8 +34,8 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders;

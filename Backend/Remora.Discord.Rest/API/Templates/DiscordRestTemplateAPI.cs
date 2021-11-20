@@ -29,9 +29,11 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -43,10 +45,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The Json options.</param>
-        public DiscordRestTemplateAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -57,9 +59,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<ITemplate>
+            return this.RestHttpClient.GetAsync<ITemplate>
             (
                 $"guilds/templates/{templateCode}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -85,7 +88,7 @@ namespace Remora.Discord.Rest.API
                 iconData = packIcon.Entity;
             }
 
-            return await this.DiscordHttpClient.PostAsync<IGuild>
+            return await this.RestHttpClient.PostAsync<IGuild>
             (
                 $"guilds/templates/{templateCode}",
                 b => b.WithJson
@@ -95,7 +98,8 @@ namespace Remora.Discord.Rest.API
                         j.WriteString("name", name);
                         j.Write("icon", iconData);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -107,9 +111,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<ITemplate>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<ITemplate>>
             (
                 $"guilds/{guildID}/templates",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -123,7 +128,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<ITemplate>
+            return this.RestHttpClient.PostAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates",
                 b => b.WithJson
@@ -133,7 +138,8 @@ namespace Remora.Discord.Rest.API
                         j.WriteString("name", name);
                         j.Write("description", description, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -146,9 +152,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync<ITemplate>
+            return this.RestHttpClient.PutAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -163,7 +170,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PatchAsync<ITemplate>
+            return this.RestHttpClient.PatchAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
                 b => b.WithJson
@@ -173,7 +180,8 @@ namespace Remora.Discord.Rest.API
                         j.WriteString("name", name);
                         j.Write("description", description, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -186,9 +194,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync<ITemplate>
+            return this.RestHttpClient.DeleteAsync<ITemplate>
             (
                 $"guilds/{guildID}/templates/{templateCode}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }

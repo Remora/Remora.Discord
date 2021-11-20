@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Core;
+using Remora.Discord.Rest;
 using Xunit;
 
 // ReSharper disable SA1600

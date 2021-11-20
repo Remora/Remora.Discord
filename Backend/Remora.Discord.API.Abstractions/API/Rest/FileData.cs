@@ -1,5 +1,5 @@
 //
-//  DiscordRestResultError.cs
+//  FileData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,17 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.IO;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
 
-#pragma warning disable CS1591
-
-namespace Remora.Discord.Rest.Results
+namespace Remora.Discord.API.Abstractions.Rest
 {
     /// <summary>
-    /// Represents an error returned by the Discord API.
+    /// Represents a file with its associated information.
     /// </summary>
+    /// <param name="Name">The name of the file.</param>
+    /// <param name="Content">The contents of the file.</param>
+    /// <param name="Description">The file description.</param>
     [PublicAPI]
-    public record DiscordRestResultError(IRestError DiscordError) : ResultError(DiscordError.Message);
+    public record FileData(string Name, Stream Content, string Description = "No description set.");
 }

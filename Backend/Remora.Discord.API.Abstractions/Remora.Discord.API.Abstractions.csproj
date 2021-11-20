@@ -20,11 +20,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Remora.Discord.Core\Remora.Discord.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.201" />
+      <PackageReference Include="Remora.Rest.Core" Version="1.0.0" />
       <PackageReference Include="Remora.Results" Version="7.0.3" />
     </ItemGroup>
 

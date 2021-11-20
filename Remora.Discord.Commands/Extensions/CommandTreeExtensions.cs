@@ -32,11 +32,11 @@ using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Commands.Trees.Nodes;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Results;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 

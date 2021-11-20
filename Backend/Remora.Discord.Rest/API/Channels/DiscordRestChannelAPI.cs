@@ -35,8 +35,10 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -48,10 +50,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestChannelAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestChannelAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -62,9 +64,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IChannel>
+            return this.RestHttpClient.GetAsync<IChannel>
             (
                 $"channels/{channelID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -128,7 +131,7 @@ namespace Remora.Discord.Rest.API
                 base64EncodedIcon = Convert.ToBase64String(bytes);
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IChannel>
+            return await this.RestHttpClient.PatchAsync<IChannel>
             (
                 $"channels/{channelID}",
                 b => b
@@ -155,7 +158,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("default_auto_archive_duration", defaultAutoArchiveDuration);
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -328,10 +332,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
@@ -366,7 +370,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IMessage>>
+            return await this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
             (
                 $"channels/{channelID}/messages",
                 b =>
@@ -390,6 +394,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -403,9 +409,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IMessage>
+            return this.RestHttpClient.GetAsync<IMessage>
             (
                 $"channels/{channelID}/messages/{messageID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -440,7 +447,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.PostAsync<IMessage>
+            return await this.RestHttpClient.PostAsync<IMessage>
             (
                 $"channels/{channelID}/messages",
                 b =>
@@ -486,7 +493,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("sticker_ids", stickerIds, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -500,9 +508,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return await this.DiscordHttpClient.PostAsync<IMessage>
+            return await this.RestHttpClient.PostAsync<IMessage>
             (
                 $"channels/{channelID}/messages/{messageID}/crosspost",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -516,9 +525,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync
+            return this.RestHttpClient.PutAsync
             (
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -532,9 +542,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -549,9 +560,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -572,7 +584,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
             }
 
-            return await this.DiscordHttpClient.GetAsync<IReadOnlyList<IUser>>
+            return await this.RestHttpClient.GetAsync<IReadOnlyList<IUser>>
             (
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
                 b =>
@@ -586,6 +598,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -599,9 +613,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}/reactions",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -615,9 +630,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -644,7 +660,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IMessage>
+            return await this.RestHttpClient.PatchAsync<IMessage>
             (
                 $"channels/{channelID}/messages/{messageID}",
                 b =>
@@ -687,7 +703,8 @@ namespace Remora.Discord.Rest.API
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -702,10 +719,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/messages/{messageID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
@@ -728,7 +745,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.PostAsync
+            return await this.RestHttpClient.PostAsync
             (
                 $"channels/{channelID}/messages/bulk-delete",
                 b => b
@@ -740,7 +757,8 @@ namespace Remora.Discord.Rest.API
                         json.WritePropertyName("messages");
                         JsonSerializer.Serialize(json, messageIDs, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct
             );
         }
@@ -757,7 +775,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync
+            return this.RestHttpClient.PutAsync
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
                 b => b
@@ -770,7 +788,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("deny", deny, this.JsonOptions);
                         json.Write("type", type, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct
             );
         }
@@ -782,9 +801,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IInvite>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
             (
                 $"channels/{channelID}/invites",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -822,7 +842,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.PostAsync<IInvite>
+            return await this.RestHttpClient.PostAsync<IInvite>
             (
                 $"channels/{channelID}/invites",
                 b => b
@@ -843,7 +863,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("target_user_id", targetUserID, this.JsonOptions);
                         json.Write("target_application_id", targetApplicationID, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -857,10 +878,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/permissions/{overwriteID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
@@ -873,7 +894,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IFollowedChannel>
+            return this.RestHttpClient.PostAsync<IFollowedChannel>
             (
                 $"channels/{channelID}/followers",
                 b => b.WithJson
@@ -882,7 +903,8 @@ namespace Remora.Discord.Rest.API
                     {
                         p.WriteString("webhook_channel_id", webhookChannelID.ToString());
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -894,9 +916,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync
+            return this.RestHttpClient.PostAsync
             (
                 $"channels/{channelID}/typing",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -908,9 +931,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IMessage>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
             (
                 $"channels/{channelID}/pins",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -924,10 +948,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync
+            return this.RestHttpClient.PutAsync
             (
                 $"channels/{channelID}/pins/{messageID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
@@ -941,10 +965,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/pins/{messageID}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct
             );
         }
@@ -959,7 +983,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync
+            return this.RestHttpClient.PutAsync
             (
                 $"channels/{channelID}/recipients/{userID}",
                 b => b.WithJson
@@ -969,7 +993,8 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("access_token", accessToken);
                         json.Write("nick", nickname, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct
             );
         }
@@ -982,9 +1007,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/recipients/{userID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1006,7 +1032,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
             }
 
-            return await this.DiscordHttpClient.PostAsync<IChannel>
+            return await this.RestHttpClient.PostAsync<IChannel>
             (
                 $"channels/{channelID}/messages/{messageID}/threads",
                 b => b
@@ -1019,7 +1045,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("auto_archive_duration", autoArchiveDuration, this.JsonOptions);
                         json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1066,7 +1093,7 @@ namespace Remora.Discord.Rest.API
                 return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
             }
 
-            return await this.DiscordHttpClient.PostAsync<IChannel>
+            return await this.RestHttpClient.PostAsync<IChannel>
             (
                 $"channels/{channelID}/threads",
                 b => b
@@ -1081,7 +1108,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("invitable", isInvitable, this.JsonOptions);
                         json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1089,7 +1117,12 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> JoinThreadAsync(Snowflake channelID, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.PutAsync($"channels/{channelID}/thread-members/@me", ct: ct);
+            return this.RestHttpClient.PutAsync
+            (
+                $"channels/{channelID}/thread-members/@me",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -1100,9 +1133,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PutAsync
+            return this.RestHttpClient.PutAsync
             (
                 $"channels/{channelID}/thread-members/{userID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1110,7 +1144,12 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.DeleteAsync($"channels/{channelID}/thread-members/@me", ct: ct);
+            return this.RestHttpClient.DeleteAsync
+            (
+                $"channels/{channelID}/thread-members/@me",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
         }
 
         /// <inheritdoc />
@@ -1121,9 +1160,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"channels/{channelID}/thread-members/{userID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1136,9 +1176,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IThreadMember>
+            return this.RestHttpClient.GetAsync<IThreadMember>
             (
                 $"channels/{channelID}/thread-members/{userID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1150,9 +1191,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
             (
                 $"channels/{channelID}/thread-members",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1164,9 +1206,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IThreadQueryResponse>
+            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
             (
                 $"channels/{channelID}/threads/active",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -1180,7 +1223,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IThreadQueryResponse>
+            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
             (
                 $"channels/{channelID}/threads/archived/public",
                 b =>
@@ -1200,6 +1243,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -1214,7 +1259,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IThreadQueryResponse>
+            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
             (
                 $"channels/{channelID}/threads/archived/private",
                 b =>
@@ -1234,6 +1279,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -1248,7 +1295,7 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IThreadQueryResponse>
+            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
             (
                 $"channels/{channelID}/users/@me/threads/archived/private",
                 b =>
@@ -1268,6 +1315,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );

@@ -33,6 +33,7 @@ using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Json;
+using Remora.Rest.Json.Policies;
 
 namespace Remora.Discord.SensitiveDataScrubber
 {

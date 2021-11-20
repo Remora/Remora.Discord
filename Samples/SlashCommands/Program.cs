@@ -29,9 +29,9 @@ using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Hosting.Extensions;
 using Remora.Discord.Samples.SlashCommands.Commands;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.Samples.SlashCommands
 {

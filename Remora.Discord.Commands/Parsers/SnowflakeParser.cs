@@ -26,7 +26,7 @@ using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;

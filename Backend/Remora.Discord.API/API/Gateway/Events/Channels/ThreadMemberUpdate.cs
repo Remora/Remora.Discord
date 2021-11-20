@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Gateway.Events.Channels;
 
