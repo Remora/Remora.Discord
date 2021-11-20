@@ -146,12 +146,20 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     (
         Snowflake guildID,
         Snowflake eventID,
+        Optional<bool> withUserCount = default,
         CancellationToken ct = default
     )
     {
         return this.DiscordHttpClient.GetAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
+            b =>
+            {
+                if (withUserCount.HasValue)
+                {
+                    b.AddQueryParameter("with_user_count", withUserCount.Value.ToString());
+                }
+            },
             ct: ct
         );
     }
@@ -234,16 +242,18 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result<IGuildScheduledEventUsersResponse>> GetGuildScheduledEventUsersAsync
+    public Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
     (
         Snowflake guildID,
         Snowflake eventID,
         Optional<int> limit = default,
         Optional<bool> withMember = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     )
     {
-        return this.DiscordHttpClient.GetAsync<IGuildScheduledEventUsersResponse>
+        return this.DiscordHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>
@@ -256,6 +266,16 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 if (withMember.HasValue)
                 {
                     b.AddQueryParameter("with_member", withMember.Value.ToString());
+                }
+
+                if (before.HasValue)
+                {
+                    b.AddQueryParameter("before", before.Value.ToString());
+                }
+
+                if (after.HasValue)
+                {
+                    b.AddQueryParameter("after", after.Value.ToString());
                 }
             },
             ct: ct

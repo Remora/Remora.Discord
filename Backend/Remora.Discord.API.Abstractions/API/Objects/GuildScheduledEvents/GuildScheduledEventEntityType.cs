@@ -28,11 +28,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum GuildScheduledEventEntityType
 {
     /// <summary>
-    /// The event has no associated entity.
-    /// </summary>
-    None = 0,
-
-    /// <summary>
     /// The event has an associated stage instance.
     /// </summary>
     StageInstance = 1,

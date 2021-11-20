@@ -84,12 +84,14 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="eventID">The ID of the event.</param>
+    /// <param name="withUserCount">Whether to include user counts.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IGuildScheduledEvent>> GetGuildScheduledEventAsync
     (
         Snowflake guildID,
         Snowflake eventID,
+        Optional<bool> withUserCount = default,
         CancellationToken ct = default
     );
 
@@ -141,14 +143,18 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// <param name="eventID">The ID of the event.</param>
     /// <param name="limit">The maximum number of users to return.</param>
     /// <param name="withMember">Whether member information should be included.</param>
+    /// <param name="before">Restrict the returned users to ones before this ID.</param>
+    /// <param name="after">Restrict the returned users to ones after this ID.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IGuildScheduledEventUsersResponse>> GetGuildScheduledEventUsersAsync
+    Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
     (
         Snowflake guildID,
         Snowflake eventID,
         Optional<int> limit = default,
         Optional<bool> withMember = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     );
 }

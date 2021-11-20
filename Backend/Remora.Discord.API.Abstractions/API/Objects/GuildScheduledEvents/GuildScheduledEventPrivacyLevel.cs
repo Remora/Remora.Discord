@@ -28,11 +28,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum GuildScheduledEventPrivacyLevel
 {
     /// <summary>
-    /// The event is open to the public.
-    /// </summary>
-    Public = 1,
-
-    /// <summary>
     /// The event is only open to the guild it is in.
     /// </summary>
     GuildOnly = 2

@@ -49,7 +49,7 @@ public interface IGuildScheduledEvent
     /// <summary>
     /// Gets the ID of the user that created the scheduled event.
     /// </summary>
-    Optional<Snowflake> CreatorID { get; }
+    Snowflake? CreatorID { get; }
 
     /// <summary>
     /// Gets the name of the scheduled event.

@@ -1,5 +1,5 @@
 //
-//  GuildScheduledEventUsersResponse.cs
+//  IGuildScheduledEventUser.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,11 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="IGuildScheduledEventUsersResponse"/>
-public record GuildScheduledEventUsersResponse(IReadOnlyList<IGuildScheduledEventSubscribedUser> Users)
-    : IGuildScheduledEventUsersResponse;
+/// <summary>
+/// Represents a user subscribed to a guild event.
+/// </summary>
+public interface IGuildScheduledEventUser
+{
+    /// <summary>
+    /// Gets the ID of the event the user subscribed to.
+    /// </summary>
+    Snowflake GuildScheduledEventID { get; }
+
+    /// <summary>
+    /// Gets the user which subscribed to the event.
+    /// </summary>
+    IUser User { get; }
+
+    /// <summary>
+    /// Gets the member information associated with the user.
+    /// </summary>
+    Optional<IGuildMember> GuildMember { get; }
+}

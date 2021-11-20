@@ -87,7 +87,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var channelID = new Snowflake(2);
             var entityMetadata = new GuildScheduledEventEntityMetadata();
             var name = "wooga";
-            var privacyLevel = GuildScheduledEventPrivacyLevel.Public;
+            var privacyLevel = GuildScheduledEventPrivacyLevel.GuildOnly;
             var scheduledStartTime = DateTimeOffset.UtcNow.AddDays(1);
             var scheduledEndTime = scheduledStartTime.AddHours(1);
             var description = "booga";
@@ -150,16 +150,18 @@ public class DiscordRestGuildScheduledEventAPITests
         {
             var guildID = new Snowflake(1);
             var eventID = new Snowflake(2);
+            var withCounts = true;
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildID}/scheduled-events/{eventID}")
+                    .WithQueryString("with_user_count", withCounts.ToString())
                     .WithNoContent()
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
 
-            var result = await api.GetGuildScheduledEventAsync(guildID, eventID);
+            var result = await api.GetGuildScheduledEventAsync(guildID, eventID, withCounts);
             ResultAssert.Successful(result);
         }
     }
@@ -181,7 +183,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var channelID = new Snowflake(3);
             var entityMetadata = new GuildScheduledEventEntityMetadata();
             var name = "wooga";
-            var privacyLevel = GuildScheduledEventPrivacyLevel.Public;
+            var privacyLevel = GuildScheduledEventPrivacyLevel.GuildOnly;
             var scheduledStartTime = DateTimeOffset.UtcNow.AddDays(1);
             var scheduledEndTime = scheduledStartTime.AddHours(1);
             var description = "booga";
@@ -278,6 +280,8 @@ public class DiscordRestGuildScheduledEventAPITests
             var eventID = new Snowflake(2);
             var limit = 10;
             var withMember = true;
+            var before = new Snowflake(3);
+            var after = new Snowflake(4);
 
             var api = CreateAPI
             (
@@ -289,12 +293,14 @@ public class DiscordRestGuildScheduledEventAPITests
                         {
                             new KeyValuePair<string, string>("limit", limit.ToString()),
                             new KeyValuePair<string, string>("with_member", withMember.ToString()),
+                            new KeyValuePair<string, string>("before", before.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString()),
                         }
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEventUsersResponse)])
+                    .Respond("application/json", "[ ]")
             );
 
-            var result = await api.GetGuildScheduledEventUsersAsync(guildID, eventID, limit, withMember);
+            var result = await api.GetGuildScheduledEventUsersAsync(guildID, eventID, limit, withMember, before, after);
             ResultAssert.Successful(result);
         }
     }

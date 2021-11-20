@@ -28,6 +28,6 @@ namespace Remora.Discord.API.Tests.Objects;
 /// <summary>
 /// Tests the Hello event.
 /// </summary>
-public class GuildScheduledEventSubscribedUserTests : ObjectTestBase<IGuildScheduledEventSubscribedUser>
+public class GuildScheduledEventSubscribedUserTests : ObjectTestBase<IGuildScheduledEventUser>
 {
 }

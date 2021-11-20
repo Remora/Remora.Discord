@@ -544,16 +544,8 @@ public static class ServiceCollectionExtensions
     {
         options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
         options.AddDataObjectConverter<IGuildScheduledEventEntityMetadata, GuildScheduledEventEntityMetadata>();
-        options.AddDataObjectConverter<IGuildScheduledEventSubscribedUser, GuildScheduledEventSubscribedUser>()
-            .WithPropertyConverter(u => u.Discriminator, new DiscriminatorConverter())
-            .WithPropertyName(u => u.IsBot, "bot")
-            .WithPropertyName(u => u.IsSystem, "system")
-            .WithPropertyName(u => u.IsVerified, "verified")
-            .WithPropertyName(u => u.IsMFAEnabled, "mfa_enabled")
-            .WithPropertyName(u => u.AccentColour, "accent_color");
-
+        options.AddDataObjectConverter<IGuildScheduledEventUser, GuildScheduledEventUser>();
         options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
-        options.AddDataObjectConverter<IGuildScheduledEventUsersResponse, GuildScheduledEventUsersResponse>();
 
         return options;
     }
