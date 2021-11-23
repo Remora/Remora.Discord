@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ using Remora.Discord.Caching.Responders;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
+using Remora.Rest;
 
 namespace Remora.Discord.Caching.Extensions
 {
@@ -58,16 +60,66 @@ namespace Remora.Discord.Caching.Extensions
             services.TryAddSingleton<CacheService>();
 
             services
-                .Replace(ServiceDescriptor.Transient<IDiscordRestChannelAPI, CachingDiscordRestChannelAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestEmojiAPI, CachingDiscordRestEmojiAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestGuildAPI, CachingDiscordRestGuildAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestInteractionAPI, CachingDiscordRestInteractionAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestInviteAPI, CachingDiscordRestInviteAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestOAuth2API, CachingDiscordRestOAuth2API>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestTemplateAPI, CachingDiscordRestTemplateAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestUserAPI, CachingDiscordRestUserAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestVoiceAPI, CachingDiscordRestVoiceAPI>())
-                .Replace(ServiceDescriptor.Transient<IDiscordRestWebhookAPI, CachingDiscordRestWebhookAPI>());
+                .Replace(ServiceDescriptor.Transient<IDiscordRestChannelAPI>(s => new CachingDiscordRestChannelAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestEmojiAPI>(s => new CachingDiscordRestEmojiAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestGuildAPI>(s => new CachingDiscordRestGuildAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestInteractionAPI>(s => new CachingDiscordRestInteractionAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestInviteAPI>(s => new CachingDiscordRestInviteAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestOAuth2API>(s => new CachingDiscordRestOAuth2API
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestTemplateAPI>(s => new CachingDiscordRestTemplateAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestUserAPI>(s => new CachingDiscordRestUserAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestVoiceAPI>(s => new CachingDiscordRestVoiceAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )))
+                .Replace(ServiceDescriptor.Transient<IDiscordRestWebhookAPI>(s => new CachingDiscordRestWebhookAPI
+                (
+                    s.GetRequiredService<IRestHttpClient>(),
+                    s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+                    s.GetRequiredService<CacheService>()
+                )));
 
             services
                 .AddResponder<EarlyCacheResponder>(ResponderGroup.Early)
