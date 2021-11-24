@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>25.0.0</Version>
+        <Version>25.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,20 +13,7 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Update the scheduled event portion with regards to Remora.Rest.
-            Remove reference to Remora.Discord.Core.
-            Remove Remora.Discord.Core.
-            Move TokenStore to Remora.Discord.Rest.
-            Move FileData out of Remora.Discord.Core.
-            Use Remora.Rest nuget packages.
-            Port a load of stuff over to Remora.Rest.
-            More error codes.
-            Implement new error code.
-            Implement pleasingly sane changes to the API.
-            Implement name/description/location limits.
-            Remove "SpeakerIDs".
-            Implement support for scheduled events.
-            Add "rate_limit_per_user" to thread creation endpoints.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

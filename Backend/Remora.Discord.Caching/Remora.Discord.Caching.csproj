@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>16.0.1</Version>
+        <Version>16.0.2</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Fix bad service registrations.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
