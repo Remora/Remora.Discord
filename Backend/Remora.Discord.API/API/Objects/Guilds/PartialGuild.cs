@@ -81,5 +81,6 @@ public record PartialGuild
     Optional<IWelcomeScreen> WelcomeScreen = default,
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<IStageInstance>> StageInstances = default,
-    Optional<IReadOnlyList<ISticker>> Stickers = default
+    Optional<IReadOnlyList<ISticker>> Stickers = default,
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents = default
 ) : IPartialGuild;

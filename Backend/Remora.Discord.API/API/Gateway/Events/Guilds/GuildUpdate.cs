@@ -81,7 +81,8 @@ public record GuildUpdate
     Optional<IWelcomeScreen> WelcomeScreen,
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<IStageInstance>> StageInstances,
-    Optional<IReadOnlyList<ISticker>> Stickers
+    Optional<IReadOnlyList<ISticker>> Stickers,
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents
 ) : Guild
 (
     ID,
@@ -131,5 +132,6 @@ public record GuildUpdate
     WelcomeScreen,
     NSFWLevel,
     StageInstances,
-    Stickers
+    Stickers,
+    GuildScheduledEvents
 ), IGuildUpdate;

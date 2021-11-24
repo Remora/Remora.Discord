@@ -275,6 +275,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// </summary>
         new Optional<IReadOnlyList<ISticker>> Stickers { get; }
 
+        /// <summary>
+        /// Gets the scheduled events in the guild.
+        /// </summary>
+        new Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
+
         /// <inheritdoc/>
         Optional<Snowflake> IPartialGuild.ID => this.ID;
 
@@ -418,5 +423,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<IReadOnlyList<ISticker>> IPartialGuild.Stickers => this.Stickers;
+
+        /// <inheritdoc/>
+        Optional<IReadOnlyList<IGuildScheduledEvent>> IPartialGuild.GuildScheduledEvents => this.GuildScheduledEvents;
     }
 }

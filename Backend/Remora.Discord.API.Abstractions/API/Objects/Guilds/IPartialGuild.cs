@@ -176,5 +176,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.Stickers"/>
         Optional<IReadOnlyList<ISticker>> Stickers { get; }
+
+        /// <inheritdoc cref="IGuild.GuildScheduledEvents"/>
+        Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
     }
 }

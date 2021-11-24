@@ -81,5 +81,6 @@ public record Guild
     Optional<IWelcomeScreen> WelcomeScreen,
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<IStageInstance>> StageInstances,
-    Optional<IReadOnlyList<ISticker>> Stickers
+    Optional<IReadOnlyList<ISticker>> Stickers,
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents
 ) : IGuild;
