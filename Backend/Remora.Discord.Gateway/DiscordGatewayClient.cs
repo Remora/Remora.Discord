@@ -318,6 +318,12 @@ namespace Remora.Discord.Gateway
             {
                 case GatewayDiscordError gde:
                 {
+                    _log.LogWarning
+                    (
+                        "Remote transient gateway error: {Error}",
+                        gde.Message
+                    );
+
                     switch (gde.CloseStatus)
                     {
                         case GatewayCloseStatus.UnknownError:
@@ -351,6 +357,12 @@ namespace Remora.Discord.Gateway
                 }
                 case GatewayWebSocketError gwe:
                 {
+                    _log.LogWarning
+                    (
+                        "Transient gateway transport layer error: {Error}",
+                        gwe.Message
+                    );
+
                     switch (gwe.CloseStatus)
                     {
                         case InternalServerError:
@@ -368,8 +380,19 @@ namespace Remora.Discord.Gateway
                     // We'll try reconnecting on non-critical internal errors
                     if (!gae.IsCritical)
                     {
+                        _log.LogWarning
+                        (
+                            "Local transient gateway error: {Error}",
+                            gae.Message
+                        );
                         return true;
                     }
+
+                    _log.LogError
+                    (
+                        "Local unrecoverable gateway error: {Error}",
+                        gae.Message
+                    );
 
                     shouldTerminate = true;
                     return false;
