@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IPartialGuild.VanityUrlCode Property</title>
+        <title>Remora.Discord Documentation - API - IPartialGuild.GuildScheduledEvents Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -152,7 +152,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/AB5C2219">Emojis</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/7ACDD491">Explicit<wbr>Content<wbr>Filter</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/52707B4A">GuildFeatures</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/039763C6">GuildScheduledEvents</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/039763C6">GuildScheduledEvents</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/BEC3DEEC">ID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/4F859F4C">Icon</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/E862063F">IsLarge</a></li>
@@ -183,7 +183,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/151109EB">SystemChannelFlags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/4E4FF6DF">SystemChannelID</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/B507F400">Threads</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/831E0B42">VanityUrlCode</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/831E0B42">VanityUrlCode</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/97DF7BA0">VerificationLevel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/8304C972">VoiceStates</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild/C720BB28">WelcomeScreen</a></li>
@@ -203,14 +203,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a>.</h3>
-	<h1>VanityUrlCode <small>Property</small></h1>
+	<h1>GuildScheduledEvents <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the vanity url code for the guild.
+    Gets the scheduled events in the guild.
     </div>
 
 		<div class="panel panel-default">
@@ -228,7 +228,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;string?&gt; VanityUrlCode { get; }</code></pre>
+	<pre><code>Optional&lt;IReadOnlyList&lt;IGuildScheduledEvent&gt;&gt; GuildScheduledEvents { get; }</code></pre>
 
 
 
@@ -245,7 +245,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Optional<wbr>&lt;string?&gt;<wbr></td>
+					<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a>&gt;<wbr>&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
