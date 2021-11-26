@@ -1136,12 +1136,9 @@ namespace Remora.Discord.Gateway
                     if (!receivedPayload.IsSuccess)
                     {
                         // Normal closures are okay
-                        if (receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure })
-                        {
-                            return Result.FromSuccess();
-                        }
-
-                        return Result.FromError(receivedPayload);
+                        return receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure }
+                            ? Result.FromSuccess()
+                            : Result.FromError(receivedPayload);
                     }
 
                     // Update the sequence number
@@ -1153,7 +1150,7 @@ namespace Remora.Discord.Gateway
                     // Update the ack timestamp
                     if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                     {
-                        DateTime receivedAt = DateTime.UtcNow;
+                        var receivedAt = DateTime.UtcNow;
                         Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
 
                         // Update the latency
@@ -1164,7 +1161,7 @@ namespace Remora.Discord.Gateway
 
                         if (lastSentHeartbeat != null)
                         {
-                            Latency = receivedAt - lastSentHeartbeat.Value;
+                            this.Latency = receivedAt - lastSentHeartbeat.Value;
                         }
                     }
 
