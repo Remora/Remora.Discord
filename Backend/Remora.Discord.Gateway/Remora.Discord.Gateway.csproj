@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.1.0</Version>
+        <Version>6.2.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Improve error logging in the gateway.
-            Update dependencies.
+            Add DiscordGatewayClient#Latency.
         </PackageReleaseNotes>
     </PropertyGroup>
 
