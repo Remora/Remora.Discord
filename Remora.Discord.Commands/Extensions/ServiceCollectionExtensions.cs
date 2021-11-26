@@ -54,12 +54,14 @@ public static class ServiceCollectionExtensions
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="enableSlash">Whether to enable slash commands.</param>
     /// <param name="useDefaultCommandResponder">Whether to add a default command responder.</param>
+    /// <param name="useDefaultInteractionResponder">Whether to add a default interaction responder.</param>
     /// <returns>The service collection, with slash commands.</returns>
     public static IServiceCollection AddDiscordCommands
     (
         this IServiceCollection serviceCollection,
         bool enableSlash = false,
-        bool useDefaultCommandResponder = true
+        bool useDefaultCommandResponder = true,
+        bool useDefaultInteractionResponder = true
     )
     {
         // Add the helpers used for context injection.
@@ -146,9 +148,12 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.TryAddSingleton<SlashService>();
         serviceCollection.AddInteractionResponder();
+        serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
 
-        serviceCollection.AddResponder<AutocompleteResponder>()
-            .AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+        if (useDefaultInteractionResponder)
+        {
+            serviceCollection.AddResponder<AutocompleteResponder>();
+        }
 
         return serviceCollection;
     }
