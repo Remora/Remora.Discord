@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IResponderTypeRepository Interface</title>
+        <title>Remora.Discord Documentation - API - DiscordGatewayClient.Latency Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Attributes">Attributes</a></p>
-<p><a href="#Methods">Methods</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,12 +134,18 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient">DiscordGatewayClient</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Class Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService">ResponderService</a></li>
-			<li class="header">Interface Types</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository">I<wbr>Responder<wbr>Type<wbr>Repository</a></li>
+			<li class="header">Constructors</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient/BC9567C2">DiscordGatewayClient<wbr>(<wbr>I<wbr>Discord<wbr>Rest<wbr>Gateway<wbr>A<wbr>P<wbr>I, <wbr>I<wbr>Payload<wbr>Transport<wbr>Service, <wbr>IOptions<wbr>&lt;<wbr>Discord<wbr>Gateway<wbr>Client<wbr>Options&gt;<wbr>, <wbr>ITokenStore, <wbr>Random, <wbr>ILogger<wbr>&lt;<wbr>Discord<wbr>Gateway<wbr>Client&gt;<wbr>, <wbr>IServiceProvider, <wbr>I<wbr>Responder<wbr>Type<wbr>Repository)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient/1F253907">Latency</a></li>
+			<li class="header">Method Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient/1B52C0CC">Dispose<wbr>()<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient/8E606AF6">RunAsync<wbr>(CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient/B49A0663">SubmitCommand<wbr>&lt;TCommand&gt;<wbr><wbr>(TCommand)<wbr></a></li>
 
 
                     </ul>
@@ -155,57 +160,40 @@
 
 
 <section class="content-header">
-	<h1>I<wbr>Responder<wbr>Type<wbr>Repository <small>Interface</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient">DiscordGatewayClient</a>.</h3>
+	<h1>Latency <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents a type that can serve lists of registered responder types for gateway events.
+    Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip latency.
+    Will return zero until the first heartbeat has occured.
     </div>
 
 		<div class="panel panel-default">
   			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-6">
-						<dl class="dl-horizontal">		
-
-								<dt>Namespace</dt>
-								<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services">Remora<wbr>.Discord<wbr>.Gateway<wbr>.Services</a></dd>
-											
-							
-							
-							
-								<dt>Implementing Types</dt>
-								<dd>
-									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService">ResponderService</a></li>								
-									</ul>
-								</dd>				
-						</dl>
-					</div>		
-					<div class="col-md-6">
-						<div class="mermaid">
-							graph BT
-	Type["IResponderTypeRepository"]
-class Type type-node
-	Implementing0["ResponderService"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService"
-
-						</div>
-					</div>
-				</div>
+				<dl class="dl-horizontal">	
+						
+						<dt>Namespace</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient">DiscordGatewayClient</a></dd>		
+					
+				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[PublicAPI]
-public interface IResponderTypeRepository</code></pre>
+	<pre><code>public TimeSpan Latency { get; private set; }</code></pre>
 
 
 
-	<h1 id="Attributes">Attributes</h1>
+
+
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -215,64 +203,13 @@ public interface IResponderTypeRepository</code></pre>
 						<th>Description</th>
 					</tr>
 				</thead>
-					<tbody><tr>
-						<td>PublicAPI</td>
-						<td></td>
-					</tr>
+				<tbody><tr>
+					<td>TimeSpan</td>
+					<td></td>
+				</tr>
 			</tbody></table>
 		</div>
 	</div>	
-
-
-
-
-
-
-
-
-			<h1 id="Methods">Methods</h1>
-			<div class="box">
-				<div class="box-body no-padding table-responsive">
-					<table class="table table-striped table-hover three-cols">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Value</th>
-								<th>Summary</th>
-							</tr>
-						</thead>
-							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository/0A3D6EAC">Get<wbr>Early<wbr>Responder<wbr>Types<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
-								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
-								<td>
-									<div>
-    Gets all responder types that are relevant for the given event, and should run before any other responders.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository/077B742B">Get<wbr>Late<wbr>Responder<wbr>Types<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
-								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
-								<td>
-									<div>
-    Gets all responder types that are relevant for the given event, and should run after any other responders.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository/44805E11">GetResponderTypes<wbr>&lt;<wbr>T<wbr>Gateway<wbr>Event&gt;<wbr><wbr>()<wbr></a></td>
-								<td>IReadOnlyList<wbr>&lt;Type&gt;<wbr></td>
-								<td>
-									<div>
-    Gets all responder types that are relevant for the given event.
-    </div>
-								</td>
-							</tr>
-					</tbody></table>
-				</div>
-			</div>
-		
-
 
 
 	
