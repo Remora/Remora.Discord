@@ -98,6 +98,12 @@ namespace Remora.Discord.Gateway
         private int _lastSequenceNumber;
 
         /// <summary>
+        /// Holds the time when the last heartbeat was sent, using
+        /// <see cref="DateTime.ToBinary"/>.
+        /// </summary>
+        private long _lastSentHeartbeat;
+
+        /// <summary>
         /// Holds the time when the last heartbeat acknowledgement was received, using
         /// <see cref="DateTime.ToBinary()"/>.
         /// </summary>
@@ -132,6 +138,12 @@ namespace Remora.Discord.Gateway
         /// Holds a value indicating whether the client's current session is resumable.
         /// </summary>
         private bool _isSessionResumable;
+
+        /// <summary>
+        /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip latency.
+        /// Will return zero until the first heartbeat has occured.
+        /// </summary>
+        public TimeSpan Latency { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
@@ -1015,7 +1027,11 @@ namespace Remora.Discord.Gateway
 
             try
             {
-                DateTime? lastHeartbeat = null;
+                var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+                var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+                    ? DateTime.FromBinary(lastSentHeartbeatBinary)
+                    : (DateTime?)null;
+
                 while (!disconnectRequested.IsCancellationRequested)
                 {
                     var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
@@ -1027,9 +1043,9 @@ namespace Remora.Discord.Gateway
                     var now = DateTime.UtcNow;
                     var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
 
-                    if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
+                    if (lastSentHeartbeat is null || now - lastSentHeartbeat >= heartbeatInterval - safetyMargin)
                     {
-                        if (lastHeartbeatAck < lastHeartbeat)
+                        if (lastHeartbeatAck < lastSentHeartbeat)
                         {
                             return new GatewayError
                             (
@@ -1060,14 +1076,15 @@ namespace Remora.Discord.Gateway
                             );
                         }
 
-                        lastHeartbeat = DateTime.UtcNow;
+                        lastSentHeartbeat = DateTime.UtcNow;
+                        Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
                     }
 
                     // Check if there are any user-submitted payloads to send
                     if (!_payloadsToSend.TryDequeue(out var payload))
                     {
                         // Let's sleep for a little while
-                        var maxSleepTime = lastHeartbeat.Value + heartbeatInterval - safetyMargin - now;
+                        var maxSleepTime = lastSentHeartbeat.Value + heartbeatInterval - safetyMargin - now;
                         var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
 
                         await Task.Delay(sleepTime, disconnectRequested);
@@ -1136,7 +1153,19 @@ namespace Remora.Discord.Gateway
                     // Update the ack timestamp
                     if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                     {
-                        Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
+                        DateTime receivedAt = DateTime.UtcNow;
+                        Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
+
+                        // Update the latency
+                        var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+                        var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+                            ? DateTime.FromBinary(lastSentHeartbeatBinary)
+                            : (DateTime?)null;
+
+                        if (lastSentHeartbeat != null)
+                        {
+                            Latency = receivedAt - lastSentHeartbeat.Value;
+                        }
                     }
 
                     // Enqueue the payload for dispatch
