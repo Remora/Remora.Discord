@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
-        <PackageReference Include="Remora.Rest.Xunit" Version="1.0.0" />
+        <PackageReference Include="Remora.Rest.Xunit" Version="1.0.1" />
     </ItemGroup>
 
     <ItemGroup>

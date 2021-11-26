@@ -876,11 +876,11 @@ public static class ServiceCollectionExtensions
                 IApplicationCommandInteractionDataResolved,
                 ApplicationCommandInteractionDataResolved
             >()
-            .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>())
-            .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>())
-            .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>())
-            .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>())
-            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>());
+            .WithPropertyConverter(r => r.Users, new SnowflakeDictionaryConverter<IUser>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch));
 
         options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
         options.AddDataObjectConverter

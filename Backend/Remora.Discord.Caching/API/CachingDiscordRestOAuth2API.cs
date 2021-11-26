@@ -40,7 +40,7 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions)" />
         public CachingDiscordRestOAuth2API
         (
             IRestHttpClient restHttpClient,
