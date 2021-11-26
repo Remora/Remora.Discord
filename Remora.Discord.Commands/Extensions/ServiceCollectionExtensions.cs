@@ -53,11 +53,13 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="enableSlash">Whether to enable slash commands.</param>
+    /// <param name="enableDefaultCommands">Whether to add a default command responder.</param>
     /// <returns>The service collection, with slash commands.</returns>
     public static IServiceCollection AddDiscordCommands
     (
         this IServiceCollection serviceCollection,
-        bool enableSlash = false
+        bool enableSlash = false,
+        bool enableDefaultCommands = true
     )
     {
         // Add the helpers used for context injection.
@@ -112,7 +114,11 @@ public static class ServiceCollectionExtensions
         );
 
         serviceCollection.AddCommands();
-        serviceCollection.AddCommandResponder();
+
+        if (enableDefaultCommands)
+        {
+            serviceCollection.AddCommandResponder();
+        }
 
         serviceCollection.AddCondition<RequireContextCondition>();
         serviceCollection.AddCondition<RequireOwnerCondition>();
