@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -30,12 +29,10 @@ using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders;
@@ -89,15 +86,10 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// <inheritdoc/>
     public virtual async Task<Result> RespondAsync
     (
-        IMessageCreate? gatewayEvent,
+        IMessageCreate gatewayEvent,
         CancellationToken ct = default
     )
     {
-        if (gatewayEvent is null)
-        {
-            return Result.FromSuccess();
-        }
-
         if (_options.Prefix is not null)
         {
             if (!gatewayEvent.Content.StartsWith(_options.Prefix))
@@ -106,7 +98,15 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             }
         }
 
-        var author = gatewayEvent.Author;
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
+        {
+            return Result.FromError(createContext);
+        }
+
+        var context = createContext.Entity;
+
+        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -117,71 +117,16 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        var context = new MessageContext
-        (
-            gatewayEvent.ChannelID,
-            author,
-            gatewayEvent.ID,
-            new PartialMessage
-            (
-                gatewayEvent.ID,
-                gatewayEvent.ChannelID,
-                gatewayEvent.GuildID,
-                new Optional<IUser>(gatewayEvent.Author),
-                gatewayEvent.Member,
-                gatewayEvent.Content,
-                gatewayEvent.Timestamp,
-                gatewayEvent.EditedTimestamp,
-                gatewayEvent.IsTTS,
-                gatewayEvent.MentionsEveryone,
-                new Optional<IReadOnlyList<IUserMention>>(gatewayEvent.Mentions),
-                new Optional<IReadOnlyList<Snowflake>>(gatewayEvent.MentionedRoles),
-                gatewayEvent.MentionedChannels,
-                new Optional<IReadOnlyList<IAttachment>>(gatewayEvent.Attachments),
-                new Optional<IReadOnlyList<IEmbed>>(gatewayEvent.Embeds),
-                gatewayEvent.Reactions,
-                gatewayEvent.Nonce,
-                gatewayEvent.IsPinned,
-                gatewayEvent.WebhookID,
-                gatewayEvent.Type,
-                gatewayEvent.Activity,
-                gatewayEvent.Application,
-                gatewayEvent.ApplicationID,
-                gatewayEvent.MessageReference,
-                gatewayEvent.Flags,
-                gatewayEvent.ReferencedMessage,
-                gatewayEvent.Interaction,
-                gatewayEvent.Thread,
-                gatewayEvent.Components,
-                gatewayEvent.StickerItems
-            )
-        );
-
         return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
     }
 
     /// <inheritdoc/>
     public virtual async Task<Result> RespondAsync
     (
-        IMessageUpdate? gatewayEvent,
+        IMessageUpdate gatewayEvent,
         CancellationToken ct = default
     )
     {
-        if (gatewayEvent is null)
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!gatewayEvent.ID.IsDefined(out var messageID))
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-        {
-            return Result.FromSuccess();
-        }
-
         if (!gatewayEvent.Content.IsDefined(out var content))
         {
             return Result.FromSuccess();
@@ -195,11 +140,15 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             }
         }
 
-        if (!gatewayEvent.Author.IsDefined(out var author))
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
         {
-            return Result.FromSuccess();
+            return Result.FromError(createContext);
         }
 
+        var context = createContext.Entity;
+
+        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -225,14 +174,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             // No edit means no visible change to the command
             return Result.FromSuccess();
         }
-
-        var context = new MessageContext
-        (
-            channelID,
-            author,
-            messageID,
-            gatewayEvent
-        );
 
         return await ExecuteCommandAsync(content, context, ct);
     }
@@ -275,9 +216,9 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         (
             content,
             _services,
-            tokenizerOptions: _tokenizerOptions,
-            searchOptions: _treeSearchOptions,
-            ct: ct
+            _tokenizerOptions,
+            _treeSearchOptions,
+            ct
         );
 
         // Run any user-provided post execution events, passing along either the result of the command itself, or if

@@ -94,59 +94,27 @@ public class InteractionResponder : IResponder<IInteractionCreate>
     /// <inheritdoc />
     public virtual async Task<Result> RespondAsync
     (
-        IInteractionCreate? gatewayEvent,
+        IInteractionCreate gatewayEvent,
         CancellationToken ct = default
     )
     {
-        if (gatewayEvent is null)
-        {
-            return Result.FromSuccess();
-        }
-
         if (gatewayEvent.Type != InteractionType.ApplicationCommand)
         {
             return Result.FromSuccess();
         }
 
-        if (!gatewayEvent.Data.IsDefined(out var interactionData))
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
         {
-            return Result.FromSuccess();
+            return Result.FromError(createContext);
         }
 
-        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-        {
-            return Result.FromSuccess();
-        }
-
-        var user = gatewayEvent.User.HasValue
-            ? gatewayEvent.User.Value
-            : gatewayEvent.Member.HasValue
-                ? gatewayEvent.Member.Value.User.HasValue
-                    ? gatewayEvent.Member.Value.User.Value
-                    : null
-                : null;
-
-        if (user is null)
-        {
-            return Result.FromSuccess();
-        }
-
-        var context = new InteractionContext
-        (
-            gatewayEvent.GuildID,
-            channelID,
-            user,
-            gatewayEvent.Member,
-            gatewayEvent.Token,
-            gatewayEvent.ID,
-            gatewayEvent.ApplicationID,
-            interactionData
-        );
+        var context = createContext.Entity;
 
         // Provide the created context to any services inside this scope
         _contextInjection.Context = context;
 
-        interactionData.UnpackInteraction(out var commandPath, out var parameters);
+        context.Data.UnpackInteraction(out var commandPath, out var parameters);
 
         // Run any user-provided pre-execution events
         var preExecution = await _eventCollector.RunPreExecutionEvents(_services, context, ct);
@@ -216,7 +184,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         (
             preparedCommand,
             _services,
-            ct: ct
+            ct
         );
 
         // Run any user-provided post execution events, passing along either the result of the command itself, or if
