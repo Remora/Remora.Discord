@@ -70,7 +70,8 @@ public static class InteractionCreateExtensions
             interactionCreate.Token,
             interactionCreate.ID,
             interactionCreate.ApplicationID,
-            interactionData
+            interactionData,
+            interactionCreate.Message
         );
     }
 }

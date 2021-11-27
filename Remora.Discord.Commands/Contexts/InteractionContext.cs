@@ -41,5 +41,6 @@ public record InteractionContext
     string Token,
     Snowflake ID,
     Snowflake ApplicationID,
-    IInteractionData Data
+    IInteractionData Data,
+    Optional<IMessage> Message
 ) : CommandContext(GuildID, ChannelID, User);
