@@ -146,14 +146,14 @@ public static class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        serviceCollection.TryAddSingleton<SlashService>();
-        serviceCollection.AddInteractionResponder();
-        serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
-
         if (useDefaultInteractionResponder)
         {
-            serviceCollection.AddResponder<AutocompleteResponder>();
+            serviceCollection.AddInteractionResponder();
         }
+
+        serviceCollection.TryAddSingleton<SlashService>();
+        serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+        serviceCollection.AddResponder<AutocompleteResponder>();
 
         return serviceCollection;
     }
