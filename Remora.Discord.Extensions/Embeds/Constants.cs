@@ -30,34 +30,44 @@ namespace Remora.Discord.Extensions.Embeds
     public static class Constants
     {
         /// <summary>
-        /// Returns the maximum number of fields allowed by Discord.
-        /// </summary>
-        public const int MaxFieldCount = 25;
-
-        /// <summary>
-        /// Returns the maximum title length allowed by Discord.
+        /// Gets the maximum length of a title.
         /// </summary>
         public const int MaxTitleLength = 256;
 
         /// <summary>
-        /// Returns the maximum description length allowed by Discord.
+        /// Gets the maximum length of a description.
         /// </summary>
-        public const int MaxDescriptionLength = 2048;
+        public const int MaxDescriptionLength = 4096;
 
         /// <summary>
-        /// Returns the maximum total embed length allowed by Discord.
+        /// Gets the maximum number of fields.
         /// </summary>
-        public const int MaxEmbedLength = 6000;
+        public const int MaxFieldCount = 25;
 
         /// <summary>
-        /// Returns the maximum author name length allowed by Discord.
+        /// Gets the maximum length of a field name.
+        /// </summary>
+        public const int MaxFieldNameLength = 256;
+
+        /// <summary>
+        /// Gets the maximum length of a field value.
+        /// </summary>
+        public const int MaxFieldValueLength = 1024;
+
+        /// <summary>
+        /// Gets the maximum length of an author's name.
         /// </summary>
         public const int MaxAuthorNameLength = 256;
 
         /// <summary>
-        /// Returns the maximum footer length allowed by Discord.
+        /// Gets the maximum length of a footer.
         /// </summary>
         public const int MaxFooterTextLength = 2048;
+
+        /// <summary>
+        /// Gets the maximum overall size of an embed.
+        /// </summary>
+        public const int MaxEmbedLength = 6000;
 
         /// <summary>
         /// The default embed color.

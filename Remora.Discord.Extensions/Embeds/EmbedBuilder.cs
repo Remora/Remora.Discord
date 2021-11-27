@@ -107,12 +107,12 @@ namespace Remora.Discord.Extensions.Embeds
             get
             {
                 int titleLength = Title.Length;
-                int authorLength = Author?.Name.Length ?? 0;
                 int descriptionLength = Description.Length;
-                int footerLength = Footer?.Text.Length ?? 0;
                 int fieldSum = _fields.Sum(field => field.Name.Length + field.Value.Length);
+                int footerLength = Footer?.Text.Length ?? 0;
+                int authorLength = Author?.Name.Length ?? 0;
 
-                return titleLength + authorLength + descriptionLength + footerLength + fieldSum;
+                return titleLength + descriptionLength + fieldSum + footerLength + authorLength;
             }
         }
 
