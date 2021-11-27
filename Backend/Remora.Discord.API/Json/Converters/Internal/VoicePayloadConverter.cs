@@ -29,6 +29,7 @@ using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.VoiceGateway;
+using Remora.Discord.API.VoiceGateway.Events;
 
 namespace Remora.Discord.API.Json;
 
@@ -99,7 +100,15 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
         }
 
         var payloadData = payloadDataPropertyGetter.Invoke(value, null);
-        JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+        switch (payloadData)
+        {
+            case VoiceResumed:
+                writer.WriteNullValue();
+                break;
+            default:
+                JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                break;
+        }
 
         writer.WriteEndObject();
     }
@@ -165,7 +174,7 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
             _ when typeof(IVoiceHeartbeatAcknowledge).IsAssignableFrom(payloadDataType)
             => VoiceOperationCode.HeartbeatAcknowledgement,
 
-            _ when typeof(IVoiceReady).IsAssignableFrom(payloadDataType)
+            _ when typeof(IVoiceHello).IsAssignableFrom(payloadDataType)
             => VoiceOperationCode.Hello,
 
             _ when typeof(IVoiceResumed).IsAssignableFrom(payloadDataType)
@@ -198,7 +207,7 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
             VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>(VoiceOperationCode.SessionDescription, document, options),
             VoiceOperationCode.HeartbeatAcknowledgement => DeserializePayload<IVoiceHeartbeatAcknowledge>(VoiceOperationCode.HeartbeatAcknowledgement, document, options),
             VoiceOperationCode.Hello => DeserializePayload<IVoiceHello>(VoiceOperationCode.Hello, document, options),
-            VoiceOperationCode.Resumed => DeserializePayload<IVoiceResume>(VoiceOperationCode.Resumed, document, options),
+            VoiceOperationCode.Resumed => new VoicePayload<VoiceResumed>(VoiceOperationCode.Resumed, new VoiceResumed()),
 
             // If we don't recognise it (which often happens due to undocumented OP codes) we just return null.
             // It's not fantastically explicit design but it prevents generating an exception.

@@ -1,5 +1,5 @@
 ﻿//
-//  VoiceHello.cs
+//  VoiceReadyTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
+using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.API.VoiceGateway.Events;
 
-namespace Remora.Discord.API.VoiceGateway.Events;
-
-/// <inheritdoc cref="IVoiceHello" />
-[PublicAPI]
-public record VoiceHello
-(
-    TimeSpan HeartbeatInterval
-) : IVoiceHello;
+namespace Remora.Discord.API.Tests.VoiceGateway.Events
+{
+    /// <summary>
+    /// Tests the <see cref="VoiceReady"/> event.
+    /// </summary>
+    public class VoiceReadyTests : VoiceGatewayEventTestBase<IVoiceReady>
+    {
+    }
+}

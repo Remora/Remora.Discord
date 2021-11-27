@@ -410,7 +410,6 @@ public static class ServiceCollectionExtensions
     {
         // Connecting/Resuming
         options.AddDataObjectConverter<IVoiceHello, VoiceHello>()
-            .WithPropertyName(v => v.Version, "v")
             .WithPropertyConverter(v => v.HeartbeatInterval, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
 
         options.AddDataObjectConverter<IVoiceReady, VoiceReady>();
