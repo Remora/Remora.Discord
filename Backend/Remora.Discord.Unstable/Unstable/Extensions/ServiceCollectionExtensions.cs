@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Linq;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,15 +43,23 @@ namespace Remora.Discord.Unstable.Extensions
         /// Adds experimental features from the Discord API.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="optionsName">The name of the serializer options, if any. You should probably leave this set to the default value.</param>
         /// <returns>The service collection, with the services.</returns>
         public static IServiceCollection AddExperimentalDiscordApi
         (
-            this IServiceCollection serviceCollection
+            this IServiceCollection serviceCollection,
+            string? optionsName = "Discord"
         )
         {
-            serviceCollection.Configure<JsonSerializerOptions>(jsonOptions =>
+            serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
             {
                 jsonOptions.Converters.Add(new UnstableVoicePayloadConverter());
+
+                var existingConverter = jsonOptions.Converters.FirstOrDefault(c => c.GetType() == typeof(VoicePayloadConverter));
+                if (existingConverter is not null)
+                {
+                    jsonOptions.Converters.Remove(existingConverter);
+                }
 
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
