@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Feedback.Messages;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Interactivity;
 using Remora.Rest.Core;
@@ -128,12 +129,12 @@ internal sealed class PaginatedMessageEntity :
             }
             case var _ when customID == this.Data.Appearance.Help.CustomID:
             {
-                // TODO: If possible, this should be ephemeral
                 var sendHelp = await _feedback.SendContextualInfoAsync
                 (
                     this.Data.Appearance.HelpText,
                     this.Data.SourceUserID,
-                    ct: ct
+                    new FeedbackMessageOptions(MessageFlags: MessageFlags.Ephemeral),
+                    ct
                 );
 
                 return sendHelp.IsSuccess
