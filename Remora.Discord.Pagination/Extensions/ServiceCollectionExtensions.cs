@@ -1,5 +1,5 @@
 //
-//  IButtonInteractiveEntity.cs
+//  ServiceCollectionExtensions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Threading;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
+using Microsoft.Extensions.DependencyInjection;
+using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Interactivity.Extensions;
+using Remora.Discord.Pagination.Responders;
 
-namespace Remora.Discord.Interactivity;
+namespace Remora.Discord.Pagination.Extensions;
 
 /// <summary>
-/// Represents an entity that responds to button interactions.
+/// Defines extension methods for the <see cref="IServiceCollection"/> interface.
 /// </summary>
 [PublicAPI]
-public interface IButtonInteractiveEntity : IInteractiveEntity
+public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Handles a button interaction; that is, a user pressed a button attached to a message.
+    /// Adds the services required for paginated messages.
     /// </summary>
-    /// <param name="user">The user who pressed the button.</param>
-    /// <param name="customID">The button's own unique ID.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result> HandleInteractionAsync(IUser user, string customID, CancellationToken ct = default);
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <returns>The service collection, with pagination.</returns>
+    public static IServiceCollection AddPagination(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddResponder<MessageDeletedResponder>();
+        serviceCollection.AddInteractiveEntity<PaginatedMessageEntity>();
+
+        return serviceCollection;
+    }
 }

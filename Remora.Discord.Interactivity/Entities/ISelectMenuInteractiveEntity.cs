@@ -33,7 +33,7 @@ namespace Remora.Discord.Interactivity;
 /// Represents an entity that responds to selection menu interactions.
 /// </summary>
 [PublicAPI]
-public interface ISelectMenuInteractiveEntity
+public interface ISelectMenuInteractiveEntity : IInteractiveEntity
 {
     /// <summary>
     /// Handles a selection menu interaction; that is, a user selected a set of options from a menu attached to a

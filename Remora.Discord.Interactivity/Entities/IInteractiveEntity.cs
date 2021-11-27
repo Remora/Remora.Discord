@@ -1,5 +1,5 @@
 //
-//  IButtonInteractiveEntity.cs
+//  IInteractiveEntity.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,26 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Threading;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
 
 /// <summary>
-/// Represents an entity that responds to button interactions.
+/// Marker interface for interactive entities.
 /// </summary>
 [PublicAPI]
-public interface IButtonInteractiveEntity : IInteractiveEntity
+public interface IInteractiveEntity
 {
-    /// <summary>
-    /// Handles a button interaction; that is, a user pressed a button attached to a message.
-    /// </summary>
-    /// <param name="user">The user who pressed the button.</param>
-    /// <param name="customID">The button's own unique ID.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result> HandleInteractionAsync(IUser user, string customID, CancellationToken ct = default);
 }

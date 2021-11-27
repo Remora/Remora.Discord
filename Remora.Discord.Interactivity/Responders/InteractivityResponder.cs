@@ -39,9 +39,9 @@ using Remora.Results;
 namespace Remora.Discord.Interactivity.Responders;
 
 /// <summary>
-/// Acts as a base class for interactivity responders.
+/// Handles dispatch of interaction events to interested entities.
 /// </summary>
-public class InteractivityResponder : IResponder<IInteractionCreate>
+internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 {
     private readonly IMemoryCache _cache;
     private readonly ContextInjectionService _contextInjectionService;
@@ -228,7 +228,15 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
             }
             finally
             {
-                semaphore.Release();
+                if (persistentEntity.DeleteData)
+                {
+                    _cache.Remove(dataKey);
+                    semaphore.Dispose();
+                }
+                else
+                {
+                    semaphore.Release();
+                }
             }
 
             return interactionResult;

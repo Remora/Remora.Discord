@@ -46,6 +46,12 @@ public abstract class InMemoryPersistentInteractiveEntity
     /// Gets the data type.
     /// </summary>
     internal abstract Type DataType { get; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the persistent data should be deleted after the entity finishes using
+    /// it.
+    /// </summary>
+    public bool DeleteData { get; protected set; }
 }
 
 /// <summary>

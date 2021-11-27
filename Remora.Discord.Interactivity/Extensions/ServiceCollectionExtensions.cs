@@ -20,17 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
+using System.Linq;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.Gateway;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Interactivity.Responders;
+using Remora.Discord.Interactivity.Services;
 
 namespace Remora.Discord.Interactivity.Extensions;
 
 /// <summary>
 /// Provides extension methods for the <see cref="IServiceCollection"/> interface.
 /// </summary>
+[PublicAPI]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -40,13 +44,46 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the added services.</returns>
     public static IServiceCollection AddInteractivity(this IServiceCollection serviceCollection)
     {
-        serviceCollection.Configure<DiscordGatewayClientOptions>(o =>
-        {
-            o.Intents |= GatewayIntents.DirectMessageReactions;
-            o.Intents |= GatewayIntents.GuildMessageReactions;
-        });
-
         serviceCollection.AddResponder<InteractivityResponder>();
+        serviceCollection.TryAddScoped<InteractiveMessageService>();
+
+        return serviceCollection;
+    }
+
+    /// <summary>
+    /// Adds an interactive entity to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <typeparam name="TEntity">The entity type.</typeparam>
+    /// <returns>The collection, with the entity added.</returns>
+    public static IServiceCollection AddInteractiveEntity<TEntity>(this IServiceCollection serviceCollection)
+        where TEntity : class, IInteractiveEntity => serviceCollection.AddInteractiveEntity(typeof(TEntity));
+
+    /// <summary>
+    /// Adds an interactive entity to the service collection.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="entityType">The entity type.</param>
+    /// <returns>The collection, with the entity added.</returns>
+    public static IServiceCollection AddInteractiveEntity
+    (
+        this IServiceCollection serviceCollection,
+        Type entityType
+    )
+    {
+        if (serviceCollection.Any(s => s.ServiceType == entityType))
+        {
+            // Already registered
+            return serviceCollection;
+        }
+
+        serviceCollection.AddTransient(entityType);
+
+        var entityInterfaces = entityType.GetInterfaces().Where(i => typeof(IInteractiveEntity).IsAssignableFrom(i));
+        foreach (var entityInterface in entityInterfaces)
+        {
+            serviceCollection.AddTransient(entityInterface, entityType);
+        }
 
         return serviceCollection;
     }
