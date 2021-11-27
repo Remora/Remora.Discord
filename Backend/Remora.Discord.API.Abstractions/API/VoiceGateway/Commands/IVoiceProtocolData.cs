@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.API.VoiceGateway;
 
 namespace Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 
@@ -43,5 +44,5 @@ public interface IVoiceProtocolData : IVoiceGatewayCommand
     /// <summary>
     /// Gets the requested encryption mode for our connection.
     /// </summary>
-    string Mode { get; }
+    EncryptionMode Mode { get; }
 }
