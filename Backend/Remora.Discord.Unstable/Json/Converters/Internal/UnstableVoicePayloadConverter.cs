@@ -1,5 +1,5 @@
 ﻿//
-//  VoicePayloadConverter.cs
+//  UnstableVoicePayloadConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,11 +26,11 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
-namespace Remora.Discord.Json.Converters.Internal;
+namespace Remora.Discord.API.Json;
 
 /// <inheritdoc />
 [PublicAPI]
-public class VoicePayloadConverter : API.Json.Converters.Internal.VoicePayloadConverter
+internal class UnstableVoicePayloadConverter : VoicePayloadConverter
 {
     /// <inheritdoc />
     protected override IVoicePayload? DeserializeFromOperationCode(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)

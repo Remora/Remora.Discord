@@ -30,11 +30,11 @@ using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.VoiceGateway;
 
-namespace Remora.Discord.API.Json.Converters.Internal;
+namespace Remora.Discord.API.Json;
 
 /// <inheritdoc />
 [PublicAPI]
-public class VoicePayloadConverter : JsonConverter<IVoicePayload?>
+internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
 {
     /// <inheritdoc />
     public override bool CanConvert(Type objectType)

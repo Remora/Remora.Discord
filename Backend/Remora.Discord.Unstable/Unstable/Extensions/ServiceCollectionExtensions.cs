@@ -24,8 +24,10 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Extensions;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Json;
+using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
 
 namespace Remora.Discord.Unstable.Extensions
@@ -48,8 +50,13 @@ namespace Remora.Discord.Unstable.Extensions
         {
             serviceCollection.Configure<JsonSerializerOptions>(jsonOptions =>
             {
+                jsonOptions.Converters.Add(new UnstableVoicePayloadConverter());
+
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
+
+                jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
+                jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
             });
 
             return serviceCollection;

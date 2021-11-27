@@ -28,12 +28,16 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
+using Remora.Discord.API.VoiceGateway.Commands;
+using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
 using Remora.Rest.Json;
 using Remora.Rest.Json.Policies;
@@ -75,11 +79,14 @@ public static class ServiceCollectionExtensions
                     options.DictionaryKeyPolicy = snakeCase;
 
                     options.Converters.Add(new PayloadConverter(allowUnknownEvents));
+                    options.Converters.Add(new VoicePayloadConverter());
 
                     options
                         .AddGatewayBidirectionalConverters()
                         .AddGatewayCommandConverters()
                         .AddGatewayEventConverters()
+                        .AddVoiceGatewayCommandConverters()
+                        .AddVoiceGatewayEventConverters()
                         .AddActivityObjectConverters()
                         .AddAuditLogObjectConverters()
                         .AddChannelObjectConverters()
@@ -368,6 +375,51 @@ public static class ServiceCollectionExtensions
 
         // Other
         options.AddDataObjectConverter<IUnknownEvent, UnknownEvent>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle gateway command payloads.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddVoiceGatewayCommandConverters(this JsonSerializerOptions options)
+    {
+        // ConnectingResuming
+        options.AddDataObjectConverter<IVoiceIdentify, VoiceIdentify>();
+        options.AddDataObjectConverter<IVoiceResume, VoiceResume>();
+
+        // Heartbeats
+        options.AddDataObjectConverter<IVoiceHeartbeat, VoiceHeartbeat>();
+
+        // Protocols
+        options.AddDataObjectConverter<IVoiceProtocolData, VoiceProtocolData>();
+        options.AddDataObjectConverter<IVoiceSelectProtocol, VoiceSelectProtocol>();
+        options.AddDataObjectConverter<IVoiceSpeakingCommand, VoiceSpeakingCommand>();
+
+        return options;
+    }
+
+    /// <summary>
+    /// Adds the JSON converters that handle gateway event payloads.
+    /// </summary>
+    /// <param name="options">The serializer options.</param>
+    /// <returns>The options, with the converters added.</returns>
+    private static JsonSerializerOptions AddVoiceGatewayEventConverters(this JsonSerializerOptions options)
+    {
+        // Connecting/Resuming
+        options.AddDataObjectConverter<IVoiceHello, VoiceHello>()
+            .WithPropertyName(v => v.Version, "v")
+            .WithPropertyConverter(v => v.HeartbeatInterval, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
+
+        options.AddDataObjectConverter<IVoiceReady, VoiceReady>();
+
+        // Heartbeats
+        options.AddDataObjectConverter<IVoiceHeartbeatAcknowledge, VoiceHeartbeatAcknowledge>();
+
+        // Sessions
+        options.AddDataObjectConverter<IVoiceSessionDescription, VoiceSessionDescription>();
 
         return options;
     }
