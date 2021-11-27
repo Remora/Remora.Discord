@@ -9,10 +9,11 @@
         <Description>
             $(BaseDescription)
 
-            This package provides simple glue code for using Remora.Commands with Remora.Discord.
+            This package provides a framework for creating interaction-driven entities using Discord's message 
+            components.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Initial release.
         </PackageReleaseNotes>
     </PropertyGroup>
     
