@@ -55,7 +55,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// <param name="contextInjectionService">The context injection service.</param>
     /// <param name="cache">The memory cache.</param>
     /// <param name="interactionAPI">The interaction API.</param>
-    protected InteractivityResponder
+    public InteractivityResponder
     (
         IServiceProvider services,
         ContextInjectionService contextInjectionService,
