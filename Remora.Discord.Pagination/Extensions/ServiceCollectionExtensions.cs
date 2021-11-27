@@ -41,6 +41,7 @@ public static class ServiceCollectionExtensions
     /// <returns>The service collection, with pagination.</returns>
     public static IServiceCollection AddPagination(this IServiceCollection serviceCollection)
     {
+        serviceCollection.AddInteractivity();
         serviceCollection.AddResponder<MessageDeletedResponder>();
         serviceCollection.AddInteractiveEntity<PaginatedMessageEntity>();
 
