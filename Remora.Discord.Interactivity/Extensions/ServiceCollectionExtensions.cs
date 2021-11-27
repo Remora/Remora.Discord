@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
     /// <returns>The collection, with the added services.</returns>
     public static IServiceCollection AddInteractivity(this IServiceCollection serviceCollection)
     {
+        serviceCollection.AddMemoryCache();
         serviceCollection.AddResponder<InteractivityResponder>();
         serviceCollection.TryAddScoped<InteractiveMessageService>();
 
