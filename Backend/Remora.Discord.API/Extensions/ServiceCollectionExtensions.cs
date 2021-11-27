@@ -391,7 +391,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IVoiceResume, VoiceResume>();
 
         // Heartbeats
-        options.AddDataObjectConverter<IVoiceHeartbeat, VoiceHeartbeat>();
+        options.AddConverter<VoiceHeartbeatConverter>();
 
         // Protocols
         options.AddDataObjectConverter<IVoiceProtocolData, VoiceProtocolData>();
@@ -416,7 +416,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IVoiceReady, VoiceReady>();
 
         // Heartbeats
-        options.AddDataObjectConverter<IVoiceHeartbeatAcknowledge, VoiceHeartbeatAcknowledge>();
+        options.AddConverter<VoiceHeartbeatAcknowledgeConverter>();
 
         // Sessions
         options.AddDataObjectConverter<IVoiceSessionDescription, VoiceSessionDescription>();
