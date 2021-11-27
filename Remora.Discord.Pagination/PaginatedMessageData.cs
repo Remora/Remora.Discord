@@ -145,23 +145,20 @@ internal sealed class PaginatedMessageData
     /// <returns>The buttons.</returns>
     public IReadOnlyList<IMessageComponent> GetCurrentComponents()
     {
-        var baseButtons = this.Appearance.Buttons;
-
-        if (_currentPage >= 0 && _currentPage < _pages.Count)
-        {
-            // all buttons are active
-            return baseButtons;
-        }
-
-        // One or more buttons should be disabled
         return new[]
         {
-            this.Appearance.First with { IsDisabled = _currentPage == 0 },
-            this.Appearance.Previous with { IsDisabled = _currentPage == 0 },
-            this.Appearance.Next with { IsDisabled = _currentPage == _pages.Count - 1 },
-            this.Appearance.Last with { IsDisabled = _currentPage == _pages.Count - 1 },
-            this.Appearance.Close,
-            this.Appearance.Help
+            new ActionRowComponent(new[]
+            {
+                this.Appearance.First with { IsDisabled = _currentPage == 0 },
+                this.Appearance.Previous with { IsDisabled = _currentPage == 0 },
+                this.Appearance.Next with { IsDisabled = _currentPage == _pages.Count - 1 },
+                this.Appearance.Last with { IsDisabled = _currentPage == _pages.Count - 1 }
+            }),
+            new ActionRowComponent(new[]
+            {
+                this.Appearance.Close,
+                this.Appearance.Help
+            })
         };
     }
 }
