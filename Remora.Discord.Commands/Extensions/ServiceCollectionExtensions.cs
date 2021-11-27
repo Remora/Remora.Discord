@@ -53,11 +53,15 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="enableSlash">Whether to enable slash commands.</param>
+    /// <param name="useDefaultCommandResponder">Whether to add a default command responder.</param>
+    /// <param name="useDefaultInteractionResponder">Whether to add a default interaction responder.</param>
     /// <returns>The service collection, with slash commands.</returns>
     public static IServiceCollection AddDiscordCommands
     (
         this IServiceCollection serviceCollection,
-        bool enableSlash = false
+        bool enableSlash = false,
+        bool useDefaultCommandResponder = true,
+        bool useDefaultInteractionResponder = true
     )
     {
         // Add the helpers used for context injection.
@@ -112,7 +116,11 @@ public static class ServiceCollectionExtensions
         );
 
         serviceCollection.AddCommands();
-        serviceCollection.AddCommandResponder();
+
+        if (useDefaultCommandResponder)
+        {
+            serviceCollection.AddCommandResponder();
+        }
 
         serviceCollection.AddCondition<RequireContextCondition>();
         serviceCollection.AddCondition<RequireOwnerCondition>();
@@ -138,11 +146,14 @@ public static class ServiceCollectionExtensions
             return serviceCollection;
         }
 
-        serviceCollection.TryAddSingleton<SlashService>();
-        serviceCollection.AddInteractionResponder();
+        if (useDefaultInteractionResponder)
+        {
+            serviceCollection.AddInteractionResponder();
+        }
 
-        serviceCollection.AddResponder<AutocompleteResponder>()
-            .AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+        serviceCollection.TryAddSingleton<SlashService>();
+        serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
+        serviceCollection.AddResponder<AutocompleteResponder>();
 
         return serviceCollection;
     }
