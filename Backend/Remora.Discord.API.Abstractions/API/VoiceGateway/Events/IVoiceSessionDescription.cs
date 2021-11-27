@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.API.VoiceGateway;
 
 namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
@@ -35,7 +34,7 @@ public interface IVoiceSessionDescription : IVoiceGatewayEvent
     /// <summary>
     /// Gets the encryption mode that the server accepted for the session.
     /// </summary>
-    EncryptionMode Mode { get; }
+    string Mode { get; }
 
     /// <summary>
     /// Gets the shared secret session key.

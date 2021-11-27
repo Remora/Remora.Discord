@@ -21,7 +21,6 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.API.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 
 namespace Remora.Discord.API.VoiceGateway.Commands;
@@ -32,5 +31,5 @@ public record VoiceProtocolData
 (
     string Address,
     ushort Port,
-    EncryptionMode Mode
+    string Mode
 ) : IVoiceProtocolData;

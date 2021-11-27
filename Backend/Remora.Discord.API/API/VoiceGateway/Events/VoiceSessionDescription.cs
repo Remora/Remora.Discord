@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.API.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
 namespace Remora.Discord.API.VoiceGateway.Events;
@@ -31,6 +30,6 @@ namespace Remora.Discord.API.VoiceGateway.Events;
 [PublicAPI]
 public record VoiceSessionDescription
 (
-    EncryptionMode Mode,
+    string Mode,
     IReadOnlyList<byte> SecretKey
 ) : IVoiceSessionDescription;
