@@ -38,8 +38,8 @@ public interface IButtonInteractiveEntity
     /// Handles a button interaction; that is, a user pressed a button attached to a message.
     /// </summary>
     /// <param name="user">The user who pressed the button.</param>
-    /// <param name="uniqueID">The button's own unique ID.</param>
+    /// <param name="customID">The button's own unique ID.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result> HandleInteractionAsync(IUser user, string uniqueID, CancellationToken ct = default);
+    Task<Result> HandleInteractionAsync(IUser user, string customID, CancellationToken ct = default);
 }

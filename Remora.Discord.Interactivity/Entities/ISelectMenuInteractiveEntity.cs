@@ -40,14 +40,14 @@ public interface ISelectMenuInteractiveEntity
     /// message.
     /// </summary>
     /// <param name="user">The user who pressed the button.</param>
-    /// <param name="uniqueID">The button's own unique ID.</param>
+    /// <param name="customID">The button's own custom ID.</param>
     /// <param name="values">The selected values.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result> HandleInteractionAsync
     (
         IUser user,
-        string uniqueID,
+        string customID,
         IReadOnlyList<string> values,
         CancellationToken ct = default
     );
