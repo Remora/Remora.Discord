@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Net;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
@@ -39,7 +40,7 @@ public interface IVoiceReady : IVoiceGatewayEvent
     /// <summary>
     /// Gets the IP that the voice server is available on.
     /// </summary>
-    string IP { get; }
+    IPAddress IP { get; }
 
     /// <summary>
     /// Gets the UDP port that the voice server is available on.

@@ -24,7 +24,6 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
@@ -34,7 +33,6 @@ using Remora.Discord.API.VoiceGateway.Events;
 namespace Remora.Discord.API.Json;
 
 /// <inheritdoc />
-[PublicAPI]
 internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
 {
     /// <inheritdoc />

@@ -53,13 +53,7 @@ namespace Remora.Discord.Unstable.Extensions
         {
             serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
             {
-                jsonOptions.Converters.Add(new UnstableVoicePayloadConverter());
-
-                var existingConverter = jsonOptions.Converters.FirstOrDefault(c => c.GetType() == typeof(VoicePayloadConverter));
-                if (existingConverter is not null)
-                {
-                    jsonOptions.Converters.Remove(existingConverter);
-                }
+                jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
 
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();

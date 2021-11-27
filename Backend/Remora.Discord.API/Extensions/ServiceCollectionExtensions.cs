@@ -35,6 +35,7 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
+using Remora.Discord.API.Json.Converters;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
@@ -412,6 +413,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IVoiceHello, VoiceHello>()
             .WithPropertyConverter(v => v.HeartbeatInterval, new UnitTimeSpanConverter(TimeUnit.Milliseconds));
 
+        options.AddConverter<IPAddressConverter>();
         options.AddDataObjectConverter<IVoiceReady, VoiceReady>();
 
         // Heartbeats

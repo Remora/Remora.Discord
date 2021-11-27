@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using System.Net;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
@@ -31,7 +32,7 @@ namespace Remora.Discord.API.VoiceGateway.Events;
 public record VoiceReady
 (
     uint SSRC,
-    string IP,
+    IPAddress IP,
     ushort Port,
     IReadOnlyList<string> Modes
 ) : IVoiceReady;
