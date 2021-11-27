@@ -31,7 +31,7 @@ namespace Remora.Discord.API.Tests.TestBases
     /// </summary>
     /// <typeparam name="TType">The type under test.</typeparam>
     [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-    public abstract class VoiceGatewayCommandTestBase<TType> : GatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
+    public abstract class VoiceGatewayCommandTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
         where TType : IVoiceGatewayCommand
     {
     }

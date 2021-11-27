@@ -1,5 +1,5 @@
 ﻿//
-//  VoiceGatewayEventTestBase.cs
+//  VoiceIdentifyTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.VoiceGateway.Events;
-using Remora.Discord.API.Tests.Services;
+using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.API.VoiceGateway.Commands;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.API.VoiceGateway.Commands
 {
     /// <summary>
-    /// Acts as a base class for voice gateway event types.
+    /// Tests the <see cref="VoiceIdentify"/> command.
     /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
-    public abstract class VoiceGatewayEventTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceEventDataSource<TType>>
-        where TType : IVoiceGatewayEvent
+    public class VoiceIdentifyTests : VoiceGatewayCommandTestBase<IVoiceIdentify>
     {
     }
 }
