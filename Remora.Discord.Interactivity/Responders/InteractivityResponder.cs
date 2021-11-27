@@ -135,12 +135,13 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
         Func<TEntity, CancellationToken, Task<Result>> handler,
         CancellationToken ct = default
     )
+        where TEntity : class
     {
         var entities = _services.GetServices<TEntity>();
 
         return await Task.WhenAll(entities.Select(async entity =>
         {
-            if (entity is not IInMemoryPersistentInteractiveEntity persistentEntity)
+            if (entity is not InMemoryPersistentInteractiveEntity persistentEntity)
             {
                 try
                 {
@@ -161,13 +162,7 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
             var (semaphore, data) = value;
 
             // Figure out the real data type the entity wants
-            var entityDataType = persistentEntity
-                .GetType()
-                .GetInterfaces()
-                .Where(i => i.IsGenericType)
-                .Single(i => i.GetGenericTypeDefinition() == typeof(IInMemoryPersistentInteractiveEntity<>))
-                .GetGenericArguments()
-                .Single();
+            var entityDataType = persistentEntity.DataType;
 
             if (entityDataType != data.GetType())
             {

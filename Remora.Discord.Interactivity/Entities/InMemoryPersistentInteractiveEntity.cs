@@ -1,5 +1,5 @@
 //
-//  IInMemoryPersistentInteractiveEntity.cs
+//  InMemoryPersistentInteractiveEntity.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.Interactivity;
@@ -28,18 +29,23 @@ namespace Remora.Discord.Interactivity;
 /// Represents an interactive entity with in-memory persistent data.
 /// </summary>
 [PublicAPI]
-public interface IInMemoryPersistentInteractiveEntity
+public abstract class InMemoryPersistentInteractiveEntity
 {
     /// <summary>
     /// Gets the nonce used to look up the data object.
     /// </summary>
-    string Nonce { get; }
+    public abstract string Nonce { get; }
 
     /// <summary>
     /// Gets or sets the persistent data object. This property is used to both provide the cached data object, and to
     /// update it in the memory cache after execution of the interaction.
     /// </summary>
-    object UntypedData { get; protected internal set; }
+    internal abstract object UntypedData { get; set; }
+
+    /// <summary>
+    /// Gets the data type.
+    /// </summary>
+    internal abstract Type DataType { get; }
 }
 
 /// <summary>
@@ -47,16 +53,19 @@ public interface IInMemoryPersistentInteractiveEntity
 /// </summary>
 /// <typeparam name="TEntityData">The type of entity data.</typeparam>
 [PublicAPI]
-public interface IInMemoryPersistentInteractiveEntity<TEntityData> : IInMemoryPersistentInteractiveEntity
+public abstract class InMemoryPersistentInteractiveEntity<TEntityData> : InMemoryPersistentInteractiveEntity
     where TEntityData : notnull
 {
-    /// <inheritdoc cref="IInMemoryPersistentInteractiveEntity.UntypedData"/>
-    TEntityData Data
-    {
-        get => (TEntityData)this.UntypedData;
-        protected set => this.UntypedData = value;
-    }
+    /// <inheritdoc/>
+    internal sealed override object UntypedData { get; set; } = null!;
 
     /// <inheritdoc/>
-    object IInMemoryPersistentInteractiveEntity.UntypedData { get; set; }
+    internal sealed override Type DataType => typeof(TEntityData);
+
+    /// <inheritdoc cref="InMemoryPersistentInteractiveEntity.UntypedData"/>
+    protected TEntityData Data
+    {
+        get => (TEntityData)this.UntypedData;
+        set => this.UntypedData = value;
+    }
 }
