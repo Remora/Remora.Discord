@@ -54,7 +54,7 @@ public class FeedbackService
     /// Holds a value indicating whether the original message was ephemeral; if so, followup messages should also
     /// be ephemeral.
     /// </summary>
-    private bool _isEphemeral;
+    private bool _isOriginalEphemeral;
 
     /// <summary>
     /// Gets the theme used by the feedback service.
@@ -486,10 +486,17 @@ public class FeedbackService
             }
             case InteractionContext interactionContext:
             {
-                var messageFlags = default(Optional<MessageFlags>);
-                if (this.HasEditedOriginalMessage && _isEphemeral)
+                var messageFlags = options?.MessageFlags ?? default;
+                if (this.HasEditedOriginalMessage && _isOriginalEphemeral)
                 {
-                    messageFlags = MessageFlags.Ephemeral;
+                    if (messageFlags.HasValue)
+                    {
+                        messageFlags = messageFlags.Value | MessageFlags.Ephemeral;
+                    }
+                    else
+                    {
+                        messageFlags = MessageFlags.Ephemeral;
+                    }
                 }
 
                 var result = await _interactionAPI.CreateFollowupMessageAsync
@@ -516,7 +523,7 @@ public class FeedbackService
                 }
 
                 var message = result.Entity;
-                _isEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
+                _isOriginalEphemeral = message.Flags.IsDefined(out var flags) && flags.HasFlag(MessageFlags.Ephemeral);
 
                 this.HasEditedOriginalMessage = true;
                 return result;
