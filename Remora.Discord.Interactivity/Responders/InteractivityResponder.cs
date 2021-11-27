@@ -29,6 +29,8 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -43,6 +45,7 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
 {
     private readonly IMemoryCache _cache;
     private readonly ContextInjectionService _contextInjectionService;
+    private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly IServiceProvider _services;
 
     /// <summary>
@@ -51,16 +54,19 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
     /// <param name="services">The available services.</param>
     /// <param name="contextInjectionService">The context injection service.</param>
     /// <param name="cache">The memory cache.</param>
+    /// <param name="interactionAPI">The interaction API.</param>
     protected InteractivityResponder
     (
         IServiceProvider services,
         ContextInjectionService contextInjectionService,
-        IMemoryCache cache
+        IMemoryCache cache,
+        IDiscordRestInteractionAPI interactionAPI
     )
     {
         _services = services;
         _contextInjectionService = contextInjectionService;
         _cache = cache;
+        _interactionAPI = interactionAPI;
     }
 
     /// <inheritdoc />
@@ -95,6 +101,20 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
         {
             case ComponentType.Button:
             {
+                var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
+                var createResponse = await _interactionAPI.CreateInteractionResponseAsync
+                (
+                    context.ID,
+                    context.Token,
+                    response,
+                    ct: ct
+                );
+
+                if (!createResponse.IsSuccess)
+                {
+                    return createResponse;
+                }
+
                 interactionResults = await RunEntityHandlersAsync<IButtonInteractiveEntity>
                 (
                     (entity, c) => entity.HandleInteractionAsync(context.User, customID, c),
@@ -108,6 +128,20 @@ public class InteractivityResponder : IResponder<IInteractionCreate>
                 if (!context.Data.Values.IsDefined(out var values))
                 {
                     return new InvalidOperationError("The interaction did not contain selected values.");
+                }
+
+                var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
+                var createResponse = await _interactionAPI.CreateInteractionResponseAsync
+                (
+                    context.ID,
+                    context.Token,
+                    response,
+                    ct: ct
+                );
+
+                if (!createResponse.IsSuccess)
+                {
+                    return createResponse;
                 }
 
                 interactionResults = await RunEntityHandlersAsync<ISelectMenuInteractiveEntity>
