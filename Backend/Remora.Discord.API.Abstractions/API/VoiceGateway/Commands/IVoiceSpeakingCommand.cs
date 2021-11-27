@@ -33,15 +33,15 @@ public interface IVoiceSpeakingCommand : IVoiceGatewayCommand
     /// <summary>
     /// Gets the speaker flags.
     /// </summary>
-    public SpeakingFlags Speaking { get; }
+    SpeakingFlags Speaking { get; }
 
     /// <summary>
     /// Gets a defunct, but required field. Set to a value of 0 when sending.
     /// </summary>
-    public int Delay { get; }
+    int Delay { get; }
 
     /// <summary>
     /// Gets the synchronization source ID that this speech event is associated with.
     /// </summary>
-    public uint SSRC { get; }
+    uint SSRC { get; }
 }

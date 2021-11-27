@@ -48,12 +48,6 @@ public interface IVoiceReady : IVoiceGatewayEvent
 
     /// <summary>
     /// Gets the encryption modes the server supports.
-    /// <remarks>
-    /// At the moment, Discord supports the following modes:
-    ///     - xsalsa20_poly1305
-    ///     - xsalsa20_poly1305_suffix
-    ///     - xsalsa20_poly1305_lite
-    /// </remarks>
     /// </summary>
     IReadOnlyList<string> Modes { get; }
 }
