@@ -190,6 +190,7 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
             VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>(VoiceOperationCode.Identify, document, options),
             VoiceOperationCode.SelectProtocol => DeserializePayload<IVoiceSelectProtocol>(VoiceOperationCode.SelectProtocol, document, options),
             VoiceOperationCode.Heartbeat => DeserializePayload<IVoiceHeartbeat>(VoiceOperationCode.Heartbeat, document, options),
+            VoiceOperationCode.Speaking => DeserializePayload<IVoiceSpeakingCommand>(VoiceOperationCode.Speaking, document, options),
             VoiceOperationCode.Resume => DeserializePayload<IVoiceResume>(VoiceOperationCode.Resume, document, options),
 
             // Events

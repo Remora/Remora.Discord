@@ -1,8 +1,7 @@
 {
-    "op": 0,
+    "op": 7,
     "d": {
         "server_id": "41771983423143937",
-        "user_id": "104694319306248192",
         "session_id": "my_session_id",
         "token": "my_token"
     }
