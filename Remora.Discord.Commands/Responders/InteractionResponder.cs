@@ -178,7 +178,12 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         }
 
         var preparedCommand = prepareCommand.Entity;
-        if (!_options.SuppressAutomaticResponses)
+
+        var suppressResponseAttribute = preparedCommand.Command.Node
+            .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();
+
+        var shouldSendResponse = !(suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses);
+        if (shouldSendResponse)
         {
             // Signal Discord that we'll be handling this one asynchronously
             var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
@@ -216,7 +221,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         (
             preparedCommand,
             _services,
-            ct: ct
+            ct
         );
 
         // Run any user-provided post execution events, passing along either the result of the command itself, or if
