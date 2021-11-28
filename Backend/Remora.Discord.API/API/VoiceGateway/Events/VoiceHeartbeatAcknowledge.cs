@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceHeartbeatAcknowledge.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway.Events;
+
+/// <inheritdoc cref="IVoiceHeartbeatAcknowledge" />
+[PublicAPI]
+public record VoiceHeartbeatAcknowledge(long Nonce) : IVoiceHeartbeatAcknowledge;

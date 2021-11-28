@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceResumed.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
+
+/// <summary>
+/// Represents an acknowledged session resume.
+/// </summary>
+[PublicAPI]
+public interface IVoiceResumed : IVoiceGatewayEvent
+{
+}

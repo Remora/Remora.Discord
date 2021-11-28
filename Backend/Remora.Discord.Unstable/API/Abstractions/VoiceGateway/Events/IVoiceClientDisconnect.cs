@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceClientDisconnect.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Rest.Core;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
+
+/// <summary>
+/// Represents data that a client disconnected.
+/// </summary>
+[PublicAPI]
+public interface IVoiceClientDisconnect : IVoiceGatewayEvent
+{
+    /// <summary>
+    /// Gets the ID of the user who disconnected.
+    /// </summary>
+    Snowflake UserID { get; }
+}

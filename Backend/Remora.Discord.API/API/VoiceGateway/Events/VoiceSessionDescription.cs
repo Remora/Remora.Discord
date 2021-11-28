@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceSessionDescription.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway.Events;
+
+/// <inheritdoc cref="IVoiceSessionDescription" />
+[PublicAPI]
+public record VoiceSessionDescription
+(
+    string Mode,
+    IReadOnlyList<byte> SecretKey
+) : IVoiceSessionDescription;

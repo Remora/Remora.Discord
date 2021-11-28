@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoicePayload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway;
+
+/// <summary>
+/// Represents a payload of data to be sent to, or received from, the Discord voice gateway.
+/// </summary>
+/// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
+/// <param name="OperationCode">The operation code of the payload.</param>
+/// <param name="Data">The data encapsulated in the payload.</param>
+[PublicAPI]
+public record VoicePayload<TData>
+(
+    VoiceOperationCode OperationCode,
+    TData Data
+) : IVoicePayload<TData> where TData : IVoiceGatewayPayloadData;

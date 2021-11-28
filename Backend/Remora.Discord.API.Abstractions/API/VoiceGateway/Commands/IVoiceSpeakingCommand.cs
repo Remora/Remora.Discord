@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceSpeakingCommand.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+
+/// <summary>
+/// Represents a speaking update request.
+/// </summary>
+[PublicAPI]
+public interface IVoiceSpeakingCommand : IVoiceGatewayCommand
+{
+    /// <summary>
+    /// Gets the speaker flags.
+    /// </summary>
+    SpeakingFlags Speaking { get; }
+
+    /// <summary>
+    /// Gets a defunct, but required field. Set to a value of 0 when sending.
+    /// </summary>
+    int Delay { get; }
+
+    /// <summary>
+    /// Gets the synchronization source ID that this speech event is associated with.
+    /// </summary>
+    uint SSRC { get; }
+}

@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceHello.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using System;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
+
+/// <summary>
+/// Represents the greeting event sent by the voice gateway after connection.
+/// </summary>
+[PublicAPI]
+public interface IVoiceHello : IVoiceGatewayEvent
+{
+    /// <summary>
+    /// Gets the heartbeat interval (in milliseconds).
+    /// </summary>
+    TimeSpan HeartbeatInterval { get; }
+}

@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceResume.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+using Remora.Rest.Core;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway.Commands;
+
+/// <inheritdoc cref="IVoiceResume" />
+[PublicAPI]
+public record VoiceResume
+(
+    Snowflake ServerID,
+    string SessionID,
+    string Token
+) : IVoiceResume;

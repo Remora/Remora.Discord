@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceHello.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using System;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway.Events;
+
+/// <inheritdoc cref="IVoiceHello" />
+[PublicAPI]
+public record VoiceHello
+(
+    TimeSpan HeartbeatInterval
+) : IVoiceHello;

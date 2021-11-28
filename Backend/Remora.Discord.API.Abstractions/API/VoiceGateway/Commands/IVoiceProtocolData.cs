@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceProtocolData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+
+/// <summary>
+/// Represents clientside connection information provided to the voice server.
+/// </summary>
+[PublicAPI]
+public interface IVoiceProtocolData : IVoiceGatewayCommand
+{
+    /// <summary>
+    /// Gets the public address on which we will be receiving voice data.
+    /// </summary>
+    string Address { get; }
+
+    /// <summary>
+    /// Gets the port on which we will be receiving voice data.
+    /// </summary>
+    ushort Port { get; }
+
+    /// <summary>
+    /// Gets the requested encryption mode for our connection.
+    /// </summary>
+    string Mode { get; }
+}

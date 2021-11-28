@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceSelectProtocol.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,23 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+
+/// <summary>
+/// Represents a protocol selection request.
+/// </summary>
+[PublicAPI]
+public interface IVoiceSelectProtocol : IVoiceGatewayCommand
+{
+    /// <summary>
+    /// Gets the name of the IP protocol the client wishes to communicate with. This should always be "udp".
+    /// </summary>
+    string Protocol { get; }
+
+    /// <summary>
+    /// Gets the connection data of the client.
+    /// </summary>
+    IVoiceProtocolData Data { get; }
+}

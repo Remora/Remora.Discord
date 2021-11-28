@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceGatewayCommandTestBase.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+using Remora.Discord.API.Tests.Services;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Tests.TestBases
+{
+    /// <summary>
+    /// Acts as a base class for voice gateway command types.
+    /// </summary>
+    /// <typeparam name="TType">The type under test.</typeparam>
+    [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+    public abstract class VoiceGatewayCommandTestBase<TType> : VoiceGatewayTestBase<TType, SampleVoiceCommandDataSource<TType>>
+        where TType : IVoiceGatewayCommand
+    {
+    }
+}

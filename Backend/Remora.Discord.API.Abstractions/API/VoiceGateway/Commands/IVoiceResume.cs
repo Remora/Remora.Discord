@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceResume.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Rest.Core;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+
+/// <summary>
+/// Represents a request to resume an interrupted voice session.
+/// </summary>
+[PublicAPI]
+public interface IVoiceResume : IVoiceGatewayCommand
+{
+    /// <summary>
+    /// Gets the ID of the server to resume the connection to.
+    /// </summary>
+    Snowflake ServerID { get; }
+
+    /// <summary>
+    /// Gets the ID of the session to resume.
+    /// </summary>
+    string SessionID { get; }
+
+    /// <summary>
+    /// Gets the authentication token of the user that is resuming their session.
+    /// </summary>
+    string Token { get; }
+}

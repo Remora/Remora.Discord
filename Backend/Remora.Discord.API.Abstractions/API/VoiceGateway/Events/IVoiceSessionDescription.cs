@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceSessionDescription.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
+
+/// <summary>
+/// Represents a session descriptor with information used to establish an encrypted voice connection.
+/// </summary>
+[PublicAPI]
+public interface IVoiceSessionDescription : IVoiceGatewayEvent
+{
+    /// <summary>
+    /// Gets the encryption mode that the server accepted for the session.
+    /// </summary>
+    string Mode { get; }
+
+    /// <summary>
+    /// Gets the shared secret session key.
+    /// </summary>
+    IReadOnlyList<byte> SecretKey { get; }
+}

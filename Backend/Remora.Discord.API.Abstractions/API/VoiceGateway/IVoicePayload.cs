@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoicePayload.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway;
+
+/// <summary>
+/// Marker interface for voice payload objects.
+/// </summary>
+[PublicAPI]
+public interface IVoicePayload
+{
+    /// <summary>
+    /// Gets the operation code of the payload.
+    /// </summary>
+    VoiceOperationCode OperationCode { get; }
+}
+
+/// <summary>
+/// Marker interface for payload classes.
+/// </summary>
+/// <typeparam name="TData">The data contained in the payload.</typeparam>
+[PublicAPI]
+public interface IVoicePayload<out TData> : IVoicePayload where TData : IVoiceGatewayPayloadData
+{
+    /// <summary>
+    /// Gets the data contained in the payload.
+    /// </summary>
+    TData Data { get; }
+}

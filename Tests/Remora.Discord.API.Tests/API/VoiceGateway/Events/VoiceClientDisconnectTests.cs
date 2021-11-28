@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceClientDisconnectTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,16 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
+using Remora.Discord.API.Tests.TestBases;
+using Remora.Discord.API.VoiceGateway.Events;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Tests.VoiceGateway.Events
+{
+    /// <summary>
+    /// Tests the <see cref="VoiceClientDisconnect"/> event.
+    /// </summary>
+    public class VoiceClientDisconnectTests : VoiceGatewayEventTestBase<IVoiceClientDisconnect>
+    {
+    }
+}

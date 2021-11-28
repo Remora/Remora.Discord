@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  IVoiceSpeakingEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Rest.Core;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.Abstractions.VoiceGateway.Events;
+
+/// <summary>
+/// Represents data that a client is speaking.
+/// </summary>
+[PublicAPI]
+public interface IVoiceSpeakingEvent : IVoiceGatewayEvent
+{
+    /// <summary>
+    /// Gets the ID of the user who speaking.
+    /// </summary>
+    Snowflake UserID { get; }
+
+    /// <summary>
+    /// Gets the speaker flags.
+    /// </summary>
+    SpeakingFlags Speaking { get; }
+
+    /// <summary>
+    /// Gets the synchronization source ID that this speech event is associated with.
+    /// </summary>
+    uint SSRC { get; }
+}

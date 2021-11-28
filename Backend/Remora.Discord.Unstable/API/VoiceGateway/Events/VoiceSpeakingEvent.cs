@@ -1,5 +1,5 @@
-//
-//  Attributes.cs
+﻿//
+//  VoiceSpeakingEvent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,7 +20,18 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.VoiceGateway;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
+using Remora.Rest.Core;
 
-[assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
-[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]
+namespace Remora.Discord.API.VoiceGateway.Events;
+
+/// <inheritdoc cref="IVoiceSpeakingEvent" />
+[PublicAPI]
+public record VoiceSpeakingEvent
+(
+    Snowflake UserID,
+    SpeakingFlags Speaking,
+    uint SSRC
+) : IVoiceSpeakingEvent;
