@@ -1,5 +1,5 @@
 ﻿//
-//  EmbedError.cs
+//  IBuilder.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Remora.Discord.Extensions.Embeds;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Errors
+namespace Remora.Discord.Extensions.Builder
 {
     /// <summary>
-    /// Represents an error which occurs when validating an <see cref="EmbedBuilder"/>.
+    /// Represents an object responsible for constructing and validating a model.
     /// </summary>
-    /// <param name="Reason">The reason the validation failed.</param>
-    public record EmbedError(string Reason) : ResultError($"Embed validation failed: {Reason}");
+    /// <typeparam name="TEntity">The type of model to build.</typeparam>
+    public interface IBuilder<TEntity>
+    {
+        /// <summary>
+        /// Validate the model within specifications described by the model.
+        /// </summary>
+        /// <returns>Returns a <see cref="Result"/> indicating the result of validation.</returns>
+        Result Validate();
+
+        /// <summary>
+        /// Validates and then builds the model.
+        /// </summary>
+        /// <returns>Returns a <see cref="Result{TEntity}"/> containing the result of the build or the reason for failure.</returns>
+        Result<TEntity> Build();
+    }
 }

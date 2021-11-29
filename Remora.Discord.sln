@@ -79,7 +79,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remora.Discord.SensitiveDat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autocomplete", "Samples\Autocomplete\Autocomplete.csproj", "{D1FBE943-B854-456B-9C3B-C49EAB24AE61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Extensions", "Remora.Discord.Extensions\Remora.Discord.Extensions.csproj", "{9611DF82-C4FE-4016-BB6A-06C1DA7A8752}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remora.Discord.Extensions", "Remora.Discord.Extensions\Remora.Discord.Extensions.csproj", "{657AF34F-5B19-461E-AC63-987F4E24CE1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remora.Discord.Extensions.Tests", "Tests\Remora.Discord.Extensions.Tests\Remora.Discord.Extensions.Tests.csproj", "{9F9B3DFD-891A-4823-9BF7-E58CC52989C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,10 +173,14 @@ Global
 		{D1FBE943-B854-456B-9C3B-C49EAB24AE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1FBE943-B854-456B-9C3B-C49EAB24AE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1FBE943-B854-456B-9C3B-C49EAB24AE61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9611DF82-C4FE-4016-BB6A-06C1DA7A8752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9611DF82-C4FE-4016-BB6A-06C1DA7A8752}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9611DF82-C4FE-4016-BB6A-06C1DA7A8752}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9611DF82-C4FE-4016-BB6A-06C1DA7A8752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657AF34F-5B19-461E-AC63-987F4E24CE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657AF34F-5B19-461E-AC63-987F4E24CE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657AF34F-5B19-461E-AC63-987F4E24CE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657AF34F-5B19-461E-AC63-987F4E24CE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9B3DFD-891A-4823-9BF7-E58CC52989C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9B3DFD-891A-4823-9BF7-E58CC52989C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9B3DFD-891A-4823-9BF7-E58CC52989C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9B3DFD-891A-4823-9BF7-E58CC52989C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +205,7 @@ Global
 		{E8B6A214-6F37-48E7-8E10-77C1DBD7DF09} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
 		{F3436707-8B8C-4B6B-93E1-A19A5C8F6BBC} = {83B6FEDE-25DF-4996-9B5E-A482D93C3CC7}
 		{D1FBE943-B854-456B-9C3B-C49EAB24AE61} = {D1A34922-E02F-492B-AEF5-9B34E81CE293}
+		{9F9B3DFD-891A-4823-9BF7-E58CC52989C5} = {6E2D59EB-648D-4968-8A63-8D8E3813EC86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02545F40-E06C-4956-A77D-02EB2D41A964}

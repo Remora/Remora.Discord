@@ -1,5 +1,5 @@
 ﻿//
-//  Constants.cs
+//  EmbedConstants.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,7 +27,7 @@ namespace Remora.Discord.Extensions.Embeds
     /// <summary>
     /// Provides a set of constant values for embed validation.
     /// </summary>
-    public static class Constants
+    public static class EmbedConstants
     {
         /// <summary>
         /// Gets the maximum length of a title.

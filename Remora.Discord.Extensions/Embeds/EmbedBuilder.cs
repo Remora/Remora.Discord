@@ -22,12 +22,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Extensions.Builder;
 using Remora.Discord.Extensions.Errors;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -37,30 +37,22 @@ namespace Remora.Discord.Extensions.Embeds
     /// <summary>
     /// Provides utilities for building an embed.
     /// </summary>
-    public class EmbedBuilder
+    public class EmbedBuilder : IBuilder<Embed>
     {
         /// <summary>
         /// Gets or sets the title of the embed.
         /// </summary>
-        [MaxLength(Constants.MaxTitleLength)]
-        public string Title { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets the type of embed. Only <see cref="EmbedType.Rich"/> is available for embeds created by bots.
-        /// </summary>
-        public EmbedType Type { get; } = EmbedType.Rich;
+        public string? Title { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the description of the embed.
         /// </summary>
-        [MaxLength(Constants.MaxDescriptionLength)]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the url of the embed.
         /// </summary>
-        [Url]
-        public string Url { get; set; } = string.Empty;
+        public string? Url { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the timestamp, if any, which should be displayed on the embed.
@@ -70,27 +62,27 @@ namespace Remora.Discord.Extensions.Embeds
         /// <summary>
         /// Gets or sets the color of this embed.
         /// </summary>
-        public Color Colour { get; set; } = Constants.DefaultColour;
+        public Color Colour { get; set; } = EmbedConstants.DefaultColour;
 
         /// <summary>
         /// Gets or sets the footer of this embed.
         /// </summary>
-        public IEmbedFooter? Footer { get; set; } = null;
+        public EmbedFooterBuilder? Footer { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the image added to this embed.
         /// </summary>
-        public IEmbedImage? Image { get; set; } = null;
+        public string? ImageUrl { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the thumbnail added to this embed.
         /// </summary>
-        public IEmbedThumbnail? Thumbnail { get; set; } = null;
+        public string? ThumbnailUrl { get; set; } = null;
 
         /// <summary>
         /// Gets or sets the author of the embed.
         /// </summary>
-        public IEmbedAuthor? Author { get; set; } = null;
+        public EmbedAuthorBuilder? Author { get; set; } = null;
 
         /// <summary>
         /// Gets a read-only list of fields added to this embed.
@@ -106,8 +98,8 @@ namespace Remora.Discord.Extensions.Embeds
         {
             get
             {
-                int titleLength = Title.Length;
-                int descriptionLength = Description.Length;
+                int titleLength = Title?.Length ?? 0;
+                int descriptionLength = Description?.Length ?? 0;
                 int fieldSum = _fields.Sum(field => field.Name.Length + field.Value.Length);
                 int footerLength = Footer?.Text.Length ?? 0;
                 int authorLength = Author?.Name.Length ?? 0;
@@ -120,12 +112,12 @@ namespace Remora.Discord.Extensions.Embeds
         /// Initializes a new instance of the <see cref="EmbedBuilder"/> class.
         /// </summary>
         public EmbedBuilder()
-            : this(new List<IEmbedField>(Constants.MaxFieldCount))
+            : this(new List<IEmbedField>(EmbedConstants.MaxFieldCount))
         {
         }
 
         private EmbedBuilder(Optional<IReadOnlyList<IEmbedField>> fields)
-            : this(fields.HasValue ? new List<IEmbedField>(fields.Value) : new List<IEmbedField>(Constants.MaxFieldCount))
+            : this(fields.HasValue ? new List<IEmbedField>(fields.Value) : new List<IEmbedField>(EmbedConstants.MaxFieldCount))
         {
         }
 
@@ -135,13 +127,111 @@ namespace Remora.Discord.Extensions.Embeds
         }
 
         /// <summary>
-        /// Ensures that the overall length of the embed is less than the value of <see cref="Constants.MaxEmbedLength"/>.
+        /// Ensures that the overall length of the embed is less than the value of <see cref="EmbedConstants.MaxEmbedLength"/>.
         /// </summary>
         /// <returns>Returns a <see cref="Result"/> indicating success or failure of the validation.</returns>
-        public Result Ensure()
-            => Length < Constants.MaxEmbedLength
-            ? Result.FromSuccess()
-            : new EmbedError("Embed is too long.");
+        public Result Validate()
+        {
+            Result ValidateUrl(string propertyName, string? url)
+            {
+                if (url is null)
+                {
+                    return Result.FromSuccess();
+                }
+
+                if (url.Length == 0)
+                {
+                    return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
+                }
+
+                if
+                (
+                    Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
+                    Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
+                    uri is { Scheme: "http" or "https" }
+                )
+                {
+                    return Result.FromSuccess();
+                }
+
+                return new ValidationError(propertyName, "Url is not in a valid format.");
+            }
+
+            Result ValidateLength(string propertyName, string? text, int upperBound)
+            {
+                if (text is null)
+                {
+                    return Result.FromSuccess();
+                }
+
+                if (text.Length == 0)
+                {
+                    return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
+                }
+
+                if (text.Length > upperBound)
+                {
+                    return new ValidationError(propertyName, $"The {propertyName} is too long. Expected: <{upperBound}. Actual: {text.Length}");
+                }
+
+                return Result.FromSuccess();
+            }
+
+            var validateTitleResult = ValidateLength(nameof(Title), Title, EmbedConstants.MaxTitleLength);
+            if (!validateTitleResult.IsSuccess)
+            {
+                return validateTitleResult;
+            }
+
+            var validateDescriptionResult = ValidateLength(nameof(Description), Description, EmbedConstants.MaxDescriptionLength);
+            if (!validateDescriptionResult.IsSuccess)
+            {
+                return validateDescriptionResult;
+            }
+
+            var validateUrlResult = ValidateUrl(nameof(Url), Url);
+            if (!validateUrlResult.IsSuccess)
+            {
+                return validateUrlResult;
+            }
+
+            // If there is no footer, just default to success.
+            var validateFooterResult = Footer?.Validate() ?? Result.FromSuccess();
+            if (!validateFooterResult.IsSuccess)
+            {
+                return validateFooterResult;
+            }
+
+            var validateImageResult = ValidateUrl(nameof(ImageUrl), ImageUrl);
+            if (!validateImageResult.IsSuccess)
+            {
+                return validateImageResult;
+            }
+
+            var validateThumbnailResult = ValidateUrl(nameof(ThumbnailUrl), ThumbnailUrl);
+            if (!validateThumbnailResult.IsSuccess)
+            {
+                return validateThumbnailResult;
+            }
+
+            var validateAuthorResult = Author?.Validate() ?? Result.FromSuccess();
+            if (!validateAuthorResult.IsSuccess)
+            {
+                return validateAuthorResult;
+            }
+
+            if (Fields.Count >= EmbedConstants.MaxFieldCount)
+            {
+                return new ArgumentOutOfRangeError(nameof(Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {Fields.Count}.");
+            }
+
+            if (Length > EmbedConstants.MaxEmbedLength)
+            {
+                return new ValidationError(nameof(Length), $"The overall embed length is too long.");
+            }
+
+            return Result.FromSuccess();
+        }
 
         /// <summary>
         /// Adds the specified title to this <see cref="EmbedBuilder"/>.
@@ -183,7 +273,7 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
         public EmbedBuilder WithThumbnailUrl(string thumbnailUrl)
         {
-            Thumbnail = new EmbedThumbnail(Url: thumbnailUrl);
+            ThumbnailUrl = thumbnailUrl;
             return this;
         }
 
@@ -194,7 +284,7 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
         public EmbedBuilder WithImageUrl(string imageUrl)
         {
-            Image = new EmbedImage(Url: imageUrl);
+            ImageUrl = imageUrl;
             return this;
         }
 
@@ -250,12 +340,12 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
         public EmbedBuilder WithAuthor
         (
-            [MaxLength(Constants.MaxAuthorNameLength)] string name,
-            [Url] string url = "",
-            [Url] string iconUrl = ""
+            string name,
+            string url = "",
+            string iconUrl = ""
         )
         {
-            Author = new EmbedAuthor(name, url, iconUrl);
+            Author = new EmbedAuthorBuilder(name, url, iconUrl);
             return this;
         }
 
@@ -272,7 +362,7 @@ namespace Remora.Discord.Extensions.Embeds
                 ? avatarUrlResult.Entity
                 : CDN.GetDefaultUserAvatarUrl(user, imageSize: 256).Entity;
 
-            Author = new EmbedAuthor($"{user.Username}${user.Discriminator}", IconUrl: avatarUrl.AbsoluteUri);
+            Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
             return this;
         }
 
@@ -282,9 +372,9 @@ namespace Remora.Discord.Extensions.Embeds
         /// <param name="text">The text of the footer.</param>
         /// <param name="iconUrl">The url of the icon.</param>
         /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-        public EmbedBuilder WithFooter([MaxLength(Constants.MaxFooterTextLength)] string text, [Url] string iconUrl = "")
+        public EmbedBuilder WithFooter(string text, string iconUrl = "")
         {
-            Footer = new EmbedFooter(text, iconUrl);
+            Footer = new EmbedFooterBuilder(text, iconUrl);
             return this;
         }
 
@@ -295,7 +385,7 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
         public EmbedBuilder WithFooter(IEmbedFooter footer)
         {
-            Footer = footer;
+            Footer = EmbedFooterBuilder.FromFooter(footer);
             return this;
         }
 
@@ -316,9 +406,9 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>A result indicating the success or failure of the operation.</returns>
         public Result AddField(IEmbedField field)
         {
-            if (_fields.Count >= Constants.MaxFieldCount)
+            if (_fields.Count >= EmbedConstants.MaxFieldCount)
             {
-                return new EmbedError($"Cannot add any more fields to this embed.");
+                return new ValidationError(nameof(Fields), $"Cannot add any more fields to this embed.");
             }
 
             _fields.Add(field);
@@ -332,9 +422,9 @@ namespace Remora.Discord.Extensions.Embeds
         /// <returns>A result indicating the success or failure of the operation.</returns>
         public Result SetFields(ICollection<IEmbedField> fields)
         {
-            if (fields.Count >= Constants.MaxFieldCount)
+            if (fields.Count >= EmbedConstants.MaxFieldCount)
             {
-                return new EmbedError($"The specified field collection is too large.");
+                return new ArgumentOutOfRangeError(nameof(fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {fields.Count}.");
             }
 
             _fields = fields.ToList();
@@ -342,26 +432,40 @@ namespace Remora.Discord.Extensions.Embeds
         }
 
         /// <summary>
-        /// Builds the <see cref="EmbedBuilder"/> into a rich embed.
+        /// Validates and builds the <see cref="EmbedBuilder"/>.
         /// </summary>
-        /// <returns>A result containing the built embed or an error indicating failure.</returns>
+        /// <returns>A result containing the built <see cref="Embed"/> or an error indicating failure.</returns>
         public Result<Embed> Build()
-            => Length > Constants.MaxEmbedLength
-            ? new EmbedError($"The total size of this EmbedBuilder is longer than the maximum allowed length.")
-            : new Embed()
+        {
+            var validationResult = this.Validate();
+
+            if (validationResult.IsSuccess)
             {
-                Title = Title,
-                Type = Type,
-                Description = Description,
-                Url = Url,
-                Timestamp = Timestamp ?? default(Optional<DateTimeOffset>),
-                Colour = Colour,
-                Footer = Footer is null ? default : new Optional<IEmbedFooter>(Footer),
-                Image = Image is null ? default : new Optional<IEmbedImage>(Image),
-                Thumbnail = Thumbnail is null ? default : new Optional<IEmbedThumbnail>(Thumbnail),
-                Author = Author is null ? default : new Optional<IEmbedAuthor>(Author),
-                Fields = new(Fields)
-            };
+                var footerResult = Footer?.Build();
+                var authorResult = Author?.Build();
+
+                return new Embed()
+                {
+                    Title = Title ?? default(Optional<string>),
+                    Type = EmbedType.Rich,
+                    Description = Description ?? default(Optional<string>),
+                    Url = Url ?? default(Optional<string>),
+                    Timestamp = Timestamp ?? default(Optional<DateTimeOffset>),
+                    Colour = Colour,
+                    Image = ImageUrl is null ? default(Optional<IEmbedImage>) : new EmbedImage(ImageUrl),
+                    Thumbnail = ThumbnailUrl is null ? default(Optional<IEmbedThumbnail>) : new EmbedThumbnail(ThumbnailUrl),
+                    Author = (authorResult is { IsSuccess: true } author)
+                        ? author.Entity
+                        : default(Optional<IEmbedAuthor>),
+                    Footer = (footerResult is { IsSuccess: true } footer)
+                        ? footer.Entity
+                        : default(Optional<IEmbedFooter>),
+                    Fields = new(Fields)
+                };
+            }
+
+            return Result<Embed>.FromError(validationResult);
+        }
 
         /// <summary>
         /// Converts the provided <see cref="IEmbed"/> to an instance of <see cref="EmbedBuilder"/>.
@@ -371,14 +475,15 @@ namespace Remora.Discord.Extensions.Embeds
         public static EmbedBuilder FromEmbed(IEmbed embed)
             => new(embed.Fields)
             {
-                Title = embed.Title.HasValue ? embed.Title.Value : string.Empty,
-                Description = embed.Description.HasValue ? embed.Description.Value : string.Empty,
-                Url = embed.Url.HasValue ? embed.Url.Value : string.Empty,
+                Title = embed.Title.HasValue ? embed.Title.Value : null,
+                Description = embed.Description.HasValue ? embed.Description.Value : null,
+                Url = embed.Url.HasValue ? embed.Url.Value : null,
                 Timestamp = embed.Timestamp.HasValue ? embed.Timestamp.Value : null,
-                Colour = embed.Colour.HasValue ? embed.Colour.Value : Constants.DefaultColour,
-                Footer = embed.Footer.HasValue ? embed.Footer.Value : default,
-                Image = embed.Image.HasValue ? embed.Image.Value : default,
-                Thumbnail = embed.Thumbnail.HasValue ? embed.Thumbnail.Value : default
+                Colour = embed.Colour.HasValue ? embed.Colour.Value : EmbedConstants.DefaultColour,
+                ImageUrl = embed.Image.HasValue ? embed.Image.Value.Url : null,
+                ThumbnailUrl = embed.Thumbnail.HasValue ? embed.Thumbnail.Value.Url : null,
+                Author = embed.Author.HasValue ? EmbedAuthorBuilder.FromAuthor(embed.Author.Value) : default,
+                Footer = embed.Footer.HasValue ? EmbedFooterBuilder.FromFooter(embed.Footer.Value) : default
             };
     }
 }
