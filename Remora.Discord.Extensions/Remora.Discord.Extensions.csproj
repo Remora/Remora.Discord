@@ -14,12 +14,10 @@
 		<PackageReleaseNotes>
 			Initial release.
 		</PackageReleaseNotes>
-		<PlatformTarget>AnyCPU</PlatformTarget>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Remora.Results" Version="7.0.3" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
