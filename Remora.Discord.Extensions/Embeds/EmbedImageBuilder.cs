@@ -32,7 +32,7 @@ namespace Remora.Discord.Extensions.Embeds
     public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
     {
         /// <summary>
-        /// Gets or sets the url of the image.
+        /// Gets or sets the url of the image. Must be a valid url. Null values are not allowed.
         /// </summary>
         public string Url { get; set; }
 
@@ -48,11 +48,17 @@ namespace Remora.Discord.Extensions.Embeds
         /// <inheritdoc />
         public override Result<EmbedImage> Build()
         {
-            var validateResult = this.Validate();
+            var validateResult = Validate();
 
             return validateResult.IsSuccess
                 ? new EmbedImage(Url)
                 : Result<EmbedImage>.FromError(validateResult);
+        }
+
+        /// <inheritdoc />
+        public override Result Validate()
+        {
+            return ValidateUrl(nameof(Url), Url, false);
         }
     }
 }

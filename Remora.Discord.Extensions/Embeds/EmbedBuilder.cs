@@ -37,7 +37,7 @@ namespace Remora.Discord.Extensions.Embeds
     /// <summary>
     /// Provides utilities for building an embed.
     /// </summary>
-    public class EmbedBuilder : IBuilder<Embed>
+    public class EmbedBuilder : BuilderBase<Embed>
     {
         /// <summary>
         /// Gets or sets the title of the embed.
@@ -130,66 +130,21 @@ namespace Remora.Discord.Extensions.Embeds
         /// Ensures that the overall length of the embed is less than the value of <see cref="EmbedConstants.MaxEmbedLength"/>.
         /// </summary>
         /// <returns>Returns a <see cref="Result"/> indicating success or failure of the validation.</returns>
-        public Result Validate()
+        public override Result Validate()
         {
-            Result ValidateUrl(string propertyName, string? url)
-            {
-                if (url is null)
-                {
-                    return Result.FromSuccess();
-                }
-
-                if (url.Length == 0)
-                {
-                    return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
-                }
-
-                if
-                (
-                    Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
-                    Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
-                    uri is { Scheme: "http" or "https" }
-                )
-                {
-                    return Result.FromSuccess();
-                }
-
-                return new ValidationError(propertyName, "Url is not in a valid format.");
-            }
-
-            Result ValidateLength(string propertyName, string? text, int upperBound)
-            {
-                if (text is null)
-                {
-                    return Result.FromSuccess();
-                }
-
-                if (text.Length == 0)
-                {
-                    return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
-                }
-
-                if (text.Length > upperBound)
-                {
-                    return new ValidationError(propertyName, $"The {propertyName} is too long. Expected: <{upperBound}. Actual: {text.Length}");
-                }
-
-                return Result.FromSuccess();
-            }
-
-            var validateTitleResult = ValidateLength(nameof(Title), Title, EmbedConstants.MaxTitleLength);
+            var validateTitleResult = ValidateLength(nameof(Title), Title, EmbedConstants.MaxTitleLength, true);
             if (!validateTitleResult.IsSuccess)
             {
                 return validateTitleResult;
             }
 
-            var validateDescriptionResult = ValidateLength(nameof(Description), Description, EmbedConstants.MaxDescriptionLength);
+            var validateDescriptionResult = ValidateLength(nameof(Description), Description, EmbedConstants.MaxDescriptionLength, true);
             if (!validateDescriptionResult.IsSuccess)
             {
                 return validateDescriptionResult;
             }
 
-            var validateUrlResult = ValidateUrl(nameof(Url), Url);
+            var validateUrlResult = ValidateUrl(nameof(Url), Url, true);
             if (!validateUrlResult.IsSuccess)
             {
                 return validateUrlResult;
@@ -202,13 +157,13 @@ namespace Remora.Discord.Extensions.Embeds
                 return validateFooterResult;
             }
 
-            var validateImageResult = ValidateUrl(nameof(ImageUrl), ImageUrl);
+            var validateImageResult = ValidateUrl(nameof(ImageUrl), ImageUrl, true);
             if (!validateImageResult.IsSuccess)
             {
                 return validateImageResult;
             }
 
-            var validateThumbnailResult = ValidateUrl(nameof(ThumbnailUrl), ThumbnailUrl);
+            var validateThumbnailResult = ValidateUrl(nameof(ThumbnailUrl), ThumbnailUrl, true);
             if (!validateThumbnailResult.IsSuccess)
             {
                 return validateThumbnailResult;
@@ -435,7 +390,7 @@ namespace Remora.Discord.Extensions.Embeds
         /// Validates and builds the <see cref="EmbedBuilder"/>.
         /// </summary>
         /// <returns>A result containing the built <see cref="Embed"/> or an error indicating failure.</returns>
-        public Result<Embed> Build()
+        public override Result<Embed> Build()
         {
             var validationResult = this.Validate();
 

@@ -21,8 +21,8 @@
 //
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using Remora.Discord.Extensions.Builder;
+using Remora.Discord.Extensions.Errors;
 using Remora.Results;
 
 namespace Remora.Discord.Extensions.Tests.Samples
@@ -35,13 +35,11 @@ namespace Remora.Discord.Extensions.Tests.Samples
         /// <summary>
         /// Gets the person's name.
         /// </summary>
-        [MaxLength(5)]
         public string Name { get; }
 
         /// <summary>
         /// Gets the person's age.
         /// </summary>
-        [Range(1, 100)]
         public int Age { get; }
 
         /// <summary>
@@ -63,6 +61,23 @@ namespace Remora.Discord.Extensions.Tests.Samples
             return validationResult.IsSuccess
                 ? new Person(Name, Age)
                 : Result<Person>.FromError(validationResult);
+        }
+
+        /// <inheritdoc />
+        public override Result Validate()
+        {
+            var nameValidate = ValidateLength(nameof(Name), Name, 5, false);
+            if (!nameValidate.IsSuccess)
+            {
+                return Result.FromError(nameValidate.Error);
+            }
+
+            if (Age < 1 || Age > 100)
+            {
+                return Result.FromError(new ValidationError(nameof(Age), "Age must be between 1 and 100."));
+            }
+
+            return Result.FromSuccess();
         }
     }
 }

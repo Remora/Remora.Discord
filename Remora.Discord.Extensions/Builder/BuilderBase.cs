@@ -20,8 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System;
 using Remora.Discord.Extensions.Errors;
 using Remora.Results;
 
@@ -34,34 +33,70 @@ namespace Remora.Discord.Extensions.Builder
         public abstract Result<TEntity> Build();
 
         /// <inheritdoc />
-        public Result Validate()
-        {
-            var context = new ValidationContext(this);
-            var errorResults = new List<ValidationResult>();
+        public abstract Result Validate();
 
-            if (Validator.TryValidateObject(this, context, errorResults, true))
+        /// <summary>
+        /// Validates a URL to ensure it is a valid URL.
+        /// </summary>
+        /// <param name="propertyName">The name of the property you are testing.</param>
+        /// <param name="url">The text of the url.</param>
+        /// <param name="allowNull">If true, a null url will return a successful result.</param>
+        /// <returns>Returns a successful result if the url is valid; otherwise, a failed result.</returns>
+        internal static Result ValidateUrl(string propertyName, string? url, bool allowNull)
+        {
+            if (url is null)
+            {
+                return allowNull
+                    ? Result.FromSuccess()
+                    : new ValidationError(propertyName, "The provided url is null but null values are not allowed.");
+            }
+
+            if (url.Length == 0)
+            {
+                return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
+            }
+
+            if
+            (
+                Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
+                Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
+                uri is { Scheme: "http" or "https" }
+            )
             {
                 return Result.FromSuccess();
             }
-            else
+
+            return new ValidationError(propertyName, "Url is not in a valid format.");
+        }
+
+        /// <summary>
+        /// Ensures that the length of the provided text is valid.
+        /// </summary>
+        /// <param name="propertyName">The name of the property you are testing.</param>
+        /// <param name="text">The text.</param>
+        /// <param name="upperBound">The maximum length of the value.</param>
+        /// <param name="allowNull">If true, a null field will return a successful result.</param>
+        /// <returns>Returns a successful result if the text is valid; otherwise, a failed result.</returns>
+        internal static Result ValidateLength(string propertyName, string? text, int upperBound, bool allowNull)
+        {
+            if (text is null)
             {
-                var errors = new List<IResult>();
-                foreach (var errorResult in errorResults)
-                {
-                    foreach (var member in errorResult.MemberNames)
-                    {
-                        errors.Add(Result.FromError(new ValidationError(member, errorResult.ErrorMessage ?? string.Empty)));
-                    }
-                }
-
-                // If there's only one error, return that error directly.
-                if (errors.Count == 1)
-                {
-                    return (Result)errors[0];
-                }
-
-                return new AggregateError(errors.AsReadOnly());
+                return allowNull
+                    ? Result.FromSuccess()
+                    : new ValidationError(propertyName, "The provided text is null but null values are not allowed.");
             }
+
+            if (text.Length == 0)
+            {
+                return new ValidationError(propertyName, $"The {propertyName} cannot be an empty string.");
+            }
+
+            if (text.Length > upperBound)
+            {
+                return new ValidationError(propertyName, $"The {propertyName} is too long. Expected: shorter than {upperBound}. Actual: {text.Length}");
+            }
+
+            return Result.FromSuccess();
         }
     }
 }

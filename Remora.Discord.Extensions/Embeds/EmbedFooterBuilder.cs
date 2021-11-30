@@ -34,21 +34,21 @@ namespace Remora.Discord.Extensions.Embeds
     public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     {
         /// <summary>
-        /// Gets or sets the text of the footer.
+        /// Gets or sets the text of the footer. Must be shorter than or equal to <see cref="EmbedConstants.MaxFooterTextLength"/> in length.
         /// </summary>
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the icon url of the footer.
+        /// Gets or sets the icon url of the footer. Provide <c>null</c> if no url is needed.
         /// </summary>
-        public Optional<string> IconUrl { get; set; }
+        public string? IconUrl { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmbedFooterBuilder"/> class.
         /// </summary>
         /// <param name="text">The text of the footer.</param>
         /// <param name="iconUrl">The icon url of the footer.</param>
-        public EmbedFooterBuilder(string text, Optional<string> iconUrl = default)
+        public EmbedFooterBuilder(string text, string? iconUrl = null)
         {
             Text = text;
             IconUrl = iconUrl;
@@ -57,11 +57,29 @@ namespace Remora.Discord.Extensions.Embeds
         /// <inheritdoc />
         public override Result<EmbedFooter> Build()
         {
-            var validationResult = this.Validate();
+            var validationResult = Validate();
 
             return validationResult.IsSuccess
-                ? new EmbedFooter(Text, IconUrl)
+                ? new EmbedFooter(Text, IconUrl ?? default(Optional<string>))
                 : Result<EmbedFooter>.FromError(validationResult);
+        }
+
+        /// <inheritdoc />
+        public override Result Validate()
+        {
+            var textValidationResult = ValidateLength(nameof(Text), Text, EmbedConstants.MaxFooterTextLength, false);
+            if (!textValidationResult.IsSuccess)
+            {
+                Result.FromError(textValidationResult.Error);
+            }
+
+            var urlValidationResult = ValidateUrl(nameof(IconUrl), IconUrl, true);
+            if (!urlValidationResult.IsSuccess)
+            {
+                Result.FromError(urlValidationResult.Error);
+            }
+
+            return Result.FromSuccess();
         }
 
         /// <summary>
@@ -70,6 +88,6 @@ namespace Remora.Discord.Extensions.Embeds
         /// <param name="footer">The footer.</param>
         /// <returns>A new <see cref="EmbedFooterBuilder"/> based on the provided footer.</returns>
         public static EmbedFooterBuilder FromFooter(IEmbedFooter footer)
-            => new(footer.Text, footer.IconUrl);
+            => new(footer.Text, footer.IconUrl.HasValue ? footer.IconUrl.Value : null);
     }
 }
