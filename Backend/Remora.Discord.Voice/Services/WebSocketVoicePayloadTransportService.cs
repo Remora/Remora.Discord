@@ -22,21 +22,22 @@
 
 using System;
 using System.Buffers;
-using System.Diagnostics;
 using System.IO;
 using System.Net.WebSockets;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IO;
 using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.Voice.Abstractions.Services;
 using Remora.Discord.Voice.Errors;
 using Remora.Results;
+#if DEBUG_VOICE
+using System.Diagnostics;
+using System.Text;
+#endif
 
 namespace Remora.Discord.Voice.Services
 {
@@ -79,12 +80,12 @@ namespace Remora.Discord.Voice.Services
         (
             IServiceProvider services,
             RecyclableMemoryStreamManager memoryStreamManager,
-            IOptions<JsonSerializerOptions> jsonOptions
+            JsonSerializerOptions jsonOptions
         )
         {
             _services = services;
             _memoryStreamManager = memoryStreamManager;
-            _jsonOptions = jsonOptions.Value;
+            _jsonOptions = jsonOptions;
 
             _payloadSendSemaphore = new SemaphoreSlim(1, 1);
             _payloadSendBuffer = new ArrayBufferWriter<byte>(MaxPayloadSize);
@@ -169,6 +170,11 @@ namespace Remora.Discord.Voice.Services
                     return new OperationCanceledException("Could not enter semaphore.");
                 }
 
+#if DEBUG_VOICE
+                var stringData = Encoding.UTF8.GetString(data.ToArray());
+                Debug.WriteLine("Voice S: " + stringData);
+#endif
+
                 await _clientWebSocket.SendAsync(data, WebSocketMessageType.Text, true, ct).ConfigureAwait(false);
 
                 if (_clientWebSocket.CloseStatus.HasValue)
@@ -232,17 +238,14 @@ namespace Remora.Discord.Voice.Services
 #if DEBUG_VOICE
                 var tempBuffer = MemoryPool<byte>.Shared.Rent((int)ms.Length);
                 await ms.ReadAsync(tempBuffer.Memory[0.. (int)ms.Length], ct).ConfigureAwait(false);
-                Debug.WriteLine(Encoding.UTF8.GetString(tempBuffer.Memory.Span[0.. (int)ms.Length]));
+                Debug.WriteLine("Voice R: " + Encoding.UTF8.GetString(tempBuffer.Memory.Span[0.. (int)ms.Length]));
                 ms.Seek(0, SeekOrigin.Begin);
 #endif
 
                 var payload = await JsonSerializer.DeserializeAsync<IVoicePayload>(ms, _jsonOptions, ct).ConfigureAwait(false);
                 if (payload is null)
                 {
-                    return new NotSupportedError
-                    (
-                        "The received payload deserialized as a null value."
-                    );
+                    return new UnrecognisedPayloadError("The received payload deserialized as a null value.");
                 }
 
                 return Result<IVoicePayload>.FromSuccess(payload);

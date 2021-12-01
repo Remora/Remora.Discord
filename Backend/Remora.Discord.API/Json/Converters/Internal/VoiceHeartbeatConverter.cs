@@ -29,10 +29,10 @@ using Remora.Discord.API.VoiceGateway.Commands;
 namespace Remora.Discord.API.Json;
 
 /// <inheritdoc />
-internal class VoiceHeartbeatConverter : JsonConverter<IVoiceHeartbeat?>
+internal class VoiceHeartbeatConverter : JsonConverter<VoiceHeartbeat?>
 {
     /// <inheritdoc />
-    public override IVoiceHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override VoiceHeartbeat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         return reader.TokenType switch
         {
@@ -42,7 +42,7 @@ internal class VoiceHeartbeatConverter : JsonConverter<IVoiceHeartbeat?>
     }
 
     /// <inheritdoc />
-    public override void Write(Utf8JsonWriter writer, IVoiceHeartbeat? value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, VoiceHeartbeat? value, JsonSerializerOptions options)
     {
         if (value is null)
         {

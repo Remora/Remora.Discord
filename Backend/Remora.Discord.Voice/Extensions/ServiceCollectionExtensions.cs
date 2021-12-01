@@ -20,9 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.IO;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Gateway;
@@ -52,7 +54,12 @@ namespace Remora.Discord.Voice.Extensions
         {
             serviceCollection.TryAddSingleton<RecyclableMemoryStreamManager>();
             serviceCollection.TryAddSingleton<IConnectionEstablishmentWaiterService, ConnectionEstablishmentWaiterService>();
-            serviceCollection.TryAddTransient<IVoicePayloadTransportService, WebSocketVoicePayloadTransportService>();
+            serviceCollection.TryAddTransient<IVoicePayloadTransportService>(s => new WebSocketVoicePayloadTransportService
+            (
+                s,
+                s.GetRequiredService<RecyclableMemoryStreamManager>(),
+                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            ));
 
             serviceCollection.TryAddTransient<DiscordVoiceClient>();
             serviceCollection.TryAddSingleton<DiscordVoiceClientFactory>();

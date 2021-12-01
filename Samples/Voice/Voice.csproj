@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <RootNamespace>Remora.Discord.Samples.Voice</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FFMpegCore" Version="4.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Backend\Remora.Discord.Voice\Remora.Discord.Voice.csproj" />
+    <ProjectReference Include="..\..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+    <ProjectReference Include="..\..\Remora.Discord.Hosting\Remora.Discord.Hosting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="libopus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="sample.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

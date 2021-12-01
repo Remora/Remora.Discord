@@ -519,20 +519,20 @@ namespace Remora.Discord.Voice
                             if (_sendTask.IsCompleted)
                             {
                                 // TODO: Don't just blank return here.
-                                Console.WriteLine("Send task failed.");
                                 var sendTaskResult = await _sendTask.ConfigureAwait(false);
                                 if (!sendTaskResult.IsSuccess)
                                 {
+                                    Console.WriteLine("Send task failed: " + sendTaskResult.Error.Message);
                                     return sendTaskResult;
                                 }
                             }
 
                             if (_receiveTask.IsCompleted)
                             {
-                                Console.WriteLine("Receive task failed.");
                                 var receiveTaskResult = await _receiveTask.ConfigureAwait(false);
                                 if (!receiveTaskResult.IsSuccess)
                                 {
+                                    Console.WriteLine("Receive task failed: " + receiveTaskResult.Error.Message);
                                     return receiveTaskResult;
                                 }
                             }
@@ -1114,6 +1114,12 @@ namespace Remora.Discord.Voice
 
                     if (!receiveResult.IsSuccess)
                     {
+                        // We don't support all the payloads/OP codes
+                        if (receiveResult.Error is UnrecognisedPayloadError)
+                        {
+                            continue;
+                        }
+
                         // Normal closures are okay
                         return receiveResult.Error is VoiceGatewayWebSocketError { CloseStatus: WebSocketCloseStatus.NormalClosure }
                             ? Result.FromSuccess()
@@ -1186,7 +1192,7 @@ namespace Remora.Discord.Voice
                     (
                         new VoicePayload<VoiceHeartbeat>
                         (
-                            new VoiceHeartbeat(_heartbeatData.LastReceivedNonce)
+                            new VoiceHeartbeat(_heartbeatData.LastSentNonce)
                         ),
                         ct
                     ).ConfigureAwait(false);
