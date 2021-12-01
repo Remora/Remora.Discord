@@ -115,12 +115,11 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     /// Deserializes a payload.
     /// </summary>
     /// <typeparam name="TData">The type of the payload data.</typeparam>
-    /// <param name="operationCode">The OP code of the payload.</param>
     /// <param name="document">The JSON document to deserialize.</param>
     /// <param name="options">The JSON options to use.</param>
     /// <returns>The deserialized payload.</returns>
     /// <exception cref="JsonException">Thrown if the payload was invalid.</exception>
-    protected static VoicePayload<TData> DeserializePayload<TData>(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)
+    protected static VoicePayload<TData> DeserializePayload<TData>(JsonDocument document, JsonSerializerOptions options)
         where TData : IVoiceGatewayPayloadData
     {
         if (!document.RootElement.TryGetProperty("d", out var dataProperty))
@@ -135,7 +134,7 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
             throw new JsonException();
         }
 
-        return new VoicePayload<TData>(operationCode, data);
+        return new VoicePayload<TData>(data);
     }
 
     /// <summary>
@@ -192,20 +191,19 @@ internal class VoicePayloadConverter : JsonConverter<IVoicePayload?>
     protected virtual IVoicePayload? DeserializeFromOperationCode(VoiceOperationCode operationCode, JsonDocument document, JsonSerializerOptions options)
         => operationCode switch
         {
-
             // Commands
-            VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>(VoiceOperationCode.Identify, document, options),
-            VoiceOperationCode.SelectProtocol => DeserializePayload<IVoiceSelectProtocol>(VoiceOperationCode.SelectProtocol, document, options),
-            VoiceOperationCode.Heartbeat => DeserializePayload<IVoiceHeartbeat>(VoiceOperationCode.Heartbeat, document, options),
-            VoiceOperationCode.Speaking => DeserializePayload<IVoiceSpeakingCommand>(VoiceOperationCode.Speaking, document, options),
-            VoiceOperationCode.Resume => DeserializePayload<IVoiceResume>(VoiceOperationCode.Resume, document, options),
+            VoiceOperationCode.Identify => DeserializePayload<IVoiceIdentify>(document, options),
+            VoiceOperationCode.SelectProtocol => DeserializePayload<IVoiceSelectProtocol>(document, options),
+            VoiceOperationCode.Heartbeat => DeserializePayload<IVoiceHeartbeat>(document, options),
+            VoiceOperationCode.Speaking => DeserializePayload<IVoiceSpeakingCommand>(document, options),
+            VoiceOperationCode.Resume => DeserializePayload<IVoiceResume>(document, options),
 
             // Events
-            VoiceOperationCode.Ready => DeserializePayload<IVoiceReady>(VoiceOperationCode.Ready, document, options),
-            VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>(VoiceOperationCode.SessionDescription, document, options),
-            VoiceOperationCode.HeartbeatAcknowledgement => DeserializePayload<IVoiceHeartbeatAcknowledge>(VoiceOperationCode.HeartbeatAcknowledgement, document, options),
-            VoiceOperationCode.Hello => DeserializePayload<IVoiceHello>(VoiceOperationCode.Hello, document, options),
-            VoiceOperationCode.Resumed => new VoicePayload<VoiceResumed>(VoiceOperationCode.Resumed, new VoiceResumed()),
+            VoiceOperationCode.Ready => DeserializePayload<IVoiceReady>(document, options),
+            VoiceOperationCode.SessionDescription => DeserializePayload<IVoiceSessionDescription>(document, options),
+            VoiceOperationCode.HeartbeatAcknowledgement => DeserializePayload<IVoiceHeartbeatAcknowledge>(document, options),
+            VoiceOperationCode.Hello => DeserializePayload<IVoiceHello>(document, options),
+            VoiceOperationCode.Resumed => new VoicePayload<VoiceResumed>(new VoiceResumed()),
 
             // If we don't recognise it (which often happens due to undocumented OP codes) we just return null.
             // It's not fantastically explicit design but it prevents generating an exception.

@@ -29,11 +29,6 @@ namespace Remora.Discord.API.VoiceGateway;
 /// Represents a payload of data to be sent to, or received from, the Discord voice gateway.
 /// </summary>
 /// <typeparam name="TData">The data type encapsulated in the payload.</typeparam>
-/// <param name="OperationCode">The operation code of the payload.</param>
 /// <param name="Data">The data encapsulated in the payload.</param>
 [PublicAPI]
-public record VoicePayload<TData>
-(
-    VoiceOperationCode OperationCode,
-    TData Data
-) : IVoicePayload<TData> where TData : IVoiceGatewayPayloadData;
+public record VoicePayload<TData>(TData Data) : IVoicePayload<TData> where TData : IVoiceGatewayPayloadData;

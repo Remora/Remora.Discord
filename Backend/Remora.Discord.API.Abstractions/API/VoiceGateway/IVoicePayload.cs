@@ -30,10 +30,6 @@ namespace Remora.Discord.API.Abstractions.VoiceGateway;
 [PublicAPI]
 public interface IVoicePayload
 {
-    /// <summary>
-    /// Gets the operation code of the payload.
-    /// </summary>
-    VoiceOperationCode OperationCode { get; }
 }
 
 /// <summary>

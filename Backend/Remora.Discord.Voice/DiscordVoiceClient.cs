@@ -41,12 +41,10 @@ using Remora.Discord.Gateway;
 using Remora.Discord.Voice.Abstractions.Services;
 using Remora.Discord.Voice.Errors;
 using Remora.Discord.Voice.Objects;
-using Remora.Discord.Voice.Objects.UdpDataProtocol;
 using Remora.Discord.Voice.Util;
 using Remora.Rest.Core;
 using Remora.Results;
 
-// TODO: Remove requirement for operation code on VoicePayload?
 namespace Remora.Discord.Voice
 {
     /// <summary>
@@ -266,11 +264,10 @@ namespace Remora.Discord.Voice
         /// Enqueues a voice gateway command for sending.
         /// </summary>
         /// <typeparam name="TCommand">The type of the command to send.</typeparam>
-        /// <param name="operationCode">The operation code.</param>
         /// <param name="command">The command object.</param>
-        public void EnqueueCommand<TCommand>(VoiceOperationCode operationCode, TCommand command) where TCommand : IVoiceGatewayCommand
+        public void EnqueueCommand<TCommand>(TCommand command) where TCommand : IVoiceGatewayCommand
         {
-            var payload = new VoicePayload<TCommand>(operationCode, command);
+            var payload = new VoicePayload<TCommand>(command);
             _payloadsToSend.Enqueue(payload);
         }
 
@@ -335,7 +332,6 @@ namespace Remora.Discord.Voice
 
                 EnqueueCommand
                 (
-                    VoiceOperationCode.Speaking,
                     new VoiceSpeakingCommand
                     (
                         speakingFlags,
@@ -425,7 +421,6 @@ namespace Remora.Discord.Voice
 
                 EnqueueCommand
                 (
-                    VoiceOperationCode.Speaking,
                     new VoiceSpeakingCommand
                     (
                         SpeakingFlags.None,
@@ -648,7 +643,7 @@ namespace Remora.Discord.Voice
                     selectedEncryptionMode.Entity
                 )
             );
-            EnqueueCommand(VoiceOperationCode.Speaking, selectProtocol);
+            EnqueueCommand(selectProtocol);
 
             var startedWaitingForSessionDescription = DateTimeOffset.UtcNow;
             while (true)
@@ -750,7 +745,6 @@ namespace Remora.Discord.Voice
 
             EnqueueCommand
             (
-                VoiceOperationCode.Identify,
                 new VoiceIdentify
                 (
                     voiceServer.GuildID,
@@ -833,7 +827,6 @@ namespace Remora.Discord.Voice
 
             EnqueueCommand
             (
-                VoiceOperationCode.Resume,
                 new VoiceResume
                 (
                     voiceServer.GuildID,
@@ -1193,7 +1186,6 @@ namespace Remora.Discord.Voice
                     (
                         new VoicePayload<VoiceHeartbeat>
                         (
-                            VoiceOperationCode.Heartbeat,
                             new VoiceHeartbeat(_heartbeatData.LastReceivedNonce)
                         ),
                         ct

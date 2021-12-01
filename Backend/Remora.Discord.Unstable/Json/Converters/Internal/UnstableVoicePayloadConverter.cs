@@ -38,7 +38,7 @@ internal class UnstableVoicePayloadConverter : VoicePayloadConverter
         => operationCode switch
         {
             VoiceOperationCode.Speaking => DeserializeFromSpeakingOperationCode(document, options),
-            VoiceOperationCode.ClientDisconnect => DeserializePayload<IVoiceClientDisconnect>(VoiceOperationCode.ClientDisconnect, document, options),
+            VoiceOperationCode.ClientDisconnect => DeserializePayload<IVoiceClientDisconnect>(document, options),
 
             _ => base.DeserializeFromOperationCode(operationCode, document, options)
         };
@@ -78,7 +78,7 @@ internal class UnstableVoicePayloadConverter : VoicePayloadConverter
 
         if (dataElement.TryGetProperty(userIDPropertyName, out _))
         {
-            return DeserializePayload<IVoiceSpeakingEvent>(VoiceOperationCode.Speaking, document, options);
+            return DeserializePayload<IVoiceSpeakingEvent>(document, options);
         }
         else
         {
