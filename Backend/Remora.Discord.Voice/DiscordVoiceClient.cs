@@ -210,7 +210,7 @@ namespace Remora.Discord.Voice
                 _disconnectRequestedSource.Dispose();
                 _disconnectRequestedSource = new CancellationTokenSource();
 
-                Result connectionResult = await ConnectAsync(_connectionRequestParameters, ct).ConfigureAwait(false);
+                var connectionResult = await ConnectAsync(_connectionRequestParameters, ct).ConfigureAwait(false);
                 if (!connectionResult.IsSuccess)
                 {
                     SendDisconnectVoiceStateUpdate(guildID);
@@ -244,7 +244,7 @@ namespace Remora.Discord.Voice
 
                 await CleanupAsync().ConfigureAwait(false);
 
-                Result runLoopTaskResult = await _runLoopTask.ConfigureAwait(false);
+                var runLoopTaskResult = await _runLoopTask.ConfigureAwait(false);
                 if (!runLoopTaskResult.IsSuccess)
                 {
                     return runLoopTaskResult;
@@ -270,7 +270,7 @@ namespace Remora.Discord.Voice
         /// <param name="command">The command object.</param>
         public void EnqueueCommand<TCommand>(VoiceOperationCode operationCode, TCommand command) where TCommand : IVoiceGatewayCommand
         {
-            VoicePayload<TCommand> payload = new(operationCode, command);
+            var payload = new VoicePayload<TCommand>(operationCode, command);
             _payloadsToSend.Enqueue(payload);
         }
 
@@ -312,10 +312,10 @@ namespace Remora.Discord.Voice
             }
 
             // Take a local copy of the SSRC so we can still send a voice state update when the client is stopped
-            uint ssrc = _voiceServerConnectionDetails!.SSRC;
-            bool needsRelease = false;
+            var ssrc = _voiceServerConnectionDetails!.SSRC;
+            var needsRelease = false;
 
-            int sampleSize = transcoder.SampleSize;
+            var sampleSize = transcoder.SampleSize;
             IMemoryOwner<byte> inputBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
             IMemoryOwner<byte> opusBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
 
@@ -346,7 +346,7 @@ namespace Remora.Discord.Voice
 
                 while (!ct.IsCancellationRequested)
                 {
-                    int read = await audioStream.ReadAsync
+                    var read = await audioStream.ReadAsync
                     (
                         inputBuffer.Memory[0..sampleSize],
                         ct
@@ -357,7 +357,7 @@ namespace Remora.Discord.Voice
                         break; // TODO: Does this cut off audio in some cases?
                     }
 
-                    Result<int> encodeResult = await transcoder.EncodeAsync
+                    var encodeResult = await transcoder.EncodeAsync
                     (
                         inputBuffer.Memory[..read],
                         opusBuffer.Memory[..read],
@@ -370,12 +370,12 @@ namespace Remora.Discord.Voice
                     }
 
                     // Adapted from https://github.com/DSharpPlus/DSharpPlus/blob/master/DSharpPlus.VoiceNext/VoiceNextConnection.cs
-                    int durationModifier = Pcm16Util.CalculateSampleDuration(read) / 5;
-                    double cts = Math.Max(Stopwatch.GetTimestamp() - synchronizerTicks, 0);
+                    var durationModifier = Pcm16Util.CalculateSampleDuration(read) / 5;
+                    var cts = Math.Max(Stopwatch.GetTimestamp() - synchronizerTicks, 0);
 
                     if (cts < synchronizerResolution * durationModifier)
                     {
-                        long waitTicks = (long)(((synchronizerResolution * durationModifier) - cts) * tickResolution);
+                        var waitTicks = (long)(((synchronizerResolution * durationModifier) - cts) * tickResolution);
 
                         await Task.Delay
                         (
@@ -393,7 +393,7 @@ namespace Remora.Discord.Voice
                         break;
                     }
 
-                    Result sendFrameResult = await _dataService.SendFrameAsync
+                    var sendFrameResult = await _dataService.SendFrameAsync
                     (
                         opusBuffer.Memory[0..encodeResult.Entity],
                         read,
@@ -406,7 +406,7 @@ namespace Remora.Discord.Voice
                     }
                 }
 
-                Result sendSilence = SendSilenceFrames(sampleSize, ct);
+                var sendSilence = SendSilenceFrames(sampleSize, ct);
                 if (!sendSilence.IsSuccess)
                 {
                     return sendSilence;
@@ -525,7 +525,7 @@ namespace Remora.Discord.Voice
                             {
                                 // TODO: Don't just blank return here.
                                 Console.WriteLine("Send task failed.");
-                                Result sendTaskResult = await _sendTask.ConfigureAwait(false);
+                                var sendTaskResult = await _sendTask.ConfigureAwait(false);
                                 if (!sendTaskResult.IsSuccess)
                                 {
                                     return sendTaskResult;
@@ -535,7 +535,7 @@ namespace Remora.Discord.Voice
                             if (_receiveTask.IsCompleted)
                             {
                                 Console.WriteLine("Receive task failed.");
-                                Result receiveTaskResult = await _receiveTask.ConfigureAwait(false);
+                                var receiveTaskResult = await _receiveTask.ConfigureAwait(false);
                                 if (!receiveTaskResult.IsSuccess)
                                 {
                                     return receiveTaskResult;
@@ -553,7 +553,7 @@ namespace Remora.Discord.Voice
             }
             catch (Exception ex)
             {
-                Result retResult = await BeforeReturn().ConfigureAwait(false);
+                var retResult = await BeforeReturn().ConfigureAwait(false);
 
                 if (ex is TaskCanceledException or OperationCanceledException)
                 {
@@ -574,8 +574,8 @@ namespace Remora.Discord.Voice
 
             async Task<Result> BeforeReturn()
             {
-                Result transportDisconnectResult = await _transportService.DisconnectAsync(false, ct).ConfigureAwait(false);
-                Result dataDisconnectResult = _dataService.Disconnect();
+                var transportDisconnectResult = await _transportService.DisconnectAsync(false, ct).ConfigureAwait(false);
+                var dataDisconnectResult = _dataService.Disconnect();
 
                 if (!transportDisconnectResult.IsSuccess)
                 {
@@ -606,14 +606,14 @@ namespace Remora.Discord.Voice
             switch (this.ConnectionStatus)
             {
                 case GatewayConnectionStatus.Offline:
-                    Result initialConnectResult = await InitialConnectionAsync(connectionParameters, ct).ConfigureAwait(false);
+                    var initialConnectResult = await InitialConnectionAsync(connectionParameters, ct).ConfigureAwait(false);
                     if (!initialConnectResult.IsSuccess)
                     {
                         return initialConnectResult;
                     }
                     break;
                 case GatewayConnectionStatus.Disconnected:
-                    Result resumeResult = await ResumeConnectionAsync(ct).ConfigureAwait(false);
+                    var resumeResult = await ResumeConnectionAsync(ct).ConfigureAwait(false);
                     if (!resumeResult.IsSuccess)
                     {
                         return resumeResult;
@@ -621,13 +621,13 @@ namespace Remora.Discord.Voice
                     break;
             }
 
-            Result<string> selectedEncryptionMode = _dataService.SelectSupportedEncryptionMode(_voiceServerConnectionDetails!.Modes);
+            var selectedEncryptionMode = _dataService.SelectSupportedEncryptionMode(_voiceServerConnectionDetails!.Modes);
             if (!selectedEncryptionMode.IsSuccess)
             {
                 return Result.FromError(selectedEncryptionMode);
             }
 
-            Result<IPDiscoveryResponse> voiceServerConnectResult = await _dataService.ConnectAsync
+            var voiceServerConnectResult = await _dataService.ConnectAsync
             (
                 _voiceServerConnectionDetails!,
                 ct
@@ -638,7 +638,7 @@ namespace Remora.Discord.Voice
                 return Result.FromError(voiceServerConnectResult);
             }
 
-            VoiceSelectProtocol selectProtocol = new
+            var selectProtocol = new VoiceSelectProtocol
             (
                 "udp",
                 new VoiceProtocolData
@@ -650,7 +650,7 @@ namespace Remora.Discord.Voice
             );
             EnqueueCommand(VoiceOperationCode.Speaking, selectProtocol);
 
-            DateTimeOffset startedWaitingForSessionDescription = DateTimeOffset.UtcNow;
+            var startedWaitingForSessionDescription = DateTimeOffset.UtcNow;
             while (true)
             {
                 if (ct.IsCancellationRequested)
@@ -658,7 +658,7 @@ namespace Remora.Discord.Voice
                     return new VoiceGatewayError("Operation was cancelled.", true);
                 }
 
-                Result<IVoicePayload> sessionDescriptionPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
+                var sessionDescriptionPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
                 if (!sessionDescriptionPayload.IsDefined())
                 {
                     return Result.FromError
@@ -709,7 +709,7 @@ namespace Remora.Discord.Voice
         {
             _gatewayClient.SubmitCommand(connectionParameters);
 
-            Result<VoiceConnectionEstablishmentDetails> getConnectionDetails = await _connectionWaiterService.WaitForRequestConfirmation
+            var getConnectionDetails = await _connectionWaiterService.WaitForRequestConfirmation
             (
                 connectionParameters.GuildID,
                 ct: ct
@@ -722,23 +722,22 @@ namespace Remora.Discord.Voice
 
             _gatewayConnectionDetails = getConnectionDetails.Entity;
 
-            // Using the full namespace here to help avoid potential confusion between the normal and voice gateway event sets.
-            API.Abstractions.Gateway.Events.IVoiceStateUpdate voiceState = getConnectionDetails.Entity.VoiceState;
-            API.Abstractions.Gateway.Events.IVoiceServerUpdate voiceServer = getConnectionDetails.Entity.VoiceServer;
+            var voiceState = getConnectionDetails.Entity.VoiceState;
+            var voiceServer = getConnectionDetails.Entity.VoiceServer;
 
             if (voiceServer.Endpoint is null)
             {
                 return new VoiceGatewayUnavailableError();
             }
 
-            Result<Uri> constructUriResult = ConstructVoiceGatewayEndpoint(voiceServer.Endpoint);
+            var constructUriResult = ConstructVoiceGatewayEndpoint(voiceServer.Endpoint);
             if (!constructUriResult.IsDefined())
             {
                 return Result.FromError(constructUriResult);
             }
 
             // Connect the websocket and start the send task
-            Result webSocketConnectionResult = await ConnectToGatewayAndBeginSendTask
+            var webSocketConnectionResult = await ConnectToGatewayAndBeginSendTask
             (
                 constructUriResult.Entity,
                 ct
@@ -768,7 +767,7 @@ namespace Remora.Discord.Voice
                     return new VoiceGatewayError("Operation was cancelled.", true);
                 }
 
-                Result<IVoicePayload> readyPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
+                var readyPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
                 if (!readyPayload.IsDefined())
                 {
                     return Result.FromError
@@ -811,18 +810,17 @@ namespace Remora.Discord.Voice
                 return new InvalidOperationError("There is no session to resume.");
             }
 
-            // Using the full namespace here to help avoid potential confusion between the normal and voice gateway event sets.
-            API.Abstractions.Gateway.Events.IVoiceStateUpdate voiceState = _gatewayConnectionDetails.VoiceState;
-            API.Abstractions.Gateway.Events.IVoiceServerUpdate voiceServer = _gatewayConnectionDetails.VoiceServer;
+            var voiceState = _gatewayConnectionDetails.VoiceState;
+            var voiceServer = _gatewayConnectionDetails.VoiceServer;
 
-            Result<Uri> constructUriResult = ConstructVoiceGatewayEndpoint(voiceServer.Endpoint!);
+            var constructUriResult = ConstructVoiceGatewayEndpoint(voiceServer.Endpoint!);
             if (!constructUriResult.IsDefined())
             {
                 return Result.FromError(constructUriResult);
             }
 
             // Connect the websocket and start the send task
-            Result webSocketConnectionResult = await ConnectToGatewayAndBeginSendTask
+            var webSocketConnectionResult = await ConnectToGatewayAndBeginSendTask
             (
                 constructUriResult.Entity,
                 ct
@@ -923,13 +921,13 @@ namespace Remora.Discord.Voice
             CancellationToken ct
         )
         {
-            Result connectResult = await _transportService.ConnectAsync(gatewayUri, ct).ConfigureAwait(false);
+            var connectResult = await _transportService.ConnectAsync(gatewayUri, ct).ConfigureAwait(false);
             if (!connectResult.IsSuccess)
             {
                 return connectResult;
             }
 
-            Result<IVoicePayload> helloPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
+            var helloPayload = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
             if (!helloPayload.IsDefined())
             {
                 return Result.FromError
@@ -1063,7 +1061,7 @@ namespace Remora.Discord.Voice
             {
                 while (!ct.IsCancellationRequested)
                 {
-                    Result<TimeSpan> heartbeatResult = await SendHeartbeatAsync(ct).ConfigureAwait(false);
+                    var heartbeatResult = await SendHeartbeatAsync(ct).ConfigureAwait(false);
                     if (!heartbeatResult.IsSuccess)
                     {
                         return Result.FromError(heartbeatResult);
@@ -1073,12 +1071,12 @@ namespace Remora.Discord.Voice
                     if (!_payloadsToSend.TryDequeue(out var payload))
                     {
                         // Let's sleep for a little while
-                        TimeSpan sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, heartbeatResult.Entity.TotalMilliseconds));
+                        var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, heartbeatResult.Entity.TotalMilliseconds));
                         await Task.Delay(sleepTime, ct).ConfigureAwait(false);
                         continue;
                     }
 
-                    Result sendResult = await _transportService.SendPayloadAsync(payload, ct).ConfigureAwait(false);
+                    var sendResult = await _transportService.SendPayloadAsync(payload, ct).ConfigureAwait(false);
                     if (sendResult.IsSuccess)
                     {
                         continue;
@@ -1119,7 +1117,7 @@ namespace Remora.Discord.Voice
             {
                 while (!ct.IsCancellationRequested)
                 {
-                    Result<IVoicePayload> receiveResult = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
+                    var receiveResult = await _transportService.ReceivePayloadAsync(ct).ConfigureAwait(false);
 
                     if (!receiveResult.IsSuccess)
                     {
@@ -1167,8 +1165,8 @@ namespace Remora.Discord.Voice
         {
             try
             {
-                DateTimeOffset now = DateTimeOffset.UtcNow;
-                TimeSpan safetyMargin = _clientOptions.GetTrueHeartbeatSafetyMargin(_heartbeatData.Interval);
+                var now = DateTimeOffset.UtcNow;
+                var safetyMargin = _clientOptions.GetTrueHeartbeatSafetyMargin(_heartbeatData.Interval);
 
                 if (_heartbeatData.LastSentTime is null || now - _heartbeatData.LastSentTime >= _heartbeatData.Interval - safetyMargin)
                 {
@@ -1191,7 +1189,7 @@ namespace Remora.Discord.Voice
                     }
 
                     _heartbeatData.LastSentNonce = _random.Next();
-                    Result sendHeartbeatResult = await _transportService.SendPayloadAsync
+                    var sendHeartbeatResult = await _transportService.SendPayloadAsync
                     (
                         new VoicePayload<VoiceHeartbeat>
                         (
@@ -1213,7 +1211,7 @@ namespace Remora.Discord.Voice
                     _heartbeatData.LastSentTime = DateTimeOffset.UtcNow;
                 }
 
-                TimeSpan safeTimeTillNext = _heartbeatData.LastSentTime.Value + _heartbeatData.Interval - safetyMargin - now;
+                var safeTimeTillNext = _heartbeatData.LastSentTime.Value + _heartbeatData.Interval - safetyMargin - now;
                 return Result<TimeSpan>.FromSuccess(safeTimeTillNext);
             }
             catch (Exception ex)
@@ -1249,7 +1247,7 @@ namespace Remora.Discord.Voice
         {
             for (int i = 0; i < 5 && !ct.IsCancellationRequested && !_disconnectRequestedSource.IsCancellationRequested; i++)
             {
-                Result sendFrameResult = _dataService.SendFrame(_silenceFrameBuffer.Memory.Span[..3], sampleSize);
+                var sendFrameResult = _dataService.SendFrame(_silenceFrameBuffer.Memory.Span[..3], sampleSize);
                 if (!sendFrameResult.IsSuccess)
                 {
                     return sendFrameResult;
