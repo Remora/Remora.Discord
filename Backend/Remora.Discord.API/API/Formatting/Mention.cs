@@ -21,7 +21,7 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Formatting
 {
@@ -38,16 +38,7 @@ namespace Remora.Discord.API.Formatting
         /// <returns>
         /// A user mention string.
         /// </returns>
-        public static string Username(Snowflake snowflake) => $"<@{snowflake.Value}>";
-
-        /// <summary>
-        /// Creates a mention string for a user, displaying their nickname.
-        /// </summary>
-        /// <param name="snowflake">The user Snowflake ID.</param>
-        /// <returns>
-        /// A user mention string.
-        /// </returns>
-        public static string Nickname(Snowflake snowflake) => $"<@!{snowflake.Value}>";
+        public static string User(Snowflake snowflake) => $"<@{snowflake.Value}>";
 
         /// <summary>
         /// Creates a mention string for a channel.
