@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.API.Formatting
+namespace Remora.Discord.Extensions.Formatting
 {
     /// <summary>
     /// Represents the possible display formats for Timestamp Markdown.

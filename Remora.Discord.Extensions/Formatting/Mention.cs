@@ -23,7 +23,7 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Formatting
+namespace Remora.Discord.Extensions.Formatting
 {
     /// <summary>
     /// Provides helper methods to mention various Discord objects.

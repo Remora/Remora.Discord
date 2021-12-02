@@ -22,7 +22,7 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Formatting
+namespace Remora.Discord.Extensions.Formatting
 {
     /// <summary>
     /// Provides helper methods to format strings into Discord Markdown.
