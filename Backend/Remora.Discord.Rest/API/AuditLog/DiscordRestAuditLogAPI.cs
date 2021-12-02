@@ -27,7 +27,9 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
+using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -39,10 +41,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestAuditLogAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestAuditLogAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestAuditLogAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -66,7 +68,7 @@ namespace Remora.Discord.Rest.API
                 );
             }
 
-            return await this.DiscordHttpClient.GetAsync<IAuditLog>
+            return await this.RestHttpClient.GetAsync<IAuditLog>
             (
                 $"guilds/{guildID}/audit-logs",
                 b =>
@@ -90,6 +92,8 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
                     }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );

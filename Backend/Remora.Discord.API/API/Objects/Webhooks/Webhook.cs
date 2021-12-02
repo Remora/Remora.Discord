@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IWebhook" />
-    [PublicAPI]
-    public record Webhook
-    (
-        Snowflake ID,
-        WebhookType Type,
-        Optional<Snowflake?> GuildID,
-        Snowflake? ChannelID,
-        Optional<IUser> User,
-        string? Name,
-        string? Avatar,
-        Optional<string> Token = default,
-        Snowflake? ApplicationID = default,
-        Optional<IPartialGuild> SourceGuild = default,
-        Optional<IPartialChannel> SourceChannel = default,
-        Optional<string> URL = default
-    ) : IWebhook;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IWebhook" />
+[PublicAPI]
+public record Webhook
+(
+    Snowflake ID,
+    WebhookType Type,
+    Optional<Snowflake?> GuildID,
+    Snowflake? ChannelID,
+    Optional<IUser> User,
+    string? Name,
+    string? Avatar,
+    Optional<string> Token = default,
+    Snowflake? ApplicationID = default,
+    Optional<IPartialGuild> SourceGuild = default,
+    Optional<IPartialChannel> SourceChannel = default,
+    Optional<string> URL = default
+) : IWebhook;

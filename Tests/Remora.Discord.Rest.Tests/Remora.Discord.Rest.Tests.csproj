@@ -1,29 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="RichardSzalay.MockHttp" Version="6.0.0" />
+        <PackageReference Include="Remora.Rest.Xunit" Version="1.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Backend\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
       <ProjectReference Include="..\..\Backend\Remora.Discord.Unstable\Remora.Discord.Unstable.csproj" />
       <ProjectReference Include="..\Remora.Discord.Tests\Remora.Discord.Tests.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Json\JsonArrayMatcherBuilder.cs">
-        <DependentUpon>JsonArrayMatcher.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Json\JsonObjectMatcherBuilder.cs">
-        <DependentUpon>JsonObjectMatcher.cs</DependentUpon>
-      </Compile>
-      <Compile Update="Json\JsonElementMatcherBuilder.cs">
-        <DependentUpon>JsonElementMatcher.cs</DependentUpon>
-      </Compile>
     </ItemGroup>
 
 </Project>

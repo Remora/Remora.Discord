@@ -32,84 +32,83 @@ using Remora.Discord.Gateway.Results;
 using Remora.Discord.Hosting.Options;
 using Remora.Results;
 
-namespace Remora.Discord.Hosting.Services
+namespace Remora.Discord.Hosting.Services;
+
+/// <summary>
+/// The <see cref="IHostedService"/> that will run discord in the background.
+/// </summary>
+[PublicAPI]
+public class DiscordService : BackgroundService
 {
+    private readonly DiscordGatewayClient _gatewayClient;
+    private readonly IHostApplicationLifetime _lifetime;
+    private readonly DiscordServiceOptions _options;
+    private readonly ILogger<DiscordService> _logger;
+
     /// <summary>
-    /// The <see cref="IHostedService"/> that will run discord in the background.
+    /// Initializes a new instance of the <see cref="DiscordService"/> class.
     /// </summary>
-    [PublicAPI]
-    public class DiscordService : BackgroundService
+    /// <param name="gatewayClient">The gateway client.</param>
+    /// <param name="lifetime">The application lifetime.</param>
+    /// <param name="options">The service options.</param>
+    /// <param name="logger">The <see cref="ILogger"/>.</param>
+    public DiscordService
+    (
+        DiscordGatewayClient gatewayClient,
+        IHostApplicationLifetime lifetime,
+        IOptions<DiscordServiceOptions> options,
+        ILogger<DiscordService> logger
+    )
     {
-        private readonly DiscordGatewayClient _gatewayClient;
-        private readonly IHostApplicationLifetime _lifetime;
-        private readonly DiscordServiceOptions _options;
-        private readonly ILogger<DiscordService> _logger;
+        _gatewayClient = gatewayClient;
+        _lifetime = lifetime;
+        _options = options.Value;
+        _logger = logger;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordService"/> class.
-        /// </summary>
-        /// <param name="gatewayClient">The gateway client.</param>
-        /// <param name="lifetime">The application lifetime.</param>
-        /// <param name="options">The service options.</param>
-        /// <param name="logger">The <see cref="ILogger"/>.</param>
-        public DiscordService
-        (
-            DiscordGatewayClient gatewayClient,
-            IHostApplicationLifetime lifetime,
-            IOptions<DiscordServiceOptions> options,
-            ILogger<DiscordService> logger
-        )
+    /// <inheritdoc />
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        var runResult = await _gatewayClient.RunAsync(stoppingToken);
+
+        if (!runResult.IsSuccess)
         {
-            _gatewayClient = gatewayClient;
-            _lifetime = lifetime;
-            _options = options.Value;
-            _logger = logger;
-        }
-
-        /// <inheritdoc />
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            var runResult = await _gatewayClient.RunAsync(stoppingToken);
-
-            if (!runResult.IsSuccess)
+            switch (runResult.Error)
             {
-                switch (runResult.Error)
+                case ExceptionError exe:
                 {
-                    case ExceptionError exe:
+                    if (exe.Exception is OperationCanceledException)
                     {
-                        if (exe.Exception is OperationCanceledException)
-                        {
-                            // No need for further cleanup
-                            return;
-                        }
+                        // No need for further cleanup
+                        return;
+                    }
 
-                        _logger.LogError
-                        (
-                            exe.Exception,
-                            "Exception during gateway connection: {ExceptionMessage}",
-                            exe.Message
-                        );
+                    _logger.LogError
+                    (
+                        exe.Exception,
+                        "Exception during gateway connection: {ExceptionMessage}",
+                        exe.Message
+                    );
 
-                        break;
-                    }
-                    case GatewayWebSocketError:
-                    case GatewayDiscordError:
-                    case GatewayError:
-                    {
-                        _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
-                        break;
-                    }
-                    default:
-                    {
-                        _logger.LogError("Unknown error: {Message}", runResult.Error.Message);
-                        break;
-                    }
+                    break;
                 }
-
-                if (_options.TerminateApplicationOnCriticalGatewayErrors)
+                case GatewayWebSocketError:
+                case GatewayDiscordError:
+                case GatewayError:
                 {
-                    _lifetime.StopApplication();
+                    _logger.LogError("Gateway error: {Message}", runResult.Error.Message);
+                    break;
                 }
+                default:
+                {
+                    _logger.LogError("Unknown error: {Message}", runResult.Error.Message);
+                    break;
+                }
+            }
+
+            if (_options.TerminateApplicationOnCriticalGatewayErrors)
+            {
+                _lifetime.StopApplication();
             }
         }
     }

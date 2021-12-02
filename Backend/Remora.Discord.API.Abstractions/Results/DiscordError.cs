@@ -367,7 +367,7 @@ namespace Remora.Discord.API.Abstractions.Results
         GuildAlreadyHasATemplate = 30031,
 
         /// <summary>
-        /// The maximum number of participants in a thread has been reached.
+        /// The maximum number of participants in a thread has been reached (1000).
         /// </summary>
         MaxNumberOfThreadParticipantsReached = 30033,
 
@@ -375,6 +375,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// The maximum number of bans for non-guild members has been exceeded.
         /// </summary>
         MaxNumberOfNonMemberBansReached = 30035,
+
+        /// <summary>
+        /// The maximum number of ban fetches has been exceeded.
+        /// </summary>
+        MaxNumberOfBanFetchesReached = 30037,
+
+        /// <summary>
+        /// The maximum number of uncompleted scheduled events has been reached (100).
+        /// </summary>
+        MaxNumberOfUncompletedGuildScheduledEventsReached = 30038,
 
         /// <summary>
         /// Maximum number of stickers reached.
@@ -726,6 +736,16 @@ namespace Remora.Discord.API.Abstractions.Results
         /// <summary>
         /// The sticker animation is too long (currently max 5 seconds).
         /// </summary>
-        StickerAnimationDurationTooLong = 170007
+        StickerAnimationDurationTooLong = 170007,
+
+        /// <summary>
+        /// A finished scheduled event cannot be updated.
+        /// </summary>
+        CannotUpdateFinishedEvent = 180000,
+
+        /// <summary>
+        /// For whatever reason, the system failed to create a stage for the stage event.
+        /// </summary>
+        FailedToCreatedStageForEvent = 180002
     }
 }

@@ -23,9 +23,8 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IResumed" />
-    [PublicAPI]
-    public record Resumed : IResumed;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IResumed" />
+[PublicAPI]
+public record Resumed : IResumed;

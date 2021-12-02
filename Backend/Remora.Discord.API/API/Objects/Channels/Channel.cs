@@ -24,41 +24,40 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IChannel" />
-    [PublicAPI]
-    public record Channel
-    (
-        Snowflake ID,
-        ChannelType Type,
-        Optional<Snowflake> GuildID = default,
-        Optional<int> Position = default,
-        Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
-        Optional<string> Name = default,
-        Optional<string?> Topic = default,
-        Optional<bool> IsNsfw = default,
-        Optional<Snowflake?> LastMessageID = default,
-        Optional<int> Bitrate = default,
-        Optional<int> UserLimit = default,
-        Optional<TimeSpan> RateLimitPerUser = default,
-        Optional<IReadOnlyList<IUser>> Recipients = default,
-        Optional<IImageHash?> Icon = default,
-        Optional<Snowflake> OwnerID = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<Snowflake?> ParentID = default,
-        Optional<DateTimeOffset?> LastPinTimestamp = default,
-        Optional<string?> RTCRegion = default,
-        Optional<VideoQualityMode> VideoQualityMode = default,
-        Optional<int> MessageCount = default,
-        Optional<int> MemberCount = default,
-        Optional<IThreadMetadata> ThreadMetadata = default,
-        Optional<IThreadMember> Member = default,
-        Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
-        Optional<IDiscordPermissionSet> Permissions = default
-    ) : IChannel;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IChannel" />
+[PublicAPI]
+public record Channel
+(
+    Snowflake ID,
+    ChannelType Type,
+    Optional<Snowflake> GuildID = default,
+    Optional<int> Position = default,
+    Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
+    Optional<string> Name = default,
+    Optional<string?> Topic = default,
+    Optional<bool> IsNsfw = default,
+    Optional<Snowflake?> LastMessageID = default,
+    Optional<int> Bitrate = default,
+    Optional<int> UserLimit = default,
+    Optional<TimeSpan> RateLimitPerUser = default,
+    Optional<IReadOnlyList<IUser>> Recipients = default,
+    Optional<IImageHash?> Icon = default,
+    Optional<Snowflake> OwnerID = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<Snowflake?> ParentID = default,
+    Optional<DateTimeOffset?> LastPinTimestamp = default,
+    Optional<string?> RTCRegion = default,
+    Optional<VideoQualityMode> VideoQualityMode = default,
+    Optional<int> MessageCount = default,
+    Optional<int> MemberCount = default,
+    Optional<IThreadMetadata> ThreadMetadata = default,
+    Optional<IThreadMember> Member = default,
+    Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
+    Optional<IDiscordPermissionSet> Permissions = default
+) : IChannel;

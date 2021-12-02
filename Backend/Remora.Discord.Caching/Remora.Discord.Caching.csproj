@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>13.0.5</Version>
+        <Version>16.0.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

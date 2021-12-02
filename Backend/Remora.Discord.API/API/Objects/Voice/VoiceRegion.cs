@@ -25,17 +25,15 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IVoiceRegion" />
-    [PublicAPI]
-    public record VoiceRegion
-    (
-        string ID,
-        string Name,
-        bool IsVIP,
-        bool IsOptimal,
-        bool IsDeprecated,
-        bool IsCustom
-    ) : IVoiceRegion;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IVoiceRegion" />
+[PublicAPI]
+public record VoiceRegion
+(
+    string ID,
+    string Name,
+    bool IsOptimal,
+    bool IsDeprecated,
+    bool IsCustom
+) : IVoiceRegion;

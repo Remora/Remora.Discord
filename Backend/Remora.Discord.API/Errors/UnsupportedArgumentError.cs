@@ -23,11 +23,10 @@
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.API.Errors
-{
-    /// <summary>
-    /// Represents an error produced by an unsupported argument.
-    /// </summary>
-    [PublicAPI]
-    public record UnsupportedArgumentError(string Message) : ResultError(Message);
-}
+namespace Remora.Discord.API.Errors;
+
+/// <summary>
+/// Represents an error produced by an unsupported argument.
+/// </summary>
+[PublicAPI]
+public record UnsupportedArgumentError(string Message) : ResultError(Message);

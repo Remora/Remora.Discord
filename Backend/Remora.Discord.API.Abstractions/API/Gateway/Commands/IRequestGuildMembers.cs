@@ -22,7 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Commands
 {
@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// <summary>
         /// Gets a limiting number of users to fetch.
         /// </summary>
-        int Limit { get; }
+        Optional<int> Limit { get; }
 
         /// <summary>
         /// Gets a value indicating whether we want to fetch the presences of the users.
@@ -55,7 +55,7 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// <summary>
         /// Gets a collection of user IDs that should be fetched.
         /// </summary>
-        Optional<IReadOnlyCollection<Snowflake>> UserIDs { get; }
+        Optional<IReadOnlyList<Snowflake>> UserIDs { get; }
 
         /// <summary>
         /// Gets a nonce (unique string) to identify the incoming guild member chunks after the request has been accepted.

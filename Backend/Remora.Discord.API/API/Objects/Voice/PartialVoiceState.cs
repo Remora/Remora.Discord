@@ -23,28 +23,27 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialVoiceState" />
-    [PublicAPI]
-    public record PartialVoiceState
-    (
-        Optional<Snowflake> GuildID = default,
-        Optional<Snowflake?> ChannelID = default,
-        Optional<Snowflake> UserID = default,
-        Optional<IGuildMember> Member = default,
-        Optional<string> SessionID = default,
-        Optional<bool> IsDeafened = default,
-        Optional<bool> IsMuted = default,
-        Optional<bool> IsSelfDeafened = default,
-        Optional<bool> IsSelfMuted = default,
-        Optional<bool> IsStreaming = default,
-        Optional<bool> IsVideoEnabled = default,
-        Optional<bool> IsSuppressed = default,
-        Optional<DateTimeOffset?> RequestToSpeakTimestamp = default
-    ) : IPartialVoiceState;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialVoiceState" />
+[PublicAPI]
+public record PartialVoiceState
+(
+    Optional<Snowflake> GuildID = default,
+    Optional<Snowflake?> ChannelID = default,
+    Optional<Snowflake> UserID = default,
+    Optional<IGuildMember> Member = default,
+    Optional<string> SessionID = default,
+    Optional<bool> IsDeafened = default,
+    Optional<bool> IsMuted = default,
+    Optional<bool> IsSelfDeafened = default,
+    Optional<bool> IsSelfMuted = default,
+    Optional<bool> IsStreaming = default,
+    Optional<bool> IsVideoEnabled = default,
+    Optional<bool> IsSuppressed = default,
+    Optional<DateTimeOffset?> RequestToSpeakTimestamp = default
+) : IPartialVoiceState;

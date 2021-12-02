@@ -29,49 +29,48 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses instances of <see cref="IGuildMember"/> from command-line inputs.
+/// </summary>
+[PublicAPI]
+public class GuildMemberParser : AbstractTypeParser<IGuildMember>
 {
+    private readonly ICommandContext _context;
+    private readonly IDiscordRestGuildAPI _guildAPI;
+
     /// <summary>
-    /// Parses instances of <see cref="IGuildMember"/> from command-line inputs.
+    /// Initializes a new instance of the <see cref="GuildMemberParser"/> class.
     /// </summary>
-    [PublicAPI]
-    public class GuildMemberParser : AbstractTypeParser<IGuildMember>
+    /// <param name="context">The command context.</param>
+    /// <param name="guildAPI">The guild API.</param>
+    public GuildMemberParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
     {
-        private readonly ICommandContext _context;
-        private readonly IDiscordRestGuildAPI _guildAPI;
+        _guildAPI = guildAPI;
+        _context = context;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuildMemberParser"/> class.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="guildAPI">The guild API.</param>
-        public GuildMemberParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
+    /// <inheritdoc />
+    public override async ValueTask<Result<IGuildMember>> TryParseAsync
+    (
+        string value,
+        CancellationToken ct = default
+    )
+    {
+        if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
         {
-            _guildAPI = guildAPI;
-            _context = context;
+            return new ParsingError<IGuildMember>(value);
         }
 
-        /// <inheritdoc />
-        public override async ValueTask<Result<IGuildMember>> TryParseAsync
-        (
-            string value,
-            CancellationToken ct = default
-        )
+        if (!_context.GuildID.IsDefined(out var guildID))
         {
-            if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
-            {
-                return new ParsingError<IGuildMember>(value);
-            }
-
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
-            }
-
-            return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
+            return new InvalidOperationError("You're not in a guild channel, so I can't get any guild members.");
         }
+
+        return await _guildAPI.GetGuildMemberAsync(guildID, guildMemberID.Value, ct);
     }
 }

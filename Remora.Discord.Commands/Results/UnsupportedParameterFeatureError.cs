@@ -26,13 +26,12 @@ using Remora.Commands.Trees.Nodes;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Commands.Results
-{
-    /// <summary>
-    /// Represents a failure to create a slash command based on an unsupported feature, specifically related to a
-    /// parameter.
-    /// </summary>
-    [PublicAPI]
-    public record UnsupportedParameterFeatureError(string Message, CommandNode Command, IParameterShape Parameter)
-        : UnsupportedFeatureError(Message, Command);
-}
+namespace Remora.Discord.Commands.Results;
+
+/// <summary>
+/// Represents a failure to create a slash command based on an unsupported feature, specifically related to a
+/// parameter.
+/// </summary>
+[PublicAPI]
+public record UnsupportedParameterFeatureError(string Message, CommandNode Command, IParameterShape Parameter)
+    : UnsupportedFeatureError(Message, Command);

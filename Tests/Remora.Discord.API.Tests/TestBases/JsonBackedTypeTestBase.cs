@@ -26,9 +26,15 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Extensions;
+using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.Services;
 using Remora.Discord.Tests;
 using Remora.Discord.Unstable.Extensions;
+using Remora.Rest;
+using Remora.Rest.Extensions;
+using Remora.Rest.Json;
+using Remora.Rest.Json.Internal;
+using Remora.Rest.Xunit;
 using Xunit;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -74,13 +80,14 @@ namespace Remora.Discord.API.Tests.TestBases
         {
             // ReSharper disable once VirtualMemberCallInConstructor
             var services = new ServiceCollection()
-                .AddDiscordApi(this.AllowUnknownEvents)
+                .ConfigureDiscordJsonConverters(allowUnknownEvents: this.AllowUnknownEvents)
                 .AddSingleton<SampleDataService>()
                 .AddExperimentalDiscordApi()
                 .BuildServiceProvider(true);
 
             this.SampleData = services.GetRequiredService<SampleDataService>();
-            this.Options = services.GetRequiredService<IOptions<JsonSerializerOptions>>().Value;
+            this.Options = services.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>()
+                .Get("Discord");
         }
 
         /// <summary>

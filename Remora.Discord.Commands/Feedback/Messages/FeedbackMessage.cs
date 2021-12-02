@@ -22,10 +22,9 @@
 
 using System.Drawing;
 
-namespace Remora.Discord.Commands.Feedback.Messages
-{
-    /// <summary>
-    /// Encapsulates a feedback message sent to a user.
-    /// </summary>
-    public record FeedbackMessage(string Message, Color Colour);
-}
+namespace Remora.Discord.Commands.Feedback.Messages;
+
+/// <summary>
+/// Encapsulates a feedback message sent to a user.
+/// </summary>
+public record FeedbackMessage(string Message, Color Colour);

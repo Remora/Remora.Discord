@@ -23,26 +23,25 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ITemplate" />
-    [PublicAPI]
-    public record Template
-    (
-        string Code,
-        string Name,
-        string? Description,
-        int UsageCount,
-        Snowflake CreatorID,
-        IUser Creator,
-        DateTimeOffset CreatedAt,
-        DateTimeOffset UpdatedAt,
-        Snowflake SourceGuildID,
-        IGuildTemplate SerializedSourceGuild,
-        bool? IsDirty
-    ) : ITemplate;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ITemplate" />
+[PublicAPI]
+public record Template
+(
+    string Code,
+    string Name,
+    string? Description,
+    int UsageCount,
+    Snowflake CreatorID,
+    IUser Creator,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset UpdatedAt,
+    Snowflake SourceGuildID,
+    IGuildTemplate SerializedSourceGuild,
+    bool? IsDirty
+) : ITemplate;

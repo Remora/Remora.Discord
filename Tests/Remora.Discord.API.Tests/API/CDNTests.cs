@@ -27,7 +27,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Errors;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Tests
     public class CDNTests
     {
         /// <summary>
-        /// Tests the <see cref="CDN.GetEmojiUrl(IEmoji, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+        /// Tests the <see cref="GetEmojiUrl"/> method and its
         /// overloads.
         /// </summary>
         public class GetEmojiUrl : CDNTestBase

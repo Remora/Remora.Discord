@@ -59,6 +59,16 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The application is embedded.
         /// </summary>
-        Embedded = 1 << 17
+        Embedded = 1 << 17,
+
+        /// <summary>
+        /// The application has access to message contents over the gateway.
+        /// </summary>
+        GatewayMessageContent = 1 << 18,
+
+        /// <summary>
+        /// The application's access to message contents over the gateway is limited.
+        /// </summary>
+        GatewayMessageContentLimited = 1 << 19
     }
 }

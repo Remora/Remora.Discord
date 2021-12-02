@@ -25,11 +25,10 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents an identification set for a sharded connection.
-    /// </summary>
-    [PublicAPI]
-    public record ShardIdentification(int ShardID, int ShardCount) : IShardIdentification;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents an identification set for a sharded connection.
+/// </summary>
+[PublicAPI]
+public record ShardIdentification(int ShardID, int ShardCount) : IShardIdentification;

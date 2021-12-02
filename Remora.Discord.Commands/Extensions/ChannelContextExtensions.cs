@@ -25,17 +25,17 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 using static Remora.Discord.API.Abstractions.Objects.ChannelType;
 
-namespace Remora.Discord.Commands.Extensions
+namespace Remora.Discord.Commands.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="ChannelContext"/> class.
+/// </summary>
+public static class ChannelContextExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="ChannelContext"/> class.
+    /// Holds a mapping of channel contexts to their constituent channel types.
     /// </summary>
-    public static class ChannelContextExtensions
-    {
-        /// <summary>
-        /// Holds a mapping of channel contexts to their constituent channel types.
-        /// </summary>
-        private static readonly IReadOnlyDictionary<ChannelContext, IReadOnlyList<ChannelType>> ChannelTypesMap =
+    private static readonly IReadOnlyDictionary<ChannelContext, IReadOnlyList<ChannelType>> ChannelTypesMap =
         new Dictionary<ChannelContext, IReadOnlyList<ChannelType>>
         {
             {
@@ -69,14 +69,13 @@ namespace Remora.Discord.Commands.Extensions
             }
         };
 
-        /// <summary>
-        /// Converts the general channel context into its constituent channel types.
-        /// </summary>
-        /// <param name="channelContext">The channel context to retrieve the channel types from.</param>
-        /// <returns>The channel context's channels types.</returns>
-        public static IReadOnlyList<ChannelType> ToChannelTypes(this ChannelContext channelContext)
-        {
-            return ChannelTypesMap[channelContext];
-        }
+    /// <summary>
+    /// Converts the general channel context into its constituent channel types.
+    /// </summary>
+    /// <param name="channelContext">The channel context to retrieve the channel types from.</param>
+    /// <returns>The channel context's channels types.</returns>
+    public static IReadOnlyList<ChannelType> ToChannelTypes(this ChannelContext channelContext)
+    {
+        return ChannelTypesMap[channelContext];
     }
 }

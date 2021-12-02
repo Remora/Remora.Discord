@@ -28,47 +28,46 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Checks that the bot's owner is the same as the invoking user.
+/// </summary>
+[PublicAPI]
+public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
 {
+    private readonly ICommandContext _context;
+    private readonly IDiscordRestOAuth2API _oauth2API;
+
     /// <summary>
-    /// Checks that the bot's owner is the same as the invoking user.
+    /// Initializes a new instance of the <see cref="RequireOwnerCondition"/> class.
     /// </summary>
-    [PublicAPI]
-    public class RequireOwnerCondition : ICondition<RequireOwnerAttribute>
+    /// <param name="context">The command context.</param>
+    /// <param name="oauth2API">The OAuth2 API.</param>
+    public RequireOwnerCondition(ICommandContext context, IDiscordRestOAuth2API oauth2API)
     {
-        private readonly ICommandContext _context;
-        private readonly IDiscordRestOAuth2API _oauth2API;
+        _context = context;
+        _oauth2API = oauth2API;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireOwnerCondition"/> class.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="oauth2API">The OAuth2 API.</param>
-        public RequireOwnerCondition(ICommandContext context, IDiscordRestOAuth2API oauth2API)
+    /// <inheritdoc />
+    public async ValueTask<Result> CheckAsync(RequireOwnerAttribute attribute, CancellationToken ct = default)
+    {
+        var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
+        if (!getApplication.IsSuccess)
         {
-            _context = context;
-            _oauth2API = oauth2API;
+            return Result.FromError(getApplication);
         }
 
-        /// <inheritdoc />
-        public async ValueTask<Result> CheckAsync(RequireOwnerAttribute attribute, CancellationToken ct = default)
+        var application = getApplication.Entity;
+
+        if (application.Owner is null || !application.Owner.ID.HasValue)
         {
-            var getApplication = await _oauth2API.GetCurrentBotApplicationInformationAsync(ct);
-            if (!getApplication.IsSuccess)
-            {
-                return Result.FromError(getApplication);
-            }
-
-            var application = getApplication.Entity;
-
-            if (application.Owner is null || !application.Owner.ID.HasValue)
-            {
-                return new InvalidOperationError("The application owner's ID was not present.");
-            }
-
-            return application.Owner.ID.Value == _context.User.ID
-                ? Result.FromSuccess()
-                : new InvalidOperationError("You need to be the bot owner to do that.");
+            return new InvalidOperationError("The application owner's ID was not present.");
         }
+
+        return application.Owner.ID.Value == _context.User.ID
+            ? Result.FromSuccess()
+            : new InvalidOperationError("You need to be the bot owner to do that.");
     }
 }

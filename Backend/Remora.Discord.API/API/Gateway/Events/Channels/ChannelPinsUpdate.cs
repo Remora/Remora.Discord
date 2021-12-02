@@ -23,18 +23,17 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelPinsUpdate" />
-    [PublicAPI]
-    public record ChannelPinsUpdate
-    (
-        Optional<Snowflake> GuildID,
-        Snowflake ChannelID,
-        Optional<DateTimeOffset?> LastPinTimestamp = default
-    ) : IChannelPinsUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IChannelPinsUpdate" />
+[PublicAPI]
+public record ChannelPinsUpdate
+(
+    Optional<Snowflake> GuildID,
+    Snowflake ChannelID,
+    Optional<DateTimeOffset?> LastPinTimestamp = default
+) : IChannelPinsUpdate;

@@ -23,53 +23,52 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Enumerates supported type hints for slash command parameters. The values in this enum map to
+/// <see cref="ApplicationCommandOptionType"/>, and can be considered a subset of that enum.
+/// </summary>
+[PublicAPI]
+public enum TypeHint
 {
     /// <summary>
-    /// Enumerates supported type hints for slash command parameters. The values in this enum map to
-    /// <see cref="ApplicationCommandOptionType"/>, and can be considered a subset of that enum.
+    /// The option is a string.
     /// </summary>
-    [PublicAPI]
-    public enum TypeHint
-    {
-        /// <summary>
-        /// The option is a string.
-        /// </summary>
-        String = 3,
+    String = 3,
 
-        /// <summary>
-        /// The option is an integer.
-        /// </summary>
-        Integer = 4,
+    /// <summary>
+    /// The option is an integer.
+    /// </summary>
+    Integer = 4,
 
-        /// <summary>
-        /// The option is a boolean.
-        /// </summary>
-        Boolean = 5,
+    /// <summary>
+    /// The option is a boolean.
+    /// </summary>
+    Boolean = 5,
 
-        /// <summary>
-        /// The option is a user reference.
-        /// </summary>
-        User = 6,
+    /// <summary>
+    /// The option is a user reference.
+    /// </summary>
+    User = 6,
 
-        /// <summary>
-        /// The option is a channel reference.
-        /// </summary>
-        Channel = 7,
+    /// <summary>
+    /// The option is a channel reference.
+    /// </summary>
+    Channel = 7,
 
-        /// <summary>
-        /// The option is a role reference.
-        /// </summary>
-        Role = 8,
+    /// <summary>
+    /// The option is a role reference.
+    /// </summary>
+    Role = 8,
 
-        /// <summary>
-        /// The option is some type of mentionable object (member, role, channel, etc).
-        /// </summary>
-        Mentionable = 9,
+    /// <summary>
+    /// The option is some type of mentionable object (member, role, channel, etc).
+    /// </summary>
+    Mentionable = 9,
 
-        /// <summary>
-        /// The option is a floating-point number (double precision).
-        /// </summary>
-        Number = 10
-    }
+    /// <summary>
+    /// The option is a floating-point number (double precision).
+    /// </summary>
+    Number = 10
 }

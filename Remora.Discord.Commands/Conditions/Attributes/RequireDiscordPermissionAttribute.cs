@@ -27,70 +27,69 @@ using JetBrains.Annotations;
 using Remora.Commands.Conditions;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Marks an entity as requiring a certain permission.
+/// </summary>
+/// <remarks>
+/// Supported entities include the following:
+///     * Command groups (which require the invoker to have the permission(s))
+///     * Commands (which require the invoker to have the permission(s))
+///     * IUser parameters (which require the target user to have the permission(s))
+///     * IGuildMember parameters (which require the target user to have the permission(s))
+///     * IRole parameters (which require the target role to have the permission(s))
+///
+/// More than one permission may be specified, in which case the behaviour is controlled with
+/// <see cref="Operator"/>.
+/// </remarks>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Parameter)]
+public class RequireDiscordPermissionAttribute : ConditionAttribute
 {
     /// <summary>
-    /// Marks an entity as requiring a certain permission.
+    /// Gets the logical operator used to combine the permissions.
     /// </summary>
-    /// <remarks>
-    /// Supported entities include the following:
-    ///     * Command groups (which require the invoker to have the permission(s))
-    ///     * Commands (which require the invoker to have the permission(s))
-    ///     * IUser parameters (which require the target user to have the permission(s))
-    ///     * IGuildMember parameters (which require the target user to have the permission(s))
-    ///     * IRole parameters (which require the target role to have the permission(s))
-    ///
-    /// More than one permission may be specified, in which case the behaviour is controlled with
-    /// <see cref="Operator"/>.
-    /// </remarks>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Parameter)]
-    public class RequireDiscordPermissionAttribute : ConditionAttribute
+    public LogicalOperator Operator { get; init; } = LogicalOperator.And;
+
+    /// <summary>
+    /// Gets the permissions that should be checked.
+    /// </summary>
+    public IReadOnlyList<DiscordPermission> Permissions { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
+    /// </summary>
+    /// <param name="permissions">The permissions to require.</param>
+    public RequireDiscordPermissionAttribute(params DiscordPermission[] permissions)
     {
-        /// <summary>
-        /// Gets the logical operator used to combine the permissions.
-        /// </summary>
-        public LogicalOperator Operator { get; init; } = LogicalOperator.And;
+        this.Permissions = permissions;
+    }
 
-        /// <summary>
-        /// Gets the permissions that should be checked.
-        /// </summary>
-        public IReadOnlyList<DiscordPermission> Permissions { get; }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
+    /// </summary>
+    /// <param name="permissions">The permissions to require.</param>
+    public RequireDiscordPermissionAttribute(params DiscordTextPermission[] permissions)
+    {
+        this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(params DiscordPermission[] permissions)
-        {
-            this.Permissions = permissions;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
+    /// </summary>
+    /// <param name="permissions">The permissions to require.</param>
+    public RequireDiscordPermissionAttribute(params DiscordVoicePermission[] permissions)
+    {
+        this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(params DiscordTextPermission[] permissions)
-        {
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(params DiscordVoicePermission[] permissions)
-        {
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="permissions">The permissions to require.</param>
-        public RequireDiscordPermissionAttribute(params DiscordStagePermission[] permissions)
-        {
-            this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequireDiscordPermissionAttribute"/> class.
+    /// </summary>
+    /// <param name="permissions">The permissions to require.</param>
+    public RequireDiscordPermissionAttribute(params DiscordStagePermission[] permissions)
+    {
+        this.Permissions = permissions.Cast<DiscordPermission>().ToArray();
     }
 }

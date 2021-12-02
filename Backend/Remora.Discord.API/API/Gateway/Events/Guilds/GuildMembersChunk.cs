@@ -24,22 +24,21 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMembersChunk" />
-    [PublicAPI]
-    public record GuildMembersChunk
-    (
-        Snowflake GuildID,
-        IReadOnlyList<IGuildMember> Members,
-        int ChunkIndex,
-        int ChunkCount,
-        Optional<IReadOnlyList<Snowflake>> NotFound = default,
-        Optional<IReadOnlyList<IPresence>> Presences = default,
-        Optional<string> Nonce = default
-    ) : IGuildMembersChunk;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildMembersChunk" />
+[PublicAPI]
+public record GuildMembersChunk
+(
+    Snowflake GuildID,
+    IReadOnlyList<IGuildMember> Members,
+    int ChunkIndex,
+    int ChunkCount,
+    Optional<IReadOnlyList<Snowflake>> NotFound = default,
+    Optional<IReadOnlyList<IPresence>> Presences = default,
+    Optional<string> Nonce = default
+) : IGuildMembersChunk;

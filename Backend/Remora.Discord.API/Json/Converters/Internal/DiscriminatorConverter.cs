@@ -24,33 +24,32 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts a user discriminator to or from JSON.
+/// </summary>
+internal class DiscriminatorConverter : JsonConverter<ushort>
 {
-    /// <summary>
-    /// Converts a user discriminator to or from JSON.
-    /// </summary>
-    internal class DiscriminatorConverter : JsonConverter<ushort>
+    /// <inheritdoc />
+    public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override ushort Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType is not JsonTokenType.String)
         {
-            if (reader.TokenType is not JsonTokenType.String)
-            {
-                throw new JsonException();
-            }
-
-            if (!ushort.TryParse(reader.GetString(), out var result))
-            {
-                throw new JsonException();
-            }
-
-            return result;
+            throw new JsonException();
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)
+        if (!ushort.TryParse(reader.GetString(), out var result))
         {
-            writer.WriteStringValue($"{value:D4}");
+            throw new JsonException();
         }
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, ushort value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue($"{value:D4}");
     }
 }

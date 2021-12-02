@@ -22,26 +22,25 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ISticker" />
-    [PublicAPI]
-    public record Sticker
-    (
-        Snowflake ID,
-        Optional<Snowflake> PackID,
-        string Name,
-        string? Description,
-        string Tags,
-        StickerType Type,
-        StickerFormatType FormatType,
-        Optional<bool> IsAvailable = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<IUser> User = default,
-        Optional<int> SortValue = default
-    ) : ISticker;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ISticker" />
+[PublicAPI]
+public record Sticker
+(
+    Snowflake ID,
+    Optional<Snowflake> PackID,
+    string Name,
+    string? Description,
+    string Tags,
+    StickerType Type,
+    StickerFormatType FormatType,
+    Optional<bool> IsAvailable = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<IUser> User = default,
+    Optional<int> SortValue = default
+) : ISticker;

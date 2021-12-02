@@ -75,5 +75,10 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Allows the user to request to speak in a stage channel.
         /// </summary>
         RequestToSpeak = 32,
+
+        /// <summary>
+        /// Allows the user to manage scheduled events.
+        /// </summary>
+        ManageEvents = 33
     }
 }

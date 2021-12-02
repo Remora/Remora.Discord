@@ -159,6 +159,20 @@ namespace Remora.Discord.API.Abstractions.Gateway.Commands
         /// Subscribes to the following events:
         ///     - TYPING_START
         /// </summary>
-        DirectMessageTyping = 1 << 14
+        DirectMessageTyping = 1 << 14,
+
+        /// <summary>
+        /// Subscribes to the following events:
+        ///     - GUILD_SCHEDULED_EVENT_CREATE
+        ///     - GUILD_SCHEDULED_EVENT_UPDATE
+        ///     - GUILD_SCHEDULED_EVENT_DELETE
+        ///     - GUILD_SCHEDULED_EVENT_USER_ADD **
+        ///     - GUILD_SCHEDULED_EVENT_USER_REMOVE **
+        /// </summary>
+        /// <remarks>
+        /// GUILD_SCHEDULED_EVENT_USER_ADD and GUILD_SCHEDULED_EVENT_USER_REMOVE are currently experimental and not
+        /// officially supported.
+        /// </remarks>
+        GuildScheduledEvents = 1 << 16
     }
 }

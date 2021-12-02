@@ -22,32 +22,31 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Enumerates various logical operators.
+/// </summary>
+[PublicAPI]
+public enum LogicalOperator
 {
     /// <summary>
-    /// Enumerates various logical operators.
+    /// AND, that is, all of the inputs must be logically true.
     /// </summary>
-    [PublicAPI]
-    public enum LogicalOperator
-    {
-        /// <summary>
-        /// AND, that is, all of the inputs must be logically true.
-        /// </summary>
-        And,
+    And,
 
-        /// <summary>
-        /// NOT, that is, all of the inputs must be logically false.
-        /// </summary>
-        Not,
+    /// <summary>
+    /// NOT, that is, all of the inputs must be logically false.
+    /// </summary>
+    Not,
 
-        /// <summary>
-        /// OR, that is, one or more of the inputs must be logically true.
-        /// </summary>
-        Or,
+    /// <summary>
+    /// OR, that is, one or more of the inputs must be logically true.
+    /// </summary>
+    Or,
 
-        /// <summary>
-        /// XOR, that is, one and only one of the inputs must be logically true.
-        /// </summary>
-        Xor,
-    }
+    /// <summary>
+    /// XOR, that is, one and only one of the inputs must be logically true.
+    /// </summary>
+    Xor,
 }

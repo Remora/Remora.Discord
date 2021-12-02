@@ -23,29 +23,28 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ISelectMenuComponent" />
+[PublicAPI]
+public record SelectMenuComponent
+(
+    string CustomID,
+    IReadOnlyList<ISelectOption> Options,
+    Optional<string> Placeholder,
+    Optional<int> MinValues,
+    Optional<int> MaxValues,
+    Optional<bool> IsDisabled
+) : ISelectMenuComponent, IDefaultedComponent
 {
-    /// <inheritdoc cref="ISelectMenuComponent" />
-    [PublicAPI]
-    public record SelectMenuComponent
-    (
-        string CustomID,
-        IReadOnlyList<ISelectOption> Options,
-        Optional<string> Placeholder,
-        Optional<int> MinValues,
-        Optional<int> MaxValues,
-        Optional<bool> IsDisabled
-    ) : ISelectMenuComponent, IDefaultedComponent
-    {
-        /// <inheritdoc/>
-        ComponentType IComponent.Type => ComponentType.SelectMenu;
+    /// <inheritdoc/>
+    ComponentType IComponent.Type => ComponentType.SelectMenu;
 
-        /// <inheritdoc/>
-        Optional<string> IComponent.CustomID => this.CustomID;
+    /// <inheritdoc/>
+    Optional<string> IComponent.CustomID => this.CustomID;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<ISelectOption>> IComponent.Options => new(this.Options);
-    }
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<ISelectOption>> IComponent.Options => new(this.Options);
 }

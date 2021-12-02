@@ -26,69 +26,68 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts <see cref="IShardIdentification"/> values to and from JSON.
+/// </summary>
+internal class ShardIdentificationConverter : JsonConverter<IShardIdentification?>
 {
-    /// <summary>
-    /// Converts <see cref="IShardIdentification"/> values to and from JSON.
-    /// </summary>
-    internal class ShardIdentificationConverter : JsonConverter<IShardIdentification?>
+    /// <inheritdoc/>
+    public override IShardIdentification? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc/>
-        public override IShardIdentification? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType == JsonTokenType.Null)
         {
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-
-            if (reader.TokenType != JsonTokenType.StartArray)
-            {
-                throw new JsonException();
-            }
-
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            var shardID = reader.GetInt32();
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            var shardCount = reader.GetInt32();
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            if (reader.TokenType != JsonTokenType.EndArray)
-            {
-                throw new JsonException();
-            }
-
-            if (!reader.IsFinalBlock && !reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            return new ShardIdentification(shardID, shardCount);
+            return null;
         }
 
-        /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, IShardIdentification? value, JsonSerializerOptions options)
+        if (reader.TokenType != JsonTokenType.StartArray)
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteStartArray();
-            writer.WriteNumberValue(value.ShardID);
-            writer.WriteNumberValue(value.ShardCount);
-            writer.WriteEndArray();
+            throw new JsonException();
         }
+
+        if (!reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        var shardID = reader.GetInt32();
+        if (!reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        var shardCount = reader.GetInt32();
+        if (!reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        if (reader.TokenType != JsonTokenType.EndArray)
+        {
+            throw new JsonException();
+        }
+
+        if (!reader.IsFinalBlock && !reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        return new ShardIdentification(shardID, shardCount);
+    }
+
+    /// <inheritdoc/>
+    public override void Write(Utf8JsonWriter writer, IShardIdentification? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        writer.WriteStartArray();
+        writer.WriteNumberValue(value.ShardID);
+        writer.WriteNumberValue(value.ShardCount);
+        writer.WriteEndArray();
     }
 }

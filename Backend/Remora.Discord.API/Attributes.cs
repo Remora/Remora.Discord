@@ -23,3 +23,4 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Remora.Discord.API.Tests")]
+[assembly: InternalsVisibleTo("Remora.Discord.Unstable")]

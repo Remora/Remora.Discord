@@ -27,8 +27,9 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
 using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -40,10 +41,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestInviteAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestInviteAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestInviteAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -53,10 +54,11 @@ namespace Remora.Discord.Rest.API
             string inviteCode,
             Optional<bool> withCounts = default,
             Optional<bool> withExpiration = default,
+            Optional<Snowflake> guildScheduledEventID = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IInvite>
+            return this.RestHttpClient.GetAsync<IInvite>
             (
                 $"invites/{inviteCode}",
                 b =>
@@ -70,6 +72,13 @@ namespace Remora.Discord.Rest.API
                     {
                         b.AddQueryParameter("with_expiration", withExpiration.Value.ToString());
                     }
+
+                    if (guildScheduledEventID.HasValue)
+                    {
+                        b.AddQueryParameter("guild_scheduled_event_id", guildScheduledEventID.Value.ToString());
+                    }
+
+                    b.WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -83,10 +92,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync<IInvite>
+            return this.RestHttpClient.DeleteAsync<IInvite>
             (
                 $"invites/{inviteCode}",
-                b => b.AddAuditLogReason(reason),
+                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
                 ct: ct
             );
         }

@@ -23,20 +23,19 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialPresence" />
-    [PublicAPI]
-    public record PartialPresence
-    (
-        Optional<IPartialUser> User = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<ClientStatus> Status = default,
-        Optional<IReadOnlyList<IActivity>?> Activities = default,
-        Optional<IClientStatuses> ClientStatus = default
-    ) : IPartialPresence;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialPresence" />
+[PublicAPI]
+public record PartialPresence
+(
+    Optional<IPartialUser> User = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<ClientStatus> Status = default,
+    Optional<IReadOnlyList<IActivity>?> Activities = default,
+    Optional<IClientStatuses> ClientStatus = default
+) : IPartialPresence;

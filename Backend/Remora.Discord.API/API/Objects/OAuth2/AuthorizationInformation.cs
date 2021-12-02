@@ -24,19 +24,18 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuthorizationInformation" />
-    [PublicAPI]
-    public record AuthorizationInformation
-    (
-        IPartialApplication Application,
-        IReadOnlyList<string> Scopes,
-        DateTimeOffset Expires,
-        Optional<IUser> User = default
-    ) : IAuthorizationInformation;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IAuthorizationInformation" />
+[PublicAPI]
+public record AuthorizationInformation
+(
+    IPartialApplication Application,
+    IReadOnlyList<string> Scopes,
+    DateTimeOffset Expires,
+    Optional<IUser> User = default
+) : IAuthorizationInformation;

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.13</Version>
+        <Version>6.2.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Add DiscordGatewayClient#Latency.
         </PackageReleaseNotes>
     </PropertyGroup>
 

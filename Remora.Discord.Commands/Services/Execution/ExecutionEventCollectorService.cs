@@ -29,78 +29,77 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Services
+namespace Remora.Discord.Commands.Services;
+
+/// <summary>
+/// Collects execution event services for simpler conjoined execution.
+/// </summary>
+[PublicAPI]
+public class ExecutionEventCollectorService
 {
     /// <summary>
-    /// Collects execution event services for simpler conjoined execution.
+    /// Runs all collected pre-execution events.
     /// </summary>
-    [PublicAPI]
-    public class ExecutionEventCollectorService
+    /// <param name="services">The service provider.</param>
+    /// <param name="commandContext">The command context.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    public async Task<Result> RunPreExecutionEvents
+    (
+        IServiceProvider services,
+        ICommandContext commandContext,
+        CancellationToken ct
+    )
     {
-        /// <summary>
-        /// Runs all collected pre-execution events.
-        /// </summary>
-        /// <param name="services">The service provider.</param>
-        /// <param name="commandContext">The command context.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task<Result> RunPreExecutionEvents
+        var results = await Task.WhenAll
         (
-            IServiceProvider services,
-            ICommandContext commandContext,
-            CancellationToken ct
-        )
+            services
+                .GetServices<IPreExecutionEvent>()
+                .Select(e => e.BeforeExecutionAsync(commandContext, ct))
+        );
+
+        foreach (var result in results)
         {
-            var results = await Task.WhenAll
-            (
-                services
-                    .GetServices<IPreExecutionEvent>()
-                    .Select(e => e.BeforeExecutionAsync(commandContext, ct))
-            );
-
-            foreach (var result in results)
+            if (!result.IsSuccess)
             {
-                if (!result.IsSuccess)
-                {
-                    return result;
-                }
+                return result;
             }
-
-            return Result.FromSuccess();
         }
 
-        /// <summary>
-        /// Runs all collected post-execution events.
-        /// </summary>
-        /// <param name="services">The service provider.</param>
-        /// <param name="commandContext">The command context.</param>
-        /// <param name="commandResult">The result of the executed command.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task<Result> RunPostExecutionEvents
+        return Result.FromSuccess();
+    }
+
+    /// <summary>
+    /// Runs all collected post-execution events.
+    /// </summary>
+    /// <param name="services">The service provider.</param>
+    /// <param name="commandContext">The command context.</param>
+    /// <param name="commandResult">The result of the executed command.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    public async Task<Result> RunPostExecutionEvents
+    (
+        IServiceProvider services,
+        ICommandContext commandContext,
+        IResult commandResult,
+        CancellationToken ct
+    )
+    {
+        var results = await Task.WhenAll
         (
-            IServiceProvider services,
-            ICommandContext commandContext,
-            IResult commandResult,
-            CancellationToken ct
-        )
+            services
+                .GetServices<IPostExecutionEvent>()
+                .Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
+        );
+
+        foreach (var result in results)
         {
-            var results = await Task.WhenAll
-            (
-                services
-                    .GetServices<IPostExecutionEvent>()
-                    .Select(e => e.AfterExecutionAsync(commandContext, commandResult, ct))
-            );
-
-            foreach (var result in results)
+            if (!result.IsSuccess)
             {
-                if (!result.IsSuccess)
-                {
-                    return result;
-                }
+                return result;
             }
-
-            return Result.FromSuccess();
         }
+
+        return Result.FromSuccess();
     }
 }

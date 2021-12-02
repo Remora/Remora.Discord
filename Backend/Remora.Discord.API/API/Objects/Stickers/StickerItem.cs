@@ -22,12 +22,10 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IStickerItem" />
-    [PublicAPI]
-    public record StickerItem(Snowflake ID, string Name, StickerFormatType FormatType)
-        : IStickerItem;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IStickerItem" />
+[PublicAPI]
+public record StickerItem(Snowflake ID, string Name, StickerFormatType FormatType) : IStickerItem;

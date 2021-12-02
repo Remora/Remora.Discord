@@ -22,18 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivitySecrets" />
-    [PublicAPI]
-    public record ActivitySecrets
-    (
-        Optional<string> Join = default,
-        Optional<string> Spectate = default,
-        Optional<string> Match = default
-    ) : IActivitySecrets;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivitySecrets" />
+[PublicAPI]
+public record ActivitySecrets
+(
+    Optional<string> Join = default,
+    Optional<string> Spectate = default,
+    Optional<string> Match = default
+) : IActivitySecrets;

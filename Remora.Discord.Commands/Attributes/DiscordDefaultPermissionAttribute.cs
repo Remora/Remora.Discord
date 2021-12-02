@@ -22,29 +22,28 @@
 
 using System;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a group with a default permission, that is, whether commands in the group will be visible to all users by
+/// default.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class)]
+public class DiscordDefaultPermissionAttribute : Attribute
 {
     /// <summary>
-    /// Marks a group with a default permission, that is, whether commands in the group will be visible to all users by
-    /// default.
+    /// Gets a value indicating whether commands in the group will be visible to all users by default.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    public class DiscordDefaultPermissionAttribute : Attribute
-    {
-        /// <summary>
-        /// Gets a value indicating whether commands in the group will be visible to all users by default.
-        /// </summary>
-        public bool DefaultPermission { get; }
+    public bool DefaultPermission { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordDefaultPermissionAttribute"/> class.
-        /// </summary>
-        /// <param name="defaultPermission">
-        /// true if commands in the group should be visible to all users by default; otherwise, false.
-        /// </param>
-        public DiscordDefaultPermissionAttribute(bool defaultPermission)
-        {
-            this.DefaultPermission = defaultPermission;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordDefaultPermissionAttribute"/> class.
+    /// </summary>
+    /// <param name="defaultPermission">
+    /// true if commands in the group should be visible to all users by default; otherwise, false.
+    /// </param>
+    public DiscordDefaultPermissionAttribute(bool defaultPermission)
+    {
+        this.DefaultPermission = defaultPermission;
     }
 }

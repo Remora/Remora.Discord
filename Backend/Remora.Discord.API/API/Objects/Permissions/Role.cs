@@ -23,26 +23,25 @@
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IRole" />
-    [PublicAPI]
-    public record Role
-    (
-        Snowflake ID,
-        string Name,
-        Color Colour,
-        bool IsHoisted,
-        Optional<IImageHash?> Icon,
-        Optional<string?> UnicodeEmoji,
-        int Position,
-        IDiscordPermissionSet Permissions,
-        bool IsManaged,
-        bool IsMentionable,
-        Optional<IRoleTags> Tags = default
-    ) : IRole;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IRole" />
+[PublicAPI]
+public record Role
+(
+    Snowflake ID,
+    string Name,
+    Color Colour,
+    bool IsHoisted,
+    Optional<IImageHash?> Icon,
+    Optional<string?> UnicodeEmoji,
+    int Position,
+    IDiscordPermissionSet Permissions,
+    bool IsManaged,
+    bool IsMentionable,
+    Optional<IRoleTags> Tags = default
+) : IRole;

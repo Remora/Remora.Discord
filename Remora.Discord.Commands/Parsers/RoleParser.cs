@@ -31,60 +31,59 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses instances of <see cref="IRole"/> from command-line inputs.
+/// </summary>
+[PublicAPI]
+public class RoleParser : AbstractTypeParser<IRole>
 {
+    private readonly ICommandContext _context;
+    private readonly IDiscordRestGuildAPI _guildAPI;
+
     /// <summary>
-    /// Parses instances of <see cref="IRole"/> from command-line inputs.
+    /// Initializes a new instance of the <see cref="RoleParser"/> class.
     /// </summary>
-    [PublicAPI]
-    public class RoleParser : AbstractTypeParser<IRole>
+    /// <param name="context">The command context.</param>
+    /// <param name="guildAPI">The guild API.</param>
+    public RoleParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
     {
-        private readonly ICommandContext _context;
-        private readonly IDiscordRestGuildAPI _guildAPI;
+        _guildAPI = guildAPI;
+        _context = context;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RoleParser"/> class.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="guildAPI">The guild API.</param>
-        public RoleParser(ICommandContext context, IDiscordRestGuildAPI guildAPI)
+    /// <inheritdoc />
+    public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
+    {
+        if (!_context.GuildID.IsDefined(out var guildID))
         {
-            _guildAPI = guildAPI;
-            _context = context;
+            return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
         }
 
-        /// <inheritdoc />
-        public override async ValueTask<Result<IRole>> TryParseAsync(string value, CancellationToken ct = default)
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        if (!getRoles.IsSuccess)
         {
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new InvalidOperationError("You're not in a guild channel, so I can't get any roles.");
-            }
-
-            var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
-            if (!getRoles.IsSuccess)
-            {
-                return Result<IRole>.FromError(getRoles);
-            }
-
-            var roles = getRoles.Entity;
-            if (!Snowflake.TryParse(value.Unmention(), out var roleID))
-            {
-                // Try a name-based lookup
-                var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));
-                return roleByName is not null
-                    ? Result<IRole>.FromSuccess(roleByName)
-                    : new ParsingError<IRole>(value.Unmention());
-            }
-
-            var role = roles.FirstOrDefault(r => r.ID.Equals(roleID));
-
-            return role is not null
-                ? Result<IRole>.FromSuccess(role)
-                : new ParsingError<IRole>("No role with that ID could be found.");
+            return Result<IRole>.FromError(getRoles);
         }
+
+        var roles = getRoles.Entity;
+        if (!Snowflake.TryParse(value.Unmention(), out var roleID))
+        {
+            // Try a name-based lookup
+            var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));
+            return roleByName is not null
+                ? Result<IRole>.FromSuccess(roleByName)
+                : new ParsingError<IRole>(value.Unmention());
+        }
+
+        var role = roles.FirstOrDefault(r => r.ID.Equals(roleID));
+
+        return role is not null
+            ? Result<IRole>.FromSuccess(role)
+            : new ParsingError<IRole>("No role with that ID could be found.");
     }
 }

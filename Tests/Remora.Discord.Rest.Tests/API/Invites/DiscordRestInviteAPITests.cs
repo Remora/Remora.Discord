@@ -28,6 +28,7 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using RichardSzalay.MockHttp;
 using Xunit;
 
@@ -53,6 +54,7 @@ namespace Remora.Discord.Rest.Tests.API.Invites
                 var inviteCode = "brr";
                 var withCounts = true;
                 var withExpiration = false;
+                var eventID = new Snowflake(1);
 
                 var api = CreateAPI
                 (
@@ -64,12 +66,13 @@ namespace Remora.Discord.Rest.Tests.API.Invites
                             {
                                 new KeyValuePair<string, string>("with_counts", withCounts.ToString()),
                                 new KeyValuePair<string, string>("with_expiration", withExpiration.ToString()),
+                                new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString()),
                             }
                         )
                         .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
                 );
 
-                var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration);
+                var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration, eventID);
                 ResultAssert.Successful(result);
             }
         }

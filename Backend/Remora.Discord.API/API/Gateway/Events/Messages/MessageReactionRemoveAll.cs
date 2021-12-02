@@ -22,18 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll" />
-    [PublicAPI]
-    public record MessageReactionRemoveAll
-    (
-        Snowflake ChannelID,
-        Snowflake MessageID,
-        Optional<Snowflake> GuildID = default
-    ) : IMessageReactionRemoveAll;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IMessageReactionRemoveAll" />
+[PublicAPI]
+public record MessageReactionRemoveAll
+(
+    Snowflake ChannelID,
+    Snowflake MessageID,
+    Optional<Snowflake> GuildID = default
+) : IMessageReactionRemoveAll;

@@ -26,11 +26,10 @@ using Remora.Results;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Commands.Results
-{
-    /// <summary>
-    /// Represents a failure to create a slash command based on an unsupported feature.
-    /// </summary>
-    [PublicAPI]
-    public record UnsupportedFeatureError(string Message, IChildNode? Node = default) : ResultError(Message);
-}
+namespace Remora.Discord.Commands.Results;
+
+/// <summary>
+/// Represents a failure to create a slash command based on an unsupported feature.
+/// </summary>
+[PublicAPI]
+public record UnsupportedFeatureError(string Message, IChildNode? Node = default) : ResultError(Message);

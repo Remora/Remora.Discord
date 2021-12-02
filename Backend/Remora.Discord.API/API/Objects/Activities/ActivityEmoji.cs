@@ -22,18 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IActivityEmoji" />
-    [PublicAPI]
-    public record ActivityEmoji
-    (
-        string Name,
-        Optional<Snowflake> ID = default,
-        Optional<bool> Animated = default
-    ) : IActivityEmoji;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IActivityEmoji" />
+[PublicAPI]
+public record ActivityEmoji
+(
+    string Name,
+    Optional<Snowflake> ID = default,
+    Optional<bool> Animated = default
+) : IActivityEmoji;

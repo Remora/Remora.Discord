@@ -23,34 +23,32 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IApplication" />
-    [PublicAPI]
-    public record PartialApplication
-    (
-        Optional<Snowflake> ID = default,
-        Optional<string> Name = default,
-        Optional<IImageHash?> Icon = default,
-        Optional<string> Description = default,
-        Optional<IReadOnlyList<string>> RPCOrigins = default,
-        Optional<bool> IsBotPublic = default,
-        Optional<bool> DoesBotRequireCodeGrant = default,
-        Optional<string> TermsOfServiceURL = default,
-        Optional<string> PrivacyPolicyURL = default,
-        Optional<IPartialUser?> Owner = default,
-        Optional<string> Summary = default,
-        Optional<string> VerifyKey = default,
-        Optional<ITeam?> Team = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<Snowflake> PrimarySKUID = default,
-        Optional<string> Slug = default,
-        Optional<IImageHash> CoverImage = default,
-        Optional<ApplicationFlags> Flags = default
-    )
-    : IPartialApplication;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IApplication" />
+[PublicAPI]
+public record PartialApplication
+(
+    Optional<Snowflake> ID = default,
+    Optional<string> Name = default,
+    Optional<IImageHash?> Icon = default,
+    Optional<string> Description = default,
+    Optional<IReadOnlyList<string>> RPCOrigins = default,
+    Optional<bool> IsBotPublic = default,
+    Optional<bool> DoesBotRequireCodeGrant = default,
+    Optional<string> TermsOfServiceURL = default,
+    Optional<string> PrivacyPolicyURL = default,
+    Optional<IPartialUser?> Owner = default,
+    Optional<string> Summary = default,
+    Optional<string> VerifyKey = default,
+    Optional<ITeam?> Team = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<Snowflake> PrimarySKUID = default,
+    Optional<string> Slug = default,
+    Optional<IImageHash> CoverImage = default,
+    Optional<ApplicationFlags> Flags = default
+) : IPartialApplication;

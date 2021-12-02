@@ -27,49 +27,48 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts to and from the JSON representation of a <see cref="IDiscordPermissionSet"/>.
+/// </summary>
+internal class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionSet>
 {
-    /// <summary>
-    /// Converts to and from the JSON representation of a <see cref="IDiscordPermissionSet"/>.
-    /// </summary>
-    internal class DiscordPermissionSetConverter : JsonConverter<IDiscordPermissionSet>
+    /// <inheritdoc />
+    public override IDiscordPermissionSet Read
+    (
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        /// <inheritdoc />
-        public override IDiscordPermissionSet Read
-        (
-            ref Utf8JsonReader reader,
-            Type typeToConvert,
-            JsonSerializerOptions options
-        )
+        switch (reader.TokenType)
         {
-            switch (reader.TokenType)
+            case JsonTokenType.String:
             {
-                case JsonTokenType.String:
-                {
-                    var rawString = reader.GetString();
-                    if (rawString is null)
-                    {
-                        throw new JsonException();
-                    }
-
-                    if (!BigInteger.TryParse(rawString, out var value))
-                    {
-                        throw new JsonException();
-                    }
-
-                    return new DiscordPermissionSet(value);
-                }
-                default:
+                var rawString = reader.GetString();
+                if (rawString is null)
                 {
                     throw new JsonException();
                 }
+
+                if (!BigInteger.TryParse(rawString, out var value))
+                {
+                    throw new JsonException();
+                }
+
+                return new DiscordPermissionSet(value);
+            }
+            default:
+            {
+                throw new JsonException();
             }
         }
+    }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IDiscordPermissionSet value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.Value.ToString());
-        }
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IDiscordPermissionSet value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.Value.ToString());
     }
 }

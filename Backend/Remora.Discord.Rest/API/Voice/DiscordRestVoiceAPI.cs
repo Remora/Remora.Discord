@@ -28,6 +28,8 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.Rest.Extensions;
+using Remora.Rest;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -39,19 +41,20 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestVoiceAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestVoiceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
         /// <inheritdoc />
         public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
             (
                 "voice/regions",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }

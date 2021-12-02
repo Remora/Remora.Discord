@@ -23,20 +23,19 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStickerPack" />
-    [PublicAPI]
-    public record StickerPack
-    (
-        Snowflake ID,
-        IReadOnlyList<ISticker> Stickers,
-        string Name,
-        Snowflake SKUID,
-        Optional<Snowflake> CoverStickerID,
-        string Description,
-        Snowflake BannerAssetID
-    ) : IStickerPack;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStickerPack" />
+[PublicAPI]
+public record StickerPack
+(
+    Snowflake ID,
+    IReadOnlyList<ISticker> Stickers,
+    string Name,
+    Snowflake SKUID,
+    Optional<Snowflake> CoverStickerID,
+    string Description,
+    Snowflake BannerAssetID
+) : IStickerPack;

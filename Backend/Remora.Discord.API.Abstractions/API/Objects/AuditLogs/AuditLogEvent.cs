@@ -233,6 +233,36 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A sticker was deleted.
         /// </summary>
-        StickerDelete = 92
+        StickerDelete = 92,
+
+        /// <summary>
+        /// A scheduled guild event was created.
+        /// </summary>
+        GuildScheduledEventCreate = 100,
+
+        /// <summary>
+        /// A scheduled guild event was updated.
+        /// </summary>
+        GuildScheduledEventUpdate = 101,
+
+        /// <summary>
+        /// A scheduled guild event was deleted.
+        /// </summary>
+        GuildScheduledEventDelete = 102,
+
+        /// <summary>
+        /// A thread was created.
+        /// </summary>
+        ThreadCreate = 110,
+
+        /// <summary>
+        /// A thread was updated.
+        /// </summary>
+        ThreadUpdate = 111,
+
+        /// <summary>
+        /// A thread was deleted.
+        /// </summary>
+        ThreadDelete = 112
     }
 }

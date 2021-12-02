@@ -25,9 +25,8 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IInvalidSession"/>
-    [PublicAPI]
-    public record InvalidSession(bool IsResumable) : IInvalidSession;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IInvalidSession"/>
+[PublicAPI]
+public record InvalidSession(bool IsResumable) : IInvalidSession;

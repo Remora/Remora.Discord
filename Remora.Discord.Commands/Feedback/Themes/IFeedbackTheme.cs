@@ -23,92 +23,91 @@
 using System.Drawing;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Feedback.Themes
+namespace Remora.Discord.Commands.Feedback.Themes;
+
+/// <summary>
+/// Represents the public API of a colour theme for feedback messages.
+/// </summary>
+[PublicAPI]
+public interface IFeedbackTheme
 {
     /// <summary>
-    /// Represents the public API of a colour theme for feedback messages.
+    /// Gets a colour used as a background for things interposed with each other; image backgrounds, text
+    /// background, etc.
     /// </summary>
-    [PublicAPI]
-    public interface IFeedbackTheme
-    {
-        /// <summary>
-        /// Gets a colour used as a background for things interposed with each other; image backgrounds, text
-        /// background, etc.
-        /// </summary>
-        Color Background { get; }
+    Color Background { get; }
 
-        /// <summary>
-        /// Gets a colour used for primary text elements superimposed on the <see cref="Background"/> colour.
-        /// </summary>
-        Color Text { get; }
+    /// <summary>
+    /// Gets a colour used for primary text elements superimposed on the <see cref="Background"/> colour.
+    /// </summary>
+    Color Text { get; }
 
-        /// <summary>
-        /// Gets a colour used for secondary text elements superimposed on an element, such as <see cref="Primary"/> or
-        /// <see cref="Secondary"/>.
-        /// </summary>
-        Color TextSecondary { get; }
+    /// <summary>
+    /// Gets a colour used for secondary text elements superimposed on an element, such as <see cref="Primary"/> or
+    /// <see cref="Secondary"/>.
+    /// </summary>
+    Color TextSecondary { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="TextSecondary"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color TextSecondaryDisabled { get; }
+    /// <summary>
+    /// Gets a variant of <see cref="TextSecondary"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color TextSecondaryDisabled { get; }
 
-        /// <summary>
-        /// Gets a colour used as a primary element colour; buttons, links, etc.
-        /// </summary>
-        Color Primary { get; }
+    /// <summary>
+    /// Gets a colour used as a primary element colour; buttons, links, etc.
+    /// </summary>
+    Color Primary { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="Primary"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color PrimaryDisabled { get; }
+    /// <summary>
+    /// Gets a variant of <see cref="Primary"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color PrimaryDisabled { get; }
 
-        /// <summary>
-        /// Gets a colour used as a secondary element colour; less important buttons, bulk elements, etc.
-        /// </summary>
-        Color Secondary { get; }
+    /// <summary>
+    /// Gets a colour used as a secondary element colour; less important buttons, bulk elements, etc.
+    /// </summary>
+    Color Secondary { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="Secondary"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color SecondaryDisabled { get; }
+    /// <summary>
+    /// Gets a variant of <see cref="Secondary"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color SecondaryDisabled { get; }
 
-        /// <summary>
-        /// Gets a colour used to indicate success; positive actions, completed requests, etc.
-        /// </summary>
-        Color Success { get; }
+    /// <summary>
+    /// Gets a colour used to indicate success; positive actions, completed requests, etc.
+    /// </summary>
+    Color Success { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="Success"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color SuccessDisabled { get; }
+    /// <summary>
+    /// Gets a variant of <see cref="Success"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color SuccessDisabled { get; }
 
-        /// <summary>
-        /// Gets a colour used to indicate a warning; actions that partially succeeded, something a user has to take
-        /// note of, etc.
-        /// </summary>
-        Color Warning { get; }
+    /// <summary>
+    /// Gets a colour used to indicate a warning; actions that partially succeeded, something a user has to take
+    /// note of, etc.
+    /// </summary>
+    Color Warning { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="Warning"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color WarningDisabled { get; }
+    /// <summary>
+    /// Gets a variant of <see cref="Warning"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color WarningDisabled { get; }
 
-        /// <summary>
-        /// Gets a colour used to indicate a fault or a dangerous action; a failed request, interacting with the element
-        /// will be destructive, etc.
-        /// </summary>
-        Color FaultOrDanger { get; }
+    /// <summary>
+    /// Gets a colour used to indicate a fault or a dangerous action; a failed request, interacting with the element
+    /// will be destructive, etc.
+    /// </summary>
+    Color FaultOrDanger { get; }
 
-        /// <summary>
-        /// Gets a variant of <see cref="FaultOrDanger"/>, which is used to indicate the associated element is currently
-        /// non-interactable.
-        /// </summary>
-        Color FaultOrDangerDisabled { get; }
-    }
+    /// <summary>
+    /// Gets a variant of <see cref="FaultOrDanger"/>, which is used to indicate the associated element is currently
+    /// non-interactable.
+    /// </summary>
+    Color FaultOrDangerDisabled { get; }
 }

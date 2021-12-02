@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildIntegrationsUpdate" />
-    [PublicAPI]
-    public record GuildIntegrationsUpdate(Snowflake GuildID) : IGuildIntegrationsUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildIntegrationsUpdate" />
+[PublicAPI]
+public record GuildIntegrationsUpdate(Snowflake GuildID) : IGuildIntegrationsUpdate;

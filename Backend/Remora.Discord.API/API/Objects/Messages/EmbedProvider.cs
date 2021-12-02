@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IEmbedProvider" />
-    [PublicAPI]
-    public record EmbedProvider(Optional<string> Name = default, Optional<string> Url = default) : IEmbedProvider;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IEmbedProvider" />
+[PublicAPI]
+public record EmbedProvider(Optional<string> Name = default, Optional<string> Url = default) : IEmbedProvider;

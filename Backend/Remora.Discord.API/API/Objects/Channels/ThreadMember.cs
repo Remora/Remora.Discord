@@ -23,20 +23,18 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMember" />
-    [PublicAPI]
-    public record ThreadMember
-    (
-        Optional<Snowflake> ID,
-        Optional<Snowflake> UserID,
-        DateTimeOffset JoinTimestamp,
-        ThreadMemberFlags Flags,
-        Optional<IGuildMember> Member = default,
-        Optional<IPartialPresence?> Presence = default
-    )
-    : IThreadMember;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadMember" />
+[PublicAPI]
+public record ThreadMember
+(
+    Optional<Snowflake> ID,
+    Optional<Snowflake> UserID,
+    DateTimeOffset JoinTimestamp,
+    ThreadMemberFlags Flags,
+    Optional<IGuildMember> Member = default,
+    Optional<IPartialPresence?> Presence = default
+) : IThreadMember;

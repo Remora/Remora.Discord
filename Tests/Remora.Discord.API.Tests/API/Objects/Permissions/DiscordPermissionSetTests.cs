@@ -26,7 +26,7 @@ using Moq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Xunit;
 
 #pragma warning disable CS1591, SA1600
@@ -105,7 +105,14 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void HasPermissionReturnsTrueForLargeIntegers()
         {
-            var permissions = new DiscordPermission[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
+            var permissions = new[]
+            {
+                DiscordPermission.AddReactions,
+                DiscordPermission.Connect,
+                DiscordPermission.UseVoiceActivity,
+                DiscordPermission.SendMessagesInThreads,
+                DiscordPermission.StartEmbeddedActivities
+            };
 
             var permissionSet = new DiscordPermissionSet(permissions);
             var permission = DiscordPermission.StartEmbeddedActivities;
@@ -326,7 +333,7 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanGetPermissions()
         {
-            var permissions = new DiscordPermission[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
+            var permissions = new[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
             var permissionSet = new DiscordPermissionSet(permissions);
 
             Assert.Equal(permissions, permissionSet.GetPermissions());

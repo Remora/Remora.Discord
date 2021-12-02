@@ -26,14 +26,12 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen" />
-    [PublicAPI]
-    public record WelcomeScreen
-    (
-        string? Description,
-        IReadOnlyList<IWelcomeScreenChannel> WelcomeChannels
-    )
-    : IWelcomeScreen;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IWelcomeScreen" />
+[PublicAPI]
+public record WelcomeScreen
+(
+    string? Description,
+    IReadOnlyList<IWelcomeScreenChannel> WelcomeChannels
+) : IWelcomeScreen;

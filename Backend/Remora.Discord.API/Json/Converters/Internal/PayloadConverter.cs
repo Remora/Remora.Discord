@@ -31,283 +31,285 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Rest.Json;
+using Remora.Rest.Json.Policies;
 using Remora.Results;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <inheritdoc />
+internal class PayloadConverter : JsonConverter<IPayload?>
 {
-    /// <inheritdoc />
-    internal class PayloadConverter : JsonConverter<IPayload?>
+    private readonly SnakeCaseNamingPolicy _snakeCase = new();
+
+    /// <summary>
+    /// Holds a value indicating whether unknown events are allowed to be deserialized.
+    /// </summary>
+    private readonly bool _allowUnknownEvents;
+
+    /// <summary>
+    /// Holds a cache of event names to event types.
+    /// </summary>
+    private readonly ConcurrentDictionary<string, Type?> _eventTypes;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PayloadConverter"/> class.
+    /// </summary>
+    /// <param name="allowUnknownEvents">Whether unknown events are allowed to be deserialized.</param>
+    public PayloadConverter(bool allowUnknownEvents = true)
     {
-        private readonly SnakeCaseNamingPolicy _snakeCase = new();
+        _allowUnknownEvents = allowUnknownEvents;
+        _eventTypes = new ConcurrentDictionary<string, Type?>();
+    }
 
-        /// <summary>
-        /// Holds a value indicating whether unknown events are allowed to be deserialized.
-        /// </summary>
-        private readonly bool _allowUnknownEvents;
+    /// <inheritdoc />
+    public override bool CanConvert(Type objectType)
+    {
+        return objectType.GetInterfaces().Contains(typeof(IPayload)) || objectType == typeof(IPayload);
+    }
 
-        /// <summary>
-        /// Holds a cache of event names to event types.
-        /// </summary>
-        private readonly ConcurrentDictionary<string, Type?> _eventTypes;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PayloadConverter"/> class.
-        /// </summary>
-        /// <param name="allowUnknownEvents">Whether unknown events are allowed to be deserialized.</param>
-        public PayloadConverter(bool allowUnknownEvents = true)
+    /// <inheritdoc />
+    public override IPayload Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (!JsonDocument.TryParseValue(ref reader, out var document))
         {
-            _allowUnknownEvents = allowUnknownEvents;
-            _eventTypes = new ConcurrentDictionary<string, Type?>();
+            throw new JsonException();
         }
 
-        /// <inheritdoc />
-        public override bool CanConvert(Type objectType)
+        using var realDocument = document;
+
+        if (!realDocument.RootElement.TryGetProperty("op", out var operationCodeProperty))
         {
-            return objectType.GetInterfaces().Contains(typeof(IPayload)) || objectType == typeof(IPayload);
+            throw new JsonException();
         }
 
-        /// <inheritdoc />
-        public override IPayload Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        var operationCode = JsonSerializer.Deserialize<OperationCode>(operationCodeProperty.GetRawText(), options);
+        var obj = operationCode switch
         {
-            if (!JsonDocument.TryParseValue(ref reader, out var document))
+            // Commands
+            OperationCode.Heartbeat => DeserializePayload<IHeartbeat>(realDocument, options),
+            OperationCode.Identify => DeserializePayload<IIdentify>(realDocument, options),
+            OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(realDocument, options),
+            OperationCode.Resume => DeserializePayload<IResume>(realDocument, options),
+            OperationCode.PresenceUpdate => DeserializePayload<IUpdatePresence>(realDocument, options),
+            OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(realDocument, options),
+
+            // Events
+            OperationCode.Hello => DeserializePayload<IHello>(realDocument, options),
+            OperationCode.Reconnect => new Payload<Reconnect>(new Reconnect()),
+            OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(realDocument, options),
+            OperationCode.HeartbeatAcknowledge => new Payload<HeartbeatAcknowledge>(new HeartbeatAcknowledge()),
+            OperationCode.Dispatch => DeserializeDispatch(realDocument, options),
+
+            // Other
+            OperationCode.Unknown => DeserializePayload<IUnknownEvent>(realDocument, options),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        return obj;
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IPayload? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        var getOperationCode = GetOperationCode(value.GetType());
+        if (!getOperationCode.IsSuccess)
+        {
+            throw new JsonException();
+        }
+
+        var operationCode = getOperationCode.Entity;
+
+        writer.WriteStartObject();
+        writer.WriteNumber("op", (int)operationCode);
+        if (operationCode != OperationCode.Dispatch)
+        {
+            writer.WriteNull("s");
+            writer.WriteNull("t");
+        }
+        else
+        {
+            if (!value.GetType().IsGenericType)
             {
                 throw new JsonException();
             }
 
-            using var realDocument = document;
-
-            if (!realDocument.RootElement.TryGetProperty("op", out var operationCodeProperty))
+            var genericArguments = value.GetType().GetGenericArguments();
+            if (genericArguments.Length <= 0)
             {
                 throw new JsonException();
             }
 
-            var operationCode = JsonSerializer.Deserialize<OperationCode>(operationCodeProperty.GetRawText(), options);
-            var obj = operationCode switch
+            if (value is IEventPayload eventPayload)
             {
-                // Commands
-                OperationCode.Heartbeat => DeserializePayload<IHeartbeat>(realDocument, options),
-                OperationCode.Identify => DeserializePayload<IIdentify>(realDocument, options),
-                OperationCode.RequestGuildMembers => DeserializePayload<IRequestGuildMembers>(realDocument, options),
-                OperationCode.Resume => DeserializePayload<IResume>(realDocument, options),
-                OperationCode.PresenceUpdate => DeserializePayload<IUpdatePresence>(realDocument, options),
-                OperationCode.VoiceStateUpdate => DeserializePayload<IUpdateVoiceState>(realDocument, options),
+                var dataType = genericArguments[0];
+                var dataName = _snakeCase.ConvertName(dataType.Name[1..]).ToUpperInvariant();
 
-                // Events
-                OperationCode.Hello => DeserializePayload<IHello>(realDocument, options),
-                OperationCode.Reconnect => new Payload<Reconnect>(new Reconnect()),
-                OperationCode.InvalidSession => DeserializePayload<IInvalidSession>(realDocument, options),
-                OperationCode.HeartbeatAcknowledge => new Payload<HeartbeatAcknowledge>(new HeartbeatAcknowledge()),
-                OperationCode.Dispatch => DeserializeDispatch(realDocument, options),
+                var nameToWrite = eventPayload.EventName != dataName
+                    ? eventPayload.EventName
+                    : dataName;
 
-                // Other
-                OperationCode.Unknown => DeserializePayload<IUnknownEvent>(realDocument, options),
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                writer.WriteString("t", nameToWrite);
 
-            return obj;
-        }
-
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IPayload? value, JsonSerializerOptions options)
-        {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            var getOperationCode = GetOperationCode(value.GetType());
-            if (!getOperationCode.IsSuccess)
-            {
-                throw new JsonException();
-            }
-
-            var operationCode = getOperationCode.Entity;
-
-            writer.WriteStartObject();
-            writer.WriteNumber("op", (int)operationCode);
-            if (operationCode != OperationCode.Dispatch)
-            {
-                writer.WriteNull("s");
-                writer.WriteNull("t");
+                writer.WriteNumber("s", eventPayload.SequenceNumber);
             }
             else
             {
-                if (!value.GetType().IsGenericType)
-                {
-                    throw new JsonException();
-                }
-
-                var genericArguments = value.GetType().GetGenericArguments();
-                if (genericArguments.Length <= 0)
-                {
-                    throw new JsonException();
-                }
-
-                if (value is IEventPayload eventPayload)
-                {
-                    var dataType = genericArguments[0];
-                    var dataName = _snakeCase.ConvertName(dataType.Name[1..]).ToUpperInvariant();
-
-                    var nameToWrite = eventPayload.EventName != dataName
-                        ? eventPayload.EventName
-                        : dataName;
-
-                    writer.WriteString("t", nameToWrite);
-
-                    writer.WriteNumber("s", eventPayload.SequenceNumber);
-                }
-                else
-                {
-                    writer.WriteNull("t");
-                    writer.WriteNull("s");
-                }
+                writer.WriteNull("t");
+                writer.WriteNull("s");
             }
-
-            writer.WritePropertyName("d");
-
-            // We're using IHeartbeat here as a dummy type
-            var payloadDataProperty = value.GetType().GetProperty(nameof(Payload<IHeartbeat>.Data));
-            if (payloadDataProperty is null)
-            {
-                throw new JsonException();
-            }
-
-            var payloadDataPropertyGetter = payloadDataProperty.GetGetMethod();
-            if (payloadDataPropertyGetter is null)
-            {
-                throw new JsonException();
-            }
-
-            var payloadData = payloadDataPropertyGetter.Invoke(value, null);
-            switch (payloadData)
-            {
-                case Reconnect or HeartbeatAcknowledge:
-                {
-                    writer.WriteNullValue();
-                    break;
-                }
-                case UnknownEvent unknownEvent:
-                {
-                    using var eventData = JsonDocument.Parse(unknownEvent.Data);
-                    var innerData = eventData.RootElement.GetProperty("d");
-
-                    innerData.WriteTo(writer);
-                    break;
-                }
-                default:
-                {
-                    JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
-                    break;
-                }
-            }
-
-            writer.WriteEndObject();
         }
 
-        private static Result<OperationCode> GetOperationCode(Type objectType)
+        writer.WritePropertyName("d");
+
+        // We're using IHeartbeat here as a dummy type
+        var payloadDataProperty = value.GetType().GetProperty(nameof(Payload<IHeartbeat>.Data));
+        if (payloadDataProperty is null)
         {
-            if (!objectType.IsGenericType)
+            throw new JsonException();
+        }
+
+        var payloadDataPropertyGetter = payloadDataProperty.GetGetMethod();
+        if (payloadDataPropertyGetter is null)
+        {
+            throw new JsonException();
+        }
+
+        var payloadData = payloadDataPropertyGetter.Invoke(value, null);
+        switch (payloadData)
+        {
+            case Reconnect or HeartbeatAcknowledge:
             {
-                return new NotSupportedError("Unable to determine operation code.");
+                writer.WriteNullValue();
+                break;
             }
-
-            if (objectType.GetGenericTypeDefinition() == typeof(EventPayload<>))
+            case UnknownEvent unknownEvent:
             {
-                return OperationCode.Dispatch;
+                using var eventData = JsonDocument.Parse(unknownEvent.Data);
+                var innerData = eventData.RootElement.GetProperty("d");
+
+                innerData.WriteTo(writer);
+                break;
             }
-
-            var dataType = objectType.GetGenericArguments()[0];
-
-            return dataType switch
+            default:
             {
-                // Commands
-                _ when typeof(IHeartbeat).IsAssignableFrom(dataType)
+                JsonSerializer.Serialize(writer, payloadData, payloadDataProperty.PropertyType, options);
+                break;
+            }
+        }
+
+        writer.WriteEndObject();
+    }
+
+    private static Result<OperationCode> GetOperationCode(Type objectType)
+    {
+        if (!objectType.IsGenericType)
+        {
+            return new NotSupportedError("Unable to determine operation code.");
+        }
+
+        if (objectType.GetGenericTypeDefinition() == typeof(EventPayload<>))
+        {
+            return OperationCode.Dispatch;
+        }
+
+        var dataType = objectType.GetGenericArguments()[0];
+
+        return dataType switch
+        {
+            // Commands
+            _ when typeof(IHeartbeat).IsAssignableFrom(dataType)
                 => OperationCode.Heartbeat,
 
-                _ when typeof(IIdentify).IsAssignableFrom(dataType)
+            _ when typeof(IIdentify).IsAssignableFrom(dataType)
                 => OperationCode.Identify,
 
-                _ when typeof(IRequestGuildMembers).IsAssignableFrom(dataType)
+            _ when typeof(IRequestGuildMembers).IsAssignableFrom(dataType)
                 => OperationCode.RequestGuildMembers,
 
-                _ when typeof(IResume).IsAssignableFrom(dataType)
+            _ when typeof(IResume).IsAssignableFrom(dataType)
                 => OperationCode.Resume,
 
-                _ when typeof(IUpdatePresence).IsAssignableFrom(dataType)
+            _ when typeof(IUpdatePresence).IsAssignableFrom(dataType)
                 => OperationCode.PresenceUpdate,
 
-                _ when typeof(IUpdateVoiceState).IsAssignableFrom(dataType)
+            _ when typeof(IUpdateVoiceState).IsAssignableFrom(dataType)
                 => OperationCode.VoiceStateUpdate,
 
-                // Events
-                _ when typeof(IHello).IsAssignableFrom(dataType)
+            // Events
+            _ when typeof(IHello).IsAssignableFrom(dataType)
                 => OperationCode.Hello,
 
-                _ when typeof(IHeartbeatAcknowledge).IsAssignableFrom(dataType)
+            _ when typeof(IHeartbeatAcknowledge).IsAssignableFrom(dataType)
                 => OperationCode.HeartbeatAcknowledge,
 
-                _ when typeof(IInvalidSession).IsAssignableFrom(dataType)
+            _ when typeof(IInvalidSession).IsAssignableFrom(dataType)
                 => OperationCode.InvalidSession,
 
-                _ when typeof(IReconnect).IsAssignableFrom(dataType)
+            _ when typeof(IReconnect).IsAssignableFrom(dataType)
                 => OperationCode.Reconnect,
 
-                // Other
-                _ => new NotSupportedError("Unknown operation code.")
-            };
+            // Other
+            _ => new NotSupportedError("Unknown operation code.")
+        };
+    }
+
+    private static IPayload DeserializePayload<TData>(JsonDocument document, JsonSerializerOptions options)
+        where TData : IGatewayPayloadData
+    {
+        if (!document.RootElement.TryGetProperty("d", out var dataProperty))
+        {
+            throw new JsonException();
         }
 
-        private static IPayload DeserializePayload<TData>(JsonDocument document, JsonSerializerOptions options)
-            where TData : IGatewayPayloadData
+        var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
+
+        if (data is null)
         {
-            if (!document.RootElement.TryGetProperty("d", out var dataProperty))
-            {
-                throw new JsonException();
-            }
-
-            var data = JsonSerializer.Deserialize<TData>(dataProperty.GetRawText(), options);
-
-            if (data is null)
-            {
-                throw new JsonException();
-            }
-
-            return new Payload<TData>(data);
+            throw new JsonException();
         }
 
-        private IPayload DeserializeDispatch
-        (
-            JsonDocument document,
-            JsonSerializerOptions options
-        )
+        return new Payload<TData>(data);
+    }
+
+    private IPayload DeserializeDispatch
+    (
+        JsonDocument document,
+        JsonSerializerOptions options
+    )
+    {
+        if (!document.RootElement.TryGetProperty("d", out var dataProperty))
         {
-            if (!document.RootElement.TryGetProperty("d", out var dataProperty))
-            {
-                throw new JsonException();
-            }
+            throw new JsonException();
+        }
 
-            if (!document.RootElement.TryGetProperty("t", out var eventNameProperty))
-            {
-                throw new JsonException();
-            }
+        if (!document.RootElement.TryGetProperty("t", out var eventNameProperty))
+        {
+            throw new JsonException();
+        }
 
-            if (!document.RootElement.TryGetProperty("s", out var sequenceNumberProperty))
-            {
-                throw new JsonException();
-            }
+        if (!document.RootElement.TryGetProperty("s", out var sequenceNumberProperty))
+        {
+            throw new JsonException();
+        }
 
-            var sequenceNumber = sequenceNumberProperty.GetInt32();
+        var sequenceNumber = sequenceNumberProperty.GetInt32();
 
-            var eventName = eventNameProperty.GetString();
-            if (eventName is null)
-            {
-                throw new JsonException();
-            }
+        var eventName = eventNameProperty.GetString();
+        if (eventName is null)
+        {
+            throw new JsonException();
+        }
 
-            if (!_eventTypes.TryGetValue(eventName, out var eventType))
-            {
-                var convertibleTypes = options.Converters.Where
+        if (!_eventTypes.TryGetValue(eventName, out var eventType))
+        {
+            var convertibleTypes = options.Converters.Where
                 (
                     c =>
                     {
@@ -323,80 +325,79 @@ namespace Remora.Discord.API.Json
                 )
                 .Select(c => c.GetType().GetGenericArguments()[0]);
 
-                eventType = convertibleTypes.FirstOrDefault
-                (
-                    t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
-                );
-
-                _eventTypes.TryAdd(eventName, eventType);
-            }
-
-            if (eventType is null)
-            {
-                if (!_allowUnknownEvents)
-                {
-                    throw new InvalidOperationException("No matching implementation interface could be found.");
-                }
-
-                return new EventPayload<IUnknownEvent>
-                (
-                    eventName,
-                    sequenceNumber,
-                    OperationCode.Dispatch,
-                    new UnknownEvent(document.RootElement.GetRawText())
-                );
-            }
-
-            object? eventData;
-            try
-            {
-                eventData = JsonSerializer.Deserialize
-                (
-                    dataProperty.GetRawText(), eventType, options
-                );
-            }
-            catch
-            {
-                if (!_allowUnknownEvents)
-                {
-                    throw;
-                }
-
-                return new EventPayload<IUnknownEvent>
-                (
-                    eventName,
-                    sequenceNumber,
-                    OperationCode.Dispatch,
-                    new UnknownEvent(document.RootElement.GetRawText())
-                );
-            }
-
-            var payloadConstructor = typeof(EventPayload<>)
-                .MakeGenericType(eventType)
-                .GetConstructor(new[] { typeof(string), typeof(int), typeof(OperationCode), eventType });
-
-            if (payloadConstructor is null)
-            {
-                throw new JsonException();
-            }
-
-            var eventObject = payloadConstructor.Invoke
+            eventType = convertibleTypes.FirstOrDefault
             (
-                new[]
-                {
-                    eventName,
-                    sequenceNumber,
-                    OperationCode.Dispatch,
-                    eventData
-                }
+                t => _snakeCase.ConvertName(t.Name[1..]).ToUpperInvariant() == eventName
             );
 
-            if (eventObject is not IPayload)
+            _eventTypes.TryAdd(eventName, eventType);
+        }
+
+        if (eventType is null)
+        {
+            if (!_allowUnknownEvents)
             {
-                throw new JsonException();
+                throw new InvalidOperationException("No matching implementation interface could be found.");
             }
 
-            return (IPayload)eventObject;
+            return new EventPayload<IUnknownEvent>
+            (
+                eventName,
+                sequenceNumber,
+                OperationCode.Dispatch,
+                new UnknownEvent(document.RootElement.GetRawText())
+            );
         }
+
+        object? eventData;
+        try
+        {
+            eventData = JsonSerializer.Deserialize
+            (
+                dataProperty.GetRawText(), eventType, options
+            );
+        }
+        catch
+        {
+            if (!_allowUnknownEvents)
+            {
+                throw;
+            }
+
+            return new EventPayload<IUnknownEvent>
+            (
+                eventName,
+                sequenceNumber,
+                OperationCode.Dispatch,
+                new UnknownEvent(document.RootElement.GetRawText())
+            );
+        }
+
+        var payloadConstructor = typeof(EventPayload<>)
+            .MakeGenericType(eventType)
+            .GetConstructor(new[] { typeof(string), typeof(int), typeof(OperationCode), eventType });
+
+        if (payloadConstructor is null)
+        {
+            throw new JsonException();
+        }
+
+        var eventObject = payloadConstructor.Invoke
+        (
+            new[]
+            {
+                eventName,
+                sequenceNumber,
+                OperationCode.Dispatch,
+                eventData
+            }
+        );
+
+        if (eventObject is not IPayload)
+        {
+            throw new JsonException();
+        }
+
+        return (IPayload)eventObject;
     }
 }

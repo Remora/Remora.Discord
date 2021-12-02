@@ -24,18 +24,17 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadMembersUpdate" />
-    [PublicAPI]
-    public record ThreadMembersUpdate
-    (
-        Snowflake ID,
-        Snowflake GuildID,
-        int MemberCount,
-        Optional<IReadOnlyList<IThreadMember>> AddedMembers,
-        Optional<IReadOnlyList<Snowflake>> RemovedMemberIDs
-    ) : IThreadMembersUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadMembersUpdate" />
+[PublicAPI]
+public record ThreadMembersUpdate
+(
+    Snowflake ID,
+    Snowflake GuildID,
+    int MemberCount,
+    Optional<IReadOnlyList<IThreadMember>> AddedMembers,
+    Optional<IReadOnlyList<Snowflake>> RemovedMemberIDs
+) : IThreadMembersUpdate;

@@ -26,22 +26,21 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IChannelTemplate" />
-    [PublicAPI]
-    public record ChannelTemplate
-    (
-        int ID,
-        ChannelType Type,
-        string Name,
-        int Position,
-        string? Topic,
-        int Bitrate,
-        int UserLimit,
-        bool IsNsfw,
-        int RateLimitPerUser,
-        int? ParentID,
-        IReadOnlyList<IPermissionOverwriteTemplate> PermissionOverwrites
-    ) : IChannelTemplate;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IChannelTemplate" />
+[PublicAPI]
+public record ChannelTemplate
+(
+    int ID,
+    ChannelType Type,
+    string Name,
+    int Position,
+    string? Topic,
+    int Bitrate,
+    int UserLimit,
+    bool IsNsfw,
+    int RateLimitPerUser,
+    int? ParentID,
+    IReadOnlyList<IPermissionOverwriteTemplate> PermissionOverwrites
+) : IChannelTemplate;

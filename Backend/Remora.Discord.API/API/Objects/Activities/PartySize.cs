@@ -25,9 +25,8 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartySize" />
-    [PublicAPI]
-    public record PartySize(int CurrentSize, int MaxSize) : IPartySize;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartySize" />
+[PublicAPI]
+public record PartySize(int CurrentSize, int MaxSize) : IPartySize;

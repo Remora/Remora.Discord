@@ -23,27 +23,26 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a parameter with type hinting for Discord slash commands, controlling what kind of autocompletion is used.
+/// </summary>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Parameter)]
+public class DiscordTypeHintAttribute : Attribute
 {
     /// <summary>
-    /// Marks a parameter with type hinting for Discord slash commands, controlling what kind of autocompletion is used.
+    /// Gets the configured type hint.
     /// </summary>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class DiscordTypeHintAttribute : Attribute
-    {
-        /// <summary>
-        /// Gets the configured type hint.
-        /// </summary>
-        public TypeHint TypeHint { get; }
+    public TypeHint TypeHint { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordTypeHintAttribute"/> class.
-        /// </summary>
-        /// <param name="typeHint">The type hint.</param>
-        public DiscordTypeHintAttribute(TypeHint typeHint)
-        {
-            this.TypeHint = typeHint;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordTypeHintAttribute"/> class.
+    /// </summary>
+    /// <param name="typeHint">The type hint.</param>
+    public DiscordTypeHintAttribute(TypeHint typeHint)
+    {
+        this.TypeHint = typeHint;
     }
 }

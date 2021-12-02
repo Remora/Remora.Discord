@@ -24,25 +24,24 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialGuildMember" />
-    [PublicAPI]
-    public record PartialGuildMember
-    (
-        Optional<IUser> User = default,
-        Optional<string?> Nickname = default,
-        Optional<IImageHash?> Avatar = default,
-        Optional<IReadOnlyList<Snowflake>> Roles = default,
-        Optional<DateTimeOffset> JoinedAt = default,
-        Optional<DateTimeOffset?> PremiumSince = default,
-        Optional<bool> IsDeafened = default,
-        Optional<bool> IsMuted = default,
-        Optional<bool?> IsPending = default,
-        Optional<IDiscordPermissionSet> Permissions = default
-    ) : IPartialGuildMember;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialGuildMember" />
+[PublicAPI]
+public record PartialGuildMember
+(
+    Optional<IUser> User = default,
+    Optional<string?> Nickname = default,
+    Optional<IImageHash?> Avatar = default,
+    Optional<IReadOnlyList<Snowflake>> Roles = default,
+    Optional<DateTimeOffset> JoinedAt = default,
+    Optional<DateTimeOffset?> PremiumSince = default,
+    Optional<bool> IsDeafened = default,
+    Optional<bool> IsMuted = default,
+    Optional<bool?> IsPending = default,
+    Optional<IDiscordPermissionSet> Permissions = default
+) : IPartialGuildMember;

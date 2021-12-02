@@ -23,19 +23,18 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IAllowedMentions" />
-    [PublicAPI]
-    public record AllowedMentions
-    (
-        Optional<IReadOnlyList<MentionType>> Parse = default,
-        Optional<IReadOnlyList<Snowflake>> Roles = default,
-        Optional<IReadOnlyList<Snowflake>> Users = default,
-        Optional<bool> MentionRepliedUser = default
-    ) : IAllowedMentions;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IAllowedMentions" />
+[PublicAPI]
+public record AllowedMentions
+(
+    Optional<IReadOnlyList<MentionType>> Parse = default,
+    Optional<IReadOnlyList<Snowflake>> Roles = default,
+    Optional<IReadOnlyList<Snowflake>> Users = default,
+    Optional<bool> MentionRepliedUser = default
+) : IAllowedMentions;

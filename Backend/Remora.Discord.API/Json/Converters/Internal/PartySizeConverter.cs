@@ -26,59 +26,58 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <summary>
+/// Converts <see cref="PartySize"/> values to and from JSON.
+/// </summary>
+internal class PartySizeConverter : JsonConverter<IPartySize?>
 {
-    /// <summary>
-    /// Converts <see cref="PartySize"/> values to and from JSON.
-    /// </summary>
-    internal class PartySizeConverter : JsonConverter<IPartySize?>
+    /// <inheritdoc/>
+    public override IPartySize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc/>
-        public override IPartySize Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType != JsonTokenType.StartArray)
         {
-            if (reader.TokenType != JsonTokenType.StartArray)
-            {
-                throw new JsonException();
-            }
-
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            var currentSize = reader.GetInt32();
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            var maxSize = reader.GetInt32();
-            if (!reader.Read())
-            {
-                throw new JsonException();
-            }
-
-            if (reader.TokenType != JsonTokenType.EndArray)
-            {
-                throw new JsonException();
-            }
-
-            return new PartySize(currentSize, maxSize);
+            throw new JsonException();
         }
 
-        /// <inheritdoc/>
-        public override void Write(Utf8JsonWriter writer, IPartySize? value, JsonSerializerOptions options)
+        if (!reader.Read())
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteStartArray();
-            writer.WriteNumberValue(value.CurrentSize);
-            writer.WriteNumberValue(value.MaxSize);
-            writer.WriteEndArray();
+            throw new JsonException();
         }
+
+        var currentSize = reader.GetInt32();
+        if (!reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        var maxSize = reader.GetInt32();
+        if (!reader.Read())
+        {
+            throw new JsonException();
+        }
+
+        if (reader.TokenType != JsonTokenType.EndArray)
+        {
+            throw new JsonException();
+        }
+
+        return new PartySize(currentSize, maxSize);
+    }
+
+    /// <inheritdoc/>
+    public override void Write(Utf8JsonWriter writer, IPartySize? value, JsonSerializerOptions options)
+    {
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+
+        writer.WriteStartArray();
+        writer.WriteNumberValue(value.CurrentSize);
+        writer.WriteNumberValue(value.MaxSize);
+        writer.WriteEndArray();
     }
 }

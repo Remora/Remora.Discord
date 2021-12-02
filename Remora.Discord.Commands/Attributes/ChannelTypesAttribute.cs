@@ -25,27 +25,26 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a channel parameter with type requirements for Discord slash commands, controlling what channel autocompletion is presented to the user.
+/// </summary>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
+public class ChannelTypesAttribute : Attribute
 {
     /// <summary>
-    /// Marks a channel parameter with type requirements for Discord slash commands, controlling what channel autocompletion is presented to the user.
+    /// Gets the types of channel that are allowed to be presented as an autocomplete option.
     /// </summary>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
-    public class ChannelTypesAttribute : Attribute
-    {
-        /// <summary>
-        /// Gets the types of channel that are allowed to be presented as an autocomplete option.
-        /// </summary>
-        public IReadOnlyList<ChannelType> Types { get; }
+    public IReadOnlyList<ChannelType> Types { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelTypesAttribute"/> class.
-        /// </summary>
-        /// <param name="types">The types of channel that are allowed to be presented as an autocomplete option.</param>
-        public ChannelTypesAttribute(params ChannelType[] types)
-        {
-            this.Types = types;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChannelTypesAttribute"/> class.
+    /// </summary>
+    /// <param name="types">The types of channel that are allowed to be presented as an autocomplete option.</param>
+    public ChannelTypesAttribute(params ChannelType[] types)
+    {
+        this.Types = types;
     }
 }

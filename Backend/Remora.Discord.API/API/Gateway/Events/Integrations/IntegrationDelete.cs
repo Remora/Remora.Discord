@@ -22,16 +22,15 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IIntegrationDelete" />
-    [PublicAPI]
-    public record IntegrationDelete
-    (
-        Snowflake ID,
-        Snowflake GuildID,
-        Optional<Snowflake> ApplicationID
-    ) : IIntegrationDelete;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IIntegrationDelete" />
+[PublicAPI]
+public record IntegrationDelete
+(
+    Snowflake ID,
+    Snowflake GuildID,
+    Optional<Snowflake> ApplicationID
+) : IIntegrationDelete;

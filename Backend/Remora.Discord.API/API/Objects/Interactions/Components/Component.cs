@@ -23,25 +23,24 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
-    [PublicAPI]
-    public record Component
-    (
-        ComponentType Type,
-        Optional<IReadOnlyList<IMessageComponent>> Components,
-        Optional<ButtonComponentStyle> Style,
-        Optional<string> Label,
-        Optional<IPartialEmoji> Emoji,
-        Optional<string> CustomID,
-        Optional<string> URL,
-        Optional<bool> IsDisabled,
-        Optional<IReadOnlyList<ISelectOption>> Options,
-        Optional<string> Placeholder,
-        Optional<int> MinValues,
-        Optional<int> MaxValues
-    ) : IMessageComponent, IComponent;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
+[PublicAPI]
+public record Component
+(
+    ComponentType Type,
+    Optional<IReadOnlyList<IMessageComponent>> Components,
+    Optional<ButtonComponentStyle> Style,
+    Optional<string> Label,
+    Optional<IPartialEmoji> Emoji,
+    Optional<string> CustomID,
+    Optional<string> URL,
+    Optional<bool> IsDisabled,
+    Optional<IReadOnlyList<ISelectOption>> Options,
+    Optional<string> Placeholder,
+    Optional<int> MinValues,
+    Optional<int> MaxValues
+) : IMessageComponent, IComponent;

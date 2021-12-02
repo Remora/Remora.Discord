@@ -24,13 +24,12 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildEmojisUpdate" />
-    [PublicAPI]
-    public record GuildEmojisUpdate(Snowflake GuildID, IReadOnlyList<IEmoji> Emojis) : IGuildEmojisUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IGuildEmojisUpdate" />
+[PublicAPI]
+public record GuildEmojisUpdate(Snowflake GuildID, IReadOnlyList<IEmoji> Emojis) : IGuildEmojisUpdate;

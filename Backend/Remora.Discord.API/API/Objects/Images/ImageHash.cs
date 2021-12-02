@@ -25,13 +25,12 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IImageHash" />
+[PublicAPI]
+public record ImageHash(string Value) : IImageHash
 {
-    /// <inheritdoc cref="IImageHash" />
-    [PublicAPI]
-    public record ImageHash(string Value) : IImageHash
-    {
-        /// <inheritdoc />
-        public bool HasGif => this.Value.StartsWith("a_");
-    }
+    /// <inheritdoc />
+    public bool HasGif => this.Value.StartsWith("a_");
 }

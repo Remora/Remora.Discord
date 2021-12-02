@@ -24,22 +24,21 @@ using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Extensions
+namespace Remora.Discord.API.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="AutoArchiveDuration"/> enumeration.
+/// </summary>
+[PublicAPI]
+public static class AutoArchiveDurationExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="AutoArchiveDuration"/> enumeration.
+    /// Converts the archival duration to a <see cref="TimeSpan"/>.
     /// </summary>
-    [PublicAPI]
-    public static class AutoArchiveDurationExtensions
+    /// <param name="duration">The archival duration.</param>
+    /// <returns>The equivalent time span.</returns>
+    public static TimeSpan ToTimeSpan(this AutoArchiveDuration duration)
     {
-        /// <summary>
-        /// Converts the archival duration to a <see cref="TimeSpan"/>.
-        /// </summary>
-        /// <param name="duration">The archival duration.</param>
-        /// <returns>The equivalent time span.</returns>
-        public static TimeSpan ToTimeSpan(this AutoArchiveDuration duration)
-        {
-            return TimeSpan.FromMinutes((int)duration);
-        }
+        return TimeSpan.FromMinutes((int)duration);
     }
 }

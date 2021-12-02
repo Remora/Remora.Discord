@@ -22,18 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IEmbedFooter" />
-    [PublicAPI]
-    public record EmbedFooter
-    (
-        string Text,
-        Optional<string> IconUrl = default,
-        Optional<string> ProxyIconUrl = default
-    ) : IEmbedFooter;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IEmbedFooter" />
+[PublicAPI]
+public record EmbedFooter
+(
+    string Text,
+    Optional<string> IconUrl = default,
+    Optional<string> ProxyIconUrl = default
+) : IEmbedFooter;

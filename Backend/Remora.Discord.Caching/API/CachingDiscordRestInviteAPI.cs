@@ -27,9 +27,10 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API
@@ -40,14 +41,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestInviteAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestInviteAPI(IRestHttpClient, JsonSerializerOptions)" />
         public CachingDiscordRestInviteAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }
@@ -58,6 +59,7 @@ namespace Remora.Discord.Caching.API
             string inviteCode,
             Optional<bool> withCounts = default,
             Optional<bool> withExpiration = default,
+            Optional<Snowflake> guildScheduledEventID = default,
             CancellationToken ct = default
         )
         {
@@ -67,7 +69,15 @@ namespace Remora.Discord.Caching.API
                 return Result<IInvite>.FromSuccess(cachedInstance);
             }
 
-            var getInvite = await base.GetInviteAsync(inviteCode, withCounts, withExpiration, ct);
+            var getInvite = await base.GetInviteAsync
+            (
+                inviteCode,
+                withCounts,
+                withExpiration,
+                guildScheduledEventID,
+                ct
+            );
+
             if (!getInvite.IsSuccess)
             {
                 return getInvite;

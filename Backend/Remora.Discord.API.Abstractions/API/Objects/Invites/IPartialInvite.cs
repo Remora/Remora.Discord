@@ -22,7 +22,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
@@ -64,5 +64,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IInvite.StageInstance" />
         Optional<IInviteStageInstance> StageInstance { get; }
+
+        /// <inheritdoc cref="IInvite.GuildScheduledEvent" />
+        Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
     }
 }

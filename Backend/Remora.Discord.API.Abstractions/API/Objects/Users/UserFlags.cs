@@ -99,6 +99,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// The user is a Discord-certified moderator.
         /// </summary>
-        DiscordCertifiedModerator = 1 << 18
+        DiscordCertifiedModerator = 1 << 18,
+
+        /// <summary>
+        /// The user is a bot that only uses outgoing webhook interactions, and should always be shown as online.
+        /// </summary>
+        BotHttpInteractions = 1 << 19
     }
 }

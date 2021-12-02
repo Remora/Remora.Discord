@@ -25,15 +25,14 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPermissionOverwriteTemplate" />
-    [PublicAPI]
-    public record PermissionOverwriteTemplate
-    (
-        int ID,
-        PermissionOverwriteType Type,
-        IDiscordPermissionSet Allow,
-        IDiscordPermissionSet Deny
-    ) : IPermissionOverwriteTemplate;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPermissionOverwriteTemplate" />
+[PublicAPI]
+public record PermissionOverwriteTemplate
+(
+    int ID,
+    PermissionOverwriteType Type,
+    IDiscordPermissionSet Allow,
+    IDiscordPermissionSet Deny
+) : IPermissionOverwriteTemplate;

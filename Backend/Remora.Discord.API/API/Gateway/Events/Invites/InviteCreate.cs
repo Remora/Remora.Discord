@@ -24,27 +24,26 @@ using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IInviteCreate" />
-    [PublicAPI]
-    public record InviteCreate
-    (
-        Snowflake ChannelID,
-        string Code,
-        DateTimeOffset CreatedAt,
-        Optional<Snowflake> GuildID,
-        Optional<IUser> Inviter,
-        TimeSpan MaxAge,
-        int MaxUses,
-        Optional<IPartialUser> TargetUser,
-        Optional<InviteTarget> TargetType,
-        Optional<IPartialApplication> TargetApplication,
-        bool IsTemporary,
-        int Uses
-    ) : IInviteCreate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IInviteCreate" />
+[PublicAPI]
+public record InviteCreate
+(
+    Snowflake ChannelID,
+    string Code,
+    DateTimeOffset CreatedAt,
+    Optional<Snowflake> GuildID,
+    Optional<IUser> Inviter,
+    TimeSpan MaxAge,
+    int MaxUses,
+    Optional<IPartialUser> TargetUser,
+    Optional<InviteTarget> TargetType,
+    Optional<IPartialApplication> TargetApplication,
+    bool IsTemporary,
+    int Uses
+) : IInviteCreate;

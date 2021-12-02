@@ -26,68 +26,66 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events.Channels
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadCreate" />
-    [PublicAPI]
-    public record ThreadCreate
-    (
-        Snowflake ID,
-        ChannelType Type,
-        Optional<Snowflake> GuildID = default,
-        Optional<int> Position = default,
-        Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
-        Optional<string> Name = default,
-        Optional<string?> Topic = default,
-        Optional<bool> IsNsfw = default,
-        Optional<Snowflake?> LastMessageID = default,
-        Optional<int> Bitrate = default,
-        Optional<int> UserLimit = default,
-        Optional<TimeSpan> RateLimitPerUser = default,
-        Optional<IReadOnlyList<IUser>> Recipients = default,
-        Optional<IImageHash?> Icon = default,
-        Optional<Snowflake> OwnerID = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<Snowflake?> ParentID = default,
-        Optional<DateTimeOffset?> LastPinTimestamp = default,
-        Optional<string?> RTCRegion = default,
-        Optional<VideoQualityMode> VideoQualityMode = default,
-        Optional<int> MessageCount = default,
-        Optional<int> MemberCount = default,
-        Optional<IThreadMetadata> ThreadMetadata = default,
-        Optional<IThreadMember> Member = default,
-        Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
-        Optional<IDiscordPermissionSet> Permissions = default
-    ) :
-    Channel
-    (
-        ID,
-        Type,
-        GuildID,
-        Position,
-        PermissionOverwrites,
-        Name,
-        Topic,
-        IsNsfw,
-        LastMessageID,
-        Bitrate,
-        UserLimit,
-        RateLimitPerUser,
-        Recipients,
-        Icon,
-        OwnerID,
-        ApplicationID,
-        ParentID,
-        LastPinTimestamp,
-        RTCRegion,
-        VideoQualityMode,
-        MessageCount,
-        MemberCount,
-        ThreadMetadata,
-        Member,
-        DefaultAutoArchiveDuration,
-        Permissions
-    ), IThreadCreate;
-}
+namespace Remora.Discord.API.Gateway.Events.Channels;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IThreadCreate" />
+[PublicAPI]
+public record ThreadCreate
+(
+    Snowflake ID,
+    ChannelType Type,
+    Optional<Snowflake> GuildID = default,
+    Optional<int> Position = default,
+    Optional<IReadOnlyList<IPermissionOverwrite>> PermissionOverwrites = default,
+    Optional<string> Name = default,
+    Optional<string?> Topic = default,
+    Optional<bool> IsNsfw = default,
+    Optional<Snowflake?> LastMessageID = default,
+    Optional<int> Bitrate = default,
+    Optional<int> UserLimit = default,
+    Optional<TimeSpan> RateLimitPerUser = default,
+    Optional<IReadOnlyList<IUser>> Recipients = default,
+    Optional<IImageHash?> Icon = default,
+    Optional<Snowflake> OwnerID = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<Snowflake?> ParentID = default,
+    Optional<DateTimeOffset?> LastPinTimestamp = default,
+    Optional<string?> RTCRegion = default,
+    Optional<VideoQualityMode> VideoQualityMode = default,
+    Optional<int> MessageCount = default,
+    Optional<int> MemberCount = default,
+    Optional<IThreadMetadata> ThreadMetadata = default,
+    Optional<IThreadMember> Member = default,
+    Optional<AutoArchiveDuration> DefaultAutoArchiveDuration = default,
+    Optional<IDiscordPermissionSet> Permissions = default
+) : Channel
+(
+    ID,
+    Type,
+    GuildID,
+    Position,
+    PermissionOverwrites,
+    Name,
+    Topic,
+    IsNsfw,
+    LastMessageID,
+    Bitrate,
+    UserLimit,
+    RateLimitPerUser,
+    Recipients,
+    Icon,
+    OwnerID,
+    ApplicationID,
+    ParentID,
+    LastPinTimestamp,
+    RTCRegion,
+    VideoQualityMode,
+    MessageCount,
+    MemberCount,
+    ThreadMetadata,
+    Member,
+    DefaultAutoArchiveDuration,
+    Permissions
+), IThreadCreate;

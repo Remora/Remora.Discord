@@ -23,27 +23,26 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Commands.Attributes
+namespace Remora.Discord.Commands.Attributes;
+
+/// <summary>
+/// Marks a command as requiring an ephemeral response, when invoked by an interaction.
+/// </summary>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class EphemeralAttribute : Attribute
 {
     /// <summary>
-    /// Marks a command as requiring an ephemeral response, when invoked by an interaction.
+    /// Gets a value indicating whether this command should send ephemeral responses.
     /// </summary>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class EphemeralAttribute : Attribute
-    {
-        /// <summary>
-        /// Gets a value indicating whether this command should send ephemeral responses.
-        /// </summary>
-        public bool IsEphemeral { get; }
+    public bool IsEphemeral { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EphemeralAttribute"/> class.
-        /// </summary>
-        /// <param name="isEphemeral">A value indicating whether this command should send ephemeral responses. Set this to override group-level <see cref="EphemeralAttribute"/>s.</param>
-        public EphemeralAttribute(bool isEphemeral = true)
-        {
-            this.IsEphemeral = isEphemeral;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EphemeralAttribute"/> class.
+    /// </summary>
+    /// <param name="isEphemeral">A value indicating whether this command should send ephemeral responses. Set this to override group-level <see cref="EphemeralAttribute"/>s.</param>
+    public EphemeralAttribute(bool isEphemeral = true)
+    {
+        this.IsEphemeral = isEphemeral;
     }
 }

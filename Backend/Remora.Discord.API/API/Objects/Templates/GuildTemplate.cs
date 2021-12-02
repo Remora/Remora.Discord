@@ -26,24 +26,23 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IGuildTemplate" />
-    [PublicAPI]
-    public record GuildTemplate
-    (
-        string Name,
-        string? Description,
-        IImageHash? IconHash,
-        VerificationLevel VerificationLevel,
-        MessageNotificationLevel DefaultMessageNotifications,
-        ExplicitContentFilterLevel ExplicitContentFilter,
-        string PreferredLocale,
-        int AFKTimeout,
-        IReadOnlyList<IRoleTemplate> Roles,
-        IReadOnlyList<IChannelTemplate> Channels,
-        int? AFKChannelID,
-        int? SystemChannelID,
-        SystemChannelFlags SystemChannelFlags
-    ) : IGuildTemplate;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IGuildTemplate" />
+[PublicAPI]
+public record GuildTemplate
+(
+    string Name,
+    string? Description,
+    IImageHash? IconHash,
+    VerificationLevel VerificationLevel,
+    MessageNotificationLevel DefaultMessageNotifications,
+    ExplicitContentFilterLevel ExplicitContentFilter,
+    string PreferredLocale,
+    int AFKTimeout,
+    IReadOnlyList<IRoleTemplate> Roles,
+    IReadOnlyList<IChannelTemplate> Channels,
+    int? AFKChannelID,
+    int? SystemChannelID,
+    SystemChannelFlags SystemChannelFlags
+) : IGuildTemplate;

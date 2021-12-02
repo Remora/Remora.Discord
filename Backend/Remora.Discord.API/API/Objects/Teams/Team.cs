@@ -23,21 +23,19 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ITeam" />
-    [PublicAPI]
-    public record Team
-    (
-        IImageHash? Icon,
-        Snowflake ID,
-        IReadOnlyList<ITeamMember> Members,
-        string Name,
-        Snowflake OwnerUserID
-    )
-    : ITeam;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ITeam" />
+[PublicAPI]
+public record Team
+(
+    IImageHash? Icon,
+    Snowflake ID,
+    IReadOnlyList<ITeamMember> Members,
+    string Name,
+    Snowflake OwnerUserID
+) : ITeam;

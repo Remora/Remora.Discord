@@ -25,9 +25,8 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUnknownEvent" />
-    [PublicAPI]
-    public record UnknownEvent(string Data) : IUnknownEvent;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Gateway.Events.IUnknownEvent" />
+[PublicAPI]
+public record UnknownEvent(string Data) : IUnknownEvent;

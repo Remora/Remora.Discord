@@ -25,28 +25,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IEmbed" />
-    [PublicAPI]
-    public record Embed
-    (
-        Optional<string> Title = default,
-        Optional<EmbedType> Type = default,
-        Optional<string> Description = default,
-        Optional<string> Url = default,
-        Optional<DateTimeOffset> Timestamp = default,
-        Optional<Color> Colour = default,
-        Optional<IEmbedFooter> Footer = default,
-        Optional<IEmbedImage> Image = default,
-        Optional<IEmbedThumbnail> Thumbnail = default,
-        Optional<IEmbedVideo> Video = default,
-        Optional<IEmbedProvider> Provider = default,
-        Optional<IEmbedAuthor> Author = default,
-        Optional<IReadOnlyList<IEmbedField>> Fields = default
-    ) : IEmbed;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IEmbed" />
+[PublicAPI]
+public record Embed
+(
+    Optional<string> Title = default,
+    Optional<EmbedType> Type = default,
+    Optional<string> Description = default,
+    Optional<string> Url = default,
+    Optional<DateTimeOffset> Timestamp = default,
+    Optional<Color> Colour = default,
+    Optional<IEmbedFooter> Footer = default,
+    Optional<IEmbedImage> Image = default,
+    Optional<IEmbedThumbnail> Thumbnail = default,
+    Optional<IEmbedVideo> Video = default,
+    Optional<IEmbedProvider> Provider = default,
+    Optional<IEmbedAuthor> Author = default,
+    Optional<IReadOnlyList<IEmbedField>> Fields = default
+) : IEmbed;

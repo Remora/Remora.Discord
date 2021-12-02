@@ -34,304 +34,303 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Results;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Conditions
+namespace Remora.Discord.Commands.Conditions;
+
+/// <summary>
+/// Determines whether the invoking user fulfills a set of requirements related to Discord permissions.
+/// </summary>
+[PublicAPI]
+public class RequireDiscordPermissionCondition :
+    ICondition<RequireDiscordPermissionAttribute>,
+    ICondition<RequireDiscordPermissionAttribute, IUser>,
+    ICondition<RequireDiscordPermissionAttribute, IGuildMember>,
+    ICondition<RequireDiscordPermissionAttribute, IRole>
 {
+    private readonly IDiscordRestUserAPI _userAPI;
+    private readonly IDiscordRestGuildAPI _guildAPI;
+    private readonly IDiscordRestChannelAPI _channelAPI;
+    private readonly ICommandContext _context;
+
     /// <summary>
-    /// Determines whether the invoking user fulfills a set of requirements related to Discord permissions.
+    /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
     /// </summary>
-    [PublicAPI]
-    public class RequireDiscordPermissionCondition :
-        ICondition<RequireDiscordPermissionAttribute>,
-        ICondition<RequireDiscordPermissionAttribute, IUser>,
-        ICondition<RequireDiscordPermissionAttribute, IGuildMember>,
-        ICondition<RequireDiscordPermissionAttribute, IRole>
+    /// <param name="userAPI">The user API.</param>
+    /// <param name="guildAPI">The guild API.</param>
+    /// <param name="channelAPI">The channel API.</param>
+    /// <param name="context">The command context.</param>
+    public RequireDiscordPermissionCondition
+    (
+        IDiscordRestUserAPI userAPI,
+        IDiscordRestGuildAPI guildAPI,
+        IDiscordRestChannelAPI channelAPI,
+        ICommandContext context
+    )
     {
-        private readonly IDiscordRestUserAPI _userAPI;
-        private readonly IDiscordRestGuildAPI _guildAPI;
-        private readonly IDiscordRestChannelAPI _channelAPI;
-        private readonly ICommandContext _context;
+        _userAPI = userAPI;
+        _guildAPI = guildAPI;
+        _channelAPI = channelAPI;
+        _context = context;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
-        /// </summary>
-        /// <param name="userAPI">The user API.</param>
-        /// <param name="guildAPI">The guild API.</param>
-        /// <param name="channelAPI">The channel API.</param>
-        /// <param name="context">The command context.</param>
-        public RequireDiscordPermissionCondition
-        (
-            IDiscordRestUserAPI userAPI,
-            IDiscordRestGuildAPI guildAPI,
-            IDiscordRestChannelAPI channelAPI,
-            ICommandContext context
-        )
+    /// <inheritdoc />
+    /// <remarks>
+    /// This method checks the condition against the invoking user.
+    /// </remarks>
+    public async ValueTask<Result> CheckAsync
+    (
+        RequireDiscordPermissionAttribute attribute,
+        CancellationToken ct = default
+    )
+    {
+        if (!_context.GuildID.IsDefined(out var guildID))
         {
-            _userAPI = userAPI;
-            _guildAPI = guildAPI;
-            _channelAPI = channelAPI;
-            _context = context;
-        }
-
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method checks the condition against the invoking user.
-        /// </remarks>
-        public async ValueTask<Result> CheckAsync
-        (
-            RequireDiscordPermissionAttribute attribute,
-            CancellationToken ct = default
-        )
-        {
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new PermissionDeniedError
-                (
-                    "Commands executed outside of guilds may not require any permissions."
-                );
-            }
-
-            // Grab required information
-            var getMember = await _guildAPI.GetGuildMemberAsync(guildID, _context.User.ID, ct);
-            if (!getMember.IsSuccess)
-            {
-                return Result.FromError(getMember);
-            }
-
-            var member = getMember.Entity;
-
-            return await CheckAsync(attribute, member, ct);
-        }
-
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method checks the condition against the target user.
-        /// </remarks>
-        public async ValueTask<Result> CheckAsync
-        (
-            RequireDiscordPermissionAttribute attribute,
-            IUser user,
-            CancellationToken ct = default
-        )
-        {
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new PermissionDeniedError
-                (
-                    "Commands executed outside of guilds may not require any permissions."
-                );
-            }
-
-            // Grab required information
-            var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
-            if (!getMember.IsSuccess)
-            {
-                return Result.FromError(getMember);
-            }
-
-            var member = getMember.Entity;
-
-            return await CheckAsync(attribute, member, ct);
-        }
-
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method checks the condition against the target user.
-        /// </remarks>
-        public async ValueTask<Result> CheckAsync
-        (
-            RequireDiscordPermissionAttribute attribute,
-            IGuildMember member,
-            CancellationToken ct = default
-        )
-        {
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new PermissionDeniedError
-                (
-                    "Commands executed outside of guilds may not require any permissions."
-                );
-            }
-
-            var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
-            if (!getRoles.IsSuccess)
-            {
-                return Result.FromError(getRoles);
-            }
-
-            var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
-            if (!getChannel.IsSuccess)
-            {
-                return Result.FromError(getChannel);
-            }
-
-            var guildRoles = getRoles.Entity;
-            var channel = getChannel.Entity;
-
-            // Collate the various permission sources
-            var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
-            var memberRoles = guildRoles.Where(r => member.Roles.Contains(r.ID)).ToList();
-            var permissionOverwrites = channel.PermissionOverwrites.HasValue
-                ? channel.PermissionOverwrites.Value
-                : Array.Empty<PermissionOverwrite>();
-
-            var computedPermissions = DiscordPermissionSet.ComputePermissions
+            return new PermissionDeniedError
             (
-                member.User.Value.ID,
-                everyoneRole,
-                memberRoles,
-                permissionOverwrites
+                "Commands executed outside of guilds may not require any permissions."
+            );
+        }
+
+        // Grab required information
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, _context.User.ID, ct);
+        if (!getMember.IsSuccess)
+        {
+            return Result.FromError(getMember);
+        }
+
+        var member = getMember.Entity;
+
+        return await CheckAsync(attribute, member, ct);
+    }
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// This method checks the condition against the target user.
+    /// </remarks>
+    public async ValueTask<Result> CheckAsync
+    (
+        RequireDiscordPermissionAttribute attribute,
+        IUser user,
+        CancellationToken ct = default
+    )
+    {
+        if (!_context.GuildID.IsDefined(out var guildID))
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of guilds may not require any permissions."
+            );
+        }
+
+        // Grab required information
+        var getMember = await _guildAPI.GetGuildMemberAsync(guildID, user.ID, ct);
+        if (!getMember.IsSuccess)
+        {
+            return Result.FromError(getMember);
+        }
+
+        var member = getMember.Entity;
+
+        return await CheckAsync(attribute, member, ct);
+    }
+
+    /// <inheritdoc />
+    /// <remarks>
+    /// This method checks the condition against the target user.
+    /// </remarks>
+    public async ValueTask<Result> CheckAsync
+    (
+        RequireDiscordPermissionAttribute attribute,
+        IGuildMember member,
+        CancellationToken ct = default
+    )
+    {
+        if (!_context.GuildID.IsDefined(out var guildID))
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of guilds may not require any permissions."
+            );
+        }
+
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        if (!getRoles.IsSuccess)
+        {
+            return Result.FromError(getRoles);
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!getChannel.IsSuccess)
+        {
+            return Result.FromError(getChannel);
+        }
+
+        var guildRoles = getRoles.Entity;
+        var channel = getChannel.Entity;
+
+        // Collate the various permission sources
+        var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
+        var memberRoles = guildRoles.Where(r => member.Roles.Contains(r.ID)).ToList();
+        var permissionOverwrites = channel.PermissionOverwrites.HasValue
+            ? channel.PermissionOverwrites.Value
+            : Array.Empty<PermissionOverwrite>();
+
+        var computedPermissions = DiscordPermissionSet.ComputePermissions
+        (
+            member.User.Value.ID,
+            everyoneRole,
+            memberRoles,
+            permissionOverwrites
+        );
+
+        var isCheckingInvoker = _context.User.ID == member.User.Value.ID;
+        if (isCheckingInvoker && computedPermissions.HasPermission(DiscordPermission.Administrator))
+        {
+            // always allowed
+            return Result.FromSuccess();
+        }
+
+        var permissionInformation = attribute.Permissions
+            .Distinct()
+            .ToDictionary
+            (
+                p => p,
+                p => computedPermissions.HasPermission(p)
             );
 
-            var isCheckingInvoker = _context.User.ID == member.User.Value.ID;
-            if (isCheckingInvoker && computedPermissions.HasPermission(DiscordPermission.Administrator))
-            {
-                // always allowed
-                return Result.FromSuccess();
-            }
+        var result = CheckRequirements(permissionInformation, attribute.Operator);
+        if (result.IsSuccess)
+        {
+            return result;
+        }
 
-            var permissionInformation = attribute.Permissions
-                .Distinct()
-                .ToDictionary
-                (
-                    p => p,
-                    p => computedPermissions.HasPermission(p)
-                );
+        if (result.Error is not PermissionDeniedError permissionDeniedError)
+        {
+            return result;
+        }
 
-            var result = CheckRequirements(permissionInformation, attribute.Operator);
-            if (result.IsSuccess)
-            {
-                return result;
-            }
+        var userDoes = isCheckingInvoker ? "You do" : "The given user does";
+        return permissionDeniedError with
+        {
+            Message = $"{userDoes} not fulfill the permission requirements " +
+                      $"({Explain(permissionInformation, attribute.Operator)})."
+        };
+    }
 
-            if (result.Error is not PermissionDeniedError permissionDeniedError)
-            {
-                return result;
-            }
+    /// <inheritdoc />
+    /// <remarks>
+    /// This method checks the condition against the target role.
+    /// </remarks>
+    public async ValueTask<Result> CheckAsync
+    (
+        RequireDiscordPermissionAttribute attribute,
+        IRole role,
+        CancellationToken ct = default
+    )
+    {
+        if (!_context.GuildID.IsDefined(out var guildID))
+        {
+            return new PermissionDeniedError
+            (
+                "Commands executed outside of guilds may not require any permissions."
+            );
+        }
 
-            var userDoes = isCheckingInvoker ? "You do" : "The given user does";
+        var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
+        if (!getRoles.IsSuccess)
+        {
+            return Result.FromError(getRoles);
+        }
+
+        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
+        if (!getChannel.IsSuccess)
+        {
+            return Result.FromError(getChannel);
+        }
+
+        var guildRoles = getRoles.Entity;
+        var channel = getChannel.Entity;
+
+        // Collate the various permission sources
+        var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
+        var permissionOverwrites = channel.PermissionOverwrites.HasValue
+            ? channel.PermissionOverwrites.Value
+            : Array.Empty<PermissionOverwrite>();
+
+        var computedPermissions = DiscordPermissionSet.ComputePermissions
+        (
+            role.ID,
+            everyoneRole,
+            permissionOverwrites
+        );
+
+        var permissionInformation = attribute.Permissions
+            .Distinct()
+            .ToDictionary
+            (
+                p => p,
+                p => computedPermissions.HasPermission(p)
+            );
+
+        var result = CheckRequirements(permissionInformation, attribute.Operator);
+        if (result.IsSuccess)
+        {
+            return result;
+        }
+
+        if (result.Error is PermissionDeniedError permissionDeniedError)
+        {
             return permissionDeniedError with
             {
-                Message = $"{userDoes} not fulfill the permission requirements " +
+                Message = $"The given role does not fulfill the permission requirements " +
                           $"({Explain(permissionInformation, attribute.Operator)})."
             };
         }
 
-        /// <inheritdoc />
-        /// <remarks>
-        /// This method checks the condition against the target role.
-        /// </remarks>
-        public async ValueTask<Result> CheckAsync
-        (
-            RequireDiscordPermissionAttribute attribute,
-            IRole role,
-            CancellationToken ct = default
-        )
+        return result;
+    }
+
+    private string Explain
+    (
+        IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
+        LogicalOperator logicalOperator
+    )
+    {
+        return logicalOperator switch
         {
-            if (!_context.GuildID.IsDefined(out var guildID))
-            {
-                return new PermissionDeniedError
-                (
-                    "Commands executed outside of guilds may not require any permissions."
-                );
-            }
+            LogicalOperator.Not =>
+                $"had disallowed permissions {string.Join(", ", permissionInformation.Where(kvp => kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+            LogicalOperator.And =>
+                $"missing permissions {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}",
+            LogicalOperator.Or =>
+                $"missing one of {string.Join(", ", permissionInformation.Keys.Select(k => k.ToString()))}",
+            LogicalOperator.Xor =>
+                $"had {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}; only one is allowed",
+            _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator), logicalOperator, null)
+        };
+    }
 
-            var getRoles = await _guildAPI.GetGuildRolesAsync(guildID, ct);
-            if (!getRoles.IsSuccess)
-            {
-                return Result.FromError(getRoles);
-            }
-
-            var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
-            if (!getChannel.IsSuccess)
-            {
-                return Result.FromError(getChannel);
-            }
-
-            var guildRoles = getRoles.Entity;
-            var channel = getChannel.Entity;
-
-            // Collate the various permission sources
-            var everyoneRole = guildRoles.First(r => r.ID == _context.GuildID.Value);
-            var permissionOverwrites = channel.PermissionOverwrites.HasValue
-                ? channel.PermissionOverwrites.Value
-                : Array.Empty<PermissionOverwrite>();
-
-            var computedPermissions = DiscordPermissionSet.ComputePermissions
+    private Result CheckRequirements
+    (
+        IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
+        LogicalOperator logicalOperator
+    )
+    {
+        var passesCheck = false;
+        passesCheck = logicalOperator switch
+        {
+            LogicalOperator.Not => permissionInformation.Values.All(v => !v),
+            LogicalOperator.And => permissionInformation.Values.All(v => v),
+            LogicalOperator.Or => permissionInformation.Values.Any(v => v),
+            LogicalOperator.Xor => permissionInformation.Values.Aggregate
             (
-                role.ID,
-                everyoneRole,
-                permissionOverwrites
-            );
+                passesCheck,
+                (current, value) => current ^ value
+            ),
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
-            var permissionInformation = attribute.Permissions
-                .Distinct()
-                .ToDictionary
-                (
-                    p => p,
-                    p => computedPermissions.HasPermission(p)
-                );
-
-            var result = CheckRequirements(permissionInformation, attribute.Operator);
-            if (result.IsSuccess)
-            {
-                return result;
-            }
-
-            if (result.Error is PermissionDeniedError permissionDeniedError)
-            {
-                return permissionDeniedError with
-                {
-                    Message = $"The given role does not fulfill the permission requirements " +
-                              $"({Explain(permissionInformation, attribute.Operator)})."
-                };
-            }
-
-            return result;
-        }
-
-        private string Explain
-        (
-            IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
-            LogicalOperator logicalOperator
-        )
-        {
-            return logicalOperator switch
-            {
-                LogicalOperator.Not =>
-                    $"had disallowed permissions {string.Join(", ", permissionInformation.Where(kvp => kvp.Value).Select(kvp => kvp.Key.ToString()))}",
-                LogicalOperator.And =>
-                    $"missing permissions {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}",
-                LogicalOperator.Or =>
-                    $"missing one of {string.Join(", ", permissionInformation.Keys.Select(k => k.ToString()))}",
-                LogicalOperator.Xor =>
-                    $"had {string.Join(", ", permissionInformation.Where(kvp => !kvp.Value).Select(kvp => kvp.Key.ToString()))}; only one is allowed",
-                _ => throw new ArgumentOutOfRangeException(nameof(logicalOperator), logicalOperator, null)
-            };
-        }
-
-        private Result CheckRequirements
-        (
-            IReadOnlyDictionary<DiscordPermission, bool> permissionInformation,
-            LogicalOperator logicalOperator
-        )
-        {
-            var passesCheck = false;
-            passesCheck = logicalOperator switch
-            {
-                LogicalOperator.Not => permissionInformation.Values.All(v => !v),
-                LogicalOperator.And => permissionInformation.Values.All(v => v),
-                LogicalOperator.Or => permissionInformation.Values.Any(v => v),
-                LogicalOperator.Xor => permissionInformation.Values.Aggregate
-                (
-                    passesCheck,
-                    (current, value) => current ^ value
-                ),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            return passesCheck
-                ? Result.FromSuccess()
-                : new PermissionDeniedError(Permissions: permissionInformation.Keys.ToArray());
-        }
+        return passesCheck
+            ? Result.FromSuccess()
+            : new PermissionDeniedError(Permissions: permissionInformation.Keys.ToArray());
     }
 }

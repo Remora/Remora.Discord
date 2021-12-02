@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>11.0.1</Version>
+        <Version>14.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Add FeedbackMessageOptions and implement support in FeedbackService
         </PackageReleaseNotes>
     </PropertyGroup>
 
@@ -22,7 +21,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Commands" Version="7.1.1" />
+        <PackageReference Include="FuzzySharp" Version="2.0.2" />
+        <PackageReference Include="Humanizer.Core" Version="2.13.14" />
+        <PackageReference Include="Remora.Commands" Version="7.1.4" />
         <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.1" />
     </ItemGroup>
 

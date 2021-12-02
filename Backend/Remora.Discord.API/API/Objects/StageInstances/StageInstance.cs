@@ -22,19 +22,18 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStageInstance" />
-    [PublicAPI]
-    public record StageInstance
-    (
-        Snowflake ID,
-        Snowflake GuildID,
-        Snowflake ChannelID,
-        string Topic,
-        StagePrivacyLevel PrivacyLevel,
-        bool IsDiscoveryDisabled
-    ) : IStageInstance;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IStageInstance" />
+[PublicAPI]
+public record StageInstance
+(
+    Snowflake ID,
+    Snowflake GuildID,
+    Snowflake ChannelID,
+    string Topic,
+    StagePrivacyLevel PrivacyLevel,
+    bool IsDiscoveryDisabled
+) : IStageInstance;

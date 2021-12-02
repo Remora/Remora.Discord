@@ -22,7 +22,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
@@ -87,6 +87,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// </summary>
         new Optional<IInviteStageInstance> StageInstance { get; }
 
+        /// <summary>
+        /// Gets metadata about the scheduled event the invite points to.
+        /// </summary>
+        new Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
+
         /// <inheritdoc/>
         Optional<string> IPartialInvite.Code => this.Code;
 
@@ -119,5 +124,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<IInviteStageInstance> IPartialInvite.StageInstance => this.StageInstance;
+
+        /// <inheritdoc/>
+        Optional<IGuildScheduledEvent> IPartialInvite.GuildScheduledEvent => this.GuildScheduledEvent;
     }
 }

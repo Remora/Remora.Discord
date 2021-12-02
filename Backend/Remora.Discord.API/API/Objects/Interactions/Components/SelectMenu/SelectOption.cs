@@ -22,18 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ISelectOption" />
-    [PublicAPI]
-    public record SelectOption
-    (
-        string Label,
-        string Value,
-        Optional<string> Description,
-        Optional<IPartialEmoji> Emoji,
-        Optional<bool> IsDefault
-    ) : ISelectOption;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ISelectOption" />
+[PublicAPI]
+public record SelectOption
+(
+    string Label,
+    string Value,
+    Optional<string> Description,
+    Optional<IPartialEmoji> Emoji,
+    Optional<bool> IsDefault
+) : ISelectOption;

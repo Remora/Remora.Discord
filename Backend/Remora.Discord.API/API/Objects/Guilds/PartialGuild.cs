@@ -24,63 +24,63 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialGuild" />
-    [PublicAPI]
-    public record PartialGuild
-    (
-        Optional<Snowflake> ID = default,
-        Optional<string> Name = default,
-        Optional<IImageHash?> Icon = default,
-        Optional<IImageHash?> Splash = default,
-        Optional<IImageHash?> DiscoverySplash = default,
-        Optional<bool> IsOwner = default,
-        Optional<Snowflake> OwnerID = default,
-        Optional<IDiscordPermissionSet> Permissions = default,
-        Optional<Snowflake?> AFKChannelID = default,
-        Optional<TimeSpan> AFKTimeout = default,
-        Optional<VerificationLevel> VerificationLevel = default,
-        Optional<MessageNotificationLevel> DefaultMessageNotifications = default,
-        Optional<ExplicitContentFilterLevel> ExplicitContentFilter = default,
-        Optional<IReadOnlyList<IRole>> Roles = default,
-        Optional<IReadOnlyList<IEmoji>> Emojis = default,
-        Optional<IReadOnlyList<GuildFeature>> GuildFeatures = default,
-        Optional<MultiFactorAuthenticationLevel> MFALevel = default,
-        Optional<Snowflake?> ApplicationID = default,
-        Optional<bool> IsWidgetEnabled = default,
-        Optional<Snowflake?> WidgetChannelID = default,
-        Optional<Snowflake?> SystemChannelID = default,
-        Optional<SystemChannelFlags> SystemChannelFlags = default,
-        Optional<Snowflake?> RulesChannelID = default,
-        Optional<DateTimeOffset> JoinedAt = default,
-        Optional<bool> IsLarge = default,
-        Optional<bool> IsUnavailable = default,
-        Optional<int> MemberCount = default,
-        Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates = default,
-        Optional<IReadOnlyList<IGuildMember>> Members = default,
-        Optional<IReadOnlyList<IChannel>> Channels = default,
-        Optional<IReadOnlyList<IChannel>> Threads = default,
-        Optional<IReadOnlyList<IPartialPresence>> Presences = default,
-        Optional<int?> MaxPresences = default,
-        Optional<int> MaxMembers = default,
-        Optional<string?> VanityUrlCode = default,
-        Optional<string?> Description = default,
-        Optional<IImageHash?> Banner = default,
-        Optional<PremiumTier> PremiumTier = default,
-        Optional<int> PremiumSubscriptionCount = default,
-        Optional<string> PreferredLocale = default,
-        Optional<Snowflake?> PublicUpdatesChannelID = default,
-        Optional<int> MaxVideoChannelUsers = default,
-        Optional<int> ApproximateMemberCount = default,
-        Optional<int> ApproximatePresenceCount = default,
-        Optional<IWelcomeScreen> WelcomeScreen = default,
-        Optional<GuildNSFWLevel> NSFWLevel = default,
-        Optional<IReadOnlyList<IStageInstance>> StageInstances = default,
-        Optional<IReadOnlyList<ISticker>> Stickers = default
-    ) : IPartialGuild;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialGuild" />
+[PublicAPI]
+public record PartialGuild
+(
+    Optional<Snowflake> ID = default,
+    Optional<string> Name = default,
+    Optional<IImageHash?> Icon = default,
+    Optional<IImageHash?> Splash = default,
+    Optional<IImageHash?> DiscoverySplash = default,
+    Optional<bool> IsOwner = default,
+    Optional<Snowflake> OwnerID = default,
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<Snowflake?> AFKChannelID = default,
+    Optional<TimeSpan> AFKTimeout = default,
+    Optional<VerificationLevel> VerificationLevel = default,
+    Optional<MessageNotificationLevel> DefaultMessageNotifications = default,
+    Optional<ExplicitContentFilterLevel> ExplicitContentFilter = default,
+    Optional<IReadOnlyList<IRole>> Roles = default,
+    Optional<IReadOnlyList<IEmoji>> Emojis = default,
+    Optional<IReadOnlyList<GuildFeature>> GuildFeatures = default,
+    Optional<MultiFactorAuthenticationLevel> MFALevel = default,
+    Optional<Snowflake?> ApplicationID = default,
+    Optional<bool> IsWidgetEnabled = default,
+    Optional<Snowflake?> WidgetChannelID = default,
+    Optional<Snowflake?> SystemChannelID = default,
+    Optional<SystemChannelFlags> SystemChannelFlags = default,
+    Optional<Snowflake?> RulesChannelID = default,
+    Optional<DateTimeOffset> JoinedAt = default,
+    Optional<bool> IsLarge = default,
+    Optional<bool> IsUnavailable = default,
+    Optional<int> MemberCount = default,
+    Optional<IReadOnlyList<IPartialVoiceState>> VoiceStates = default,
+    Optional<IReadOnlyList<IGuildMember>> Members = default,
+    Optional<IReadOnlyList<IChannel>> Channels = default,
+    Optional<IReadOnlyList<IChannel>> Threads = default,
+    Optional<IReadOnlyList<IPartialPresence>> Presences = default,
+    Optional<int?> MaxPresences = default,
+    Optional<int> MaxMembers = default,
+    Optional<string?> VanityUrlCode = default,
+    Optional<string?> Description = default,
+    Optional<IImageHash?> Banner = default,
+    Optional<PremiumTier> PremiumTier = default,
+    Optional<int> PremiumSubscriptionCount = default,
+    Optional<string> PreferredLocale = default,
+    Optional<Snowflake?> PublicUpdatesChannelID = default,
+    Optional<int> MaxVideoChannelUsers = default,
+    Optional<int> ApproximateMemberCount = default,
+    Optional<int> ApproximatePresenceCount = default,
+    Optional<IWelcomeScreen> WelcomeScreen = default,
+    Optional<GuildNSFWLevel> NSFWLevel = default,
+    Optional<IReadOnlyList<IStageInstance>> StageInstances = default,
+    Optional<IReadOnlyList<ISticker>> Stickers = default,
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents = default
+) : IPartialGuild;

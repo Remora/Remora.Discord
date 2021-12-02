@@ -25,11 +25,10 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents a resume command.
-    /// </summary>
-    [PublicAPI]
-    public record Resume(string Token, string SessionID, int SequenceNumber) : IResume;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a resume command.
+/// </summary>
+[PublicAPI]
+public record Resume(string Token, string SessionID, int SequenceNumber) : IResume;

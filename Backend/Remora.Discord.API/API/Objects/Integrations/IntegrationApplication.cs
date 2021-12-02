@@ -22,21 +22,20 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IIntegrationApplication" />
-    [PublicAPI]
-    public record IntegrationApplication
-    (
-        Snowflake ID,
-        string Name,
-        IImageHash? Icon,
-        string Description,
-        string Summary,
-        Optional<IUser> Bot = default
-    ) : IIntegrationApplication;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IIntegrationApplication" />
+[PublicAPI]
+public record IntegrationApplication
+(
+    Snowflake ID,
+    string Name,
+    IImageHash? Icon,
+    string Description,
+    string Summary,
+    Optional<IUser> Bot = default
+) : IIntegrationApplication;

@@ -43,6 +43,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// A user-initiated interaction with a message component.
         /// </summary>
-        MessageComponent = 3
+        MessageComponent = 3,
+
+        /// <summary>
+        /// An autocomplete request.
+        /// </summary>
+        ApplicationCommandAutocomplete = 4
     }
 }

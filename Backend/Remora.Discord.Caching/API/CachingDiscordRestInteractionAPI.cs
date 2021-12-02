@@ -26,11 +26,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API
@@ -41,14 +44,14 @@ namespace Remora.Discord.Caching.API
     {
         private readonly CacheService _cacheService;
 
-        /// <inheritdoc cref="DiscordRestInteractionAPI(DiscordHttpClient, IOptions{JsonSerializerOptions})" />
+        /// <inheritdoc cref="DiscordRestInteractionAPI(IRestHttpClient, JsonSerializerOptions)" />
         public CachingDiscordRestInteractionAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }
@@ -62,11 +65,11 @@ namespace Remora.Discord.Caching.API
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<MessageFlags> flags = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -78,11 +81,11 @@ namespace Remora.Discord.Caching.API
                 username,
                 avatarUrl,
                 isTTS,
-                file,
                 embeds,
                 allowedMentions,
                 components,
                 flags,
+                attachments,
                 ct
             );
 
@@ -159,6 +162,7 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -171,6 +175,7 @@ namespace Remora.Discord.Caching.API
                 embeds,
                 allowedMentions,
                 components,
+                attachments,
                 ct
             );
 
@@ -224,6 +229,7 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -235,6 +241,7 @@ namespace Remora.Discord.Caching.API
                 embeds,
                 allowedMentions,
                 components,
+                attachments,
                 ct
             );
 

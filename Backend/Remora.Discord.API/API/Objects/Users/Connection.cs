@@ -23,24 +23,23 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IConnection" />
-    [PublicAPI]
-    public record Connection
-    (
-        string ID,
-        string Name,
-        string Type,
-        Optional<bool> IsRevoked,
-        Optional<IReadOnlyList<IPartialIntegration>> Integrations,
-        bool IsVerified,
-        bool IsFriendSyncEnabled,
-        bool ShouldShowActivity,
-        ConnectionVisibility Visibility
-    ) : IConnection;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IConnection" />
+[PublicAPI]
+public record Connection
+(
+    string ID,
+    string Name,
+    string Type,
+    Optional<bool> IsRevoked,
+    Optional<IReadOnlyList<IPartialIntegration>> Integrations,
+    bool IsVerified,
+    bool IsFriendSyncEnabled,
+    bool ShouldShowActivity,
+    ConnectionVisibility Visibility
+) : IConnection;

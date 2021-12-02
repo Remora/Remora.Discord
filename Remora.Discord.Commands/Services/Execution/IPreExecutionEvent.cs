@@ -26,20 +26,19 @@ using JetBrains.Annotations;
 using Remora.Discord.Commands.Contexts;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Services
+namespace Remora.Discord.Commands.Services;
+
+/// <summary>
+/// Represents the public interface of a service that can perform a pre-execution event.
+/// </summary>
+[PublicAPI]
+public interface IPreExecutionEvent
 {
     /// <summary>
-    /// Represents the public interface of a service that can perform a pre-execution event.
+    /// Runs before the attempted execution of a command.
     /// </summary>
-    [PublicAPI]
-    public interface IPreExecutionEvent
-    {
-        /// <summary>
-        /// Runs before the attempted execution of a command.
-        /// </summary>
-        /// <param name="context">The command context.</param>
-        /// <param name="ct">The cancellation token of the current operation.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task<Result> BeforeExecutionAsync(ICommandContext context, CancellationToken ct = default);
-    }
+    /// <param name="context">The command context.</param>
+    /// <param name="ct">The cancellation token of the current operation.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    Task<Result> BeforeExecutionAsync(ICommandContext context, CancellationToken ct = default);
 }

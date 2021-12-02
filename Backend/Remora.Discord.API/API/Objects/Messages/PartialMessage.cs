@@ -24,45 +24,44 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialMessage" />
-    [PublicAPI]
-    public record PartialMessage
-    (
-        Optional<Snowflake> ID = default,
-        Optional<Snowflake> ChannelID = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<IUser> Author = default,
-        Optional<IPartialGuildMember> Member = default,
-        Optional<string> Content = default,
-        Optional<DateTimeOffset> Timestamp = default,
-        Optional<DateTimeOffset?> EditedTimestamp = default,
-        Optional<bool> IsTTS = default,
-        Optional<bool> MentionsEveryone = default,
-        Optional<IReadOnlyList<IUserMention>> Mentions = default,
-        Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
-        Optional<IReadOnlyList<IAttachment>> Attachments = default,
-        Optional<IReadOnlyList<IEmbed>> Embeds = default,
-        Optional<IReadOnlyList<IReaction>> Reactions = default,
-        Optional<string> Nonce = default,
-        Optional<bool> IsPinned = default,
-        Optional<Snowflake> WebhookID = default,
-        Optional<MessageType> Type = default,
-        Optional<IMessageActivity> Activity = default,
-        Optional<IPartialApplication> Application = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<IMessageReference> MessageReference = default,
-        Optional<MessageFlags> Flags = default,
-        Optional<IMessage?> ReferencedMessage = default,
-        Optional<IMessageInteraction> Interaction = default,
-        Optional<IChannel> Thread = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IStickerItem>> StickerItems = default
-    ) : IPartialMessage;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialMessage" />
+[PublicAPI]
+public record PartialMessage
+(
+    Optional<Snowflake> ID = default,
+    Optional<Snowflake> ChannelID = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<IUser> Author = default,
+    Optional<IPartialGuildMember> Member = default,
+    Optional<string> Content = default,
+    Optional<DateTimeOffset> Timestamp = default,
+    Optional<DateTimeOffset?> EditedTimestamp = default,
+    Optional<bool> IsTTS = default,
+    Optional<bool> MentionsEveryone = default,
+    Optional<IReadOnlyList<IUserMention>> Mentions = default,
+    Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
+    Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
+    Optional<IReadOnlyList<IAttachment>> Attachments = default,
+    Optional<IReadOnlyList<IEmbed>> Embeds = default,
+    Optional<IReadOnlyList<IReaction>> Reactions = default,
+    Optional<string> Nonce = default,
+    Optional<bool> IsPinned = default,
+    Optional<Snowflake> WebhookID = default,
+    Optional<MessageType> Type = default,
+    Optional<IMessageActivity> Activity = default,
+    Optional<IPartialApplication> Application = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<IMessageReference> MessageReference = default,
+    Optional<MessageFlags> Flags = default,
+    Optional<IMessage?> ReferencedMessage = default,
+    Optional<IMessageInteraction> Interaction = default,
+    Optional<IChannel> Thread = default,
+    Optional<IReadOnlyList<IMessageComponent>> Components = default,
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+) : IPartialMessage;

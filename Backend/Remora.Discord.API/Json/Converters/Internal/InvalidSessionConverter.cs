@@ -26,38 +26,37 @@ using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Events;
 
-namespace Remora.Discord.API.Json
+namespace Remora.Discord.API.Json;
+
+/// <inheritdoc />
+internal class InvalidSessionConverter : JsonConverter<IInvalidSession?>
 {
     /// <inheritdoc />
-    internal class InvalidSessionConverter : JsonConverter<IInvalidSession?>
+    public override IInvalidSession Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override IInvalidSession Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        switch (reader.TokenType)
         {
-            switch (reader.TokenType)
+            case JsonTokenType.True:
+            case JsonTokenType.False:
             {
-                case JsonTokenType.True:
-                case JsonTokenType.False:
-                {
-                    return new InvalidSession(reader.GetBoolean());
-                }
-                default:
-                {
-                    throw new JsonException();
-                }
+                return new InvalidSession(reader.GetBoolean());
+            }
+            default:
+            {
+                throw new JsonException();
             }
         }
+    }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IInvalidSession? value, JsonSerializerOptions options)
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IInvalidSession? value, JsonSerializerOptions options)
+    {
+        if (value is null)
         {
-            if (value is null)
-            {
-                writer.WriteNullValue();
-                return;
-            }
-
-            writer.WriteBooleanValue(value.IsResumable);
+            writer.WriteNullValue();
+            return;
         }
+
+        writer.WriteBooleanValue(value.IsResumable);
     }
 }

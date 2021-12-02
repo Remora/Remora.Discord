@@ -21,15 +21,17 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.TestBases
@@ -64,6 +66,7 @@ namespace Remora.Discord.Commands.Tests.TestBases
                     It.IsAny<Snowflake>(),
                     It.IsAny<string>(),
                     It.IsAny<IInteractionResponse>(),
+                    It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
                 )
             )

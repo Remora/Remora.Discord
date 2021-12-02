@@ -28,11 +28,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Core;
 using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
+using Remora.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Caching.API
@@ -48,11 +51,11 @@ namespace Remora.Discord.Caching.API
         /// <inheritdoc cref="DiscordRestChannelAPI" />
         public CachingDiscordRestChannelAPI
         (
-            DiscordHttpClient discordHttpClient,
-            IOptions<JsonSerializerOptions> jsonOptions,
+            IRestHttpClient restHttpClient,
+            JsonSerializerOptions jsonOptions,
             CacheService cacheService
         )
-            : base(discordHttpClient, jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
             _cacheService = cacheService;
         }
@@ -196,12 +199,12 @@ namespace Remora.Discord.Caching.API
             Optional<string> content = default,
             Optional<string> nonce = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<IMessageReference> messageReference = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
             Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -211,12 +214,12 @@ namespace Remora.Discord.Caching.API
                 content,
                 nonce,
                 isTTS,
-                file,
                 embeds,
                 allowedMentions,
                 messageReference,
                 components,
                 stickerIds,
+                attachments,
                 ct
             );
 
@@ -241,8 +244,8 @@ namespace Remora.Discord.Caching.API
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<MessageFlags?> flags = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
@@ -254,8 +257,8 @@ namespace Remora.Discord.Caching.API
                 embeds,
                 flags,
                 allowedMentions,
-                attachments,
                 components,
+                attachments,
                 ct
             );
 
@@ -436,7 +439,8 @@ namespace Remora.Discord.Caching.API
             Snowflake channelID,
             Snowflake messageID,
             string name,
-            AutoArchiveDuration autoArchiveDuration,
+            Optional<AutoArchiveDuration> autoArchiveDuration = default,
+            Optional<int?> rateLimitPerUser = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -447,6 +451,7 @@ namespace Remora.Discord.Caching.API
                 messageID,
                 name,
                 autoArchiveDuration,
+                rateLimitPerUser,
                 reason,
                 ct
             );
@@ -469,8 +474,9 @@ namespace Remora.Discord.Caching.API
             string name,
             AutoArchiveDuration autoArchiveDuration,
             Optional<ChannelType> type = default,
-            Optional<string> reason = default,
             Optional<bool> isInvitable = default,
+            Optional<int?> rateLimitPerUser = default,
+            Optional<string> reason = default,
             CancellationToken ct = default
         )
         {
@@ -480,8 +486,9 @@ namespace Remora.Discord.Caching.API
                 name,
                 autoArchiveDuration,
                 type,
-                reason,
                 isInvitable,
+                rateLimitPerUser,
+                reason,
                 ct
             );
 
@@ -671,6 +678,32 @@ namespace Remora.Discord.Caching.API
                 var inviteKey = KeyHelpers.CreateInviteCacheKey(invite.Code);
                 _cacheService.Cache(inviteKey, invite);
             }
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override async Task<Result<IThreadMember>> GetThreadMemberAsync
+        (
+            Snowflake channelID,
+            Snowflake userID,
+            CancellationToken ct = default
+        )
+        {
+            var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
+            if (_cacheService.TryGetValue<IThreadMember>(key, out var cachedInstance))
+            {
+                return Result<IThreadMember>.FromSuccess(cachedInstance);
+            }
+
+            var result = await base.GetThreadMemberAsync(channelID, userID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var threadMember = result.Entity;
+            _cacheService.Cache(key, threadMember);
 
             return result;
         }

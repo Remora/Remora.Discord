@@ -22,22 +22,20 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Commands.Contexts
-{
-    /// <summary>
-    /// Represents contextual information about a message.
-    /// </summary>
-    [PublicAPI]
-    public record MessageContext
-    (
-        Snowflake ChannelID,
-        IUser User,
-        Snowflake MessageID,
-        IPartialMessage Message
-    )
-    : CommandContext(Message.GuildID, ChannelID, User);
-}
+namespace Remora.Discord.Commands.Contexts;
+
+/// <summary>
+/// Represents contextual information about a message.
+/// </summary>
+[PublicAPI]
+public record MessageContext
+(
+    Snowflake ChannelID,
+    IUser User,
+    Snowflake MessageID,
+    IPartialMessage Message
+) : CommandContext(Message.GuildID, ChannelID, User);

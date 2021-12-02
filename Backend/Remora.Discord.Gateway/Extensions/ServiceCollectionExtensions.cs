@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -60,7 +61,11 @@ namespace Remora.Discord.Gateway.Extensions
             serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 
             serviceCollection.TryAddTransient<ClientWebSocket>();
-            serviceCollection.TryAddTransient<IPayloadTransportService, WebSocketPayloadTransportService>();
+            serviceCollection.TryAddTransient<IPayloadTransportService>(s => new WebSocketPayloadTransportService
+            (
+                s,
+                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            ));
 
             return serviceCollection;
         }

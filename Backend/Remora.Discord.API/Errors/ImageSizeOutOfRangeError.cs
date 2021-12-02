@@ -23,11 +23,10 @@
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.API.Errors
-{
-    /// <summary>
-    /// Represents an error produced by requesting an image size outside of allowed parameters.
-    /// </summary>
-    [PublicAPI]
-    public record ImageSizeOutOfRangeError() : ResultError("The image size must be between 16 and 4096.");
-}
+namespace Remora.Discord.API.Errors;
+
+/// <summary>
+/// Represents an error produced by requesting an image size outside of allowed parameters.
+/// </summary>
+[PublicAPI]
+public record ImageSizeOutOfRangeError() : ResultError("The image size must be between 16 and 4096.");

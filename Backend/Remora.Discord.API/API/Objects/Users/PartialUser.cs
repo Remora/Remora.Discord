@@ -23,30 +23,29 @@
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialUser" />
-    [PublicAPI]
-    public record PartialUser
-    (
-        Optional<Snowflake> ID = default,
-        Optional<string> Username = default,
-        Optional<ushort> Discriminator = default,
-        Optional<IImageHash?> Avatar = default,
-        Optional<bool> IsBot = default,
-        Optional<bool> IsSystem = default,
-        Optional<bool> IsMFAEnabled = default,
-        Optional<IImageHash?> Banner = default,
-        Optional<Color?> AccentColour = default,
-        Optional<string> Locale = default,
-        Optional<bool> IsVerified = default,
-        Optional<string?> Email = default,
-        Optional<UserFlags> Flags = default,
-        Optional<PremiumType> PremiumType = default,
-        Optional<UserFlags> PublicFlags = default
-    ) : IPartialUser;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialUser" />
+[PublicAPI]
+public record PartialUser
+(
+    Optional<Snowflake> ID = default,
+    Optional<string> Username = default,
+    Optional<ushort> Discriminator = default,
+    Optional<IImageHash?> Avatar = default,
+    Optional<bool> IsBot = default,
+    Optional<bool> IsSystem = default,
+    Optional<bool> IsMFAEnabled = default,
+    Optional<IImageHash?> Banner = default,
+    Optional<Color?> AccentColour = default,
+    Optional<string> Locale = default,
+    Optional<bool> IsVerified = default,
+    Optional<string?> Email = default,
+    Optional<UserFlags> Flags = default,
+    Optional<PremiumType> PremiumType = default,
+    Optional<UserFlags> PublicFlags = default
+) : IPartialUser;

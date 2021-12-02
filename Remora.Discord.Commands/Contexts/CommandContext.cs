@@ -22,19 +22,17 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Commands.Contexts
-{
-    /// <inheritdoc cref="Remora.Discord.Commands.Contexts.ICommandContext" />
-    [PublicAPI]
-    public record CommandContext
-    (
-        Optional<Snowflake> GuildID,
-        Snowflake ChannelID,
-        IUser User
-    )
-    : ICommandContext;
-}
+namespace Remora.Discord.Commands.Contexts;
+
+/// <inheritdoc cref="Remora.Discord.Commands.Contexts.ICommandContext" />
+[PublicAPI]
+public record CommandContext
+(
+    Optional<Snowflake> GuildID,
+    Snowflake ChannelID,
+    IUser User
+) : ICommandContext;

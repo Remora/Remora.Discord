@@ -23,26 +23,25 @@
 using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialRole" />
-    [PublicAPI]
-    public record PartialRole
-    (
-        Optional<Snowflake> ID = default,
-        Optional<string> Name = default,
-        Optional<Color> Colour = default,
-        Optional<bool> IsHoisted = default,
-        Optional<IImageHash?> Icon = default,
-        Optional<string?> UnicodeEmoji = default,
-        Optional<int> Position = default,
-        Optional<IDiscordPermissionSet> Permissions = default,
-        Optional<bool> IsManaged = default,
-        Optional<bool> IsMentionable = default,
-        Optional<IRoleTags> Tags = default
-    ) : IPartialRole;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialRole" />
+[PublicAPI]
+public record PartialRole
+(
+    Optional<Snowflake> ID = default,
+    Optional<string> Name = default,
+    Optional<Color> Colour = default,
+    Optional<bool> IsHoisted = default,
+    Optional<IImageHash?> Icon = default,
+    Optional<string?> UnicodeEmoji = default,
+    Optional<int> Position = default,
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<bool> IsManaged = default,
+    Optional<bool> IsMentionable = default,
+    Optional<IRoleTags> Tags = default
+) : IPartialRole;

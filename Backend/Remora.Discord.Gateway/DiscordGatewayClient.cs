@@ -41,11 +41,12 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
-using Remora.Discord.Core;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
+using Remora.Discord.Rest;
+using Remora.Rest.Core;
 using Remora.Results;
 using static System.Net.WebSockets.WebSocketCloseStatus;
 
@@ -97,6 +98,12 @@ namespace Remora.Discord.Gateway
         private int _lastSequenceNumber;
 
         /// <summary>
+        /// Holds the time when the last heartbeat was sent, using
+        /// <see cref="DateTime.ToBinary"/>.
+        /// </summary>
+        private long _lastSentHeartbeat;
+
+        /// <summary>
         /// Holds the time when the last heartbeat acknowledgement was received, using
         /// <see cref="DateTime.ToBinary()"/>.
         /// </summary>
@@ -131,6 +138,12 @@ namespace Remora.Discord.Gateway
         /// Holds a value indicating whether the client's current session is resumable.
         /// </summary>
         private bool _isSessionResumable;
+
+        /// <summary>
+        /// Gets the time taken for the gateway to respond to the last heartbeat, providing an estimate of round-trip latency.
+        /// Will return zero until the first heartbeat has occured.
+        /// </summary>
+        public TimeSpan Latency { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordGatewayClient"/> class.
@@ -181,7 +194,7 @@ namespace Remora.Discord.Gateway
         /// </summary>
         /// <param name="commandPayload">The command to send.</param>
         /// <typeparam name="TCommand">The type of command to send.</typeparam>
-        public void SubmitCommandAsync<TCommand>(TCommand commandPayload) where TCommand : IGatewayCommand
+        public void SubmitCommand<TCommand>(TCommand commandPayload) where TCommand : IGatewayCommand
         {
             var payload = new Payload<TCommand>(commandPayload);
             _payloadsToSend.Enqueue(payload);
@@ -317,6 +330,12 @@ namespace Remora.Discord.Gateway
             {
                 case GatewayDiscordError gde:
                 {
+                    _log.LogWarning
+                    (
+                        "Remote transient gateway error: {Error}",
+                        gde.Message
+                    );
+
                     switch (gde.CloseStatus)
                     {
                         case GatewayCloseStatus.UnknownError:
@@ -350,6 +369,12 @@ namespace Remora.Discord.Gateway
                 }
                 case GatewayWebSocketError gwe:
                 {
+                    _log.LogWarning
+                    (
+                        "Transient gateway transport layer error: {Error}",
+                        gwe.Message
+                    );
+
                     switch (gwe.CloseStatus)
                     {
                         case InternalServerError:
@@ -367,8 +392,19 @@ namespace Remora.Discord.Gateway
                     // We'll try reconnecting on non-critical internal errors
                     if (!gae.IsCritical)
                     {
+                        _log.LogWarning
+                        (
+                            "Local transient gateway error: {Error}",
+                            gae.Message
+                        );
                         return true;
                     }
+
+                    _log.LogError
+                    (
+                        "Local unrecoverable gateway error: {Error}",
+                        gae.Message
+                    );
 
                     shouldTerminate = true;
                     return false;
@@ -423,6 +459,67 @@ namespace Remora.Discord.Gateway
                         (
                             new GatewayError("Failed to get the gateway endpoint.", true),
                             getGatewayEndpoint
+                        );
+                    }
+
+                    var endpointInformation = getGatewayEndpoint.Entity;
+                    if (endpointInformation.Shards.IsDefined(out var shards))
+                    {
+                        if (shards > 1 && _gatewayOptions.ShardIdentification?.ShardCount != shards)
+                        {
+                            _log.LogInformation
+                            (
+                                "Discord suggests {Shards} shards for this bot, but your sharding configuration does " +
+                                "not match this. Consider switching to a sharded topology of at least that many shards",
+                                shards
+                            );
+                        }
+                    }
+
+                    if (endpointInformation.SessionStartLimit.IsDefined(out var startLimit))
+                    {
+                        if (_sessionID is null)
+                        {
+                            if (startLimit.Remaining <= 0)
+                            {
+                                _log.LogWarning
+                                (
+                                    "No further sessions may be started right now for this bot. Waiting {Time} for " +
+                                    "the limits to reset...",
+                                    startLimit.ResetAfter
+                                );
+
+                                await Task.Delay(startLimit.ResetAfter, stopRequested);
+                                return new GatewayError("Session start limits reached; retrying...", false);
+                            }
+
+                            _log.LogInformation
+                            (
+                                "Starting a new session ({Remaining} session starts remaining of {Total}; limits " +
+                                "reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
+                                startLimit.ResetAfter
+                            );
+                        }
+                        else
+                        {
+                            _log.LogInformation
+                            (
+                                "Resuming an existing session ({Remaining} new session starts remaining of {Total}; " +
+                                "limits reset in {Time})",
+                                startLimit.Remaining,
+                                startLimit.Total,
+                                startLimit.ResetAfter
+                            );
+                        }
+                    }
+                    else
+                    {
+                        _log.LogWarning
+                        (
+                            "There's no session start limits available for this connection. Rate limits may be " +
+                            "unexpectedly hit"
                         );
                     }
 
@@ -800,7 +897,7 @@ namespace Remora.Discord.Gateway
                 ? default
                 : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
 
-            SubmitCommandAsync
+            SubmitCommand
             (
                 new Identify
                 (
@@ -858,7 +955,7 @@ namespace Remora.Discord.Gateway
 
             _log.LogInformation("Resuming existing session...");
 
-            SubmitCommandAsync
+            SubmitCommand
             (
                 new Resume
                 (
@@ -930,7 +1027,11 @@ namespace Remora.Discord.Gateway
 
             try
             {
-                DateTime? lastHeartbeat = null;
+                var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+                var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+                    ? DateTime.FromBinary(lastSentHeartbeatBinary)
+                    : (DateTime?)null;
+
                 while (!disconnectRequested.IsCancellationRequested)
                 {
                     var lastReceivedHeartbeatAck = Interlocked.Read(ref _lastReceivedHeartbeatAck);
@@ -942,9 +1043,9 @@ namespace Remora.Discord.Gateway
                     var now = DateTime.UtcNow;
                     var safetyMargin = _gatewayOptions.GetTrueHeartbeatSafetyMargin(heartbeatInterval);
 
-                    if (lastHeartbeat is null || now - lastHeartbeat >= heartbeatInterval - safetyMargin)
+                    if (lastSentHeartbeat is null || now - lastSentHeartbeat >= heartbeatInterval - safetyMargin)
                     {
-                        if (lastHeartbeatAck < lastHeartbeat)
+                        if (lastHeartbeatAck < lastSentHeartbeat)
                         {
                             return new GatewayError
                             (
@@ -975,14 +1076,15 @@ namespace Remora.Discord.Gateway
                             );
                         }
 
-                        lastHeartbeat = DateTime.UtcNow;
+                        lastSentHeartbeat = DateTime.UtcNow;
+                        Interlocked.Exchange(ref _lastSentHeartbeat, lastSentHeartbeat.Value.ToBinary());
                     }
 
                     // Check if there are any user-submitted payloads to send
                     if (!_payloadsToSend.TryDequeue(out var payload))
                     {
                         // Let's sleep for a little while
-                        var maxSleepTime = lastHeartbeat.Value + heartbeatInterval - safetyMargin - now;
+                        var maxSleepTime = lastSentHeartbeat.Value + heartbeatInterval - safetyMargin - now;
                         var sleepTime = TimeSpan.FromMilliseconds(Math.Clamp(100, 0, maxSleepTime.TotalMilliseconds));
 
                         await Task.Delay(sleepTime, disconnectRequested);
@@ -1034,12 +1136,9 @@ namespace Remora.Discord.Gateway
                     if (!receivedPayload.IsSuccess)
                     {
                         // Normal closures are okay
-                        if (receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure })
-                        {
-                            return Result.FromSuccess();
-                        }
-
-                        return Result.FromError(receivedPayload);
+                        return receivedPayload.Error is GatewayWebSocketError { CloseStatus: NormalClosure }
+                            ? Result.FromSuccess()
+                            : Result.FromError(receivedPayload);
                     }
 
                     // Update the sequence number
@@ -1051,7 +1150,19 @@ namespace Remora.Discord.Gateway
                     // Update the ack timestamp
                     if (receivedPayload.Entity is IPayload<IHeartbeatAcknowledge>)
                     {
-                        Interlocked.Exchange(ref _lastReceivedHeartbeatAck, DateTime.UtcNow.ToBinary());
+                        var receivedAt = DateTime.UtcNow;
+                        Interlocked.Exchange(ref _lastReceivedHeartbeatAck, receivedAt.ToBinary());
+
+                        // Update the latency
+                        var lastSentHeartbeatBinary = Interlocked.Read(ref _lastSentHeartbeat);
+                        var lastSentHeartbeat = lastSentHeartbeatBinary > 0
+                            ? DateTime.FromBinary(lastSentHeartbeatBinary)
+                            : (DateTime?)null;
+
+                        if (lastSentHeartbeat != null)
+                        {
+                            this.Latency = receivedAt - lastSentHeartbeat.Value;
+                        }
                     }
 
                     // Enqueue the payload for dispatch
@@ -1076,7 +1187,7 @@ namespace Remora.Discord.Gateway
                         }
                         case IPayload<IHeartbeat>:
                         {
-                            SubmitCommandAsync(new HeartbeatAcknowledge());
+                            SubmitCommand(new HeartbeatAcknowledge());
                             continue;
                         }
                         default:

@@ -26,15 +26,14 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="ISessionStartLimit" />
-    [PublicAPI]
-    public record SessionStartLimit
-    (
-        int Total,
-        int Remaining,
-        TimeSpan ResetAfter,
-        int MaxConcurrency
-    ) : ISessionStartLimit;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="ISessionStartLimit" />
+[PublicAPI]
+public record SessionStartLimit
+(
+    int Total,
+    int Remaining,
+    TimeSpan ResetAfter,
+    int MaxConcurrency
+) : ISessionStartLimit;

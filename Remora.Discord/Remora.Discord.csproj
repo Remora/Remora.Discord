@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+        <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.69</Version>
+        <Version>4.0.2</Version>
         <Description>
             $(BaseDescription)
 

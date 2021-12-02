@@ -44,6 +44,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Suppresses server setup tips.
         /// </summary>
-        SuppressGuildReminderNotifications = 1 << 2
+        SuppressGuildReminderNotifications = 1 << 2,
+
+        /// <summary>
+        /// Suppresses the reply sticker button for new joins.
+        /// </summary>
+        SuppressJoinNotificationReplies = 1 << 3
     }
 }

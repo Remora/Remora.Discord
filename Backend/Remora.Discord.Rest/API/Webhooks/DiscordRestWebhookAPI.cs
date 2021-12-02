@@ -23,17 +23,22 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
-using Remora.Discord.Core;
+using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Rest.Utility;
+using Remora.Rest;
+using Remora.Rest.Core;
+using Remora.Rest.Extensions;
 using Remora.Results;
 
 namespace Remora.Discord.Rest.API
@@ -45,10 +50,10 @@ namespace Remora.Discord.Rest.API
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
         /// </summary>
-        /// <param name="discordHttpClient">The Discord HTTP client.</param>
+        /// <param name="restHttpClient">The Discord HTTP client.</param>
         /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestWebhookAPI(DiscordHttpClient discordHttpClient, IOptions<JsonSerializerOptions> jsonOptions)
-            : base(discordHttpClient, jsonOptions)
+        public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+            : base(restHttpClient, jsonOptions)
         {
         }
 
@@ -79,7 +84,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PostAsync<IWebhook>
+            return await this.RestHttpClient.PostAsync<IWebhook>
             (
                 $"channels/{channelID}/webhooks",
                 b => b.WithJson
@@ -89,7 +94,8 @@ namespace Remora.Discord.Rest.API
                         json.WriteString("name", name);
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -101,9 +107,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"channels/{channelID}/webhooks",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -115,9 +122,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
             (
                 $"guilds/{guildID}/webhooks",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -129,9 +137,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IWebhook>
+            return this.RestHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -144,9 +153,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IWebhook>
+            return this.RestHttpClient.GetAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -169,7 +179,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PatchAsync<IWebhook>
+            return await this.RestHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}",
                 b => b.WithJson
@@ -180,7 +190,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("avatar", avatarData, this.JsonOptions);
                         json.Write("channel_id", channelID, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -203,7 +214,7 @@ namespace Remora.Discord.Rest.API
 
             var avatarData = packAvatar.Entity;
 
-            return await this.DiscordHttpClient.PatchAsync<IWebhook>
+            return await this.RestHttpClient.PatchAsync<IWebhook>
             (
                 $"webhooks/{webhookID}/{token}",
                 b => b.WithJson
@@ -213,7 +224,8 @@ namespace Remora.Discord.Rest.API
                         json.Write("name", name, this.JsonOptions);
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
-                ),
+                )
+                .WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -221,9 +233,10 @@ namespace Remora.Discord.Rest.API
         /// <inheritdoc />
         public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -236,9 +249,10 @@ namespace Remora.Discord.Rest.API
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}",
+                b => b.WithRateLimitContext(),
                 ct: ct
             );
         }
@@ -253,15 +267,15 @@ namespace Remora.Discord.Rest.API
             Optional<string> username = default,
             Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
-            Optional<FileData> file = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
             Optional<Snowflake> threadID = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.PostAsync<IMessage?>
+            return this.RestHttpClient.PostAsync<IMessage?>
             (
                 $"webhooks/{webhookID}/{token}",
                 b =>
@@ -271,9 +285,31 @@ namespace Remora.Discord.Rest.API
                         b.AddQueryParameter("wait", shouldWait.Value.ToString());
                     }
 
-                    if (file.HasValue)
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
                     }
 
                     b.WithJson
@@ -288,8 +324,10 @@ namespace Remora.Discord.Rest.API
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 true,
                 ct
@@ -302,12 +340,22 @@ namespace Remora.Discord.Rest.API
             Snowflake webhookID,
             string webhookToken,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.GetAsync<IMessage>
+            return this.RestHttpClient.GetAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
+                b =>
+                {
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    }
+
+                    b.WithRateLimitContext();
+                },
                 ct: ct
             );
         }
@@ -321,9 +369,9 @@ namespace Remora.Discord.Rest.API
             Optional<string?> content = default,
             Optional<IReadOnlyList<IEmbed>?> embeds = default,
             Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<FileData?> file = default,
-            Optional<IReadOnlyList<IAttachment>> attachments = default,
             Optional<IReadOnlyList<IMessageComponent>> components = default,
+            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
@@ -337,14 +385,41 @@ namespace Remora.Discord.Rest.API
                 return new NotSupportedError("Too many embeds (max 10).");
             }
 
-            return await this.DiscordHttpClient.PatchAsync<IMessage>
+            return await this.RestHttpClient.PatchAsync<IMessage>
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
                 b =>
                 {
-                    if (file.IsDefined())
+                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                    if (attachments.HasValue)
                     {
-                        b.AddContent(new StreamContent(file.Value.Content), "file", file.Value.Name);
+                        // build attachment list
+                        attachmentList = attachments.Value.Select
+                        (
+                            (f, i) => f.Match
+                            (
+                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                attachment => attachment
+                            )
+                        ).ToList();
+
+                        for (var i = 0; i < attachments.Value.Count; i++)
+                        {
+                            if (!attachments.Value[i].IsT0)
+                            {
+                                continue;
+                            }
+
+                            var (name, stream, _) = attachments.Value[i].AsT0;
+                            var contentName = $"files[{i}]";
+
+                            b.AddContent(new StreamContent(stream), contentName, name);
+                        }
+                    }
+
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
                     }
 
                     b.WithJson
@@ -354,15 +429,11 @@ namespace Remora.Discord.Rest.API
                             json.Write("content", content, this.JsonOptions);
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("attachments", attachments, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
-
-                            if (file.HasValue && file.Value is null)
-                            {
-                                json.WriteNull("file");
-                            }
+                            json.Write("attachments", attachmentList, this.JsonOptions);
                         }
-                    );
+                    )
+                    .WithRateLimitContext();
                 },
                 ct: ct
             );
@@ -374,13 +445,23 @@ namespace Remora.Discord.Rest.API
             Snowflake webhookID,
             string token,
             Snowflake messageID,
+            Optional<Snowflake> threadID = default,
             CancellationToken ct = default
         )
         {
-            return this.DiscordHttpClient.DeleteAsync
+            return this.RestHttpClient.DeleteAsync
             (
                 $"webhooks/{webhookID}/{token}/messages/{messageID}",
-                ct: ct
+                b =>
+                {
+                    if (threadID.HasValue)
+                    {
+                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                    }
+
+                    b.WithRateLimitContext();
+                },
+                ct
             );
         }
     }

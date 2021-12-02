@@ -22,18 +22,16 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IInteractionResponse" />
-    [PublicAPI]
-    public record InteractionResponse
-    (
-        InteractionCallbackType Type,
-        Optional<IInteractionCallbackData> Data = default
-    )
-    : IInteractionResponse;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IInteractionResponse" />
+[PublicAPI]
+public record InteractionResponse
+(
+    InteractionCallbackType Type,
+    Optional<IInteractionCallbackData> Data = default
+) : IInteractionResponse;

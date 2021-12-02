@@ -25,18 +25,17 @@ using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Results;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IRestError" />
-    [PublicAPI]
-    public record RestError
-    (
-        DiscordError Code,
-        Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors,
-        string Message
-    ) : IRestError;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IRestError" />
+[PublicAPI]
+public record RestError
+(
+    DiscordError Code,
+    Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors,
+    string Message
+) : IRestError;

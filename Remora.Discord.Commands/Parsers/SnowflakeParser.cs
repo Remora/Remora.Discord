@@ -26,26 +26,25 @@ using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
 using Remora.Discord.Commands.Extensions;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses instances of <see cref="Snowflake"/>s.
+/// </summary>
+[PublicAPI]
+public class SnowflakeParser : AbstractTypeParser<Snowflake>
 {
-    /// <summary>
-    /// Parses instances of <see cref="Snowflake"/>s.
-    /// </summary>
-    [PublicAPI]
-    public class SnowflakeParser : AbstractTypeParser<Snowflake>
+    /// <inheritdoc />
+    public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
     {
-        /// <inheritdoc />
-        public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
-        {
-            return new
-            (
-                !Snowflake.TryParse(value.Unmention(), out var snowflake)
-                    ? new ParsingError<Snowflake>(value)
-                    : snowflake.Value
-            );
-        }
+        return new
+        (
+            !Snowflake.TryParse(value.Unmention(), out var snowflake)
+                ? new ParsingError<Snowflake>(value)
+                : snowflake.Value
+        );
     }
 }

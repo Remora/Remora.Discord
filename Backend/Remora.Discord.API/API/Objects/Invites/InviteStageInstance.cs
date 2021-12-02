@@ -24,15 +24,14 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IInviteStageInstance" />
-    [PublicAPI]
-    public record InviteStageInstance
-    (
-        IReadOnlyList<IPartialGuildMember> Members,
-        int ParticipantCount,
-        int SpeakerCount,
-        string Topic
-    ) : IInviteStageInstance;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IInviteStageInstance" />
+[PublicAPI]
+public record InviteStageInstance
+(
+    IReadOnlyList<IPartialGuildMember> Members,
+    int ParticipantCount,
+    int SpeakerCount,
+    string Topic
+) : IInviteStageInstance;

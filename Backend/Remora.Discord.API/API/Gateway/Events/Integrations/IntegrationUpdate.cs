@@ -25,48 +25,45 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IIntegrationUpdate" />
-    [PublicAPI]
-    public record IntegrationUpdate
-    (
-        Snowflake ID,
-        string Name,
-        string Type,
-        bool IsEnabled,
-        bool IsSyncing,
-        Snowflake RoleID,
-        Optional<bool> EnableEmoticons,
-        IntegrationExpireBehaviour ExpireBehaviour,
-        TimeSpan ExpireGracePeriod,
-        Optional<IUser> User,
-        IAccount Account,
-        DateTimeOffset SyncedAt,
-        int SubscriberCount,
-        bool IsRevoked,
-        Optional<IIntegrationApplication> Application,
-        Snowflake GuildID
-    ) :
-        Integration
-        (
-            ID,
-            Name,
-            Type,
-            IsEnabled,
-            IsSyncing,
-            RoleID,
-            EnableEmoticons,
-            ExpireBehaviour,
-            ExpireGracePeriod,
-            User,
-            Account,
-            SyncedAt,
-            SubscriberCount,
-            IsRevoked,
-            Application
-        ),
-        IIntegrationUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IIntegrationUpdate" />
+[PublicAPI]
+public record IntegrationUpdate
+(
+    Snowflake ID,
+    string Name,
+    string Type,
+    bool IsEnabled,
+    bool IsSyncing,
+    Snowflake RoleID,
+    Optional<bool> EnableEmoticons,
+    IntegrationExpireBehaviour ExpireBehaviour,
+    TimeSpan ExpireGracePeriod,
+    Optional<IUser> User,
+    IAccount Account,
+    DateTimeOffset SyncedAt,
+    int SubscriberCount,
+    bool IsRevoked,
+    Optional<IIntegrationApplication> Application,
+    Snowflake GuildID
+) : Integration
+(
+    ID,
+    Name,
+    Type,
+    IsEnabled,
+    IsSyncing,
+    RoleID,
+    EnableEmoticons,
+    ExpireBehaviour,
+    ExpireGracePeriod,
+    User,
+    Account,
+    SyncedAt,
+    SubscriberCount,
+    IsRevoked,
+    Application
+), IIntegrationUpdate;

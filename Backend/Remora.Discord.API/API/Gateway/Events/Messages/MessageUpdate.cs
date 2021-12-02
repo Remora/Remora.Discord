@@ -26,76 +26,74 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events
-{
-    /// <inheritdoc cref="IMessageUpdate"/>
-    [PublicAPI]
-    public record MessageUpdate
-    (
-        Optional<Snowflake> ID = default,
-        Optional<Snowflake> ChannelID = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<IUser> Author = default,
-        Optional<IPartialGuildMember> Member = default,
-        Optional<string> Content = default,
-        Optional<DateTimeOffset> Timestamp = default,
-        Optional<DateTimeOffset?> EditedTimestamp = default,
-        Optional<bool> IsTTS = default,
-        Optional<bool> MentionsEveryone = default,
-        Optional<IReadOnlyList<IUserMention>> Mentions = default,
-        Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
-        Optional<IReadOnlyList<IAttachment>> Attachments = default,
-        Optional<IReadOnlyList<IEmbed>> Embeds = default,
-        Optional<IReadOnlyList<IReaction>> Reactions = default,
-        Optional<string> Nonce = default,
-        Optional<bool> IsPinned = default,
-        Optional<Snowflake> WebhookID = default,
-        Optional<MessageType> Type = default,
-        Optional<IMessageActivity> Activity = default,
-        Optional<IPartialApplication> Application = default,
-        Optional<Snowflake> ApplicationID = default,
-        Optional<IMessageReference> MessageReference = default,
-        Optional<MessageFlags> Flags = default,
-        Optional<IMessage?> ReferencedMessage = default,
-        Optional<IMessageInteraction> Interaction = default,
-        Optional<IChannel> Thread = default,
-        Optional<IReadOnlyList<IMessageComponent>> Components = default,
-        Optional<IReadOnlyList<IStickerItem>> StickerItems = default
-    )
-    : PartialMessage
-    (
-        ID,
-        ChannelID,
-        GuildID,
-        Author,
-        Member,
-        Content,
-        Timestamp,
-        EditedTimestamp,
-        IsTTS,
-        MentionsEveryone,
-        Mentions,
-        MentionedRoles,
-        MentionedChannels,
-        Attachments,
-        Embeds,
-        Reactions,
-        Nonce,
-        IsPinned,
-        WebhookID,
-        Type,
-        Activity,
-        Application,
-        ApplicationID,
-        MessageReference,
-        Flags,
-        ReferencedMessage,
-        Interaction,
-        Thread,
-        Components,
-        StickerItems
-    ), IMessageUpdate;
-}
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IMessageUpdate"/>
+[PublicAPI]
+public record MessageUpdate
+(
+    Optional<Snowflake> ID = default,
+    Optional<Snowflake> ChannelID = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<IUser> Author = default,
+    Optional<IPartialGuildMember> Member = default,
+    Optional<string> Content = default,
+    Optional<DateTimeOffset> Timestamp = default,
+    Optional<DateTimeOffset?> EditedTimestamp = default,
+    Optional<bool> IsTTS = default,
+    Optional<bool> MentionsEveryone = default,
+    Optional<IReadOnlyList<IUserMention>> Mentions = default,
+    Optional<IReadOnlyList<Snowflake>> MentionedRoles = default,
+    Optional<IReadOnlyList<IChannelMention>> MentionedChannels = default,
+    Optional<IReadOnlyList<IAttachment>> Attachments = default,
+    Optional<IReadOnlyList<IEmbed>> Embeds = default,
+    Optional<IReadOnlyList<IReaction>> Reactions = default,
+    Optional<string> Nonce = default,
+    Optional<bool> IsPinned = default,
+    Optional<Snowflake> WebhookID = default,
+    Optional<MessageType> Type = default,
+    Optional<IMessageActivity> Activity = default,
+    Optional<IPartialApplication> Application = default,
+    Optional<Snowflake> ApplicationID = default,
+    Optional<IMessageReference> MessageReference = default,
+    Optional<MessageFlags> Flags = default,
+    Optional<IMessage?> ReferencedMessage = default,
+    Optional<IMessageInteraction> Interaction = default,
+    Optional<IChannel> Thread = default,
+    Optional<IReadOnlyList<IMessageComponent>> Components = default,
+    Optional<IReadOnlyList<IStickerItem>> StickerItems = default
+) : PartialMessage
+(
+    ID,
+    ChannelID,
+    GuildID,
+    Author,
+    Member,
+    Content,
+    Timestamp,
+    EditedTimestamp,
+    IsTTS,
+    MentionsEveryone,
+    Mentions,
+    MentionedRoles,
+    MentionedChannels,
+    Attachments,
+    Embeds,
+    Reactions,
+    Nonce,
+    IsPinned,
+    WebhookID,
+    Type,
+    Activity,
+    Application,
+    ApplicationID,
+    MessageReference,
+    Flags,
+    ReferencedMessage,
+    Interaction,
+    Thread,
+    Components,
+    StickerItems
+), IMessageUpdate;

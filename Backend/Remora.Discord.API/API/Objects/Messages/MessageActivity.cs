@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IMessageActivity" />
-    [PublicAPI]
-    public record MessageActivity(MessageActivityType Type, Optional<string> PartyID = default) : IMessageActivity;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IMessageActivity" />
+[PublicAPI]
+public record MessageActivity(MessageActivityType Type, Optional<string> PartyID = default) : IMessageActivity;

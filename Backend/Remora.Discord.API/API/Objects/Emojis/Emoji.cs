@@ -23,23 +23,22 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IEmoji" />
-    [PublicAPI]
-    public record Emoji
-    (
-        Snowflake? ID,
-        string? Name,
-        Optional<IReadOnlyList<Snowflake>> Roles = default,
-        Optional<IUser> User = default,
-        Optional<bool> RequireColons = default,
-        Optional<bool> IsManaged = default,
-        Optional<bool> IsAnimated = default,
-        Optional<bool> IsAvailable = default
-    ) : IEmoji;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IEmoji" />
+[PublicAPI]
+public record Emoji
+(
+    Snowflake? ID,
+    string? Name,
+    Optional<IReadOnlyList<Snowflake>> Roles = default,
+    Optional<IUser> User = default,
+    Optional<bool> RequireColons = default,
+    Optional<bool> IsManaged = default,
+    Optional<bool> IsAnimated = default,
+    Optional<bool> IsAvailable = default
+) : IEmoji;

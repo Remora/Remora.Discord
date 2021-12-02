@@ -23,26 +23,26 @@
 using System;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IPartialInvite" />
-    [PublicAPI]
-    public record PartialInvite
-    (
-        Optional<string> Code = default,
-        Optional<IPartialGuild> Guild = default,
-        Optional<IPartialChannel> Channel = default,
-        Optional<IUser> Inviter = default,
-        Optional<InviteTarget> TargetType = default,
-        Optional<IPartialUser> TargetUser = default,
-        Optional<IPartialApplication> TargetApplication = default,
-        Optional<int> ApproximatePresenceCount = default,
-        Optional<int> ApproximateMemberCount = default,
-        Optional<DateTimeOffset?> ExpiresAt = default,
-        Optional<IInviteStageInstance> StageInstance = default
-    ) : IPartialInvite;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IPartialInvite" />
+[PublicAPI]
+public record PartialInvite
+(
+    Optional<string> Code = default,
+    Optional<IPartialGuild> Guild = default,
+    Optional<IPartialChannel> Channel = default,
+    Optional<IUser> Inviter = default,
+    Optional<InviteTarget> TargetType = default,
+    Optional<IPartialUser> TargetUser = default,
+    Optional<IPartialApplication> TargetApplication = default,
+    Optional<int> ApproximatePresenceCount = default,
+    Optional<int> ApproximateMemberCount = default,
+    Optional<DateTimeOffset?> ExpiresAt = default,
+    Optional<IInviteStageInstance> StageInstance = default,
+    Optional<IGuildScheduledEvent> GuildScheduledEvent = default
+) : IPartialInvite;

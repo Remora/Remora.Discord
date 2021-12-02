@@ -25,15 +25,13 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
-    [PublicAPI, Obsolete("Will be removed in API v10.")]
-    public record ThreadQueryResponse
-    (
-        IReadOnlyList<IChannel> Threads,
-        IReadOnlyList<IThreadMember> Members,
-        bool HasMore
-    )
-    : IThreadQueryResponse;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
+[PublicAPI, Obsolete("Will be removed in API v10.")]
+public record ThreadQueryResponse
+(
+    IReadOnlyList<IChannel> Threads,
+    IReadOnlyList<IThreadMember> Members,
+    bool HasMore
+) : IThreadQueryResponse;

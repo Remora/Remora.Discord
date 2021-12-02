@@ -26,16 +26,15 @@ using Remora.Discord.API.Abstractions.Objects;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IAuditLog" />
-    [PublicAPI]
-    public record AuditLog
-    (
-        IReadOnlyList<IAuditLogEntry> AuditLogEntries,
-        IReadOnlyList<IPartialIntegration> Integrations,
-        IReadOnlyList<IChannel> Threads,
-        IReadOnlyList<IUser> Users,
-        IReadOnlyList<IWebhook> Webhooks
-    ) : IAuditLog;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IAuditLog" />
+[PublicAPI]
+public record AuditLog
+(
+    IReadOnlyList<IAuditLogEntry> AuditLogEntries,
+    IReadOnlyList<IPartialIntegration> Integrations,
+    IReadOnlyList<IChannel> Threads,
+    IReadOnlyList<IUser> Users,
+    IReadOnlyList<IWebhook> Webhooks
+) : IAuditLog;

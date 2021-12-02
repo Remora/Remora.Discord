@@ -20,21 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using OneOf;
 using Remora.Commands.Extensions;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Responders;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Commands.Tests.Data.Ephemeral;
 using Remora.Discord.Commands.Tests.Data.Events;
 using Remora.Discord.Commands.Tests.TestBases;
-using Remora.Discord.Core;
 using Remora.Discord.Tests;
+using Remora.Rest.Core;
 using Remora.Results;
 using Xunit;
 
@@ -275,6 +278,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             r.Data.Value.Flags.HasValue &&
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -314,6 +318,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             !r.Data.Value.Flags.HasValue ||
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -354,6 +359,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                 !r.Data.Value.Flags.HasValue ||
                                 (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );
@@ -395,6 +401,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                      !r.Data.Value.Flags.HasValue ||
                                      (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );
@@ -447,6 +454,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             r.Data.Value.Flags.HasValue &&
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -486,6 +494,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                             !r.Data.Value.Flags.HasValue ||
                             (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) != 0
                         ),
+                        It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
                     )
                 );
@@ -526,6 +535,7 @@ namespace Remora.Discord.Commands.Tests.Responders
                                 !r.Data.Value.Flags.HasValue ||
                                 (r.Data.Value.Flags.Value & InteractionCallbackDataFlags.Ephemeral) == 0
                             ),
+                            It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                             It.IsAny<CancellationToken>()
                         )
                     );

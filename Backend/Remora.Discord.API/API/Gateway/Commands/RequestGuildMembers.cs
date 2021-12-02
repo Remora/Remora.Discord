@@ -23,23 +23,75 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a command used to request guild members.
+/// </summary>
+/// <remarks>
+/// This command has some special requirements related to the presence or absence of certain members in the data
+/// payload. Please read <see cref="!:https://discord.com/developers/docs/topics/gateway#request-guild-members"/> for
+/// more information before use, as misuse may cause Discord to terminate the gateway connection.
+/// </remarks>
+[PublicAPI]
+public record RequestGuildMembers
+(
+    Snowflake GuildID,
+    Optional<int> Limit,
+    Optional<bool> Presences,
+    Optional<string> Query,
+    Optional<IReadOnlyList<Snowflake>> UserIDs,
+    Optional<string> Nonce
+) : IRequestGuildMembers
 {
     /// <summary>
-    /// Represents a command used to request guild members.
+    /// Initializes a new instance of the <see cref="RequestGuildMembers"/> class.
     /// </summary>
-    [PublicAPI]
-    public record RequestGuildMembers
+    /// <param name="guildID">The ID of the guild to query.</param>
+    /// <param name="query">
+    /// The string to filter usernames on (that is, usernames should start with this string). Defaults to the empty
+    /// string, which matches all members.
+    /// </param>
+    /// <param name="limit">
+    /// The maximum number of members to return. Defaults to 0, which signifies a request for all members.
+    /// </param>
+    /// <param name="withPresences">true if member presence data should be included; otherwise, false.</param>
+    /// <param name="nonce">A nonce to identify response chunks by.</param>
+    public RequestGuildMembers
     (
-        Snowflake GuildID,
-        int Limit,
-        Optional<bool> Presences = default,
-        Optional<string> Query = default,
-        Optional<IReadOnlyCollection<Snowflake>> UserIDs = default,
-        Optional<string> Nonce = default
-    ) : IRequestGuildMembers;
+        Snowflake guildID,
+        string query = "",
+        int limit = 0,
+        Optional<bool> withPresences = default,
+        Optional<string> nonce = default
+    )
+        : this(guildID, limit, withPresences, query, default, nonce)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RequestGuildMembers"/> class.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild to query.</param>
+    /// <param name="userIDs">The IDs of the users to retrieve.</param>
+    /// <param name="limit">
+    /// The maximum number of members to return. Defaults to 0, which signifies a request for all members.
+    /// </param>
+    /// <param name="withPresences">true if member presence data should be included; otherwise, false.</param>
+    /// <param name="nonce">A nonce to identify response chunks by.</param>
+    public RequestGuildMembers
+    (
+        Snowflake guildID,
+        IReadOnlyList<Snowflake> userIDs,
+        Optional<int> limit = default,
+        Optional<bool> withPresences = default,
+        Optional<string> nonce = default
+    )
+        : this(guildID, limit, withPresences, default, new Optional<IReadOnlyList<Snowflake>>(userIDs), nonce)
+    {
+    }
 }

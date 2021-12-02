@@ -27,6 +27,8 @@ using System.Reflection;
 using Humanizer;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Results;
 
 namespace Remora.Discord.API.Tests.Services
@@ -70,6 +72,24 @@ namespace Remora.Discord.API.Tests.Services
         /// <returns>A retrieval result which may or may not have succeeded.</returns>
         public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleObjectDataSet<TType>()
             => GetSampleDataSet<TType>("Objects");
+
+        /// <summary>
+        /// Gets a sample file for the given voice gateway event type.
+        /// </summary>
+        /// <typeparam name="TType">The gateway type.</typeparam>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleVoiceEventDataSet<TType>()
+            where TType : IVoiceGatewayEvent
+            => GetSampleDataSet<TType>(Path.Combine("VoiceGateway", "Events"));
+
+        /// <summary>
+        /// Gets a sample file for the given voice gateway command type.
+        /// </summary>
+        /// <typeparam name="TType">The gateway type.</typeparam>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        public Result<IReadOnlyList<SampleDataDescriptor>> GetSampleVoiceCommandDataSet<TType>()
+            where TType : IVoiceGatewayCommand
+            => GetSampleDataSet<TType>(Path.Combine("VoiceGateway", "Commands"));
 
         private Result<string> GetBaseSampleDataPath()
         {

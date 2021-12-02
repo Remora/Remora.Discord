@@ -30,82 +30,81 @@ using Remora.Commands.Parsers;
 using Remora.Commands.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Parsers
+namespace Remora.Discord.Commands.Parsers;
+
+/// <summary>
+/// Parses various instances of the <see cref="OneOf{T}"/> type.
+/// </summary>
+public class OneOfParser : AbstractTypeParser
 {
-    /// <summary>
-    /// Parses various instances of the <see cref="OneOf{T}"/> type.
-    /// </summary>
-    public class OneOfParser : AbstractTypeParser
+    private static readonly IReadOnlyList<Type> OneOfTypes = new List<Type>
     {
-        private static readonly IReadOnlyList<Type> OneOfTypes = new List<Type>
-        {
-            typeof(OneOf<>),
-            typeof(OneOf<,>),
-            typeof(OneOf<,,>),
-            typeof(OneOf<,,,>),
-            typeof(OneOf<,,,,>),
-            typeof(OneOf<,,,,,>),
-            typeof(OneOf<,,,,,,>),
-            typeof(OneOf<,,,,,,,>),
-            typeof(OneOf<,,,,,,,,>)
-        };
+        typeof(OneOf<>),
+        typeof(OneOf<,>),
+        typeof(OneOf<,,>),
+        typeof(OneOf<,,,>),
+        typeof(OneOf<,,,,>),
+        typeof(OneOf<,,,,,>),
+        typeof(OneOf<,,,,,,>),
+        typeof(OneOf<,,,,,,,>),
+        typeof(OneOf<,,,,,,,,>)
+    };
 
-        private readonly TypeParserService _typeParserService;
-        private readonly IServiceProvider _services;
+    private readonly TypeParserService _typeParserService;
+    private readonly IServiceProvider _services;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OneOfParser"/> class.
-        /// </summary>
-        /// <param name="typeParserService">The type parser service.</param>
-        /// <param name="services">The available services.</param>
-        public OneOfParser(TypeParserService typeParserService, IServiceProvider services)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OneOfParser"/> class.
+    /// </summary>
+    /// <param name="typeParserService">The type parser service.</param>
+    /// <param name="services">The available services.</param>
+    public OneOfParser(TypeParserService typeParserService, IServiceProvider services)
+    {
+        _typeParserService = typeParserService;
+        _services = services;
+    }
+
+    /// <inheritdoc/>
+    public override bool CanParse(Type type)
+    {
+        if (!type.IsGenericType)
         {
-            _typeParserService = typeParserService;
-            _services = services;
+            return false;
         }
 
-        /// <inheritdoc/>
-        public override bool CanParse(Type type)
+        var genericType = type.GetGenericTypeDefinition();
+        return OneOfTypes.Contains(genericType);
+    }
+
+    /// <inheritdoc/>
+    public override async ValueTask<Result<object?>> TryParseAsync
+    (
+        string token,
+        Type type,
+        CancellationToken ct = default
+    )
+    {
+        var unionTypes = type.GetGenericArguments();
+
+        var errors = new List<IResult>();
+        for (var i = 0; i < unionTypes.Length; i++)
         {
-            if (!type.IsGenericType)
+            var unionType = unionTypes[i];
+            var methodName = $"FromT{i}";
+
+            var tryParse = await _typeParserService.TryParseAsync(_services, token, unionType, ct);
+            if (!tryParse.IsSuccess)
             {
-                return false;
+                errors.Add(tryParse);
+                continue;
             }
 
-            var genericType = type.GetGenericTypeDefinition();
-            return OneOfTypes.Contains(genericType);
+            var method = type.GetMethod(methodName) ?? throw new MissingMethodException();
+
+            var value = tryParse.Entity;
+            return method.Invoke(null, new[] { value });
         }
 
-        /// <inheritdoc/>
-        public override async ValueTask<Result<object?>> TryParseAsync
-        (
-            string token,
-            Type type,
-            CancellationToken ct = default
-        )
-        {
-            var unionTypes = type.GetGenericArguments();
-
-            var errors = new List<IResult>();
-            for (var i = 0; i < unionTypes.Length; i++)
-            {
-                var unionType = unionTypes[i];
-                var methodName = $"FromT{i}";
-
-                var tryParse = await _typeParserService.TryParseAsync(_services, token, unionType, ct);
-                if (!tryParse.IsSuccess)
-                {
-                    errors.Add(tryParse);
-                    continue;
-                }
-
-                var method = type.GetMethod(methodName) ?? throw new MissingMethodException();
-
-                var value = tryParse.Entity;
-                return method.Invoke(null, new[] { value });
-            }
-
-            return new AggregateError(errors, $"\"{token}\" could not be parsed as any of the OneOf members.");
-        }
+        return new AggregateError(errors, $"\"{token}\" could not be parsed as any of the OneOf members.");
     }
 }

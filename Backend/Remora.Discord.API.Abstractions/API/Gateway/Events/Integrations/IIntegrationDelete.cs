@@ -21,7 +21,7 @@
 //
 
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Gateway.Events
 {

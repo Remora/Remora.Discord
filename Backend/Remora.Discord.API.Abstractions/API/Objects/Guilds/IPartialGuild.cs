@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects
 {
@@ -176,5 +176,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.Stickers"/>
         Optional<IReadOnlyList<ISticker>> Stickers { get; }
+
+        /// <inheritdoc cref="IGuild.GuildScheduledEvents"/>
+        Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
     }
 }

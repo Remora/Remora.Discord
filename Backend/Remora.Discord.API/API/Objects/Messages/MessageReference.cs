@@ -22,19 +22,18 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Objects
-{
-    /// <inheritdoc cref="IMessageReference" />
-    [PublicAPI]
-    public record MessageReference
-    (
-        Optional<Snowflake> MessageID = default,
-        Optional<Snowflake> ChannelID = default,
-        Optional<Snowflake> GuildID = default,
-        Optional<bool> FailIfNotExists = default
-    ) : IMessageReference;
-}
+namespace Remora.Discord.API.Objects;
+
+/// <inheritdoc cref="IMessageReference" />
+[PublicAPI]
+public record MessageReference
+(
+    Optional<Snowflake> MessageID = default,
+    Optional<Snowflake> ChannelID = default,
+    Optional<Snowflake> GuildID = default,
+    Optional<bool> FailIfNotExists = default
+) : IMessageReference;

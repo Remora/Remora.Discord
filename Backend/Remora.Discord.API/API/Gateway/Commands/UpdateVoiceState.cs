@@ -22,21 +22,20 @@
 
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.API.Gateway.Commands
-{
-    /// <summary>
-    /// Represents a command to update the voice state of the client.
-    /// </summary>
-    [PublicAPI]
-    public record UpdateVoiceState
-    (
-        Snowflake GuildID,
-        bool IsSelfMuted,
-        bool IsSelfDeafened,
-        Snowflake? ChannelID = null
-    ) : IUpdateVoiceState;
-}
+namespace Remora.Discord.API.Gateway.Commands;
+
+/// <summary>
+/// Represents a command to update the voice state of the client.
+/// </summary>
+[PublicAPI]
+public record UpdateVoiceState
+(
+    Snowflake GuildID,
+    bool IsSelfMuted,
+    bool IsSelfDeafened,
+    Snowflake? ChannelID = null
+) : IUpdateVoiceState;

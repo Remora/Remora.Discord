@@ -26,47 +26,39 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Core;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Gateway.Events
+namespace Remora.Discord.API.Gateway.Events;
+
+/// <inheritdoc cref="IGuildMemberAdd" />
+[PublicAPI]
+public record GuildMemberAdd
+(
+    Optional<IUser> User,
+    Optional<string?> Nickname,
+    Optional<IImageHash?> Avatar,
+    IReadOnlyList<Snowflake> Roles,
+    DateTimeOffset JoinedAt,
+    Optional<DateTimeOffset?> PremiumSince,
+    bool IsDeafened,
+    bool IsMuted,
+    Optional<bool?> IsPending,
+    Snowflake GuildID,
+    Optional<IDiscordPermissionSet> Permissions = default
+) : GuildMember
+(
+    User,
+    Nickname,
+    Avatar,
+    Roles,
+    JoinedAt,
+    PremiumSince,
+    IsDeafened,
+    IsMuted,
+    IsPending,
+    Permissions
+), IGuildMemberAdd
 {
-    /// <inheritdoc cref="IGuildMemberAdd" />
-    [PublicAPI]
-    public record GuildMemberAdd : GuildMember, IGuildMemberAdd
-    {
-        /// <inheritdoc />
-        public Snowflake GuildID { get; }
-
-        /// <inheritdoc cref="GuildMember"/>
-        public GuildMemberAdd
-        (
-            Optional<IUser> user,
-            Optional<string?> nickname,
-            Optional<IImageHash?> avatar,
-            IReadOnlyList<Snowflake> roles,
-            DateTimeOffset joinedAt,
-            Optional<DateTimeOffset?> premiumSince,
-            bool isDeafened,
-            bool isMuted,
-            Optional<bool?> isPending,
-            Snowflake guildID,
-            Optional<IDiscordPermissionSet> permissions = default
-        )
-            : base
-            (
-                user,
-                nickname,
-                avatar,
-                roles,
-                joinedAt,
-                premiumSince,
-                isDeafened,
-                isMuted,
-                isPending,
-                permissions
-            )
-        {
-            this.GuildID = guildID;
-        }
-    }
+    /// <inheritdoc cref="GuildMember"/>
+    public Snowflake GuildID { get; } = GuildID;
 }
