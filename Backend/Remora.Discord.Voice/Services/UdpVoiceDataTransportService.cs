@@ -35,7 +35,7 @@ using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.Voice.Abstractions;
 using Remora.Discord.Voice.Abstractions.Services;
 using Remora.Discord.Voice.Errors;
-using Remora.Discord.Voice.Interop;
+using Remora.Discord.Voice.Interop.Sodium;
 using Remora.Discord.Voice.Objects.UdpDataProtocol;
 using Remora.Discord.Voice.Util;
 using Remora.Results;
@@ -131,28 +131,22 @@ namespace Remora.Discord.Voice.Services
                 new IPDiscoveryRequest
                 (
                     voiceServerDetails.SSRC,
-                    discoveryBufferSize - sizeof(ushort) - sizeof(ushort)
+                    IPDiscoveryRequest.CalculateEmbeddedLength(discoveryBufferSize)
                 ).Pack(discoveryBuffer.Memory.Span);
 
                 await _client.Client.SendAsync(discoveryBuffer.Memory[0..discoveryBufferSize], SocketFlags.None, ct).ConfigureAwait(false);
 
                 using CancellationTokenSource cts = new(1000);
-
                 var bytesRead = await _client.Client.ReceiveAsync(discoveryBuffer.Memory, SocketFlags.None, cts.Token).ConfigureAwait(false);
                 if (bytesRead != discoveryBufferSize)
                 {
-                    return new VoiceUdpError("Failed to receive an IP discovery packet.");
-                }
-
-                var packetType = BinaryPrimitives.ReadUInt16BigEndian(discoveryBuffer.Memory.Span);
-                if (packetType != (ushort)IPDiscoveryPacketType.Response)
-                {
-                    return new VoiceUdpError("Failed to receive an IP discovery response");
+                    return new VoiceUdpError("Failed to receive an IP discovery packet: timed out.");
                 }
 
                 this.IsConnected = true;
                 _ssrc = voiceServerDetails.SSRC;
 
+                // This method also checks that the packet is valid
                 return IPDiscoveryResponse.Unpack(discoveryBuffer.Memory.Span);
             }
             catch (Exception ex)

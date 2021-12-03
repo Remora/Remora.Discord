@@ -337,7 +337,7 @@ namespace Remora.Discord.Voice.Services
         /// <summary>
         /// Constructs a relevant error for the websocket having closed.
         /// </summary>
-        /// <remarks>Assumes the <see cref="_clientWebSocket"/> field to be non-null.</remarks>
+        /// <remarks>Assumes the <see cref="_clientWebSocket"/> and its CloseStatus field to be non-null.</remarks>
         /// <returns>A <see cref="VoiceGatewayDiscordError"/> or <see cref="VoiceGatewayWebSocketError"/>.</returns>
         private ResultError ConstructCloseError()
         {

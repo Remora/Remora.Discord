@@ -28,7 +28,7 @@ using Remora.Results;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 
-namespace Remora.Discord.Voice.Interop
+namespace Remora.Discord.Voice.Interop.Sodium
 {
     /// <summary>
     /// Represents an interface to the native libsodium library.

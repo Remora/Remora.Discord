@@ -22,8 +22,11 @@
 
 using System;
 using System.Buffers.Binary;
+using System.Runtime.CompilerServices;
 using System.Text;
 using JetBrains.Annotations;
+using Remora.Discord.Voice.Errors;
+using Remora.Results;
 
 namespace Remora.Discord.Voice.Objects.UdpDataProtocol
 {
@@ -50,9 +53,15 @@ namespace Remora.Discord.Voice.Objects.UdpDataProtocol
         /// </summary>
         /// <param name="unpackFrom">The data to unpack from.</param>
         /// <returns>An <see cref="IPDiscoveryResponse"/> object.</returns>
-        public static IPDiscoveryResponse Unpack(ReadOnlySpan<byte> unpackFrom)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Result<IPDiscoveryResponse> Unpack(ReadOnlySpan<byte> unpackFrom)
         {
             IPDiscoveryPacketType type = (IPDiscoveryPacketType)BinaryPrimitives.ReadUInt16BigEndian(unpackFrom);
+            if (type is not IPDiscoveryPacketType.Response)
+            {
+                return new VoiceUdpError($"The provided buffer does not appear to contain an ${nameof(IPDiscoveryResponse)} packet.");
+            }
+
             ushort length = BinaryPrimitives.ReadUInt16BigEndian(unpackFrom[2..]);
             uint ssrc = BinaryPrimitives.ReadUInt32BigEndian(unpackFrom[4..]);
             string address = Encoding.UTF8.GetString(unpackFrom[8..72]);

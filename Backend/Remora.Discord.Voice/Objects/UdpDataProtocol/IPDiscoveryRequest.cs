@@ -52,5 +52,14 @@ namespace Remora.Discord.Voice.Objects.UdpDataProtocol
             BinaryPrimitives.WriteUInt16BigEndian(packTo[2..], Length);
             BinaryPrimitives.WriteUInt32BigEndian(packTo[4..], SSRC);
         }
+
+        /// <summary>
+        /// Calculates the value of the <see cref="Length"/> property from the given buffer size.
+        /// </summary>
+        /// <param name="bufferSize">The size of the buffer that will be used to store the packet.</param>
+        /// <returns>The value that should be used for the <see cref="Length"/> property.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ushort CalculateEmbeddedLength(int bufferSize)
+            => (ushort)(bufferSize - sizeof(ushort) - sizeof(ushort));
     }
 }
