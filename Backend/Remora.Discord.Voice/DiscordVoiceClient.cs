@@ -313,8 +313,8 @@ namespace Remora.Discord.Voice
             var needsRelease = false;
 
             var sampleSize = transcoder.SampleSize;
-            IMemoryOwner<byte> inputBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
-            IMemoryOwner<byte> opusBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
+            var inputBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
+            var opusBuffer = MemoryPool<byte>.Shared.Rent(sampleSize);
 
             try
             {
@@ -326,9 +326,9 @@ namespace Remora.Discord.Voice
                 needsRelease = true;
 
                 // From https://github.com/DSharpPlus/DSharpPlus/blob/master/DSharpPlus.VoiceNext/VoiceNextConnection.cs
-                double synchronizerTicks = Stopwatch.GetTimestamp();
-                double synchronizerResolution = Stopwatch.Frequency * 0.005;
-                double tickResolution = 10_000_000.0 / Stopwatch.Frequency;
+                var synchronizerTicks = (double)Stopwatch.GetTimestamp();
+                var synchronizerResolution = Stopwatch.Frequency * 0.005;
+                var tickResolution = 10_000_000.0 / Stopwatch.Frequency;
 
                 EnqueueCommand
                 (
