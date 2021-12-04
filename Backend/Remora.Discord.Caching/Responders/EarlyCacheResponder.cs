@@ -49,6 +49,7 @@ namespace Remora.Discord.Caching.Responders
         IResponder<IGuildRoleCreate>,
         IResponder<IGuildRoleUpdate>,
         IResponder<IMessageCreate>,
+        IResponder<IMessageUpdate>,
         IResponder<IMessageReactionAdd>,
         IResponder<IUserUpdate>,
         IResponder<IInteractionCreate>
@@ -234,6 +235,25 @@ namespace Remora.Discord.Caching.Responders
         {
             var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
             _cacheService.Cache<IMessage>(key, gatewayEvent);
+
+            return Task.FromResult(Result.FromSuccess());
+        }
+
+        /// <inheritdoc/>
+        public Task<Result> RespondAsync(IMessageUpdate gatewayEvent, CancellationToken ct = default)
+        {
+            if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
+            {
+                return Task.FromResult(Result.FromSuccess());
+            }
+
+            if (!gatewayEvent.ID.IsDefined(out var messageID))
+            {
+                return Task.FromResult(Result.FromSuccess());
+            }
+
+            var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
+            _cacheService.Cache(key, gatewayEvent);
 
             return Task.FromResult(Result.FromSuccess());
         }
