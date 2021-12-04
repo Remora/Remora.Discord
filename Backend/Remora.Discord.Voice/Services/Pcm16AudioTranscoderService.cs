@@ -72,7 +72,7 @@ namespace Remora.Discord.Voice.Services
         /// <inheritdoc />
         public Result Initialize(OpusApplicationDefinition audioType = OpusApplicationDefinition.Audio)
         {
-            Result<OpusEncoder> createEncoder = OpusEncoder.Create(audioType);
+            var createEncoder = OpusEncoder.Create(audioType);
             if (!createEncoder.IsSuccess)
             {
                 return Result.FromError(createEncoder);

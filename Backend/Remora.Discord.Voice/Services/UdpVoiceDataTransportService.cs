@@ -42,7 +42,7 @@ using Remora.Results;
 
 namespace Remora.Discord.Voice.Services
 {
-    // TODO: Latency
+    // TODO: Latency, heartbeating, voice speaking synthesis
 
     /// <summary>
     /// Represents a UDP-based transport service for voice data.
@@ -120,13 +120,13 @@ namespace Remora.Discord.Voice.Services
         /// <inheritdoc />
         public async Task<Result<IPDiscoveryResponse>> ConnectAsync(IVoiceReady voiceServerDetails, CancellationToken ct = default)
         {
-            const int discoveryBufferSize = 74;
+            const int discoveryBufferSize = IPDiscoveryResponse.PacketLength;
 
             try
             {
                 _client.Connect(voiceServerDetails.IP, voiceServerDetails.Port);
 
-                using IMemoryOwner<byte> discoveryBuffer = MemoryPool<byte>.Shared.Rent(discoveryBufferSize);
+                using var discoveryBuffer = MemoryPool<byte>.Shared.Rent(discoveryBufferSize);
 
                 new IPDiscoveryRequest
                 (
@@ -136,7 +136,7 @@ namespace Remora.Discord.Voice.Services
 
                 await _client.Client.SendAsync(discoveryBuffer.Memory[0..discoveryBufferSize], SocketFlags.None, ct).ConfigureAwait(false);
 
-                using CancellationTokenSource cts = new(1000);
+                using var cts = new CancellationTokenSource(1000);
                 var bytesRead = await _client.Client.ReceiveAsync(discoveryBuffer.Memory, SocketFlags.None, cts.Token).ConfigureAwait(false);
                 if (bytesRead != discoveryBufferSize)
                 {

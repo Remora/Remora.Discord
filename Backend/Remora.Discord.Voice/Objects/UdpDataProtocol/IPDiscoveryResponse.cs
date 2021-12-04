@@ -49,6 +49,11 @@ namespace Remora.Discord.Voice.Objects.UdpDataProtocol
     )
     {
         /// <summary>
+        /// Gets the length in bytes of a discovery response packet.
+        /// </summary>
+        public const int PacketLength = 74;
+
+        /// <summary>
         /// Unpacks from raw data.
         /// </summary>
         /// <param name="unpackFrom">The data to unpack from.</param>
@@ -56,6 +61,11 @@ namespace Remora.Discord.Voice.Objects.UdpDataProtocol
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Result<IPDiscoveryResponse> Unpack(ReadOnlySpan<byte> unpackFrom)
         {
+            if (unpackFrom.Length < PacketLength)
+            {
+                return new ArgumentOutOfRangeError($"The provided buffer must be at least {PacketLength} bytes.");
+            }
+
             IPDiscoveryPacketType type = (IPDiscoveryPacketType)BinaryPrimitives.ReadUInt16BigEndian(unpackFrom);
             if (type is not IPDiscoveryPacketType.Response)
             {
