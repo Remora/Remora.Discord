@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>44.0.1</Version>
+        <Version>44.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -21,7 +21,7 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
         <PackageReference Include="System.Text.Json" Version="6.0.0" />
-        <PackageReference Include="Remora.Rest" Version="1.1.1" />
+        <PackageReference Include="Remora.Rest" Version="1.1.2" />
     </ItemGroup>
 
     <ItemGroup>

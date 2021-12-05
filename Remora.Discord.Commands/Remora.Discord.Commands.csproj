@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>14.0.2</Version>
+        <Version>14.0.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -23,7 +23,7 @@
     <ItemGroup>
         <PackageReference Include="FuzzySharp" Version="2.0.2" />
         <PackageReference Include="Humanizer.Core" Version="2.13.14" />
-        <PackageReference Include="Remora.Commands" Version="7.1.4" />
+        <PackageReference Include="Remora.Commands" Version="7.1.5" />
         <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.1" />
     </ItemGroup>
 
