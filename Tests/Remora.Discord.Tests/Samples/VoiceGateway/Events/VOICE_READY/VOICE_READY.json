@@ -1,0 +1,13 @@
+{
+    "op": 2,
+    "d": {
+        "ssrc": 1,
+        "ip": "127.0.0.1",
+        "port": 1234,
+        "modes": [
+            "xsalsa20_poly1305",
+            "xsalsa20_poly1305_suffix",
+            "xsalsa20_poly1305_lite"
+        ]
+    }
+}

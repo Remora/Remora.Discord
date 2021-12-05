@@ -37,6 +37,7 @@ namespace Remora.Discord.Caching.Services
     public class CacheService
     {
         private readonly IMemoryCache _memoryCache;
+        private readonly IMemoryCache _evictionCache;
         private readonly CacheSettings _cacheSettings;
 
         /// <summary>
@@ -44,10 +45,17 @@ namespace Remora.Discord.Caching.Services
         /// </summary>
         /// <param name="memoryCache">The memory cache.</param>
         /// <param name="cacheSettings">The cache settings.</param>
-        public CacheService(IMemoryCache memoryCache, IOptions<CacheSettings> cacheSettings)
+        /// <param name="memoryCacheOptions">The memory cache options.</param>
+        public CacheService
+        (
+            IMemoryCache memoryCache,
+            IOptions<CacheSettings> cacheSettings,
+            IOptions<MemoryCacheOptions> memoryCacheOptions
+        )
         {
             _memoryCache = memoryCache;
             _cacheSettings = cacheSettings.Value;
+            _evictionCache = new MemoryCache(memoryCacheOptions);
         }
 
         /// <summary>
@@ -93,11 +101,31 @@ namespace Remora.Discord.Caching.Services
         }
 
         /// <summary>
-        /// Evicts the instance with the given key from the cache.
+        /// Attempts to retrieve the previous value of the given key from the eviction cache.
         /// </summary>
         /// <param name="key">The cache key.</param>
-        public void Evict(object key)
+        /// <param name="cachedInstance">The previous instance, if any.</param>
+        /// <typeparam name="TInstance">The instance type.</typeparam>
+        /// <returns>true if an instance was retrieved; otherwise, false.</returns>
+        public bool TryGetPreviousValue<TInstance>(object key, [NotNullWhen(true)] out TInstance? cachedInstance)
+            where TInstance : class
         {
+            return _evictionCache.TryGetValue(key, out cachedInstance);
+        }
+
+        /// <summary>
+        /// Evicts the instance with the given key from the cache.
+        /// </summary>
+        /// <typeparam name="TInstance">The type of the value.</typeparam>
+        /// <param name="key">The cache key.</param>
+        public void Evict<TInstance>(object key)
+            where TInstance : class
+        {
+            if (_memoryCache.TryGetValue(key, out var existing))
+            {
+                _evictionCache.Set(key, existing, _cacheSettings.GetEntryOptions<TInstance>());
+            }
+
             _memoryCache.Remove(key);
         }
 
@@ -307,7 +335,13 @@ namespace Remora.Discord.Caching.Services
         private void CacheInstance<TInstance>(object key, TInstance instance)
             where TInstance : class
         {
-            _memoryCache.Set(key, instance, _cacheSettings.GetEntryOptions<TInstance>());
+            var entryOptions = _cacheSettings.GetEntryOptions<TInstance>();
+            if (_memoryCache.TryGetValue<TInstance>(key, out var existing))
+            {
+                _evictionCache.Set(key, existing, entryOptions);
+            }
+
+            _memoryCache.Set(key, instance, entryOptions);
         }
     }
 }

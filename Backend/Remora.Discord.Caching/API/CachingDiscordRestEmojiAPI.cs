@@ -153,7 +153,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateEmojiCacheKey(guildID, emojiID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IEmoji>(key);
 
             return deleteResult;
         }

@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
@@ -59,7 +60,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IChannelDelete gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateChannelCacheKey(gatewayEvent.ID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IChannel>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -68,7 +69,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IGuildBanRemove gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildBanCacheKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IBan>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -77,7 +78,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.GuildID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IGuild>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -86,7 +87,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IGuildMemberRemove gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildMemberKey(gatewayEvent.GuildID, gatewayEvent.User.ID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IGuildMember>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -95,7 +96,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IGuildRoleDelete gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateGuildRoleCacheKey(gatewayEvent.GuildID, gatewayEvent.RoleID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IRole>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -104,7 +105,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IInviteDelete gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateInviteCacheKey(gatewayEvent.Code);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IInvite>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -113,7 +114,7 @@ namespace Remora.Discord.Caching.Responders
         public Task<Result> RespondAsync(IMessageDelete gatewayEvent, CancellationToken ct = default)
         {
             var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, gatewayEvent.ID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return Task.FromResult(Result.FromSuccess());
         }
@@ -124,7 +125,7 @@ namespace Remora.Discord.Caching.Responders
             foreach (var messageID in gatewayEvent.IDs)
             {
                 var key = KeyHelpers.CreateMessageCacheKey(gatewayEvent.ChannelID, messageID);
-                _cacheService.Evict(key);
+                _cacheService.Evict<IMessage>(key);
             }
 
             return Task.FromResult(Result.FromSuccess());

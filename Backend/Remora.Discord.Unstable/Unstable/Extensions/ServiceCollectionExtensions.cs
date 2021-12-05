@@ -20,12 +20,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Linq;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Extensions;
+using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Gateway.Events;
+using Remora.Discord.API.Json;
+using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
 
 namespace Remora.Discord.Unstable.Extensions
@@ -40,16 +43,23 @@ namespace Remora.Discord.Unstable.Extensions
         /// Adds experimental features from the Discord API.
         /// </summary>
         /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="optionsName">The name of the serializer options, if any. You should probably leave this set to the default value.</param>
         /// <returns>The service collection, with the services.</returns>
         public static IServiceCollection AddExperimentalDiscordApi
         (
-            this IServiceCollection serviceCollection
+            this IServiceCollection serviceCollection,
+            string? optionsName = "Discord"
         )
         {
-            serviceCollection.Configure<JsonSerializerOptions>(jsonOptions =>
+            serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
             {
+                jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
+
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
                 jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
+
+                jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
+                jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
             });
 
             return serviceCollection;

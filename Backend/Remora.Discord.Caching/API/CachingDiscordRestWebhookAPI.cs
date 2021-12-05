@@ -94,7 +94,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IWebhook>(key);
 
             return deleteWebhook;
         }
@@ -276,7 +276,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateWebhookCacheKey(webhookID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IWebhook>(key);
 
             return deleteWebhook;
         }
@@ -388,7 +388,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return result;
         }

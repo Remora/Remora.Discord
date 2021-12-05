@@ -104,7 +104,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IInvite>(key);
 
             return deleteInvite;
         }
