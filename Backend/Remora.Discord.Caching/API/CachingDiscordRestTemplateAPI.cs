@@ -118,7 +118,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
-            _cacheService.Evict(key);
+            _cacheService.Evict<ITemplate>(key);
 
             return deleteTemplate;
         }

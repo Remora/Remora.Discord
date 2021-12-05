@@ -161,7 +161,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateChannelCacheKey(channelID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IChannel>(key);
 
             return deleteResult;
         }
@@ -290,7 +290,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return deleteResult;
         }
@@ -313,7 +313,7 @@ namespace Remora.Discord.Caching.API
             foreach (var messageID in messageIDs)
             {
                 var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-                _cacheService.Evict(key);
+                _cacheService.Evict<IMessage>(key);
             }
 
             return deleteResult;
@@ -376,7 +376,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateChannelPermissionCacheKey(channelID, overwriteID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IPermissionOverwrite>(key);
 
             return deleteResult;
         }
@@ -428,7 +428,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateMessageCacheKey(channelID, messageID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return deleteResult;
         }
@@ -756,7 +756,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateThreadMemberCacheKey(channelID, userID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IThreadMember>(key);
 
             return result;
         }

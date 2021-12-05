@@ -121,7 +121,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return result;
         }
@@ -276,7 +276,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IMessage>(key);
 
             return result;
         }

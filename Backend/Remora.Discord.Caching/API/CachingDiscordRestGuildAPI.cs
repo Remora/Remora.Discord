@@ -233,7 +233,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateGuildCacheKey(guildID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IGuild>(key);
 
             return deleteResult;
         }
@@ -476,7 +476,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var memberKey = KeyHelpers.CreateGuildMemberKey(guildID, userID);
-            _cacheService.Evict(memberKey);
+            _cacheService.Evict<IGuildMember>(memberKey);
 
             return removeMember;
         }
@@ -554,7 +554,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateGuildBanCacheKey(guildID, userID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IBan>(key);
 
             return deleteResult;
         }
@@ -719,7 +719,7 @@ namespace Remora.Discord.Caching.API
             }
 
             var key = KeyHelpers.CreateGuildRoleCacheKey(guildId, roleID);
-            _cacheService.Evict(key);
+            _cacheService.Evict<IRole>(key);
 
             return deleteResult;
         }
