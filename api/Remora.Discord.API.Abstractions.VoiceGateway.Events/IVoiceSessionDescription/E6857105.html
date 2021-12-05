@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - CacheService.CacheService(IMemoryCache, IOptions&lt;CacheSettings&gt;) Constructor</title>
+        <title>Remora.Discord Documentation - API - IVoiceSessionDescription.SecretKey Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,14 +134,13 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services">Remora<wbr>.Discord<wbr>.Caching<wbr>.Services</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.VoiceGateway<wbr>.Events</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription">I<wbr>Voice<wbr>Session<wbr>Description</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Constructors</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService/BF413AA0">CacheService<wbr>(IMemoryCache, <wbr>IOptions<wbr>&lt;<wbr>Cache<wbr>Settings&gt;<wbr>)<wbr></a></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService/785512FE">Cache<wbr>&lt;TInstance&gt;<wbr><wbr>(object, <wbr>TInstance)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription/BD5622CB">Mode</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription/E6857105">SecretKey</a></li>
 
 
                     </ul>
@@ -157,64 +155,39 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a>.</h3>
-	<h1>CacheService<wbr>(IMemoryCache, <wbr>IOptions<wbr>&lt;<wbr>Cache<wbr>Settings&gt;<wbr>)<wbr> <small>Constructor</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription">I<wbr>Voice<wbr>Session<wbr>Description</a>.</h3>
+	<h1>SecretKey <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Initializes a new instance of the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a></code> class.
+    Gets the shared secret session key.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
+  			<div class="panel-body">
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.Services">Remora<wbr>.Discord<wbr>.Caching<wbr>.Services</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.VoiceGateway<wbr>.Events</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService">CacheService</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription">I<wbr>Voice<wbr>Session<wbr>Description</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public CacheService(IMemoryCache memoryCache, IOptions&lt;CacheSettings&gt; cacheSettings)</code></pre>
+	<pre><code>IReadOnlyList&lt;byte&gt; SecretKey { get; }</code></pre>
 
 
 
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>memoryCache</td>
-						<td>IMemoryCache</td>
-						<td>The memory cache.</td>
-					</tr>
-					<tr>
-						<td>cacheSettings</td>
-						<td>IOptions<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings">CacheSettings</a>&gt;<wbr></td>
-						<td>The cache settings.</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -225,7 +198,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>void</td>
+					<td>IReadOnlyList<wbr>&lt;byte&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
