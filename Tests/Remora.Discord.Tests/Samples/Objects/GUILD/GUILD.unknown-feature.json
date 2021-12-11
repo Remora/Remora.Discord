@@ -39,5 +39,6 @@
   "preferred_locale": "en-US",
   "rules_channel_id": "999999999999999999",
   "public_updates_channel_id": "999999999999999999",
-  "nsfw_level": 0
+  "nsfw_level": 0,
+  "premium_progress_bar_enabled": true
 }

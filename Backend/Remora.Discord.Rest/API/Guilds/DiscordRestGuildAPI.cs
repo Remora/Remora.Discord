@@ -184,6 +184,7 @@ namespace Remora.Discord.Rest.API
             Optional<string?> preferredLocale = default,
             Optional<IReadOnlyList<GuildFeature>> features = default,
             Optional<string?> description = default,
+            Optional<bool> isPremiumProgressBarEnabled = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -255,6 +256,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("preferred_locale", preferredLocale, this.JsonOptions);
                         json.Write("features", features, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
+                        json.Write("premium_progress_bar_enabled", isPremiumProgressBarEnabled, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(),

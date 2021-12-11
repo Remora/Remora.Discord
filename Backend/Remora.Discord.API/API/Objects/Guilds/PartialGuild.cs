@@ -82,5 +82,6 @@ public record PartialGuild
     Optional<GuildNSFWLevel> NSFWLevel = default,
     Optional<IReadOnlyList<IStageInstance>> StageInstances = default,
     Optional<IReadOnlyList<ISticker>> Stickers = default,
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents = default
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents = default,
+    Optional<bool> IsPremiumProgressBarEnabled = default
 ) : IPartialGuild;

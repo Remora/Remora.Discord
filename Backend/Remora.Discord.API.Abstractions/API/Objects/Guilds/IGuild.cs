@@ -280,6 +280,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// </summary>
         new Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether the guild has the boost progress bar enabled.
+        /// </summary>
+        new bool IsPremiumProgressBarEnabled { get; }
+
         /// <inheritdoc/>
         Optional<Snowflake> IPartialGuild.ID => this.ID;
 
@@ -426,5 +431,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<IReadOnlyList<IGuildScheduledEvent>> IPartialGuild.GuildScheduledEvents => this.GuildScheduledEvents;
+
+        /// <inheritdoc/>
+        Optional<bool> IPartialGuild.IsPremiumProgressBarEnabled => this.IsPremiumProgressBarEnabled;
     }
 }

@@ -246,6 +246,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
@@ -255,6 +256,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
@@ -549,6 +551,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
@@ -558,6 +561,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildMember, GuildMember>()

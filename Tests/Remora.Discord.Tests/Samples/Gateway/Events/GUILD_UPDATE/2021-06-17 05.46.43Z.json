@@ -393,6 +393,7 @@
     "premium_subscription_count": 0,
     "mfa_level": 0,
     "afk_channel_id": null,
-    "max_presences": null
+    "max_presences": null,
+    "premium_progress_bar_enabled": true
   }
 }
