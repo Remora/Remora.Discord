@@ -165,6 +165,21 @@ namespace Remora.Discord.Rest.API
             );
         }
 
+        /// <inheritdoc/>
+        public virtual Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            return this.RestHttpClient.GetAsync<IGuildMember>
+            (
+                $"users/@me/guilds/{guildID}/member",
+                b => b.WithRateLimitContext(),
+                ct: ct
+            );
+        }
+
         /// <inheritdoc />
         public virtual Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
         (

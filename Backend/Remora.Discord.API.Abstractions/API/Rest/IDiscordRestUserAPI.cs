@@ -83,6 +83,17 @@ namespace Remora.Discord.API.Abstractions.Rest
         );
 
         /// <summary>
+        /// Gets a guild member object for the current user.
+        /// </summary>
+        /// <remarks>
+        /// Requires the "guild.members.read" OAuth" scope.
+        /// </remarks>
+        /// <param name="guildID">The ID of the guild.</param>
+        /// <param name="ct">The cancellation token for this operation.</param>
+        /// <returns>A retrieval result which may or may not have succeeded.</returns>
+        Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync(Snowflake guildID, CancellationToken ct = default);
+
+        /// <summary>
         /// Leaves the given guild.
         /// </summary>
         /// <param name="guildID">The ID of the guild.</param>
