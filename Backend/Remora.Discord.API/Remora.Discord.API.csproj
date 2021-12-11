@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>44.0.2</Version>
+        <Version>45.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,14 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Some events are no longer experimental.
+            Implement new method to get guild members.
+            Update nullability of IInvite::Channel.
+            Implement new error code.
+            Add new error code.
+            Implement GuildScheduledEvents in the audit log.
+            Implement server boost bar.
+            Remove username and avatarUrl from CreateFollowupMessage.
         </PackageReleaseNotes>
     </PropertyGroup>
 
