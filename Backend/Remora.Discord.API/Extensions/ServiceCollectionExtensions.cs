@@ -607,6 +607,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildScheduledEventUser, GuildScheduledEventUser>();
         options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
 
+        options.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
+        options.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
+
         return options;
     }
 
