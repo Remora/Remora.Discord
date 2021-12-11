@@ -349,8 +349,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate">IGuildUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate">IGuildCreate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate">IGuildUpdate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -362,10 +362,10 @@
 	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild"
 	Type["IGuild"]
 class Type type-node
-	Implementing0["IGuildUpdate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate"
-	Implementing1["IGuildCreate"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate"
+	Implementing0["IGuildCreate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate"
+	Implementing1["IGuildUpdate"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate"
 
 						</div>
 					</div>
@@ -573,6 +573,15 @@ public interface IGuild : IPartialGuild</code></pre>
 								<td>
 									<div>
     Gets a value indicating whether the current user is the guild's owner.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild/18981266">Is<wbr>Premium<wbr>Progress<wbr>Bar<wbr>Enabled</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Gets a value indicating whether the guild has the boost progress bar enabled.
     </div>
 								</td>
 							</tr>
