@@ -769,8 +769,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                 var token = "aa";
 
                 var content = "brr";
-                var username = "aaaag";
-                var avatarUrl = "http://aaaa";
                 var tts = false;
                 var allowedMentions = new AllowedMentions();
                 var components = new List<IMessageComponent>();
@@ -786,8 +784,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                             (
                                 o => o
                                     .WithProperty("content", p => p.Is(content))
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                                     .WithProperty("components", p => p.IsArray())
@@ -802,8 +798,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     applicationID,
                     token,
                     content,
-                    username,
-                    avatarUrl,
                     tts,
                     allowedMentions: allowedMentions,
                     components: components,
@@ -824,8 +818,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                 var token = "aa";
 
                 var embeds = new List<Embed>();
-                var username = "aaaag";
-                var avatarUrl = "http://aaaa";
                 var tts = false;
                 var allowedMentions = new AllowedMentions();
 
@@ -839,8 +831,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                             (
                                 o => o
                                     .WithProperty("embeds", p => p.IsArray())
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar_url", p => p.Is(avatarUrl))
                                     .WithProperty("tts", p => p.Is(tts))
                                     .WithProperty("allowed_mentions", p => p.IsObject())
                             )
@@ -852,8 +842,6 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                 (
                     applicationID,
                     token,
-                    username: username,
-                    avatarUrl: avatarUrl,
                     isTTS: tts,
                     embeds: embeds,
                     allowedMentions: allowedMentions

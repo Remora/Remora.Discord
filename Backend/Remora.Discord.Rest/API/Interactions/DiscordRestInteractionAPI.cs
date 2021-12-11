@@ -245,8 +245,6 @@ namespace Remora.Discord.Rest.API
             Snowflake applicationID,
             string token,
             Optional<string> content = default,
-            Optional<string> username = default,
-            Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,
@@ -293,8 +291,6 @@ namespace Remora.Discord.Rest.API
                         json =>
                         {
                             json.Write("content", content, this.JsonOptions);
-                            json.Write("username", username, this.JsonOptions);
-                            json.Write("avatar_url", avatarUrl, this.JsonOptions);
                             json.Write("tts", isTTS, this.JsonOptions);
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
