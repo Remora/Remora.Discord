@@ -39,7 +39,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialGuild> Guild { get; }
 
         /// <inheritdoc cref="IInvite.Channel" />
-        Optional<IPartialChannel> Channel { get; }
+        Optional<IPartialChannel?> Channel { get; }
 
         /// <inheritdoc cref="IInvite.Inviter" />
         Optional<IUser> Inviter { get; }
