@@ -282,6 +282,11 @@ namespace Remora.Discord.API.Abstractions.Results
         WriteRateLimitHit = 20028,
 
         /// <summary>
+        /// The write action you are performing on the server has hit the write rate limit.
+        /// </summary>
+        ServerWriteRateLimitHit = 20029,
+
+        /// <summary>
         /// Your stage channel topic, server name, description, or channel name contains disallowed words.
         /// </summary>
         DisallowedWords = 20031,
