@@ -609,6 +609,11 @@ namespace Remora.Discord.API.Abstractions.Results
         CannotSelfRedeemGift = 50054,
 
         /// <summary>
+        /// Some guild is invalid.
+        /// </summary>
+        InvalidGuild = 50055,
+
+        /// <summary>
         /// You need a payment source to redeem this gift.
         /// </summary>
         PaymentSourceRequiredForRedemption = 50070,
