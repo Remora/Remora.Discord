@@ -33,6 +33,7 @@ namespace Remora.Discord.API.Objects;
 public record AuditLog
 (
     IReadOnlyList<IAuditLogEntry> AuditLogEntries,
+    IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents,
     IReadOnlyList<IPartialIntegration> Integrations,
     IReadOnlyList<IChannel> Threads,
     IReadOnlyList<IUser> Users,

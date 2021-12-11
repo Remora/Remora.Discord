@@ -37,6 +37,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         IReadOnlyList<IAuditLogEntry> AuditLogEntries { get; }
 
         /// <summary>
+        /// Gets a list of scheduled events found in the audit log.
+        /// </summary>
+        IReadOnlyList<IGuildScheduledEvent> GuildScheduledEvents { get; }
+
+        /// <summary>
         /// Gets a list of partial integration objects found in the audit log.
         /// </summary>
         IReadOnlyList<IPartialIntegration> Integrations { get; }
