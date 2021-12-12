@@ -116,6 +116,7 @@ namespace Remora.Discord.Rest.API
             Optional<Snowflake> before = default,
             Optional<Snowflake> after = default,
             Optional<int> limit = default,
+            Optional<bool> withCounts = default,
             CancellationToken ct = default
         )
         {
@@ -146,6 +147,11 @@ namespace Remora.Discord.Rest.API
                     if (limit.HasValue)
                     {
                         b.AddQueryParameter("limit", limit.Value.ToString());
+                    }
+
+                    if (withCounts.HasValue)
+                    {
+                        b.AddQueryParameter("with_counts", withCounts.Value.ToString());
                     }
 
                     b.WithRateLimitContext();
