@@ -162,18 +162,11 @@ namespace Remora.Discord.Voice
 
         /// <summary>
         /// Runs the voice gateway client.
-        /// <para>
-        /// This task will not complete until cancelled (or faulted), maintaining the connection for the duration of it.
-        ///
-        /// If the gateway client encounters a fatal problem during the execution of this task, it will return with a
-        /// failed result. If a shutdown is requested, it will gracefully terminate the connection and return a
-        /// successful result.
-        /// </para>
         /// </summary>
         /// <param name="guildID">The ID of the guild to connect to.</param>
         /// <param name="channelID">The ID of the channel to connect to.</param>
-        /// <param name="isSelfMuted">A value indicating whether the bot should mute itself.</param>
-        /// <param name="isSelfDeafened">A value indicating whether the bot should deafen itself.</param>
+        /// <param name="isSelfMuted">A value indicating whether the bot should connect in a muted state.</param>
+        /// <param name="isSelfDeafened">A value indicating whether the bot should connect in a deafened state.</param>
         /// <param name="ct">A token by which the caller can request this method to stop.</param>
         /// <returns>A gateway connection result which may or may not have succeeded.</returns>
         public async Task<Result> RunAsync
@@ -850,7 +843,7 @@ namespace Remora.Discord.Voice
                 {
                     if (receiveEvent.Error is VoiceGatewayDiscordError)
                     {
-                        // Reconnect on next iteration
+                        // We've failed to connect. Start from scratch on the next iteration
                         this.ConnectionStatus = GatewayConnectionStatus.Offline;
                         return Result.FromSuccess();
                     }
