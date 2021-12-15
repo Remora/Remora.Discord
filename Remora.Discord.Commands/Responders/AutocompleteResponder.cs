@@ -152,7 +152,8 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             gatewayEvent.Token,
             gatewayEvent.ID,
             gatewayEvent.ApplicationID,
-            data
+            data,
+            gatewayEvent.Message
         );
 
         var contextInjector = _services.GetRequiredService<ContextInjectionService>();

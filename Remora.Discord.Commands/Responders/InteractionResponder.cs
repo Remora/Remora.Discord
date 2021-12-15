@@ -140,7 +140,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             gatewayEvent.Token,
             gatewayEvent.ID,
             gatewayEvent.ApplicationID,
-            interactionData
+            interactionData,
+            gatewayEvent.Message
         );
 
         // Provide the created context to any services inside this scope
