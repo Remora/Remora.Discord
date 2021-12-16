@@ -210,13 +210,13 @@ namespace Remora.Discord.Caching.Services
                 {
                     var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
 
-                    if (!channel.GuildID.HasValue && channel.Type is not ChannelType.DM or ChannelType.GroupDM)
+                    if (!channel.GuildID.HasValue && channel.Type is not (ChannelType.DM or ChannelType.GroupDM))
                     {
                         if (channel is Channel record)
                         {
                             // Polyfill the instance with contextual data - bit of a cheat, but it's okay in this
                             // instance
-                            Cache(key, record with { GuildID = guild.ID });
+                            Cache(channelKey, record with { GuildID = guild.ID });
                         }
                     }
                     else

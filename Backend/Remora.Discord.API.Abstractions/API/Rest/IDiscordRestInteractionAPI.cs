@@ -127,8 +127,6 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="applicationID">The ID of the bot application.</param>
         /// <param name="token">The interaction token.</param>
         /// <param name="content">The content of the message.</param>
-        /// <param name="username">The username to use for this message.</param>
-        /// <param name="avatarUrl">The avatar to use for this message.</param>
         /// <param name="isTTS">Whether this message is a TTS message.</param>
         /// <param name="embeds">The embeds in the message.</param>
         /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
@@ -147,8 +145,6 @@ namespace Remora.Discord.API.Abstractions.Rest
             Snowflake applicationID,
             string token,
             Optional<string> content = default,
-            Optional<string> username = default,
-            Optional<string> avatarUrl = default,
             Optional<bool> isTTS = default,
             Optional<IReadOnlyList<IEmbed>> embeds = default,
             Optional<IAllowedMentions> allowedMentions = default,

@@ -61,7 +61,7 @@ public class GuildMemberParser : AbstractTypeParser<IGuildMember>
         CancellationToken ct = default
     )
     {
-        if (!Snowflake.TryParse(value.Unmention(), out var guildMemberID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var guildMemberID))
         {
             return new ParsingError<IGuildMember>(value);
         }

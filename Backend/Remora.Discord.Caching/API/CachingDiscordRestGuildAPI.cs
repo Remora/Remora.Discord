@@ -177,6 +177,7 @@ namespace Remora.Discord.Caching.API
             Optional<string?> preferredLocale = default,
             Optional<IReadOnlyList<GuildFeature>> features = default,
             Optional<string?> description = default,
+            Optional<bool> isPremiumProgressBarEnabled = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -202,6 +203,7 @@ namespace Remora.Discord.Caching.API
                 preferredLocale,
                 features,
                 description,
+                isPremiumProgressBarEnabled,
                 reason,
                 ct
             );

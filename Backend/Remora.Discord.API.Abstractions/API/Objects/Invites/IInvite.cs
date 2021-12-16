@@ -45,7 +45,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the channel this invite is for.
         /// </summary>
-        new IPartialChannel Channel { get; }
+        new IPartialChannel? Channel { get; }
 
         /// <summary>
         /// Gets the user who created the invite.
@@ -99,7 +99,7 @@ namespace Remora.Discord.API.Abstractions.Objects
         Optional<IPartialGuild> IPartialInvite.Guild => this.Guild;
 
         /// <inheritdoc/>
-        Optional<IPartialChannel> IPartialInvite.Channel => new(this.Channel);
+        Optional<IPartialChannel?> IPartialInvite.Channel => new(this.Channel);
 
         /// <inheritdoc/>
         Optional<IUser> IPartialInvite.Inviter => this.Inviter;

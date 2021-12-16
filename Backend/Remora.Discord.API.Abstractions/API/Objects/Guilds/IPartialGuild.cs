@@ -179,5 +179,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuild.GuildScheduledEvents"/>
         Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents { get; }
+
+        /// <inheritdoc cref="IGuild.IsPremiumProgressBarEnabled"/>
+        Optional<bool> IsPremiumProgressBarEnabled { get; }
     }
 }

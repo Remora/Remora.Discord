@@ -208,5 +208,30 @@ namespace Remora.Discord.Caching.API
 
             return getUserDMs;
         }
+
+        /// <inheritdoc />
+        public override async Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync
+        (
+            Snowflake guildID,
+            CancellationToken ct = default
+        )
+        {
+            var result = await base.GetCurrentUserGuildMemberAsync(guildID, ct);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
+
+            var member = result.Entity;
+            if (!member.User.IsDefined(out var user))
+            {
+                return result;
+            }
+
+            var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+            _cacheService.Cache(key, member);
+
+            return result;
+        }
     }
 }

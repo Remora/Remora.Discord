@@ -266,6 +266,32 @@ namespace Remora.Discord.Rest.Tests.API.Users
         }
 
         /// <summary>
+        /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildMemberAsync"/> method.
+        /// </summary>
+        public class GetCurrentUserGuildMemberAsync : RestAPITestBase<IDiscordRestUserAPI>
+        {
+            /// <summary>
+            /// Tests whether the API method performs its request correctly.
+            /// </summary>
+            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+            [Fact]
+            public async Task PerformsRequestCorrectly()
+            {
+                var guildId = new Snowflake(0);
+
+                var api = CreateAPI
+                (
+                    b => b
+                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds/{guildId}/member")
+                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+                );
+
+                var result = await api.GetCurrentUserGuildMemberAsync(guildId);
+                ResultAssert.Successful(result);
+            }
+        }
+
+        /// <summary>
         /// Tests the <see cref="DiscordRestUserAPI.LeaveGuildAsync"/> method.
         /// </summary>
         public class LeaveGuildAsync : RestAPITestBase<IDiscordRestUserAPI>

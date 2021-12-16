@@ -61,7 +61,7 @@ namespace Remora.Discord.Samples.SlashCommands
             var debugServerString = configuration.GetValue<string?>("REMORA_DEBUG_SERVER");
             if (debugServerString is not null)
             {
-                if (!Snowflake.TryParse(debugServerString, out debugServer))
+                if (!DiscordSnowflake.TryParse(debugServerString, out debugServer))
                 {
                     log.LogWarning("Failed to parse debug server from environment");
                 }

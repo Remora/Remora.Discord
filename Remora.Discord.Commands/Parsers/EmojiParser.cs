@@ -144,7 +144,7 @@ public class EmojiParser : AbstractTypeParser<IEmoji>
             return false;
         }
 
-        if (!Snowflake.TryParse(inputParts[^1], out var emojiID))
+        if (!DiscordSnowflake.TryParse(inputParts[^1], out var emojiID))
         {
             return false;
         }

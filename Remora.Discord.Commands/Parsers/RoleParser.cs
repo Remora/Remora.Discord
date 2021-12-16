@@ -71,7 +71,7 @@ public class RoleParser : AbstractTypeParser<IRole>
         }
 
         var roles = getRoles.Entity;
-        if (!Snowflake.TryParse(value.Unmention(), out var roleID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var roleID))
         {
             // Try a name-based lookup
             var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));

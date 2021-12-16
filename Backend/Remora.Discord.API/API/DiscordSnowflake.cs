@@ -1,5 +1,5 @@
-//
-//  InteractionContext.cs
+﻿//
+//  DiscordSnowflake.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using System.Diagnostics.CodeAnalysis;
+using Remora.Discord.API;
 
-namespace Remora.Discord.Commands.Contexts;
+namespace Remora.Rest.Core;
 
 /// <summary>
-/// Represents contextual information about an interaction.
+/// Contains methods for initializing a <see cref="Snowflake"/> with the <see cref="Constants.DiscordEpoch"/>.
 /// </summary>
-[PublicAPI]
-public record InteractionContext
-(
-    Optional<Snowflake> GuildID,
-    Snowflake ChannelID,
-    IUser User,
-    Optional<IGuildMember> Member,
-    string Token,
-    Snowflake ID,
-    Snowflake ApplicationID,
-    IInteractionData Data,
-    Optional<IMessage> Message
-) : CommandContext(GuildID, ChannelID, User);
+public static class DiscordSnowflake
+{
+    /// <summary>
+    /// Initialzes a new instance of a Snowflake with the Discord epoch.
+    /// </summary>
+    /// <param name="value">The snowflake value.</param>
+    /// <returns>A snowflake.</returns>
+    public static Snowflake New(ulong value)
+        => new(value, Constants.DiscordEpoch);
+
+    /// <inheritdoc cref="Snowflake.TryParse(string, out Snowflake?, ulong)"/>
+    public static bool TryParse(string value, [NotNullWhen(true)] out Snowflake? result)
+        => Snowflake.TryParse(value, out result, Constants.DiscordEpoch);
+}

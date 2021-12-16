@@ -5,14 +5,21 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>17.0.0</Version>
+        <Version>18.0.1</Version>
         <Description>
             $(BaseDescription)
 
             This package contains memory cache functionality for the gateway and REST API.
         </Description>
         <PackageReleaseNotes>
-            Implement a second-stage cache for evicted values.
+            Some events are no longer experimental.
+            Implement new method to get guild members.
+            Update nullability of IInvite::Channel.
+            Implement new error code.
+            Add new error code.
+            Implement GuildScheduledEvents in the audit log.
+            Implement server boost bar.
+            Remove username and avatarUrl from CreateFollowupMessage.
         </PackageReleaseNotes>
     </PropertyGroup>
 

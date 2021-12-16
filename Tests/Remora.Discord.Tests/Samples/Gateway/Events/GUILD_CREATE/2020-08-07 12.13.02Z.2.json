@@ -395,6 +395,7 @@
     ],
     "vanity_url_code": null,
     "id": "999999999999999999",
-    "nsfw_level": 0
+    "nsfw_level": 0,
+    "premium_progress_bar_enabled": true
   }
 }

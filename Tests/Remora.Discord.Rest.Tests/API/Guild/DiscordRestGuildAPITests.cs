@@ -308,6 +308,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var preferredLocale = "dd";
                 var features = Array.Empty<GuildFeature>();
                 var description = "aaa";
+                var isPremiumProgressBarEnabled = true;
                 var reason = "test";
 
                 var api = CreateAPI
@@ -342,6 +343,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                             .WithProperty("preferred_locale", p => p.Is(preferredLocale))
                             .WithProperty("features", p => p.IsArray())
                             .WithProperty("description", p => p.Is(description))
+                            .WithProperty("premium_progress_bar_enabled", p => p.Is(isPremiumProgressBarEnabled))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuild)])
@@ -368,6 +370,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     preferredLocale,
                     features,
                     description,
+                    isPremiumProgressBarEnabled,
                     reason
                 );
 

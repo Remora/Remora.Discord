@@ -53,7 +53,7 @@ public class ChannelParser : AbstractTypeParser<IChannel>
     /// <inheritdoc />
     public override async ValueTask<Result<IChannel>> TryParseAsync(string value, CancellationToken ct = default)
     {
-        if (!Snowflake.TryParse(value.Unmention(), out var channelID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var channelID))
         {
             return new ParsingError<IChannel>(value.Unmention());
         }

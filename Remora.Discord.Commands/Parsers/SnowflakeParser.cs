@@ -42,7 +42,7 @@ public class SnowflakeParser : AbstractTypeParser<Snowflake>
     {
         return new
         (
-            !Snowflake.TryParse(value.Unmention(), out var snowflake)
+            !DiscordSnowflake.TryParse(value.Unmention(), out var snowflake)
                 ? new ParsingError<Snowflake>(value)
                 : snowflake.Value
         );

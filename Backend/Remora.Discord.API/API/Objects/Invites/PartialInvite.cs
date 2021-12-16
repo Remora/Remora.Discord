@@ -35,7 +35,7 @@ public record PartialInvite
 (
     Optional<string> Code = default,
     Optional<IPartialGuild> Guild = default,
-    Optional<IPartialChannel> Channel = default,
+    Optional<IPartialChannel?> Channel = default,
     Optional<IUser> Inviter = default,
     Optional<InviteTarget> TargetType = default,
     Optional<IPartialUser> TargetUser = default,

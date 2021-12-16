@@ -55,9 +55,6 @@ namespace Remora.Discord.Unstable.Extensions
             {
                 jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
 
-                jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
-                jsonOptions.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
-
                 jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
                 jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
             });
