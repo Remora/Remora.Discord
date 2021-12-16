@@ -664,6 +664,11 @@ namespace Remora.Discord.API.Abstractions.Results
         ServerNeedsMoreBoosts = 50101,
 
         /// <summary>
+        /// The request body contains invalid JSON.
+        /// </summary>
+        InvalidJSONInRequestBody = 50109,
+
+        /// <summary>
         /// Two factor is required for this operation.
         /// </summary>
         TwoFactorRequired = 60003,
