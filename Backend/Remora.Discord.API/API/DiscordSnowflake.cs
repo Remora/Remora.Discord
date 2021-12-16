@@ -1,5 +1,5 @@
-//
-//  SnowflakeParser.cs
+﻿//
+//  DiscordSnowflake.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Threading;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Remora.Commands.Parsers;
-using Remora.Commands.Results;
-using Remora.Discord.Commands.Extensions;
-using Remora.Rest.Core;
-using Remora.Results;
+using System.Diagnostics.CodeAnalysis;
+using Remora.Discord.API;
 
-namespace Remora.Discord.Commands.Parsers;
+namespace Remora.Rest.Core;
 
 /// <summary>
-/// Parses instances of <see cref="Snowflake"/>s.
+/// Contains methods for initializing a <see cref="Snowflake"/> with the <see cref="Constants.DiscordEpoch"/>.
 /// </summary>
-[PublicAPI]
-public class SnowflakeParser : AbstractTypeParser<Snowflake>
+public static class DiscordSnowflake
 {
-    /// <inheritdoc />
-    public override ValueTask<Result<Snowflake>> TryParseAsync(string value, CancellationToken ct = default)
-    {
-        return new
-        (
-            !DiscordSnowflake.TryParse(value.Unmention(), out var snowflake)
-                ? new ParsingError<Snowflake>(value)
-                : snowflake.Value
-        );
-    }
+    /// <summary>
+    /// Initialzes a new instance of a Snowflake with the Discord epoch.
+    /// </summary>
+    /// <param name="value">The snowflake value.</param>
+    /// <returns>A snowflake.</returns>
+    public static Snowflake New(ulong value)
+        => new(value, Constants.DiscordEpoch);
+
+    /// <inheritdoc cref="Snowflake.TryParse(string, out Snowflake?, ulong)"/>
+    public static bool TryParse(string value, [NotNullWhen(true)] out Snowflake? result)
+        => Snowflake.TryParse(value, out result, Constants.DiscordEpoch);
 }
