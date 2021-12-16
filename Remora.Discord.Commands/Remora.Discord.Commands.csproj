@@ -5,14 +5,20 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>14.0.4</Version>
+        <Version>15.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update optionality of sticker pack member.
+            Add another error code.
+            Implement audit log reasons for more endpoints.
+            Update signature of the data option.
+            Implement GuildID for IThreadMemberUpdate.
+            Add InteractionContext#Message
+            Add DiscordSnowflake and replace Snowflake instantiation
         </PackageReleaseNotes>
     </PropertyGroup>
 

@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>5.0.0</Version>
+        <Version>5.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -18,14 +18,7 @@
             component to the appropriate stable component of Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Some events are no longer experimental.
-            Implement new method to get guild members.
-            Update nullability of IInvite::Channel.
-            Implement new error code.
-            Add new error code.
-            Implement GuildScheduledEvents in the audit log.
-            Implement server boost bar.
-            Remove username and avatarUrl from CreateFollowupMessage.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

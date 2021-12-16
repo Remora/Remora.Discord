@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>45.0.0</Version>
+        <Version>46.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,14 +13,13 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Some events are no longer experimental.
-            Implement new method to get guild members.
-            Update nullability of IInvite::Channel.
-            Implement new error code.
-            Add new error code.
-            Implement GuildScheduledEvents in the audit log.
-            Implement server boost bar.
-            Remove username and avatarUrl from CreateFollowupMessage.
+            Update optionality of sticker pack member.
+            Add another error code.
+            Implement audit log reasons for more endpoints.
+            Update signature of the data option.
+            Implement GuildID for IThreadMemberUpdate.
+            Add InteractionContext#Message
+            Add DiscordSnowflake and replace Snowflake instantiation
         </PackageReleaseNotes>
     </PropertyGroup>
 
