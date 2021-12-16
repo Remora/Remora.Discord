@@ -999,7 +999,12 @@ public static class CDN
         IStickerPack stickerPack,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
-    ) => GetStickerPackBannerUrl(stickerPack.BannerAssetID, imageFormat, imageSize);
+    )
+    {
+        return stickerPack.BannerAssetID.IsDefined(out var assetID)
+            ? GetStickerPackBannerUrl(assetID, imageFormat, imageSize)
+            : new ImageNotFoundError();
+    }
 
     /// <summary>
     /// Gets the CDN URI of the given sticker pack's banner.

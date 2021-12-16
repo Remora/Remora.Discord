@@ -65,6 +65,6 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Gets the ID of the sticker pack's banner image.
         /// </summary>
-        Snowflake BannerAssetID { get; }
+        Optional<Snowflake> BannerAssetID { get; }
     }
 }
