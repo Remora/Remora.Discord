@@ -92,6 +92,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var scheduledEndTime = scheduledStartTime.AddHours(1);
             var description = "booga";
             var entityType = GuildScheduledEventEntityType.StageInstance;
+            var reason = "aaa";
 
             var api = CreateAPI
             (
@@ -116,6 +117,7 @@ public class DiscordRestGuildScheduledEventAPITests
                                 .WithProperty("entity_type", p => p.Is((int)entityType))
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
 
@@ -129,7 +131,8 @@ public class DiscordRestGuildScheduledEventAPITests
                 scheduledStartTime,
                 scheduledEndTime,
                 description,
-                entityType
+                entityType,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -189,6 +192,7 @@ public class DiscordRestGuildScheduledEventAPITests
             var description = "booga";
             var entityType = GuildScheduledEventEntityType.StageInstance;
             var status = GuildScheduledEventStatus.Completed;
+            var reason = "aaa";
 
             var api = CreateAPI
             (
@@ -214,6 +218,7 @@ public class DiscordRestGuildScheduledEventAPITests
                                 .WithProperty("status", p => p.Is((int)status))
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IGuildScheduledEvent)])
             );
 
@@ -229,7 +234,8 @@ public class DiscordRestGuildScheduledEventAPITests
                 scheduledEndTime,
                 description,
                 entityType,
-                status
+                status,
+                reason
             );
 
             ResultAssert.Successful(result);
