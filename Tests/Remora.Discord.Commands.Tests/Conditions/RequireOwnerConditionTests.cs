@@ -47,10 +47,10 @@ namespace Remora.Discord.Commands.Tests.Conditions
         public async Task ReturnsFalseIfInvokerIsNotBotOwner()
         {
             var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.User.ID).Returns(new Snowflake(0));
+            contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
 
             var informationMock = new Mock<IApplication>();
-            informationMock.Setup(i => i.Owner!.ID).Returns(new Snowflake(1));
+            informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(1));
 
             var apiMock = new Mock<IDiscordRestOAuth2API>();
             apiMock
@@ -72,10 +72,10 @@ namespace Remora.Discord.Commands.Tests.Conditions
         public async Task ReturnsTrueIfInvokerIsBotOwner()
         {
             var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.User.ID).Returns(new Snowflake(0));
+            contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(0));
 
             var informationMock = new Mock<IApplication>();
-            informationMock.Setup(i => i.Owner!.ID).Returns(new Snowflake(0));
+            informationMock.Setup(i => i.Owner!.ID).Returns(DiscordSnowflake.New(0));
 
             var apiMock = new Mock<IDiscordRestOAuth2API>();
             apiMock

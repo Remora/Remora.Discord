@@ -123,11 +123,11 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberPermissions()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneRoleMock = new Mock<IRole>();
-            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneRoleMock.Object;
@@ -146,11 +146,11 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberPermissionsWithMemberAllowOverwrites()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneRoleMock = new Mock<IRole>();
-            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneRoleMock.Object;
@@ -183,11 +183,11 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberPermissionsWithMemberDenyOverwrites()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneRoleMock = new Mock<IRole>();
-            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneRoleMock.Object;
@@ -215,18 +215,18 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberWithRolePermissions()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneRoleMock = new Mock<IRole>();
-            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneRoleMock.Object;
 
             var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
             var roleMock = new Mock<IRole>();
-            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(2));
             roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
 
             var role = roleMock.Object;
@@ -245,18 +245,18 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberPermissionsWithRoleAllowOverwrites()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneMock = new Mock<IRole>();
-            everyoneMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneMock.Object;
 
             var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
             var roleMock = new Mock<IRole>();
-            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(2));
             roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
 
             var role = roleMock.Object;
@@ -290,18 +290,18 @@ namespace Remora.Discord.API.Tests.Objects
         [Fact]
         public void CanComputeMemberPermissionsWithRoleDenyOverwrites()
         {
-            var memberID = new Snowflake(0);
+            var memberID = DiscordSnowflake.New(0);
 
             var everyonePermissions = new DiscordPermissionSet(DiscordTextPermission.SendMessages);
             var everyoneRoleMock = new Mock<IRole>();
-            everyoneRoleMock.SetupGet(r => r.ID).Returns(new Snowflake(1));
+            everyoneRoleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(1));
             everyoneRoleMock.SetupGet(r => r.Permissions).Returns(everyonePermissions);
 
             var everyoneRole = everyoneRoleMock.Object;
 
             var rolePermissions = new DiscordPermissionSet(DiscordTextPermission.MentionEveryone);
             var roleMock = new Mock<IRole>();
-            roleMock.SetupGet(r => r.ID).Returns(new Snowflake(2));
+            roleMock.SetupGet(r => r.ID).Returns(DiscordSnowflake.New(2));
             roleMock.SetupGet(r => r.Permissions).Returns(rolePermissions);
 
             var role = roleMock.Object;

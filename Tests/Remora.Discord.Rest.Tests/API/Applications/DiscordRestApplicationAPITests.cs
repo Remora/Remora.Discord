@@ -55,7 +55,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -86,7 +86,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForChatCommand()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var type = ApplicationCommandType.ChatInput;
                 var name = "aaa";
                 var description = "wwww";
@@ -129,7 +129,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForUserCommand()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var type = ApplicationCommandType.User;
                 var name = "aaa";
                 var description = "wwww";
@@ -172,7 +172,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForMessageCommand()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var type = ApplicationCommandType.Message;
                 var name = "aaa";
                 var description = "wwww";
@@ -215,7 +215,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var name = string.Empty;
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -258,7 +258,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var name = new string('a', 33);
                 var description = "wwww";
                 var options = new List<ApplicationCommandOption>();
@@ -298,7 +298,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var name = "aaa";
                 var description = string.Empty;
                 var options = new List<ApplicationCommandOption>();
@@ -338,7 +338,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var name = "aaa";
                 var description = new string('a', 101);
                 var options = new List<ApplicationCommandOption>();
@@ -384,7 +384,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -479,7 +479,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -512,7 +512,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -545,7 +545,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -578,7 +578,7 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -617,8 +617,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -650,8 +650,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var name = "aaa";
                 var description = "wwww";
@@ -693,8 +693,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var name = string.Empty;
                 var description = "wwww";
@@ -736,8 +736,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var name = new string('a', 33);
                 var description = "wwww";
@@ -779,8 +779,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var name = "aaa";
                 var description = string.Empty;
@@ -822,8 +822,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var name = "aaa";
                 var description = new string('a', 101);
@@ -871,8 +871,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var commandID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var commandID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -902,8 +902,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -939,8 +939,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForChatCommands()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var type = ApplicationCommandType.ChatInput;
                 var name = "aaa";
@@ -989,8 +989,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForUserCommands()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var type = ApplicationCommandType.User;
                 var name = "aaa";
@@ -1039,8 +1039,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectlyForMessageCommands()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var type = ApplicationCommandType.Message;
                 var name = "aaa";
@@ -1089,8 +1089,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var name = string.Empty;
                 var description = "wwww";
@@ -1136,8 +1136,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var name = new string('a', 33);
                 var description = "wwww";
@@ -1183,8 +1183,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var name = "aaa";
                 var description = string.Empty;
@@ -1230,8 +1230,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var name = "aaa";
                 var description = new string('a', 101);
@@ -1283,8 +1283,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -1380,8 +1380,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -1415,8 +1415,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -1450,8 +1450,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -1485,8 +1485,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
                 var commands = new[]
                 {
                     new BulkApplicationCommandData
@@ -1526,9 +1526,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var api = CreateAPI
                 (
@@ -1565,9 +1565,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var name = "aaa";
                 var description = "wwww";
@@ -1614,9 +1614,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var name = string.Empty;
                 var description = "wwww";
@@ -1663,9 +1663,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfNameIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var name = new string('a', 33);
                 var description = "wwww";
@@ -1712,9 +1712,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var name = "aaa";
                 var description = string.Empty;
@@ -1761,9 +1761,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var name = "aaa";
                 var description = new string('a', 101);
@@ -1816,9 +1816,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var api = CreateAPI
                 (
@@ -1849,8 +1849,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1881,9 +1881,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var api = CreateAPI
                 (
@@ -1918,9 +1918,9 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
-                var commandID = new Snowflake(2);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
+                var commandID = DiscordSnowflake.New(2);
 
                 var permissions = Array.Empty<IApplicationCommandPermissions>();
 
@@ -1959,8 +1959,8 @@ namespace Remora.Discord.Rest.Tests.API.Applications
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
-                var guildID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var guildID = DiscordSnowflake.New(1);
 
                 var permissions = Array.Empty<IPartialGuildApplicationCommandPermissions>();
 

@@ -55,7 +55,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -82,8 +82,8 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var emojiId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var emojiId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -110,7 +110,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "ff";
                 var reason = "test";
 
@@ -151,7 +151,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task ReturnsErrorForUnknownImageFormat()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "ff";
 
                 // Create a dummy PNG image
@@ -190,7 +190,7 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task ReturnsErrorForTooLargeImage()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "ff";
 
                 // Create a dummy PNG image
@@ -235,8 +235,8 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var emojiId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var emojiId = DiscordSnowflake.New(1);
                 var name = "ff";
                 var roles = new List<Snowflake>();
                 var reason = "test";
@@ -269,8 +269,8 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var emojiId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var emojiId = DiscordSnowflake.New(1);
                 var name = "ff";
 
                 var api = CreateAPI
@@ -306,8 +306,8 @@ namespace Remora.Discord.Rest.Tests.API.Emoji
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var emojiId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var emojiId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI

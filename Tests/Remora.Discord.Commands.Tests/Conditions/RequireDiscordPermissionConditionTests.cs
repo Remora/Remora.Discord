@@ -59,10 +59,10 @@ namespace Remora.Discord.Commands.Tests.Conditions
         /// </summary>
         public RequireDiscordPermissionConditionTests()
         {
-            _guildID = new Snowflake(0);
-            _userID = new Snowflake(1);
+            _guildID = DiscordSnowflake.New(0);
+            _userID = DiscordSnowflake.New(1);
 
-            var channelID = new Snowflake(2);
+            var channelID = DiscordSnowflake.New(2);
 
             // Dependency mocks
             _userAPIMock = new Mock<IDiscordRestUserAPI>();
@@ -383,7 +383,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         )
             where TPermission : struct, Enum
         {
-            _contextMock.Setup(c => c.User.ID).Returns(new Snowflake(4));
+            _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
 
             effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
             _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
@@ -426,7 +426,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         )
             where TPermission : struct, Enum
         {
-            _contextMock.Setup(c => c.User.ID).Returns(new Snowflake(4));
+            _contextMock.Setup(c => c.User.ID).Returns(DiscordSnowflake.New(4));
 
             effectivePermissions = effectivePermissions.Concat(new[] { DiscordPermission.Administrator }).ToArray();
             _everyoneRoleMock.Setup(r => r.Permissions).Returns(new DiscordPermissionSet(effectivePermissions));
@@ -456,7 +456,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         [Fact]
         public async Task RespectsUserRoles()
         {
-            var memberRoleID = new Snowflake(3);
+            var memberRoleID = DiscordSnowflake.New(3);
             var memberRole = new Mock<IRole>();
 
             _everyoneRoleMock
@@ -504,7 +504,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         [Fact]
         public async Task RespectsMemberRoles()
         {
-            var memberRoleID = new Snowflake(3);
+            var memberRoleID = DiscordSnowflake.New(3);
             var memberRole = new Mock<IRole>();
 
             _everyoneRoleMock
@@ -552,7 +552,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         [Fact]
         public async Task RespectsChannelRoleOverwrites()
         {
-            var memberRoleID = new Snowflake(3);
+            var memberRoleID = DiscordSnowflake.New(3);
             var memberRole = new Mock<IRole>();
 
             var overwriteMock = new Mock<IPermissionOverwrite>();
@@ -610,7 +610,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         [Fact]
         public async Task RespectsChannelMemberOverwrites()
         {
-            var memberRoleID = new Snowflake(3);
+            var memberRoleID = DiscordSnowflake.New(3);
             var memberRole = new Mock<IRole>();
 
             var overwriteMock = new Mock<IPermissionOverwrite>();

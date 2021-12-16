@@ -52,7 +52,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelID = new Snowflake(1);
+                var channelID = DiscordSnowflake.New(1);
                 var topic = "aa";
                 var privacyLevel = StagePrivacyLevel.GuildOnly;
                 var reason = "test";
@@ -92,7 +92,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelID = new Snowflake(1);
+                var channelID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -119,7 +119,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelID = new Snowflake(1);
+                var channelID = DiscordSnowflake.New(1);
                 var topic = "aa";
                 var privacyLevel = StagePrivacyLevel.GuildOnly;
                 var reason = "test";
@@ -158,7 +158,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelID = new Snowflake(1);
+                var channelID = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI

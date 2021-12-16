@@ -36,7 +36,7 @@ namespace Remora.Discord.Gateway.Tests
         /// </summary>
         public static IUser BotUser { get; } = new User
         (
-            new Snowflake(0),
+            DiscordSnowflake.New(0),
             "mock-bot",
             0,
             null

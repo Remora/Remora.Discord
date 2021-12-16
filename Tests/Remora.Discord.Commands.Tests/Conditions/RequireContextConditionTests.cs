@@ -68,7 +68,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         )
         {
             var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.ChannelID).Returns(new Snowflake(0));
+            contextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
 
             var channelMock = new Mock<IChannel>();
             channelMock.Setup(c => c.Type).Returns(channelType);
@@ -103,7 +103,7 @@ namespace Remora.Discord.Commands.Tests.Conditions
         )
         {
             var contextMock = new Mock<ICommandContext>();
-            contextMock.Setup(c => c.ChannelID).Returns(new Snowflake(0));
+            contextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
 
             var channelMock = new Mock<IChannel>();
             channelMock.Setup(c => c.Type).Returns(actual);
@@ -128,10 +128,10 @@ namespace Remora.Discord.Commands.Tests.Conditions
         public async Task CanCheckMultipleContexts()
         {
             var textContextMock = new Mock<ICommandContext>();
-            textContextMock.Setup(c => c.ChannelID).Returns(new Snowflake(0));
+            textContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
 
             var groupDMContextMock = new Mock<ICommandContext>();
-            groupDMContextMock.Setup(c => c.ChannelID).Returns(new Snowflake(1));
+            groupDMContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(1));
 
             var textChannelMock = new Mock<IChannel>();
             textChannelMock.Setup(c => c.Type).Returns(ChannelType.GuildText);
@@ -141,11 +141,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0, 0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == DiscordSnowflake.New(0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(textChannelMock.Object));
 
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1, 0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == DiscordSnowflake.New(1)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(groupDMMock.Object));
 
             var attribute = new RequireContextAttribute(ChannelContext.Guild, ChannelContext.GroupDM);
@@ -167,10 +167,10 @@ namespace Remora.Discord.Commands.Tests.Conditions
         public async Task CanCheckMultipleTypes()
         {
             var textContextMock = new Mock<ICommandContext>();
-            textContextMock.Setup(c => c.ChannelID).Returns(new Snowflake(0));
+            textContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(0));
 
             var groupDMContextMock = new Mock<ICommandContext>();
-            groupDMContextMock.Setup(c => c.ChannelID).Returns(new Snowflake(1));
+            groupDMContextMock.Setup(c => c.ChannelID).Returns(DiscordSnowflake.New(1));
 
             var textChannelMock = new Mock<IChannel>();
             textChannelMock.Setup(c => c.Type).Returns(ChannelType.GuildText);
@@ -180,11 +180,11 @@ namespace Remora.Discord.Commands.Tests.Conditions
 
             var channelAPIMock = new Mock<IDiscordRestChannelAPI>();
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(0, 0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == DiscordSnowflake.New(0)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(textChannelMock.Object));
 
             channelAPIMock
-                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == new Snowflake(1, 0)), It.IsAny<CancellationToken>()))
+                .Setup(c => c.GetChannelAsync(It.Is<Snowflake>(s => s == DiscordSnowflake.New(1)), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result<IChannel>.FromSuccess(groupDMMock.Object));
 
             var attribute = new RequireContextAttribute(ChannelType.GuildText, ChannelType.GroupDM);

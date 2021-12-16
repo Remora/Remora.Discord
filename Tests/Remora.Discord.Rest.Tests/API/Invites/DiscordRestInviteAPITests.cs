@@ -54,7 +54,7 @@ namespace Remora.Discord.Rest.Tests.API.Invites
                 var inviteCode = "brr";
                 var withCounts = true;
                 var withExpiration = false;
-                var eventID = new Snowflake(1);
+                var eventID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (

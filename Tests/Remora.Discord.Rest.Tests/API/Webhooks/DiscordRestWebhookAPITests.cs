@@ -56,7 +56,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "aaa";
 
                 // Create a dummy PNG image
@@ -98,7 +98,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task ReturnsErrorIfNameIsTooShort()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = string.Empty;
 
                 var api = CreateAPI
@@ -125,7 +125,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task ReturnsErrorIfNameIsTooLong()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = new string('a', 81);
 
                 var api = CreateAPI
@@ -152,7 +152,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task ReturnsErrorIfNameIsClyde()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "clyde";
 
                 var api = CreateAPI
@@ -179,7 +179,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task ReturnsErrorIfAvatarIsUnknownFormat()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "aaa";
 
                 // Create a dummy PNG image
@@ -218,7 +218,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var api = CreateAPI
                 (
                     b => b
@@ -247,7 +247,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var api = CreateAPI
                 (
                     b => b
@@ -276,7 +276,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var api = CreateAPI
                 (
                     b => b
@@ -305,7 +305,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var api = CreateAPI
@@ -337,7 +337,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var name = "aaa";
 
                 // Create a dummy PNG image
@@ -346,7 +346,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 binaryWriter.Write(9894494448401390090);
                 avatar.Position = 0;
 
-                var channelId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -383,7 +383,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -422,7 +422,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 binaryWriter.Write(0x000000);
                 avatar.Position = 0;
 
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -461,7 +461,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aasdasdaa";
                 var name = "aaa";
 
@@ -496,7 +496,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var api = CreateAPI
@@ -537,7 +537,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 binaryWriter.Write(0x000000);
                 avatar.Position = 0;
 
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var api = CreateAPI
@@ -570,7 +570,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -600,7 +600,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var api = CreateAPI
@@ -632,7 +632,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsNormalRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var shouldWait = true;
@@ -641,7 +641,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                 var avatarUrl = "http://aaaa";
                 var tts = false;
                 var allowedMentions = new AllowedMentions();
-                var threadID = new Snowflake(1);
+                var threadID = DiscordSnowflake.New(1);
                 var components = new List<IMessageComponent>();
 
                 var api = CreateAPI
@@ -690,7 +690,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsEmbedRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var shouldWait = true;
@@ -742,7 +742,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -816,7 +816,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file1 = new MemoryStream();
@@ -915,7 +915,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -989,7 +989,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1003,7 +1003,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsNullReturnRequestCorrectly()
             {
-                var webhookId = new Snowflake(0);
+                var webhookId = DiscordSnowflake.New(0);
                 var token = "aa";
                 var content = "bb";
 
@@ -1045,10 +1045,10 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsNormalRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+                var messageID = DiscordSnowflake.New(1);
+                var threadID = DiscordSnowflake.New(2);
 
                 var content = "booga";
                 var allowedMentions = new AllowedMentions();
@@ -1097,9 +1097,9 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsEmbedRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 var content = "booga";
                 var embeds = new List<IEmbed>();
@@ -1143,9 +1143,9 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1224,9 +1224,9 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file1 = new MemoryStream();
                 await using var file2 = new MemoryStream();
@@ -1329,9 +1329,9 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1409,7 +1409,7 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1429,10 +1429,10 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "token";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+                var messageID = DiscordSnowflake.New(1);
+                var threadID = DiscordSnowflake.New(2);
 
                 var api = CreateAPI
                 (
@@ -1466,10 +1466,10 @@ namespace Remora.Discord.Rest.Tests.API.Webhooks
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var webhookID = new Snowflake(0);
+                var webhookID = DiscordSnowflake.New(0);
                 var token = "aaa";
-                var messageID = new Snowflake(1);
-                var threadID = new Snowflake(2);
+                var messageID = DiscordSnowflake.New(1);
+                var threadID = DiscordSnowflake.New(2);
 
                 var api = CreateAPI
                 (

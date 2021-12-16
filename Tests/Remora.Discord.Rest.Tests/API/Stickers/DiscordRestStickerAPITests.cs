@@ -53,7 +53,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var stickerId = new Snowflake(1);
+                var stickerId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -105,7 +105,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -132,8 +132,8 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var stickerId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var stickerId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -160,7 +160,7 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "aa";
                 var description = "bb";
                 var tags = "cc";
@@ -198,8 +198,8 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var stickerId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var stickerId = DiscordSnowflake.New(1);
                 var name = "aa";
                 var description = "bb";
                 var tags = "cc";
@@ -240,8 +240,8 @@ namespace Remora.Discord.Rest.Tests.API
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var stickerId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var stickerId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI

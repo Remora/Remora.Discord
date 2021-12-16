@@ -833,7 +833,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
 
                 var commandNode = tree.Root.Children[0];
 
-                var commandID = new Snowflake(1);
+                var commandID = DiscordSnowflake.New(1);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand
@@ -873,8 +873,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var commandNodeA = tree.Root.Children[0];
                 var commandNodeB = tree.Root.Children[1];
 
-                var commandAID = new Snowflake(1);
-                var commandBID = new Snowflake(2);
+                var commandAID = DiscordSnowflake.New(1);
+                var commandBID = DiscordSnowflake.New(2);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand
@@ -930,7 +930,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var groupNode = (GroupNode)tree.Root.Children[0];
                 var commandNode = groupNode.Children[0];
 
-                var commandID = new Snowflake(1);
+                var commandID = DiscordSnowflake.New(1);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand
@@ -980,7 +980,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var commandNodeB = groupNode.Children[0];
                 var commandNodeC = groupNode.Children[1];
 
-                var commandID = new Snowflake(1);
+                var commandID = DiscordSnowflake.New(1);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand
@@ -1036,7 +1036,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var subGroupNode = (GroupNode)groupNode.Children[0];
                 var commandNode = subGroupNode.Children[0];
 
-                var commandID = new Snowflake(1);
+                var commandID = DiscordSnowflake.New(1);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand
@@ -1095,8 +1095,8 @@ namespace Remora.Discord.Commands.Tests.Extensions
                 var commandNodeF = groupNode.Children.Single(c => c.Key is "f");
                 var commandNodeG = tree.Root.Children.Single(c => c.Key is "g");
 
-                var groupID = new Snowflake(1);
-                var commandGID = new Snowflake(2);
+                var groupID = DiscordSnowflake.New(1);
+                var commandGID = DiscordSnowflake.New(2);
                 var applicationCommands = new List<IApplicationCommand>
                 {
                     new ApplicationCommand

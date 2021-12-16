@@ -55,10 +55,10 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
                 var actionType = AuditLogEvent.BotAdd;
-                var before = new Snowflake(2);
+                var before = DiscordSnowflake.New(2);
                 byte limit = 45;
 
                 var api = CreateAPI
@@ -97,10 +97,10 @@ namespace Remora.Discord.Rest.Tests.API.AuditLog
                 var services = CreateConfiguredAPIServices(_ => { });
                 var api = services.GetRequiredService<IDiscordRestAuditLogAPI>();
 
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
                 var actionType = AuditLogEvent.BotAdd;
-                var before = new Snowflake(2);
+                var before = DiscordSnowflake.New(2);
 
                 var result = await api.GetAuditLogAsync
                 (

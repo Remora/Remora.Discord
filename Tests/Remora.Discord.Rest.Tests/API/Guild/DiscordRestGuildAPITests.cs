@@ -70,9 +70,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var explicitContentFilter = ExplicitContentFilterLevel.Disabled;
                 var roles = new List<IRole>();
                 var channels = new List<IPartialChannel>();
-                var afkChannelID = new Snowflake(0);
+                var afkChannelID = DiscordSnowflake.New(0);
                 var afkTimeout = TimeSpan.FromSeconds(10);
-                var systemChannelID = new Snowflake(1);
+                var systemChannelID = DiscordSnowflake.New(1);
                 var systemChannelFlags = SystemChannelFlags.SuppressJoinNotifications;
 
                 var api = CreateAPI
@@ -214,7 +214,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var withCounts = true;
 
                 var api = CreateAPI
@@ -243,7 +243,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -270,7 +270,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
 
                 // Create a dummy PNG image
@@ -282,11 +282,11 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var verificationLevel = VerificationLevel.High;
                 var defaultMessageNotifications = MessageNotificationLevel.AllMessages;
                 var explicitContentFilter = ExplicitContentFilterLevel.Disabled;
-                var afkChannelID = new Snowflake(0);
+                var afkChannelID = DiscordSnowflake.New(0);
                 var afkTimeout = TimeSpan.FromSeconds(10);
-                var systemChannelID = new Snowflake(1);
+                var systemChannelID = DiscordSnowflake.New(1);
                 var systemChannelFlags = SystemChannelFlags.SuppressJoinNotifications;
-                var ownerId = new Snowflake(2);
+                var ownerId = DiscordSnowflake.New(2);
 
                 await using var splash = new MemoryStream();
                 await using var splashBinaryWriter = new BinaryWriter(splash);
@@ -303,8 +303,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 bannerBinaryWriter.Write(9894494448401390090);
                 banner.Position = 0;
 
-                var rulesChannelId = new Snowflake(3);
-                var publicUpdatesChannelID = new Snowflake(4);
+                var rulesChannelId = DiscordSnowflake.New(3);
+                var publicUpdatesChannelID = DiscordSnowflake.New(4);
                 var preferredLocale = "dd";
                 var features = Array.Empty<GuildFeature>();
                 var description = "aaa";
@@ -384,7 +384,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
 
                 var api = CreateAPI
@@ -423,7 +423,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task ReturnsErrorIfIconIsUnknownFormat()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
 
                 await using var icon = new MemoryStream();
@@ -455,7 +455,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task ReturnsErrorIfBannerIsUnknownFormat()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
 
                 await using var banner = new MemoryStream();
@@ -487,7 +487,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task ReturnsErrorIfSplashIsUnknownFormat()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
 
                 await using var splash = new MemoryStream();
@@ -525,7 +525,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -552,7 +552,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -579,14 +579,14 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsTextRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "dd";
                 var type = ChannelType.GuildText;
                 var topic = "ggg";
                 var rateLimitPerUser = 10;
                 var position = 1;
                 var permissionOverwrites = new List<IPermissionOverwrite>();
-                var parentId = new Snowflake(1);
+                var parentId = DiscordSnowflake.New(1);
                 var nsfw = true;
                 var reason = "test";
 
@@ -637,7 +637,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsVoiceRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "dd";
                 var type = ChannelType.GuildVoice;
                 var topic = "ggg";
@@ -645,7 +645,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var userLimit = 10;
                 var position = 1;
                 var permissionOverwrites = new List<IPermissionOverwrite>();
-                var parentId = new Snowflake(1);
+                var parentId = DiscordSnowflake.New(1);
                 var nsfw = true;
                 var reason = "test";
 
@@ -688,7 +688,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var swaps = new List
                 <
                     (
@@ -699,10 +699,10 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     )
                 >
                 {
-                    (new Snowflake(1), 1, false, new Snowflake(0)),
-                    (new Snowflake(2), 2, false, new Snowflake(0)),
-                    (new Snowflake(3), 3, false, new Snowflake(0)),
-                    (new Snowflake(4), 4, false, new Snowflake(0))
+                    (DiscordSnowflake.New(1), 1, false, DiscordSnowflake.New(0)),
+                    (DiscordSnowflake.New(2), 2, false, DiscordSnowflake.New(0)),
+                    (DiscordSnowflake.New(3), 3, false, DiscordSnowflake.New(0)),
+                    (DiscordSnowflake.New(4), 4, false, DiscordSnowflake.New(0))
                 };
                 var reason = "test";
 
@@ -782,7 +782,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var swaps = new List
                 <
                     (
@@ -793,10 +793,10 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     )
                 >
                 {
-                    (new Snowflake(1), null, null, null),
-                    (new Snowflake(2), null, null, null),
-                    (new Snowflake(3), null, null, null),
-                    (new Snowflake(4), null, null, null)
+                    (DiscordSnowflake.New(1), null, null, null),
+                    (DiscordSnowflake.New(2), null, null, null),
+                    (DiscordSnowflake.New(3), null, null, null),
+                    (DiscordSnowflake.New(4), null, null, null)
                 };
 
                 var api = CreateAPI
@@ -880,8 +880,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -908,9 +908,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var limit = 10;
-                var after = new Snowflake(1);
+                var after = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -945,7 +945,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var query = "aaa";
                 var limit = 10;
 
@@ -982,8 +982,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsExistingMemberRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var accessToken = "aa";
                 var nick = "cdd";
                 var roles = new List<Snowflake>();
@@ -1031,8 +1031,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsNewMemberRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var accessToken = "aa";
                 var nick = "cdd";
                 var roles = new List<Snowflake>();
@@ -1086,14 +1086,14 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var nick = "cdd";
                 var roles = new List<Snowflake>();
                 var mute = true;
                 var deaf = true;
-                var channelId = new Snowflake(2);
+                var channelId = DiscordSnowflake.New(2);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1144,7 +1144,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var nick = "cdd";
                 var reason = "test";
 
@@ -1187,7 +1187,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var nick = "cdd";
                 var reason = "test";
 
@@ -1230,9 +1230,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
-                var roleId = new Snowflake(2);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
+                var roleId = DiscordSnowflake.New(2);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1267,9 +1267,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
-                var roleId = new Snowflake(2);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
+                var roleId = DiscordSnowflake.New(2);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1308,8 +1308,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1343,7 +1343,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1373,8 +1373,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1405,8 +1405,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var deleteMessageDays = 10;
                 var reason = "ddd";
 
@@ -1450,8 +1450,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1485,7 +1485,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1515,7 +1515,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var name = "brr";
                 var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var color = Color.Aqua;
@@ -1583,13 +1583,13 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var swaps = new List<(Snowflake ID, Optional<int?> Position)>
                 {
-                    (new Snowflake(1), 1),
-                    (new Snowflake(2), 2),
-                    (new Snowflake(3), 3),
-                    (new Snowflake(4), 4)
+                    (DiscordSnowflake.New(1), 1),
+                    (DiscordSnowflake.New(2), 2),
+                    (DiscordSnowflake.New(3), 3),
+                    (DiscordSnowflake.New(4), 4)
                 };
                 var reason = "test";
 
@@ -1672,8 +1672,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var roleId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var roleId = DiscordSnowflake.New(1);
                 var name = "ff";
                 var permissions = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var color = Color.Aqua;
@@ -1742,8 +1742,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var roleId = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var roleId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1777,7 +1777,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var days = 2;
                 var includeRoles = new List<Snowflake>
                 {
@@ -1824,7 +1824,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var days = 3;
                 var computePruneCount = true;
                 var includeRoles = new List<Snowflake>();
@@ -1873,7 +1873,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1903,7 +1903,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1933,7 +1933,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1965,7 +1965,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1995,9 +1995,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var enabled = true;
-                var channelId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -2041,7 +2041,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2071,7 +2071,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var widgetStyle = WidgetImageStyle.Banner1;
 
                 var api = CreateAPI
@@ -2104,7 +2104,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2134,7 +2134,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
+                var guildId = DiscordSnowflake.New(0);
                 var isEnabled = true;
                 var welcomeChannels = Array.Empty<IWelcomeScreenChannel>();
                 var description = "aaa";
@@ -2183,8 +2183,8 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var channelID = new Snowflake(1);
+                var guildId = DiscordSnowflake.New(0);
+                var channelID = DiscordSnowflake.New(1);
                 var suppress = true;
                 var requestToSpeakTimestamp = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
 
@@ -2229,9 +2229,9 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildId = new Snowflake(0);
-                var userID = new Snowflake(1);
-                var channelID = new Snowflake(2);
+                var guildId = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
+                var channelID = DiscordSnowflake.New(2);
                 var suppress = true;
 
                 var api = CreateAPI
@@ -2274,7 +2274,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (

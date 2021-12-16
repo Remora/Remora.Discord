@@ -67,7 +67,7 @@ namespace Remora.Discord.API.Tests
                     this.ValidUriWithoutExtension + ".gif"
                 );
 
-                var emoji = new Emoji(new Snowflake(0), null, IsAnimated: true);
+                var emoji = new Emoji(DiscordSnowflake.New(0), null, IsAnimated: true);
                 var getActual = CDN.GetEmojiUrl(emoji);
 
                 Assert.True(getActual.IsSuccess);
@@ -86,7 +86,7 @@ namespace Remora.Discord.API.Tests
                     this.ValidUriWithoutExtension + ".png"
                 );
 
-                var emoji = new Emoji(new Snowflake(0), null, IsAnimated: true);
+                var emoji = new Emoji(DiscordSnowflake.New(0), null, IsAnimated: true);
                 var getActual = CDN.GetEmojiUrl(emoji, CDNImageFormat.PNG);
 
                 Assert.True(getActual.IsSuccess);
@@ -113,7 +113,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var emoji = new Emoji(new Snowflake(0), null);
+                var emoji = new Emoji(DiscordSnowflake.New(0), null);
                 yield return CDN.GetEmojiUrl(emoji, imageFormat, imageSize);
                 yield return CDN.GetEmojiUrl(emoji.ID!.Value, imageFormat, imageSize);
             }
@@ -145,7 +145,7 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/icons/0/a_1.gif");
 
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("a_1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -169,7 +169,7 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/icons/0/a_1.png");
 
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("a_1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -190,7 +190,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
 
                 var mockedGuild = new Mock<IGuild>();
                 mockedGuild.SetupGet(g => g.Icon).Returns((IImageHash?)null);
@@ -211,7 +211,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -248,7 +248,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
 
                 var mockedGuild = new Mock<IGuild>();
                 mockedGuild.SetupGet(g => g.Splash).Returns((IImageHash?)null);
@@ -269,7 +269,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -306,7 +306,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
 
                 var mockedGuild = new Mock<IGuild>();
                 mockedGuild.SetupGet(g => g.DiscoverySplash).Returns((IImageHash?)null);
@@ -327,7 +327,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -364,7 +364,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
 
                 var mockedGuild = new Mock<IGuild>();
                 mockedGuild.SetupGet(g => g.Banner).Returns((IImageHash?)null);
@@ -385,7 +385,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var guildID = new Snowflake(0);
+                var guildID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedGuild = new Mock<IGuild>();
@@ -422,7 +422,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
 
                 var mockedUser = new Mock<IUser>();
                 mockedUser.SetupGet(g => g.Banner).Returns(default(Optional<IImageHash?>));
@@ -442,7 +442,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNullImage()
             {
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
 
                 var mockedUser = new Mock<IUser>();
                 mockedUser.SetupGet(g => g.Banner).Returns(new Optional<IImageHash?>(null));
@@ -463,7 +463,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedUser = new Mock<IUser>();
@@ -538,7 +538,7 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/avatars/0/a_1.gif");
 
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("a_1");
 
                 var mockedUser = new Mock<IUser>();
@@ -562,7 +562,7 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/avatars/0/a_1.png");
 
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("a_1");
 
                 var mockedUser = new Mock<IUser>();
@@ -583,7 +583,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
 
                 var mockedUser = new Mock<IUser>();
                 mockedUser.SetupGet(g => g.Avatar).Returns((IImageHash?)null);
@@ -604,7 +604,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var userID = new Snowflake(0);
+                var userID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedUser = new Mock<IUser>();
@@ -643,8 +643,8 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/guilds/0/users/1/avatars/a_2.gif");
 
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
                 var imageHash = new ImageHash("a_2");
 
                 var mockedUser = new Mock<IUser>();
@@ -671,8 +671,8 @@ namespace Remora.Discord.API.Tests
             {
                 var expected = new Uri("https://cdn.discordapp.com/guilds/0/users/1/avatars/a_2.png");
 
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
                 var imageHash = new ImageHash("a_2");
 
                 var mockedUser = new Mock<IUser>();
@@ -696,8 +696,8 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
 
                 var mockedUser = new Mock<IUser>();
                 mockedUser.SetupGet(g => g.ID).Returns(userID);
@@ -721,8 +721,8 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var guildID = new Snowflake(0);
-                var userID = new Snowflake(1);
+                var guildID = DiscordSnowflake.New(0);
+                var userID = DiscordSnowflake.New(1);
                 var imageHash = new ImageHash("2");
 
                 var mockedUser = new Mock<IUser>();
@@ -762,7 +762,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
 
                 var mockedApplication = new Mock<IApplication>();
                 mockedApplication.SetupGet(g => g.Icon).Returns((IImageHash?)null);
@@ -783,7 +783,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedApplication = new Mock<IApplication>();
@@ -820,7 +820,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
 
                 var mockedApplication = new Mock<IApplication>();
                 mockedApplication.SetupGet(g => g.CoverImage).Returns(default(Optional<IImageHash>));
@@ -841,7 +841,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedApplication = new Mock<IApplication>();
@@ -880,7 +880,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
 
                 var mockedApplication = new Mock<IApplication>();
                 mockedApplication.SetupGet(g => g.ID).Returns(applicationID);
@@ -917,8 +917,8 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var applicationID = new Snowflake(0);
-                var achievementID = new Snowflake(1);
+                var applicationID = DiscordSnowflake.New(0);
+                var achievementID = DiscordSnowflake.New(1);
                 var imageHash = new ImageHash("2");
 
                 var mockedApplication = new Mock<IApplication>();
@@ -954,7 +954,7 @@ namespace Remora.Discord.API.Tests
             [Fact]
             public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
             {
-                var teamID = new Snowflake(0);
+                var teamID = DiscordSnowflake.New(0);
 
                 var mockedTeam = new Mock<ITeam>();
                 mockedTeam.SetupGet(g => g.Icon).Returns((IImageHash?)null);
@@ -975,7 +975,7 @@ namespace Remora.Discord.API.Tests
                 Optional<ushort> imageSize = default
             )
             {
-                var teamID = new Snowflake(0);
+                var teamID = DiscordSnowflake.New(0);
                 var imageHash = new ImageHash("1");
 
                 var mockedTeam = new Mock<ITeam>();

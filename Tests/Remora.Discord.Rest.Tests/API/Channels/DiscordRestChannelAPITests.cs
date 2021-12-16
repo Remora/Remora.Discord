@@ -59,7 +59,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelID = new Snowflake(0);
+                var channelID = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -85,7 +85,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsGroupDMRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "brr";
                 var icon = new MemoryStream(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF });
 
@@ -123,7 +123,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsTextChannelRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "brr";
                 var type = ChannelType.GuildNews;
                 var position = 1;
@@ -131,7 +131,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 var nsfw = true;
                 var rateLimitPerUser = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
-                var parentId = new Snowflake(1);
+                var parentId = DiscordSnowflake.New(1);
                 var defaultAutoArchiveDuration = AutoArchiveDuration.Hour;
                 var reason = "test";
 
@@ -185,13 +185,13 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsVoiceChannelRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "brr";
                 var position = 1;
                 var bitrate = 8000;
                 var userLimit = 10;
                 var permissionOverwrites = new List<PermissionOverwrite>();
-                var parentId = new Snowflake(1);
+                var parentId = DiscordSnowflake.New(1);
                 var rtcRegion = "somewhere";
                 var videoQualityMode = VideoQualityMode.Auto;
                 var reason = "test";
@@ -244,7 +244,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsThreadChannelRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "brr";
                 var isArchived = true;
                 var autoArchiveDuration = AutoArchiveDuration.Hour;
@@ -294,7 +294,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var api = CreateAPI
                 (
                     b => b
@@ -344,7 +344,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfNameIsTooLong()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = new string('b', 101);
 
                 var api = CreateAPI(_ => { });
@@ -365,7 +365,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfNameIsTooShort()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = new string('b', 1);
 
                 var api = CreateAPI(_ => { });
@@ -386,7 +386,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfTopicIsTooLong()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var topic = new string('b', 1025);
 
                 var api = CreateAPI(_ => { });
@@ -407,7 +407,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfUserLimitIsTooSmall()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var userLimit = -1;
 
                 var api = CreateAPI(_ => { });
@@ -428,7 +428,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfUserLimitIsTooLarge()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var userLimit = 100;
 
                 var api = CreateAPI(_ => { });
@@ -455,7 +455,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -483,8 +483,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsBeforeRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var before = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var before = DiscordSnowflake.New(1);
                 var limit = 10;
 
                 var api = CreateAPI
@@ -513,8 +513,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsAfterRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var after = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var after = DiscordSnowflake.New(1);
                 var limit = 10;
 
                 var api = CreateAPI
@@ -543,8 +543,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsAroundRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var around = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var around = DiscordSnowflake.New(1);
                 var limit = 10;
 
                 var api = CreateAPI
@@ -580,15 +580,15 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                         b =>
                         {
                             var around = (b & 0b100) > 0
-                                ? new Snowflake(1)
+                                ? DiscordSnowflake.New(1)
                                 : default(Optional<Snowflake>);
 
                             var before = (b & 0b010) > 0
-                                ? new Snowflake(1)
+                                ? DiscordSnowflake.New(1)
                                 : default(Optional<Snowflake>);
 
                             var after = (b & 0b001) > 0
-                                ? new Snowflake(1)
+                                ? DiscordSnowflake.New(1)
                                 : default(Optional<Snowflake>);
 
                             return new object[] { around, before, after };
@@ -615,7 +615,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                 Optional<Snowflake> after
             )
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var limit = 10;
 
                 var expectedQueryStringParameters = new List<KeyValuePair<string, string>>
@@ -668,7 +668,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             {
                 var api = CreateAPI(_ => { });
 
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var result = await api.GetChannelMessagesAsync(channelId, default, default, default, 0);
 
@@ -692,8 +692,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -719,7 +719,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsNormalRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var content = "brr";
                 var nonce = "aasda";
                 var tts = false;
@@ -762,7 +762,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsEmbedRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var embeds = new List<Embed>();
                 var nonce = "aasda";
@@ -806,7 +806,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsComponentRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var embeds = new List<Embed>();
                 var nonce = "aasda";
@@ -853,7 +853,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -933,7 +933,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 await using var file1 = new MemoryStream();
                 await using var file2 = new MemoryStream();
@@ -1037,7 +1037,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1116,7 +1116,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1136,8 +1136,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1167,8 +1167,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
                 var api = CreateAPI
@@ -1199,8 +1199,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
                 var api = CreateAPI
@@ -1231,9 +1231,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
-                var userId = new Snowflake(2);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
+                var userId = DiscordSnowflake.New(2);
 
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
@@ -1265,9 +1265,9 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
-                var after = new Snowflake(3);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
+                var after = DiscordSnowflake.New(3);
                 var limit = 10;
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
@@ -1301,8 +1301,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfLimitIsTooLow()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var limit = 0;
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
@@ -1328,8 +1328,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfLimitIsTooHigh()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var limit = 101;
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
@@ -1361,8 +1361,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1392,8 +1392,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var urlEncodedEmoji = HttpUtility.UrlEncode("🔥");
 
@@ -1425,8 +1425,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var content = "drr";
                 var embeds = new List<Embed>();
@@ -1477,8 +1477,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsNullableRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1511,8 +1511,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1586,8 +1586,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 await using var file1 = new MemoryStream();
                 await using var file2 = new MemoryStream();
@@ -1685,8 +1685,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1759,7 +1759,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1779,8 +1779,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1810,8 +1810,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageIds = new[] { new Snowflake(1), new Snowflake(2) };
+                var channelId = DiscordSnowflake.New(0);
+                var messageIds = new[] { DiscordSnowflake.New(1), DiscordSnowflake.New(2) };
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1853,8 +1853,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfMessageCountIsTooSmall()
             {
-                var channelId = new Snowflake(0);
-                var messageIds = new[] { new Snowflake(1) };
+                var channelId = DiscordSnowflake.New(0);
+                var messageIds = new[] { DiscordSnowflake.New(1) };
 
                 var api = CreateAPI
                 (
@@ -1878,7 +1878,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task ReturnsErrorIfMessageCountIsTooLarge()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var messageIds = new Snowflake[101];
 
                 var api = CreateAPI
@@ -1909,8 +1909,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var overwriteId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var overwriteId = DiscordSnowflake.New(1);
 
                 var allow = new DiscordPermissionSet(DiscordPermission.Administrator);
                 var deny = new DiscordPermissionSet(DiscordPermission.Administrator);
@@ -1956,7 +1956,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -1986,14 +1986,14 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var maxAge = TimeSpan.FromSeconds(10);
                 var maxUses = 12;
                 var temporary = false;
                 var unique = true;
-                var targetUser = new Snowflake(1);
+                var targetUser = DiscordSnowflake.New(1);
                 var targetType = InviteTarget.Stream;
-                var targetApplication = new Snowflake(2);
+                var targetApplication = DiscordSnowflake.New(2);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -2051,8 +2051,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var overwriteId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var overwriteId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -2084,8 +2084,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var webhookChannelId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var webhookChannelId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -2122,7 +2122,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2152,7 +2152,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2182,8 +2182,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -2215,8 +2215,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -2248,8 +2248,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
                 var accessToken = "fbb";
                 var nick = "bb";
 
@@ -2290,8 +2290,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -2321,8 +2321,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var messageId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var messageId = DiscordSnowflake.New(1);
                 var name = "abba";
                 var duration = AutoArchiveDuration.Hour;
                 var reason = "test";
@@ -2367,7 +2367,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var name = "abba";
                 var duration = AutoArchiveDuration.Hour;
                 var type = ChannelType.GuildPrivateThread;
@@ -2426,7 +2426,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2457,8 +2457,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -2489,7 +2489,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2520,8 +2520,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -2552,8 +2552,8 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
-                var userId = new Snowflake(1);
+                var channelId = DiscordSnowflake.New(0);
+                var userId = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -2584,7 +2584,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2615,7 +2615,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
 
                 var api = CreateAPI
                 (
@@ -2646,7 +2646,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
                 var limit = 10;
 
@@ -2686,7 +2686,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
                 var limit = 10;
 
@@ -2726,7 +2726,7 @@ namespace Remora.Discord.Rest.Tests.API.Channels
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var channelId = new Snowflake(0);
+                var channelId = DiscordSnowflake.New(0);
                 var before = DateTimeOffset.Parse("2020-08-28T18:17:25.377506\u002B00:00");
                 var limit = 10;
 

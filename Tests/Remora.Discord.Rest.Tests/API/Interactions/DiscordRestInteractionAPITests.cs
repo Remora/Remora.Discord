@@ -57,7 +57,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var interactionID = new Snowflake(0);
+                var interactionID = DiscordSnowflake.New(0);
                 var token = "aaaa";
                 var interactionResponse = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
 
@@ -92,7 +92,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var interactionID = new Snowflake(0);
+                var interactionID = DiscordSnowflake.New(0);
                 var token = "aa";
                 var interactionResponse = new InteractionResponse
                 (
@@ -180,7 +180,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var interactionID = new Snowflake(0);
+                var interactionID = DiscordSnowflake.New(0);
                 var token = "aa";
                 var interactionResponse = new InteractionResponse
                 (
@@ -292,7 +292,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var interactionID = new Snowflake(0);
+                var interactionID = DiscordSnowflake.New(0);
                 var token = "aa";
                 var interactionResponse = new InteractionResponse
                 (
@@ -379,7 +379,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -399,7 +399,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var content = "booga";
@@ -449,7 +449,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -528,7 +528,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file1 = new MemoryStream();
@@ -631,7 +631,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -709,7 +709,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -729,7 +729,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aaa";
 
                 var api = CreateAPI
@@ -765,7 +765,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsNormalRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var content = "brr";
@@ -814,7 +814,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsEmbedRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 var embeds = new List<Embed>();
@@ -857,7 +857,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -931,7 +931,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file1 = new MemoryStream();
@@ -1030,7 +1030,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
 
                 await using var file = new MemoryStream();
@@ -1104,7 +1104,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1124,9 +1124,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1163,9 +1163,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 var content = "booga";
                 var embeds = new List<IEmbed>();
@@ -1215,9 +1215,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1296,9 +1296,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsMultiFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file1 = new MemoryStream();
                 await using var file2 = new MemoryStream();
@@ -1401,9 +1401,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRetainingFileUploadRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 await using var file = new MemoryStream();
                 var fileName = "file.bin";
@@ -1481,7 +1481,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
                     attachments: new OneOf<FileData, IPartialAttachment>[]
                     {
                         new FileData(fileName, file, description),
-                        new PartialAttachment(new Snowflake(999))
+                        new PartialAttachment(DiscordSnowflake.New(999))
                     }
                 );
 
@@ -1501,9 +1501,9 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var applicationID = new Snowflake(0);
+                var applicationID = DiscordSnowflake.New(0);
                 var token = "aaa";
-                var messageID = new Snowflake(1);
+                var messageID = DiscordSnowflake.New(1);
 
                 var api = CreateAPI
                 (
@@ -1539,7 +1539,7 @@ namespace Remora.Discord.Rest.Tests.API.Interactions
             [Fact]
             public async Task PerformsRequestCorrectly()
             {
-                var interactionID = new Snowflake(0);
+                var interactionID = DiscordSnowflake.New(0);
                 var token = "aaa";
 
                 var api = CreateAPI

@@ -47,7 +47,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default
                 );
@@ -65,7 +65,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default,
                     new[]
@@ -97,7 +97,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default,
                     new[]
@@ -139,7 +139,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default,
                     new[]
@@ -165,7 +165,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default,
                     new[]
@@ -206,7 +206,7 @@ namespace Remora.Discord.Commands.Tests.Extensions
             {
                 var command = new InteractionData
                 (
-                    new Snowflake(0),
+                    DiscordSnowflake.New(0),
                     "a",
                     default,
                     new[]
