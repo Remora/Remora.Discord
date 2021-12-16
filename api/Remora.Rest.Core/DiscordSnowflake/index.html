@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordRestGuildScheduledEventAPI.ModifyGuildScheduledEventAsync(Snowflake, Snowflake, Optional&lt;Snowflake&gt;, Optional&lt;IGuildScheduledEventEntityMetadata&gt;, Optional&lt;string&gt;, Optional&lt;GuildScheduledEventPrivacyLevel&gt;, Optional&lt;DateTimeOffset&gt;, Optional&lt;DateTimeOffset&gt;, Optional&lt;string&gt;, Optional&lt;GuildScheduledEventEntityType&gt;, Optional&lt;GuildScheduledEventStatus&gt;, CancellationToken) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordSnowflake Class</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,23 +134,10 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></li>
-		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Rest.Core">Remora<wbr>.Rest<wbr>.Core</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Constructors</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/997360CC">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/DC9B54C4">Create<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata&gt;<wbr>, <wbr>string, <wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level, <wbr>DateTimeOffset, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/E6691FB5">Delete<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/198A74AD">Get<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/24031AA9">Get<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Users<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/93BAB312">List<wbr>Scheduled<wbr>Events<wbr>For<wbr>Guild<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI/90ED481C">Modify<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Status&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
-			<li class="header">Property Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></li>
+			<li class="header">Class Types</li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake">DiscordSnowflake</a></li>
 
 
                     </ul>
@@ -166,130 +152,96 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>Modify<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Status&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
+	<h1>DiscordSnowflake <small>Class</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Modifies the given scheduled event.
+    Contains methods for initializing a <code class="cs">Snowflake</code> with the <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API/Constants/F2FD3908">DiscordEpoch</a></code>.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
-				<dl class="dl-horizontal">	
-						
-						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API">Remora<wbr>.Discord<wbr>.Rest<wbr>.API</a></dd>
-					
-						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI">Discord<wbr>Rest<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>A<wbr>P<wbr>I</a></dd>		
-					
-				</dl>
+  			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<dl class="dl-horizontal">		
+
+								<dt>Namespace</dt>
+								<dd><a href="/Remora.Discord/api/Remora.Rest.Core">Remora<wbr>.Rest<wbr>.Core</a></dd>
+											
+							
+								<dt>Base Types</dt>
+								<dd>
+									<ul class="list-unstyled">										
+											<li>object</li>								
+									</ul>
+								</dd>				
+							
+							
+						</dl>
+					</div>		
+					<div class="col-md-6">
+						<div class="mermaid">
+							graph BT
+	Type--&gt;Base0["object"]
+	Type["DiscordSnowflake"]
+class Type type-node
+
+						</div>
+					</div>
+				</div>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public Task&lt;Result&lt;IGuildScheduledEvent&gt;&gt; ModifyGuildScheduledEventAsync(Snowflake guildID, Snowflake eventID, Optional&lt;Snowflake&gt; channelID = null, Optional&lt;IGuildScheduledEventEntityMetadata&gt; entityMetadata = null, Optional&lt;string&gt; name = null, Optional&lt;GuildScheduledEventPrivacyLevel&gt; privacyLevel = null, Optional&lt;DateTimeOffset&gt; scheduledStartTime = null, Optional&lt;DateTimeOffset&gt; scheduledEndTime = null, Optional&lt;string&gt; description = null, Optional&lt;GuildScheduledEventEntityType&gt; entityType = null, Optional&lt;GuildScheduledEventStatus&gt; status = null, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public static class DiscordSnowflake</code></pre>
 
 
 
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>guildID</td>
-						<td>Snowflake</td>
-						<td>The ID of the guild.</td>
-					</tr>
-					<tr>
-						<td>eventID</td>
-						<td>Snowflake</td>
-						<td>The ID of the event.</td>
-					</tr>
-					<tr>
-						<td>channelID</td>
-						<td>Optional<wbr>&lt;Snowflake&gt;<wbr></td>
-						<td>The new channel ID associated with the event.</td>
-					</tr>
-					<tr>
-						<td>entityMetadata</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata">I<wbr>Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Metadata</a>&gt;<wbr></td>
-						<td>The new entity metadata.</td>
-					</tr>
-					<tr>
-						<td>name</td>
-						<td>Optional<wbr>&lt;string&gt;<wbr></td>
-						<td>The new name of the event (1-100 characters).</td>
-					</tr>
-					<tr>
-						<td>privacyLevel</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a>&gt;<wbr></td>
-						<td>The new privacy level of the event.</td>
-					</tr>
-					<tr>
-						<td>scheduledStartTime</td>
-						<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
-						<td>The new start time of the event.</td>
-					</tr>
-					<tr>
-						<td>scheduledEndTime</td>
-						<td>Optional<wbr>&lt;DateTimeOffset&gt;<wbr></td>
-						<td>The new end time of the event.</td>
-					</tr>
-					<tr>
-						<td>description</td>
-						<td>Optional<wbr>&lt;string&gt;<wbr></td>
-						<td>The new description of the event (1-100 characters).</td>
-					</tr>
-					<tr>
-						<td>entityType</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType">Guild<wbr>Scheduled<wbr>Event<wbr>Entity<wbr>Type</a>&gt;<wbr></td>
-						<td>The new entity type associated with the event.</td>
-					</tr>
-					<tr>
-						<td>status</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a>&gt;<wbr></td>
-						<td>The new status of the event.</td>
-					</tr>
-					<tr>
-						<td>ct</td>
-						<td>CancellationToken</td>
-						<td>The cancellation token for this operation.</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
 
-	<h1 id="ReturnValue">Return Value</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover two-cols">
-				<thead>
-					<tr>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-				<tbody><tr>
-					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent">IGuildScheduledEvent</a>&gt;<wbr>&gt;<wbr></td>
-					<td>A modification result which may or may not have succeeded.</td>
-				</tr>
-			</tbody></table>
-		</div>
-	</div>	
+
+
+
+
+
+			<h1 id="Methods">Methods</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake/EAE6BD3A">New<wbr>(ulong)<wbr></a></td>
+								<td>Snowflake</td>
+								<td>
+									<div>
+    Initialzes a new instance of a Snowflake with the Discord epoch.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake/0DD955BB">TryParse<wbr>(string, <wbr>Snowflake?)<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
 
 
 	
