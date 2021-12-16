@@ -36,7 +36,7 @@ public record ApplicationCommandInteractionDataOption
 (
     string Name,
     ApplicationCommandOptionType Type,
-    Optional<OneOf<IApplicationCommandInteractionDataOption, string, long, bool, Snowflake>> Value = default,
+    Optional<OneOf<string, long, bool, Snowflake, double>> Value = default,
     Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
     Optional<bool> IsFocused = default
 ) : IApplicationCommandInteractionDataOption;
