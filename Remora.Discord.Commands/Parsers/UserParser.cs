@@ -53,7 +53,7 @@ public class UserParser : AbstractTypeParser<IUser>
     /// <inheritdoc />
     public override async ValueTask<Result<IUser>> TryParseAsync(string value, CancellationToken ct = default)
     {
-        if (!Snowflake.TryParse(value.Unmention(), out var userID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var userID))
         {
             return new ParsingError<IUser>(value.Unmention());
         }

@@ -293,7 +293,7 @@ namespace Remora.Discord.Rest.API
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
                                 attachment => attachment
                             )
                         ).ToList();
@@ -398,7 +398,7 @@ namespace Remora.Discord.Rest.API
                         (
                             (f, i) => f.Match
                             (
-                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
+                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
                                 attachment => attachment
                             )
                         ).ToList();
