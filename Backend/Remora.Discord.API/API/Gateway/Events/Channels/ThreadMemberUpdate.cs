@@ -38,5 +38,6 @@ public record ThreadMemberUpdate
     DateTimeOffset JoinTimestamp,
     ThreadMemberFlags Flags,
     Optional<IGuildMember> Member,
-    Optional<IPartialPresence?> Presence
+    Optional<IPartialPresence?> Presence,
+    Snowflake GuildID
 ) : ThreadMember(ID, UserID, JoinTimestamp, Flags, Member, Presence), IThreadMemberUpdate;
