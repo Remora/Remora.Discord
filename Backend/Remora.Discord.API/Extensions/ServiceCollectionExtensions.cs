@@ -272,8 +272,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(m => m.Nickname, "nick")
             .WithPropertyName(m => m.IsDeafened, "deaf")
             .WithPropertyName(m => m.IsMuted, "mute")
-            .WithPropertyName(m => m.IsPending, "pending")
-            .WithPropertyName(m => m.CommunicationDisabledUntil, "communication_disabled_until");
+            .WithPropertyName(m => m.IsPending, "pending");
 
         options.AddDataObjectConverter<IGuildMemberRemove, GuildMemberRemove>();
         options.AddDataObjectConverter<IGuildMemberUpdate, GuildMemberUpdate>()
