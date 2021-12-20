@@ -321,6 +321,7 @@ namespace Remora.Discord.API.Abstractions.Rest
         /// <param name="isMuted">The new mute state of the user.</param>
         /// <param name="isDeafened">The new deaf state of the user.</param>
         /// <param name="channelID">The new voice channel of the user.</param>
+        /// <param name="communicationDisabledUntil">The <see cref="DateTime"/> until the user has communication disabled.</param>
         /// <param name="reason">The reason to mark the action in the audit log with.</param>
         /// <param name="ct">The cancellation token for this operation.</param>
         /// <returns>A rest result which may or may not have succeeded.</returns>
@@ -333,6 +334,7 @@ namespace Remora.Discord.API.Abstractions.Rest
             Optional<bool?> isMuted = default,
             Optional<bool?> isDeafened = default,
             Optional<Snowflake?> channelID = default,
+            Optional<DateTime?> communicationDisabledUntil = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         );

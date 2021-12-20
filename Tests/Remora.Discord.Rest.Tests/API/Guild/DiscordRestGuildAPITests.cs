@@ -1094,6 +1094,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                 var mute = true;
                 var deaf = true;
                 var channelId = DiscordSnowflake.New(2);
+                var communicationDisabledUntil = DateTime.Now.AddDays(2);
                 var reason = "test";
 
                 var api = CreateAPI
@@ -1111,6 +1112,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                                     .WithProperty("mute", p => p.Is(mute))
                                     .WithProperty("deaf", p => p.Is(deaf))
                                     .WithProperty("channel_id", p => p.Is(channelId.ToString()))
+                                    .WithProperty("communication_disabled_until", p => p.Is(communicationDisabledUntil))
                             )
                         )
                         .Respond(HttpStatusCode.NoContent)
@@ -1125,6 +1127,7 @@ namespace Remora.Discord.Rest.Tests.API.Guild
                     mute,
                     deaf,
                     channelId,
+                    communicationDisabledUntil,
                     reason
                 );
 

@@ -83,6 +83,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// </summary>
         new Optional<IDiscordPermissionSet> Permissions { get; }
 
+        /// <summary>
+        /// Gets the <see cref="DateTime"/> until the user has communication disabled.
+        /// </summary>
+        new Optional<DateTime?> CommunicationDisabledUntil { get; }
+
         /// <inheritdoc/>
         Optional<IUser> IPartialGuildMember.User => this.User;
 
@@ -112,5 +117,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc/>
         Optional<IDiscordPermissionSet> IPartialGuildMember.Permissions => this.Permissions;
+
+        /// <inheritdoc/>
+        Optional<DateTime?> IPartialGuildMember.CommunicationDisabledUntil => this.CommunicationDisabledUntil;
     }
 }

@@ -44,7 +44,8 @@ public record GuildMemberAdd
     bool IsMuted,
     Optional<bool?> IsPending,
     Snowflake GuildID,
-    Optional<IDiscordPermissionSet> Permissions = default
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<DateTime?> CommunicationDisabledUntil = default
 ) : GuildMember
 (
     User,
@@ -56,7 +57,8 @@ public record GuildMemberAdd
     IsDeafened,
     IsMuted,
     IsPending,
-    Permissions
+    Permissions,
+    CommunicationDisabledUntil
 ), IGuildMemberAdd
 {
     /// <inheritdoc cref="GuildMember"/>
