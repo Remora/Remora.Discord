@@ -230,6 +230,11 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// <summary>
         /// Allows for launching activities in a voice channel.
         /// </summary>
-        StartEmbeddedActivities = 39
+        StartEmbeddedActivities = 39,
+
+        /// <summary>
+        /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.
+        /// </summary>
+        ModerateMembers = 40
     }
 }
