@@ -41,43 +41,35 @@ public class MinValueAttribute : Attribute
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(long? minValue = default)
+    public MinValueAttribute(long minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(ulong? minValue = default)
+    public MinValueAttribute(ulong minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(float? minValue = default)
+    public MinValueAttribute(float minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(double? minValue = default)
+    public MinValueAttribute(double minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
     }
 }
