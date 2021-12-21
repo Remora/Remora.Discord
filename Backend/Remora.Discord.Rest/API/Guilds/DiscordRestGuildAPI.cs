@@ -527,7 +527,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isMuted = default,
             Optional<bool?> isDeafened = default,
             Optional<Snowflake?> channelID = default,
-            Optional<DateTime?> communicationDisabledUntil = default,
+            Optional<DateTimeOffset?> communicationDisabledUntil = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )

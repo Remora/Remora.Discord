@@ -45,7 +45,7 @@ public record GuildMemberAdd
     Optional<bool?> IsPending,
     Snowflake GuildID,
     Optional<IDiscordPermissionSet> Permissions = default,
-    Optional<DateTime?> CommunicationDisabledUntil = default
+    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
 ) : GuildMember
 (
     User,

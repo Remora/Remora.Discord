@@ -44,5 +44,5 @@ public record PartialGuildMember
     Optional<bool> IsMuted = default,
     Optional<bool?> IsPending = default,
     Optional<IDiscordPermissionSet> Permissions = default,
-    Optional<DateTime?> CommunicationDisabledUntil = default
+    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
 ) : IPartialGuildMember;
