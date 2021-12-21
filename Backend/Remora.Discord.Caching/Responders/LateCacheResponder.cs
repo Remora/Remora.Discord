@@ -77,7 +77,7 @@ namespace Remora.Discord.Caching.Responders
         /// <inheritdoc/>
         public Task<Result> RespondAsync(IGuildDelete gatewayEvent, CancellationToken ct = default)
         {
-            var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.GuildID);
+            var key = KeyHelpers.CreateGuildCacheKey(gatewayEvent.ID);
             _cacheService.Evict<IGuild>(key);
 
             return Task.FromResult(Result.FromSuccess());
