@@ -62,5 +62,8 @@ namespace Remora.Discord.API.Abstractions.Objects
 
         /// <inheritdoc cref="IGuildMember.Permissions" />
         Optional<IDiscordPermissionSet> Permissions { get; }
+
+        /// <inheritdoc cref="IGuildMember.CommunicationDisabledUntil"/>
+        Optional<DateTimeOffset?> CommunicationDisabledUntil { get; }
     }
 }

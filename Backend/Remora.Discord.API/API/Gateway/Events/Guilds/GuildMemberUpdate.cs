@@ -44,5 +44,6 @@ public record GuildMemberUpdate
     Optional<DateTimeOffset?> PremiumSince = default,
     Optional<bool> IsPending = default,
     Optional<bool> IsDeafened = default,
-    Optional<bool> IsMuted = default
+    Optional<bool> IsMuted = default,
+    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
 ) : IGuildMemberUpdate;

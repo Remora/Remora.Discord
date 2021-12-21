@@ -527,6 +527,7 @@ namespace Remora.Discord.Rest.API
             Optional<bool?> isMuted = default,
             Optional<bool?> isDeafened = default,
             Optional<Snowflake?> channelID = default,
+            Optional<DateTimeOffset?> communicationDisabledUntil = default,
             Optional<string> reason = default,
             CancellationToken ct = default
         )
@@ -545,6 +546,7 @@ namespace Remora.Discord.Rest.API
                         json.Write("mute", isMuted, this.JsonOptions);
                         json.Write("deaf", isDeafened, this.JsonOptions);
                         json.Write("channel_id", channelID, this.JsonOptions);
+                        json.Write("communication_disabled_until", communicationDisabledUntil, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(),

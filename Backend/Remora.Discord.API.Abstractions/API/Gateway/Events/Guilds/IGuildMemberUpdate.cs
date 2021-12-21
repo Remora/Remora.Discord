@@ -83,5 +83,10 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events
         /// Gets a value indicating whether the user is muted in voice channels.
         /// </summary>
         Optional<bool> IsMuted { get; }
+
+        /// <summary>
+        /// Gets the <see cref="DateTimeOffset"/> until the user has communication disabled.
+        /// </summary>
+        Optional<DateTimeOffset?> CommunicationDisabledUntil { get; }
     }
 }
