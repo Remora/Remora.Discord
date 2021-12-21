@@ -35,7 +35,7 @@ public class MinValueAttribute : Attribute
     /// <summary>
     /// Gets the minimum allowed value.
     /// </summary>
-    public Optional<OneOf<ulong, long, float, double>> Value { get; }
+    public OneOf<ulong, long, float, double> Value { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
@@ -43,7 +43,7 @@ public class MinValueAttribute : Attribute
     /// <param name="minValue">The minimum value.</param>
     public MinValueAttribute(long minValue = default)
     {
-        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
+        this.Value = minValue;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class MinValueAttribute : Attribute
     /// <param name="minValue">The minimum value.</param>
     public MinValueAttribute(ulong minValue = default)
     {
-        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
+        this.Value = minValue;
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class MinValueAttribute : Attribute
     /// <param name="minValue">The minimum value.</param>
     public MinValueAttribute(float minValue = default)
     {
-        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
+        this.Value = minValue;
     }
 
     /// <summary>
@@ -70,6 +70,6 @@ public class MinValueAttribute : Attribute
     /// <param name="minValue">The minimum value.</param>
     public MinValueAttribute(double minValue = default)
     {
-        this.Value = new Optional<OneOf<ulong, long, float, double>>(minValue);
+        this.Value = minValue;
     }
 }
