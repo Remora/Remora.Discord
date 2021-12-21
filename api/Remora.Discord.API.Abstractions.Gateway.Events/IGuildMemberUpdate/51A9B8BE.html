@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IGuildMember.Roles Property</title>
+        <title>Remora.Discord Documentation - API - IGuildMemberUpdate.CommunicationDisabledUntil Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -134,22 +134,22 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Events</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate">IGuildMemberUpdate</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Property Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/0D977C3C">Avatar</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/878F117C">Communication<wbr>Disabled<wbr>Until</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/C0F76C27">IsDeafened</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/5FD59126">IsMuted</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/FC65003D">IsPending</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/D81DF0DA">JoinedAt</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/B8845AD6">Nickname</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/C8227314">Permissions</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/58B3FAE6">PremiumSince</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/3C98F0D2">Roles</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember/50ED8D28">User</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/CC2032C5">Avatar</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/51A9B8BE">Communication<wbr>Disabled<wbr>Until</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/4988444B">GuildID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/05BE1783">IsDeafened</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/CE690BCA">IsMuted</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/9ACD8D97">IsPending</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/B624145D">JoinedAt</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/D6BDBE51">Nickname</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/1CCD775F">PremiumSince</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/A0369825">Roles</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate/C42C7422">User</a></li>
 
 
                     </ul>
@@ -164,15 +164,15 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a>.</h3>
-	<h1>Roles <small>Property</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate">IGuildMemberUpdate</a>.</h3>
+	<h1>Communication<wbr>Disabled<wbr>Until <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the roles the user has.
+    Gets the <code class="cs"><a href="/Remora.Discord">DateTimeOffset</a></code> until the user has communication disabled.
     </div>
 
 		<div class="panel panel-default">
@@ -180,17 +180,17 @@
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Gateway<wbr>.Events</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember">IGuildMember</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate">IGuildMemberUpdate</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>IReadOnlyList&lt;Snowflake&gt; Roles { get; }</code></pre>
+	<pre><code>Optional&lt;DateTimeOffset?&gt; CommunicationDisabledUntil { get; }</code></pre>
 
 
 
@@ -207,7 +207,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>IReadOnlyList<wbr>&lt;Snowflake&gt;<wbr></td>
+					<td>Optional<wbr>&lt;DateTimeOffset?&gt;<wbr></td>
 					<td></td>
 				</tr>
 			</tbody></table>
