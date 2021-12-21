@@ -41,43 +41,35 @@ public class MaxValueAttribute : Attribute
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(long? maxValue = default)
+    public MaxValueAttribute(long maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(maxValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(ulong? maxValue = default)
+    public MaxValueAttribute(ulong maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(maxValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(float? maxValue = default)
+    public MaxValueAttribute(float maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(maxValue);
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(double? maxValue = default)
+    public MaxValueAttribute(double maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = new Optional<OneOf<ulong, long, float, double>>(maxValue);
     }
 }
