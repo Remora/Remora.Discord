@@ -260,6 +260,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
+            .WithPropertyName(d => d.GuildID, "id")
             .WithPropertyName(d => d.IsUnavailable, "unavailable");
 
         options.AddDataObjectConverter<IGuildBanAdd, GuildBanAdd>();
