@@ -25,7 +25,6 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
-using Remora.Rest.Json.Policies;
 
 namespace Remora.Discord.API.Json;
 

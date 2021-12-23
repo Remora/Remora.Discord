@@ -29,7 +29,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
 using Remora.Results;

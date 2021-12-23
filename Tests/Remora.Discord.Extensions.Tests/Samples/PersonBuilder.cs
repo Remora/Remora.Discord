@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using Remora.Discord.Extensions.Builder;
 using Remora.Discord.Extensions.Errors;
 using Remora.Results;

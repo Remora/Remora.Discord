@@ -23,7 +23,6 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using Humanizer;
-using OneOf.Types;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Objects;

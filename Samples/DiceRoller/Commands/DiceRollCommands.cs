@@ -27,7 +27,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Samples.DiceRoller.API;

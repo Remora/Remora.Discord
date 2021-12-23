@@ -23,7 +23,6 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 using Remora.Rest.Xunit;
 
 namespace Remora.Discord.API.Tests.Gateway.Events

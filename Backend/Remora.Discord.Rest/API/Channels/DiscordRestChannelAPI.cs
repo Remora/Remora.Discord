@@ -30,7 +30,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;

@@ -20,13 +20,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Linq;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
-using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
-using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Json;
 using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;

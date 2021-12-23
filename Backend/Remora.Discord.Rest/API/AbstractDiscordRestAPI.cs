@@ -23,7 +23,6 @@
 using System;
 using System.Text.Json;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Rest;
 
 namespace Remora.Discord.Rest.API

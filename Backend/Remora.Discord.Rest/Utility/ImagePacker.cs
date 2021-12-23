@@ -25,7 +25,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Remora.Discord.Rest.Extensions;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
