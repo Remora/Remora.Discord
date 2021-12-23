@@ -39,1952 +39,6 @@ var searchModule = function() {
     a(
         {
             id:0,
-            title:"IGuildPreview",
-            content:"IGuildPreview",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview',
-            title:"IGuildPreview",
-            description:""
-        }
-    );
-    a(
-        {
-            id:1,
-            title:"PremiumType",
-            content:"PremiumType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumType',
-            title:"PremiumType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:2,
-            title:"IPartialPresence",
-            content:"IPartialPresence",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence',
-            title:"IPartialPresence",
-            description:""
-        }
-    );
-    a(
-        {
-            id:3,
-            title:"IActivityTimestamps",
-            content:"IActivityTimestamps",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityTimestamps',
-            title:"IActivityTimestamps",
-            description:""
-        }
-    );
-    a(
-        {
-            id:4,
-            title:"INitroStickerPacks",
-            content:"INitroStickerPacks",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/INitroStickerPacks',
-            title:"INitroStickerPacks",
-            description:""
-        }
-    );
-    a(
-        {
-            id:5,
-            title:"GuildFeature",
-            content:"GuildFeature",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature',
-            title:"GuildFeature",
-            description:""
-        }
-    );
-    a(
-        {
-            id:6,
-            title:"IMessageDelete",
-            content:"IMessageDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageDelete',
-            title:"IMessageDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:7,
-            title:"IVoicePayload",
-            content:"IVoicePayload",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoicePayload_1',
-            title:"IVoicePayload<TData>",
-            description:""
-        }
-    );
-    a(
-        {
-            id:8,
-            title:"IEmbedFooter",
-            content:"IEmbedFooter",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedFooter',
-            title:"IEmbedFooter",
-            description:""
-        }
-    );
-    a(
-        {
-            id:9,
-            title:"IDiscordRestInviteAPI",
-            content:"IDiscordRestInviteAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI',
-            title:"IDiscordRestInviteAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:10,
-            title:"IInteractionResponse",
-            content:"IInteractionResponse",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse',
-            title:"IInteractionResponse",
-            description:""
-        }
-    );
-    a(
-        {
-            id:11,
-            title:"ISticker",
-            content:"ISticker",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker',
-            title:"ISticker",
-            description:""
-        }
-    );
-    a(
-        {
-            id:12,
-            title:"ApplicationCommandOptionType",
-            content:"ApplicationCommandOptionType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandOptionType',
-            title:"ApplicationCommandOptionType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:13,
-            title:"IPartialRole",
-            content:"IPartialRole",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialRole',
-            title:"IPartialRole",
-            description:""
-        }
-    );
-    a(
-        {
-            id:14,
-            title:"IGuildScheduledEventUserAdd",
-            content:"IGuildScheduledEventUserAdd",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserAdd',
-            title:"IGuildScheduledEventUserAdd",
-            description:""
-        }
-    );
-    a(
-        {
-            id:15,
-            title:"IVoiceGatewayCommand",
-            content:"IVoiceGatewayCommand",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceGatewayCommand',
-            title:"IVoiceGatewayCommand",
-            description:""
-        }
-    );
-    a(
-        {
-            id:16,
-            title:"DiscordPermissionSet",
-            content:"DiscordPermissionSet",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Objects/DiscordPermissionSet',
-            title:"DiscordPermissionSet",
-            description:""
-        }
-    );
-    a(
-        {
-            id:17,
-            title:"IThreadListSync",
-            content:"IThreadListSync",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadListSync',
-            title:"IThreadListSync",
-            description:""
-        }
-    );
-    a(
-        {
-            id:18,
-            title:"InviteTarget",
-            content:"InviteTarget",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InviteTarget',
-            title:"InviteTarget",
-            description:""
-        }
-    );
-    a(
-        {
-            id:19,
-            title:"IGuildIntegrationsUpdate",
-            content:"IGuildIntegrationsUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildIntegrationsUpdate',
-            title:"IGuildIntegrationsUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:20,
-            title:"IPartialGuildMember",
-            content:"IPartialGuildMember",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildMember',
-            title:"IPartialGuildMember",
-            description:""
-        }
-    );
-    a(
-        {
-            id:21,
-            title:"IEmbedProvider",
-            content:"IEmbedProvider",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedProvider',
-            title:"IEmbedProvider",
-            description:""
-        }
-    );
-    a(
-        {
-            id:22,
-            title:"IChannelMention",
-            content:"IChannelMention",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelMention',
-            title:"IChannelMention",
-            description:""
-        }
-    );
-    a(
-        {
-            id:23,
-            title:"IDiscordRestUserAPI",
-            content:"IDiscordRestUserAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI',
-            title:"IDiscordRestUserAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:24,
-            title:"IVoiceHeartbeat",
-            content:"IVoiceHeartbeat",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceHeartbeat',
-            title:"IVoiceHeartbeat",
-            description:""
-        }
-    );
-    a(
-        {
-            id:25,
-            title:"IVoiceIdentify",
-            content:"IVoiceIdentify",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceIdentify',
-            title:"IVoiceIdentify",
-            description:""
-        }
-    );
-    a(
-        {
-            id:26,
-            title:"IChannelUpdate",
-            content:"IChannelUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate',
-            title:"IChannelUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:27,
-            title:"CachingDiscordRestGuildAPI",
-            content:"CachingDiscordRestGuildAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI',
-            title:"CachingDiscordRestGuildAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:28,
-            title:"DiscordRestWebhookAPI",
-            content:"DiscordRestWebhookAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI',
-            title:"DiscordRestWebhookAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:29,
-            title:"IGuildApplicationCommandPermissions",
-            content:"IGuildApplicationCommandPermissions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions',
-            title:"IGuildApplicationCommandPermissions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:30,
-            title:"IGuildScheduledEventDelete",
-            content:"IGuildScheduledEventDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventDelete',
-            title:"IGuildScheduledEventDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:31,
-            title:"CacheSettings",
-            content:"CacheSettings",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings',
-            title:"CacheSettings",
-            description:""
-        }
-    );
-    a(
-        {
-            id:32,
-            title:"IVoiceRegion",
-            content:"IVoiceRegion",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceRegion',
-            title:"IVoiceRegion",
-            description:""
-        }
-    );
-    a(
-        {
-            id:33,
-            title:"DiscordPermission",
-            content:"DiscordPermission",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission',
-            title:"DiscordPermission",
-            description:""
-        }
-    );
-    a(
-        {
-            id:34,
-            title:"StringEnumListConverter",
-            content:"StringEnumListConverter",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Json/StringEnumListConverter_1',
-            title:"StringEnumListConverter<TEnum>",
-            description:""
-        }
-    );
-    a(
-        {
-            id:35,
-            title:"IStageInstanceDelete",
-            content:"IStageInstanceDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete',
-            title:"IStageInstanceDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:36,
-            title:"AuditLogEvent",
-            content:"AuditLogEvent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent',
-            title:"AuditLogEvent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:37,
-            title:"IThreadMetadata",
-            content:"IThreadMetadata",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata',
-            title:"IThreadMetadata",
-            description:""
-        }
-    );
-    a(
-        {
-            id:38,
-            title:"IDiscordRestGatewayAPI",
-            content:"IDiscordRestGatewayAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGatewayAPI',
-            title:"IDiscordRestGatewayAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:39,
-            title:"IPayload",
-            content:"IPayload",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IPayload',
-            title:"IPayload",
-            description:""
-        }
-    );
-    a(
-        {
-            id:40,
-            title:"MessageNotificationLevel",
-            content:"MessageNotificationLevel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageNotificationLevel',
-            title:"MessageNotificationLevel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:41,
-            title:"StickerType",
-            content:"StickerType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StickerType',
-            title:"StickerType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:42,
-            title:"IMessageDeleteBulk",
-            content:"IMessageDeleteBulk",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageDeleteBulk',
-            title:"IMessageDeleteBulk",
-            description:""
-        }
-    );
-    a(
-        {
-            id:43,
-            title:"DiscordGatewayClient",
-            content:"DiscordGatewayClient",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient',
-            title:"DiscordGatewayClient",
-            description:""
-        }
-    );
-    a(
-        {
-            id:44,
-            title:"IMessageReactionAdd",
-            content:"IMessageReactionAdd",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionAdd',
-            title:"IMessageReactionAdd",
-            description:""
-        }
-    );
-    a(
-        {
-            id:45,
-            title:"IActivitySecrets",
-            content:"IActivitySecrets",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivitySecrets',
-            title:"IActivitySecrets",
-            description:""
-        }
-    );
-    a(
-        {
-            id:46,
-            title:"RestRequestBuilderExtensions",
-            content:"RestRequestBuilderExtensions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions',
-            title:"RestRequestBuilderExtensions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:47,
-            title:"IResponderTypeRepository",
-            content:"IResponderTypeRepository",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository',
-            title:"IResponderTypeRepository",
-            description:""
-        }
-    );
-    a(
-        {
-            id:48,
-            title:"WebSocketPayloadTransportService",
-            content:"WebSocketPayloadTransportService",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Transport/WebSocketPayloadTransportService',
-            title:"WebSocketPayloadTransportService",
-            description:""
-        }
-    );
-    a(
-        {
-            id:49,
-            title:"IRoleTemplate",
-            content:"IRoleTemplate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTemplate',
-            title:"IRoleTemplate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:50,
-            title:"IBan",
-            content:"IBan",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBan',
-            title:"IBan",
-            description:""
-        }
-    );
-    a(
-        {
-            id:51,
-            title:"ITypingStart",
-            content:"ITypingStart",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/ITypingStart',
-            title:"ITypingStart",
-            description:""
-        }
-    );
-    a(
-        {
-            id:52,
-            title:"StagePrivacyLevel",
-            content:"StagePrivacyLevel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StagePrivacyLevel',
-            title:"StagePrivacyLevel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:53,
-            title:"IVoiceResumed",
-            content:"IVoiceResumed",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed',
-            title:"IVoiceResumed",
-            description:""
-        }
-    );
-    a(
-        {
-            id:54,
-            title:"PermissionOverwriteType",
-            content:"PermissionOverwriteType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType',
-            title:"PermissionOverwriteType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:55,
-            title:"IActivityEmoji",
-            content:"IActivityEmoji",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityEmoji',
-            title:"IActivityEmoji",
-            description:""
-        }
-    );
-    a(
-        {
-            id:56,
-            title:"VerificationLevel",
-            content:"VerificationLevel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/VerificationLevel',
-            title:"VerificationLevel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:57,
-            title:"IMessage",
-            content:"IMessage",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage',
-            title:"IMessage",
-            description:""
-        }
-    );
-    a(
-        {
-            id:58,
-            title:"IVoiceStateUpdate",
-            content:"IVoiceStateUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IVoiceStateUpdate',
-            title:"IVoiceStateUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:59,
-            title:"IActivityButton",
-            content:"IActivityButton",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityButton',
-            title:"IActivityButton",
-            description:""
-        }
-    );
-    a(
-        {
-            id:60,
-            title:"IGuildMemberAdd",
-            content:"IGuildMemberAdd",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberAdd',
-            title:"IGuildMemberAdd",
-            description:""
-        }
-    );
-    a(
-        {
-            id:61,
-            title:"StickerFormatType",
-            content:"StickerFormatType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StickerFormatType',
-            title:"StickerFormatType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:62,
-            title:"IResponder",
-            content:"IResponder",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1',
-            title:"IResponder<TGatewayEvent>",
-            description:""
-        }
-    );
-    a(
-        {
-            id:63,
-            title:"IBulkApplicationCommandData",
-            content:"IBulkApplicationCommandData",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData',
-            title:"IBulkApplicationCommandData",
-            description:""
-        }
-    );
-    a(
-        {
-            id:64,
-            title:"IEmoji",
-            content:"IEmoji",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji',
-            title:"IEmoji",
-            description:""
-        }
-    );
-    a(
-        {
-            id:65,
-            title:"DiscordTextPermission",
-            content:"DiscordTextPermission",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordTextPermission',
-            title:"DiscordTextPermission",
-            description:""
-        }
-    );
-    a(
-        {
-            id:66,
-            title:"IChannelTemplate",
-            content:"IChannelTemplate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelTemplate',
-            title:"IChannelTemplate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:67,
-            title:"IRestError",
-            content:"IRestError",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRestError',
-            title:"IRestError",
-            description:""
-        }
-    );
-    a(
-        {
-            id:68,
-            title:"IResume",
-            content:"IResume",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IResume',
-            title:"IResume",
-            description:""
-        }
-    );
-    a(
-        {
-            id:69,
-            title:"IErrorDetails",
-            content:"IErrorDetails",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IErrorDetails',
-            title:"IErrorDetails",
-            description:""
-        }
-    );
-    a(
-        {
-            id:70,
-            title:"IStageInstanceUpdate",
-            content:"IStageInstanceUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate',
-            title:"IStageInstanceUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:71,
-            title:"IResumed",
-            content:"IResumed",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IResumed',
-            title:"IResumed",
-            description:""
-        }
-    );
-    a(
-        {
-            id:72,
-            title:"IEmbedVideo",
-            content:"IEmbedVideo",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedVideo',
-            title:"IEmbedVideo",
-            description:""
-        }
-    );
-    a(
-        {
-            id:73,
-            title:"IWelcomeScreen",
-            content:"IWelcomeScreen",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen',
-            title:"IWelcomeScreen",
-            description:""
-        }
-    );
-    a(
-        {
-            id:74,
-            title:"IHello",
-            content:"IHello",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IHello',
-            title:"IHello",
-            description:""
-        }
-    );
-    a(
-        {
-            id:75,
-            title:"AutoArchiveDurationExtensions",
-            content:"AutoArchiveDurationExtensions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/AutoArchiveDurationExtensions',
-            title:"AutoArchiveDurationExtensions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:76,
-            title:"IGuildMemberUpdate",
-            content:"IGuildMemberUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate',
-            title:"IGuildMemberUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:77,
-            title:"MessageFlags",
-            content:"MessageFlags",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageFlags',
-            title:"MessageFlags",
-            description:""
-        }
-    );
-    a(
-        {
-            id:78,
-            title:"IDiscordRestApplicationAPI",
-            content:"IDiscordRestApplicationAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestApplicationAPI',
-            title:"IDiscordRestApplicationAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:79,
-            title:"IDiscordRestVoiceAPI",
-            content:"IDiscordRestVoiceAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI',
-            title:"IDiscordRestVoiceAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:80,
-            title:"IFollowedChannel",
-            content:"IFollowedChannel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IFollowedChannel',
-            title:"IFollowedChannel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:81,
-            title:"IGuildEmojisUpdate",
-            content:"IGuildEmojisUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildEmojisUpdate',
-            title:"IGuildEmojisUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:82,
-            title:"IVoicePayload",
-            content:"IVoicePayload",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoicePayload',
-            title:"IVoicePayload",
-            description:""
-        }
-    );
-    a(
-        {
-            id:83,
-            title:"ClientStatus",
-            content:"ClientStatus",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ClientStatus',
-            title:"ClientStatus",
-            description:""
-        }
-    );
-    a(
-        {
-            id:84,
-            title:"IMessageReactionRemoveAll",
-            content:"IMessageReactionRemoveAll",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemoveAll',
-            title:"IMessageReactionRemoveAll",
-            description:""
-        }
-    );
-    a(
-        {
-            id:85,
-            title:"IInviteDelete",
-            content:"IInviteDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInviteDelete',
-            title:"IInviteDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:86,
-            title:"IAuditLogChange",
-            content:"IAuditLogChange",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogChange',
-            title:"IAuditLogChange",
-            description:""
-        }
-    );
-    a(
-        {
-            id:87,
-            title:"MentionType",
-            content:"MentionType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MentionType',
-            title:"MentionType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:88,
-            title:"DiscordError",
-            content:"DiscordError",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError',
-            title:"DiscordError",
-            description:""
-        }
-    );
-    a(
-        {
-            id:89,
-            title:"GatewayConnectionStatus",
-            content:"GatewayConnectionStatus",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway/GatewayConnectionStatus',
-            title:"GatewayConnectionStatus",
-            description:""
-        }
-    );
-    a(
-        {
-            id:90,
-            title:"IPresence",
-            content:"IPresence",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPresence',
-            title:"IPresence",
-            description:""
-        }
-    );
-    a(
-        {
-            id:91,
-            title:"IInteractionCallbackData",
-            content:"IInteractionCallbackData",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionCallbackData',
-            title:"IInteractionCallbackData",
-            description:""
-        }
-    );
-    a(
-        {
-            id:92,
-            title:"IMessageActivity",
-            content:"IMessageActivity",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity',
-            title:"IMessageActivity",
-            description:""
-        }
-    );
-    a(
-        {
-            id:93,
-            title:"IAllowedMentions",
-            content:"IAllowedMentions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAllowedMentions',
-            title:"IAllowedMentions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:94,
-            title:"IGatewayEndpoint",
-            content:"IGatewayEndpoint",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGatewayEndpoint',
-            title:"IGatewayEndpoint",
-            description:""
-        }
-    );
-    a(
-        {
-            id:95,
-            title:"IApplication",
-            content:"IApplication",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplication',
-            title:"IApplication",
-            description:""
-        }
-    );
-    a(
-        {
-            id:96,
-            title:"VoiceGatewayCloseStatus",
-            content:"VoiceGatewayCloseStatus",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/VoiceGatewayCloseStatus',
-            title:"VoiceGatewayCloseStatus",
-            description:""
-        }
-    );
-    a(
-        {
-            id:97,
-            title:"IMessageUpdate",
-            content:"IMessageUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageUpdate',
-            title:"IMessageUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:98,
-            title:"IVoiceClientDisconnect",
-            content:"IVoiceClientDisconnect",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceClientDisconnect',
-            title:"IVoiceClientDisconnect",
-            description:""
-        }
-    );
-    a(
-        {
-            id:99,
-            title:"ISelectOption",
-            content:"ISelectOption",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption',
-            title:"ISelectOption",
-            description:""
-        }
-    );
-    a(
-        {
-            id:100,
-            title:"ApplicationCommandPermissionType",
-            content:"ApplicationCommandPermissionType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandPermissionType',
-            title:"ApplicationCommandPermissionType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:101,
-            title:"IDiscordRestStickerAPI",
-            content:"IDiscordRestStickerAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStickerAPI',
-            title:"IDiscordRestStickerAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:102,
-            title:"IInviteStageInstance",
-            content:"IInviteStageInstance",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance',
-            title:"IInviteStageInstance",
-            description:""
-        }
-    );
-    a(
-        {
-            id:103,
-            title:"IMessageReference",
-            content:"IMessageReference",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference',
-            title:"IMessageReference",
-            description:""
-        }
-    );
-    a(
-        {
-            id:104,
-            title:"IChannelDelete",
-            content:"IChannelDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete',
-            title:"IChannelDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:105,
-            title:"ISessionStartLimit",
-            content:"ISessionStartLimit",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISessionStartLimit',
-            title:"ISessionStartLimit",
-            description:""
-        }
-    );
-    a(
-        {
-            id:106,
-            title:"ITokenStore",
-            content:"ITokenStore",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest/ITokenStore',
-            title:"ITokenStore",
-            description:""
-        }
-    );
-    a(
-        {
-            id:107,
-            title:"IShardIdentification",
-            content:"IShardIdentification",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification',
-            title:"IShardIdentification",
-            description:""
-        }
-    );
-    a(
-        {
-            id:108,
-            title:"CachingDiscordRestOAuth API",
-            content:"CachingDiscordRestOAuth API",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestOAuth2API',
-            title:"CachingDiscordRestOAuth2API",
-            description:""
-        }
-    );
-    a(
-        {
-            id:109,
-            title:"DiscordRestOAuth API",
-            content:"DiscordRestOAuth API",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API',
-            title:"DiscordRestOAuth2API",
-            description:""
-        }
-    );
-    a(
-        {
-            id:110,
-            title:"IActivityAssets",
-            content:"IActivityAssets",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityAssets',
-            title:"IActivityAssets",
-            description:""
-        }
-    );
-    a(
-        {
-            id:111,
-            title:"IPartialAttachment",
-            content:"IPartialAttachment",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment',
-            title:"IPartialAttachment",
-            description:""
-        }
-    );
-    a(
-        {
-            id:112,
-            title:"IUpdateVoiceState",
-            content:"IUpdateVoiceState",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState',
-            title:"IUpdateVoiceState",
-            description:""
-        }
-    );
-    a(
-        {
-            id:113,
-            title:"WebhookType",
-            content:"WebhookType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/WebhookType',
-            title:"WebhookType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:114,
-            title:"IInvalidSession",
-            content:"IInvalidSession",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInvalidSession',
-            title:"IInvalidSession",
-            description:""
-        }
-    );
-    a(
-        {
-            id:115,
-            title:"IThreadUpdate",
-            content:"IThreadUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate',
-            title:"IThreadUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:116,
-            title:"IStageInstance",
-            content:"IStageInstance",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance',
-            title:"IStageInstance",
-            description:""
-        }
-    );
-    a(
-        {
-            id:117,
-            title:"IApplicationCommandInteractionDataOption",
-            content:"IApplicationCommandInteractionDataOption",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandInteractionDataOption',
-            title:"IApplicationCommandInteractionDataOption",
-            description:""
-        }
-    );
-    a(
-        {
-            id:118,
-            title:"DiscordRestChannelAPI",
-            content:"DiscordRestChannelAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI',
-            title:"DiscordRestChannelAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:119,
-            title:"IPresenceUpdate",
-            content:"IPresenceUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IPresenceUpdate',
-            title:"IPresenceUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:120,
-            title:"MembershipState",
-            content:"MembershipState",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MembershipState',
-            title:"MembershipState",
-            description:""
-        }
-    );
-    a(
-        {
-            id:121,
-            title:"ChannelType",
-            content:"ChannelType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelType',
-            title:"ChannelType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:122,
-            title:"IEmbedImage",
-            content:"IEmbedImage",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedImage',
-            title:"IEmbedImage",
-            description:""
-        }
-    );
-    a(
-        {
-            id:123,
-            title:"InteractionCallbackDataFlags",
-            content:"InteractionCallbackDataFlags",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags',
-            title:"InteractionCallbackDataFlags",
-            description:""
-        }
-    );
-    a(
-        {
-            id:124,
-            title:"DiscordRestGatewayAPI",
-            content:"DiscordRestGatewayAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI',
-            title:"DiscordRestGatewayAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:125,
-            title:"Constants",
-            content:"Constants",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API/Constants',
-            title:"Constants",
-            description:""
-        }
-    );
-    a(
-        {
-            id:126,
-            title:"IActionRowComponent",
-            content:"IActionRowComponent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent',
-            title:"IActionRowComponent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:127,
-            title:"IRoleTags",
-            content:"IRoleTags",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTags',
-            title:"IRoleTags",
-            description:""
-        }
-    );
-    a(
-        {
-            id:128,
-            title:"DiscordRestEmojiAPI",
-            content:"DiscordRestEmojiAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI',
-            title:"DiscordRestEmojiAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:129,
-            title:"DiscordGatewayClientOptions",
-            content:"DiscordGatewayClientOptions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions',
-            title:"DiscordGatewayClientOptions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:130,
-            title:"IUserUpdate",
-            content:"IUserUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate',
-            title:"IUserUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:131,
-            title:"IStickerPack",
-            content:"IStickerPack",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStickerPack',
-            title:"IStickerPack",
-            description:""
-        }
-    );
-    a(
-        {
-            id:132,
-            title:"IComponent",
-            content:"IComponent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent',
-            title:"IComponent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:133,
-            title:"DiscordRestStickerAPI",
-            content:"DiscordRestStickerAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI',
-            title:"DiscordRestStickerAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:134,
-            title:"CachingDiscordRestTemplateAPI",
-            content:"CachingDiscordRestTemplateAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestTemplateAPI',
-            title:"CachingDiscordRestTemplateAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:135,
-            title:"CachingDiscordRestUserAPI",
-            content:"CachingDiscordRestUserAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI',
-            title:"CachingDiscordRestUserAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:136,
-            title:"GuildScheduledEventEntityType",
-            content:"GuildScheduledEventEntityType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType',
-            title:"GuildScheduledEventEntityType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:137,
-            title:"ActivityFlags",
-            content:"ActivityFlags",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ActivityFlags',
-            title:"ActivityFlags",
-            description:""
-        }
-    );
-    a(
-        {
-            id:138,
-            title:"IPermissionOverwriteTemplate",
-            content:"IPermissionOverwriteTemplate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPermissionOverwriteTemplate',
-            title:"IPermissionOverwriteTemplate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:139,
             title:"IChannelPinsUpdate",
             content:"IChannelPinsUpdate",
             description:'',
@@ -1998,133 +52,203 @@ var searchModule = function() {
     );
     a(
         {
-            id:140,
-            title:"IClientStatuses",
-            content:"IClientStatuses",
+            id:1,
+            title:"AutoArchiveDurationExtensions",
+            content:"AutoArchiveDurationExtensions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IClientStatuses',
-            title:"IClientStatuses",
+            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/AutoArchiveDurationExtensions',
+            title:"AutoArchiveDurationExtensions",
             description:""
         }
     );
     a(
         {
-            id:141,
-            title:"IOptionalAuditEntryInfo",
-            content:"IOptionalAuditEntryInfo",
+            id:2,
+            title:"IIntegrationDelete",
+            content:"IIntegrationDelete",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo',
-            title:"IOptionalAuditEntryInfo",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationDelete',
+            title:"IIntegrationDelete",
             description:""
         }
     );
     a(
         {
-            id:142,
-            title:"IGuildMember",
-            content:"IGuildMember",
+            id:3,
+            title:"ButtonComponentStyle",
+            content:"ButtonComponentStyle",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember',
-            title:"IGuildMember",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ButtonComponentStyle',
+            title:"ButtonComponentStyle",
             description:""
         }
     );
     a(
         {
-            id:143,
-            title:"IWebhook",
-            content:"IWebhook",
+            id:4,
+            title:"IMessageInteraction",
+            content:"IMessageInteraction",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook',
-            title:"IWebhook",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageInteraction',
+            title:"IMessageInteraction",
             description:""
         }
     );
     a(
         {
-            id:144,
-            title:"IResponder",
-            content:"IResponder",
+            id:5,
+            title:"IStageInstanceDelete",
+            content:"IStageInstanceDelete",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder',
-            title:"IResponder",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete',
+            title:"IStageInstanceDelete",
             description:""
         }
     );
     a(
         {
-            id:145,
-            title:"IGuildScheduledEventCreate",
-            content:"IGuildScheduledEventCreate",
+            id:6,
+            title:"StickerFormatType",
+            content:"StickerFormatType",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventCreate',
-            title:"IGuildScheduledEventCreate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StickerFormatType',
+            title:"StickerFormatType",
             description:""
         }
     );
     a(
         {
-            id:146,
-            title:"IPartialUser",
-            content:"IPartialUser",
+            id:7,
+            title:"IDiscordPermissionSet",
+            content:"IDiscordPermissionSet",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser',
-            title:"IPartialUser",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet',
+            title:"IDiscordPermissionSet",
             description:""
         }
     );
     a(
         {
-            id:147,
-            title:"GuildScheduledEventStatus",
-            content:"GuildScheduledEventStatus",
+            id:8,
+            title:"VerificationLevel",
+            content:"VerificationLevel",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus',
-            title:"GuildScheduledEventStatus",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/VerificationLevel',
+            title:"VerificationLevel",
             description:""
         }
     );
     a(
         {
-            id:148,
-            title:"CachingDiscordRestInviteAPI",
-            content:"CachingDiscordRestInviteAPI",
+            id:9,
+            title:"IPartialGuildMember",
+            content:"IPartialGuildMember",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI',
-            title:"CachingDiscordRestInviteAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildMember',
+            title:"IPartialGuildMember",
             description:""
         }
     );
     a(
         {
-            id:149,
+            id:10,
+            title:"IEventPayload",
+            content:"IEventPayload",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IEventPayload',
+            title:"IEventPayload",
+            description:""
+        }
+    );
+    a(
+        {
+            id:11,
+            title:"ServiceCollectionExtensions",
+            content:"ServiceCollectionExtensions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/ServiceCollectionExtensions',
+            title:"ServiceCollectionExtensions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:12,
+            title:"ServiceCollectionExtensions",
+            content:"ServiceCollectionExtensions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Unstable.Extensions/ServiceCollectionExtensions',
+            title:"ServiceCollectionExtensions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:13,
+            title:"StringEnumListConverter",
+            content:"StringEnumListConverter",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Json/StringEnumListConverter_1',
+            title:"StringEnumListConverter<TEnum>",
+            description:""
+        }
+    );
+    a(
+        {
+            id:14,
+            title:"Constants",
+            content:"Constants",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API/Constants',
+            title:"Constants",
+            description:""
+        }
+    );
+    a(
+        {
+            id:15,
             title:"IDiscordRestOAuth API",
             content:"IDiscordRestOAuth API",
             description:'',
@@ -2138,273 +262,315 @@ var searchModule = function() {
     );
     a(
         {
-            id:150,
-            title:"IGuildStickersUpdate",
-            content:"IGuildStickersUpdate",
+            id:16,
+            title:"DiscordRestGatewayAPI",
+            content:"DiscordRestGatewayAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildStickersUpdate',
-            title:"IGuildStickersUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGatewayAPI',
+            title:"DiscordRestGatewayAPI",
             description:""
         }
     );
     a(
         {
-            id:151,
-            title:"IGuildWidget",
-            content:"IGuildWidget",
+            id:17,
+            title:"IVoiceGatewayCommand",
+            content:"IVoiceGatewayCommand",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget',
-            title:"IGuildWidget",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceGatewayCommand',
+            title:"IVoiceGatewayCommand",
             description:""
         }
     );
     a(
         {
-            id:152,
-            title:"IEmbed",
-            content:"IEmbed",
+            id:18,
+            title:"IEmoji",
+            content:"IEmoji",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed',
-            title:"IEmbed",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmoji',
+            title:"IEmoji",
             description:""
         }
     );
     a(
         {
-            id:153,
-            title:"VoiceOperationCode",
-            content:"VoiceOperationCode",
+            id:19,
+            title:"IStickerPack",
+            content:"IStickerPack",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/VoiceOperationCode',
-            title:"VoiceOperationCode",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStickerPack',
+            title:"IStickerPack",
             description:""
         }
     );
     a(
         {
-            id:154,
-            title:"InteractionCallbackType",
-            content:"InteractionCallbackType",
+            id:20,
+            title:"IEmbedImage",
+            content:"IEmbedImage",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType',
-            title:"InteractionCallbackType",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedImage',
+            title:"IEmbedImage",
             description:""
         }
     );
     a(
         {
-            id:155,
-            title:"IThreadMemberUpdate",
-            content:"IThreadMemberUpdate",
+            id:21,
+            title:"DiscordTextPermission",
+            content:"DiscordTextPermission",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMemberUpdate',
-            title:"IThreadMemberUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordTextPermission',
+            title:"DiscordTextPermission",
             description:""
         }
     );
     a(
         {
-            id:156,
-            title:"IPayloadTransportService",
-            content:"IPayloadTransportService",
+            id:22,
+            title:"IStageInstanceCreate",
+            content:"IStageInstanceCreate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Transport/IPayloadTransportService',
-            title:"IPayloadTransportService",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate',
+            title:"IStageInstanceCreate",
             description:""
         }
     );
     a(
         {
-            id:157,
-            title:"DiscordRestStageInstanceAPI",
-            content:"DiscordRestStageInstanceAPI",
+            id:23,
+            title:"IVoiceSelectProtocol",
+            content:"IVoiceSelectProtocol",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI',
-            title:"DiscordRestStageInstanceAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceSelectProtocol',
+            title:"IVoiceSelectProtocol",
             description:""
         }
     );
     a(
         {
-            id:158,
-            title:"ServiceCollectionExtensions",
-            content:"ServiceCollectionExtensions",
+            id:24,
+            title:"IInviteCreate",
+            content:"IInviteCreate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions',
-            title:"ServiceCollectionExtensions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInviteCreate',
+            title:"IInviteCreate",
             description:""
         }
     );
     a(
         {
-            id:159,
-            title:"IPartySize",
-            content:"IPartySize",
+            id:25,
+            title:"CDN",
+            content:"CDN",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartySize',
-            title:"IPartySize",
+            url:'/Remora.Discord/api/Remora.Discord.API/CDN',
+            title:"CDN",
             description:""
         }
     );
     a(
         {
-            id:160,
-            title:"IVoiceReady",
-            content:"IVoiceReady",
+            id:26,
+            title:"IMessageCreate",
+            content:"IMessageCreate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady',
-            title:"IVoiceReady",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageCreate',
+            title:"IMessageCreate",
             description:""
         }
     );
     a(
         {
-            id:161,
-            title:"IHeartbeat",
-            content:"IHeartbeat",
+            id:27,
+            title:"TypeExtensions",
+            content:"TypeExtensions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeat',
-            title:"IHeartbeat",
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Extensions/TypeExtensions',
+            title:"TypeExtensions",
             description:""
         }
     );
     a(
         {
-            id:162,
-            title:"IDiscordRestGuildScheduledEventAPI",
-            content:"IDiscordRestGuildScheduledEventAPI",
+            id:28,
+            title:"DiscordGatewayClientOptions",
+            content:"DiscordGatewayClientOptions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildScheduledEventAPI',
-            title:"IDiscordRestGuildScheduledEventAPI",
+            url:'/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions',
+            title:"DiscordGatewayClientOptions",
             description:""
         }
     );
     a(
         {
-            id:163,
-            title:"IGuildScheduledEventEntityMetadata",
-            content:"IGuildScheduledEventEntityMetadata",
+            id:29,
+            title:"IEmbedAuthor",
+            content:"IEmbedAuthor",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata',
-            title:"IGuildScheduledEventEntityMetadata",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedAuthor',
+            title:"IEmbedAuthor",
             description:""
         }
     );
     a(
         {
-            id:164,
-            title:"IApplicationCommandOption",
-            content:"IApplicationCommandOption",
+            id:30,
+            title:"IMessageDelete",
+            content:"IMessageDelete",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption',
-            title:"IApplicationCommandOption",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageDelete',
+            title:"IMessageDelete",
             description:""
         }
     );
     a(
         {
-            id:165,
-            title:"CDNImageFormatExtensions",
-            content:"CDNImageFormatExtensions",
+            id:31,
+            title:"IGuildScheduledEventUpdate",
+            content:"IGuildScheduledEventUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/CDNImageFormatExtensions',
-            title:"CDNImageFormatExtensions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUpdate',
+            title:"IGuildScheduledEventUpdate",
             description:""
         }
     );
     a(
         {
-            id:166,
-            title:"IIntegrationApplication",
-            content:"IIntegrationApplication",
+            id:32,
+            title:"CachingDiscordRestInviteAPI",
+            content:"CachingDiscordRestInviteAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication',
-            title:"IIntegrationApplication",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestInviteAPI',
+            title:"CachingDiscordRestInviteAPI",
             description:""
         }
     );
     a(
         {
-            id:167,
-            title:"IntegrationExpireBehaviour",
-            content:"IntegrationExpireBehaviour",
+            id:33,
+            title:"IGuildScheduledEventUserAdd",
+            content:"IGuildScheduledEventUserAdd",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour',
-            title:"IntegrationExpireBehaviour",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUserAdd',
+            title:"IGuildScheduledEventUserAdd",
             description:""
         }
     );
     a(
         {
-            id:168,
-            title:"IVoiceHeartbeatAcknowledge",
-            content:"IVoiceHeartbeatAcknowledge",
+            id:34,
+            title:"IInteraction",
+            content:"IInteraction",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge',
-            title:"IVoiceHeartbeatAcknowledge",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction',
+            title:"IInteraction",
             description:""
         }
     );
     a(
         {
-            id:169,
+            id:35,
+            title:"IMessageUpdate",
+            content:"IMessageUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageUpdate',
+            title:"IMessageUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:36,
+            title:"ActivityType",
+            content:"ActivityType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ActivityType',
+            title:"ActivityType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:37,
+            title:"CachingDiscordRestGuildAPI",
+            content:"CachingDiscordRestGuildAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI',
+            title:"CachingDiscordRestGuildAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:38,
             title:"IGatewayPayloadData",
             content:"IGatewayPayloadData",
             description:'',
@@ -2418,203 +584,301 @@ var searchModule = function() {
     );
     a(
         {
-            id:170,
-            title:"IReaction",
-            content:"IReaction",
+            id:39,
+            title:"IConnection",
+            content:"IConnection",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IReaction',
-            title:"IReaction",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IConnection',
+            title:"IConnection",
             description:""
         }
     );
     a(
         {
-            id:171,
-            title:"IPruneCount",
-            content:"IPruneCount",
+            id:40,
+            title:"IGuildTemplate",
+            content:"IGuildTemplate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPruneCount',
-            title:"IPruneCount",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate',
+            title:"IGuildTemplate",
             description:""
         }
     );
     a(
         {
-            id:172,
-            title:"IVoiceHello",
-            content:"IVoiceHello",
+            id:41,
+            title:"INitroStickerPacks",
+            content:"INitroStickerPacks",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHello',
-            title:"IVoiceHello",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/INitroStickerPacks',
+            title:"INitroStickerPacks",
             description:""
         }
     );
     a(
         {
-            id:173,
-            title:"IApplicationCommandPermissions",
-            content:"IApplicationCommandPermissions",
+            id:42,
+            title:"IGuildMembersChunk",
+            content:"IGuildMembersChunk",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandPermissions',
-            title:"IApplicationCommandPermissions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk',
+            title:"IGuildMembersChunk",
             description:""
         }
     );
     a(
         {
-            id:174,
-            title:"ConnectionVisibility",
-            content:"ConnectionVisibility",
+            id:43,
+            title:"IThreadListSync",
+            content:"IThreadListSync",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ConnectionVisibility',
-            title:"ConnectionVisibility",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadListSync',
+            title:"IThreadListSync",
             description:""
         }
     );
     a(
         {
-            id:175,
-            title:"IPartialEmoji",
-            content:"IPartialEmoji",
+            id:44,
+            title:"IInviteDelete",
+            content:"IInviteDelete",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji',
-            title:"IPartialEmoji",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInviteDelete',
+            title:"IInviteDelete",
             description:""
         }
     );
     a(
         {
-            id:176,
-            title:"IEmbedThumbnail",
-            content:"IEmbedThumbnail",
+            id:45,
+            title:"IUnknownEvent",
+            content:"IUnknownEvent",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedThumbnail',
-            title:"IEmbedThumbnail",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUnknownEvent',
+            title:"IUnknownEvent",
             description:""
         }
     );
     a(
         {
-            id:177,
-            title:"IImageHash",
-            content:"IImageHash",
+            id:46,
+            title:"IActivityParty",
+            content:"IActivityParty",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash',
-            title:"IImageHash",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityParty',
+            title:"IActivityParty",
             description:""
         }
     );
     a(
         {
-            id:178,
-            title:"IApplicationCommand",
-            content:"IApplicationCommand",
+            id:47,
+            title:"DiscordRestInviteAPI",
+            content:"DiscordRestInviteAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand',
-            title:"IApplicationCommand",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI',
+            title:"DiscordRestInviteAPI",
             description:""
         }
     );
     a(
         {
-            id:179,
-            title:"IVoiceProtocolData",
-            content:"IVoiceProtocolData",
+            id:48,
+            title:"IDiscordRestEmojiAPI",
+            content:"IDiscordRestEmojiAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceProtocolData',
-            title:"IVoiceProtocolData",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestEmojiAPI',
+            title:"IDiscordRestEmojiAPI",
             description:""
         }
     );
     a(
         {
-            id:180,
-            title:"IThreadQueryResponse",
-            content:"IThreadQueryResponse",
+            id:49,
+            title:"IPartialChannel",
+            content:"IPartialChannel",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse',
-            title:"IThreadQueryResponse",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel',
+            title:"IPartialChannel",
             description:""
         }
     );
     a(
         {
-            id:181,
-            title:"GuildScheduledEventPrivacyLevel",
-            content:"GuildScheduledEventPrivacyLevel",
+            id:50,
+            title:"DiscordRestAuditLogAPI",
+            content:"DiscordRestAuditLogAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel',
-            title:"GuildScheduledEventPrivacyLevel",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI',
+            title:"DiscordRestAuditLogAPI",
             description:""
         }
     );
     a(
         {
-            id:182,
-            title:"IUser",
-            content:"IUser",
+            id:51,
+            title:"IVoiceSpeakingCommand",
+            content:"IVoiceSpeakingCommand",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser',
-            title:"IUser",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceSpeakingCommand',
+            title:"IVoiceSpeakingCommand",
             description:""
         }
     );
     a(
         {
-            id:183,
-            title:"ApplicationFlags",
-            content:"ApplicationFlags",
+            id:52,
+            title:"IVoiceIdentify",
+            content:"IVoiceIdentify",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationFlags',
-            title:"ApplicationFlags",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceIdentify',
+            title:"IVoiceIdentify",
             description:""
         }
     );
     a(
         {
-            id:184,
+            id:53,
+            title:"RestRequestBuilderExtensions",
+            content:"RestRequestBuilderExtensions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions',
+            title:"RestRequestBuilderExtensions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:54,
+            title:"WebSocketPayloadTransportService",
+            content:"WebSocketPayloadTransportService",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Transport/WebSocketPayloadTransportService',
+            title:"WebSocketPayloadTransportService",
+            description:""
+        }
+    );
+    a(
+        {
+            id:55,
+            title:"IInteractionData",
+            content:"IInteractionData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionData',
+            title:"IInteractionData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:56,
+            title:"GatewayIntents",
+            content:"GatewayIntents",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents',
+            title:"GatewayIntents",
+            description:""
+        }
+    );
+    a(
+        {
+            id:57,
+            title:"ISticker",
+            content:"ISticker",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISticker',
+            title:"ISticker",
+            description:""
+        }
+    );
+    a(
+        {
+            id:58,
+            title:"IMessageReactionRemoveAll",
+            content:"IMessageReactionRemoveAll",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemoveAll',
+            title:"IMessageReactionRemoveAll",
+            description:""
+        }
+    );
+    a(
+        {
+            id:59,
+            title:"IVoiceResume",
+            content:"IVoiceResume",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceResume',
+            title:"IVoiceResume",
+            description:""
+        }
+    );
+    a(
+        {
+            id:60,
             title:"UserFlags",
             content:"UserFlags",
             description:'',
@@ -2628,63 +892,91 @@ var searchModule = function() {
     );
     a(
         {
-            id:185,
-            title:"DiscordRestTemplateAPI",
-            content:"DiscordRestTemplateAPI",
+            id:61,
+            title:"IInviteStageInstance",
+            content:"IInviteStageInstance",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI',
-            title:"DiscordRestTemplateAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance',
+            title:"IInviteStageInstance",
             description:""
         }
     );
     a(
         {
-            id:186,
-            title:"IMessageReactionRemoveEmoji",
-            content:"IMessageReactionRemoveEmoji",
+            id:62,
+            title:"IIntegration",
+            content:"IIntegration",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemoveEmoji',
-            title:"IMessageReactionRemoveEmoji",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration',
+            title:"IIntegration",
             description:""
         }
     );
     a(
         {
-            id:187,
-            title:"ThreadMemberFlags",
-            content:"ThreadMemberFlags",
+            id:63,
+            title:"IInvalidSession",
+            content:"IInvalidSession",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ThreadMemberFlags',
-            title:"ThreadMemberFlags",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInvalidSession',
+            title:"IInvalidSession",
             description:""
         }
     );
     a(
         {
-            id:188,
-            title:"DiscordVoicePermission",
-            content:"DiscordVoicePermission",
+            id:64,
+            title:"ISessionStartLimit",
+            content:"ISessionStartLimit",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordVoicePermission',
-            title:"DiscordVoicePermission",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISessionStartLimit',
+            title:"ISessionStartLimit",
             description:""
         }
     );
     a(
         {
-            id:189,
+            id:65,
+            title:"InteractionCallbackDataFlags",
+            content:"InteractionCallbackDataFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags',
+            title:"InteractionCallbackDataFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:66,
+            title:"IUnavailableGuild",
+            content:"IUnavailableGuild",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUnavailableGuild',
+            title:"IUnavailableGuild",
+            description:""
+        }
+    );
+    a(
+        {
+            id:67,
             title:"IDiscordRestAuditLogAPI",
             content:"IDiscordRestAuditLogAPI",
             description:'',
@@ -2693,6 +985,1714 @@ var searchModule = function() {
         {
             url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestAuditLogAPI',
             title:"IDiscordRestAuditLogAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:68,
+            title:"IVoiceProtocolData",
+            content:"IVoiceProtocolData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceProtocolData',
+            title:"IVoiceProtocolData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:69,
+            title:"IEmbedField",
+            content:"IEmbedField",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedField',
+            title:"IEmbedField",
+            description:""
+        }
+    );
+    a(
+        {
+            id:70,
+            title:"IntegrationExpireBehaviour",
+            content:"IntegrationExpireBehaviour",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour',
+            title:"IntegrationExpireBehaviour",
+            description:""
+        }
+    );
+    a(
+        {
+            id:71,
+            title:"ITokenStore",
+            content:"ITokenStore",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest/ITokenStore',
+            title:"ITokenStore",
+            description:""
+        }
+    );
+    a(
+        {
+            id:72,
+            title:"IGuildRoleCreate",
+            content:"IGuildRoleCreate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleCreate',
+            title:"IGuildRoleCreate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:73,
+            title:"IMessageComponent",
+            content:"IMessageComponent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent',
+            title:"IMessageComponent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:74,
+            title:"IPermissionOverwrite",
+            content:"IPermissionOverwrite",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPermissionOverwrite',
+            title:"IPermissionOverwrite",
+            description:""
+        }
+    );
+    a(
+        {
+            id:75,
+            title:"IFollowedChannel",
+            content:"IFollowedChannel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IFollowedChannel',
+            title:"IFollowedChannel",
+            description:""
+        }
+    );
+    a(
+        {
+            id:76,
+            title:"IGuildPreview",
+            content:"IGuildPreview",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildPreview',
+            title:"IGuildPreview",
+            description:""
+        }
+    );
+    a(
+        {
+            id:77,
+            title:"IPartialVoiceState",
+            content:"IPartialVoiceState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState',
+            title:"IPartialVoiceState",
+            description:""
+        }
+    );
+    a(
+        {
+            id:78,
+            title:"ITypingStart",
+            content:"ITypingStart",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/ITypingStart',
+            title:"ITypingStart",
+            description:""
+        }
+    );
+    a(
+        {
+            id:79,
+            title:"IGuildScheduledEventUser",
+            content:"IGuildScheduledEventUser",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser',
+            title:"IGuildScheduledEventUser",
+            description:""
+        }
+    );
+    a(
+        {
+            id:80,
+            title:"DiscordError",
+            content:"DiscordError",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError',
+            title:"DiscordError",
+            description:""
+        }
+    );
+    a(
+        {
+            id:81,
+            title:"IPayload",
+            content:"IPayload",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IPayload',
+            title:"IPayload",
+            description:""
+        }
+    );
+    a(
+        {
+            id:82,
+            title:"GuildFeature",
+            content:"GuildFeature",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildFeature',
+            title:"GuildFeature",
+            description:""
+        }
+    );
+    a(
+        {
+            id:83,
+            title:"IPayload",
+            content:"IPayload",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IPayload_1',
+            title:"IPayload<TData>",
+            description:""
+        }
+    );
+    a(
+        {
+            id:84,
+            title:"DiscordStagePermission",
+            content:"DiscordStagePermission",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordStagePermission',
+            title:"DiscordStagePermission",
+            description:""
+        }
+    );
+    a(
+        {
+            id:85,
+            title:"DiscordGatewayClient",
+            content:"DiscordGatewayClient",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient',
+            title:"DiscordGatewayClient",
+            description:""
+        }
+    );
+    a(
+        {
+            id:86,
+            title:"IDiscordRestInteractionAPI",
+            content:"IDiscordRestInteractionAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI',
+            title:"IDiscordRestInteractionAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:87,
+            title:"DiscordRestVoiceAPI",
+            content:"DiscordRestVoiceAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI',
+            title:"DiscordRestVoiceAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:88,
+            title:"EmbedType",
+            content:"EmbedType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/EmbedType',
+            title:"EmbedType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:89,
+            title:"IPartialMessage",
+            content:"IPartialMessage",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessage',
+            title:"IPartialMessage",
+            description:""
+        }
+    );
+    a(
+        {
+            id:90,
+            title:"ComponentType",
+            content:"ComponentType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ComponentType',
+            title:"ComponentType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:91,
+            title:"IDiscordRestGatewayAPI",
+            content:"IDiscordRestGatewayAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGatewayAPI',
+            title:"IDiscordRestGatewayAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:92,
+            title:"OperationCode",
+            content:"OperationCode",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/OperationCode',
+            title:"OperationCode",
+            description:""
+        }
+    );
+    a(
+        {
+            id:93,
+            title:"CachingDiscordRestTemplateAPI",
+            content:"CachingDiscordRestTemplateAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestTemplateAPI',
+            title:"CachingDiscordRestTemplateAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:94,
+            title:"WebhookType",
+            content:"WebhookType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/WebhookType',
+            title:"WebhookType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:95,
+            title:"IDiscordRestApplicationAPI",
+            content:"IDiscordRestApplicationAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestApplicationAPI',
+            title:"IDiscordRestApplicationAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:96,
+            title:"IActivityAssets",
+            content:"IActivityAssets",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityAssets',
+            title:"IActivityAssets",
+            description:""
+        }
+    );
+    a(
+        {
+            id:97,
+            title:"IRequestGuildMembers",
+            content:"IRequestGuildMembers",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers',
+            title:"IRequestGuildMembers",
+            description:""
+        }
+    );
+    a(
+        {
+            id:98,
+            title:"IComponent",
+            content:"IComponent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent',
+            title:"IComponent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:99,
+            title:"IRoleTemplate",
+            content:"IRoleTemplate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTemplate',
+            title:"IRoleTemplate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:100,
+            title:"ResponderGroup",
+            content:"ResponderGroup",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/ResponderGroup',
+            title:"ResponderGroup",
+            description:""
+        }
+    );
+    a(
+        {
+            id:101,
+            title:"SystemChannelFlags",
+            content:"SystemChannelFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/SystemChannelFlags',
+            title:"SystemChannelFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:102,
+            title:"CachingDiscordRestUserAPI",
+            content:"CachingDiscordRestUserAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestUserAPI',
+            title:"CachingDiscordRestUserAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:103,
+            title:"IPermissionOverwriteTemplate",
+            content:"IPermissionOverwriteTemplate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPermissionOverwriteTemplate',
+            title:"IPermissionOverwriteTemplate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:104,
+            title:"AuditLogEvent",
+            content:"AuditLogEvent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AuditLogEvent',
+            title:"AuditLogEvent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:105,
+            title:"IHello",
+            content:"IHello",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IHello',
+            title:"IHello",
+            description:""
+        }
+    );
+    a(
+        {
+            id:106,
+            title:"IGuildScheduledEventCreate",
+            content:"IGuildScheduledEventCreate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventCreate',
+            title:"IGuildScheduledEventCreate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:107,
+            title:"IInvite",
+            content:"IInvite",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite',
+            title:"IInvite",
+            description:""
+        }
+    );
+    a(
+        {
+            id:108,
+            title:"IBulkApplicationCommandData",
+            content:"IBulkApplicationCommandData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBulkApplicationCommandData',
+            title:"IBulkApplicationCommandData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:109,
+            title:"WidgetImageStyle",
+            content:"WidgetImageStyle",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/WidgetImageStyle',
+            title:"WidgetImageStyle",
+            description:""
+        }
+    );
+    a(
+        {
+            id:110,
+            title:"IVoiceServerUpdate",
+            content:"IVoiceServerUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IVoiceServerUpdate',
+            title:"IVoiceServerUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:111,
+            title:"CacheSettings",
+            content:"CacheSettings",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.Services/CacheSettings',
+            title:"CacheSettings",
+            description:""
+        }
+    );
+    a(
+        {
+            id:112,
+            title:"IGuildScheduledEventDelete",
+            content:"IGuildScheduledEventDelete",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventDelete',
+            title:"IGuildScheduledEventDelete",
+            description:""
+        }
+    );
+    a(
+        {
+            id:113,
+            title:"IHeartbeatAcknowledge",
+            content:"IHeartbeatAcknowledge",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge',
+            title:"IHeartbeatAcknowledge",
+            description:""
+        }
+    );
+    a(
+        {
+            id:114,
+            title:"IDiscordRestUserAPI",
+            content:"IDiscordRestUserAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestUserAPI',
+            title:"IDiscordRestUserAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:115,
+            title:"IActivityTimestamps",
+            content:"IActivityTimestamps",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityTimestamps',
+            title:"IActivityTimestamps",
+            description:""
+        }
+    );
+    a(
+        {
+            id:116,
+            title:"IActivity",
+            content:"IActivity",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivity',
+            title:"IActivity",
+            description:""
+        }
+    );
+    a(
+        {
+            id:117,
+            title:"IMessageDeleteBulk",
+            content:"IMessageDeleteBulk",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageDeleteBulk',
+            title:"IMessageDeleteBulk",
+            description:""
+        }
+    );
+    a(
+        {
+            id:118,
+            title:"IActivityEmoji",
+            content:"IActivityEmoji",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityEmoji',
+            title:"IActivityEmoji",
+            description:""
+        }
+    );
+    a(
+        {
+            id:119,
+            title:"DiscordRestGuildAPI",
+            content:"DiscordRestGuildAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI',
+            title:"DiscordRestGuildAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:120,
+            title:"GatewayCloseStatus",
+            content:"GatewayCloseStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/GatewayCloseStatus',
+            title:"GatewayCloseStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:121,
+            title:"IMessageReference",
+            content:"IMessageReference",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference',
+            title:"IMessageReference",
+            description:""
+        }
+    );
+    a(
+        {
+            id:122,
+            title:"ApplicationCommandPermissionType",
+            content:"ApplicationCommandPermissionType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandPermissionType',
+            title:"ApplicationCommandPermissionType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:123,
+            title:"IAuditLog",
+            content:"IAuditLog",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLog',
+            title:"IAuditLog",
+            description:""
+        }
+    );
+    a(
+        {
+            id:124,
+            title:"IEmbedVideo",
+            content:"IEmbedVideo",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedVideo',
+            title:"IEmbedVideo",
+            description:""
+        }
+    );
+    a(
+        {
+            id:125,
+            title:"IDiscordRestChannelAPI",
+            content:"IDiscordRestChannelAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI',
+            title:"IDiscordRestChannelAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:126,
+            title:"IPartialGuildApplicationCommandPermissions",
+            content:"IPartialGuildApplicationCommandPermissions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildApplicationCommandPermissions',
+            title:"IPartialGuildApplicationCommandPermissions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:127,
+            title:"IGuildDelete",
+            content:"IGuildDelete",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildDelete',
+            title:"IGuildDelete",
+            description:""
+        }
+    );
+    a(
+        {
+            id:128,
+            title:"IGuildMemberRemove",
+            content:"IGuildMemberRemove",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberRemove',
+            title:"IGuildMemberRemove",
+            description:""
+        }
+    );
+    a(
+        {
+            id:129,
+            title:"DiscordSnowflake",
+            content:"DiscordSnowflake",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake',
+            title:"DiscordSnowflake",
+            description:""
+        }
+    );
+    a(
+        {
+            id:130,
+            title:"IWebhook",
+            content:"IWebhook",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWebhook',
+            title:"IWebhook",
+            description:""
+        }
+    );
+    a(
+        {
+            id:131,
+            title:"ApplicationCommandOptionType",
+            content:"ApplicationCommandOptionType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandOptionType',
+            title:"ApplicationCommandOptionType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:132,
+            title:"IPartialGuild",
+            content:"IPartialGuild",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild',
+            title:"IPartialGuild",
+            description:""
+        }
+    );
+    a(
+        {
+            id:133,
+            title:"IMessageActivity",
+            content:"IMessageActivity",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity',
+            title:"IMessageActivity",
+            description:""
+        }
+    );
+    a(
+        {
+            id:134,
+            title:"VoiceOperationCode",
+            content:"VoiceOperationCode",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/VoiceOperationCode',
+            title:"VoiceOperationCode",
+            description:""
+        }
+    );
+    a(
+        {
+            id:135,
+            title:"IEmbedThumbnail",
+            content:"IEmbedThumbnail",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedThumbnail',
+            title:"IEmbedThumbnail",
+            description:""
+        }
+    );
+    a(
+        {
+            id:136,
+            title:"AutoArchiveDuration",
+            content:"AutoArchiveDuration",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration',
+            title:"AutoArchiveDuration",
+            description:""
+        }
+    );
+    a(
+        {
+            id:137,
+            title:"DiscordRestUserAPI",
+            content:"DiscordRestUserAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI',
+            title:"DiscordRestUserAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:138,
+            title:"IThreadUpdate",
+            content:"IThreadUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadUpdate',
+            title:"IThreadUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:139,
+            title:"IDiscordRestStageInstanceAPI",
+            content:"IDiscordRestStageInstanceAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI',
+            title:"IDiscordRestStageInstanceAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:140,
+            title:"IPartialPresence",
+            content:"IPartialPresence",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence',
+            title:"IPartialPresence",
+            description:""
+        }
+    );
+    a(
+        {
+            id:141,
+            title:"IAuditLogEntry",
+            content:"IAuditLogEntry",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogEntry',
+            title:"IAuditLogEntry",
+            description:""
+        }
+    );
+    a(
+        {
+            id:142,
+            title:"IStickerItem",
+            content:"IStickerItem",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStickerItem',
+            title:"IStickerItem",
+            description:""
+        }
+    );
+    a(
+        {
+            id:143,
+            title:"IApplicationCommandInteractionDataResolved",
+            content:"IApplicationCommandInteractionDataResolved",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandInteractionDataResolved',
+            title:"IApplicationCommandInteractionDataResolved",
+            description:""
+        }
+    );
+    a(
+        {
+            id:144,
+            title:"IMessage",
+            content:"IMessage",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage',
+            title:"IMessage",
+            description:""
+        }
+    );
+    a(
+        {
+            id:145,
+            title:"IDiscordRestInviteAPI",
+            content:"IDiscordRestInviteAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInviteAPI',
+            title:"IDiscordRestInviteAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:146,
+            title:"DiscordRestStageInstanceAPI",
+            content:"DiscordRestStageInstanceAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStageInstanceAPI',
+            title:"DiscordRestStageInstanceAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:147,
+            title:"StickerType",
+            content:"StickerType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StickerType',
+            title:"StickerType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:148,
+            title:"IResume",
+            content:"IResume",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IResume',
+            title:"IResume",
+            description:""
+        }
+    );
+    a(
+        {
+            id:149,
+            title:"IUpdatePresence",
+            content:"IUpdatePresence",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence',
+            title:"IUpdatePresence",
+            description:""
+        }
+    );
+    a(
+        {
+            id:150,
+            title:"IWelcomeScreen",
+            content:"IWelcomeScreen",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreen',
+            title:"IWelcomeScreen",
+            description:""
+        }
+    );
+    a(
+        {
+            id:151,
+            title:"IThreadQueryResponse",
+            content:"IThreadQueryResponse",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse',
+            title:"IThreadQueryResponse",
+            description:""
+        }
+    );
+    a(
+        {
+            id:152,
+            title:"IRoleTags",
+            content:"IRoleTags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRoleTags',
+            title:"IRoleTags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:153,
+            title:"IVoicePayload",
+            content:"IVoicePayload",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoicePayload',
+            title:"IVoicePayload",
+            description:""
+        }
+    );
+    a(
+        {
+            id:154,
+            title:"ServiceCollectionExtensions",
+            content:"ServiceCollectionExtensions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.Extensions/ServiceCollectionExtensions',
+            title:"ServiceCollectionExtensions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:155,
+            title:"IVoiceRegion",
+            content:"IVoiceRegion",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceRegion',
+            title:"IVoiceRegion",
+            description:""
+        }
+    );
+    a(
+        {
+            id:156,
+            title:"IResponder",
+            content:"IResponder",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder',
+            title:"IResponder",
+            description:""
+        }
+    );
+    a(
+        {
+            id:157,
+            title:"ISelectOption",
+            content:"ISelectOption",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption',
+            title:"ISelectOption",
+            description:""
+        }
+    );
+    a(
+        {
+            id:158,
+            title:"IPropertyErrorDetails",
+            content:"IPropertyErrorDetails",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPropertyErrorDetails',
+            title:"IPropertyErrorDetails",
+            description:""
+        }
+    );
+    a(
+        {
+            id:159,
+            title:"IChannelMention",
+            content:"IChannelMention",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelMention',
+            title:"IChannelMention",
+            description:""
+        }
+    );
+    a(
+        {
+            id:160,
+            title:"IInteractionCreate",
+            content:"IInteractionCreate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInteractionCreate',
+            title:"IInteractionCreate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:161,
+            title:"IGatewayEvent",
+            content:"IGatewayEvent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent',
+            title:"IGatewayEvent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:162,
+            title:"IVoiceGatewayEvent",
+            content:"IVoiceGatewayEvent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceGatewayEvent',
+            title:"IVoiceGatewayEvent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:163,
+            title:"IGuildBanAdd",
+            content:"IGuildBanAdd",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildBanAdd',
+            title:"IGuildBanAdd",
+            description:""
+        }
+    );
+    a(
+        {
+            id:164,
+            title:"IIntegrationApplication",
+            content:"IIntegrationApplication",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication',
+            title:"IIntegrationApplication",
+            description:""
+        }
+    );
+    a(
+        {
+            id:165,
+            title:"IActivityButton",
+            content:"IActivityButton",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityButton',
+            title:"IActivityButton",
+            description:""
+        }
+    );
+    a(
+        {
+            id:166,
+            title:"IMessageReactionRemove",
+            content:"IMessageReactionRemove",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemove',
+            title:"IMessageReactionRemove",
+            description:""
+        }
+    );
+    a(
+        {
+            id:167,
+            title:"IDiscordRestStickerAPI",
+            content:"IDiscordRestStickerAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStickerAPI',
+            title:"IDiscordRestStickerAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:168,
+            title:"IGuildThreadQueryResponse",
+            content:"IGuildThreadQueryResponse",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse',
+            title:"IGuildThreadQueryResponse",
+            description:""
+        }
+    );
+    a(
+        {
+            id:169,
+            title:"IOptionalAuditEntryInfo",
+            content:"IOptionalAuditEntryInfo",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo',
+            title:"IOptionalAuditEntryInfo",
+            description:""
+        }
+    );
+    a(
+        {
+            id:170,
+            title:"IPresenceUpdate",
+            content:"IPresenceUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IPresenceUpdate',
+            title:"IPresenceUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:171,
+            title:"IEmbedProvider",
+            content:"IEmbedProvider",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedProvider',
+            title:"IEmbedProvider",
+            description:""
+        }
+    );
+    a(
+        {
+            id:172,
+            title:"CDNImageFormatExtensions",
+            content:"CDNImageFormatExtensions",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/CDNImageFormatExtensions',
+            title:"CDNImageFormatExtensions",
+            description:""
+        }
+    );
+    a(
+        {
+            id:173,
+            title:"DiscordRestOAuth API",
+            content:"DiscordRestOAuth API",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestOAuth2API',
+            title:"DiscordRestOAuth2API",
+            description:""
+        }
+    );
+    a(
+        {
+            id:174,
+            title:"InteractionType",
+            content:"InteractionType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionType',
+            title:"InteractionType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:175,
+            title:"IPresence",
+            content:"IPresence",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPresence',
+            title:"IPresence",
+            description:""
+        }
+    );
+    a(
+        {
+            id:176,
+            title:"AbstractDiscordRestAPI",
+            content:"AbstractDiscordRestAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI',
+            title:"AbstractDiscordRestAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:177,
+            title:"IGuildCreate",
+            content:"IGuildCreate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate',
+            title:"IGuildCreate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:178,
+            title:"IImageHash",
+            content:"IImageHash",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash',
+            title:"IImageHash",
+            description:""
+        }
+    );
+    a(
+        {
+            id:179,
+            title:"PremiumTier",
+            content:"PremiumTier",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumTier',
+            title:"PremiumTier",
+            description:""
+        }
+    );
+    a(
+        {
+            id:180,
+            title:"GuildScheduledEventStatus",
+            content:"GuildScheduledEventStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus',
+            title:"GuildScheduledEventStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:181,
+            title:"IApplication",
+            content:"IApplication",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplication',
+            title:"IApplication",
+            description:""
+        }
+    );
+    a(
+        {
+            id:182,
+            title:"ResponderService",
+            content:"ResponderService",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService',
+            title:"ResponderService",
+            description:""
+        }
+    );
+    a(
+        {
+            id:183,
+            title:"IChannelDelete",
+            content:"IChannelDelete",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelDelete',
+            title:"IChannelDelete",
+            description:""
+        }
+    );
+    a(
+        {
+            id:184,
+            title:"IThreadMetadata",
+            content:"IThreadMetadata",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata',
+            title:"IThreadMetadata",
+            description:""
+        }
+    );
+    a(
+        {
+            id:185,
+            title:"MentionType",
+            content:"MentionType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MentionType',
+            title:"MentionType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:186,
+            title:"IGuildEmojisUpdate",
+            content:"IGuildEmojisUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildEmojisUpdate',
+            title:"IGuildEmojisUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:187,
+            title:"IGatewayCommand",
+            content:"IGatewayCommand",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IGatewayCommand',
+            title:"IGatewayCommand",
+            description:""
+        }
+    );
+    a(
+        {
+            id:188,
+            title:"IReconnect",
+            content:"IReconnect",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IReconnect',
+            title:"IReconnect",
+            description:""
+        }
+    );
+    a(
+        {
+            id:189,
+            title:"IHeartbeat",
+            content:"IHeartbeat",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeat',
+            title:"IHeartbeat",
             description:""
         }
     );
@@ -2713,216 +2713,160 @@ var searchModule = function() {
     a(
         {
             id:191,
-            title:"IDiscordPermissionSet",
-            content:"IDiscordPermissionSet",
+            title:"VoiceGatewayCloseStatus",
+            content:"VoiceGatewayCloseStatus",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet',
-            title:"IDiscordPermissionSet",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/VoiceGatewayCloseStatus',
+            title:"VoiceGatewayCloseStatus",
             description:""
         }
     );
     a(
         {
             id:192,
-            title:"IStickerItem",
-            content:"IStickerItem",
+            title:"IInteractionResponse",
+            content:"IInteractionResponse",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStickerItem',
-            title:"IStickerItem",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse',
+            title:"IInteractionResponse",
             description:""
         }
     );
     a(
         {
             id:193,
-            title:"IVoiceState",
-            content:"IVoiceState",
+            title:"IApplicationCommand",
+            content:"IApplicationCommand",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState',
-            title:"IVoiceState",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommand',
+            title:"IApplicationCommand",
             description:""
         }
     );
     a(
         {
             id:194,
-            title:"WidgetImageStyle",
-            content:"WidgetImageStyle",
+            title:"IMessageReactionAdd",
+            content:"IMessageReactionAdd",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/WidgetImageStyle',
-            title:"WidgetImageStyle",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionAdd',
+            title:"IMessageReactionAdd",
             description:""
         }
     );
     a(
         {
             id:195,
-            title:"IInteractionData",
-            content:"IInteractionData",
+            title:"IGuildUpdate",
+            content:"IGuildUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionData',
-            title:"IInteractionData",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate',
+            title:"IGuildUpdate",
             description:""
         }
     );
     a(
         {
             id:196,
-            title:"GatewayCloseStatus",
-            content:"GatewayCloseStatus",
+            title:"IAllowedMentions",
+            content:"IAllowedMentions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/GatewayCloseStatus',
-            title:"GatewayCloseStatus",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAllowedMentions',
+            title:"IAllowedMentions",
             description:""
         }
     );
     a(
         {
             id:197,
-            title:"IVoiceSessionDescription",
-            content:"IVoiceSessionDescription",
+            title:"DiscordRestApplicationAPI",
+            content:"DiscordRestApplicationAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription',
-            title:"IVoiceSessionDescription",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI',
+            title:"DiscordRestApplicationAPI",
             description:""
         }
     );
     a(
         {
             id:198,
-            title:"ImagePacker",
-            content:"ImagePacker",
+            title:"IGuildApplicationCommandPermissions",
+            content:"IGuildApplicationCommandPermissions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.Utility/ImagePacker',
-            title:"ImagePacker",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildApplicationCommandPermissions',
+            title:"IGuildApplicationCommandPermissions",
             description:""
         }
     );
     a(
         {
             id:199,
-            title:"IHeartbeatAcknowledge",
-            content:"IHeartbeatAcknowledge",
+            title:"IApplicationCommandPermissions",
+            content:"IApplicationCommandPermissions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Bidirectional/IHeartbeatAcknowledge',
-            title:"IHeartbeatAcknowledge",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandPermissions',
+            title:"IApplicationCommandPermissions",
             description:""
         }
     );
     a(
         {
             id:200,
-            title:"IUnavailableGuild",
-            content:"IUnavailableGuild",
+            title:"DiscordRestTemplateAPI",
+            content:"DiscordRestTemplateAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUnavailableGuild',
-            title:"IUnavailableGuild",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestTemplateAPI',
+            title:"DiscordRestTemplateAPI",
             description:""
         }
     );
     a(
         {
             id:201,
-            title:"IPayload",
-            content:"IPayload",
+            title:"IGuildStickersUpdate",
+            content:"IGuildStickersUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IPayload_1',
-            title:"IPayload<TData>",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildStickersUpdate',
+            title:"IGuildStickersUpdate",
             description:""
         }
     );
     a(
         {
             id:202,
-            title:"TokenStore",
-            content:"TokenStore",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest/TokenStore',
-            title:"TokenStore",
-            description:""
-        }
-    );
-    a(
-        {
-            id:203,
-            title:"CachingDiscordRestWebhookAPI",
-            content:"CachingDiscordRestWebhookAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI',
-            title:"CachingDiscordRestWebhookAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:204,
-            title:"IIntegration",
-            content:"IIntegration",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration',
-            title:"IIntegration",
-            description:""
-        }
-    );
-    a(
-        {
-            id:205,
-            title:"CachingDiscordRestChannelAPI",
-            content:"CachingDiscordRestChannelAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI',
-            title:"CachingDiscordRestChannelAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:206,
             title:"IAttachment",
             content:"IAttachment",
             description:'',
@@ -2936,203 +2880,189 @@ var searchModule = function() {
     );
     a(
         {
-            id:207,
-            title:"IGuildRoleUpdate",
-            content:"IGuildRoleUpdate",
+            id:203,
+            title:"IUser",
+            content:"IUser",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleUpdate',
-            title:"IGuildRoleUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser',
+            title:"IUser",
+            description:""
+        }
+    );
+    a(
+        {
+            id:204,
+            title:"IVoiceHeartbeatAcknowledge",
+            content:"IVoiceHeartbeatAcknowledge",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHeartbeatAcknowledge',
+            title:"IVoiceHeartbeatAcknowledge",
+            description:""
+        }
+    );
+    a(
+        {
+            id:205,
+            title:"IVoiceResumed",
+            content:"IVoiceResumed",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceResumed',
+            title:"IVoiceResumed",
+            description:""
+        }
+    );
+    a(
+        {
+            id:206,
+            title:"IReady",
+            content:"IReady",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IReady',
+            title:"IReady",
+            description:""
+        }
+    );
+    a(
+        {
+            id:207,
+            title:"ISelectMenuComponent",
+            content:"ISelectMenuComponent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent',
+            title:"ISelectMenuComponent",
             description:""
         }
     );
     a(
         {
             id:208,
-            title:"IAccount",
-            content:"IAccount",
+            title:"IBan",
+            content:"IBan",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAccount',
-            title:"IAccount",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IBan',
+            title:"IBan",
             description:""
         }
     );
     a(
         {
             id:209,
-            title:"ITeam",
-            content:"ITeam",
+            title:"IApplicationCommandInteractionDataOption",
+            content:"IApplicationCommandInteractionDataOption",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeam',
-            title:"ITeam",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandInteractionDataOption',
+            title:"IApplicationCommandInteractionDataOption",
             description:""
         }
     );
     a(
         {
             id:210,
-            title:"IPartialIntegration",
-            content:"IPartialIntegration",
+            title:"PremiumType",
+            content:"PremiumType",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration',
-            title:"IPartialIntegration",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumType',
+            title:"PremiumType",
             description:""
         }
     );
     a(
         {
             id:211,
-            title:"Constants",
-            content:"Constants",
+            title:"IPayloadTransportService",
+            content:"IPayloadTransportService",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest/Constants',
-            title:"Constants",
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Transport/IPayloadTransportService',
+            title:"IPayloadTransportService",
             description:""
         }
     );
     a(
         {
             id:212,
-            title:"IGuildTemplate",
-            content:"IGuildTemplate",
+            title:"ServiceCollectionExtensions",
+            content:"ServiceCollectionExtensions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate',
-            title:"IGuildTemplate",
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions',
+            title:"ServiceCollectionExtensions",
             description:""
         }
     );
     a(
         {
             id:213,
-            title:"IWebhooksUpdate",
-            content:"IWebhooksUpdate",
+            title:"IGuildScheduledEvent",
+            content:"IGuildScheduledEvent",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IWebhooksUpdate',
-            title:"IWebhooksUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent',
+            title:"IGuildScheduledEvent",
             description:""
         }
     );
     a(
         {
             id:214,
-            title:"IGatewayCommand",
-            content:"IGatewayCommand",
+            title:"InteractionCallbackType",
+            content:"InteractionCallbackType",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IGatewayCommand',
-            title:"IGatewayCommand",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType',
+            title:"InteractionCallbackType",
             description:""
         }
     );
     a(
         {
             id:215,
-            title:"IMessageInteraction",
-            content:"IMessageInteraction",
+            title:"MessageNotificationLevel",
+            content:"MessageNotificationLevel",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageInteraction',
-            title:"IMessageInteraction",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageNotificationLevel',
+            title:"MessageNotificationLevel",
             description:""
         }
     );
     a(
         {
             id:216,
-            title:"IRole",
-            content:"IRole",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole',
-            title:"IRole",
-            description:""
-        }
-    );
-    a(
-        {
-            id:217,
-            title:"DiscordSnowflake",
-            content:"DiscordSnowflake",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake',
-            title:"DiscordSnowflake",
-            description:""
-        }
-    );
-    a(
-        {
-            id:218,
-            title:"IActivityParty",
-            content:"IActivityParty",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivityParty',
-            title:"IActivityParty",
-            description:""
-        }
-    );
-    a(
-        {
-            id:219,
-            title:"DiscordRestAuditLogAPI",
-            content:"DiscordRestAuditLogAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestAuditLogAPI',
-            title:"DiscordRestAuditLogAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:220,
-            title:"IChannelCreate",
-            content:"IChannelCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate',
-            title:"IChannelCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:221,
             title:"IIntegrationCreate",
             content:"IIntegrationCreate",
             description:'',
@@ -3146,35 +3076,21 @@ var searchModule = function() {
     );
     a(
         {
-            id:222,
-            title:"AutoArchiveDuration",
-            content:"AutoArchiveDuration",
+            id:217,
+            title:"DiscordRestEmojiAPI",
+            content:"DiscordRestEmojiAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/AutoArchiveDuration',
-            title:"AutoArchiveDuration",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestEmojiAPI',
+            title:"DiscordRestEmojiAPI",
             description:""
         }
     );
     a(
         {
-            id:223,
-            title:"IStageInstanceCreate",
-            content:"IStageInstanceCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate',
-            title:"IStageInstanceCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:224,
+            id:218,
             title:"IPartialInvite",
             content:"IPartialInvite",
             description:'',
@@ -3188,427 +3104,49 @@ var searchModule = function() {
     );
     a(
         {
-            id:225,
-            title:"IPartialGuildApplicationCommandPermissions",
-            content:"IPartialGuildApplicationCommandPermissions",
+            id:219,
+            title:"IActivitySecrets",
+            content:"IActivitySecrets",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuildApplicationCommandPermissions',
-            title:"IPartialGuildApplicationCommandPermissions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivitySecrets',
+            title:"IActivitySecrets",
             description:""
         }
     );
     a(
         {
-            id:226,
-            title:"SystemChannelFlags",
-            content:"SystemChannelFlags",
+            id:220,
+            title:"ITemplate",
+            content:"ITemplate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/SystemChannelFlags',
-            title:"SystemChannelFlags",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate',
+            title:"ITemplate",
             description:""
         }
     );
     a(
         {
-            id:227,
-            title:"GuildNSFWLevel",
-            content:"GuildNSFWLevel",
+            id:221,
+            title:"IPartialIntegration",
+            content:"IPartialIntegration",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel',
-            title:"GuildNSFWLevel",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration',
+            title:"IPartialIntegration",
             description:""
         }
     );
     a(
         {
-            id:228,
-            title:"ExplicitContentFilterLevel",
-            content:"ExplicitContentFilterLevel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel',
-            title:"ExplicitContentFilterLevel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:229,
-            title:"IMessageCreate",
-            content:"IMessageCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageCreate',
-            title:"IMessageCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:230,
-            title:"IPAddressConverter",
-            content:"IPAddressConverter",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter',
-            title:"IPAddressConverter",
-            description:""
-        }
-    );
-    a(
-        {
-            id:231,
-            title:"IPartialMessage",
-            content:"IPartialMessage",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessage',
-            title:"IPartialMessage",
-            description:""
-        }
-    );
-    a(
-        {
-            id:232,
-            title:"IGuildScheduledEventUpdate",
-            content:"IGuildScheduledEventUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildScheduledEventUpdate',
-            title:"IGuildScheduledEventUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:233,
-            title:"IVoiceSelectProtocol",
-            content:"IVoiceSelectProtocol",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceSelectProtocol',
-            title:"IVoiceSelectProtocol",
-            description:""
-        }
-    );
-    a(
-        {
-            id:234,
-            title:"DiscordRestInteractionAPI",
-            content:"DiscordRestInteractionAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI',
-            title:"DiscordRestInteractionAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:235,
-            title:"LateCacheResponder",
-            content:"LateCacheResponder",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder',
-            title:"LateCacheResponder",
-            description:""
-        }
-    );
-    a(
-        {
-            id:236,
-            title:"ApplicationCommandType",
-            content:"ApplicationCommandType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandType',
-            title:"ApplicationCommandType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:237,
-            title:"CacheService",
-            content:"CacheService",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService',
-            title:"CacheService",
-            description:""
-        }
-    );
-    a(
-        {
-            id:238,
-            title:"CachingDiscordRestEmojiAPI",
-            content:"CachingDiscordRestEmojiAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI',
-            title:"CachingDiscordRestEmojiAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:239,
-            title:"IIntegrationUpdate",
-            content:"IIntegrationUpdate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate',
-            title:"IIntegrationUpdate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:240,
-            title:"IPermissionOverwrite",
-            content:"IPermissionOverwrite",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPermissionOverwrite',
-            title:"IPermissionOverwrite",
-            description:""
-        }
-    );
-    a(
-        {
-            id:241,
-            title:"OperationCode",
-            content:"OperationCode",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/OperationCode',
-            title:"OperationCode",
-            description:""
-        }
-    );
-    a(
-        {
-            id:242,
-            title:"IDiscordRestGuildAPI",
-            content:"IDiscordRestGuildAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI',
-            title:"IDiscordRestGuildAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:243,
-            title:"MessageActivityType",
-            content:"MessageActivityType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageActivityType',
-            title:"MessageActivityType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:244,
-            title:"SpeakingFlags",
-            content:"SpeakingFlags",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/SpeakingFlags',
-            title:"SpeakingFlags",
-            description:""
-        }
-    );
-    a(
-        {
-            id:245,
-            title:"IIntegrationDelete",
-            content:"IIntegrationDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationDelete',
-            title:"IIntegrationDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:246,
-            title:"IGuildThreadQueryResponse",
-            content:"IGuildThreadQueryResponse",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse',
-            title:"IGuildThreadQueryResponse",
-            description:""
-        }
-    );
-    a(
-        {
-            id:247,
-            title:"IVoiceResume",
-            content:"IVoiceResume",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceResume',
-            title:"IVoiceResume",
-            description:""
-        }
-    );
-    a(
-        {
-            id:248,
-            title:"IConnection",
-            content:"IConnection",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IConnection',
-            title:"IConnection",
-            description:""
-        }
-    );
-    a(
-        {
-            id:249,
-            title:"ButtonComponentStyle",
-            content:"ButtonComponentStyle",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ButtonComponentStyle',
-            title:"ButtonComponentStyle",
-            description:""
-        }
-    );
-    a(
-        {
-            id:250,
-            title:"IGuild",
-            content:"IGuild",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild',
-            title:"IGuild",
-            description:""
-        }
-    );
-    a(
-        {
-            id:251,
-            title:"IInviteCreate",
-            content:"IInviteCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInviteCreate',
-            title:"IInviteCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:252,
-            title:"DiscordRestUserAPI",
-            content:"DiscordRestUserAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestUserAPI',
-            title:"DiscordRestUserAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:253,
-            title:"IChannel",
-            content:"IChannel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel',
-            title:"IChannel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:254,
-            title:"IMessageReactionRemove",
-            content:"IMessageReactionRemove",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemove',
-            title:"IMessageReactionRemove",
-            description:""
-        }
-    );
-    a(
-        {
-            id:255,
+            id:222,
             title:"MessageType",
             content:"MessageType",
             description:'',
@@ -3622,7 +3160,49 @@ var searchModule = function() {
     );
     a(
         {
-            id:256,
+            id:223,
+            title:"IApplicationCommandOption",
+            content:"IApplicationCommandOption",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOption',
+            title:"IApplicationCommandOption",
+            description:""
+        }
+    );
+    a(
+        {
+            id:224,
+            title:"InviteTarget",
+            content:"InviteTarget",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InviteTarget',
+            title:"InviteTarget",
+            description:""
+        }
+    );
+    a(
+        {
+            id:225,
+            title:"IPartialApplication",
+            content:"IPartialApplication",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication',
+            title:"IPartialApplication",
+            description:""
+        }
+    );
+    a(
+        {
+            id:226,
             title:"IConnectionProperties",
             content:"IConnectionProperties",
             description:'',
@@ -3636,85 +3216,505 @@ var searchModule = function() {
     );
     a(
         {
-            id:257,
-            title:"IPartialChannel",
-            content:"IPartialChannel",
+            id:227,
+            title:"IChannelTemplate",
+            content:"IChannelTemplate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel',
-            title:"IPartialChannel",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelTemplate',
+            title:"IChannelTemplate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:228,
+            title:"GuildScheduledEventPrivacyLevel",
+            content:"GuildScheduledEventPrivacyLevel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel',
+            title:"GuildScheduledEventPrivacyLevel",
+            description:""
+        }
+    );
+    a(
+        {
+            id:229,
+            title:"TokenStore",
+            content:"TokenStore",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest/TokenStore',
+            title:"TokenStore",
+            description:""
+        }
+    );
+    a(
+        {
+            id:230,
+            title:"MessageActivityType",
+            content:"MessageActivityType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageActivityType',
+            title:"MessageActivityType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:231,
+            title:"IThreadCreate",
+            content:"IThreadCreate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate',
+            title:"IThreadCreate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:232,
+            title:"DiscordPermission",
+            content:"DiscordPermission",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission',
+            title:"DiscordPermission",
+            description:""
+        }
+    );
+    a(
+        {
+            id:233,
+            title:"IVoiceStateUpdate",
+            content:"IVoiceStateUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IVoiceStateUpdate',
+            title:"IVoiceStateUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:234,
+            title:"IChannel",
+            content:"IChannel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel',
+            title:"IChannel",
+            description:""
+        }
+    );
+    a(
+        {
+            id:235,
+            title:"PermissionOverwriteType",
+            content:"PermissionOverwriteType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PermissionOverwriteType',
+            title:"PermissionOverwriteType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:236,
+            title:"IPartialRole",
+            content:"IPartialRole",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialRole',
+            title:"IPartialRole",
+            description:""
+        }
+    );
+    a(
+        {
+            id:237,
+            title:"IThreadMember",
+            content:"IThreadMember",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMember',
+            title:"IThreadMember",
+            description:""
+        }
+    );
+    a(
+        {
+            id:238,
+            title:"DiscordVoicePermission",
+            content:"DiscordVoicePermission",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordVoicePermission',
+            title:"DiscordVoicePermission",
+            description:""
+        }
+    );
+    a(
+        {
+            id:239,
+            title:"CachingDiscordRestOAuth API",
+            content:"CachingDiscordRestOAuth API",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestOAuth2API',
+            title:"CachingDiscordRestOAuth2API",
+            description:""
+        }
+    );
+    a(
+        {
+            id:240,
+            title:"IResponderTypeRepository",
+            content:"IResponderTypeRepository",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Services/IResponderTypeRepository',
+            title:"IResponderTypeRepository",
+            description:""
+        }
+    );
+    a(
+        {
+            id:241,
+            title:"IGuildIntegrationsUpdate",
+            content:"IGuildIntegrationsUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildIntegrationsUpdate',
+            title:"IGuildIntegrationsUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:242,
+            title:"IVoiceSpeakingEvent",
+            content:"IVoiceSpeakingEvent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSpeakingEvent',
+            title:"IVoiceSpeakingEvent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:243,
+            title:"IResponder",
+            content:"IResponder",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/IResponder_1',
+            title:"IResponder<TGatewayEvent>",
+            description:""
+        }
+    );
+    a(
+        {
+            id:244,
+            title:"IVoicePayload",
+            content:"IVoicePayload",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoicePayload_1',
+            title:"IVoicePayload<TData>",
+            description:""
+        }
+    );
+    a(
+        {
+            id:245,
+            title:"IClientStatuses",
+            content:"IClientStatuses",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IClientStatuses',
+            title:"IClientStatuses",
+            description:""
+        }
+    );
+    a(
+        {
+            id:246,
+            title:"DiscordRestWebhookAPI",
+            content:"DiscordRestWebhookAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI',
+            title:"DiscordRestWebhookAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:247,
+            title:"IApplicationCommandOptionChoice",
+            content:"IApplicationCommandOptionChoice",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOptionChoice',
+            title:"IApplicationCommandOptionChoice",
+            description:""
+        }
+    );
+    a(
+        {
+            id:248,
+            title:"ActivityFlags",
+            content:"ActivityFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ActivityFlags',
+            title:"ActivityFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:249,
+            title:"IDiscordRestGuildAPI",
+            content:"IDiscordRestGuildAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildAPI',
+            title:"IDiscordRestGuildAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:250,
+            title:"IPartialUser",
+            content:"IPartialUser",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser',
+            title:"IPartialUser",
+            description:""
+        }
+    );
+    a(
+        {
+            id:251,
+            title:"IPartialEmoji",
+            content:"IPartialEmoji",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji',
+            title:"IPartialEmoji",
+            description:""
+        }
+    );
+    a(
+        {
+            id:252,
+            title:"IVoiceHeartbeat",
+            content:"IVoiceHeartbeat",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceHeartbeat',
+            title:"IVoiceHeartbeat",
+            description:""
+        }
+    );
+    a(
+        {
+            id:253,
+            title:"IEmbed",
+            content:"IEmbed",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed',
+            title:"IEmbed",
+            description:""
+        }
+    );
+    a(
+        {
+            id:254,
+            title:"IVoiceGatewayPayloadData",
+            content:"IVoiceGatewayPayloadData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoiceGatewayPayloadData',
+            title:"IVoiceGatewayPayloadData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:255,
+            title:"IVoiceState",
+            content:"IVoiceState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IVoiceState',
+            title:"IVoiceState",
+            description:""
+        }
+    );
+    a(
+        {
+            id:256,
+            title:"IThreadMemberUpdate",
+            content:"IThreadMemberUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMemberUpdate',
+            title:"IThreadMemberUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:257,
+            title:"GuildNSFWLevel",
+            content:"GuildNSFWLevel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildNSFWLevel',
+            title:"GuildNSFWLevel",
             description:""
         }
     );
     a(
         {
             id:258,
-            title:"IButtonComponent",
-            content:"IButtonComponent",
+            title:"CachingDiscordRestChannelAPI",
+            content:"CachingDiscordRestChannelAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent',
-            title:"IButtonComponent",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI',
+            title:"CachingDiscordRestChannelAPI",
             description:""
         }
     );
     a(
         {
             id:259,
-            title:"IThreadMembersUpdate",
-            content:"IThreadMembersUpdate",
+            title:"IVoiceClientDisconnect",
+            content:"IVoiceClientDisconnect",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMembersUpdate',
-            title:"IThreadMembersUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceClientDisconnect',
+            title:"IVoiceClientDisconnect",
             description:""
         }
     );
     a(
         {
             id:260,
-            title:"IGuildRoleCreate",
-            content:"IGuildRoleCreate",
+            title:"IGuildWidget",
+            content:"IGuildWidget",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleCreate',
-            title:"IGuildRoleCreate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget',
+            title:"IGuildWidget",
             description:""
         }
     );
     a(
         {
             id:261,
-            title:"DiscordRestGuildScheduledEventAPI",
-            content:"DiscordRestGuildScheduledEventAPI",
+            title:"GuildScheduledEventEntityType",
+            content:"GuildScheduledEventEntityType",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI',
-            title:"DiscordRestGuildScheduledEventAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventEntityType',
+            title:"GuildScheduledEventEntityType",
             description:""
         }
     );
     a(
         {
             id:262,
-            title:"CachingDiscordRestVoiceAPI",
-            content:"CachingDiscordRestVoiceAPI",
+            title:"IPAddressConverter",
+            content:"IPAddressConverter",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI',
-            title:"CachingDiscordRestVoiceAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter',
+            title:"IPAddressConverter",
             description:""
         }
     );
@@ -3735,776 +3735,48 @@ var searchModule = function() {
     a(
         {
             id:264,
-            title:"IVoiceServerUpdate",
-            content:"IVoiceServerUpdate",
+            title:"CachingDiscordRestEmojiAPI",
+            content:"CachingDiscordRestEmojiAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IVoiceServerUpdate',
-            title:"IVoiceServerUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestEmojiAPI',
+            title:"CachingDiscordRestEmojiAPI",
             description:""
         }
     );
     a(
         {
             id:265,
-            title:"IInvite",
-            content:"IInvite",
+            title:"IMessageReactionRemoveEmoji",
+            content:"IMessageReactionRemoveEmoji",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite',
-            title:"IInvite",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IMessageReactionRemoveEmoji',
+            title:"IMessageReactionRemoveEmoji",
             description:""
         }
     );
     a(
         {
             id:266,
-            title:"IActivity",
-            content:"IActivity",
+            title:"LateCacheResponder",
+            content:"LateCacheResponder",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActivity',
-            title:"IActivity",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.Responders/LateCacheResponder',
+            title:"LateCacheResponder",
             description:""
         }
     );
     a(
         {
             id:267,
-            title:"IAuditLog",
-            content:"IAuditLog",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLog',
-            title:"IAuditLog",
-            description:""
-        }
-    );
-    a(
-        {
-            id:268,
-            title:"ComponentType",
-            content:"ComponentType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ComponentType',
-            title:"ComponentType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:269,
-            title:"PremiumTier",
-            content:"PremiumTier",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/PremiumTier',
-            title:"PremiumTier",
-            description:""
-        }
-    );
-    a(
-        {
-            id:270,
-            title:"IPartialGuild",
-            content:"IPartialGuild",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild',
-            title:"IPartialGuild",
-            description:""
-        }
-    );
-    a(
-        {
-            id:271,
-            title:"EarlyCacheResponder",
-            content:"EarlyCacheResponder",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.Responders/EarlyCacheResponder',
-            title:"EarlyCacheResponder",
-            description:""
-        }
-    );
-    a(
-        {
-            id:272,
-            title:"CDN",
-            content:"CDN",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API/CDN',
-            title:"CDN",
-            description:""
-        }
-    );
-    a(
-        {
-            id:273,
-            title:"IGuildBanRemove",
-            content:"IGuildBanRemove",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildBanRemove',
-            title:"IGuildBanRemove",
-            description:""
-        }
-    );
-    a(
-        {
-            id:274,
-            title:"IPartialApplication",
-            content:"IPartialApplication",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication',
-            title:"IPartialApplication",
-            description:""
-        }
-    );
-    a(
-        {
-            id:275,
-            title:"IEmbedField",
-            content:"IEmbedField",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedField',
-            title:"IEmbedField",
-            description:""
-        }
-    );
-    a(
-        {
-            id:276,
-            title:"InteractionType",
-            content:"InteractionType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionType',
-            title:"InteractionType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:277,
-            title:"ITeamMember",
-            content:"ITeamMember",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeamMember',
-            title:"ITeamMember",
-            description:""
-        }
-    );
-    a(
-        {
-            id:278,
-            title:"IRequestGuildMembers",
-            content:"IRequestGuildMembers",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IRequestGuildMembers',
-            title:"IRequestGuildMembers",
-            description:""
-        }
-    );
-    a(
-        {
-            id:279,
-            title:"IDiscordRestChannelAPI",
-            content:"IDiscordRestChannelAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI',
-            title:"IDiscordRestChannelAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:280,
-            title:"IPartialVoiceState",
-            content:"IPartialVoiceState",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState',
-            title:"IPartialVoiceState",
-            description:""
-        }
-    );
-    a(
-        {
-            id:281,
-            title:"IIdentify",
-            content:"IIdentify",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IIdentify',
-            title:"IIdentify",
-            description:""
-        }
-    );
-    a(
-        {
-            id:282,
-            title:"IEmbedAuthor",
-            content:"IEmbedAuthor",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedAuthor',
-            title:"IEmbedAuthor",
-            description:""
-        }
-    );
-    a(
-        {
-            id:283,
-            title:"IReconnect",
-            content:"IReconnect",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IReconnect',
-            title:"IReconnect",
-            description:""
-        }
-    );
-    a(
-        {
-            id:284,
-            title:"IDiscordRestInteractionAPI",
-            content:"IDiscordRestInteractionAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestInteractionAPI',
-            title:"IDiscordRestInteractionAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:285,
-            title:"DiscordRestInviteAPI",
-            content:"DiscordRestInviteAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInviteAPI',
-            title:"DiscordRestInviteAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:286,
-            title:"IPropertyErrorDetails",
-            content:"IPropertyErrorDetails",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPropertyErrorDetails',
-            title:"IPropertyErrorDetails",
-            description:""
-        }
-    );
-    a(
-        {
-            id:287,
-            title:"DiscordRestApplicationAPI",
-            content:"DiscordRestApplicationAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestApplicationAPI',
-            title:"DiscordRestApplicationAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:288,
-            title:"VideoQualityMode",
-            content:"VideoQualityMode",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/VideoQualityMode',
-            title:"VideoQualityMode",
-            description:""
-        }
-    );
-    a(
-        {
-            id:289,
-            title:"IThreadMember",
-            content:"IThreadMember",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMember',
-            title:"IThreadMember",
-            description:""
-        }
-    );
-    a(
-        {
-            id:290,
-            title:"IGuildRoleDelete",
-            content:"IGuildRoleDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleDelete',
-            title:"IGuildRoleDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:291,
-            title:"CDNImageFormat",
-            content:"CDNImageFormat",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API/CDNImageFormat',
-            title:"CDNImageFormat",
-            description:""
-        }
-    );
-    a(
-        {
-            id:292,
-            title:"ITemplate",
-            content:"ITemplate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate',
-            title:"ITemplate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:293,
-            title:"ServiceCollectionExtensions",
-            content:"ServiceCollectionExtensions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching.Extensions/ServiceCollectionExtensions',
-            title:"ServiceCollectionExtensions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:294,
-            title:"IWelcomeScreenChannel",
-            content:"IWelcomeScreenChannel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreenChannel',
-            title:"IWelcomeScreenChannel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:295,
-            title:"ServiceCollectionExtensions",
-            content:"ServiceCollectionExtensions",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Extensions/ServiceCollectionExtensions',
-            title:"ServiceCollectionExtensions",
-            description:""
-        }
-    );
-    a(
-        {
-            id:296,
-            title:"IApplicationCommandOptionChoice",
-            content:"IApplicationCommandOptionChoice",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandOptionChoice',
-            title:"IApplicationCommandOptionChoice",
-            description:""
-        }
-    );
-    a(
-        {
-            id:297,
-            title:"IDiscordRestTemplateAPI",
-            content:"IDiscordRestTemplateAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI',
-            title:"IDiscordRestTemplateAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:298,
-            title:"IGuildMemberRemove",
-            content:"IGuildMemberRemove",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberRemove',
-            title:"IGuildMemberRemove",
-            description:""
-        }
-    );
-    a(
-        {
-            id:299,
-            title:"IGuildScheduledEvent",
-            content:"IGuildScheduledEvent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEvent',
-            title:"IGuildScheduledEvent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:300,
-            title:"IDiscordRestStageInstanceAPI",
-            content:"IDiscordRestStageInstanceAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI',
-            title:"IDiscordRestStageInstanceAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:301,
-            title:"IEventPayload",
-            content:"IEventPayload",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway/IEventPayload',
-            title:"IEventPayload",
-            description:""
-        }
-    );
-    a(
-        {
-            id:302,
-            title:"IGuildDelete",
-            content:"IGuildDelete",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildDelete',
-            title:"IGuildDelete",
-            description:""
-        }
-    );
-    a(
-        {
-            id:303,
-            title:"IApplicationCommandInteractionDataResolved",
-            content:"IApplicationCommandInteractionDataResolved",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IApplicationCommandInteractionDataResolved',
-            title:"IApplicationCommandInteractionDataResolved",
-            description:""
-        }
-    );
-    a(
-        {
-            id:304,
-            title:"KeyHelpers",
-            content:"KeyHelpers",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers',
-            title:"KeyHelpers",
-            description:""
-        }
-    );
-    a(
-        {
-            id:305,
-            title:"DiscordRestGuildAPI",
-            content:"DiscordRestGuildAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI',
-            title:"DiscordRestGuildAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:306,
-            title:"IUnknownEvent",
-            content:"IUnknownEvent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUnknownEvent',
-            title:"IUnknownEvent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:307,
-            title:"IGuildMembersChunk",
-            content:"IGuildMembersChunk",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMembersChunk',
-            title:"IGuildMembersChunk",
-            description:""
-        }
-    );
-    a(
-        {
-            id:308,
-            title:"DiscordRestVoiceAPI",
-            content:"DiscordRestVoiceAPI",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestVoiceAPI',
-            title:"DiscordRestVoiceAPI",
-            description:""
-        }
-    );
-    a(
-        {
-            id:309,
-            title:"IInteractionCreate",
-            content:"IInteractionCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IInteractionCreate',
-            title:"IInteractionCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:310,
-            title:"IGatewayEvent",
-            content:"IGatewayEvent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGatewayEvent',
-            title:"IGatewayEvent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:311,
-            title:"EmbedType",
-            content:"EmbedType",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/EmbedType',
-            title:"EmbedType",
-            description:""
-        }
-    );
-    a(
-        {
-            id:312,
-            title:"MultiFactorAuthenticationLevel",
-            content:"MultiFactorAuthenticationLevel",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MultiFactorAuthenticationLevel',
-            title:"MultiFactorAuthenticationLevel",
-            description:""
-        }
-    );
-    a(
-        {
-            id:313,
-            title:"ResponderGroup",
-            content:"ResponderGroup",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Responders/ResponderGroup',
-            title:"ResponderGroup",
-            description:""
-        }
-    );
-    a(
-        {
-            id:314,
-            title:"IGuildCreate",
-            content:"IGuildCreate",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildCreate',
-            title:"IGuildCreate",
-            description:""
-        }
-    );
-    a(
-        {
-            id:315,
-            title:"IUpdatePresence",
-            content:"IUpdatePresence",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdatePresence',
-            title:"IUpdatePresence",
-            description:""
-        }
-    );
-    a(
-        {
-            id:316,
-            title:"IVoiceSpeakingCommand",
-            content:"IVoiceSpeakingCommand",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Commands/IVoiceSpeakingCommand',
-            title:"IVoiceSpeakingCommand",
-            description:""
-        }
-    );
-    a(
-        {
-            id:317,
-            title:"IGuildBanAdd",
-            content:"IGuildBanAdd",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildBanAdd',
-            title:"IGuildBanAdd",
-            description:""
-        }
-    );
-    a(
-        {
-            id:318,
-            title:"IVoiceSpeakingEvent",
-            content:"IVoiceSpeakingEvent",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSpeakingEvent',
-            title:"IVoiceSpeakingEvent",
-            description:""
-        }
-    );
-    a(
-        {
-            id:319,
             title:"CachingDiscordRestInteractionAPI",
             content:"CachingDiscordRestInteractionAPI",
             description:'',
@@ -4518,161 +3790,385 @@ var searchModule = function() {
     );
     a(
         {
-            id:320,
-            title:"IThreadCreate",
-            content:"IThreadCreate",
+            id:268,
+            title:"ExplicitContentFilterLevel",
+            content:"ExplicitContentFilterLevel",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadCreate',
-            title:"IThreadCreate",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ExplicitContentFilterLevel',
+            title:"ExplicitContentFilterLevel",
             description:""
         }
     );
     a(
         {
-            id:321,
-            title:"IMessageComponent",
-            content:"IMessageComponent",
+            id:269,
+            title:"IChannelCreate",
+            content:"IChannelCreate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent',
-            title:"IMessageComponent",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelCreate',
+            title:"IChannelCreate",
             description:""
         }
     );
     a(
         {
-            id:322,
-            title:"DiscordStagePermission",
-            content:"DiscordStagePermission",
+            id:270,
+            title:"VideoQualityMode",
+            content:"VideoQualityMode",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordStagePermission',
-            title:"DiscordStagePermission",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/VideoQualityMode',
+            title:"VideoQualityMode",
             description:""
         }
     );
     a(
         {
-            id:323,
+            id:271,
+            title:"GatewayConnectionStatus",
+            content:"GatewayConnectionStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Gateway/GatewayConnectionStatus',
+            title:"GatewayConnectionStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:272,
+            title:"CachingDiscordRestWebhookAPI",
+            content:"CachingDiscordRestWebhookAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI',
+            title:"CachingDiscordRestWebhookAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:273,
+            title:"SpeakingFlags",
+            content:"SpeakingFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/SpeakingFlags',
+            title:"SpeakingFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:274,
+            title:"IGuild",
+            content:"IGuild",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuild',
+            title:"IGuild",
+            description:""
+        }
+    );
+    a(
+        {
+            id:275,
             title:"ServiceCollectionExtensions",
             content:"ServiceCollectionExtensions",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Extensions/ServiceCollectionExtensions',
+            url:'/Remora.Discord/api/Remora.Discord.Caching.Extensions/ServiceCollectionExtensions',
             title:"ServiceCollectionExtensions",
             description:""
         }
     );
     a(
         {
-            id:324,
-            title:"IGuildUpdate",
-            content:"IGuildUpdate",
+            id:276,
+            title:"EarlyCacheResponder",
+            content:"EarlyCacheResponder",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildUpdate',
-            title:"IGuildUpdate",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.Responders/EarlyCacheResponder',
+            title:"EarlyCacheResponder",
             description:""
         }
     );
     a(
         {
-            id:325,
-            title:"IDiscordRestWebhookAPI",
-            content:"IDiscordRestWebhookAPI",
+            id:277,
+            title:"ImagePacker",
+            content:"ImagePacker",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI',
-            title:"IDiscordRestWebhookAPI",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.Utility/ImagePacker',
+            title:"ImagePacker",
             description:""
         }
     );
     a(
         {
-            id:326,
-            title:"IDiscordRestEmojiAPI",
-            content:"IDiscordRestEmojiAPI",
+            id:278,
+            title:"DiscordRestGuildScheduledEventAPI",
+            content:"DiscordRestGuildScheduledEventAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestEmojiAPI',
-            title:"IDiscordRestEmojiAPI",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildScheduledEventAPI',
+            title:"DiscordRestGuildScheduledEventAPI",
             description:""
         }
     );
     a(
         {
-            id:327,
-            title:"ServiceCollectionExtensions",
-            content:"ServiceCollectionExtensions",
+            id:279,
+            title:"IStageInstance",
+            content:"IStageInstance",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Unstable.Extensions/ServiceCollectionExtensions',
-            title:"ServiceCollectionExtensions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance',
+            title:"IStageInstance",
             description:""
         }
     );
     a(
         {
-            id:328,
-            title:"IVoiceGatewayEvent",
-            content:"IVoiceGatewayEvent",
+            id:280,
+            title:"IVoiceReady",
+            content:"IVoiceReady",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceGatewayEvent',
-            title:"IVoiceGatewayEvent",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceReady',
+            title:"IVoiceReady",
             description:""
         }
     );
     a(
         {
-            id:329,
-            title:"IAuditLogEntry",
-            content:"IAuditLogEntry",
+            id:281,
+            title:"IRole",
+            content:"IRole",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogEntry',
-            title:"IAuditLogEntry",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRole',
+            title:"IRole",
             description:""
         }
     );
     a(
         {
-            id:330,
-            title:"AbstractDiscordRestAPI",
-            content:"AbstractDiscordRestAPI",
+            id:282,
+            title:"MultiFactorAuthenticationLevel",
+            content:"MultiFactorAuthenticationLevel",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI',
-            title:"AbstractDiscordRestAPI",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MultiFactorAuthenticationLevel',
+            title:"MultiFactorAuthenticationLevel",
             description:""
         }
     );
     a(
         {
-            id:331,
+            id:283,
+            title:"IUpdateVoiceState",
+            content:"IUpdateVoiceState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IUpdateVoiceState',
+            title:"IUpdateVoiceState",
+            description:""
+        }
+    );
+    a(
+        {
+            id:284,
+            title:"IGuildRoleUpdate",
+            content:"IGuildRoleUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleUpdate',
+            title:"IGuildRoleUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:285,
+            title:"ITeamMember",
+            content:"ITeamMember",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeamMember',
+            title:"ITeamMember",
+            description:""
+        }
+    );
+    a(
+        {
+            id:286,
+            title:"DiscordPermissionSet",
+            content:"DiscordPermissionSet",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Objects/DiscordPermissionSet',
+            title:"DiscordPermissionSet",
+            description:""
+        }
+    );
+    a(
+        {
+            id:287,
+            title:"IGatewayEndpoint",
+            content:"IGatewayEndpoint",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGatewayEndpoint',
+            title:"IGatewayEndpoint",
+            description:""
+        }
+    );
+    a(
+        {
+            id:288,
+            title:"IErrorDetails",
+            content:"IErrorDetails",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IErrorDetails',
+            title:"IErrorDetails",
+            description:""
+        }
+    );
+    a(
+        {
+            id:289,
+            title:"ApplicationFlags",
+            content:"ApplicationFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationFlags',
+            title:"ApplicationFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:290,
+            title:"IUserUpdate",
+            content:"IUserUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IUserUpdate',
+            title:"IUserUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:291,
+            title:"CachingDiscordRestVoiceAPI",
+            content:"CachingDiscordRestVoiceAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestVoiceAPI',
+            title:"CachingDiscordRestVoiceAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:292,
+            title:"IGuildRoleDelete",
+            content:"IGuildRoleDelete",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildRoleDelete',
+            title:"IGuildRoleDelete",
+            description:""
+        }
+    );
+    a(
+        {
+            id:293,
+            title:"IAccount",
+            content:"IAccount",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAccount',
+            title:"IAccount",
+            description:""
+        }
+    );
+    a(
+        {
+            id:294,
+            title:"IDiscordRestVoiceAPI",
+            content:"IDiscordRestVoiceAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestVoiceAPI',
+            title:"IDiscordRestVoiceAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:295,
             title:"IAuthorizationInformation",
             content:"IAuthorizationInformation",
             description:'',
@@ -4686,7 +4182,413 @@ var searchModule = function() {
     );
     a(
         {
-            id:332,
+            id:296,
+            title:"StagePrivacyLevel",
+            content:"StagePrivacyLevel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StagePrivacyLevel',
+            title:"StagePrivacyLevel",
+            description:""
+        }
+    );
+    a(
+        {
+            id:297,
+            title:"IGuildBanRemove",
+            content:"IGuildBanRemove",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildBanRemove',
+            title:"IGuildBanRemove",
+            description:""
+        }
+    );
+    a(
+        {
+            id:298,
+            title:"IActionRowComponent",
+            content:"IActionRowComponent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IActionRowComponent',
+            title:"IActionRowComponent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:299,
+            title:"IShardIdentification",
+            content:"IShardIdentification",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IShardIdentification',
+            title:"IShardIdentification",
+            description:""
+        }
+    );
+    a(
+        {
+            id:300,
+            title:"ClientStatus",
+            content:"ClientStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ClientStatus',
+            title:"ClientStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:301,
+            title:"IDiscordRestGuildScheduledEventAPI",
+            content:"IDiscordRestGuildScheduledEventAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestGuildScheduledEventAPI',
+            title:"IDiscordRestGuildScheduledEventAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:302,
+            title:"ApplicationCommandType",
+            content:"ApplicationCommandType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ApplicationCommandType',
+            title:"ApplicationCommandType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:303,
+            title:"IThreadMembersUpdate",
+            content:"IThreadMembersUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IThreadMembersUpdate',
+            title:"IThreadMembersUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:304,
+            title:"IReaction",
+            content:"IReaction",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IReaction',
+            title:"IReaction",
+            description:""
+        }
+    );
+    a(
+        {
+            id:305,
+            title:"IDiscordRestTemplateAPI",
+            content:"IDiscordRestTemplateAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestTemplateAPI',
+            title:"IDiscordRestTemplateAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:306,
+            title:"IGuildMemberAdd",
+            content:"IGuildMemberAdd",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberAdd',
+            title:"IGuildMemberAdd",
+            description:""
+        }
+    );
+    a(
+        {
+            id:307,
+            title:"IPruneCount",
+            content:"IPruneCount",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPruneCount',
+            title:"IPruneCount",
+            description:""
+        }
+    );
+    a(
+        {
+            id:308,
+            title:"IIdentify",
+            content:"IIdentify",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/IIdentify',
+            title:"IIdentify",
+            description:""
+        }
+    );
+    a(
+        {
+            id:309,
+            title:"ChannelType",
+            content:"ChannelType",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ChannelType',
+            title:"ChannelType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:310,
+            title:"IButtonComponent",
+            content:"IButtonComponent",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IButtonComponent',
+            title:"IButtonComponent",
+            description:""
+        }
+    );
+    a(
+        {
+            id:311,
+            title:"IChannelUpdate",
+            content:"IChannelUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IChannelUpdate',
+            title:"IChannelUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:312,
+            title:"IGuildMemberUpdate",
+            content:"IGuildMemberUpdate",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IGuildMemberUpdate',
+            title:"IGuildMemberUpdate",
+            description:""
+        }
+    );
+    a(
+        {
+            id:313,
+            title:"IPartySize",
+            content:"IPartySize",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartySize',
+            title:"IPartySize",
+            description:""
+        }
+    );
+    a(
+        {
+            id:314,
+            title:"IDiscordRestWebhookAPI",
+            content:"IDiscordRestWebhookAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestWebhookAPI',
+            title:"IDiscordRestWebhookAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:315,
+            title:"IWelcomeScreenChannel",
+            content:"IWelcomeScreenChannel",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IWelcomeScreenChannel',
+            title:"IWelcomeScreenChannel",
+            description:""
+        }
+    );
+    a(
+        {
+            id:316,
+            title:"DiscordRestInteractionAPI",
+            content:"DiscordRestInteractionAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestInteractionAPI',
+            title:"DiscordRestInteractionAPI",
+            description:""
+        }
+    );
+    a(
+        {
+            id:317,
+            title:"ThreadMemberFlags",
+            content:"ThreadMemberFlags",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ThreadMemberFlags',
+            title:"ThreadMemberFlags",
+            description:""
+        }
+    );
+    a(
+        {
+            id:318,
+            title:"Constants",
+            content:"Constants",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest/Constants',
+            title:"Constants",
+            description:""
+        }
+    );
+    a(
+        {
+            id:319,
+            title:"IVoiceSessionDescription",
+            content:"IVoiceSessionDescription",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceSessionDescription',
+            title:"IVoiceSessionDescription",
+            description:""
+        }
+    );
+    a(
+        {
+            id:320,
+            title:"ITeam",
+            content:"ITeam",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITeam',
+            title:"ITeam",
+            description:""
+        }
+    );
+    a(
+        {
+            id:321,
+            title:"IPartialAttachment",
+            content:"IPartialAttachment",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment',
+            title:"IPartialAttachment",
+            description:""
+        }
+    );
+    a(
+        {
+            id:322,
+            title:"MembershipState",
+            content:"MembershipState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MembershipState',
+            title:"MembershipState",
+            description:""
+        }
+    );
+    a(
+        {
+            id:323,
+            title:"IGuildScheduledEventEntityMetadata",
+            content:"IGuildScheduledEventEntityMetadata",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventEntityMetadata',
+            title:"IGuildScheduledEventEntityMetadata",
+            description:""
+        }
+    );
+    a(
+        {
+            id:324,
+            title:"IRestError",
+            content:"IRestError",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IRestError',
+            title:"IRestError",
+            description:""
+        }
+    );
+    a(
+        {
+            id:325,
             title:"IThreadDelete",
             content:"IThreadDelete",
             description:'',
@@ -4700,127 +4602,225 @@ var searchModule = function() {
     );
     a(
         {
-            id:333,
-            title:"GatewayIntents",
-            content:"GatewayIntents",
+            id:326,
+            title:"IVoiceHello",
+            content:"IVoiceHello",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Commands/GatewayIntents',
-            title:"GatewayIntents",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway.Events/IVoiceHello',
+            title:"IVoiceHello",
+            description:""
+        }
+    );
+    a(
+        {
+            id:327,
+            title:"ConnectionVisibility",
+            content:"ConnectionVisibility",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ConnectionVisibility',
+            title:"ConnectionVisibility",
+            description:""
+        }
+    );
+    a(
+        {
+            id:328,
+            title:"IEmbedFooter",
+            content:"IEmbedFooter",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbedFooter',
+            title:"IEmbedFooter",
+            description:""
+        }
+    );
+    a(
+        {
+            id:329,
+            title:"KeyHelpers",
+            content:"KeyHelpers",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Caching/KeyHelpers',
+            title:"KeyHelpers",
+            description:""
+        }
+    );
+    a(
+        {
+            id:330,
+            title:"CDNImageFormat",
+            content:"CDNImageFormat",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API/CDNImageFormat',
+            title:"CDNImageFormat",
+            description:""
+        }
+    );
+    a(
+        {
+            id:331,
+            title:"IGuildMember",
+            content:"IGuildMember",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildMember',
+            title:"IGuildMember",
+            description:""
+        }
+    );
+    a(
+        {
+            id:332,
+            title:"IInteractionCallbackData",
+            content:"IInteractionCallbackData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionCallbackData',
+            title:"IInteractionCallbackData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:333,
+            title:"DiscordRestChannelAPI",
+            content:"DiscordRestChannelAPI",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI',
+            title:"DiscordRestChannelAPI",
             description:""
         }
     );
     a(
         {
             id:334,
-            title:"IInteraction",
-            content:"IInteraction",
+            title:"MessageFlags",
+            content:"MessageFlags",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteraction',
-            title:"IInteraction",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/MessageFlags',
+            title:"MessageFlags",
             description:""
         }
     );
     a(
         {
             id:335,
-            title:"IGuildScheduledEventUser",
-            content:"IGuildScheduledEventUser",
+            title:"CacheService",
+            content:"CacheService",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildScheduledEventUser',
-            title:"IGuildScheduledEventUser",
+            url:'/Remora.Discord/api/Remora.Discord.Caching.Services/CacheService',
+            title:"CacheService",
             description:""
         }
     );
     a(
         {
             id:336,
-            title:"ISelectMenuComponent",
-            content:"ISelectMenuComponent",
+            title:"IResumed",
+            content:"IResumed",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent',
-            title:"ISelectMenuComponent",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IResumed',
+            title:"IResumed",
             description:""
         }
     );
     a(
         {
             id:337,
-            title:"ResponderService",
-            content:"ResponderService",
+            title:"IWebhooksUpdate",
+            content:"IWebhooksUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderService',
-            title:"ResponderService",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IWebhooksUpdate',
+            title:"IWebhooksUpdate",
             description:""
         }
     );
     a(
         {
             id:338,
-            title:"IReady",
-            content:"IReady",
+            title:"IAuditLogChange",
+            content:"IAuditLogChange",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IReady',
-            title:"IReady",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IAuditLogChange',
+            title:"IAuditLogChange",
             description:""
         }
     );
     a(
         {
             id:339,
-            title:"TypeExtensions",
-            content:"TypeExtensions",
+            title:"IIntegrationUpdate",
+            content:"IIntegrationUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.Gateway.Extensions/TypeExtensions',
-            title:"TypeExtensions",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate',
+            title:"IIntegrationUpdate",
             description:""
         }
     );
     a(
         {
             id:340,
-            title:"ActivityType",
-            content:"ActivityType",
+            title:"DiscordRestStickerAPI",
+            content:"DiscordRestStickerAPI",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ActivityType',
-            title:"ActivityType",
+            url:'/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestStickerAPI',
+            title:"DiscordRestStickerAPI",
             description:""
         }
     );
     a(
         {
             id:341,
-            title:"IVoiceGatewayPayloadData",
-            content:"IVoiceGatewayPayloadData",
+            title:"IStageInstanceUpdate",
+            content:"IStageInstanceUpdate",
             description:'',
             tags:''
         },
         {
-            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.VoiceGateway/IVoiceGatewayPayloadData',
-            title:"IVoiceGatewayPayloadData",
+            url:'/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate',
+            title:"IStageInstanceUpdate",
             description:""
         }
     );
