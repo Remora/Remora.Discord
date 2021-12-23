@@ -5,15 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>16.0.0</Version>
+        <Version>16.0.1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Remove Optional from Min/MaxValue attributes.
-            Fix Nullable MaxValue and MinValue
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
