@@ -27,7 +27,6 @@ using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
-using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
@@ -39,17 +38,14 @@ namespace Remora.Discord.Samples.SlashCommands.Commands;
 public class AutocompleteCommands : CommandGroup
 {
     private readonly FeedbackService _feedbackService;
-    private readonly ICommandContext _context;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AutocompleteCommands"/> class.
     /// </summary>
     /// <param name="feedbackService">The feedback service.</param>
-    /// <param name="context">The command context.</param>
-    public AutocompleteCommands(FeedbackService feedbackService, ICommandContext context)
+    public AutocompleteCommands(FeedbackService feedbackService)
     {
         _feedbackService = feedbackService;
-        _context = context;
     }
 
     /// <summary>

@@ -42,7 +42,7 @@ public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
     /// <param name="url">The url of the image.</param>
     public EmbedImageBuilder(string url)
     {
-        Url = url;
+        this.Url = url;
     }
 
     /// <inheritdoc />
@@ -51,13 +51,13 @@ public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
         var validateResult = Validate();
 
         return validateResult.IsSuccess
-            ? new EmbedImage(Url)
+            ? new EmbedImage(this.Url)
             : Result<EmbedImage>.FromError(validateResult);
     }
 
     /// <inheritdoc />
     public override Result Validate()
     {
-        return ValidateUrl(nameof(Url), Url, false);
+        return ValidateUrl(nameof(this.Url), this.Url, false);
     }
 }

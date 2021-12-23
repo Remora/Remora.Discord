@@ -35,7 +35,6 @@ using Remora.Discord.Commands.Tests.Data.InternalLimits;
 using Remora.Discord.Commands.Tests.Data.Valid;
 using Remora.Discord.Commands.Tests.Data.Valid.Basics;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Xunit;
 using static Remora.Discord.API.Abstractions.Objects.ApplicationCommandOptionType;
 
@@ -1097,7 +1096,7 @@ public class CommandTreeExtensionTests
             var commandNodeG = tree.Root.Children.Single(c => c.Key is "g");
 
             var groupID = DiscordSnowflake.New(1);
-            var commandGID = DiscordSnowflake.New(2);
+            var commandGroupID = DiscordSnowflake.New(2);
             var applicationCommands = new List<IApplicationCommand>
             {
                 new ApplicationCommand
@@ -1123,7 +1122,7 @@ public class CommandTreeExtensionTests
                 ),
                 new ApplicationCommand
                 (
-                    commandGID,
+                    commandGroupID,
                     default,
                     default,
                     default,
@@ -1157,7 +1156,7 @@ public class CommandTreeExtensionTests
 
             var (mappedCommandID, mappedCommandNode) = map.ToList()[1];
 
-            Assert.Equal(mappedCommandID.CommandID, commandGID);
+            Assert.Equal(mappedCommandID.CommandID, commandGroupID);
             Assert.Same(commandNodeG, mappedCommandNode.AsT1);
         }
     }

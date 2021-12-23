@@ -1012,16 +1012,18 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
             $"guilds/{guildID}/integrations",
             b =>
             {
-                if (includeApplications.HasValue)
-                {
-                    b.AddQueryParameter
-                    (
-                        "include_applications",
-                        includeApplications.Value.ToString().ToLowerInvariant()
-                    );
+                b.WithRateLimitContext();
 
-                    b.WithRateLimitContext();
+                if (!includeApplications.HasValue)
+                {
+                    return;
                 }
+
+                b.AddQueryParameter
+                (
+                    "include_applications",
+                    includeApplications.Value.ToString().ToLowerInvariant()
+                );
             },
             ct: ct
         );

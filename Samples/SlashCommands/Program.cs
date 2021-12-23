@@ -77,7 +77,7 @@ public class Program
             log.LogWarning
             (
                 "The registered commands of the bot don't support slash commands: {Reason}",
-                checkSlashSupport.Error.Message
+                checkSlashSupport.Error?.Message
             );
         }
         else
@@ -85,7 +85,7 @@ public class Program
             var updateSlash = await slashService.UpdateSlashCommandsAsync(debugServer);
             if (!updateSlash.IsSuccess)
             {
-                log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error.Message);
+                log.LogWarning("Failed to update slash commands: {Reason}", updateSlash.Error?.Message);
             }
         }
 

@@ -26,7 +26,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json.Converters;
+namespace Remora.Discord.API.Json;
 
 /// <summary>
 /// Converts an <see cref="IPAddress"/> to or from JSON.
@@ -35,7 +35,7 @@ namespace Remora.Discord.API.Json.Converters;
 public class IPAddressConverter : JsonConverter<IPAddress>
 {
     /// <inheritdoc />
-    public override IPAddress? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IPAddress Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType is not JsonTokenType.String)
         {
@@ -48,7 +48,7 @@ public class IPAddressConverter : JsonConverter<IPAddress>
             throw new JsonException("Cannot convert IP address: token was null");
         }
 
-        if (IPAddress.TryParse(address, out IPAddress? parsedAddress))
+        if (IPAddress.TryParse(address, out var parsedAddress))
         {
             return parsedAddress;
         }

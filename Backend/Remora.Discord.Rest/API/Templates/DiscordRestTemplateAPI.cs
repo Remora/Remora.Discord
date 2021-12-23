@@ -75,16 +75,10 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         CancellationToken ct = default
     )
     {
-        Optional<string?> iconData = default;
-        if (icon.IsDefined(out var iconStream))
+        var packIcon = await ImagePacker.PackImageAsync(icon!, ct);
+        if (!packIcon.IsDefined(out var iconData))
         {
-            var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
-            if (!packIcon.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packIcon);
-            }
-
-            iconData = packIcon.Entity;
+            return Result<IGuild>.FromError(packIcon);
         }
 
         return await this.RestHttpClient.PostAsync<IGuild>

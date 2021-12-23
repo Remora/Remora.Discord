@@ -101,7 +101,7 @@ public class DiscordService : BackgroundService
                 }
                 default:
                 {
-                    _logger.LogError("Unknown error: {Message}", runResult.Error.Message);
+                    _logger.LogError("Unknown error: {Message}", runResult.Error?.Message);
                     break;
                 }
             }

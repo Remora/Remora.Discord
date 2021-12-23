@@ -708,7 +708,7 @@ public class DiscordGatewayClient : IDisposable
                         _log.LogWarning
                         (
                             "Error in gateway event responder.\n{Reason}",
-                            responderResult.Error.Message
+                            responderResult.Error!.Message
                         );
 
                         break;

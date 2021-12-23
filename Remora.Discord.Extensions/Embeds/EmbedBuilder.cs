@@ -42,22 +42,22 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the title of the embed.
     /// </summary>
-    public string? Title { get; set; } = null;
+    public string? Title { get; set; }
 
     /// <summary>
     /// Gets or sets the description of the embed.
     /// </summary>
-    public string? Description { get; set; } = null;
+    public string? Description { get; set; }
 
     /// <summary>
     /// Gets or sets the url of the embed.
     /// </summary>
-    public string? Url { get; set; } = null;
+    public string? Url { get; set; }
 
     /// <summary>
     /// Gets or sets the timestamp, if any, which should be displayed on the embed.
     /// </summary>
-    public DateTimeOffset? Timestamp { get; set; } = null;
+    public DateTimeOffset? Timestamp { get; set; }
 
     /// <summary>
     /// Gets or sets the color of this embed.
@@ -67,22 +67,22 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <summary>
     /// Gets or sets the footer of this embed.
     /// </summary>
-    public EmbedFooterBuilder? Footer { get; set; } = null;
+    public EmbedFooterBuilder? Footer { get; set; }
 
     /// <summary>
     /// Gets or sets the image added to this embed.
     /// </summary>
-    public string? ImageUrl { get; set; } = null;
+    public string? ImageUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the thumbnail added to this embed.
     /// </summary>
-    public string? ThumbnailUrl { get; set; } = null;
+    public string? ThumbnailUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the author of the embed.
     /// </summary>
-    public EmbedAuthorBuilder? Author { get; set; } = null;
+    public EmbedAuthorBuilder? Author { get; set; }
 
     /// <summary>
     /// Gets a read-only list of fields added to this embed.
@@ -98,11 +98,11 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         get
         {
-            int titleLength = Title?.Length ?? 0;
-            int descriptionLength = Description?.Length ?? 0;
-            int fieldSum = _fields.Sum(field => field.Name.Length + field.Value.Length);
-            int footerLength = Footer?.Text.Length ?? 0;
-            int authorLength = Author?.Name.Length ?? 0;
+            var titleLength = this.Title?.Length ?? 0;
+            var descriptionLength = this.Description?.Length ?? 0;
+            var fieldSum = _fields.Sum(field => field.Name.Length + field.Value.Length);
+            var footerLength = this.Footer?.Text.Length ?? 0;
+            var authorLength = this.Author?.Name.Length ?? 0;
 
             return titleLength + descriptionLength + fieldSum + footerLength + authorLength;
         }
@@ -132,57 +132,57 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>Returns a <see cref="Result"/> indicating success or failure of the validation.</returns>
     public override Result Validate()
     {
-        var validateTitleResult = ValidateLength(nameof(Title), Title, EmbedConstants.MaxTitleLength, true);
+        var validateTitleResult = ValidateLength(nameof(this.Title), this.Title, EmbedConstants.MaxTitleLength, true);
         if (!validateTitleResult.IsSuccess)
         {
             return validateTitleResult;
         }
 
-        var validateDescriptionResult = ValidateLength(nameof(Description), Description, EmbedConstants.MaxDescriptionLength, true);
+        var validateDescriptionResult = ValidateLength(nameof(this.Description), this.Description, EmbedConstants.MaxDescriptionLength, true);
         if (!validateDescriptionResult.IsSuccess)
         {
             return validateDescriptionResult;
         }
 
-        var validateUrlResult = ValidateUrl(nameof(Url), Url, true);
+        var validateUrlResult = ValidateUrl(nameof(this.Url), this.Url, true);
         if (!validateUrlResult.IsSuccess)
         {
             return validateUrlResult;
         }
 
         // If there is no footer, just default to success.
-        var validateFooterResult = Footer?.Validate() ?? Result.FromSuccess();
+        var validateFooterResult = this.Footer?.Validate() ?? Result.FromSuccess();
         if (!validateFooterResult.IsSuccess)
         {
             return validateFooterResult;
         }
 
-        var validateImageResult = ValidateUrl(nameof(ImageUrl), ImageUrl, true);
+        var validateImageResult = ValidateUrl(nameof(this.ImageUrl), this.ImageUrl, true);
         if (!validateImageResult.IsSuccess)
         {
             return validateImageResult;
         }
 
-        var validateThumbnailResult = ValidateUrl(nameof(ThumbnailUrl), ThumbnailUrl, true);
+        var validateThumbnailResult = ValidateUrl(nameof(this.ThumbnailUrl), this.ThumbnailUrl, true);
         if (!validateThumbnailResult.IsSuccess)
         {
             return validateThumbnailResult;
         }
 
-        var validateAuthorResult = Author?.Validate() ?? Result.FromSuccess();
+        var validateAuthorResult = this.Author?.Validate() ?? Result.FromSuccess();
         if (!validateAuthorResult.IsSuccess)
         {
             return validateAuthorResult;
         }
 
-        if (Fields.Count >= EmbedConstants.MaxFieldCount)
+        if (this.Fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ArgumentOutOfRangeError(nameof(Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {Fields.Count}.");
+            return new ArgumentOutOfRangeError(nameof(this.Fields), $"There are too many fields in this collection. Expected: <{EmbedConstants.MaxFieldCount}. Actual: {this.Fields.Count}.");
         }
 
-        if (Length > EmbedConstants.MaxEmbedLength)
+        if (this.Length > EmbedConstants.MaxEmbedLength)
         {
-            return new ValidationError(nameof(Length), $"The overall embed length is too long.");
+            return new ValidationError(nameof(this.Length), $"The overall embed length is too long.");
         }
 
         return Result.FromSuccess();
@@ -195,7 +195,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithTitle(string title)
     {
-        Title = title;
+        this.Title = title;
         return this;
     }
 
@@ -206,7 +206,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithDescription(string description)
     {
-        Description = description;
+        this.Description = description;
         return this;
     }
 
@@ -217,7 +217,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithUrl(string url)
     {
-        Url = url;
+        this.Url = url;
         return this;
     }
 
@@ -228,7 +228,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithThumbnailUrl(string thumbnailUrl)
     {
-        ThumbnailUrl = thumbnailUrl;
+        this.ThumbnailUrl = thumbnailUrl;
         return this;
     }
 
@@ -239,7 +239,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithImageUrl(string imageUrl)
     {
-        ImageUrl = imageUrl;
+        this.ImageUrl = imageUrl;
         return this;
     }
 
@@ -249,7 +249,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithCurrentTimestamp()
     {
-        Timestamp = DateTimeOffset.UtcNow;
+        this.Timestamp = DateTimeOffset.UtcNow;
         return this;
     }
 
@@ -260,7 +260,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithTimestamp(DateTimeOffset timestamp)
     {
-        Timestamp = timestamp;
+        this.Timestamp = timestamp;
         return this;
     }
 
@@ -271,7 +271,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithTimestamp(Snowflake snowflake)
     {
-        Timestamp = snowflake.Timestamp;
+        this.Timestamp = snowflake.Timestamp;
         return this;
     }
 
@@ -282,7 +282,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithColour(Color colour)
     {
-        Colour = colour;
+        this.Colour = colour;
         return this;
     }
 
@@ -300,7 +300,7 @@ public class EmbedBuilder : BuilderBase<Embed>
         string iconUrl = ""
     )
     {
-        Author = new EmbedAuthorBuilder(name, url, iconUrl);
+        this.Author = new EmbedAuthorBuilder(name, url, iconUrl);
         return this;
     }
 
@@ -317,7 +317,7 @@ public class EmbedBuilder : BuilderBase<Embed>
             ? avatarUrlResult.Entity
             : CDN.GetDefaultUserAvatarUrl(user, imageSize: 256).Entity;
 
-        Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
+        this.Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
         return this;
     }
 
@@ -329,7 +329,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithFooter(string text, string iconUrl = "")
     {
-        Footer = new EmbedFooterBuilder(text, iconUrl);
+        this.Footer = new EmbedFooterBuilder(text, iconUrl);
         return this;
     }
 
@@ -340,7 +340,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
     public EmbedBuilder WithFooter(IEmbedFooter footer)
     {
-        Footer = EmbedFooterBuilder.FromFooter(footer);
+        this.Footer = EmbedFooterBuilder.FromFooter(footer);
         return this;
     }
 
@@ -363,7 +363,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     {
         if (_fields.Count >= EmbedConstants.MaxFieldCount)
         {
-            return new ValidationError(nameof(Fields), $"Cannot add any more fields to this embed.");
+            return new ValidationError(nameof(this.Fields), $"Cannot add any more fields to this embed.");
         }
 
         _fields.Add(field);
@@ -392,34 +392,34 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <returns>A result containing the built <see cref="Embed"/> or an error indicating failure.</returns>
     public override Result<Embed> Build()
     {
-        var validationResult = this.Validate();
+        var validationResult = Validate();
 
-        if (validationResult.IsSuccess)
+        if (!validationResult.IsSuccess)
         {
-            var footerResult = Footer?.Build();
-            var authorResult = Author?.Build();
-
-            return new Embed()
-            {
-                Title = Title ?? default(Optional<string>),
-                Type = EmbedType.Rich,
-                Description = Description ?? default(Optional<string>),
-                Url = Url ?? default(Optional<string>),
-                Timestamp = Timestamp ?? default(Optional<DateTimeOffset>),
-                Colour = Colour,
-                Image = ImageUrl is null ? default(Optional<IEmbedImage>) : new EmbedImage(ImageUrl),
-                Thumbnail = ThumbnailUrl is null ? default(Optional<IEmbedThumbnail>) : new EmbedThumbnail(ThumbnailUrl),
-                Author = (authorResult is { IsSuccess: true } author)
-                    ? author.Entity
-                    : default(Optional<IEmbedAuthor>),
-                Footer = (footerResult is { IsSuccess: true } footer)
-                    ? footer.Entity
-                    : default(Optional<IEmbedFooter>),
-                Fields = new(Fields)
-            };
+            return Result<Embed>.FromError(validationResult);
         }
 
-        return Result<Embed>.FromError(validationResult);
+        var footerResult = this.Footer?.Build();
+        var authorResult = this.Author?.Build();
+
+        return new Embed
+        {
+            Title = this.Title ?? default(Optional<string>),
+            Type = EmbedType.Rich,
+            Description = this.Description ?? default(Optional<string>),
+            Url = this.Url ?? default(Optional<string>),
+            Timestamp = this.Timestamp ?? default(Optional<DateTimeOffset>),
+            Colour = this.Colour,
+            Image = this.ImageUrl is null ? default(Optional<IEmbedImage>) : new EmbedImage(this.ImageUrl),
+            Thumbnail = this.ThumbnailUrl is null ? default(Optional<IEmbedThumbnail>) : new EmbedThumbnail(this.ThumbnailUrl),
+            Author = authorResult is { IsSuccess: true } author
+                ? author.Entity
+                : default(Optional<IEmbedAuthor>),
+            Footer = footerResult is { IsSuccess: true } footer
+                ? footer.Entity
+                : default(Optional<IEmbedFooter>),
+            Fields = new(this.Fields)
+        };
     }
 
     /// <summary>
@@ -427,17 +427,16 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="embed">The embed to convert.</param>
     /// <returns>An <see cref="EmbedBuilder"/> with the same properties as the provided embed, where present. The <see cref="EmbedType"/> will be overwritten to <see cref="EmbedType.Rich"/>.</returns>
-    public static EmbedBuilder FromEmbed(IEmbed embed)
-        => new(embed.Fields)
-        {
-            Title = embed.Title.HasValue ? embed.Title.Value : null,
-            Description = embed.Description.HasValue ? embed.Description.Value : null,
-            Url = embed.Url.HasValue ? embed.Url.Value : null,
-            Timestamp = embed.Timestamp.HasValue ? embed.Timestamp.Value : null,
-            Colour = embed.Colour.HasValue ? embed.Colour.Value : EmbedConstants.DefaultColour,
-            ImageUrl = embed.Image.HasValue ? embed.Image.Value.Url : null,
-            ThumbnailUrl = embed.Thumbnail.HasValue ? embed.Thumbnail.Value.Url : null,
-            Author = embed.Author.HasValue ? EmbedAuthorBuilder.FromAuthor(embed.Author.Value) : default,
-            Footer = embed.Footer.HasValue ? EmbedFooterBuilder.FromFooter(embed.Footer.Value) : default
-        };
+    public static EmbedBuilder FromEmbed(IEmbed embed) => new(embed.Fields)
+    {
+        Title = embed.Title.HasValue ? embed.Title.Value : null,
+        Description = embed.Description.HasValue ? embed.Description.Value : null,
+        Url = embed.Url.HasValue ? embed.Url.Value : null,
+        Timestamp = embed.Timestamp.HasValue ? embed.Timestamp.Value : null,
+        Colour = embed.Colour.HasValue ? embed.Colour.Value : EmbedConstants.DefaultColour,
+        ImageUrl = embed.Image.HasValue ? embed.Image.Value.Url : null,
+        ThumbnailUrl = embed.Thumbnail.HasValue ? embed.Thumbnail.Value.Url : null,
+        Author = embed.Author.HasValue ? EmbedAuthorBuilder.FromAuthor(embed.Author.Value) : default,
+        Footer = embed.Footer.HasValue ? EmbedFooterBuilder.FromFooter(embed.Footer.Value) : default
+    };
 }

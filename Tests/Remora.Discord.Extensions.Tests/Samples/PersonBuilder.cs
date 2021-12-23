@@ -48,32 +48,32 @@ internal class PersonBuilder : BuilderBase<Person>
     /// <param name="age">The person's age.</param>
     public PersonBuilder(string name, int age)
     {
-        Name = name;
-        Age = age;
+        this.Name = name;
+        this.Age = age;
     }
 
     /// <inheritdoc />
     public override Result<Person> Build()
     {
-        var validationResult = this.Validate();
+        var validationResult = Validate();
 
         return validationResult.IsSuccess
-            ? new Person(Name, Age)
+            ? new Person(this.Name, this.Age)
             : Result<Person>.FromError(validationResult);
     }
 
     /// <inheritdoc />
     public override Result Validate()
     {
-        var nameValidate = ValidateLength(nameof(Name), Name, 5, false);
+        var nameValidate = ValidateLength(nameof(this.Name), this.Name, 5, false);
         if (!nameValidate.IsSuccess)
         {
             return Result.FromError(nameValidate.Error);
         }
 
-        if (Age < 1 || Age > 100)
+        if (this.Age < 1 || this.Age > 100)
         {
-            return Result.FromError(new ValidationError(nameof(Age), "Age must be between 1 and 100."));
+            return Result.FromError(new ValidationError(nameof(this.Age), "Age must be between 1 and 100."));
         }
 
         return Result.FromSuccess();

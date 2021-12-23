@@ -50,8 +50,8 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
     /// <param name="iconUrl">The icon url of the footer.</param>
     public EmbedFooterBuilder(string text, string? iconUrl = null)
     {
-        Text = text;
-        IconUrl = iconUrl;
+        this.Text = text;
+        this.IconUrl = iconUrl;
     }
 
     /// <inheritdoc />
@@ -60,20 +60,20 @@ public sealed class EmbedFooterBuilder : BuilderBase<EmbedFooter>
         var validationResult = Validate();
 
         return validationResult.IsSuccess
-            ? new EmbedFooter(Text, IconUrl ?? default(Optional<string>))
+            ? new EmbedFooter(this.Text, this.IconUrl ?? default(Optional<string>))
             : Result<EmbedFooter>.FromError(validationResult);
     }
 
     /// <inheritdoc />
     public override Result Validate()
     {
-        var textValidationResult = ValidateLength(nameof(Text), Text, EmbedConstants.MaxFooterTextLength, false);
+        var textValidationResult = ValidateLength(nameof(this.Text), this.Text, EmbedConstants.MaxFooterTextLength, false);
         if (!textValidationResult.IsSuccess)
         {
             Result.FromError(textValidationResult.Error);
         }
 
-        var urlValidationResult = ValidateUrl(nameof(IconUrl), IconUrl, true);
+        var urlValidationResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
         if (!urlValidationResult.IsSuccess)
         {
             Result.FromError(urlValidationResult.Error);

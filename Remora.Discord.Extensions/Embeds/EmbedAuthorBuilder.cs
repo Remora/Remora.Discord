@@ -56,18 +56,18 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// <param name="iconUrl">The author's icon url.</param>
     public EmbedAuthorBuilder(string name, string? url = null, string? iconUrl = null)
     {
-        Name = name;
-        Url = url;
-        IconUrl = iconUrl;
+        this.Name = name;
+        this.Url = url;
+        this.IconUrl = iconUrl;
     }
 
     /// <inheritdoc />
     public override Result<EmbedAuthor> Build()
     {
-        var validationResult = this.Validate();
+        var validationResult = Validate();
 
         return validationResult.IsSuccess
-            ? new EmbedAuthor(Name, Url ?? default(Optional<string>), IconUrl ?? default(Optional<string>))
+            ? new EmbedAuthor(this.Name, this.Url ?? default(Optional<string>), this.IconUrl ?? default(Optional<string>))
             : Result<EmbedAuthor>.FromError(validationResult);
     }
 
@@ -82,19 +82,19 @@ public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
     /// <inheritdoc/>
     public override Result Validate()
     {
-        var nameResult = ValidateLength(nameof(Name), Name, EmbedConstants.MaxAuthorNameLength, false);
+        var nameResult = ValidateLength(nameof(this.Name), this.Name, EmbedConstants.MaxAuthorNameLength, false);
         if (!nameResult.IsSuccess)
         {
             return Result.FromError(nameResult.Error);
         }
 
-        var urlResult = ValidateUrl(nameof(Url), Url, true);
+        var urlResult = ValidateUrl(nameof(this.Url), this.Url, true);
         if (!urlResult.IsSuccess)
         {
             return Result.FromError(urlResult.Error);
         }
 
-        var iconResult = ValidateUrl(nameof(IconUrl), IconUrl, true);
+        var iconResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
         if (!iconResult.IsSuccess)
         {
             return Result.FromError(iconResult.Error);

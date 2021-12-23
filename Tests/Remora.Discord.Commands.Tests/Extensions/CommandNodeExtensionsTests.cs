@@ -48,8 +48,8 @@ public static class CommandNodeExtensionsTests
         [Fact]
         public void FindsAttributeOnCommand()
         {
-            CommandTree tree = BuildCommandTree<EphemeralCommand>();
-            BoundCommandNode node = tree.Search("a").Single();
+            var tree = BuildCommandTree<EphemeralCommand>();
+            var node = tree.Search("a").Single();
 
             Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
         }
@@ -60,8 +60,8 @@ public static class CommandNodeExtensionsTests
         [Fact]
         public void FindsAttributeOnGroup()
         {
-            CommandTree tree = BuildCommandTree<EphemeralGroup>();
-            BoundCommandNode node = tree.Search
+            var tree = BuildCommandTree<EphemeralGroup>();
+            var node = tree.Search
             (
                 new[] { "a", "b" },
                 new Dictionary<string, IReadOnlyList<string>>()
@@ -76,8 +76,8 @@ public static class CommandNodeExtensionsTests
         [Fact]
         public void IgnoresAttributeOnAncestorWhenSpecified()
         {
-            CommandTree tree = BuildCommandTree<EphemeralGroup>();
-            BoundCommandNode node = tree.Search
+            var tree = BuildCommandTree<EphemeralGroup>();
+            var node = tree.Search
             (
                 new[] { "a", "b" },
                 new Dictionary<string, IReadOnlyList<string>>()
