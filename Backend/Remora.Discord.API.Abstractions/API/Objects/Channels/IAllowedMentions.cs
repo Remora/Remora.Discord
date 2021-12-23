@@ -24,34 +24,33 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of allowed mentions.
+/// </summary>
+[PublicAPI]
+public interface IAllowedMentions
 {
     /// <summary>
-    /// Represents a set of allowed mentions.
+    /// Gets a list of mention types to parse. The contents of this field has a mutually exclusive relationship with
+    /// the <see cref="Roles"/> and <see cref="Users"/> fields - that is, if that type is contained in this field,
+    /// the corresponding field in the type may not appear.
     /// </summary>
-    [PublicAPI]
-    public interface IAllowedMentions
-    {
-        /// <summary>
-        /// Gets a list of mention types to parse. The contents of this field has a mutually exclusive relationship with
-        /// the <see cref="Roles"/> and <see cref="Users"/> fields - that is, if that type is contained in this field,
-        /// the corresponding field in the type may not appear.
-        /// </summary>
-        Optional<IReadOnlyList<MentionType>> Parse { get; }
+    Optional<IReadOnlyList<MentionType>> Parse { get; }
 
-        /// <summary>
-        /// Gets a list of allowed roles to mention.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> Roles { get; }
+    /// <summary>
+    /// Gets a list of allowed roles to mention.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <summary>
-        /// Gets a list of allowed users to mention.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> Users { get; }
+    /// <summary>
+    /// Gets a list of allowed users to mention.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> Users { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the replied-to user should be mentioned.
-        /// </summary>
-        Optional<bool> MentionRepliedUser { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the replied-to user should be mentioned.
+    /// </summary>
+    Optional<bool> MentionRepliedUser { get; }
 }

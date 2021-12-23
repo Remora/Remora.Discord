@@ -23,69 +23,68 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a channel.
+/// </summary>
+[PublicAPI]
+public interface IChannelTemplate
 {
     /// <summary>
-    /// Represents a channel.
+    /// Gets the relative ID of the channel.
     /// </summary>
-    [PublicAPI]
-    public interface IChannelTemplate
-    {
-        /// <summary>
-        /// Gets the relative ID of the channel.
-        /// </summary>
-        int ID { get; }
+    int ID { get; }
 
-        /// <summary>
-        /// Gets the type of the channel.
-        /// </summary>
-        ChannelType Type { get; }
+    /// <summary>
+    /// Gets the type of the channel.
+    /// </summary>
+    ChannelType Type { get; }
 
-        /// <summary>
-        /// Gets the name of the channel.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the channel.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the sorting position of the channel.
-        /// </summary>
-        int Position { get; }
+    /// <summary>
+    /// Gets the sorting position of the channel.
+    /// </summary>
+    int Position { get; }
 
-        /// <summary>
-        /// Gets the topic of the channel.
-        /// </summary>
-        string? Topic { get; }
+    /// <summary>
+    /// Gets the topic of the channel.
+    /// </summary>
+    string? Topic { get; }
 
-        /// <summary>
-        /// Gets the bitrate (in bits) of the channel.
-        /// </summary>
-        int Bitrate { get; }
+    /// <summary>
+    /// Gets the bitrate (in bits) of the channel.
+    /// </summary>
+    int Bitrate { get; }
 
-        /// <summary>
-        /// Gets the user limit of the voice channel.
-        /// </summary>
-        int UserLimit { get; }
+    /// <summary>
+    /// Gets the user limit of the voice channel.
+    /// </summary>
+    int UserLimit { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the channel is NSFW.
-        /// </summary>
-        bool IsNsfw { get; }
+    /// <summary>
+    /// Gets a value indicating whether the channel is NSFW.
+    /// </summary>
+    bool IsNsfw { get; }
 
-        /// <summary>
-        /// Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as
-        /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
-        /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
-        /// </summary>
-        int RateLimitPerUser { get; }
+    /// <summary>
+    /// Gets the number of seconds a user has to wait before sending another message (0-21600); bots, as well as
+    /// users with the permission <see cref="DiscordPermission.ManageMessages"/> or
+    /// <see cref="DiscordPermission.ManageChannels"/> are unaffected. This is colloquially known as "slow mode".
+    /// </summary>
+    int RateLimitPerUser { get; }
 
-        /// <summary>
-        /// Gets the relative ID of the parent category for a channel. Each category can contain up to 50 channels.
-        /// </summary>
-        int? ParentID { get; }
+    /// <summary>
+    /// Gets the relative ID of the parent category for a channel. Each category can contain up to 50 channels.
+    /// </summary>
+    int? ParentID { get; }
 
-        /// <summary>
-        /// Gets a list of explicit permission overwrites for members and roles.
-        /// </summary>
-        IReadOnlyList<IPermissionOverwriteTemplate> PermissionOverwrites { get; }
-    }
+    /// <summary>
+    /// Gets a list of explicit permission overwrites for members and roles.
+    /// </summary>
+    IReadOnlyList<IPermissionOverwriteTemplate> PermissionOverwrites { get; }
 }

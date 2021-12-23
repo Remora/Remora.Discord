@@ -23,38 +23,37 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a single selectable option.
+/// </summary>
+[PublicAPI]
+public interface ISelectOption
 {
     /// <summary>
-    /// Represents a single selectable option.
+    /// Gets the user-facing name of the option. Max 100 characters.
     /// </summary>
-    [PublicAPI]
-    public interface ISelectOption
-    {
-        /// <summary>
-        /// Gets the user-facing name of the option. Max 100 characters.
-        /// </summary>
-        string Label { get; }
+    string Label { get; }
 
-        /// <summary>
-        /// Gets the developer-defined value of the option. Max 100 characters.
-        /// </summary>
-        string Value { get; }
+    /// <summary>
+    /// Gets the developer-defined value of the option. Max 100 characters.
+    /// </summary>
+    string Value { get; }
 
-        /// <summary>
-        /// Gets an additional description of the option. Max 100 characters.
-        /// </summary>
-        Optional<string> Description { get; }
+    /// <summary>
+    /// Gets an additional description of the option. Max 100 characters.
+    /// </summary>
+    Optional<string> Description { get; }
 
-        /// <summary>
-        /// Gets an emoji that will render along with the option.
-        /// </summary>
-        Optional<IPartialEmoji> Emoji { get; }
+    /// <summary>
+    /// Gets an emoji that will render along with the option.
+    /// </summary>
+    Optional<IPartialEmoji> Emoji { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this option will be selected by default. May be <value>true</value> for more
-        /// than one option in a multi-select menu.
-        /// </summary>
-        Optional<bool> IsDefault { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether this option will be selected by default. May be <value>true</value> for more
+    /// than one option in a multi-select menu.
+    /// </summary>
+    Optional<bool> IsDefault { get; }
 }

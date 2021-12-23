@@ -23,17 +23,16 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the greeting event sent by the gateway after connection.
+/// </summary>
+[PublicAPI]
+public interface IHello : IGatewayEvent
 {
     /// <summary>
-    /// Represents the greeting event sent by the gateway after connection.
+    /// Gets the heartbeat interval (in milliseconds).
     /// </summary>
-    [PublicAPI]
-    public interface IHello : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the heartbeat interval (in milliseconds).
-        /// </summary>
-        TimeSpan HeartbeatInterval { get; }
-    }
+    TimeSpan HeartbeatInterval { get; }
 }

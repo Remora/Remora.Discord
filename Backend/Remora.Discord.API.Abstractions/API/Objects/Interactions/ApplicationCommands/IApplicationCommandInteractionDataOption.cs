@@ -25,37 +25,36 @@ using JetBrains.Annotations;
 using OneOf;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a named option and its value.
+/// </summary>
+[PublicAPI]
+public interface IApplicationCommandInteractionDataOption
 {
     /// <summary>
-    /// Represents a named option and its value.
+    /// Gets the name of the parameter.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandInteractionDataOption
-    {
-        /// <summary>
-        /// Gets the name of the parameter.
-        /// </summary>
-        string Name { get; }
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the parameter's type.
-        /// </summary>
-        ApplicationCommandOptionType Type { get; }
+    /// <summary>
+    /// Gets the parameter's type.
+    /// </summary>
+    ApplicationCommandOptionType Type { get; }
 
-        /// <summary>
-        /// Gets the value of the pair.
-        /// </summary>
-        Optional<OneOf<string, long, bool, Snowflake, double>> Value { get; }
+    /// <summary>
+    /// Gets the value of the pair.
+    /// </summary>
+    Optional<OneOf<string, long, bool, Snowflake, double>> Value { get; }
 
-        /// <summary>
-        /// Gets the options supplied to the subcommand or subgroup.
-        /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+    /// <summary>
+    /// Gets the options supplied to the subcommand or subgroup.
+    /// </summary>
+    Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the option is currently focused.
-        /// </summary>
-        Optional<bool> IsFocused { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the option is currently focused.
+    /// </summary>
+    Optional<bool> IsFocused { get; }
 }

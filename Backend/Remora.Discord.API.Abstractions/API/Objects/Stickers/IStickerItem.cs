@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a sticker in a message.
+/// </summary>
+[PublicAPI]
+public interface IStickerItem
 {
     /// <summary>
-    /// Represents a sticker in a message.
+    /// Gets the ID of the sticker.
     /// </summary>
-    [PublicAPI]
-    public interface IStickerItem
-    {
-        /// <summary>
-        /// Gets the ID of the sticker.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the name of the sticker.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the sticker.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the format of the sticker.
-        /// </summary>
-        StickerFormatType FormatType { get; }
-    }
+    /// <summary>
+    /// Gets the format of the sticker.
+    /// </summary>
+    StickerFormatType FormatType { get; }
 }

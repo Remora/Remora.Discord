@@ -23,12 +23,11 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the StageInstanceDelete event.
+/// </summary>
+public class StageInstanceDeleteTests : GatewayEventTestBase<IStageInstanceDelete>
 {
-    /// <summary>
-    /// Tests the StageInstanceDelete event.
-    /// </summary>
-    public class StageInstanceDeleteTests : GatewayEventTestBase<IStageInstanceDelete>
-    {
-    }
 }

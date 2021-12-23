@@ -23,31 +23,30 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of role tags.
+/// </summary>
+[PublicAPI]
+public interface IRoleTags
 {
     /// <summary>
-    /// Represents a set of role tags.
+    /// Gets the ID of the bot the role belongs to.
     /// </summary>
-    [PublicAPI]
-    public interface IRoleTags
-    {
-        /// <summary>
-        /// Gets the ID of the bot the role belongs to.
-        /// </summary>
-        Optional<Snowflake> BotID { get; }
+    Optional<Snowflake> BotID { get; }
 
-        /// <summary>
-        /// Gets the ID of the integration the role belongs to.
-        /// </summary>
-        Optional<Snowflake> IntegrationID { get; }
+    /// <summary>
+    /// Gets the ID of the integration the role belongs to.
+    /// </summary>
+    Optional<Snowflake> IntegrationID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this role is the premium subscriber role.
-        /// </summary>
-        /// <remarks>
-        /// This value is strangely documented in Discord. It appears that a null value may correspond to "true", and
-        /// nonpresence may correspond to "false".
-        /// </remarks>
-        Optional<bool?> IsPremiumSubscriberRole { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether this role is the premium subscriber role.
+    /// </summary>
+    /// <remarks>
+    /// This value is strangely documented in Discord. It appears that a null value may correspond to "true", and
+    /// nonpresence may correspond to "false".
+    /// </remarks>
+    Optional<bool?> IsPremiumSubscriberRole { get; }
 }

@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the creation of a message.
+/// </summary>
+[PublicAPI]
+public interface IMessageUpdate : IPartialMessage, IGatewayEvent
 {
-    /// <summary>
-    /// Represents the creation of a message.
-    /// </summary>
-    [PublicAPI]
-    public interface IMessageUpdate : IPartialMessage, IGatewayEvent
-    {
-    }
 }

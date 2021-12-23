@@ -26,77 +26,76 @@ using System.Drawing;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an embed.
+/// </summary>
+[PublicAPI]
+public interface IEmbed
 {
     /// <summary>
-    /// Represents an embed.
+    /// Gets the title of the embed.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbed
-    {
-        /// <summary>
-        /// Gets the title of the embed.
-        /// </summary>
-        Optional<string> Title { get; }
+    Optional<string> Title { get; }
 
-        /// <summary>
-        /// Gets the type of the embed.
-        /// </summary>
-        Optional<EmbedType> Type { get; }
+    /// <summary>
+    /// Gets the type of the embed.
+    /// </summary>
+    Optional<EmbedType> Type { get; }
 
-        /// <summary>
-        /// Gets the description of the embed.
-        /// </summary>
-        Optional<string> Description { get; }
+    /// <summary>
+    /// Gets the description of the embed.
+    /// </summary>
+    Optional<string> Description { get; }
 
-        /// <summary>
-        /// Gets the URL of the embed.
-        /// </summary>
-        Optional<string> Url { get; }
+    /// <summary>
+    /// Gets the URL of the embed.
+    /// </summary>
+    Optional<string> Url { get; }
 
-        /// <summary>
-        /// Gets the timestamp of the embed content.
-        /// </summary>
-        Optional<DateTimeOffset> Timestamp { get; }
+    /// <summary>
+    /// Gets the timestamp of the embed content.
+    /// </summary>
+    Optional<DateTimeOffset> Timestamp { get; }
 
-        /// <summary>
-        /// Gets the colour code of the embed.
-        /// </summary>
-        Optional<Color> Colour { get; }
+    /// <summary>
+    /// Gets the colour code of the embed.
+    /// </summary>
+    Optional<Color> Colour { get; }
 
-        /// <summary>
-        /// Gets the footer information.
-        /// </summary>
-        Optional<IEmbedFooter> Footer { get; }
+    /// <summary>
+    /// Gets the footer information.
+    /// </summary>
+    Optional<IEmbedFooter> Footer { get; }
 
-        /// <summary>
-        /// Gets the image information.
-        /// </summary>
-        Optional<IEmbedImage> Image { get; }
+    /// <summary>
+    /// Gets the image information.
+    /// </summary>
+    Optional<IEmbedImage> Image { get; }
 
-        /// <summary>
-        /// Gets the thumbnail information.
-        /// </summary>
-        Optional<IEmbedThumbnail> Thumbnail { get; }
+    /// <summary>
+    /// Gets the thumbnail information.
+    /// </summary>
+    Optional<IEmbedThumbnail> Thumbnail { get; }
 
-        /// <summary>
-        /// Gets the video information.
-        /// </summary>
-        Optional<IEmbedVideo> Video { get; }
+    /// <summary>
+    /// Gets the video information.
+    /// </summary>
+    Optional<IEmbedVideo> Video { get; }
 
-        /// <summary>
-        /// Gets the provider information.
-        /// </summary>
-        Optional<IEmbedProvider> Provider { get; }
+    /// <summary>
+    /// Gets the provider information.
+    /// </summary>
+    Optional<IEmbedProvider> Provider { get; }
 
-        /// <summary>
-        /// Gets the author information.
-        /// </summary>
-        Optional<IEmbedAuthor> Author { get; }
+    /// <summary>
+    /// Gets the author information.
+    /// </summary>
+    Optional<IEmbedAuthor> Author { get; }
 
-        /// <summary>
-        /// Gets the embed fields.
-        /// </summary>
-        Optional<IReadOnlyList<IEmbedField>> Fields { get; }
-    }
+    /// <summary>
+    /// Gets the embed fields.
+    /// </summary>
+    Optional<IReadOnlyList<IEmbedField>> Fields { get; }
 }

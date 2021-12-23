@@ -27,44 +27,43 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Invite API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestInviteAPI
 {
     /// <summary>
-    /// Represents the Discord Invite API.
+    /// Gets an invite object for the given code.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestInviteAPI
-    {
-        /// <summary>
-        /// Gets an invite object for the given code.
-        /// </summary>
-        /// <param name="inviteCode">The invite code.</param>
-        /// <param name="withCounts">Whether the invite should contain approximate member counts.</param>
-        /// <param name="withExpiration">Whether the invite should contain the expiration date.</param>
-        /// <param name="guildScheduledEventID">The scheduled event to include with the invite.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IInvite>> GetInviteAsync
-        (
-            string inviteCode,
-            Optional<bool> withCounts = default,
-            Optional<bool> withExpiration = default,
-            Optional<Snowflake> guildScheduledEventID = default,
-            CancellationToken ct = default
-        );
+    /// <param name="inviteCode">The invite code.</param>
+    /// <param name="withCounts">Whether the invite should contain approximate member counts.</param>
+    /// <param name="withExpiration">Whether the invite should contain the expiration date.</param>
+    /// <param name="guildScheduledEventID">The scheduled event to include with the invite.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IInvite>> GetInviteAsync
+    (
+        string inviteCode,
+        Optional<bool> withCounts = default,
+        Optional<bool> withExpiration = default,
+        Optional<Snowflake> guildScheduledEventID = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Deletes the given invite code.
-        /// </summary>
-        /// <param name="inviteCode">The invite code.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<Result<IInvite>> DeleteInviteAsync
-        (
-            string inviteCode,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        );
-    }
+    /// <summary>
+    /// Deletes the given invite code.
+    /// </summary>
+    /// <param name="inviteCode">The invite code.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A deletion result which may or may not have succeeded.</returns>
+    Task<Result<IInvite>> DeleteInviteAsync
+    (
+        string inviteCode,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
 }

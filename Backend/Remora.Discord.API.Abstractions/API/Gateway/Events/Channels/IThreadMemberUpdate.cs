@@ -24,17 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to the current user's thread member object.
+/// </summary>
+[PublicAPI]
+public interface IThreadMemberUpdate : IGatewayEvent, IThreadMember
 {
     /// <summary>
-    /// Represents an update to the current user's thread member object.
+    /// Gets the ID of the guild the thread member was updated in.
     /// </summary>
-    [PublicAPI]
-    public interface IThreadMemberUpdate : IGatewayEvent, IThreadMember
-    {
-        /// <summary>
-        /// Gets the ID of the guild the thread member was updated in.
-        /// </summary>
-        Snowflake GuildID { get; }
-    }
+    Snowflake GuildID { get; }
 }

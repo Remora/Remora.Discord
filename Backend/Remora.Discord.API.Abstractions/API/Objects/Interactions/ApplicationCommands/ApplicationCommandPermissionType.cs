@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates application permission types.
+/// </summary>
+[PublicAPI]
+public enum ApplicationCommandPermissionType
 {
     /// <summary>
-    /// Enumerates application permission types.
+    /// The permission applies to a role.
     /// </summary>
-    [PublicAPI]
-    public enum ApplicationCommandPermissionType
-    {
-        /// <summary>
-        /// The permission applies to a role.
-        /// </summary>
-        Role = 1,
+    Role = 1,
 
-        /// <summary>
-        /// The permission applies to a user.
-        /// </summary>
-        User = 2
-    }
+    /// <summary>
+    /// The permission applies to a user.
+    /// </summary>
+    User = 2
 }

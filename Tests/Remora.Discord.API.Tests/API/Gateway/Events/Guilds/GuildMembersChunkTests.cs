@@ -24,22 +24,21 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the Hello event.
+/// </summary>
+public class GuildMembersChunkTests : GatewayEventTestBase<IGuildMembersChunk>
 {
-    /// <summary>
-    /// Tests the Hello event.
-    /// </summary>
-    public class GuildMembersChunkTests : GatewayEventTestBase<IGuildMembersChunk>
+    /// <inheritdoc />
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "hoisted_role", // internal discord value
-                "guild_hashes", // internal discord value
-                "lazy" // undocumented value
-            }
-        };
-    }
+            "hoisted_role", // internal discord value
+            "guild_hashes", // internal discord value
+            "lazy" // undocumented value
+        }
+    };
 }

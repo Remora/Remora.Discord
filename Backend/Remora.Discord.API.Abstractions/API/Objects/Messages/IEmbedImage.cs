@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about an image in an embed.
+/// </summary>
+[PublicAPI]
+public interface IEmbedImage
 {
     /// <summary>
-    /// Represents information about an image in an embed.
+    /// Gets the source URL of the thumbnail. Only supports http(s) and attachments.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedImage
-    {
-        /// <summary>
-        /// Gets the source URL of the thumbnail. Only supports http(s) and attachments.
-        /// </summary>
-        string Url { get; }
+    string Url { get; }
 
-        /// <summary>
-        /// Gets the proxied URL of the thumbnail.
-        /// </summary>
-        Optional<string> ProxyUrl { get; }
+    /// <summary>
+    /// Gets the proxied URL of the thumbnail.
+    /// </summary>
+    Optional<string> ProxyUrl { get; }
 
-        /// <summary>
-        /// Gets the height of the thumbnail.
-        /// </summary>
-        Optional<int> Height { get; }
+    /// <summary>
+    /// Gets the height of the thumbnail.
+    /// </summary>
+    Optional<int> Height { get; }
 
-        /// <summary>
-        /// Gets the width of the thumbnail.
-        /// </summary>
-        Optional<int> Width { get; }
-    }
+    /// <summary>
+    /// Gets the width of the thumbnail.
+    /// </summary>
+    Optional<int> Width { get; }
 }

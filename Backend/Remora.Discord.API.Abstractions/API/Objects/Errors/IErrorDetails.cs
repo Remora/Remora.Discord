@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about a single error.
+/// </summary>
+[PublicAPI]
+public interface IErrorDetails
 {
     /// <summary>
-    /// Represents information about a single error.
+    /// Gets the detailed error code. This is the name of an error enumeration member.
     /// </summary>
-    [PublicAPI]
-    public interface IErrorDetails
-    {
-        /// <summary>
-        /// Gets the detailed error code. This is the name of an error enumeration member.
-        /// </summary>
-        string Code { get; }
+    string Code { get; }
 
-        /// <summary>
-        /// Gets the detailed error message.
-        /// </summary>
-        string Message { get; }
-    }
+    /// <summary>
+    /// Gets the detailed error message.
+    /// </summary>
+    string Message { get; }
 }

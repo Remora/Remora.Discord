@@ -26,40 +26,39 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Json.Converters
+namespace Remora.Discord.API.Json.Converters;
+
+/// <summary>
+/// Converts an <see cref="IPAddress"/> to or from JSON.
+/// </summary>
+[PublicAPI]
+public class IPAddressConverter : JsonConverter<IPAddress>
 {
-    /// <summary>
-    /// Converts an <see cref="IPAddress"/> to or from JSON.
-    /// </summary>
-    [PublicAPI]
-    public class IPAddressConverter : JsonConverter<IPAddress>
+    /// <inheritdoc />
+    public override IPAddress? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        /// <inheritdoc />
-        public override IPAddress? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (reader.TokenType is not JsonTokenType.String)
         {
-            if (reader.TokenType is not JsonTokenType.String)
-            {
-                throw new JsonException("Cannot convert IP address: expected a string token");
-            }
-
-            var address = reader.GetString();
-            if (address is null)
-            {
-                throw new JsonException("Cannot convert IP address: token was null");
-            }
-
-            if (IPAddress.TryParse(address, out IPAddress? parsedAddress))
-            {
-                return parsedAddress;
-            }
-
-            throw new JsonException("Cannot convert IP address");
+            throw new JsonException("Cannot convert IP address: expected a string token");
         }
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, IPAddress value, JsonSerializerOptions options)
+        var address = reader.GetString();
+        if (address is null)
         {
-            writer.WriteStringValue(value.ToString());
+            throw new JsonException("Cannot convert IP address: token was null");
         }
+
+        if (IPAddress.TryParse(address, out IPAddress? parsedAddress))
+        {
+            return parsedAddress;
+        }
+
+        throw new JsonException("Cannot convert IP address");
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, IPAddress value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString());
     }
 }

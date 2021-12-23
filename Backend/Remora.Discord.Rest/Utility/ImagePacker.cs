@@ -29,85 +29,84 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.Utility
+namespace Remora.Discord.Rest.Utility;
+
+/// <summary>
+/// Packs images into a base64 representation.
+/// </summary>
+[PublicAPI]
+public static class ImagePacker
 {
     /// <summary>
-    /// Packs images into a base64 representation.
+    /// Packs the given stream into a base64-encoded string, type-prefixed string.
     /// </summary>
-    [PublicAPI]
-    public static class ImagePacker
+    /// <param name="stream">The stream.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    public static async Task<Result<Optional<string?>>> PackImageAsync
+    (
+        Optional<Stream?> stream,
+        CancellationToken ct = default
+    )
     {
-        /// <summary>
-        /// Packs the given stream into a base64-encoded string, type-prefixed string.
-        /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static async Task<Result<Optional<string?>>> PackImageAsync
-        (
-            Optional<Stream?> stream,
-            CancellationToken ct = default
-        )
+        Optional<string?> imageData = default;
+        if (!stream.HasValue)
         {
-            Optional<string?> imageData = default;
-            if (!stream.HasValue)
-            {
-                return imageData;
-            }
-
-            if (stream.Value is null)
-            {
-                imageData = new Optional<string?>(null);
-            }
-            else
-            {
-                var packImage = await PackImageAsync(stream.Value, ct);
-                if (!packImage.IsSuccess)
-                {
-                    return Result<Optional<string?>>.FromError(packImage.Error);
-                }
-
-                imageData = packImage.Entity;
-            }
-
             return imageData;
         }
 
-        /// <summary>
-        /// Packs the given stream into a base64-encoded string, type-prefixed string.
-        /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A creation result which may or may not have succeeded.</returns>
-        public static async Task<Result<string>> PackImageAsync
-        (
-            Stream stream,
-            CancellationToken ct = default
-        )
+        if (stream.Value is null)
         {
-            await using var memoryStream = new MemoryStream();
-
-            await stream.CopyToAsync(memoryStream, ct);
-
-            var imageData = memoryStream.ToArray();
-
-            string? mediaType = null;
-            if (imageData.IsPNG())
-            {
-                mediaType = "png";
-            }
-            else if (imageData.IsJPG())
-            {
-                mediaType = "jpeg";
-            }
-            else if (imageData.IsGIF())
-            {
-                mediaType = "gif";
-            }
-
-            return mediaType is null
-                ? new NotSupportedError("Unknown or unsupported image format.")
-                : $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
+            imageData = new Optional<string?>(null);
         }
+        else
+        {
+            var packImage = await PackImageAsync(stream.Value, ct);
+            if (!packImage.IsSuccess)
+            {
+                return Result<Optional<string?>>.FromError(packImage.Error);
+            }
+
+            imageData = packImage.Entity;
+        }
+
+        return imageData;
+    }
+
+    /// <summary>
+    /// Packs the given stream into a base64-encoded string, type-prefixed string.
+    /// </summary>
+    /// <param name="stream">The stream.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    public static async Task<Result<string>> PackImageAsync
+    (
+        Stream stream,
+        CancellationToken ct = default
+    )
+    {
+        await using var memoryStream = new MemoryStream();
+
+        await stream.CopyToAsync(memoryStream, ct);
+
+        var imageData = memoryStream.ToArray();
+
+        string? mediaType = null;
+        if (imageData.IsPNG())
+        {
+            mediaType = "png";
+        }
+        else if (imageData.IsJPG())
+        {
+            mediaType = "jpeg";
+        }
+        else if (imageData.IsGIF())
+        {
+            mediaType = "gif";
+        }
+
+        return mediaType is null
+            ? new NotSupportedError("Unknown or unsupported image format.")
+            : $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
     }
 }

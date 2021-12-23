@@ -22,48 +22,47 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various response types.
+/// </summary>
+[PublicAPI]
+public enum InteractionCallbackType
 {
     /// <summary>
-    /// Enumerates various response types.
+    /// Acknowledge a <see cref="InteractionType.Ping"/>.
     /// </summary>
-    [PublicAPI]
-    public enum InteractionCallbackType
-    {
-        /// <summary>
-        /// Acknowledge a <see cref="InteractionType.Ping"/>.
-        /// </summary>
-        Pong = 1,
+    Pong = 1,
 
-        /// <summary>
-        /// Respond with a message, showing the user input.
-        /// </summary>
-        ChannelMessageWithSource = 4,
+    /// <summary>
+    /// Respond with a message, showing the user input.
+    /// </summary>
+    ChannelMessageWithSource = 4,
 
-        /// <summary>
-        /// Acknowledge a command without sending a message, showing the user input.
-        /// </summary>
-        DeferredChannelMessageWithSource = 5,
+    /// <summary>
+    /// Acknowledge a command without sending a message, showing the user input.
+    /// </summary>
+    DeferredChannelMessageWithSource = 5,
 
-        /// <summary>
-        /// Acknowledge an interaction and edit the message later; the user does not see a loading state.
-        /// </summary>
-        /// <remarks>
-        /// Only relevant for component-based interactions.
-        /// </remarks>
-        DeferredUpdateMessage = 6,
+    /// <summary>
+    /// Acknowledge an interaction and edit the message later; the user does not see a loading state.
+    /// </summary>
+    /// <remarks>
+    /// Only relevant for component-based interactions.
+    /// </remarks>
+    DeferredUpdateMessage = 6,
 
-        /// <summary>
-        /// Respond by editing the message.
-        /// </summary>
-        /// <remarks>
-        /// Only relevant for component-based interactions.
-        /// </remarks>
-        UpdateMessage = 7,
+    /// <summary>
+    /// Respond by editing the message.
+    /// </summary>
+    /// <remarks>
+    /// Only relevant for component-based interactions.
+    /// </remarks>
+    UpdateMessage = 7,
 
-        /// <summary>
-        /// Respond to an autocomplete request with suggested choices.
-        /// </summary>
-        ApplicationCommandAutocompleteResult = 8
-    }
+    /// <summary>
+    /// Respond to an autocomplete request with suggested choices.
+    /// </summary>
+    ApplicationCommandAutocompleteResult = 8
 }

@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various multi-factor authentication levels.
+/// </summary>
+[PublicAPI]
+public enum MultiFactorAuthenticationLevel
 {
     /// <summary>
-    /// Enumerates various multi-factor authentication levels.
+    /// No requirements.
     /// </summary>
-    [PublicAPI]
-    public enum MultiFactorAuthenticationLevel
-    {
-        /// <summary>
-        /// No requirements.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Certain members must have MFA enabled.
-        /// </summary>
-        Elevated
-    }
+    /// <summary>
+    /// Certain members must have MFA enabled.
+    /// </summary>
+    Elevated
 }

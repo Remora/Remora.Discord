@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various notification levels.
+/// </summary>
+[PublicAPI]
+public enum MessageNotificationLevel
 {
     /// <summary>
-    /// Enumerates various notification levels.
+    /// The user will be notified of all messages.
     /// </summary>
-    [PublicAPI]
-    public enum MessageNotificationLevel
-    {
-        /// <summary>
-        /// The user will be notified of all messages.
-        /// </summary>
-        AllMessages = 0,
+    AllMessages = 0,
 
-        /// <summary>
-        /// The user will only be notified of direct mentions.
-        /// </summary>
-        OnlyMentions = 1
-    }
+    /// <summary>
+    /// The user will only be notified of direct mentions.
+    /// </summary>
+    OnlyMentions = 1
 }

@@ -24,27 +24,26 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a response object from the REST API regarding a thread query.
+/// </summary>
+[PublicAPI, Obsolete("Will be removed in API v10.")]
+public interface IThreadQueryResponse
 {
     /// <summary>
-    /// Represents a response object from the REST API regarding a thread query.
+    /// Gets the threads returned by the query.
     /// </summary>
-    [PublicAPI, Obsolete("Will be removed in API v10.")]
-    public interface IThreadQueryResponse
-    {
-        /// <summary>
-        /// Gets the threads returned by the query.
-        /// </summary>
-        IReadOnlyList<IChannel> Threads { get; }
+    IReadOnlyList<IChannel> Threads { get; }
 
-        /// <summary>
-        /// Gets a set of member objects that map to the returned threads the current user has joined.
-        /// </summary>
-        IReadOnlyList<IThreadMember> Members { get; }
+    /// <summary>
+    /// Gets a set of member objects that map to the returned threads the current user has joined.
+    /// </summary>
+    IReadOnlyList<IThreadMember> Members { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether more threads could be returned on a subsequent call.
-        /// </summary>
-        bool HasMore { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether more threads could be returned on a subsequent call.
+    /// </summary>
+    bool HasMore { get; }
 }

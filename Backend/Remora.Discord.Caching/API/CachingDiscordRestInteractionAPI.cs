@@ -34,245 +34,244 @@ using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
+namespace Remora.Discord.Caching.API;
+
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
 {
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestInteractionAPI(IRestHttpClient, JsonSerializerOptions)" />
+    public CachingDiscordRestInteractionAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions)
     {
-        private readonly CacheService _cacheService;
+        _cacheService = cacheService;
+    }
 
-        /// <inheritdoc cref="DiscordRestInteractionAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestInteractionAPI
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> CreateFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Optional<string> content = default,
+        Optional<bool> isTTS = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<MessageFlags> flags = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.CreateFollowupMessageAsync
         (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+            applicationID,
+            token,
+            content,
+            isTTS,
+            embeds,
+            allowedMentions,
+            components,
+            flags,
+            attachments,
+            ct
+        );
+
+        if (!result.IsSuccess)
         {
-            _cacheService = cacheService;
-        }
-
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> CreateFollowupMessageAsync
-        (
-            Snowflake applicationID,
-            string token,
-            Optional<string> content = default,
-            Optional<bool> isTTS = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IAllowedMentions> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<MessageFlags> flags = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            var result = await base.CreateFollowupMessageAsync
-            (
-                applicationID,
-                token,
-                content,
-                isTTS,
-                embeds,
-                allowedMentions,
-                components,
-                flags,
-                attachments,
-                ct
-            );
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var message = result.Entity;
-
-            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-            var followupKey = KeyHelpers.CreateFollowupMessageCacheKey(token, message.ID);
-
-            _cacheService.Cache(messageKey, message);
-            _cacheService.Cache(followupKey, message);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result> DeleteFollowupMessageAsync
-        (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
+        var message = result.Entity;
+
+        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+        var followupKey = KeyHelpers.CreateFollowupMessageCacheKey(token, message.ID);
+
+        _cacheService.Cache(messageKey, message);
+        _cacheService.Cache(followupKey, message);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result> DeleteFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.DeleteFollowupMessageAsync(applicationID, token, messageID, ct);
+        if (!result.IsSuccess)
         {
-            var result = await base.DeleteFollowupMessageAsync(applicationID, token, messageID, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
-            _cacheService.Evict<IMessage>(key);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> GetFollowupMessageAsync
-        (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+        _cacheService.Evict<IMessage>(key);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> GetFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
+        if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateFollowupMessageCacheKey(token, messageID);
-            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
-            {
-                return Result<IMessage>.FromSuccess(cachedInstance);
-            }
+            return Result<IMessage>.FromSuccess(cachedInstance);
+        }
 
-            var result = await base.GetFollowupMessageAsync(applicationID, token, messageID, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            _cacheService.Cache(key, result.Entity);
-
+        var result = await base.GetFollowupMessageAsync(applicationID, token, messageID, ct);
+        if (!result.IsSuccess)
+        {
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> EditFollowupMessageAsync
+        _cacheService.Cache(key, result.Entity);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> EditFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.EditFollowupMessageAsync
         (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
+            applicationID,
+            token,
+            messageID,
+            content,
+            embeds,
+            allowedMentions,
+            components,
+            attachments,
+            ct
+        );
+
+        if (!result.IsSuccess)
         {
-            var result = await base.EditFollowupMessageAsync
-            (
-                applicationID,
-                token,
-                messageID,
-                content,
-                embeds,
-                allowedMentions,
-                components,
-                attachments,
-                ct
-            );
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
-            _cacheService.Cache(key, result.Entity);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> GetOriginalInteractionResponseAsync
-        (
-            Snowflake applicationID,
-            string interactionToken,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateWebhookMessageCacheKey(token, messageID);
+        _cacheService.Cache(key, result.Entity);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string interactionToken,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(interactionToken);
+        if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(interactionToken);
-            if (_cacheService.TryGetValue<IMessage>(key, out var cachedInstance))
-            {
-                return Result<IMessage>.FromSuccess(cachedInstance);
-            }
+            return Result<IMessage>.FromSuccess(cachedInstance);
+        }
 
-            var result = await base.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var message = result.Entity;
-
-            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-
-            _cacheService.Cache(key, message);
-            _cacheService.Cache(messageKey, message);
-
+        var result = await base.GetOriginalInteractionResponseAsync(applicationID, interactionToken, ct);
+        if (!result.IsSuccess)
+        {
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
+        var message = result.Entity;
+
+        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+
+        _cacheService.Cache(key, message);
+        _cacheService.Cache(messageKey, message);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.EditOriginalInteractionResponseAsync
         (
-            Snowflake applicationID,
-            string token,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
+            applicationID,
+            token,
+            content,
+            embeds,
+            allowedMentions,
+            components,
+            attachments,
+            ct
+        );
+
+        if (!result.IsSuccess)
         {
-            var result = await base.EditOriginalInteractionResponseAsync
-            (
-                applicationID,
-                token,
-                content,
-                embeds,
-                allowedMentions,
-                components,
-                attachments,
-                ct
-            );
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var message = result.Entity;
-
-            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
-            var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
-
-            _cacheService.Cache(key, message);
-            _cacheService.Cache(messageKey, message);
-
             return result;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result> DeleteOriginalInteractionResponseAsync
-        (
-            Snowflake applicationID,
-            string token,
-            CancellationToken ct = default
-        )
+        var message = result.Entity;
+
+        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
+        var messageKey = KeyHelpers.CreateMessageCacheKey(message.ChannelID, message.ID);
+
+        _cacheService.Cache(key, message);
+        _cacheService.Cache(messageKey, message);
+
+        return result;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result> DeleteOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string token,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.DeleteOriginalInteractionResponseAsync(applicationID, token, ct);
+        if (!result.IsSuccess)
         {
-            var result = await base.DeleteOriginalInteractionResponseAsync(applicationID, token, ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
-            _cacheService.Evict<IMessage>(key);
-
             return result;
         }
+
+        var key = KeyHelpers.CreateOriginalInteractionMessageCacheKey(token);
+        _cacheService.Evict<IMessage>(key);
+
+        return result;
     }
 }

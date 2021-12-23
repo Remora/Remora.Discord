@@ -35,81 +35,81 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestEmojiAPI" />
+[PublicAPI]
+public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestEmojiAPI" />
-    [PublicAPI]
-    public class DiscordRestEmojiAPI : AbstractDiscordRestAPI, IDiscordRestEmojiAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestEmojiAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestEmojiAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestEmojiAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestEmojiAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IEmoji>>
+        (
+            $"guilds/{guildID}/emojis",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IEmoji>> GetGuildEmojiAsync
+    (
+        Snowflake guildID,
+        Snowflake emojiID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IEmoji>
+        (
+            $"guilds/{guildID}/emojis/{emojiID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IEmoji>> CreateGuildEmojiAsync
+    (
+        Snowflake guildID,
+        string name,
+        Stream image,
+        IReadOnlyList<Snowflake> roles,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (image.Length > 256000)
         {
+            return new NotSupportedError("Image too large (max 256k).");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IEmoji>>> ListGuildEmojisAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
+        var packImage = await ImagePacker.PackImageAsync(image, ct);
+        if (!packImage.IsSuccess)
         {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IEmoji>>
-            (
-                $"guilds/{guildID}/emojis",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
+            return Result<IEmoji>.FromError(packImage);
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IEmoji>> GetGuildEmojiAsync
+        var emojiData = packImage.Entity;
+
+        return await this.RestHttpClient.PostAsync<IEmoji>
         (
-            Snowflake guildID,
-            Snowflake emojiID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IEmoji>
-            (
-                $"guilds/{guildID}/emojis/{emojiID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IEmoji>> CreateGuildEmojiAsync
-        (
-            Snowflake guildID,
-            string name,
-            Stream image,
-            IReadOnlyList<Snowflake> roles,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (image.Length > 256000)
-            {
-                return new NotSupportedError("Image too large (max 256k).");
-            }
-
-            var packImage = await ImagePacker.PackImageAsync(image, ct);
-            if (!packImage.IsSuccess)
-            {
-                return Result<IEmoji>.FromError(packImage);
-            }
-
-            var emojiData = packImage.Entity;
-
-            return await this.RestHttpClient.PostAsync<IEmoji>
-            (
-                $"guilds/{guildID}/emojis",
-                b => b
+            $"guilds/{guildID}/emojis",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -123,25 +123,25 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IEmoji>> ModifyGuildEmojiAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IEmoji>> ModifyGuildEmojiAsync
+    (
+        Snowflake guildID,
+        Snowflake emojiID,
+        Optional<string> name = default,
+        Optional<IReadOnlyList<Snowflake>?> roles = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IEmoji>
         (
-            Snowflake guildID,
-            Snowflake emojiID,
-            Optional<string> name = default,
-            Optional<IReadOnlyList<Snowflake>?> roles = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IEmoji>
-            (
-                $"guilds/{guildID}/emojis/{emojiID}",
-                b => b
+            $"guilds/{guildID}/emojis/{emojiID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -152,25 +152,24 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGuildEmojiAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildEmojiAsync
+    (
+        Snowflake guildID,
+        Snowflake emojiID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildID,
-            Snowflake emojiID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildID}/emojis/{emojiID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildID}/emojis/{emojiID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
     }
 }

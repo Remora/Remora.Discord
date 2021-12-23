@@ -32,36 +32,36 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestStageInstanceAPI" />
-    [PublicAPI]
-    public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestStageInstanceAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestStageInstanceAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+namespace Remora.Discord.Rest.API;
 
-        /// <inheritdoc />
-        public virtual Task<Result<IStageInstance>> CreateStageInstanceAsync
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestStageInstanceAPI" />
+[PublicAPI]
+public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestStageInstanceAPI
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestStageInstanceAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
+    {
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IStageInstance>> CreateStageInstanceAsync
+    (
+        Snowflake channelID,
+        string topic,
+        Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IStageInstance>
         (
-            Snowflake channelID,
-            string topic,
-            Optional<StagePrivacyLevel> privacyLevel = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<IStageInstance>
-            (
-                "stage-instances",
-                b => b
+            "stage-instances",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -73,39 +73,39 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IStageInstance>> GetStageInstanceAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IStageInstance>> GetStageInstanceAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IStageInstance>
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IStageInstance>
-            (
-                $"stage-instances/{channelID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"stage-instances/{channelID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IStageInstance>> UpdateStageInstanceAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IStageInstance>> UpdateStageInstanceAsync
+    (
+        Snowflake channelID,
+        Optional<string> topic = default,
+        Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IStageInstance>
         (
-            Snowflake channelID,
-            Optional<string> topic = default,
-            Optional<StagePrivacyLevel> privacyLevel = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IStageInstance>
-            (
-                $"stage-instances/{channelID}",
-                b => b
+            $"stage-instances/{channelID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -116,24 +116,23 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteStageInstance
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteStageInstance
+    (
+        Snowflake channelID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"stage-instances/{channelID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"stage-instances/{channelID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
     }
 }

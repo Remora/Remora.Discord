@@ -23,49 +23,48 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents an identification command sent to the Discord gateway.
+/// </summary>
+[PublicAPI]
+public interface IIdentify : IGatewayCommand
 {
     /// <summary>
-    /// Represents an identification command sent to the Discord gateway.
+    /// Gets the authentication token.
     /// </summary>
-    [PublicAPI]
-    public interface IIdentify : IGatewayCommand
-    {
-        /// <summary>
-        /// Gets the authentication token.
-        /// </summary>
-        string Token { get; }
+    string Token { get; }
 
-        /// <summary>
-        /// Gets the connection properties.
-        /// </summary>
-        IConnectionProperties Properties { get; }
+    /// <summary>
+    /// Gets the connection properties.
+    /// </summary>
+    IConnectionProperties Properties { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing a value that indicates whether the connection supports compressed
-        /// packets.
-        /// </summary>
-        Optional<bool> Compress { get; }
+    /// <summary>
+    /// Gets an optional field, containing a value that indicates whether the connection supports compressed
+    /// packets.
+    /// </summary>
+    Optional<bool> Compress { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the threshold value of total guild members before a guild is considered
-        /// large, and offline members will not automatically be sent.
-        /// </summary>
-        Optional<byte> LargeThreshold { get; }
+    /// <summary>
+    /// Gets an optional field, containing the threshold value of total guild members before a guild is considered
+    /// large, and offline members will not automatically be sent.
+    /// </summary>
+    Optional<byte> LargeThreshold { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the sharding ID for this connection.
-        /// </summary>
-        Optional<IShardIdentification> Shard { get; }
+    /// <summary>
+    /// Gets an optional field, containing the sharding ID for this connection.
+    /// </summary>
+    Optional<IShardIdentification> Shard { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing initial presence information.
-        /// </summary>
-        Optional<IUpdatePresence> Presence { get; }
+    /// <summary>
+    /// Gets an optional field, containing initial presence information.
+    /// </summary>
+    Optional<IUpdatePresence> Presence { get; }
 
-        /// <summary>
-        /// Gets an optional field, containing the gateway intents the connection wants to receive.
-        /// </summary>
-        GatewayIntents Intents { get; }
-    }
+    /// <summary>
+    /// Gets an optional field, containing the gateway intents the connection wants to receive.
+    /// </summary>
+    GatewayIntents Intents { get; }
 }

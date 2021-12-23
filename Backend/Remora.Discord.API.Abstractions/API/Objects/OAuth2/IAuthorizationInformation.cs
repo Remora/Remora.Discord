@@ -25,32 +25,31 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about OAuth2 authorizations.
+/// </summary>
+[PublicAPI]
+public interface IAuthorizationInformation
 {
     /// <summary>
-    /// Represents information about OAuth2 authorizations.
+    /// Gets the current application.
     /// </summary>
-    [PublicAPI]
-    public interface IAuthorizationInformation
-    {
-        /// <summary>
-        /// Gets the current application.
-        /// </summary>
-        IPartialApplication Application { get; }
+    IPartialApplication Application { get; }
 
-        /// <summary>
-        /// Gets the scopes the user has authorized the application for.
-        /// </summary>
-        IReadOnlyList<string> Scopes { get; }
+    /// <summary>
+    /// Gets the scopes the user has authorized the application for.
+    /// </summary>
+    IReadOnlyList<string> Scopes { get; }
 
-        /// <summary>
-        /// Gets the time when the access token expires.
-        /// </summary>
-        DateTimeOffset Expires { get; }
+    /// <summary>
+    /// Gets the time when the access token expires.
+    /// </summary>
+    DateTimeOffset Expires { get; }
 
-        /// <summary>
-        /// Gets the user who has authorized the application, if the user has authorized with the "identity" scope.
-        /// </summary>
-        Optional<IUser> User { get; }
-    }
+    /// <summary>
+    /// Gets the user who has authorized the application, if the user has authorized with the "identity" scope.
+    /// </summary>
+    Optional<IUser> User { get; }
 }

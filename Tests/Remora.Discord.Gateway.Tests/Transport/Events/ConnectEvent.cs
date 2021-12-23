@@ -22,29 +22,28 @@
 
 using System;
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents an expected connection event.
+/// </summary>
+public class ConnectEvent : IEvent
 {
+    private readonly Func<Uri, EventMatch> _matcher;
+
     /// <summary>
-    /// Represents an expected connection event.
+    /// Initializes a new instance of the <see cref="ConnectEvent"/> class.
     /// </summary>
-    public class ConnectEvent : IEvent
+    /// <param name="matcher">The matching function.</param>
+    public ConnectEvent(Func<Uri, EventMatch> matcher)
     {
-        private readonly Func<Uri, EventMatch> _matcher;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectEvent"/> class.
-        /// </summary>
-        /// <param name="matcher">The matching function.</param>
-        public ConnectEvent(Func<Uri, EventMatch> matcher)
-        {
-            _matcher = matcher;
-        }
-
-        /// <summary>
-        /// Determines whether this event matches the given arguments.
-        /// </summary>
-        /// <param name="uri">The URI to test against.</param>
-        /// <returns>The match status.</returns>
-        public EventMatch Matches(Uri uri) => _matcher(uri);
+        _matcher = matcher;
     }
+
+    /// <summary>
+    /// Determines whether this event matches the given arguments.
+    /// </summary>
+    /// <param name="uri">The URI to test against.</param>
+    /// <returns>The match status.</returns>
+    public EventMatch Matches(Uri uri) => _matcher(uri);
 }

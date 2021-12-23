@@ -31,31 +31,30 @@ using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
-    [PublicAPI]
-    public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestVoiceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+namespace Remora.Discord.Rest.API;
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
-            (
-                "voice/regions",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestVoiceAPI" />
+[PublicAPI]
+public class DiscordRestVoiceAPI : AbstractDiscordRestAPI, IDiscordRestVoiceAPI
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestVoiceAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestVoiceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
+    {
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> ListVoiceRegionsAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
+        (
+            "voice/regions",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
     }
 }

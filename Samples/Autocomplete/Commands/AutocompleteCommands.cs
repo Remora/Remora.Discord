@@ -31,64 +31,63 @@ using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Results;
 
-namespace Remora.Discord.Samples.SlashCommands.Commands
+namespace Remora.Discord.Samples.SlashCommands.Commands;
+
+/// <summary>
+/// Responds to various commands with autocompletion support.
+/// </summary>
+public class AutocompleteCommands : CommandGroup
 {
+    private readonly FeedbackService _feedbackService;
+    private readonly ICommandContext _context;
+
     /// <summary>
-    /// Responds to various commands with autocompletion support.
+    /// Initializes a new instance of the <see cref="AutocompleteCommands"/> class.
     /// </summary>
-    public class AutocompleteCommands : CommandGroup
+    /// <param name="feedbackService">The feedback service.</param>
+    /// <param name="context">The command context.</param>
+    public AutocompleteCommands(FeedbackService feedbackService, ICommandContext context)
     {
-        private readonly FeedbackService _feedbackService;
-        private readonly ICommandContext _context;
+        _feedbackService = feedbackService;
+        _context = context;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutocompleteCommands"/> class.
-        /// </summary>
-        /// <param name="feedbackService">The feedback service.</param>
-        /// <param name="context">The command context.</param>
-        public AutocompleteCommands(FeedbackService feedbackService, ICommandContext context)
-        {
-            _feedbackService = feedbackService;
-            _context = context;
-        }
+    /// <summary>
+    /// Displays an embed with a predefined colour.
+    /// </summary>
+    /// <param name="colour">The colour.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("display-colour")]
+    public async Task<Result> DisplayColour(PredefinedColours colour)
+    {
+        var embed = new Embed
+        (
+            Description: $"This embed is {colour.Humanize().ToLowerInvariant()}.",
+            Colour: Color.FromArgb((int)(0xFF000000 | (int)colour))
+        );
 
-        /// <summary>
-        /// Displays an embed with a predefined colour.
-        /// </summary>
-        /// <param name="colour">The colour.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [Command("display-colour")]
-        public async Task<Result> DisplayColour(PredefinedColours colour)
-        {
-            var embed = new Embed
-            (
-                Description: $"This embed is {colour.Humanize().ToLowerInvariant()}.",
-                Colour: Color.FromArgb((int)(0xFF000000 | (int)colour))
-            );
+        var result = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result);
+    }
 
-            var result = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result);
-        }
+    /// <summary>
+    /// Displays an embed with a user-supplied word.
+    /// </summary>
+    /// <param name="word">The word.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("display-word")]
+    public async Task<Result> DisplayWord([AutocompleteProvider("autocomplete::dictionary")] string word)
+    {
+        var result = await _feedbackService.SendContextualNeutralAsync
+        (
+            $"Your word is \"{word}\".",
+            ct: this.CancellationToken
+        );
 
-        /// <summary>
-        /// Displays an embed with a user-supplied word.
-        /// </summary>
-        /// <param name="word">The word.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [Command("display-word")]
-        public async Task<Result> DisplayWord([AutocompleteProvider("autocomplete::dictionary")] string word)
-        {
-            var result = await _feedbackService.SendContextualNeutralAsync
-            (
-                $"Your word is \"{word}\".",
-                ct: this.CancellationToken
-            );
-
-            return result.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(result);
-        }
+        return result.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(result);
     }
 }

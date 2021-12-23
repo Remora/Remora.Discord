@@ -25,63 +25,62 @@ using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Tests;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Parsers
+namespace Remora.Discord.Commands.Tests.Parsers;
+
+/// <summary>
+/// Tests the <see cref="SnowflakeParser"/> class.
+/// </summary>
+public class SnowflakeParserTests
 {
+    private readonly SnowflakeParser _parser;
+
     /// <summary>
-    /// Tests the <see cref="SnowflakeParser"/> class.
+    /// Initializes a new instance of the <see cref="SnowflakeParserTests"/> class.
     /// </summary>
-    public class SnowflakeParserTests
+    public SnowflakeParserTests()
     {
-        private readonly SnowflakeParser _parser;
+        _parser = new SnowflakeParser();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SnowflakeParserTests"/> class.
-        /// </summary>
-        public SnowflakeParserTests()
-        {
-            _parser = new SnowflakeParser();
-        }
+    /// <summary>
+    /// Tests whether the parser returns error on invalid value.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CannotParseInvalidValue()
+    {
+        var tryParse = await _parser.TryParseAsync("invalid");
+        ResultAssert.Unsuccessful(tryParse);
+    }
 
-        /// <summary>
-        /// Tests whether the parser returns error on invalid value.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CannotParseInvalidValue()
-        {
-            var tryParse = await _parser.TryParseAsync("invalid");
-            ResultAssert.Unsuccessful(tryParse);
-        }
+    /// <summary>
+    /// Tests whether the parser can parse snowflake value given by number.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanParseSnowflakeByNumber()
+    {
+        ulong snowflakeValue = 6823586735728;
+        var tryParse = await _parser.TryParseAsync(snowflakeValue.ToString());
+        ResultAssert.Successful(tryParse);
+        Assert.Equal(snowflakeValue, tryParse.Entity.Value);
+    }
 
-        /// <summary>
-        /// Tests whether the parser can parse snowflake value given by number.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanParseSnowflakeByNumber()
-        {
-            ulong snowflakeValue = 6823586735728;
-            var tryParse = await _parser.TryParseAsync(snowflakeValue.ToString());
-            ResultAssert.Successful(tryParse);
-            Assert.Equal(snowflakeValue, tryParse.Entity.Value);
-        }
-
-        /// <summary>
-        /// Tests whether the parser can parse snowflake value given by mentions.
-        /// </summary>
-        /// <param name="value">Mention that should be parsed correctly.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [InlineData("<@135347310845624320>")]
-        [InlineData("<@!135347310845624320>")]
-        [InlineData("<#135347310845624320>")]
-        [InlineData("<@&135347310845624320>")]
-        [Theory]
-        public async Task CanParseSnowflakeByMention(string value)
-        {
-            ulong snowflakeValue = 135347310845624320;
-            var tryParse = await _parser.TryParseAsync(value);
-            ResultAssert.Successful(tryParse);
-            Assert.Equal(snowflakeValue, tryParse.Entity.Value);
-        }
+    /// <summary>
+    /// Tests whether the parser can parse snowflake value given by mentions.
+    /// </summary>
+    /// <param name="value">Mention that should be parsed correctly.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [InlineData("<@135347310845624320>")]
+    [InlineData("<@!135347310845624320>")]
+    [InlineData("<#135347310845624320>")]
+    [InlineData("<@&135347310845624320>")]
+    [Theory]
+    public async Task CanParseSnowflakeByMention(string value)
+    {
+        ulong snowflakeValue = 135347310845624320;
+        var tryParse = await _parser.TryParseAsync(value);
+        ResultAssert.Successful(tryParse);
+        Assert.Equal(snowflakeValue, tryParse.Entity.Value);
     }
 }

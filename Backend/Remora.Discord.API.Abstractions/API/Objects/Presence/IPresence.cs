@@ -24,52 +24,51 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a user's presence.
+/// </summary>
+[PublicAPI]
+public interface IPresence : IPartialPresence
 {
     /// <summary>
-    /// Represents a user's presence.
+    /// Gets the user the presence is being updated for.
     /// </summary>
-    [PublicAPI]
-    public interface IPresence : IPartialPresence
-    {
-        /// <summary>
-        /// Gets the user the presence is being updated for.
-        /// </summary>
-        new IPartialUser User { get; }
+    new IPartialUser User { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        new Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    new Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the current status of the user.
-        /// </summary>
-        new ClientStatus Status { get; }
+    /// <summary>
+    /// Gets the current status of the user.
+    /// </summary>
+    new ClientStatus Status { get; }
 
-        /// <summary>
-        /// Gets the user's current activities.
-        /// </summary>
-        new IReadOnlyList<IActivity>? Activities { get; }
+    /// <summary>
+    /// Gets the user's current activities.
+    /// </summary>
+    new IReadOnlyList<IActivity>? Activities { get; }
 
-        /// <summary>
-        /// Gets the user's platform-dependent status.
-        /// </summary>
-        new IClientStatuses ClientStatus { get; }
+    /// <summary>
+    /// Gets the user's platform-dependent status.
+    /// </summary>
+    new IClientStatuses ClientStatus { get; }
 
-        /// <inheritdoc/>
-        Optional<IPartialUser> IPartialPresence.User => new(this.User);
+    /// <inheritdoc/>
+    Optional<IPartialUser> IPartialPresence.User => new(this.User);
 
-        /// <inheritdoc/>
-        Optional<Snowflake> IPartialPresence.GuildID => this.GuildID;
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialPresence.GuildID => this.GuildID;
 
-        /// <inheritdoc/>
-        Optional<ClientStatus> IPartialPresence.Status => this.Status;
+    /// <inheritdoc/>
+    Optional<ClientStatus> IPartialPresence.Status => this.Status;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => new(this.Activities);
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IActivity>?> IPartialPresence.Activities => new(this.Activities);
 
-        /// <inheritdoc/>
-        Optional<IClientStatuses> IPartialPresence.ClientStatus => new(this.ClientStatus);
-    }
+    /// <inheritdoc/>
+    Optional<IClientStatuses> IPartialPresence.ClientStatus => new(this.ClientStatus);
 }

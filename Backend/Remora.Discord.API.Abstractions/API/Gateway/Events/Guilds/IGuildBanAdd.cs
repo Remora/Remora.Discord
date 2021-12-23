@@ -24,22 +24,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a user being banned.
+/// </summary>
+[PublicAPI]
+public interface IGuildBanAdd : IGatewayEvent
 {
     /// <summary>
-    /// Represents a user being banned.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildBanAdd : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the banned user.
-        /// </summary>
-        IUser User { get; }
-    }
+    /// <summary>
+    /// Gets the banned user.
+    /// </summary>
+    IUser User { get; }
 }

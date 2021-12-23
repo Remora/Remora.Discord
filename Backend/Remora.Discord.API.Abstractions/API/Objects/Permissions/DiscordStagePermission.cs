@@ -22,63 +22,62 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the various stage channel permissions.
+/// </summary>
+[PublicAPI]
+public enum DiscordStagePermission
 {
     /// <summary>
-    /// Enumerates the various stage channel permissions.
+    /// Allows creation of instant invites.
     /// </summary>
-    [PublicAPI]
-    public enum DiscordStagePermission
-    {
-        /// <summary>
-        /// Allows creation of instant invites.
-        /// </summary>
-        CreateInstantInvite = 0,
+    CreateInstantInvite = 0,
 
-        /// <summary>
-        /// Allows management and editing of channels.
-        /// </summary>
-        ManageChannels = 4,
+    /// <summary>
+    /// Allows management and editing of channels.
+    /// </summary>
+    ManageChannels = 4,
 
-        /// <summary>
-        /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
-        /// referred to as "Read Messages" in the Discord client.
-        /// </summary>
-        ViewChannel = 10,
+    /// <summary>
+    /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
+    /// referred to as "Read Messages" in the Discord client.
+    /// </summary>
+    ViewChannel = 10,
 
-        /// <summary>
-        /// Allows for joining of a voice channel.
-        /// </summary>
-        Connect = 20,
+    /// <summary>
+    /// Allows for joining of a voice channel.
+    /// </summary>
+    Connect = 20,
 
-        /// <summary>
-        /// Allows for muting members in a voice channel.
-        /// </summary>
-        MuteMembers = 22,
+    /// <summary>
+    /// Allows for muting members in a voice channel.
+    /// </summary>
+    MuteMembers = 22,
 
-        /// <summary>
-        /// Allows for deafening of members in a voice channel.
-        /// </summary>
-        DeafenMembers = 23,
+    /// <summary>
+    /// Allows for deafening of members in a voice channel.
+    /// </summary>
+    DeafenMembers = 23,
 
-        /// <summary>
-        /// Allows for moving of members between voice channels.
-        /// </summary>
-        MoveMembers = 24,
+    /// <summary>
+    /// Allows for moving of members between voice channels.
+    /// </summary>
+    MoveMembers = 24,
 
-        /// <summary>
-        /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
-        /// </summary>
-        ManageRoles = 28,
+    /// <summary>
+    /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
+    /// </summary>
+    ManageRoles = 28,
 
-        /// <summary>
-        /// Allows the user to request to speak in a stage channel.
-        /// </summary>
-        RequestToSpeak = 32,
+    /// <summary>
+    /// Allows the user to request to speak in a stage channel.
+    /// </summary>
+    RequestToSpeak = 32,
 
-        /// <summary>
-        /// Allows the user to manage scheduled events.
-        /// </summary>
-        ManageEvents = 33
-    }
+    /// <summary>
+    /// Allows the user to manage scheduled events.
+    /// </summary>
+    ManageEvents = 33
 }

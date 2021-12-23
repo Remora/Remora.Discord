@@ -24,28 +24,27 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a bulk deletion of a set of messages.
+/// </summary>
+[PublicAPI]
+public interface IMessageDeleteBulk : IGatewayEvent
 {
     /// <summary>
-    /// Represents a bulk deletion of a set of messages.
+    /// Gets the IDs of the removed messages.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageDeleteBulk : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the IDs of the removed messages.
-        /// </summary>
-        // ReSharper disable once InconsistentNaming
-        IReadOnlyList<Snowflake> IDs { get; }
+    // ReSharper disable once InconsistentNaming
+    IReadOnlyList<Snowflake> IDs { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the channel.
+    /// </summary>
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 }

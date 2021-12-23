@@ -24,18 +24,17 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <inheritdoc />
+public class MessageTests : ObjectTestBase<IMessage>
 {
     /// <inheritdoc />
-    public class MessageTests : ObjectTestBase<IMessage>
+    protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "hoisted_role"
-            }
-        };
-    }
+            "hoisted_role"
+        }
+    };
 }

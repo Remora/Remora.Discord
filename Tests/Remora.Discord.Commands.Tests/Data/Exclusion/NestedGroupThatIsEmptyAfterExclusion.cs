@@ -29,20 +29,19 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Exclusion
+namespace Remora.Discord.Commands.Tests.Data.Exclusion;
+
+[Group("a")]
+public class NestedGroupThatIsEmptyAfterExclusion : CommandGroup
 {
-    [Group("a")]
-    public class NestedGroupThatIsEmptyAfterExclusion : CommandGroup
+    [Group("b")]
+    public class Inner : CommandGroup
     {
-        [Group("b")]
-        public class Inner : CommandGroup
+        [Command("c")]
+        [ExcludeFromSlashCommands]
+        public Task<Result> C()
         {
-            [Command("c")]
-            [ExcludeFromSlashCommands]
-            public Task<Result> C()
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
     }
 }

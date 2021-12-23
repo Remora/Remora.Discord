@@ -28,22 +28,21 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
+
+[Group("a")]
+public class TooDeeplyNested : CommandGroup
 {
-    [Group("a")]
-    public class TooDeeplyNested : CommandGroup
+    [Group("b")]
+    public class Level2 : CommandGroup
     {
-        [Group("b")]
-        public class Level2 : CommandGroup
+        [Group("c")]
+        public class Level3 : CommandGroup
         {
-            [Group("c")]
-            public class Level3 : CommandGroup
+            [Command("d")]
+            public Task<IResult> D()
             {
-                [Command("d")]
-                public Task<IResult> D()
-                {
-                    throw new NotImplementedException();
-                }
+                throw new NotImplementedException();
             }
         }
     }

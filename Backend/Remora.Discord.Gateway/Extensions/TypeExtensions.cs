@@ -25,25 +25,24 @@ using System.Linq;
 using JetBrains.Annotations;
 using Remora.Discord.Gateway.Responders;
 
-namespace Remora.Discord.Gateway.Extensions
+namespace Remora.Discord.Gateway.Extensions;
+
+/// <summary>
+/// Defines extension methods for the <see cref="Type"/> class.
+/// </summary>
+[PublicAPI]
+public static class TypeExtensions
 {
     /// <summary>
-    /// Defines extension methods for the <see cref="Type"/> class.
+    /// Checks if the <see cref="Type"/> implements <see cref="IResponder{T}"/>.
     /// </summary>
-    [PublicAPI]
-    public static class TypeExtensions
+    /// <param name="type">The <see cref="Type"/> to check against.</param>
+    /// <returns>True if the type implements <see cref="IResponder{T}"/>.</returns>
+    public static bool IsResponder(this Type type)
     {
-        /// <summary>
-        /// Checks if the <see cref="Type"/> implements <see cref="IResponder{T}"/>.
-        /// </summary>
-        /// <param name="type">The <see cref="Type"/> to check against.</param>
-        /// <returns>True if the type implements <see cref="IResponder{T}"/>.</returns>
-        public static bool IsResponder(this Type type)
-        {
-            var interfaces = type.GetInterfaces();
-            return interfaces.Any(
-                i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
-            );
-        }
+        var interfaces = type.GetInterfaces();
+        return interfaces.Any(
+            i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResponder<>)
+        );
     }
 }

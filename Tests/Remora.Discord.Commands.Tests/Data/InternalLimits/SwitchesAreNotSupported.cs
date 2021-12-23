@@ -28,14 +28,13 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.InternalLimits
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
+
+public class SwitchesAreNotSupported : CommandGroup
 {
-    public class SwitchesAreNotSupported : CommandGroup
+    [Command("a")]
+    public Task<IResult> A([Switch("switch")] bool value = false)
     {
-        [Command("a")]
-        public Task<IResult> A([Switch("switch")] bool value = false)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

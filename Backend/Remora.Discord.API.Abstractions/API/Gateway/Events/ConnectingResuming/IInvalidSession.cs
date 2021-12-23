@@ -22,17 +22,16 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a reconnection event from the gateway.
+/// </summary>
+[PublicAPI]
+public interface IInvalidSession : IGatewayEvent
 {
     /// <summary>
-    /// Represents a reconnection event from the gateway.
+    /// Gets a value indicating whether the session is resumable.
     /// </summary>
-    [PublicAPI]
-    public interface IInvalidSession : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets a value indicating whether the session is resumable.
-        /// </summary>
-        bool IsResumable { get; }
-    }
+    bool IsResumable { get; }
 }

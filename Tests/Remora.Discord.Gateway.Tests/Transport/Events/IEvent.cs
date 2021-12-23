@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents a marker interface for events.
+/// </summary>
+[PublicAPI]
+public interface IEvent
 {
-    /// <summary>
-    /// Represents a marker interface for events.
-    /// </summary>
-    [PublicAPI]
-    public interface IEvent
-    {
-    }
 }

@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to a webhook in a channel.
+/// </summary>
+[PublicAPI]
+public interface IWebhooksUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to a webhook in a channel.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IWebhooksUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the channel.
+    /// </summary>
+    Snowflake ChannelID { get; }
 }

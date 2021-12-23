@@ -22,21 +22,20 @@
 
 using System;
 
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport;
+
+/// <summary>
+/// Defines various options for a mocked transport service.
+/// </summary>
+public class MockedTransportServiceOptions
 {
     /// <summary>
-    /// Defines various options for a mocked transport service.
+    /// Gets or sets a value indicating whether to ignore unexpected received payloads.
     /// </summary>
-    public class MockedTransportServiceOptions
-    {
-        /// <summary>
-        /// Gets or sets a value indicating whether to ignore unexpected received payloads.
-        /// </summary>
-        public bool IgnoreUnexpected { get; set; }
+    public bool IgnoreUnexpected { get; set; }
 
-        /// <summary>
-        /// Gets or sets the global advancement timeout.
-        /// </summary>
-        public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
-    }
+    /// <summary>
+    /// Gets or sets the global advancement timeout.
+    /// </summary>
+    public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
 }

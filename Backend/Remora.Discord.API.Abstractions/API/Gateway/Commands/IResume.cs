@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents a resume command.
+/// </summary>
+[PublicAPI]
+public interface IResume : IGatewayCommand
 {
     /// <summary>
-    /// Represents a resume command.
+    /// Gets the session token.
     /// </summary>
-    [PublicAPI]
-    public interface IResume : IGatewayCommand
-    {
-        /// <summary>
-        /// Gets the session token.
-        /// </summary>
-        string Token { get; }
+    string Token { get; }
 
-        /// <summary>
-        /// Gets the last session ID.
-        /// </summary>
-        string SessionID { get; }
+    /// <summary>
+    /// Gets the last session ID.
+    /// </summary>
+    string SessionID { get; }
 
-        /// <summary>
-        /// Gets the last received sequence number.
-        /// </summary>
-        int SequenceNumber { get; }
-    }
+    /// <summary>
+    /// Gets the last received sequence number.
+    /// </summary>
+    int SequenceNumber { get; }
 }

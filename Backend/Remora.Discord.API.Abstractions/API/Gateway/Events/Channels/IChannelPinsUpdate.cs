@@ -24,27 +24,26 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a pin or unpin of a message in a channel. This is not sent when a pinned message is deleted.
+/// </summary>
+[PublicAPI]
+public interface IChannelPinsUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents a pin or unpin of a message in a channel. This is not sent when a pinned message is deleted.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IChannelPinsUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the channel.
+    /// </summary>
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the time at which the most recent pinned message was pinned.
-        /// </summary>
-        Optional<DateTimeOffset?> LastPinTimestamp { get; }
-    }
+    /// <summary>
+    /// Gets the time at which the most recent pinned message was pinned.
+    /// </summary>
+    Optional<DateTimeOffset?> LastPinTimestamp { get; }
 }

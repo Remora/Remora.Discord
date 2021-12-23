@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various video quality modes.
+/// </summary>
+[PublicAPI]
+public enum VideoQualityMode
 {
     /// <summary>
-    /// Enumerates various video quality modes.
+    /// Discord chooses the best performing quality.
     /// </summary>
-    [PublicAPI]
-    public enum VideoQualityMode
-    {
-        /// <summary>
-        /// Discord chooses the best performing quality.
-        /// </summary>
-        Auto = 1,
+    Auto = 1,
 
-        /// <summary>
-        /// Discord chooses the best available quality.
-        /// </summary>
-        Full = 2
-    }
+    /// <summary>
+    /// Discord chooses the best available quality.
+    /// </summary>
+    Full = 2
 }

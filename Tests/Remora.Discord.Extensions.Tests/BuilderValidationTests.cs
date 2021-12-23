@@ -23,60 +23,59 @@
 using Remora.Discord.Extensions.Tests.Samples;
 using Xunit;
 
-namespace Remora.Discord.Extensions.Tests
+namespace Remora.Discord.Extensions.Tests;
+
+/// <summary>
+/// Ensures that the builder validation works correctly.
+/// </summary>
+public class BuilderValidationTests
 {
     /// <summary>
-    /// Ensures that the builder validation works correctly.
+    /// Tests a model where the input is within specifications.
     /// </summary>
-    public class BuilderValidationTests
+    [Fact]
+    public void ValidationSuccess()
     {
-        /// <summary>
-        /// Tests a model where the input is within specifications.
-        /// </summary>
-        [Fact]
-        public void ValidationSuccess()
-        {
-            var personBuilder = new PersonBuilder("Gary", 5);
+        var personBuilder = new PersonBuilder("Gary", 5);
 
-            Assert.True(personBuilder.Validate().IsSuccess);
-        }
+        Assert.True(personBuilder.Validate().IsSuccess);
+    }
 
-        /// <summary>
-        /// Tests a model where the input is not within specifications.
-        /// </summary>
-        [Fact]
-        public void ValidationFailure()
-        {
-            var personBuilder = new PersonBuilder("Mary", 500);
+    /// <summary>
+    /// Tests a model where the input is not within specifications.
+    /// </summary>
+    [Fact]
+    public void ValidationFailure()
+    {
+        var personBuilder = new PersonBuilder("Mary", 500);
 
-            Assert.False(personBuilder.Validate().IsSuccess);
-        }
+        Assert.False(personBuilder.Validate().IsSuccess);
+    }
 
-        /// <summary>
-        /// Ensures a builder built from a model is equivalent to the provided model.
-        /// </summary>
-        [Fact]
-        public void PersonAndBuilderEqual()
-        {
-            var person = new Person("Gary", 5);
-            var personBuider = new PersonBuilder(person.Name, person.Age);
+    /// <summary>
+    /// Ensures a builder built from a model is equivalent to the provided model.
+    /// </summary>
+    [Fact]
+    public void PersonAndBuilderEqual()
+    {
+        var person = new Person("Gary", 5);
+        var personBuider = new PersonBuilder(person.Name, person.Age);
 
-            Assert.Equal(person.Name, personBuider.Name);
-            Assert.Equal(person.Age, personBuider.Age);
-        }
+        Assert.Equal(person.Name, personBuider.Name);
+        Assert.Equal(person.Age, personBuider.Age);
+    }
 
-        /// <summary>
-        /// Ensures a person built from a builder is equivalent to a person built without a builder.
-        /// </summary>
-        [Fact]
-        public void PersonAndBuiltBuilderEqual()
-        {
-            var person = new Person("Mary", 50);
-            var personBuilder = new PersonBuilder(person.Name, person.Age);
-            var person2 = personBuilder.Build().Entity;
+    /// <summary>
+    /// Ensures a person built from a builder is equivalent to a person built without a builder.
+    /// </summary>
+    [Fact]
+    public void PersonAndBuiltBuilderEqual()
+    {
+        var person = new Person("Mary", 50);
+        var personBuilder = new PersonBuilder(person.Name, person.Age);
+        var person2 = personBuilder.Build().Entity;
 
-            Assert.Equal(person.Name, person2.Name);
-            Assert.Equal(person.Age, person2.Age);
-        }
+        Assert.Equal(person.Name, person2.Name);
+        Assert.Equal(person.Age, person2.Age);
     }
 }

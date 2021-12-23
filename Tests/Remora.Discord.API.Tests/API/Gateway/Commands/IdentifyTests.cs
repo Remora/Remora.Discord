@@ -25,20 +25,19 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Gateway.Commands
+namespace Remora.Discord.API.Tests.Gateway.Commands;
+
+/// <summary>
+/// Tests the <see cref="Identify"/> command.
+/// </summary>
+public class IdentifyTests : GatewayCommandTestBase<IIdentify>
 {
-    /// <summary>
-    /// Tests the <see cref="Identify"/> command.
-    /// </summary>
-    public class IdentifyTests : GatewayCommandTestBase<IIdentify>
+    /// <inheritdoc />
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "id", // undocumented value upon "presence.activities[]" objects
-            }
-        };
-    }
+            "id", // undocumented value upon "presence.activities[]" objects
+        }
+    };
 }

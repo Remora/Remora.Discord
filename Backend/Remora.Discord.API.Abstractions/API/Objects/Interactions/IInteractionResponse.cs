@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a response to an interaction.
+/// </summary>
+[PublicAPI]
+public interface IInteractionResponse
 {
     /// <summary>
-    /// Represents a response to an interaction.
+    /// Gets the response type.
     /// </summary>
-    [PublicAPI]
-    public interface IInteractionResponse
-    {
-        /// <summary>
-        /// Gets the response type.
-        /// </summary>
-        InteractionCallbackType Type { get; }
+    InteractionCallbackType Type { get; }
 
-        /// <summary>
-        /// Gets the response payload.
-        /// </summary>
-        Optional<IInteractionCallbackData> Data { get; }
-    }
+    /// <summary>
+    /// Gets the response payload.
+    /// </summary>
+    Optional<IInteractionCallbackData> Data { get; }
 }

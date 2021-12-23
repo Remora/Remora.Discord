@@ -22,32 +22,31 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various recognized auto-archival durations.
+/// </summary>
+[PublicAPI]
+public enum AutoArchiveDuration
 {
     /// <summary>
-    /// Enumerates various recognized auto-archival durations.
+    /// Threads will be archived after one hour.
     /// </summary>
-    [PublicAPI]
-    public enum AutoArchiveDuration
-    {
-        /// <summary>
-        /// Threads will be archived after one hour.
-        /// </summary>
-        Hour = 60,
+    Hour = 60,
 
-        /// <summary>
-        /// Threads will be archived after one day.
-        /// </summary>
-        Day = 1440,
+    /// <summary>
+    /// Threads will be archived after one day.
+    /// </summary>
+    Day = 1440,
 
-        /// <summary>
-        /// Threads will be archived after three days.
-        /// </summary>
-        ThreeDays = 4320,
+    /// <summary>
+    /// Threads will be archived after three days.
+    /// </summary>
+    ThreeDays = 4320,
 
-        /// <summary>
-        /// Threads will be archived after one week.
-        /// </summary>
-        Week = 10080
-    }
+    /// <summary>
+    /// Threads will be archived after one week.
+    /// </summary>
+    Week = 10080
 }

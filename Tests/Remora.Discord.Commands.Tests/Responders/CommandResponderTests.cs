@@ -37,179 +37,178 @@ using Remora.Discord.Tests;
 using Remora.Results;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Responders
+namespace Remora.Discord.Commands.Tests.Responders;
+
+/// <summary>
+/// Tests the <see cref="CommandResponder"/> class.
+/// </summary>
+public class CommandResponderTests
 {
     /// <summary>
-    /// Tests the <see cref="CommandResponder"/> class.
+    /// Tests pre-execution events.
     /// </summary>
-    public class CommandResponderTests
+    public class PreExecutionEvents : CommandResponderTestBase
     {
+        private readonly Mock<IPreExecutionEvent> _preExecutionEventMock;
+
         /// <summary>
-        /// Tests pre-execution events.
+        /// Initializes a new instance of the <see cref="PreExecutionEvents"/> class.
         /// </summary>
-        public class PreExecutionEvents : CommandResponderTestBase
+        public PreExecutionEvents()
         {
-            private readonly Mock<IPreExecutionEvent> _preExecutionEventMock;
+            _preExecutionEventMock = new Mock<IPreExecutionEvent>();
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PreExecutionEvents"/> class.
-            /// </summary>
-            public PreExecutionEvents()
-            {
-                _preExecutionEventMock = new Mock<IPreExecutionEvent>();
-
-                _preExecutionEventMock
-                    .Setup(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()))
-                    .Returns(Task.FromResult(Result.FromSuccess()));
-            }
-
-            /// <summary>
-            /// Tests whether pre-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecuted()
-            {
-                var authorMock = new Mock<IUser>();
-                var eventMock = new Mock<IMessageCreate>();
-
-                eventMock.Setup(e => e.Author).Returns(authorMock.Object);
-                eventMock.Setup(e => e.Content).Returns("!successful");
-
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
-
-                _preExecutionEventMock
-                    .Verify(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()));
-            }
-
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .AddCommandGroup<SimpleGroup>()
-                    .AddScoped(_ => _preExecutionEventMock.Object);
-            }
+            _preExecutionEventMock
+                .Setup(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Result.FromSuccess()));
         }
 
         /// <summary>
-        /// Tests post-execution events.
+        /// Tests whether pre-execution events are executed properly.
         /// </summary>
-        public class PostExecutionEvents : CommandResponderTestBase
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecuted()
         {
-            private readonly Mock<IPostExecutionEvent> _postExecutionEventMock;
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="PostExecutionEvents"/> class.
-            /// </summary>
-            public PostExecutionEvents()
-            {
-                _postExecutionEventMock = new Mock<IPostExecutionEvent>();
+            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.Setup(e => e.Content).Returns("!successful");
 
-                _postExecutionEventMock
-                    .Setup
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
+
+            _preExecutionEventMock
+                .Verify(e => e.BeforeExecutionAsync(It.IsAny<ICommandContext>(), It.IsAny<CancellationToken>()));
+        }
+
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandGroup<SimpleGroup>()
+                .AddScoped(_ => _preExecutionEventMock.Object);
+        }
+    }
+
+    /// <summary>
+    /// Tests post-execution events.
+    /// </summary>
+    public class PostExecutionEvents : CommandResponderTestBase
+    {
+        private readonly Mock<IPostExecutionEvent> _postExecutionEventMock;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PostExecutionEvents"/> class.
+        /// </summary>
+        public PostExecutionEvents()
+        {
+            _postExecutionEventMock = new Mock<IPostExecutionEvent>();
+
+            _postExecutionEventMock
+                .Setup
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.IsAny<IResult>(),
-                            It.IsAny<CancellationToken>()
-                        )
+                        It.IsAny<ICommandContext>(),
+                        It.IsAny<IResult>(),
+                        It.IsAny<CancellationToken>()
                     )
-                    .Returns(Task.FromResult(Result.FromSuccess()));
-            }
+                )
+                .Returns(Task.FromResult(Result.FromSuccess()));
+        }
 
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecuted()
-            {
-                var authorMock = new Mock<IUser>();
-                var eventMock = new Mock<IMessageCreate>();
+        /// <summary>
+        /// Tests whether post-execution events are executed properly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecuted()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
 
-                eventMock.Setup(e => e.Author).Returns(authorMock.Object);
-                eventMock.Setup(e => e.Content).Returns("!successful");
+            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.Setup(e => e.Content).Returns("!successful");
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                _postExecutionEventMock
-                    .Verify
+            _postExecutionEventMock
+                .Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => r.IsSuccess),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => r.IsSuccess),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
 
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecutedForUnsuccessfulCommands()
-            {
-                var authorMock = new Mock<IUser>();
-                var eventMock = new Mock<IMessageCreate>();
+        /// <summary>
+        /// Tests whether post-execution events are executed properly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForUnsuccessfulCommands()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
 
-                eventMock.Setup(e => e.Author).Returns(authorMock.Object);
-                eventMock.Setup(e => e.Content).Returns("!unsuccessful");
+            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.Setup(e => e.Content).Returns("!unsuccessful");
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                _postExecutionEventMock
-                    .Verify
+            _postExecutionEventMock
+                .Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => !r.IsSuccess),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => !r.IsSuccess),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
 
-            /// <summary>
-            /// Tests whether post-execution events are executed properly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task AreExecutedForNotFoundCommands()
-            {
-                var authorMock = new Mock<IUser>();
-                var eventMock = new Mock<IMessageCreate>();
+        /// <summary>
+        /// Tests whether post-execution events are executed properly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task AreExecutedForNotFoundCommands()
+        {
+            var authorMock = new Mock<IUser>();
+            var eventMock = new Mock<IMessageCreate>();
 
-                eventMock.Setup(e => e.Author).Returns(authorMock.Object);
-                eventMock.Setup(e => e.Content).Returns("!notfound");
+            eventMock.Setup(e => e.Author).Returns(authorMock.Object);
+            eventMock.Setup(e => e.Content).Returns("!notfound");
 
-                var result = await this.Responder.RespondAsync(eventMock.Object);
-                ResultAssert.Successful(result);
+            var result = await this.Responder.RespondAsync(eventMock.Object);
+            ResultAssert.Successful(result);
 
-                _postExecutionEventMock
-                    .Verify
+            _postExecutionEventMock
+                .Verify
+                (
+                    e => e.AfterExecutionAsync
                     (
-                        e => e.AfterExecutionAsync
-                        (
-                            It.IsAny<ICommandContext>(),
-                            It.Is<IResult>(r => r.Error is CommandNotFoundError),
-                            It.IsAny<CancellationToken>()
-                        )
-                    );
-            }
+                        It.IsAny<ICommandContext>(),
+                        It.Is<IResult>(r => r.Error is CommandNotFoundError),
+                        It.IsAny<CancellationToken>()
+                    )
+                );
+        }
 
-            /// <inheritdoc />
-            protected override void ConfigureServices(IServiceCollection serviceCollection)
-            {
-                serviceCollection
-                    .AddCommandGroup<SimpleGroup>()
-                    .AddScoped(_ => _postExecutionEventMock.Object);
-            }
+        /// <inheritdoc />
+        protected override void ConfigureServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection
+                .AddCommandGroup<SimpleGroup>()
+                .AddScoped(_ => _postExecutionEventMock.Object);
         }
     }
 }

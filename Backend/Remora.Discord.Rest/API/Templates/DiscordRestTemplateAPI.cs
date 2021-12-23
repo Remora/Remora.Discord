@@ -35,62 +35,62 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestTemplateAPI" />
+[PublicAPI]
+public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTemplateAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestTemplateAPI" />
-    [PublicAPI]
-    public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTemplateAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The Json options.</param>
+    public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The Json options.</param>
-        public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ITemplate>> GetTemplateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ITemplate>> GetTemplateAsync
+    (
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<ITemplate>
         (
-            string templateCode,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<ITemplate>
-            (
-                $"guilds/templates/{templateCode}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/templates/{templateCode}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IGuild>> CreateGuildFromTemplateAsync
-        (
-            string templateCode,
-            string name,
-            Optional<Stream> icon = default,
-            CancellationToken ct = default
-        )
+    /// <inheritdoc />
+    public virtual async Task<Result<IGuild>> CreateGuildFromTemplateAsync
+    (
+        string templateCode,
+        string name,
+        Optional<Stream> icon = default,
+        CancellationToken ct = default
+    )
+    {
+        Optional<string?> iconData = default;
+        if (icon.IsDefined(out var iconStream))
         {
-            Optional<string?> iconData = default;
-            if (icon.IsDefined(out var iconStream))
+            var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+            if (!packIcon.IsSuccess)
             {
-                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
-                if (!packIcon.IsSuccess)
-                {
-                    return Result<IGuild>.FromError(packIcon);
-                }
-
-                iconData = packIcon.Entity;
+                return Result<IGuild>.FromError(packIcon);
             }
 
-            return await this.RestHttpClient.PostAsync<IGuild>
-            (
-                $"guilds/templates/{templateCode}",
-                b => b.WithJson
+            iconData = packIcon.Entity;
+        }
+
+        return await this.RestHttpClient.PostAsync<IGuild>
+        (
+            $"guilds/templates/{templateCode}",
+            b => b.WithJson
                 (
                     j =>
                     {
@@ -99,38 +99,38 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<ITemplate>>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<ITemplate>>
-            (
-                $"guilds/{guildID}/templates",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/templates",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ITemplate>> CreateGuildTemplateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ITemplate>> CreateGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> description = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<ITemplate>
         (
-            Snowflake guildID,
-            string name,
-            Optional<string?> description = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<ITemplate>
-            (
-                $"guilds/{guildID}/templates",
-                b => b.WithJson
+            $"guilds/{guildID}/templates",
+            b => b.WithJson
                 (
                     j =>
                     {
@@ -139,40 +139,40 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ITemplate>> SyncGuildTemplateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ITemplate>> SyncGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync<ITemplate>
         (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync<ITemplate>
-            (
-                $"guilds/{guildID}/templates/{templateCode}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/templates/{templateCode}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        string name,
+        Optional<string> description,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<ITemplate>
         (
-            Snowflake guildID,
-            string templateCode,
-            string name,
-            Optional<string> description,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<ITemplate>
-            (
-                $"guilds/{guildID}/templates/{templateCode}",
-                b => b.WithJson
+            $"guilds/{guildID}/templates/{templateCode}",
+            b => b.WithJson
                 (
                     j =>
                     {
@@ -181,24 +181,23 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ITemplate>> DeleteGuildTemplateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ITemplate>> DeleteGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync<ITemplate>
         (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync<ITemplate>
-            (
-                $"guilds/{guildID}/templates/{templateCode}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/templates/{templateCode}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
     }
 }

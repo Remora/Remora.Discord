@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various mention types.
+/// </summary>
+[PublicAPI]
+public enum MentionType
 {
     /// <summary>
-    /// Enumerates various mention types.
+    /// A role mention.
     /// </summary>
-    [PublicAPI]
-    public enum MentionType
-    {
-        /// <summary>
-        /// A role mention.
-        /// </summary>
-        Roles,
+    Roles,
 
-        /// <summary>
-        /// A user mention.
-        /// </summary>
-        Users,
+    /// <summary>
+    /// A user mention.
+    /// </summary>
+    Users,
 
-        /// <summary>
-        /// An everyone mention.
-        /// </summary>
-        Everyone
-    }
+    /// <summary>
+    /// An everyone mention.
+    /// </summary>
+    Everyone
 }

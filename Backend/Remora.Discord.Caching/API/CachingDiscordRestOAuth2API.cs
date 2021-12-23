@@ -30,71 +30,70 @@ using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
-{
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
-    {
-        private readonly CacheService _cacheService;
+namespace Remora.Discord.Caching.API;
 
-        /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestOAuth2API
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
+{
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestOAuth2API(IRestHttpClient, JsonSerializerOptions)" />
+    public CachingDiscordRestOAuth2API
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions)
+    {
+        _cacheService = cacheService;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateCurrentApplicationCacheKey();
+        if (_cacheService.TryGetValue<IApplication>(key, out var cachedInstance))
         {
-            _cacheService = cacheService;
+            return Result<IApplication>.FromSuccess(cachedInstance);
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
-        (
-            CancellationToken ct = default
-        )
+        var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
+        if (!getCurrent.IsSuccess)
         {
-            var key = KeyHelpers.CreateCurrentApplicationCacheKey();
-            if (_cacheService.TryGetValue<IApplication>(key, out var cachedInstance))
-            {
-                return Result<IApplication>.FromSuccess(cachedInstance);
-            }
-
-            var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
-            if (!getCurrent.IsSuccess)
-            {
-                return getCurrent;
-            }
-
-            var application = getCurrent.Entity;
-            _cacheService.Cache(key, application);
-
             return getCurrent;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
-        (
-            CancellationToken ct = default
-        )
+        var application = getCurrent.Entity;
+        _cacheService.Cache(key, application);
+
+        return getCurrent;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
+        if (_cacheService.TryGetValue<IAuthorizationInformation>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
-            if (_cacheService.TryGetValue<IAuthorizationInformation>(key, out var cachedInstance))
-            {
-                return Result<IAuthorizationInformation>.FromSuccess(cachedInstance);
-            }
+            return Result<IAuthorizationInformation>.FromSuccess(cachedInstance);
+        }
 
-            var result = await base.GetCurrentAuthorizationInformationAsync(ct);
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            _cacheService.Cache(key, result.Entity);
-
+        var result = await base.GetCurrentAuthorizationInformationAsync(ct);
+        if (!result.IsSuccess)
+        {
             return result;
         }
+
+        _cacheService.Cache(key, result.Entity);
+
+        return result;
     }
 }

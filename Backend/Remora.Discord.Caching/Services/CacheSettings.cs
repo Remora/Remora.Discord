@@ -25,170 +25,169 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Remora.Discord.Caching.Services
+namespace Remora.Discord.Caching.Services;
+
+/// <summary>
+/// Holds various settings for individual cache objects.
+/// </summary>
+[PublicAPI]
+public class CacheSettings
 {
     /// <summary>
-    /// Holds various settings for individual cache objects.
+    /// Holds absolute cache expiration values for various types.
     /// </summary>
-    [PublicAPI]
-    public class CacheSettings
+    private readonly Dictionary<Type, TimeSpan?> _absoluteCacheExpirations = new();
+
+    /// <summary>
+    /// Holds sliding cache expiration values for various types.
+    /// </summary>
+    private readonly Dictionary<Type, TimeSpan?> _slidingCacheExpirations = new();
+
+    /// <summary>
+    /// Holds the default absolute expiration value.
+    /// </summary>
+    private TimeSpan? _defaultAbsoluteExpiration = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// Holds the default sliding expiration value.
+    /// </summary>
+    private TimeSpan? _defaultSlidingExpiration = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// Sets the default absolute expiration value for types.
+    /// </summary>
+    /// <param name="defaultAbsoluteExpiration">The default value.</param>
+    /// <returns>The settings.</returns>
+    public CacheSettings SetDefaultAbsoluteExpiration(TimeSpan? defaultAbsoluteExpiration)
     {
-        /// <summary>
-        /// Holds absolute cache expiration values for various types.
-        /// </summary>
-        private readonly Dictionary<Type, TimeSpan?> _absoluteCacheExpirations = new();
+        _defaultAbsoluteExpiration = defaultAbsoluteExpiration;
+        return this;
+    }
 
-        /// <summary>
-        /// Holds sliding cache expiration values for various types.
-        /// </summary>
-        private readonly Dictionary<Type, TimeSpan?> _slidingCacheExpirations = new();
+    /// <summary>
+    /// Sets the default sliding expiration value for types.
+    /// </summary>
+    /// <param name="defaultSlidingExpiration">The default value.</param>
+    /// <returns>The settings.</returns>
+    public CacheSettings SetDefaultSlidingExpiration(TimeSpan? defaultSlidingExpiration)
+    {
+        _defaultSlidingExpiration = defaultSlidingExpiration;
+        return this;
+    }
 
-        /// <summary>
-        /// Holds the default absolute expiration value.
-        /// </summary>
-        private TimeSpan? _defaultAbsoluteExpiration = TimeSpan.FromSeconds(30);
-
-        /// <summary>
-        /// Holds the default sliding expiration value.
-        /// </summary>
-        private TimeSpan? _defaultSlidingExpiration = TimeSpan.FromSeconds(10);
-
-        /// <summary>
-        /// Sets the default absolute expiration value for types.
-        /// </summary>
-        /// <param name="defaultAbsoluteExpiration">The default value.</param>
-        /// <returns>The settings.</returns>
-        public CacheSettings SetDefaultAbsoluteExpiration(TimeSpan? defaultAbsoluteExpiration)
+    /// <summary>
+    /// Sets the absolute cache expiration for the given type.
+    /// </summary>
+    /// <param name="absoluteExpiration">
+    /// The absolute expiration value. If the value is null, cached values will be kept indefinitely.
+    /// </param>
+    /// <typeparam name="TCachedType">The cached type.</typeparam>
+    /// <returns>The settings.</returns>
+    public CacheSettings SetAbsoluteExpiration<TCachedType>(TimeSpan? absoluteExpiration)
+    {
+        if (!_absoluteCacheExpirations.ContainsKey(typeof(TCachedType)))
         {
-            _defaultAbsoluteExpiration = defaultAbsoluteExpiration;
+            _absoluteCacheExpirations.Add(typeof(TCachedType), absoluteExpiration);
             return this;
         }
 
-        /// <summary>
-        /// Sets the default sliding expiration value for types.
-        /// </summary>
-        /// <param name="defaultSlidingExpiration">The default value.</param>
-        /// <returns>The settings.</returns>
-        public CacheSettings SetDefaultSlidingExpiration(TimeSpan? defaultSlidingExpiration)
+        _absoluteCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the sliding cache expiration for the given type.
+    /// </summary>
+    /// <param name="slidingExpiration">
+    /// The sliding expiration value. If the value is null, cached values will be kept indefinitely.
+    /// </param>
+    /// <typeparam name="TCachedType">The cached type.</typeparam>
+    /// <returns>The settings.</returns>
+    public CacheSettings SetSlidingExpiration<TCachedType>(TimeSpan? slidingExpiration)
+    {
+        if (!_slidingCacheExpirations.ContainsKey(typeof(TCachedType)))
         {
-            _defaultSlidingExpiration = defaultSlidingExpiration;
+            _slidingCacheExpirations.Add(typeof(TCachedType), slidingExpiration);
             return this;
         }
 
-        /// <summary>
-        /// Sets the absolute cache expiration for the given type.
-        /// </summary>
-        /// <param name="absoluteExpiration">
-        /// The absolute expiration value. If the value is null, cached values will be kept indefinitely.
-        /// </param>
-        /// <typeparam name="TCachedType">The cached type.</typeparam>
-        /// <returns>The settings.</returns>
-        public CacheSettings SetAbsoluteExpiration<TCachedType>(TimeSpan? absoluteExpiration)
-        {
-            if (!_absoluteCacheExpirations.ContainsKey(typeof(TCachedType)))
-            {
-                _absoluteCacheExpirations.Add(typeof(TCachedType), absoluteExpiration);
-                return this;
-            }
+        _slidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
+        return this;
+    }
 
-            _absoluteCacheExpirations[typeof(TCachedType)] = absoluteExpiration;
-            return this;
+    /// <summary>
+    /// Gets the absolute expiration time in the cache for the given type, or a default value if one does not exist.
+    /// </summary>
+    /// <param name="defaultExpiration">The default expiration. Defaults to 30 seconds.</param>
+    /// <typeparam name="T">The cached type.</typeparam>
+    /// <returns>The absolute expiration time.</returns>
+    public TimeSpan? GetAbsoluteExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
+    {
+        defaultExpiration ??= _defaultAbsoluteExpiration;
+        return GetAbsoluteExpirationOrDefault(typeof(T), defaultExpiration);
+    }
+
+    /// <summary>
+    /// Gets the absolute expiration time in the cache for the given type, or a default value if one does not exist.
+    /// </summary>
+    /// <param name="cachedType">The cached type.</param>
+    /// <param name="defaultExpiration">The default expiration. Defaults to 30 seconds.</param>
+    /// <returns>The absolute expiration time.</returns>
+    public TimeSpan? GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
+    {
+        defaultExpiration ??= _defaultAbsoluteExpiration;
+        return _absoluteCacheExpirations.TryGetValue(cachedType, out var absoluteExpiration)
+            ? absoluteExpiration
+            : defaultExpiration;
+    }
+
+    /// <summary>
+    /// Gets the sliding expiration time in the cache for the given type, or a default value if one does not exist.
+    /// </summary>
+    /// <param name="defaultExpiration">The default expiration. Defaults to 10 seconds.</param>
+    /// <typeparam name="T">The cached type.</typeparam>
+    /// <returns>The sliding expiration time.</returns>
+    public TimeSpan? GetSlidingExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
+    {
+        defaultExpiration ??= _defaultSlidingExpiration;
+        return GetSlidingExpirationOrDefault(typeof(T), defaultExpiration);
+    }
+
+    /// <summary>
+    /// Gets the sliding expiration time in the cache for the given type, or a default value if one does not exist.
+    /// </summary>
+    /// <param name="cachedType">The cached type.</param>
+    /// <param name="defaultExpiration">The default expiration. Defaults to 10 seconds.</param>
+    /// <returns>The sliding expiration time.</returns>
+    public TimeSpan? GetSlidingExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
+    {
+        defaultExpiration ??= _defaultSlidingExpiration;
+        return _slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration)
+            ? slidingExpiration
+            : defaultExpiration;
+    }
+
+    /// <summary>
+    /// Gets a set of cache options, with expirations relative to now.
+    /// </summary>
+    /// <typeparam name="T">The cache entry type.</typeparam>
+    /// <returns>The entry options.</returns>
+    public MemoryCacheEntryOptions GetEntryOptions<T>()
+    {
+        var cacheOptions = new MemoryCacheEntryOptions();
+
+        var absoluteExpiration = GetAbsoluteExpirationOrDefault<T>();
+        if (absoluteExpiration is not null)
+        {
+            cacheOptions.SetAbsoluteExpiration(absoluteExpiration.Value);
         }
 
-        /// <summary>
-        /// Sets the sliding cache expiration for the given type.
-        /// </summary>
-        /// <param name="slidingExpiration">
-        /// The sliding expiration value. If the value is null, cached values will be kept indefinitely.
-        /// </param>
-        /// <typeparam name="TCachedType">The cached type.</typeparam>
-        /// <returns>The settings.</returns>
-        public CacheSettings SetSlidingExpiration<TCachedType>(TimeSpan? slidingExpiration)
+        var slidingExpiration = GetSlidingExpirationOrDefault<T>();
+        if (slidingExpiration is not null)
         {
-            if (!_slidingCacheExpirations.ContainsKey(typeof(TCachedType)))
-            {
-                _slidingCacheExpirations.Add(typeof(TCachedType), slidingExpiration);
-                return this;
-            }
-
-            _slidingCacheExpirations[typeof(TCachedType)] = slidingExpiration;
-            return this;
+            cacheOptions.SetSlidingExpiration(slidingExpiration.Value);
         }
 
-        /// <summary>
-        /// Gets the absolute expiration time in the cache for the given type, or a default value if one does not exist.
-        /// </summary>
-        /// <param name="defaultExpiration">The default expiration. Defaults to 30 seconds.</param>
-        /// <typeparam name="T">The cached type.</typeparam>
-        /// <returns>The absolute expiration time.</returns>
-        public TimeSpan? GetAbsoluteExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
-        {
-            defaultExpiration ??= _defaultAbsoluteExpiration;
-            return GetAbsoluteExpirationOrDefault(typeof(T), defaultExpiration);
-        }
-
-        /// <summary>
-        /// Gets the absolute expiration time in the cache for the given type, or a default value if one does not exist.
-        /// </summary>
-        /// <param name="cachedType">The cached type.</param>
-        /// <param name="defaultExpiration">The default expiration. Defaults to 30 seconds.</param>
-        /// <returns>The absolute expiration time.</returns>
-        public TimeSpan? GetAbsoluteExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
-        {
-            defaultExpiration ??= _defaultAbsoluteExpiration;
-            return _absoluteCacheExpirations.TryGetValue(cachedType, out var absoluteExpiration)
-                ? absoluteExpiration
-                : defaultExpiration;
-        }
-
-        /// <summary>
-        /// Gets the sliding expiration time in the cache for the given type, or a default value if one does not exist.
-        /// </summary>
-        /// <param name="defaultExpiration">The default expiration. Defaults to 10 seconds.</param>
-        /// <typeparam name="T">The cached type.</typeparam>
-        /// <returns>The sliding expiration time.</returns>
-        public TimeSpan? GetSlidingExpirationOrDefault<T>(TimeSpan? defaultExpiration = null)
-        {
-            defaultExpiration ??= _defaultSlidingExpiration;
-            return GetSlidingExpirationOrDefault(typeof(T), defaultExpiration);
-        }
-
-        /// <summary>
-        /// Gets the sliding expiration time in the cache for the given type, or a default value if one does not exist.
-        /// </summary>
-        /// <param name="cachedType">The cached type.</param>
-        /// <param name="defaultExpiration">The default expiration. Defaults to 10 seconds.</param>
-        /// <returns>The sliding expiration time.</returns>
-        public TimeSpan? GetSlidingExpirationOrDefault(Type cachedType, TimeSpan? defaultExpiration = null)
-        {
-            defaultExpiration ??= _defaultSlidingExpiration;
-            return _slidingCacheExpirations.TryGetValue(cachedType, out var slidingExpiration)
-                ? slidingExpiration
-                : defaultExpiration;
-        }
-
-        /// <summary>
-        /// Gets a set of cache options, with expirations relative to now.
-        /// </summary>
-        /// <typeparam name="T">The cache entry type.</typeparam>
-        /// <returns>The entry options.</returns>
-        public MemoryCacheEntryOptions GetEntryOptions<T>()
-        {
-            var cacheOptions = new MemoryCacheEntryOptions();
-
-            var absoluteExpiration = GetAbsoluteExpirationOrDefault<T>();
-            if (absoluteExpiration is not null)
-            {
-                cacheOptions.SetAbsoluteExpiration(absoluteExpiration.Value);
-            }
-
-            var slidingExpiration = GetSlidingExpirationOrDefault<T>();
-            if (slidingExpiration is not null)
-            {
-                cacheOptions.SetSlidingExpiration(slidingExpiration.Value);
-            }
-
-            return cacheOptions;
-        }
+        return cacheOptions;
     }
 }

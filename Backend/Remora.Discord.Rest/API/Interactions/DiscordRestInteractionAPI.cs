@@ -38,159 +38,65 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInteractionAPI" />
+[PublicAPI]
+public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInteractionAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestInteractionAPI" />
-    [PublicAPI]
-    public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInteractionAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestInteractionAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The json options.</param>
+    public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestInteractionAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestInteractionAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result> CreateInteractionResponseAsync
+    (
+        Snowflake interactionID,
+        string interactionToken,
+        IInteractionResponse response,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+        if (attachments.HasValue)
         {
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result> CreateInteractionResponseAsync
-        (
-            Snowflake interactionID,
-            string interactionToken,
-            IInteractionResponse response,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-            if (attachments.HasValue)
-            {
-                // build attachment list
-                attachmentList = attachments.Value.Select
+            // build attachment list
+            attachmentList = attachments.Value.Select
+            (
+                (f, i) => f.Match
                 (
-                    (f, i) => f.Match
-                    (
-                        data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                        attachment => attachment
-                    )
-                ).ToList();
-            }
-
-            return attachments.HasValue switch
-            {
-                true when !response.Data.HasValue => new InvalidOperationError
-                (
-                    "Response data must be provided with the interaction response if attachments are to be " +
-                    "uploaded or retained."
-                ),
-                true when response.Data.HasValue && response.Data.Value.Attachments.HasValue => new InvalidOperationError
-                (
-                    "The response data may not contain user-supplied attachments; they would be overwritten by this " +
-                    $"call. Pass your desired attachments in the {nameof(attachments)} parameter instead."
-                ),
-                _ => await this.RestHttpClient.PostAsync
-                (
-                    $"interactions/{interactionID}/{interactionToken}/callback",
-                    b =>
-                    {
-                        if (attachmentList.HasValue)
-                        {
-                            for (var i = 0; i < attachments.Value.Count; i++)
-                            {
-                                if (!attachments.Value[i].IsT0)
-                                {
-                                    continue;
-                                }
-
-                                var (name, stream, _) = attachments.Value[i].AsT0;
-                                var contentName = $"files[{i}]";
-
-                                b.AddContent(new StreamContent(stream), contentName, name);
-                            }
-
-                            if (response is not InteractionResponse
-                            {
-                                Data: { Value: InteractionCallbackData dataRecord }
-                            } responseRecord)
-                            {
-                                throw new InvalidOperationException
-                                (
-                                    "Currently, Remora doesn't support uploading attachments when the interaction " +
-                                    "response or callback data types don't derive from Remora's own record types. " +
-                                    "Sorry!"
-                                );
-                            }
-
-                            response = responseRecord with { Data = dataRecord with { Attachments = attachmentList } };
-                        }
-
-                        b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
-                        b.WithRateLimitContext();
-                    },
-                    ct
+                    data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                    attachment => attachment
                 )
-            };
+            ).ToList();
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage>> GetOriginalInteractionResponseAsync
-        (
-            Snowflake applicationID,
-            string interactionToken,
-            CancellationToken ct = default
-        )
+        return attachments.HasValue switch
         {
-            return this.RestHttpClient.GetAsync<IMessage>
+            true when !response.Data.HasValue => new InvalidOperationError
             (
-                $"webhooks/{applicationID}/{interactionToken}/messages/@original",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
-        (
-            Snowflake applicationID,
-            string token,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
-            {
-                return new NotSupportedError("Message content is too long (max 2000).");
-            }
-
-            if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
-            {
-                return new NotSupportedError("Too many embeds (max 10).");
-            }
-
-            return await this.RestHttpClient.PatchAsync<IMessage>
+                "Response data must be provided with the interaction response if attachments are to be " +
+                "uploaded or retained."
+            ),
+            true when response.Data.HasValue && response.Data.Value.Attachments.HasValue => new InvalidOperationError
             (
-                $"webhooks/{applicationID}/{token}/messages/@original",
+                "The response data may not contain user-supplied attachments; they would be overwritten by this " +
+                $"call. Pass your desired attachments in the {nameof(attachments)} parameter instead."
+            ),
+            _ => await this.RestHttpClient.PostAsync
+            (
+                $"interactions/{interactionID}/{interactionToken}/callback",
                 b =>
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
+                    if (attachmentList.HasValue)
                     {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
-                        (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
-
                         for (var i = 0; i < attachments.Value.Count; i++)
                         {
                             if (!attachments.Value[i].IsT0)
@@ -203,9 +109,103 @@ namespace Remora.Discord.Rest.API
 
                             b.AddContent(new StreamContent(stream), contentName, name);
                         }
+
+                        if (response is not InteractionResponse
+                            {
+                                Data: { Value: InteractionCallbackData dataRecord }
+                            } responseRecord)
+                        {
+                            throw new InvalidOperationException
+                            (
+                                "Currently, Remora doesn't support uploading attachments when the interaction " +
+                                "response or callback data types don't derive from Remora's own record types. " +
+                                "Sorry!"
+                            );
+                        }
+
+                        response = responseRecord with { Data = dataRecord with { Attachments = attachmentList } };
                     }
 
-                    b.WithJson
+                    b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
+                    b.WithRateLimitContext();
+                },
+                ct
+            )
+        };
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage>> GetOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string interactionToken,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IMessage>
+        (
+            $"webhooks/{applicationID}/{interactionToken}/messages/@original",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> EditOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
+        {
+            return new NotSupportedError("Message content is too long (max 2000).");
+        }
+
+        if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
+        {
+            return new NotSupportedError("Too many embeds (max 10).");
+        }
+
+        return await this.RestHttpClient.PatchAsync<IMessage>
+        (
+            $"webhooks/{applicationID}/{token}/messages/@original",
+            b =>
+            {
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
+                {
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
+                        (
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
+
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
+                        {
+                            continue;
+                        }
+
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -217,75 +217,75 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteOriginalInteractionResponseAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteOriginalInteractionResponseAsync
+    (
+        Snowflake applicationID,
+        string token,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake applicationID,
-            string token,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"webhooks/{applicationID}/{token}/messages/@original",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"webhooks/{applicationID}/{token}/messages/@original",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage>> CreateFollowupMessageAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage>> CreateFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Optional<string> content = default,
+        Optional<bool> isTTS = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<MessageFlags> flags = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IMessage>
         (
-            Snowflake applicationID,
-            string token,
-            Optional<string> content = default,
-            Optional<bool> isTTS = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IAllowedMentions> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<MessageFlags> flags = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<IMessage>
-            (
-                $"webhooks/{applicationID}/{token}",
-                b =>
+            $"webhooks/{applicationID}/{token}",
+            b =>
+            {
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                    }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -299,85 +299,85 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
-            );
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage>> GetFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IMessage>
+        (
+            $"webhooks/{applicationID}/{token}/messages/{messageID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> EditFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
+        {
+            return new NotSupportedError("Message content is too long (max 2000).");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage>> GetFollowupMessageAsync
-        (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
+        if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
         {
-            return this.RestHttpClient.GetAsync<IMessage>
-            (
-                $"webhooks/{applicationID}/{token}/messages/{messageID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
+            return new NotSupportedError("Too many embeds (max 10).");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> EditFollowupMessageAsync
+        return await this.RestHttpClient.PatchAsync<IMessage>
         (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
+            $"webhooks/{applicationID}/{token}/messages/{messageID}",
+            b =>
             {
-                return new NotSupportedError("Message content is too long (max 2000).");
-            }
-
-            if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
-            {
-                return new NotSupportedError("Too many embeds (max 10).");
-            }
-
-            return await this.RestHttpClient.PatchAsync<IMessage>
-            (
-                $"webhooks/{applicationID}/{token}/messages/{messageID}",
-                b =>
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                    }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -389,26 +389,25 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteFollowupMessageAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteFollowupMessageAsync
+    (
+        Snowflake applicationID,
+        string token,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake applicationID,
-            string token,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"webhooks/{applicationID}/{token}/messages/{messageID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"webhooks/{applicationID}/{token}/messages/{messageID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
     }
 }

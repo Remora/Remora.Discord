@@ -25,20 +25,19 @@ using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the <see cref="MessageReactionRemove"/> event.
+/// </summary>
+public class MessageReactionRemoveTests : GatewayEventTestBase<IMessageReactionRemove>
 {
-    /// <summary>
-    /// Tests the <see cref="MessageReactionRemove"/> event.
-    /// </summary>
-    public class MessageReactionRemoveTests : GatewayEventTestBase<IMessageReactionRemove>
+    /// <inheritdoc />
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "hoisted_role" // internal discord value
-            }
-        };
-    }
+            "hoisted_role" // internal discord value
+        }
+    };
 }

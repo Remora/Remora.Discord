@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about a video in an embed.
+/// </summary>
+[PublicAPI]
+public interface IEmbedVideo
 {
     /// <summary>
-    /// Represents information about a video in an embed.
+    /// Gets the source URL of the video.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedVideo
-    {
-        /// <summary>
-        /// Gets the source URL of the video.
-        /// </summary>
-        Optional<string> Url { get; }
+    Optional<string> Url { get; }
 
-        /// <summary>
-        /// Gets the proxied URL of the video.
-        /// </summary>
-        Optional<string> ProxyUrl { get; }
+    /// <summary>
+    /// Gets the proxied URL of the video.
+    /// </summary>
+    Optional<string> ProxyUrl { get; }
 
-        /// <summary>
-        /// Gets the height of the video.
-        /// </summary>
-        Optional<int> Height { get; }
+    /// <summary>
+    /// Gets the height of the video.
+    /// </summary>
+    Optional<int> Height { get; }
 
-        /// <summary>
-        /// Gets the width of the video.
-        /// </summary>
-        Optional<int> Width { get; }
-    }
+    /// <summary>
+    /// Gets the width of the video.
+    /// </summary>
+    Optional<int> Width { get; }
 }

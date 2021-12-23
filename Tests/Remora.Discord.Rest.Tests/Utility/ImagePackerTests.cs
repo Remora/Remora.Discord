@@ -27,85 +27,84 @@ using Remora.Discord.Rest.Utility;
 using Remora.Discord.Tests;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.Utility
+namespace Remora.Discord.Rest.Tests.Utility;
+
+/// <summary>
+/// Tests the <see cref="ImagePacker"/> class.
+/// </summary>
+public class ImagePackerTests
 {
     /// <summary>
-    /// Tests the <see cref="ImagePacker"/> class.
+    /// Tests the <see cref="ImagePacker.PackImageAsync(Stream, CancellationToken)"/> method.
     /// </summary>
-    public class ImagePackerTests
+    public class PackImageAsync
     {
         /// <summary>
-        /// Tests the <see cref="ImagePacker.PackImageAsync(Stream, CancellationToken)"/> method.
+        /// Tests whether PNG images can be packed.
         /// </summary>
-        public class PackImageAsync
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task CanPackPNGAsync()
         {
-            /// <summary>
-            /// Tests whether PNG images can be packed.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task CanPackPNGAsync()
-            {
-                // Create a dummy PNG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(9894494448401390090);
-                image.Position = 0;
+            // Create a dummy PNG image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(9894494448401390090);
+            image.Position = 0;
 
-                var result = await ImagePacker.PackImageAsync(image);
-                ResultAssert.Successful(result);
-            }
+            var result = await ImagePacker.PackImageAsync(image);
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether JPEG images can be packed.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task CanPackJPEGAsync()
-            {
-                // Create a dummy JPG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00FFD8FF);
-                image.Position = 0;
+        /// <summary>
+        /// Tests whether JPEG images can be packed.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task CanPackJPEGAsync()
+        {
+            // Create a dummy JPG image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(0x00FFD8FF);
+            image.Position = 0;
 
-                var result = await ImagePacker.PackImageAsync(image);
-                ResultAssert.Successful(result);
-            }
+            var result = await ImagePacker.PackImageAsync(image);
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether GIF images can be packed.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task CanPackGIFAsync()
-            {
-                // Create a dummy GIF image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00464947);
-                image.Position = 0;
+        /// <summary>
+        /// Tests whether GIF images can be packed.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task CanPackGIFAsync()
+        {
+            // Create a dummy GIF image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(0x00464947);
+            image.Position = 0;
 
-                var result = await ImagePacker.PackImageAsync(image);
-                ResultAssert.Successful(result);
-            }
+            var result = await ImagePacker.PackImageAsync(image);
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether unknown formats return an error.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfFormatIsUnknown()
-            {
-                // Create a dummy unknown image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00000000);
-                image.Position = 0;
+        /// <summary>
+        /// Tests whether unknown formats return an error.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfFormatIsUnknown()
+        {
+            // Create a dummy unknown image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(0x00000000);
+            image.Position = 0;
 
-                var result = await ImagePacker.PackImageAsync(image);
-                ResultAssert.Unsuccessful(result);
-            }
+            var result = await ImagePacker.PackImageAsync(image);
+            ResultAssert.Unsuccessful(result);
         }
     }
 }

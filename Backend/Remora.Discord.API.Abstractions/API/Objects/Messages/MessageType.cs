@@ -22,127 +22,126 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates message types.
+/// </summary>
+[PublicAPI]
+public enum MessageType
 {
     /// <summary>
-    /// Enumerates message types.
+    /// A normal message.
     /// </summary>
-    [PublicAPI]
-    public enum MessageType
-    {
-        /// <summary>
-        /// A normal message.
-        /// </summary>
-        Default = 0,
+    Default = 0,
 
-        /// <summary>
-        /// A member has joined the group DM.
-        /// </summary>
-        RecipientAdd = 1,
+    /// <summary>
+    /// A member has joined the group DM.
+    /// </summary>
+    RecipientAdd = 1,
 
-        /// <summary>
-        /// A member has left the group DM.
-        /// </summary>
-        RecipientRemove = 2,
+    /// <summary>
+    /// A member has left the group DM.
+    /// </summary>
+    RecipientRemove = 2,
 
-        /// <summary>
-        /// Someone is calling.
-        /// </summary>
-        Call = 3,
+    /// <summary>
+    /// Someone is calling.
+    /// </summary>
+    Call = 3,
 
-        /// <summary>
-        /// The name of the channel changed.
-        /// </summary>
-        ChannelNameChange = 4,
+    /// <summary>
+    /// The name of the channel changed.
+    /// </summary>
+    ChannelNameChange = 4,
 
-        /// <summary>
-        /// The channel's icon changed.
-        /// </summary>
-        ChannelIconChange = 5,
+    /// <summary>
+    /// The channel's icon changed.
+    /// </summary>
+    ChannelIconChange = 5,
 
-        /// <summary>
-        /// A message was pinned.
-        /// </summary>
-        ChannelPinnedMessage = 6,
+    /// <summary>
+    /// A message was pinned.
+    /// </summary>
+    ChannelPinnedMessage = 6,
 
-        /// <summary>
-        /// A guild member joined.
-        /// </summary>
-        GuildMemberJoin = 7,
+    /// <summary>
+    /// A guild member joined.
+    /// </summary>
+    GuildMemberJoin = 7,
 
-        /// <summary>
-        /// A user boosted the server.
-        /// </summary>
-        UserPremiumGuildSubscription = 8,
+    /// <summary>
+    /// A user boosted the server.
+    /// </summary>
+    UserPremiumGuildSubscription = 8,
 
-        /// <summary>
-        /// A user boosted the server to tier 1.
-        /// </summary>
-        UserPremiumGuildSubscriptionTier1 = 9,
+    /// <summary>
+    /// A user boosted the server to tier 1.
+    /// </summary>
+    UserPremiumGuildSubscriptionTier1 = 9,
 
-        /// <summary>
-        /// A user boosted the server to tier 2.
-        /// </summary>
-        UserPremiumGuildSubscriptionTier2 = 10,
+    /// <summary>
+    /// A user boosted the server to tier 2.
+    /// </summary>
+    UserPremiumGuildSubscriptionTier2 = 10,
 
-        /// <summary>
-        /// A user boosted the server to tier 3.
-        /// </summary>
-        UserPremiumGuildSubscriptionTier3 = 11,
+    /// <summary>
+    /// A user boosted the server to tier 3.
+    /// </summary>
+    UserPremiumGuildSubscriptionTier3 = 11,
 
-        /// <summary>
-        /// Someone followed the channel.
-        /// </summary>
-        ChannelFollowAdd = 12,
+    /// <summary>
+    /// Someone followed the channel.
+    /// </summary>
+    ChannelFollowAdd = 12,
 
-        /// <summary>
-        /// The server has been disqualified for inclusion into guild discovery.
-        /// </summary>
-        GuildDiscoveryDisqualified = 14,
+    /// <summary>
+    /// The server has been disqualified for inclusion into guild discovery.
+    /// </summary>
+    GuildDiscoveryDisqualified = 14,
 
-        /// <summary>
-        /// The server has qualified for inclusion into guild discovery.
-        /// </summary>
-        GuildDiscoveryQualified = 15,
+    /// <summary>
+    /// The server has qualified for inclusion into guild discovery.
+    /// </summary>
+    GuildDiscoveryQualified = 15,
 
-        /// <summary>
-        /// The server is going to disqualify from guild discovery soon.
-        /// </summary>
-        GuildDiscoveryGracePeriodInitialWarning = 16,
+    /// <summary>
+    /// The server is going to disqualify from guild discovery soon.
+    /// </summary>
+    GuildDiscoveryGracePeriodInitialWarning = 16,
 
-        /// <summary>
-        /// The server is going to disqualify from guild discovery very soon.
-        /// </summary>
-        GuildDiscoveryGracePeriodFinalWarning = 17,
+    /// <summary>
+    /// The server is going to disqualify from guild discovery very soon.
+    /// </summary>
+    GuildDiscoveryGracePeriodFinalWarning = 17,
 
-        /// <summary>
-        /// A message that indicates a thread was created.
-        /// </summary>
-        ThreadCreated = 18,
+    /// <summary>
+    /// A message that indicates a thread was created.
+    /// </summary>
+    ThreadCreated = 18,
 
-        /// <summary>
-        /// A reply to another message.
-        /// </summary>
-        InlineReply = 19,
+    /// <summary>
+    /// A reply to another message.
+    /// </summary>
+    InlineReply = 19,
 
-        /// <summary>
-        /// An application command.
-        /// </summary>
-        ChatInputCommand = 20,
+    /// <summary>
+    /// An application command.
+    /// </summary>
+    ChatInputCommand = 20,
 
-        /// <summary>
-        /// A message that starts a thread.
-        /// </summary>
-        ThreadStarterMessage = 21,
+    /// <summary>
+    /// A message that starts a thread.
+    /// </summary>
+    ThreadStarterMessage = 21,
 
-        /// <summary>
-        /// A reminder message about a guild invite.
-        /// </summary>
-        GuildInviteReminder = 22,
+    /// <summary>
+    /// A reminder message about a guild invite.
+    /// </summary>
+    GuildInviteReminder = 22,
 
-        /// <summary>
-        /// A context menu command.
-        /// </summary>
-        ContextMenuCommand = 23
-    }
+    /// <summary>
+    /// A context menu command.
+    /// </summary>
+    ContextMenuCommand = 23
 }

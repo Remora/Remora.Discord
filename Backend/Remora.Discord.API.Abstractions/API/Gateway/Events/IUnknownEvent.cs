@@ -22,17 +22,16 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an unknown event.
+/// </summary>
+[PublicAPI]
+public interface IUnknownEvent : IGatewayEvent
 {
     /// <summary>
-    /// Represents an unknown event.
+    /// Gets the JSON string that represents the unknown event.
     /// </summary>
-    [PublicAPI]
-    public interface IUnknownEvent : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the JSON string that represents the unknown event.
-        /// </summary>
-        string Data { get; }
-    }
+    string Data { get; }
 }

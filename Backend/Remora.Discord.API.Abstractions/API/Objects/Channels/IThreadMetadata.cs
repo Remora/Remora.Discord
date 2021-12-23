@@ -24,37 +24,36 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents metadata information for a thread channel.
+/// </summary>
+[PublicAPI]
+public interface IThreadMetadata
 {
     /// <summary>
-    /// Represents metadata information for a thread channel.
+    /// Gets a value indicating whether the thread has been archived.
     /// </summary>
-    [PublicAPI]
-    public interface IThreadMetadata
-    {
-        /// <summary>
-        /// Gets a value indicating whether the thread has been archived.
-        /// </summary>
-        bool IsArchived { get; }
+    bool IsArchived { get; }
 
-        /// <summary>
-        /// Gets a time of inactivity after which the thread is automatically archived.
-        /// </summary>
-        AutoArchiveDuration AutoArchiveDuration { get; }
+    /// <summary>
+    /// Gets a time of inactivity after which the thread is automatically archived.
+    /// </summary>
+    AutoArchiveDuration AutoArchiveDuration { get; }
 
-        /// <summary>
-        /// Gets a timestamp when the thread's archival status was last changed.
-        /// </summary>
-        DateTimeOffset ArchiveTimestamp { get; }
+    /// <summary>
+    /// Gets a timestamp when the thread's archival status was last changed.
+    /// </summary>
+    DateTimeOffset ArchiveTimestamp { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the thread has been locked.
-        /// </summary>
-        bool IsLocked { get; }
+    /// <summary>
+    /// Gets a value indicating whether the thread has been locked.
+    /// </summary>
+    bool IsLocked { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether non-moderators can add other non-moderators.
-        /// </summary>
-        Optional<bool> IsInvitable { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether non-moderators can add other non-moderators.
+    /// </summary>
+    Optional<bool> IsInvitable { get; }
 }

@@ -24,41 +24,40 @@ using Remora.Discord.API.Objects;
 using Remora.Discord.Extensions.Builder;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Embeds
+namespace Remora.Discord.Extensions.Embeds;
+
+/// <summary>
+/// A builder which validates and builds an <see cref="EmbedImageBuilder"/>.
+/// </summary>
+public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
 {
     /// <summary>
-    /// A builder which validates and builds an <see cref="EmbedImageBuilder"/>.
+    /// Gets or sets the url of the image. Must be a valid url. Null values are not allowed.
     /// </summary>
-    public sealed class EmbedImageBuilder : BuilderBase<EmbedImage>
+    public string Url { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmbedImageBuilder"/> class.
+    /// </summary>
+    /// <param name="url">The url of the image.</param>
+    public EmbedImageBuilder(string url)
     {
-        /// <summary>
-        /// Gets or sets the url of the image. Must be a valid url. Null values are not allowed.
-        /// </summary>
-        public string Url { get; set; }
+        Url = url;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedImageBuilder"/> class.
-        /// </summary>
-        /// <param name="url">The url of the image.</param>
-        public EmbedImageBuilder(string url)
-        {
-            Url = url;
-        }
+    /// <inheritdoc />
+    public override Result<EmbedImage> Build()
+    {
+        var validateResult = Validate();
 
-        /// <inheritdoc />
-        public override Result<EmbedImage> Build()
-        {
-            var validateResult = Validate();
+        return validateResult.IsSuccess
+            ? new EmbedImage(Url)
+            : Result<EmbedImage>.FromError(validateResult);
+    }
 
-            return validateResult.IsSuccess
-                ? new EmbedImage(Url)
-                : Result<EmbedImage>.FromError(validateResult);
-        }
-
-        /// <inheritdoc />
-        public override Result Validate()
-        {
-            return ValidateUrl(nameof(Url), Url, false);
-        }
+    /// <inheritdoc />
+    public override Result Validate()
+    {
+        return ValidateUrl(nameof(Url), Url, false);
     }
 }

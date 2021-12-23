@@ -24,31 +24,30 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Tests.Services;
+
+/// <summary>
+/// Represents a source of sample data for an xUnit test.
+/// </summary>
+/// <typeparam name="TData">The data type.</typeparam>
+public class SampleBidirectionalDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IGatewayEvent, IGatewayCommand
 {
     /// <summary>
-    /// Represents a source of sample data for an xUnit test.
+    /// Initializes a new instance of the <see cref="SampleBidirectionalDataSource{TData}"/> class.
     /// </summary>
-    /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleBidirectionalDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IGatewayEvent, IGatewayCommand
+    public SampleBidirectionalDataSource()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleBidirectionalDataSource{TData}"/> class.
-        /// </summary>
-        public SampleBidirectionalDataSource()
+        var sampleData = new SampleDataService();
+
+        var getSamples = sampleData.GetSampleBidirectionalDataSet<TData>();
+        if (!getSamples.IsSuccess)
         {
-            var sampleData = new SampleDataService();
+            throw new SkipException();
+        }
 
-            var getSamples = sampleData.GetSampleBidirectionalDataSet<TData>();
-            if (!getSamples.IsSuccess)
-            {
-                throw new SkipException();
-            }
-
-            foreach (var sample in getSamples.Entity)
-            {
-                Add(sample);
-            }
+        foreach (var sample in getSamples.Entity)
+        {
+            Add(sample);
         }
     }
 }

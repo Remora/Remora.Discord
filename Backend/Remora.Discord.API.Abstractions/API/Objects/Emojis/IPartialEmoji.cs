@@ -24,36 +24,35 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a partial emoji.
+/// </summary>
+[PublicAPI]
+public interface IPartialEmoji
 {
-    /// <summary>
-    /// Represents a partial emoji.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialEmoji
-    {
-        /// <inheritdoc cref="IEmoji.ID" />
-        Optional<Snowflake?> ID { get; }
+    /// <inheritdoc cref="IEmoji.ID" />
+    Optional<Snowflake?> ID { get; }
 
-        /// <inheritdoc cref="IEmoji.Name" />
-        Optional<string?> Name { get; }
+    /// <inheritdoc cref="IEmoji.Name" />
+    Optional<string?> Name { get; }
 
-        /// <inheritdoc cref="IEmoji.Roles" />
-        Optional<IReadOnlyList<Snowflake>> Roles { get; }
+    /// <inheritdoc cref="IEmoji.Roles" />
+    Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <inheritdoc cref="IEmoji.User" />
-        Optional<IUser> User { get; }
+    /// <inheritdoc cref="IEmoji.User" />
+    Optional<IUser> User { get; }
 
-        /// <inheritdoc cref="IEmoji.RequireColons" />
-        Optional<bool> RequireColons { get; }
+    /// <inheritdoc cref="IEmoji.RequireColons" />
+    Optional<bool> RequireColons { get; }
 
-        /// <inheritdoc cref="IEmoji.IsManaged" />
-        Optional<bool> IsManaged { get; }
+    /// <inheritdoc cref="IEmoji.IsManaged" />
+    Optional<bool> IsManaged { get; }
 
-        /// <inheritdoc cref="IEmoji.IsAnimated" />
-        Optional<bool> IsAnimated { get; }
+    /// <inheritdoc cref="IEmoji.IsAnimated" />
+    Optional<bool> IsAnimated { get; }
 
-        /// <inheritdoc cref="IEmoji.IsAvailable" />
-        Optional<bool> IsAvailable { get; }
-    }
+    /// <inheritdoc cref="IEmoji.IsAvailable" />
+    Optional<bool> IsAvailable { get; }
 }

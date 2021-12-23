@@ -23,31 +23,30 @@
 using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Tests.Services;
+
+/// <summary>
+/// Represents a source of sample data for an xUnit test.
+/// </summary>
+/// <typeparam name="TData">The data type.</typeparam>
+public class SampleVoiceEventDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IVoiceGatewayEvent
 {
     /// <summary>
-    /// Represents a source of sample data for an xUnit test.
+    /// Initializes a new instance of the <see cref="SampleVoiceEventDataSource{TData}"/> class.
     /// </summary>
-    /// <typeparam name="TData">The data type.</typeparam>
-    public class SampleVoiceEventDataSource<TData> : TheoryData<SampleDataDescriptor> where TData : IVoiceGatewayEvent
+    public SampleVoiceEventDataSource()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleVoiceEventDataSource{TData}"/> class.
-        /// </summary>
-        public SampleVoiceEventDataSource()
+        var sampleData = new SampleDataService();
+
+        var getSamples = sampleData.GetSampleVoiceEventDataSet<TData>();
+        if (!getSamples.IsSuccess)
         {
-            var sampleData = new SampleDataService();
+            throw new SkipException(getSamples.Error.Message);
+        }
 
-            var getSamples = sampleData.GetSampleVoiceEventDataSet<TData>();
-            if (!getSamples.IsSuccess)
-            {
-                throw new SkipException(getSamples.Error.Message);
-            }
-
-            foreach (var sample in getSamples.Entity)
-            {
-                Add(sample);
-            }
+        foreach (var sample in getSamples.Entity)
+        {
+            Add(sample);
         }
     }
 }

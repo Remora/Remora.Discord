@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an integration account.
+/// </summary>
+[PublicAPI]
+public interface IAccount
 {
     /// <summary>
-    /// Represents an integration account.
+    /// Gets the ID of the account.
     /// </summary>
-    [PublicAPI]
-    public interface IAccount
-    {
-        /// <summary>
-        /// Gets the ID of the account.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the name of the account.
-        /// </summary>
-        string Name { get; }
-    }
+    /// <summary>
+    /// Gets the name of the account.
+    /// </summary>
+    string Name { get; }
 }

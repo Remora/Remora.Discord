@@ -28,44 +28,43 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
-{
-    public class TooManyChoiceValues : CommandGroup
-    {
-        [Command("a")]
-        public Task<IResult> A(Choices choices)
-        {
-            throw new NotImplementedException();
-        }
-    }
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
 
-    public enum Choices
+public class TooManyChoiceValues : CommandGroup
+{
+    [Command("a")]
+    public Task<IResult> A(Choices choices)
     {
-        E1,
-        E2,
-        E3,
-        E4,
-        E5,
-        E6,
-        E7,
-        E8,
-        E9,
-        E10,
-        E11,
-        E12,
-        E13,
-        E14,
-        E15,
-        E16,
-        E17,
-        E18,
-        E19,
-        E20,
-        E21,
-        E22,
-        E23,
-        E24,
-        E25,
-        E26
+        throw new NotImplementedException();
     }
+}
+
+public enum Choices
+{
+    E1,
+    E2,
+    E3,
+    E4,
+    E5,
+    E6,
+    E7,
+    E8,
+    E9,
+    E10,
+    E11,
+    E12,
+    E13,
+    E14,
+    E15,
+    E16,
+    E17,
+    E18,
+    E19,
+    E20,
+    E21,
+    E22,
+    E23,
+    E24,
+    E25,
+    E26
 }

@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the deletion of a message.
+/// </summary>
+[PublicAPI]
+public interface IMessageDelete : IGatewayEvent
 {
     /// <summary>
-    /// Represents the deletion of a message.
+    /// Gets the ID of the message.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageDelete : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the message.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the channel.
+    /// </summary>
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 }

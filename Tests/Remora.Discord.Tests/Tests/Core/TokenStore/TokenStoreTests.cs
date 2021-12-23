@@ -26,25 +26,24 @@ using Xunit;
 // ReSharper disable SA1600
 #pragma warning disable 1591, SA1600
 
-namespace Remora.Discord.Tests.Tests.Core
+namespace Remora.Discord.Tests.Tests.Core;
+
+/// <summary>
+/// Tests the <see cref="TokenStore"/> class.
+/// </summary>
+public class TokenStoreTests
 {
     /// <summary>
-    /// Tests the <see cref="TokenStore"/> class.
+    /// Tests the <see cref="TokenStore.Token"/> property.
     /// </summary>
-    public class TokenStoreTests
+    public class Token
     {
-        /// <summary>
-        /// Tests the <see cref="TokenStore.Token"/> property.
-        /// </summary>
-        public class Token
+        [Fact]
+        public void ReturnsCorrectValue()
         {
-            [Fact]
-            public void ReturnsCorrectValue()
-            {
-                var tokenStore = new TokenStore("Hello world!");
+            var tokenStore = new TokenStore("Hello world!");
 
-                Assert.Equal("Hello world!", tokenStore.Token);
-            }
+            Assert.Equal("Hello world!", tokenStore.Token);
         }
     }
 }

@@ -25,15 +25,14 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <inheritdoc />
+public class AllowedMentionsTests : ObjectTestBase<IAllowedMentions>
 {
     /// <inheritdoc />
-    public class AllowedMentionsTests : ObjectTestBase<IAllowedMentions>
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
-        {
-            AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_MENTION_TYPE"
-        };
-    }
+        AllowSkip = e => e.ValueKind is JsonValueKind.String && e.GetString() == "REMORA_UNKNOWN_MENTION_TYPE"
+    };
 }

@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.VoiceGateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.API.VoiceGateway.Commands;
 
-namespace Remora.Discord.API.Tests.API.VoiceGateway.Commands
+namespace Remora.Discord.API.Tests.API.VoiceGateway.Commands;
+
+/// <summary>
+/// Tests the <see cref="VoiceResume"/> command.
+/// </summary>
+public class VoiceResumeTests : VoiceGatewayCommandTestBase<IVoiceResume>
 {
-    /// <summary>
-    /// Tests the <see cref="VoiceResume"/> command.
-    /// </summary>
-    public class VoiceResumeTests : VoiceGatewayCommandTestBase<IVoiceResume>
-    {
-    }
 }

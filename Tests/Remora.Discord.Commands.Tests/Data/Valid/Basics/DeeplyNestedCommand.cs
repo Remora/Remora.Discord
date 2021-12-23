@@ -28,19 +28,18 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Valid.Basics
+namespace Remora.Discord.Commands.Tests.Data.Valid.Basics;
+
+[Group("a")]
+public class DeeplyNestedCommand : CommandGroup
 {
-    [Group("a")]
-    public class DeeplyNestedCommand : CommandGroup
+    [Group("b")]
+    public class SubGroup : CommandGroup
     {
-        [Group("b")]
-        public class SubGroup : CommandGroup
+        [Command("c")]
+        public Task<IResult> C()
         {
-            [Command("c")]
-            public Task<IResult> C()
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
     }
 }

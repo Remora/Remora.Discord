@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates permission overwrite types.
+/// </summary>
+[PublicAPI]
+public enum PermissionOverwriteType
 {
     /// <summary>
-    /// Enumerates permission overwrite types.
+    /// This overwrite is for a specific role.
     /// </summary>
-    [PublicAPI]
-    public enum PermissionOverwriteType
-    {
-        /// <summary>
-        /// This overwrite is for a specific role.
-        /// </summary>
-        Role = 0,
+    Role = 0,
 
-        /// <summary>
-        /// This overwrite is for a specific member.
-        /// </summary>
-        Member = 1
-    }
+    /// <summary>
+    /// This overwrite is for a specific member.
+    /// </summary>
+    Member = 1
 }

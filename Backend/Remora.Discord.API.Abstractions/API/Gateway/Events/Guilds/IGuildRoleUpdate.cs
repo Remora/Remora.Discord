@@ -24,22 +24,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to a role.
+/// </summary>
+[PublicAPI]
+public interface IGuildRoleUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to a role.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildRoleUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the role.
-        /// </summary>
-        IRole Role { get; }
-    }
+    /// <summary>
+    /// Gets the role.
+    /// </summary>
+    IRole Role { get; }
 }

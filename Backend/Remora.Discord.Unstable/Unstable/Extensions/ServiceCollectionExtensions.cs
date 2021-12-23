@@ -28,35 +28,34 @@ using Remora.Discord.API.Json;
 using Remora.Discord.API.VoiceGateway.Events;
 using Remora.Rest.Extensions;
 
-namespace Remora.Discord.Unstable.Extensions
+namespace Remora.Discord.Unstable.Extensions;
+
+/// <summary>
+/// Defines various extension methods to the <see cref="IServiceCollection"/> class.
+/// </summary>
+[PublicAPI]
+public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Defines various extension methods to the <see cref="IServiceCollection"/> class.
+    /// Adds experimental features from the Discord API.
     /// </summary>
-    [PublicAPI]
-    public static class ServiceCollectionExtensions
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="optionsName">The name of the serializer options, if any. You should probably leave this set to the default value.</param>
+    /// <returns>The service collection, with the services.</returns>
+    public static IServiceCollection AddExperimentalDiscordApi
+    (
+        this IServiceCollection serviceCollection,
+        string? optionsName = "Discord"
+    )
     {
-        /// <summary>
-        /// Adds experimental features from the Discord API.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="optionsName">The name of the serializer options, if any. You should probably leave this set to the default value.</param>
-        /// <returns>The service collection, with the services.</returns>
-        public static IServiceCollection AddExperimentalDiscordApi
-        (
-            this IServiceCollection serviceCollection,
-            string? optionsName = "Discord"
-        )
+        serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
         {
-            serviceCollection.Configure<JsonSerializerOptions>(optionsName, jsonOptions =>
-            {
-                jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
+            jsonOptions.AddConverter<UnstableVoicePayloadConverter>();
 
-                jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
-                jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
-            });
+            jsonOptions.AddDataObjectConverter<IVoiceClientDisconnect, VoiceClientDisconnect>();
+            jsonOptions.AddDataObjectConverter<IVoiceSpeakingEvent, VoiceSpeakingEvent>();
+        });
 
-            return serviceCollection;
-        }
+        return serviceCollection;
     }
 }

@@ -31,13 +31,12 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
+
+public class ContextMenusWithDescriptionsAreNotSupported : CommandGroup
 {
-    public class ContextMenusWithDescriptionsAreNotSupported : CommandGroup
-    {
-        [Command("Do thing")]
-        [CommandType(ApplicationCommandType.User)]
-        [Description("Oh no!")]
-        public Task<IResult> ContextCommand() => throw new NotImplementedException();
-    }
+    [Command("Do thing")]
+    [CommandType(ApplicationCommandType.User)]
+    [Description("Oh no!")]
+    public Task<IResult> ContextCommand() => throw new NotImplementedException();
 }

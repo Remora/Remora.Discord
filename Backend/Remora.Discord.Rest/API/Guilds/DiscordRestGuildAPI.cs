@@ -38,64 +38,64 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI" />
+[PublicAPI]
+public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGuildAPI" />
-    [PublicAPI]
-    public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestGuildAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The json options.</param>
+    public DiscordRestGuildAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestGuildAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestGuildAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IGuild>> CreateGuildAsync
+    (
+        string name,
+        Optional<Stream> icon = default,
+        Optional<VerificationLevel> verificationLevel = default,
+        Optional<MessageNotificationLevel> defaultMessageNotifications = default,
+        Optional<ExplicitContentFilterLevel> explicitContentFilter = default,
+        Optional<IReadOnlyList<IRole>> roles = default,
+        Optional<IReadOnlyList<IPartialChannel>> channels = default,
+        Optional<Snowflake> afkChannelID = default,
+        Optional<TimeSpan> afkTimeout = default,
+        Optional<Snowflake> systemChannelID = default,
+        Optional<SystemChannelFlags> systemChannelFlags = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.Length is < 2 or > 100)
         {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 100 characters.");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IGuild>> CreateGuildAsync
-        (
-            string name,
-            Optional<Stream> icon = default,
-            Optional<VerificationLevel> verificationLevel = default,
-            Optional<MessageNotificationLevel> defaultMessageNotifications = default,
-            Optional<ExplicitContentFilterLevel> explicitContentFilter = default,
-            Optional<IReadOnlyList<IRole>> roles = default,
-            Optional<IReadOnlyList<IPartialChannel>> channels = default,
-            Optional<Snowflake> afkChannelID = default,
-            Optional<TimeSpan> afkTimeout = default,
-            Optional<Snowflake> systemChannelID = default,
-            Optional<SystemChannelFlags> systemChannelFlags = default,
-            CancellationToken ct = default
-        )
+        await using var memoryStream = new MemoryStream();
+
+        var iconData = default(Optional<string?>);
+
+        // ReSharper disable once InvertIf
+        if (icon.IsDefined(out var iconStream))
         {
-            if (name.Length is < 2 or > 100)
+            var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+            if (!packIcon.IsSuccess)
             {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 100 characters.");
+                return Result<IGuild>.FromError(packIcon);
             }
 
-            await using var memoryStream = new MemoryStream();
+            iconData = packIcon.Entity;
+        }
 
-            var iconData = default(Optional<string?>);
-
-            // ReSharper disable once InvertIf
-            if (icon.IsDefined(out var iconStream))
-            {
-                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
-                if (!packIcon.IsSuccess)
-                {
-                    return Result<IGuild>.FromError(packIcon);
-                }
-
-                iconData = packIcon.Entity;
-            }
-
-            return await this.RestHttpClient.PostAsync<IGuild>
-            (
-                "guilds",
-                b => b.WithJson
+        return await this.RestHttpClient.PostAsync<IGuild>
+        (
+            "guilds",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -118,114 +118,114 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuild>> GetGuildAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuild>> GetGuildAsync
+    (
+        Snowflake guildID,
+        Optional<bool> withCounts = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuild>
         (
-            Snowflake guildID,
-            Optional<bool> withCounts = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IGuild>
-            (
-                $"guilds/{guildID}",
-                b =>
+            $"guilds/{guildID}",
+            b =>
+            {
+                if (withCounts.HasValue)
                 {
-                    if (withCounts.HasValue)
-                    {
-                        b.AddQueryParameter("with_counts", withCounts.Value.ToString());
-                    }
+                    b.AddQueryParameter("with_counts", withCounts.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildPreview>> GetGuildPreviewAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildPreview>
+        (
+            $"guilds/{guildID}/preview",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IGuild>> ModifyGuildAsync
+    (
+        Snowflake guildID,
+        Optional<string> name = default,
+        Optional<VerificationLevel?> verificationLevel = default,
+        Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
+        Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
+        Optional<Snowflake?> afkChannelID = default,
+        Optional<TimeSpan> afkTimeout = default,
+        Optional<Stream?> icon = default,
+        Optional<Snowflake> ownerID = default,
+        Optional<Stream?> splash = default,
+        Optional<Stream?> discoverySplash = default,
+        Optional<Stream?> banner = default,
+        Optional<Snowflake?> systemChannelID = default,
+        Optional<SystemChannelFlags> systemChannelFlags = default,
+        Optional<Snowflake?> rulesChannelID = default,
+        Optional<Snowflake?> publicUpdatesChannelID = default,
+        Optional<string?> preferredLocale = default,
+        Optional<IReadOnlyList<GuildFeature>> features = default,
+        Optional<string?> description = default,
+        Optional<bool> isPremiumProgressBarEnabled = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        await using var memoryStream = new MemoryStream();
+
+        var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+        if (!packIcon.IsSuccess)
+        {
+            return Result<IGuild>.FromError(packIcon);
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildPreview>> GetGuildPreviewAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
+        var iconData = packIcon.Entity;
+
+        var packSplash = await ImagePacker.PackImageAsync(splash, ct);
+        if (!packSplash.IsSuccess)
         {
-            return this.RestHttpClient.GetAsync<IGuildPreview>
-            (
-                $"guilds/{guildID}/preview",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
+            return Result<IGuild>.FromError(packSplash);
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IGuild>> ModifyGuildAsync
-        (
-            Snowflake guildID,
-            Optional<string> name = default,
-            Optional<VerificationLevel?> verificationLevel = default,
-            Optional<MessageNotificationLevel?> defaultMessageNotifications = default,
-            Optional<ExplicitContentFilterLevel?> explicitContentFilter = default,
-            Optional<Snowflake?> afkChannelID = default,
-            Optional<TimeSpan> afkTimeout = default,
-            Optional<Stream?> icon = default,
-            Optional<Snowflake> ownerID = default,
-            Optional<Stream?> splash = default,
-            Optional<Stream?> discoverySplash = default,
-            Optional<Stream?> banner = default,
-            Optional<Snowflake?> systemChannelID = default,
-            Optional<SystemChannelFlags> systemChannelFlags = default,
-            Optional<Snowflake?> rulesChannelID = default,
-            Optional<Snowflake?> publicUpdatesChannelID = default,
-            Optional<string?> preferredLocale = default,
-            Optional<IReadOnlyList<GuildFeature>> features = default,
-            Optional<string?> description = default,
-            Optional<bool> isPremiumProgressBarEnabled = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+        var splashData = packSplash.Entity;
+
+        var packDiscoverySplash = await ImagePacker.PackImageAsync(discoverySplash, ct);
+        if (!packDiscoverySplash.IsSuccess)
         {
-            await using var memoryStream = new MemoryStream();
+            return Result<IGuild>.FromError(packDiscoverySplash);
+        }
 
-            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
-            if (!packIcon.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packIcon);
-            }
+        var discoverySplashData = packDiscoverySplash.Entity;
 
-            var iconData = packIcon.Entity;
+        var packBanner = await ImagePacker.PackImageAsync(banner, ct);
+        if (!packBanner.IsSuccess)
+        {
+            return Result<IGuild>.FromError(packBanner);
+        }
 
-            var packSplash = await ImagePacker.PackImageAsync(splash, ct);
-            if (!packSplash.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packSplash);
-            }
+        var bannerData = packBanner.Entity;
 
-            var splashData = packSplash.Entity;
-
-            var packDiscoverySplash = await ImagePacker.PackImageAsync(discoverySplash, ct);
-            if (!packDiscoverySplash.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packDiscoverySplash);
-            }
-
-            var discoverySplashData = packDiscoverySplash.Entity;
-
-            var packBanner = await ImagePacker.PackImageAsync(banner, ct);
-            if (!packBanner.IsSuccess)
-            {
-                return Result<IGuild>.FromError(packBanner);
-            }
-
-            var bannerData = packBanner.Entity;
-
-            return await this.RestHttpClient.PatchAsync<IGuild>
-            (
-                $"guilds/{guildID}",
-                b => b
+        return await this.RestHttpClient.PatchAsync<IGuild>
+        (
+            $"guilds/{guildID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -259,58 +259,58 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildAsync(Snowflake guildID, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IChannel>>
-            (
-                $"guilds/{guildID}/channels",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> CreateGuildChannelAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IChannel>>> GetGuildChannelsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IChannel>>
         (
-            Snowflake guildID,
-            string name,
-            Optional<ChannelType> type = default,
-            Optional<string> topic = default,
-            Optional<int> bitrate = default,
-            Optional<int> userLimit = default,
-            Optional<int> rateLimitPerUser = default,
-            Optional<int> position = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
-            Optional<Snowflake> parentID = default,
-            Optional<bool> isNsfw = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<IChannel>
-            (
-                $"guilds/{guildID}/channels",
-                b => b
+            $"guilds/{guildID}/channels",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> CreateGuildChannelAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<ChannelType> type = default,
+        Optional<string> topic = default,
+        Optional<int> bitrate = default,
+        Optional<int> userLimit = default,
+        Optional<int> rateLimitPerUser = default,
+        Optional<int> position = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
+        Optional<Snowflake> parentID = default,
+        Optional<bool> isNsfw = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IChannel>
+        (
+            $"guilds/{guildID}/channels",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -329,31 +329,31 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> ModifyGuildChannelPositionsAsync
-        (
-            Snowflake guildID,
-            IReadOnlyList
-            <
-                (
-                    Snowflake ChannelID,
-                    int? Position,
-                    bool? LockPermissions,
-                    Snowflake? ParentID
-                )
-            > positionModifications,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync
+    /// <inheritdoc />
+    public virtual Task<Result> ModifyGuildChannelPositionsAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList
+        <
             (
-                $"guilds/{guildID}/channels",
-                b => b
+            Snowflake ChannelID,
+            int? Position,
+            bool? LockPermissions,
+            Snowflake? ParentID
+            )
+        > positionModifications,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync
+        (
+            $"guilds/{guildID}/channels",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJsonArray
                 (
@@ -396,110 +396,110 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
-            );
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildMember>> GetGuildMemberAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildMember>
+        (
+            $"guilds/{guildID}/members/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
+    (
+        Snowflake guildID,
+        Optional<int> limit = default,
+        Optional<Snowflake> after = default,
+        CancellationToken ct = default
+    )
+    {
+        if (limit.HasValue && limit.Value is < 1 or > 1000)
+        {
+            return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildMember>> GetGuildMemberAsync
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
         (
-            Snowflake guildID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IGuildMember>
-            (
-                $"guilds/{guildID}/members/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IGuildMember>>> ListGuildMembersAsync
-        (
-            Snowflake guildID,
-            Optional<int> limit = default,
-            Optional<Snowflake> after = default,
-            CancellationToken ct = default
-        )
-        {
-            if (limit.HasValue && limit.Value is < 1 or > 1000)
+            $"guilds/{guildID}/members",
+            b =>
             {
-                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
-            }
-
-            return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
-            (
-                $"guilds/{guildID}/members",
-                b =>
+                if (limit.HasValue)
                 {
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
 
-                    if (after.HasValue)
-                    {
-                        b.AddQueryParameter("after", after.Value.ToString());
-                    }
+                if (after.HasValue)
+                {
+                    b.AddQueryParameter("after", after.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+    (
+        Snowflake guildID,
+        string query,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        if (limit.HasValue && limit.Value is < 1 or > 1000)
+        {
+            return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IGuildMember>>> SearchGuildMembersAsync
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
         (
-            Snowflake guildID,
-            string query,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            if (limit.HasValue && limit.Value is < 1 or > 1000)
+            $"guilds/{guildID}/members/search",
+            b =>
             {
-                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 1000.");
-            }
+                b.AddQueryParameter("query", query);
 
-            return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildMember>>
-            (
-                $"guilds/{guildID}/members/search",
-                b =>
+                if (limit.HasValue)
                 {
-                    b.AddQueryParameter("query", query);
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
 
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildMember?>> AddGuildMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildMember?>> AddGuildMemberAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        string accessToken,
+        Optional<string> nickname = default,
+        Optional<IReadOnlyList<Snowflake>> roles = default,
+        Optional<bool> isMuted = default,
+        Optional<bool> isDeafened = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync<IGuildMember?>
         (
-            Snowflake guildID,
-            Snowflake userID,
-            string accessToken,
-            Optional<string> nickname = default,
-            Optional<IReadOnlyList<Snowflake>> roles = default,
-            Optional<bool> isMuted = default,
-            Optional<bool> isDeafened = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync<IGuildMember?>
-            (
-                $"guilds/{guildID}/members/{userID}",
-                b => b.WithJson
+            $"guilds/{guildID}/members/{userID}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -511,30 +511,30 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                true,
-                ct
-            );
-        }
+            true,
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> ModifyGuildMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result> ModifyGuildMemberAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Optional<string?> nickname = default,
+        Optional<IReadOnlyList<Snowflake>?> roles = default,
+        Optional<bool?> isMuted = default,
+        Optional<bool?> isDeafened = default,
+        Optional<Snowflake?> channelID = default,
+        Optional<DateTimeOffset?> communicationDisabledUntil = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Optional<string?> nickname = default,
-            Optional<IReadOnlyList<Snowflake>?> roles = default,
-            Optional<bool?> isMuted = default,
-            Optional<bool?> isDeafened = default,
-            Optional<Snowflake?> channelID = default,
-            Optional<DateTimeOffset?> communicationDisabledUntil = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync
-            (
-                $"guilds/{guildID}/members/{userID}",
-                b => b
+            $"guilds/{guildID}/members/{userID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -549,149 +549,149 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
-            );
-        }
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildMember>> ModifyCurrentMemberAsync
+    (
+        Snowflake guildID,
+        Optional<string?> nickname = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IGuildMember>
         (
-            Snowflake guildID,
-            Optional<string?> nickname = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IGuildMember>
-            (
-                $"guilds/{guildID}/members/@me",
-                b => b
-                    .AddAuditLogReason(reason)
-                    .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
-                    .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/members/@me",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
+                .WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
-        public virtual Task<Result<string>> ModifyCurrentUserNickAsync
+    /// <inheritdoc />
+    [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
+    public virtual Task<Result<string>> ModifyCurrentUserNickAsync
+    (
+        Snowflake guildID,
+        Optional<string?> nickname = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<string>
         (
-            Snowflake guildID,
-            Optional<string?> nickname = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<string>
-            (
-                $"guilds/{guildID}/members/@me/nick",
-                b => b
-                    .AddAuditLogReason(reason)
-                    .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
-                    .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/members/@me/nick",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
+                .WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> AddGuildMemberRoleAsync
+    /// <inheritdoc />
+    public virtual Task<Result> AddGuildMemberRoleAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Snowflake roleID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Snowflake roleID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildID}/members/{userID}/roles/{roleID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> RemoveGuildMemberRoleAsync
+    /// <inheritdoc />
+    public virtual Task<Result> RemoveGuildMemberRoleAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Snowflake roleID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Snowflake roleID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildID}/members/{userID}/roles/{roleID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildID}/members/{userID}/roles/{roleID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> RemoveGuildMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result> RemoveGuildMemberAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildID}/members/{userID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildID}/members/{userID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IBan>>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IBan>>
-            (
-                $"guilds/{guildID}/bans",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/bans",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IBan>> GetGuildBanAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IBan>> GetGuildBanAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IBan>
         (
-            Snowflake guildID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IBan>
-            (
-                $"guilds/{guildID}/bans/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/bans/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> CreateGuildBanAsync
+    /// <inheritdoc />
+    public virtual Task<Result> CreateGuildBanAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Optional<int> deleteMessageDays = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Optional<int> deleteMessageDays = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"guilds/{guildID}/bans/{userID}",
-                b => b
+            $"guilds/{guildID}/bans/{userID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -701,75 +701,75 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
-            );
-        }
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> RemoveGuildBanAsync
+    /// <inheritdoc />
+    public virtual Task<Result> RemoveGuildBanAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildID}/bans/{userID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildID}/bans/{userID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IRole>>> GetGuildRolesAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IRole>>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IRole>>
-            (
-                $"guilds/{guildID}/roles",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/roles",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IRole>> CreateGuildRoleAsync
-        (
-            Snowflake guildID,
-            Optional<string> name = default,
-            Optional<IDiscordPermissionSet> permissions = default,
-            Optional<Color> colour = default,
-            Optional<bool> isHoisted = default,
-            Optional<Stream> icon = default,
-            Optional<string> unicodeEmoji = default,
-            Optional<bool> isMentionable = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            var iconData = default(Optional<string>);
+    /// <inheritdoc />
+    public virtual async Task<Result<IRole>> CreateGuildRoleAsync
+    (
+        Snowflake guildID,
+        Optional<string> name = default,
+        Optional<IDiscordPermissionSet> permissions = default,
+        Optional<Color> colour = default,
+        Optional<bool> isHoisted = default,
+        Optional<Stream> icon = default,
+        Optional<string> unicodeEmoji = default,
+        Optional<bool> isMentionable = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var iconData = default(Optional<string>);
 
-            // ReSharper disable once InvertIf
-            if (icon.IsDefined(out var iconStream))
+        // ReSharper disable once InvertIf
+        if (icon.IsDefined(out var iconStream))
+        {
+            var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
+            if (!packIcon.IsSuccess)
             {
-                var packIcon = await ImagePacker.PackImageAsync(iconStream, ct);
-                if (!packIcon.IsSuccess)
-                {
-                    return Result<IRole>.FromError(packIcon);
-                }
-
-                iconData = packIcon.Entity;
+                return Result<IRole>.FromError(packIcon);
             }
 
-            return await this.RestHttpClient.PostAsync<IRole>
-            (
-                $"guilds/{guildID}/roles",
-                b => b
+            iconData = packIcon.Entity;
+        }
+
+        return await this.RestHttpClient.PostAsync<IRole>
+        (
+            $"guilds/{guildID}/roles",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -785,23 +785,23 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IRole>>> ModifyGuildRolePositionsAsync
+    (
+        Snowflake guildID,
+        IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IReadOnlyList<IRole>>
         (
-            Snowflake guildID,
-            IReadOnlyList<(Snowflake RoleID, Optional<int?> Position)> modifiedPositions,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IReadOnlyList<IRole>>
-            (
-                $"guilds/{guildID}/roles",
-                b => b
+            $"guilds/{guildID}/roles",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJsonArray
                 (
@@ -819,38 +819,38 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IRole>> ModifyGuildRoleAsync
+    (
+        Snowflake guildID,
+        Snowflake roleID,
+        Optional<string?> name = default,
+        Optional<IDiscordPermissionSet?> permissions = default,
+        Optional<Color?> colour = default,
+        Optional<bool?> isHoisted = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
+        Optional<bool?> isMentionable = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var packIcon = await ImagePacker.PackImageAsync(icon, ct);
+        if (!packIcon.IsSuccess)
+        {
+            return Result<IRole>.FromError(packIcon);
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IRole>> ModifyGuildRoleAsync
+        var iconData = packIcon.Entity;
+
+        return await this.RestHttpClient.PatchAsync<IRole>
         (
-            Snowflake guildID,
-            Snowflake roleID,
-            Optional<string?> name = default,
-            Optional<IDiscordPermissionSet?> permissions = default,
-            Optional<Color?> colour = default,
-            Optional<bool?> isHoisted = default,
-            Optional<Stream?> icon = default,
-            Optional<string?> unicodeEmoji = default,
-            Optional<bool?> isMentionable = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            var packIcon = await ImagePacker.PackImageAsync(icon, ct);
-            if (!packIcon.IsSuccess)
-            {
-                return Result<IRole>.FromError(packIcon);
-            }
-
-            var iconData = packIcon.Entity;
-
-            return await this.RestHttpClient.PatchAsync<IRole>
-            (
-                $"guilds/{guildID}/roles/{roleID}",
-                b => b
+            $"guilds/{guildID}/roles/{roleID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -866,94 +866,94 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGuildRoleAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildRoleAsync
+    (
+        Snowflake guildId,
+        Snowflake roleID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildId,
-            Snowflake roleID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+            $"guilds/{guildId}/roles/{roleID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IPruneCount>> GetGuildPruneCountAsync
+    (
+        Snowflake guildID,
+        Optional<int> days = default,
+        Optional<IReadOnlyList<Snowflake>> includeRoles = default,
+        CancellationToken ct = default
+    )
+    {
+        if (days.HasValue && days.Value is < 1 or > 30)
         {
-            return this.RestHttpClient.DeleteAsync
+            return new ArgumentOutOfRangeError
             (
-                $"guilds/{guildId}/roles/{roleID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
+                nameof(days),
+                "The requested number of days must be between 1 and 30."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IPruneCount>> GetGuildPruneCountAsync
+        return await this.RestHttpClient.GetAsync<IPruneCount>
         (
-            Snowflake guildID,
-            Optional<int> days = default,
-            Optional<IReadOnlyList<Snowflake>> includeRoles = default,
-            CancellationToken ct = default
-        )
-        {
-            if (days.HasValue && days.Value is < 1 or > 30)
+            $"guilds/{guildID}/prune",
+            b =>
             {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(days),
-                    "The requested number of days must be between 1 and 30."
-                );
-            }
-
-            return await this.RestHttpClient.GetAsync<IPruneCount>
-            (
-                $"guilds/{guildID}/prune",
-                b =>
+                if (days.HasValue)
                 {
-                    if (days.HasValue)
-                    {
-                        b.AddQueryParameter("days", days.Value.ToString());
-                    }
+                    b.AddQueryParameter("days", days.Value.ToString());
+                }
 
-                    if (includeRoles.HasValue)
-                    {
-                        b.AddQueryParameter
-                        (
-                            "include_roles",
-                            string.Join(',', includeRoles.Value.Select(s => s.ToString()))
-                        );
-                    }
+                if (includeRoles.HasValue)
+                {
+                    b.AddQueryParameter
+                    (
+                        "include_roles",
+                        string.Join(',', includeRoles.Value.Select(s => s.ToString()))
+                    );
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IPruneCount>> BeginGuildPruneAsync
+    (
+        Snowflake guildID,
+        Optional<int> days = default,
+        Optional<bool> computePruneCount = default,
+        Optional<IReadOnlyList<Snowflake>> includeRoles = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (days.HasValue && days.Value is < 1 or > 30)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(days),
+                "The requested number of days must be between 1 and 30."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IPruneCount>> BeginGuildPruneAsync
+        return await this.RestHttpClient.PostAsync<IPruneCount>
         (
-            Snowflake guildID,
-            Optional<int> days = default,
-            Optional<bool> computePruneCount = default,
-            Optional<IReadOnlyList<Snowflake>> includeRoles = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (days.HasValue && days.Value is < 1 or > 30)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(days),
-                    "The requested number of days must be between 1 and 30."
-                );
-            }
-
-            return await this.RestHttpClient.PostAsync<IPruneCount>
-            (
-                $"guilds/{guildID}/prune",
-                b => b
+            $"guilds/{guildID}/prune",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -965,97 +965,97 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IVoiceRegion>>> GetGuildVoiceRegionsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IVoiceRegion>>
-            (
-                $"guilds/{guildID}/regions",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/regions",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IInvite>>> GetGuildInvitesAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
-            (
-                $"guilds/{guildID}/invites",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/invites",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IIntegration>>> GetGuildIntegrationsAsync
+    (
+        Snowflake guildID,
+        Optional<bool> includeApplications = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IIntegration>>
         (
-            Snowflake guildID,
-            Optional<bool> includeApplications = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IIntegration>>
-            (
-                $"guilds/{guildID}/integrations",
-                b =>
+            $"guilds/{guildID}/integrations",
+            b =>
+            {
+                if (includeApplications.HasValue)
                 {
-                    if (includeApplications.HasValue)
-                    {
-                        b.AddQueryParameter
-                        (
-                            "include_applications",
-                            includeApplications.Value.ToString().ToLowerInvariant()
-                        );
+                    b.AddQueryParameter
+                    (
+                        "include_applications",
+                        includeApplications.Value.ToString().ToLowerInvariant()
+                    );
 
-                        b.WithRateLimitContext();
-                    }
-                },
-                ct: ct
-            );
-        }
+                    b.WithRateLimitContext();
+                }
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildWidget>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IGuildWidget>
-            (
-                $"guilds/{guildID}/widget",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/widget",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
+    (
+        Snowflake guildID,
+        Optional<bool> isEnabled = default,
+        Optional<Snowflake?> channelID = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IGuildWidget>
         (
-            Snowflake guildID,
-            Optional<bool> isEnabled = default,
-            Optional<Snowflake?> channelID = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IGuildWidget>
-            (
-                $"guilds/{guildID}/widget",
-                b => b
+            $"guilds/{guildID}/widget",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -1066,79 +1066,79 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IPartialInvite>> GetGuildVanityUrlAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IPartialInvite>> GetGuildVanityUrlAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IPartialInvite>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IPartialInvite>
-            (
-                $"guilds/{guildID}/vanity-url",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/vanity-url",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<Stream>> GetGuildWidgetImageAsync
+    /// <inheritdoc />
+    public virtual Task<Result<Stream>> GetGuildWidgetImageAsync
+    (
+        Snowflake guildID,
+        Optional<WidgetImageStyle> style = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetContentAsync
         (
-            Snowflake guildID,
-            Optional<WidgetImageStyle> style = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetContentAsync
-            (
-                $"guilds/{guildID}/widget.png",
-                b =>
+            $"guilds/{guildID}/widget.png",
+            b =>
+            {
+                if (style.HasValue)
                 {
-                    if (style.HasValue)
-                    {
-                        b.AddQueryParameter("style", style.Value.ToString().ToLowerInvariant());
-                    }
+                    b.AddQueryParameter("style", style.Value.ToString().ToLowerInvariant());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct
-            );
-        }
+                b.WithRateLimitContext();
+            },
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IWelcomeScreen>> GetGuildWelcomeScreenAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IWelcomeScreen>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IWelcomeScreen>
-            (
-                $"guilds/{guildID}/welcome-screen",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/welcome-screen",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IWelcomeScreen>> ModifyGuildWelcomeScreenAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IWelcomeScreen>> ModifyGuildWelcomeScreenAsync
+    (
+        Snowflake guildID,
+        Optional<bool?> isEnabled = default,
+        Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
+        Optional<string?> description = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IWelcomeScreen>
         (
-            Snowflake guildID,
-            Optional<bool?> isEnabled = default,
-            Optional<IReadOnlyList<IWelcomeScreenChannel>?> welcomeChannels = default,
-            Optional<string?> description = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IWelcomeScreen>
-            (
-                $"guilds/{guildID}/welcome-screen",
-                b => b
+            $"guilds/{guildID}/welcome-screen",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -1150,24 +1150,24 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc/>
-        public virtual Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    /// <inheritdoc/>
+    public virtual Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    (
+        Snowflake guildID,
+        Snowflake channelID,
+        Optional<bool> suppress = default,
+        Optional<DateTimeOffset?> requestToSpeakTimestamp = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IVoiceState>
         (
-            Snowflake guildID,
-            Snowflake channelID,
-            Optional<bool> suppress = default,
-            Optional<DateTimeOffset?> requestToSpeakTimestamp = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IVoiceState>
-            (
-                $"guilds/{guildID}/voice-states/@me",
-                b => b.WithJson
+            $"guilds/{guildID}/voice-states/@me",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -1177,24 +1177,24 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IVoiceState>> ModifyUserVoiceStateAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IVoiceState>> ModifyUserVoiceStateAsync
+    (
+        Snowflake guildID,
+        Snowflake userID,
+        Snowflake channelID,
+        Optional<bool> suppress = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PatchAsync<IVoiceState>
         (
-            Snowflake guildID,
-            Snowflake userID,
-            Snowflake channelID,
-            Optional<bool> suppress = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PatchAsync<IVoiceState>
-            (
-                $"guilds/{guildID}/voice-states/{userID}",
-                b => b.WithJson
+            $"guilds/{guildID}/voice-states/{userID}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -1203,23 +1203,22 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync
+    /// <inheritdoc />
+    public Task<Result<IGuildThreadQueryResponse>> ListActiveThreadsAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildThreadQueryResponse>
         (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IGuildThreadQueryResponse>
-            (
-                $"guilds/{guildID}/threads/active",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"guilds/{guildID}/threads/active",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
     }
 }
