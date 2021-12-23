@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
 using OneOf;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;

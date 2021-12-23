@@ -21,9 +21,9 @@
 //
 
 using System.Diagnostics.CodeAnalysis;
-using Remora.Discord.API;
+using Remora.Rest.Core;
 
-namespace Remora.Rest.Core;
+namespace Remora.Discord.API;
 
 /// <summary>
 /// Contains methods for initializing a <see cref="Snowflake"/> with the <see cref="Constants.DiscordEpoch"/>.
@@ -31,7 +31,7 @@ namespace Remora.Rest.Core;
 public static class DiscordSnowflake
 {
     /// <summary>
-    /// Initialzes a new instance of a Snowflake with the Discord epoch.
+    /// Initializes a new instance of a Snowflake with the Discord epoch.
     /// </summary>
     /// <param name="value">The snowflake value.</param>
     /// <returns>A snowflake.</returns>
