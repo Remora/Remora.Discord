@@ -90,7 +90,7 @@ public class DiceRollCommands : CommandGroup
         using var response = await _httpClient.GetAsync(requestUrl);
         if (!response.IsSuccessStatusCode)
         {
-            return new GenericError(response.ReasonPhrase ?? "No reason given.");
+            return new InvalidOperationError(response.ReasonPhrase ?? "No reason given.");
         }
 
         await using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -104,7 +104,7 @@ public class DiceRollCommands : CommandGroup
         }
 
         return !rollResponse.Success
-            ? new GenericError("Dice rolling failed :(")
+            ? new InvalidOperationError("Dice rolling failed :(")
             : rollResponse;
     }
 
