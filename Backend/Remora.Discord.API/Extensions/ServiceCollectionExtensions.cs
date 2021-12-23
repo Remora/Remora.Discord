@@ -577,7 +577,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(m => m.IsPending, "pending");
 
         options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
-            .WithPropertyName(u => u.GuildID, "id")
             .WithPropertyName(u => u.IsUnavailable, "unavailable");
 
         options.AddDataObjectConverter<IPruneCount, PruneCount>();
