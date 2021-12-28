@@ -70,6 +70,22 @@ internal sealed class PaginatedMessageEntity :
         ? message.ID.ToString()
         : throw new InvalidOperationException();
 
+    /// <inheritdoc/>
+    public override Task<Result<bool>> IsInterestedAsync
+    (
+        ComponentType componentType,
+        string customID,
+        CancellationToken ct = default
+    )
+    {
+        if (componentType is not ComponentType.Button)
+        {
+            return Task.FromResult<Result<bool>>(false);
+        }
+
+        return Task.FromResult<Result<bool>>(this.Data.Appearance.Buttons.Select(b => b.CustomID).Contains(customID));
+    }
+
     /// <inheritdoc />
     public async Task<Result> HandleInteractionAsync(IUser user, string customID, CancellationToken ct = default)
     {

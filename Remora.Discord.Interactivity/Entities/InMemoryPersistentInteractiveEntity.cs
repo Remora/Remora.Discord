@@ -21,7 +21,11 @@
 //
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
 
@@ -29,7 +33,7 @@ namespace Remora.Discord.Interactivity;
 /// Represents an interactive entity with in-memory persistent data.
 /// </summary>
 [PublicAPI]
-public abstract class InMemoryPersistentInteractiveEntity
+public abstract class InMemoryPersistentInteractiveEntity : IInteractiveEntity
 {
     /// <summary>
     /// Gets the nonce used to look up the data object.
@@ -52,6 +56,14 @@ public abstract class InMemoryPersistentInteractiveEntity
     /// it.
     /// </summary>
     public bool DeleteData { get; protected set; }
+
+    /// <inheritdoc />
+    public abstract Task<Result<bool>> IsInterestedAsync
+    (
+        ComponentType componentType,
+        string customID,
+        CancellationToken ct = default
+    );
 }
 
 /// <summary>

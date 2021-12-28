@@ -20,7 +20,11 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
 
@@ -30,4 +34,17 @@ namespace Remora.Discord.Interactivity;
 [PublicAPI]
 public interface IInteractiveEntity
 {
+    /// <summary>
+    /// Determines if the entity is interested in an interaction for the given component type and custom ID.
+    /// </summary>
+    /// <remarks>
+    /// An interested entity will be allowed to handle the interaction, and more than one entity may indicate
+    /// interest for a single interaction. Multiple interested entities will run in parallel, though access to
+    /// persistent in-memory entity data will be synchronized.
+    /// </remarks>
+    /// <param name="componentType">The component type.</param>
+    /// <param name="customID">The custom ID.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>true if the entity is interested; otherwise, false.</returns>
+    Task<Result<bool>> IsInterestedAsync(ComponentType componentType, string customID, CancellationToken ct = default);
 }
