@@ -28,6 +28,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Interactivity.Responders;
 using Remora.Discord.Interactivity.Services;
+using Remora.Extensions.Options.Immutable;
 
 namespace Remora.Discord.Interactivity.Extensions;
 
@@ -47,6 +48,8 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddMemoryCache();
         serviceCollection.AddResponder<InteractivityResponder>();
         serviceCollection.TryAddScoped<InteractiveMessageService>();
+
+        serviceCollection.Configure(() => new InteractivityResponderOptions());
 
         return serviceCollection;
     }

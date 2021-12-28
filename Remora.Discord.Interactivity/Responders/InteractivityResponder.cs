@@ -25,8 +25,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -47,6 +49,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     private readonly ContextInjectionService _contextInjectionService;
     private readonly IDiscordRestInteractionAPI _interactionAPI;
     private readonly IServiceProvider _services;
+    private readonly InteractivityResponderOptions _options;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractivityResponder"/> class.
@@ -55,18 +58,21 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// <param name="contextInjectionService">The context injection service.</param>
     /// <param name="cache">The memory cache.</param>
     /// <param name="interactionAPI">The interaction API.</param>
+    /// <param name="options">The responder options.</param>
     public InteractivityResponder
     (
         IServiceProvider services,
         ContextInjectionService contextInjectionService,
         IMemoryCache cache,
-        IDiscordRestInteractionAPI interactionAPI
+        IDiscordRestInteractionAPI interactionAPI,
+        IOptions<InteractivityResponderOptions> options
     )
     {
         _services = services;
         _contextInjectionService = contextInjectionService;
         _cache = cache;
         _interactionAPI = interactionAPI;
+        _options = options.Value;
     }
 
     /// <inheritdoc />
@@ -96,27 +102,40 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             return new InvalidOperationError("The interaction did not contain a custom ID.");
         }
 
+        if (componentType is ComponentType.SelectMenu)
+        {
+            if (!context.Data.Values.HasValue)
+            {
+                return new InvalidOperationError("The interaction did not contain any selected values.");
+            }
+        }
+
+        if (!_options.SuppressAutomaticResponses)
+        {
+            var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
+            var createResponse = await _interactionAPI.CreateInteractionResponseAsync
+            (
+                context.ID,
+                context.Token,
+                response,
+                ct: ct
+            );
+
+            if (!createResponse.IsSuccess)
+            {
+                return createResponse;
+            }
+        }
+
         IReadOnlyList<Result> interactionResults;
         switch (componentType)
         {
             case ComponentType.Button:
             {
-                var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
-                var createResponse = await _interactionAPI.CreateInteractionResponseAsync
-                (
-                    context.ID,
-                    context.Token,
-                    response,
-                    ct: ct
-                );
-
-                if (!createResponse.IsSuccess)
-                {
-                    return createResponse;
-                }
-
                 interactionResults = await RunEntityHandlersAsync<IButtonInteractiveEntity>
                 (
+                    componentType,
+                    customID,
                     (entity, c) => entity.HandleInteractionAsync(context.User, customID, c),
                     ct
                 );
@@ -125,28 +144,11 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             }
             case ComponentType.SelectMenu:
             {
-                if (!context.Data.Values.IsDefined(out var values))
-                {
-                    return new InvalidOperationError("The interaction did not contain selected values.");
-                }
-
-                var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
-                var createResponse = await _interactionAPI.CreateInteractionResponseAsync
-                (
-                    context.ID,
-                    context.Token,
-                    response,
-                    ct: ct
-                );
-
-                if (!createResponse.IsSuccess)
-                {
-                    return createResponse;
-                }
-
                 interactionResults = await RunEntityHandlersAsync<ISelectMenuInteractiveEntity>
                 (
-                    (entity, c) => entity.HandleInteractionAsync(context.User, customID, values, c),
+                    componentType,
+                    customID,
+                    (entity, c) => entity.HandleInteractionAsync(context.User, customID, context.Data.Values.Value, c),
                     ct
                 );
 
@@ -159,6 +161,16 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
             }
         }
 
+        if (!interactionResults.Any())
+        {
+            return new NotFoundError
+            (
+                "No interested interactive entities were found. Did you forget to add any entities interested " +
+                $"in {componentType.Humanize().ToLowerInvariant()} components (with the ID {customID}) to the " +
+                "service collection?"
+            );
+        }
+
         return interactionResults.All(r => r.IsSuccess)
             ? Result.FromSuccess()
             : new AggregateError(interactionResults.Where(r => !r.IsSuccess).Cast<IResult>().ToArray());
@@ -166,80 +178,131 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
     private async Task<IReadOnlyList<Result>> RunEntityHandlersAsync<TEntity>
     (
+        ComponentType componentType,
+        string customID,
         Func<TEntity, CancellationToken, Task<Result>> handler,
         CancellationToken ct = default
     )
-        where TEntity : class
+        where TEntity : class, IInteractiveEntity
     {
         var entities = _services.GetServices<TEntity>();
 
-        return await Task.WhenAll(entities.Select(async entity =>
+        // Null in this list signifies no interest
+        var results = await Task.WhenAll(entities.Select<TEntity, Task<Result?>>(async entity =>
         {
-            if (entity is not InMemoryPersistentInteractiveEntity persistentEntity)
+            if (entity is InMemoryPersistentInteractiveEntity persistentEntity)
             {
-                try
-                {
-                    return await handler(entity, ct);
-                }
-                catch (Exception e)
-                {
-                    return e;
-                }
-            }
-
-            var dataKey = InMemoryPersistenceHelpers.CreateNonceKey(persistentEntity.Nonce);
-            if (!_cache.TryGetValue<(SemaphoreSlim, object)>(dataKey, out var value))
-            {
-                return new NotFoundError("No persistent data was found for an interactive entity.");
-            }
-
-            var (semaphore, data) = value;
-
-            // Figure out the real data type the entity wants
-            var entityDataType = persistentEntity.DataType;
-
-            if (entityDataType != data.GetType())
-            {
-                // This is a certified "oops" moment
-                return new InvalidOperationError
+                return await RunPersistentEntityHandlerAsync
                 (
-                    "The cached persistent data was not compatible with the data type required by the entity that " +
-                    "requested it. Bug or API misuse?"
+                    persistentEntity,
+                    componentType,
+                    customID,
+                    handler,
+                    ct
                 );
             }
 
-            persistentEntity.UntypedData = data;
-
-            Result interactionResult;
+            // It's fine to run without synchronization
             try
             {
-                // Only one entity instance may operate on an in-memory data object at a time
-                await semaphore.WaitAsync(ct);
-                interactionResult = await handler(entity, ct);
-
-                if (interactionResult.IsSuccess)
+                var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
+                if (!determineInterest.IsSuccess)
                 {
-                    _cache.Set(dataKey, (semaphore, persistentEntity.UntypedData));
+                    return Result.FromError(determineInterest);
                 }
+
+                if (determineInterest.IsDefined(out var isInterested) && !isInterested)
+                {
+                    return null;
+                }
+
+                return await handler(entity, ct);
             }
             catch (Exception e)
             {
                 return e;
             }
-            finally
-            {
-                if (persistentEntity.DeleteData)
-                {
-                    _cache.Remove(dataKey);
-                    semaphore.Dispose();
-                }
-                else
-                {
-                    semaphore.Release();
-                }
-            }
-
-            return interactionResult;
         }));
+
+        return results.Where(r => r is not null).Select(r => r!.Value).ToList();
+    }
+
+    private async Task<Result?> RunPersistentEntityHandlerAsync<TEntity>
+    (
+        InMemoryPersistentInteractiveEntity entity,
+        ComponentType componentType,
+        string customID,
+        Func<TEntity, CancellationToken, Task<Result>> handler,
+        CancellationToken ct
+    )
+        where TEntity : class, IInteractiveEntity
+    {
+        var dataKey = InMemoryPersistenceHelpers.CreateNonceKey(entity.Nonce);
+        if (!_cache.TryGetValue<(SemaphoreSlim, object)>(dataKey, out var value))
+        {
+            return new NotFoundError
+            (
+                "No persistent data found for an interactive entity. Did you forget to initialize one when sending " +
+                "the original message?"
+            );
+        }
+
+        var (semaphore, data) = value;
+
+        // Figure out the real data type the entity wants
+        var entityDataType = entity.DataType;
+
+        if (!entityDataType.IsInstanceOfType(data))
+        {
+            // This is a certified "oops" moment
+            return new InvalidOperationError
+            (
+                "The cached persistent data was not compatible with the data type required by the entity that " +
+                "requested it. Bug or API misuse?"
+            );
+        }
+
+        entity.UntypedData = data;
+        var determineInterest = await entity.IsInterestedAsync(componentType, customID, ct);
+        if (!determineInterest.IsSuccess)
+        {
+            return Result.FromError(determineInterest);
+        }
+
+        if (determineInterest.IsDefined(out var isInterested) && !isInterested)
+        {
+            return null;
+        }
+
+        Result interactionResult;
+        try
+        {
+            // Only one entity instance may operate on an in-memory data object at a time
+            await semaphore.WaitAsync(ct);
+            interactionResult = await handler((entity as TEntity)!, ct);
+
+            if (interactionResult.IsSuccess)
+            {
+                _cache.Set(dataKey, (semaphore, entity.UntypedData));
+            }
+        }
+        catch (Exception e)
+        {
+            return e;
+        }
+        finally
+        {
+            if (entity.DeleteData)
+            {
+                _cache.Remove(dataKey);
+                semaphore.Dispose();
+            }
+            else
+            {
+                semaphore.Release();
+            }
+        }
+
+        return interactionResult;
     }
 }
