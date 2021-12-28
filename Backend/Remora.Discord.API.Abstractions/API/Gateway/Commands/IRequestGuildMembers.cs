@@ -24,42 +24,41 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents a command used to request guild members.
+/// </summary>
+[PublicAPI]
+public interface IRequestGuildMembers : IGatewayCommand
 {
     /// <summary>
-    /// Represents a command used to request guild members.
+    /// Gets the ID of the guild that members should be requested from.
     /// </summary>
-    [PublicAPI]
-    public interface IRequestGuildMembers : IGatewayCommand
-    {
-        /// <summary>
-        /// Gets the ID of the guild that members should be requested from.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets a query string that the requested usernames should start with.
-        /// </summary>
-        Optional<string> Query { get; }
+    /// <summary>
+    /// Gets a query string that the requested usernames should start with.
+    /// </summary>
+    Optional<string> Query { get; }
 
-        /// <summary>
-        /// Gets a limiting number of users to fetch.
-        /// </summary>
-        Optional<int> Limit { get; }
+    /// <summary>
+    /// Gets a limiting number of users to fetch.
+    /// </summary>
+    Optional<int> Limit { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether we want to fetch the presences of the users.
-        /// </summary>
-        Optional<bool> Presences { get; }
+    /// <summary>
+    /// Gets a value indicating whether we want to fetch the presences of the users.
+    /// </summary>
+    Optional<bool> Presences { get; }
 
-        /// <summary>
-        /// Gets a collection of user IDs that should be fetched.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> UserIDs { get; }
+    /// <summary>
+    /// Gets a collection of user IDs that should be fetched.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> UserIDs { get; }
 
-        /// <summary>
-        /// Gets a nonce (unique string) to identify the incoming guild member chunks after the request has been accepted.
-        /// </summary>
-        Optional<string> Nonce { get; }
-    }
+    /// <summary>
+    /// Gets a nonce (unique string) to identify the incoming guild member chunks after the request has been accepted.
+    /// </summary>
+    Optional<string> Nonce { get; }
 }

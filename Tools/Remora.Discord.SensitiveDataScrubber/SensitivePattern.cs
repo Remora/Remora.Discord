@@ -22,10 +22,9 @@
 
 using System.Text.RegularExpressions;
 
-namespace Remora.Discord.SensitiveDataScrubber
-{
-    /// <summary>
-    /// Serves as a data container for sensitive data patterns.
-    /// </summary>
-    public record SensitivePattern(Regex ValuePattern, string Replacement);
-}
+namespace Remora.Discord.SensitiveDataScrubber;
+
+/// <summary>
+/// Serves as a data container for sensitive data patterns.
+/// </summary>
+public record SensitivePattern(Regex ValuePattern, string Replacement);

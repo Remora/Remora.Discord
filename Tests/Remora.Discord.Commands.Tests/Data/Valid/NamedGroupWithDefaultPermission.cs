@@ -27,20 +27,19 @@ using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
+namespace Remora.Discord.Commands.Tests.Data.Valid;
+
+/// <summary>
+/// A group with a default permission set.
+/// </summary>
+[DiscordDefaultPermission(true)]
+[Group("a")]
+public class NamedGroupWithDefaultPermission : CommandGroup
 {
     /// <summary>
-    /// A group with a default permission set.
+    /// The first command.
     /// </summary>
-    [DiscordDefaultPermission(true)]
-    [Group("a")]
-    public class NamedGroupWithDefaultPermission : CommandGroup
-    {
-        /// <summary>
-        /// The first command.
-        /// </summary>
-        /// <returns>Nothing.</returns>
-        [Command("b")]
-        public Task<Result> B() => throw new NotImplementedException();
-    }
+    /// <returns>Nothing.</returns>
+    [Command("b")]
+    public Task<Result> B() => throw new NotImplementedException();
 }

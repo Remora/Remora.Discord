@@ -70,7 +70,7 @@ public static class ServiceCollectionExtensions
 
         // Set up context injection
         serviceCollection
-            .TryAddTransient<ICommandContext>
+            .TryAddTransient
             (
                 s =>
                 {

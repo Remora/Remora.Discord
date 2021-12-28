@@ -31,62 +31,61 @@ using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Gateway
+namespace Remora.Discord.Rest.Tests.API.Gateway;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestGatewayAPI"/> class.
+/// </summary>
+public class DiscordRestGatewayAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestGatewayAPI"/> class.
+    /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayAsync"/> method.
     /// </summary>
-    public class DiscordRestGatewayAPITests
+    public class GetGatewayAsync : RestAPITestBase<IDiscordRestGatewayAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetGatewayAsync : RestAPITestBase<IDiscordRestGatewayAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
+            );
 
-                var result = await api.GetGatewayAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetGatewayAsync();
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayBotAsync"/> method.
+    /// </summary>
+    public class GetGatewayBotAsync : RestAPITestBase<IDiscordRestGatewayAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestGatewayAPI.GetGatewayBotAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetGatewayBotAsync : RestAPITestBase<IDiscordRestGatewayAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
-                        .WithNoContent()
-                        .WithAuthentication()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}gateway/bot")
+                    .WithNoContent()
+                    .WithAuthentication()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGatewayEndpoint)])
+            );
 
-                var result = await api.GetGatewayBotAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetGatewayBotAsync();
+            ResultAssert.Successful(result);
         }
     }
 }

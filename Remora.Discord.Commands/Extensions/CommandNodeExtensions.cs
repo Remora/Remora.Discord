@@ -71,7 +71,7 @@ public static class CommandNodeExtensions
 
         // Traverse each parent group node, until we find the root node
         var parent = node.Parent;
-        while (parent is GroupNode group && attribute is null)
+        while (parent is GroupNode group)
         {
             parent = group.Parent;
 
@@ -87,6 +87,6 @@ public static class CommandNodeExtensions
             }
         }
 
-        return attribute;
+        return null;
     }
 }

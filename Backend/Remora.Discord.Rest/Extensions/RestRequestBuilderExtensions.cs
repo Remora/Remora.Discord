@@ -26,36 +26,35 @@ using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 
-namespace Remora.Discord.Rest.Extensions
+namespace Remora.Discord.Rest.Extensions;
+
+/// <summary>
+/// Defines extensions to the <see cref="RestRequestBuilder"/> class.
+/// </summary>
+[PublicAPI]
+public static class RestRequestBuilderExtensions
 {
     /// <summary>
-    /// Defines extensions to the <see cref="RestRequestBuilder"/> class.
+    /// Adds an audit log reason header to the request, provided the value is defined.
     /// </summary>
-    [PublicAPI]
-    public static class RestRequestBuilderExtensions
+    /// <param name="builder">The request builder.</param>
+    /// <param name="value">The value of the header.</param>
+    /// <returns>The builder, potentially with the header.</returns>
+    public static RestRequestBuilder AddAuditLogReason(this RestRequestBuilder builder, Optional<string> value)
     {
-        /// <summary>
-        /// Adds an audit log reason header to the request, provided the value is defined.
-        /// </summary>
-        /// <param name="builder">The request builder.</param>
-        /// <param name="value">The value of the header.</param>
-        /// <returns>The builder, potentially with the header.</returns>
-        public static RestRequestBuilder AddAuditLogReason(this RestRequestBuilder builder, Optional<string> value)
-        {
-            return builder.AddHeader(Constants.AuditLogHeaderName, value);
-        }
+        return builder.AddHeader(Constants.AuditLogHeaderName, value);
+    }
 
-        /// <summary>
-        /// Sets up a Polly context with an endpoint for rate limiting purposes.
-        /// </summary>
-        /// <param name="builder">The request builder.</param>
-        /// <returns>The builder, with the context.</returns>
-        public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder)
-        {
-            var context = new Context { { "endpoint", builder.Endpoint } };
-            builder.With(r => r.SetPolicyExecutionContext(context));
+    /// <summary>
+    /// Sets up a Polly context with an endpoint for rate limiting purposes.
+    /// </summary>
+    /// <param name="builder">The request builder.</param>
+    /// <returns>The builder, with the context.</returns>
+    public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder)
+    {
+        var context = new Context { { "endpoint", builder.Endpoint } };
+        builder.With(r => r.SetPolicyExecutionContext(context));
 
-            return builder;
-        }
+        return builder;
     }
 }

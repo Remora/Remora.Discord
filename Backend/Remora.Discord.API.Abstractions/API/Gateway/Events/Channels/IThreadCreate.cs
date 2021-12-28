@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the creation of a channel.
+/// </summary>
+[PublicAPI]
+public interface IThreadCreate : IGatewayEvent, IChannel
 {
-    /// <summary>
-    /// Represents the creation of a channel.
-    /// </summary>
-    [PublicAPI]
-    public interface IThreadCreate : IGatewayEvent, IChannel
-    {
-    }
 }

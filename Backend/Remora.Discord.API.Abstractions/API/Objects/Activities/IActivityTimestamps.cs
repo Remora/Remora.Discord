@@ -24,22 +24,21 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
+/// </summary>
+[PublicAPI]
+public interface IActivityTimestamps
 {
     /// <summary>
-    /// Represents a set of activity timestamps - that is, when the activity started and/or stopped.
+    /// Gets the start timestamp.
     /// </summary>
-    [PublicAPI]
-    public interface IActivityTimestamps
-    {
-        /// <summary>
-        /// Gets the start timestamp.
-        /// </summary>
-        Optional<DateTimeOffset> Start { get; }
+    Optional<DateTimeOffset> Start { get; }
 
-        /// <summary>
-        /// Gets the end timestamp.
-        /// </summary>
-        Optional<DateTimeOffset> End { get; }
-    }
+    /// <summary>
+    /// Gets the end timestamp.
+    /// </summary>
+    Optional<DateTimeOffset> End { get; }
 }

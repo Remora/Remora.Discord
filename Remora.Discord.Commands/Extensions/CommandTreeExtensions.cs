@@ -528,8 +528,8 @@ public static class CommandTreeExtensions
                 choices,
                 ChannelTypes: getChannelTypes.Entity,
                 EnableAutocomplete: enableAutocomplete,
-                MinValue: minValue?.Value ?? default,
-                MaxValue: maxValue?.Value ?? default
+                MinValue: minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+                MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>)
             );
 
             parameterOptions.Add(parameterOption);

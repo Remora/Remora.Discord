@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a reaction to a message.
+/// </summary>
+[PublicAPI]
+public interface IReaction
 {
     /// <summary>
-    /// Represents a reaction to a message.
+    /// Gets the number of times this emoji has been used to react.
     /// </summary>
-    [PublicAPI]
-    public interface IReaction
-    {
-        /// <summary>
-        /// Gets the number of times this emoji has been used to react.
-        /// </summary>
-        int Count { get; }
+    int Count { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the current user has reacted using this emoji.
-        /// </summary>
-        bool HasCurrentUserReacted { get; }
+    /// <summary>
+    /// Gets a value indicating whether the current user has reacted using this emoji.
+    /// </summary>
+    bool HasCurrentUserReacted { get; }
 
-        /// <summary>
-        /// Gets the partial emoji information.
-        /// </summary>
-        IPartialEmoji Emoji { get; }
-    }
+    /// <summary>
+    /// Gets the partial emoji information.
+    /// </summary>
+    IPartialEmoji Emoji { get; }
 }

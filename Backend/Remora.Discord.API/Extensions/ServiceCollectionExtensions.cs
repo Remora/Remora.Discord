@@ -35,7 +35,6 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
-using Remora.Discord.API.Json.Converters;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
@@ -577,7 +576,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(m => m.IsPending, "pending");
 
         options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
-            .WithPropertyName(u => u.GuildID, "id")
             .WithPropertyName(u => u.IsUnavailable, "unavailable");
 
         options.AddDataObjectConverter<IPruneCount, PruneCount>();

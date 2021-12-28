@@ -22,17 +22,16 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a count of members that would be pruned in a prune operation.
+/// </summary>
+[PublicAPI]
+public interface IPruneCount
 {
     /// <summary>
-    /// Represents a count of members that would be pruned in a prune operation.
+    /// Gets the number of members that would be pruned.
     /// </summary>
-    [PublicAPI]
-    public interface IPruneCount
-    {
-        /// <summary>
-        /// Gets the number of members that would be pruned.
-        /// </summary>
-        int? Pruned { get; }
-    }
+    int? Pruned { get; }
 }

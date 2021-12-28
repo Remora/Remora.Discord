@@ -23,52 +23,51 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various application flags.
+/// </summary>
+[PublicAPI, Flags]
+public enum ApplicationFlags
 {
     /// <summary>
-    /// Enumerates various application flags.
+    /// The application is allowed to receive presence information over the gateway.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum ApplicationFlags
-    {
-        /// <summary>
-        /// The application is allowed to receive presence information over the gateway.
-        /// </summary>
-        GatewayPresence = 1 << 12,
+    GatewayPresence = 1 << 12,
 
-        /// <summary>
-        /// The application is allowed to receive limited presence information over the gateway.
-        /// </summary>
-        GatewayPresenceLimited = 1 << 13,
+    /// <summary>
+    /// The application is allowed to receive limited presence information over the gateway.
+    /// </summary>
+    GatewayPresenceLimited = 1 << 13,
 
-        /// <summary>
-        /// The application is allowed to receive guild members over the gateway.
-        /// </summary>
-        GatewayGuildMembers = 1 << 14,
+    /// <summary>
+    /// The application is allowed to receive guild members over the gateway.
+    /// </summary>
+    GatewayGuildMembers = 1 << 14,
 
-        /// <summary>
-        /// The application is allowed to receive limited guild members over the gateway.
-        /// </summary>
-        GatewayGuildMembersLimited = 1 << 15,
+    /// <summary>
+    /// The application is allowed to receive limited guild members over the gateway.
+    /// </summary>
+    GatewayGuildMembersLimited = 1 << 15,
 
-        /// <summary>
-        /// The application is currently pending verification and has hit the guild limit.
-        /// </summary>
-        VerificationPendingGuildLimit = 1 << 16,
+    /// <summary>
+    /// The application is currently pending verification and has hit the guild limit.
+    /// </summary>
+    VerificationPendingGuildLimit = 1 << 16,
 
-        /// <summary>
-        /// The application is embedded.
-        /// </summary>
-        Embedded = 1 << 17,
+    /// <summary>
+    /// The application is embedded.
+    /// </summary>
+    Embedded = 1 << 17,
 
-        /// <summary>
-        /// The application has access to message contents over the gateway.
-        /// </summary>
-        GatewayMessageContent = 1 << 18,
+    /// <summary>
+    /// The application has access to message contents over the gateway.
+    /// </summary>
+    GatewayMessageContent = 1 << 18,
 
-        /// <summary>
-        /// The application's access to message contents over the gateway is limited.
-        /// </summary>
-        GatewayMessageContentLimited = 1 << 19
-    }
+    /// <summary>
+    /// The application's access to message contents over the gateway is limited.
+    /// </summary>
+    GatewayMessageContentLimited = 1 << 19
 }

@@ -22,28 +22,27 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various types of webhooks.
+/// </summary>
+[PublicAPI]
+public enum WebhookType
 {
     /// <summary>
-    /// Enumerates various types of webhooks.
+    /// Incoming webhooks can post messages to channels with a generated token.
     /// </summary>
-    [PublicAPI]
-    public enum WebhookType
-    {
-        /// <summary>
-        /// Incoming webhooks can post messages to channels with a generated token.
-        /// </summary>
-        Incoming = 1,
+    Incoming = 1,
 
-        /// <summary>
-        /// Channel follower webhooks are internal webhooks used with channel following to post new messages into
-        /// channels.
-        /// </summary>
-        ChannelFollower = 2,
+    /// <summary>
+    /// Channel follower webhooks are internal webhooks used with channel following to post new messages into
+    /// channels.
+    /// </summary>
+    ChannelFollower = 2,
 
-        /// <summary>
-        /// Application webhooks are used with interactions.
-        /// </summary>
-        Application = 3
-    }
+    /// <summary>
+    /// Application webhooks are used with interactions.
+    /// </summary>
+    Application = 3
 }

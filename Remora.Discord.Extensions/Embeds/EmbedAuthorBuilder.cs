@@ -26,81 +26,80 @@ using Remora.Discord.Extensions.Builder;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Embeds
+namespace Remora.Discord.Extensions.Embeds;
+
+/// <summary>
+/// A builder which validates and builds an <see cref="EmbedAuthor"/>.
+/// </summary>
+public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
 {
     /// <summary>
-    /// A builder which validates and builds an <see cref="EmbedAuthor"/>.
+    /// Gets or sets the author's name. Must be shorter than or equal to <see cref="EmbedConstants.MaxAuthorNameLength"/> in length.
     /// </summary>
-    public sealed class EmbedAuthorBuilder : BuilderBase<EmbedAuthor>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the author's website. Provide <c>null</c> if no url is needed.
+    /// </summary>
+    public string? Url { get; set; }
+
+    /// <summary>
+    /// Gets or sets the author's icon url. Provide <c>null</c> if no url is needed.
+    /// </summary>
+    public string? IconUrl { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EmbedAuthorBuilder"/> class.
+    /// </summary>
+    /// <param name="name">The author's name.</param>
+    /// <param name="url">The author's website.</param>
+    /// <param name="iconUrl">The author's icon url.</param>
+    public EmbedAuthorBuilder(string name, string? url = null, string? iconUrl = null)
     {
-        /// <summary>
-        /// Gets or sets the author's name. Must be shorter than or equal to <see cref="EmbedConstants.MaxAuthorNameLength"/> in length.
-        /// </summary>
-        public string Name { get; set; }
+        this.Name = name;
+        this.Url = url;
+        this.IconUrl = iconUrl;
+    }
 
-        /// <summary>
-        /// Gets or sets the author's website. Provide <c>null</c> if no url is needed.
-        /// </summary>
-        public string? Url { get; set; }
+    /// <inheritdoc />
+    public override Result<EmbedAuthor> Build()
+    {
+        var validationResult = Validate();
 
-        /// <summary>
-        /// Gets or sets the author's icon url. Provide <c>null</c> if no url is needed.
-        /// </summary>
-        public string? IconUrl { get; set; }
+        return validationResult.IsSuccess
+            ? new EmbedAuthor(this.Name, this.Url ?? default(Optional<string>), this.IconUrl ?? default(Optional<string>))
+            : Result<EmbedAuthor>.FromError(validationResult);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmbedAuthorBuilder"/> class.
-        /// </summary>
-        /// <param name="name">The author's name.</param>
-        /// <param name="url">The author's website.</param>
-        /// <param name="iconUrl">The author's icon url.</param>
-        public EmbedAuthorBuilder(string name, string? url = null, string? iconUrl = null)
+    /// <summary>
+    /// Converts an existing embed author into an <see cref="EmbedAuthorBuilder"/>.
+    /// </summary>
+    /// <param name="author">The author of the embed.</param>
+    /// <returns>A new <see cref="EmbedAuthorBuilder"/> based on the provided author.</returns>
+    public static EmbedAuthorBuilder FromAuthor(IEmbedAuthor author)
+        => new(author.Name, author.Url.HasValue ? author.Url.Value : null, author.IconUrl.HasValue ? author.Url.Value : null);
+
+    /// <inheritdoc/>
+    public override Result Validate()
+    {
+        var nameResult = ValidateLength(nameof(this.Name), this.Name, EmbedConstants.MaxAuthorNameLength, false);
+        if (!nameResult.IsSuccess)
         {
-            Name = name;
-            Url = url;
-            IconUrl = iconUrl;
+            return Result.FromError(nameResult.Error);
         }
 
-        /// <inheritdoc />
-        public override Result<EmbedAuthor> Build()
+        var urlResult = ValidateUrl(nameof(this.Url), this.Url, true);
+        if (!urlResult.IsSuccess)
         {
-            var validationResult = this.Validate();
-
-            return validationResult.IsSuccess
-                ? new EmbedAuthor(Name, Url ?? default(Optional<string>), IconUrl ?? default(Optional<string>))
-                : Result<EmbedAuthor>.FromError(validationResult);
+            return Result.FromError(urlResult.Error);
         }
 
-        /// <summary>
-        /// Converts an existing embed author into an <see cref="EmbedAuthorBuilder"/>.
-        /// </summary>
-        /// <param name="author">The author of the embed.</param>
-        /// <returns>A new <see cref="EmbedAuthorBuilder"/> based on the provided author.</returns>
-        public static EmbedAuthorBuilder FromAuthor(IEmbedAuthor author)
-            => new(author.Name, author.Url.HasValue ? author.Url.Value : null, author.IconUrl.HasValue ? author.Url.Value : null);
-
-        /// <inheritdoc/>
-        public override Result Validate()
+        var iconResult = ValidateUrl(nameof(this.IconUrl), this.IconUrl, true);
+        if (!iconResult.IsSuccess)
         {
-            var nameResult = ValidateLength(nameof(Name), Name, EmbedConstants.MaxAuthorNameLength, false);
-            if (!nameResult.IsSuccess)
-            {
-                return Result.FromError(nameResult.Error);
-            }
-
-            var urlResult = ValidateUrl(nameof(Url), Url, true);
-            if (!urlResult.IsSuccess)
-            {
-                return Result.FromError(urlResult.Error);
-            }
-
-            var iconResult = ValidateUrl(nameof(IconUrl), IconUrl, true);
-            if (!iconResult.IsSuccess)
-            {
-                return Result.FromError(iconResult.Error);
-            }
-
-            return Result.FromSuccess();
+            return Result.FromError(iconResult.Error);
         }
+
+        return Result.FromSuccess();
     }
 }

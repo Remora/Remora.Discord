@@ -23,10 +23,9 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <inheritdoc />
+public class AccountTests : ObjectTestBase<IAccount>
 {
-    /// <inheritdoc />
-    public class AccountTests : ObjectTestBase<IAccount>
-    {
-    }
 }

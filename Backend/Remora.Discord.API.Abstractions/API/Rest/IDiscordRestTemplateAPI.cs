@@ -29,114 +29,113 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord REST template API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestTemplateAPI
 {
     /// <summary>
-    /// Represents the Discord REST template API.
+    /// Gets the template object for the given code.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestTemplateAPI
-    {
-        /// <summary>
-        /// Gets the template object for the given code.
-        /// </summary>
-        /// <param name="templateCode">The template code.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<ITemplate>> GetTemplateAsync
-        (
-            string templateCode,
-            CancellationToken ct = default
-        );
+    /// <param name="templateCode">The template code.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<ITemplate>> GetTemplateAsync
+    (
+        string templateCode,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Creates a new guild from the given template.
-        /// </summary>
-        /// <param name="templateCode">The template code.</param>
-        /// <param name="name">The name of the new guild.</param>
-        /// <param name="icon">The icon of the new guild.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<Result<IGuild>> CreateGuildFromTemplateAsync
-        (
-            string templateCode,
-            string name,
-            Optional<Stream> icon = default,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Creates a new guild from the given template.
+    /// </summary>
+    /// <param name="templateCode">The template code.</param>
+    /// <param name="name">The name of the new guild.</param>
+    /// <param name="icon">The icon of the new guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IGuild>> CreateGuildFromTemplateAsync
+    (
+        string templateCode,
+        string name,
+        Optional<Stream> icon = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Gets the template for the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Gets the template for the given guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Creates a new guild template from the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="name">The name of the template.</param>
-        /// <param name="description">The description of the template.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<Result<ITemplate>> CreateGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string name,
-            Optional<string?> description = default,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Creates a new guild template from the given guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="name">The name of the template.</param>
+    /// <param name="description">The description of the template.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<ITemplate>> CreateGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> description = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Synchronized the template to the guild's current state.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="templateCode">The template code.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<ITemplate>> SyncGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Synchronized the template to the guild's current state.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="templateCode">The template code.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<ITemplate>> SyncGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Modifies the template's metadata.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="templateCode">The template code.</param>
-        /// <param name="name">The new name of the template.</param>
-        /// <param name="description">The new description of the template.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<Result<ITemplate>> ModifyGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            string name,
-            Optional<string> description,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Modifies the template's metadata.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="templateCode">The template code.</param>
+    /// <param name="name">The new name of the template.</param>
+    /// <param name="description">The new description of the template.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        string name,
+        Optional<string> description,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Deletes the given guild template.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="templateCode">The template code.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded. This contains the deleted template.</returns>
-        Task<Result<ITemplate>> DeleteGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        );
-    }
+    /// <summary>
+    /// Deletes the given guild template.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="templateCode">The template code.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded. This contains the deleted template.</returns>
+    Task<Result<ITemplate>> DeleteGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    );
 }

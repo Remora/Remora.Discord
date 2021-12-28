@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a single permission for a command.
+/// </summary>
+[PublicAPI]
+public interface IApplicationCommandPermissions
 {
     /// <summary>
-    /// Represents a single permission for a command.
+    /// Gets the ID of the role or user that has been assigned an explicit permission.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandPermissions
-    {
-        /// <summary>
-        /// Gets the ID of the role or user that has been assigned an explicit permission.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the type of the entity that has been assigned an explicit permission.
-        /// </summary>
-        ApplicationCommandPermissionType Type { get; }
+    /// <summary>
+    /// Gets the type of the entity that has been assigned an explicit permission.
+    /// </summary>
+    ApplicationCommandPermissionType Type { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the referenced entity has permission to use the command.
-        /// </summary>
-        bool HasPermission { get;  }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the referenced entity has permission to use the command.
+    /// </summary>
+    bool HasPermission { get;  }
 }

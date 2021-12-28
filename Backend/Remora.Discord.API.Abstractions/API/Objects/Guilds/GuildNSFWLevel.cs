@@ -22,32 +22,31 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various NSFW levels.
+/// </summary>
+[PublicAPI]
+public enum GuildNSFWLevel
 {
     /// <summary>
-    /// Enumerates various NSFW levels.
+    /// The guild uses the default NSFW level.
     /// </summary>
-    [PublicAPI]
-    public enum GuildNSFWLevel
-    {
-        /// <summary>
-        /// The guild uses the default NSFW level.
-        /// </summary>
-        Default = 0,
+    Default = 0,
 
-        /// <summary>
-        /// The guild is an explicit guild.
-        /// </summary>
-        Explicit = 1,
+    /// <summary>
+    /// The guild is an explicit guild.
+    /// </summary>
+    Explicit = 1,
 
-        /// <summary>
-        /// The guild is marked as safe.
-        /// </summary>
-        Safe = 2,
+    /// <summary>
+    /// The guild is marked as safe.
+    /// </summary>
+    Safe = 2,
 
-        /// <summary>
-        /// The guild is age-restricted.
-        /// </summary>
-        AgeRestricted = 3
-    }
+    /// <summary>
+    /// The guild is age-restricted.
+    /// </summary>
+    AgeRestricted = 3
 }

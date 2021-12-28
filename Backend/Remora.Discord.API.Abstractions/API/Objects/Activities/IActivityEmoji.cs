@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an emoji displayed in an activity.
+/// </summary>
+[PublicAPI]
+public interface IActivityEmoji
 {
     /// <summary>
-    /// Represents an emoji displayed in an activity.
+    /// Gets the name of the emoji.
     /// </summary>
-    [PublicAPI]
-    public interface IActivityEmoji
-    {
-        /// <summary>
-        /// Gets the name of the emoji.
-        /// </summary>
-        string Name { get; }
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the ID of the emoji.
-        /// </summary>
-        Optional<Snowflake> ID { get; }
+    /// <summary>
+    /// Gets the ID of the emoji.
+    /// </summary>
+    Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the emoji is animated.
-        /// </summary>
-        Optional<bool> Animated { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the emoji is animated.
+    /// </summary>
+    Optional<bool> Animated { get; }
 }

@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of descriptive assets related to an activity.
+/// </summary>
+[PublicAPI]
+public interface IActivityAssets
 {
     /// <summary>
-    /// Represents a set of descriptive assets related to an activity.
+    /// Gets the ID for a large image related to the activity. Usually, this is a snowflake.
     /// </summary>
-    [PublicAPI]
-    public interface IActivityAssets
-    {
-        /// <summary>
-        /// Gets the ID for a large image related to the activity. Usually, this is a snowflake.
-        /// </summary>
-        Optional<string> LargeImage { get; }
+    Optional<string> LargeImage { get; }
 
-        /// <summary>
-        /// Gets the text displayed when hovering over the large image.
-        /// </summary>
-        Optional<string> LargeText { get; }
+    /// <summary>
+    /// Gets the text displayed when hovering over the large image.
+    /// </summary>
+    Optional<string> LargeText { get; }
 
-        /// <summary>
-        /// Gets the ID for a small image related to the activity. Usually, this is a snowflake.
-        /// </summary>
-        Optional<string> SmallImage { get; }
+    /// <summary>
+    /// Gets the ID for a small image related to the activity. Usually, this is a snowflake.
+    /// </summary>
+    Optional<string> SmallImage { get; }
 
-        /// <summary>
-        /// Gets the text displayed when hovering over the small image.
-        /// </summary>
-        Optional<string> SmallText { get; }
-    }
+    /// <summary>
+    /// Gets the text displayed when hovering over the small image.
+    /// </summary>
+    Optional<string> SmallText { get; }
 }

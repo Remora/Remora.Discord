@@ -23,17 +23,16 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the creation of a guild. This event is sent in one of three scenarios:
+///     1. When a user is initially connecting to lazily load and backfill information for all unavailable guilds
+///        sent in the <see cref="IReady"/> event.
+///     2. When a guild becomes available again to the client.
+///     3. When the current user joins a new guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildCreate : IGatewayEvent, IGuild
 {
-    /// <summary>
-    /// Represents the creation of a guild. This event is sent in one of three scenarios:
-    ///     1. When a user is initially connecting to lazily load and backfill information for all unavailable guilds
-    ///        sent in the <see cref="IReady"/> event.
-    ///     2. When a guild becomes available again to the client.
-    ///     3. When the current user joins a new guild.
-    /// </summary>
-    [PublicAPI]
-    public interface IGuildCreate : IGatewayEvent, IGuild
-    {
-    }
 }

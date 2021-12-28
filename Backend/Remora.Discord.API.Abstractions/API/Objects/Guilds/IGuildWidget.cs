@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an embedded invite widget.
+/// </summary>
+[PublicAPI]
+public interface IGuildWidget
 {
     /// <summary>
-    /// Represents an embedded invite widget.
+    /// Gets a value indicating whether the widget is enabled.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildWidget
-    {
-        /// <summary>
-        /// Gets a value indicating whether the widget is enabled.
-        /// </summary>
-        bool IsEnabled { get; }
+    bool IsEnabled { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel invites are generated for.
-        /// </summary>
-        Snowflake? ChannelID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the channel invites are generated for.
+    /// </summary>
+    Snowflake? ChannelID { get; }
 }

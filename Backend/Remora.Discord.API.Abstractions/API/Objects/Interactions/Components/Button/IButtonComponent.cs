@@ -23,30 +23,29 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a button component.
+/// </summary>
+[PublicAPI]
+public interface IButtonComponent : IMessageComponent
 {
-    /// <summary>
-    /// Represents a button component.
-    /// </summary>
-    [PublicAPI]
-    public interface IButtonComponent : IMessageComponent
-    {
-        /// <inheritdoc cref="IComponent.Style"/>
-        ButtonComponentStyle Style { get; }
+    /// <inheritdoc cref="IComponent.Style"/>
+    ButtonComponentStyle Style { get; }
 
-        /// <inheritdoc cref="IComponent.Label"/>
-        Optional<string> Label { get; }
+    /// <inheritdoc cref="IComponent.Label"/>
+    Optional<string> Label { get; }
 
-        /// <inheritdoc cref="IComponent.Emoji"/>
-        Optional<IPartialEmoji> Emoji { get; }
+    /// <inheritdoc cref="IComponent.Emoji"/>
+    Optional<IPartialEmoji> Emoji { get; }
 
-        /// <inheritdoc cref="IComponent.CustomID"/>
-        Optional<string> CustomID { get; }
+    /// <inheritdoc cref="IComponent.CustomID"/>
+    Optional<string> CustomID { get; }
 
-        /// <inheritdoc cref="IComponent.URL"/>
-        Optional<string> URL { get; }
+    /// <inheritdoc cref="IComponent.URL"/>
+    Optional<string> URL { get; }
 
-        /// <inheritdoc cref="IComponent.IsDisabled"/>
-        Optional<bool> IsDisabled { get; }
-    }
+    /// <inheritdoc cref="IComponent.IsDisabled"/>
+    Optional<bool> IsDisabled { get; }
 }

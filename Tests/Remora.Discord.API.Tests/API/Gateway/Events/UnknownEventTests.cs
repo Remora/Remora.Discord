@@ -23,14 +23,13 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the Hello event.
+/// </summary>
+public class UnknownEventTests : GatewayEventTestBase<IUnknownEvent>
 {
-    /// <summary>
-    /// Tests the Hello event.
-    /// </summary>
-    public class UnknownEventTests : GatewayEventTestBase<IUnknownEvent>
-    {
-        /// <inheritdoc />
-        protected override bool AllowUnknownEvents => true;
-    }
+    /// <inheritdoc />
+    protected override bool AllowUnknownEvents => true;
 }

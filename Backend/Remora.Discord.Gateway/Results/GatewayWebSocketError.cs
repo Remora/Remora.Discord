@@ -26,12 +26,11 @@ using Remora.Results;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Gateway.Results
-{
-    /// <summary>
-    /// Represents an unexpected closing of the gateway on the websocket layer.
-    /// </summary>
-    [PublicAPI]
-    public record GatewayWebSocketError(WebSocketCloseStatus CloseStatus)
-        : ResultError($"The gateway closed with WebSocket close status \"{CloseStatus}\".");
-}
+namespace Remora.Discord.Gateway.Results;
+
+/// <summary>
+/// Represents an unexpected closing of the gateway on the websocket layer.
+/// </summary>
+[PublicAPI]
+public record GatewayWebSocketError(WebSocketCloseStatus CloseStatus)
+    : ResultError($"The gateway closed with WebSocket close status \"{CloseStatus}\".");

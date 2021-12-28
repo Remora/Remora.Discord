@@ -24,15 +24,14 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.Services;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases;
+
+/// <summary>
+/// Acts as a base class for command API types.
+/// </summary>
+/// <typeparam name="TType">The type under test.</typeparam>
+public abstract class GatewayBidirectionalTestBase<TType>
+    : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
+    where TType : IGatewayEvent, IGatewayCommand
 {
-    /// <summary>
-    /// Acts as a base class for command API types.
-    /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    public abstract class GatewayBidirectionalTestBase<TType>
-        : GatewayTestBase<TType, SampleBidirectionalDataSource<TType>>
-            where TType : IGatewayEvent, IGatewayCommand
-    {
-    }
 }

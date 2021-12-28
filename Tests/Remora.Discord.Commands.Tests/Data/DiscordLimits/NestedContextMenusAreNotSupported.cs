@@ -30,13 +30,12 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
+
+[Group("nested")]
+public class NestedContextMenusAreNotSupported : CommandGroup
 {
-    [Group("nested")]
-    public class NestedContextMenusAreNotSupported : CommandGroup
-    {
-        [Command("Do thing")]
-        [CommandType(ApplicationCommandType.User)]
-        public Task<IResult> ContextCommand() => throw new NotImplementedException();
-    }
+    [Command("Do thing")]
+    [CommandType(ApplicationCommandType.User)]
+    public Task<IResult> ContextCommand() => throw new NotImplementedException();
 }

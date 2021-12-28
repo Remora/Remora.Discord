@@ -23,15 +23,14 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Tests.Services;
 
-namespace Remora.Discord.API.Tests.TestBases
+namespace Remora.Discord.API.Tests.TestBases;
+
+/// <summary>
+/// Tests the <typeparamref name="TType"/> type.
+/// </summary>
+/// <typeparam name="TType">The type under test.</typeparam>
+[UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+public abstract class ObjectTestBase<TType>
+    : JsonBackedTypeTestBase<TType, SampleObjectDataSource<TType>>
 {
-    /// <summary>
-    /// Tests the <typeparamref name="TType"/> type.
-    /// </summary>
-    /// <typeparam name="TType">The type under test.</typeparam>
-    [UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
-    public abstract class ObjectTestBase<TType>
-        : JsonBackedTypeTestBase<TType, SampleObjectDataSource<TType>>
-    {
-    }
 }

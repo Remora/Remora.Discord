@@ -24,27 +24,26 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a user's presence.
+/// </summary>
+[PublicAPI]
+public interface IPartialPresence
 {
-    /// <summary>
-    /// Represents a user's presence.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialPresence
-    {
-        /// <inheritdoc cref="IPresence.User" />
-        Optional<IPartialUser> User { get; }
+    /// <inheritdoc cref="IPresence.User" />
+    Optional<IPartialUser> User { get; }
 
-        /// <inheritdoc cref="IPresence.GuildID" />
-        Optional<Snowflake> GuildID { get; }
+    /// <inheritdoc cref="IPresence.GuildID" />
+    Optional<Snowflake> GuildID { get; }
 
-        /// <inheritdoc cref="IPresence.Status" />
-        Optional<ClientStatus> Status { get; }
+    /// <inheritdoc cref="IPresence.Status" />
+    Optional<ClientStatus> Status { get; }
 
-        /// <inheritdoc cref="IPresence.Activities" />
-        Optional<IReadOnlyList<IActivity>?> Activities { get; }
+    /// <inheritdoc cref="IPresence.Activities" />
+    Optional<IReadOnlyList<IActivity>?> Activities { get; }
 
-        /// <inheritdoc cref="IPresence.ClientStatus" />
-        Optional<IClientStatuses> ClientStatus { get; }
-    }
+    /// <inheritdoc cref="IPresence.ClientStatus" />
+    Optional<IClientStatuses> ClientStatus { get; }
 }

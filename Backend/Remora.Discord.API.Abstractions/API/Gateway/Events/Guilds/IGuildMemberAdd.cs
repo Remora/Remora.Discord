@@ -24,17 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a new user joining the guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildMemberAdd : IGuildMember, IGatewayEvent
 {
     /// <summary>
-    /// Represents a new user joining the guild.
+    /// Gets the ID of the guild the member is in.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildMemberAdd : IGuildMember, IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild the member is in.
-        /// </summary>
-        Snowflake GuildID { get; }
-    }
+    Snowflake GuildID { get; }
 }

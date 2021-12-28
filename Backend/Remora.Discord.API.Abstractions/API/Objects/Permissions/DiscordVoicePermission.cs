@@ -22,79 +22,78 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
+/// applicable to voice channels.
+/// </summary>
+[PublicAPI]
+public enum DiscordVoicePermission
 {
     /// <summary>
-    /// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
-    /// applicable to voice channels.
+    /// Allows creation of instant invites.
     /// </summary>
-    [PublicAPI]
-    public enum DiscordVoicePermission
-    {
-        /// <summary>
-        /// Allows creation of instant invites.
-        /// </summary>
-        CreateInstantInvite = 0,
+    CreateInstantInvite = 0,
 
-        /// <summary>
-        /// Allows management and editing of channels.
-        /// </summary>
-        ManageChannels = 4,
+    /// <summary>
+    /// Allows management and editing of channels.
+    /// </summary>
+    ManageChannels = 4,
 
-        /// <summary>
-        /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
-        /// referred to as "Read Messages" in the Discord client.
-        /// </summary>
-        ViewChannel = 10,
+    /// <summary>
+    /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
+    /// referred to as "Read Messages" in the Discord client.
+    /// </summary>
+    ViewChannel = 10,
 
-        /// <summary>
-        /// Allows for joining of a voice channel.
-        /// </summary>
-        Connect = 20,
+    /// <summary>
+    /// Allows for joining of a voice channel.
+    /// </summary>
+    Connect = 20,
 
-        /// <summary>
-        /// Allows for speaking in a voice channel.
-        /// </summary>
-        Speak = 21,
+    /// <summary>
+    /// Allows for speaking in a voice channel.
+    /// </summary>
+    Speak = 21,
 
-        /// <summary>
-        /// Allows for muting members in a voice channel.
-        /// </summary>
-        MuteMembers = 22,
+    /// <summary>
+    /// Allows for muting members in a voice channel.
+    /// </summary>
+    MuteMembers = 22,
 
-        /// <summary>
-        /// Allows for deafening of members in a voice channel.
-        /// </summary>
-        DeafenMembers = 23,
+    /// <summary>
+    /// Allows for deafening of members in a voice channel.
+    /// </summary>
+    DeafenMembers = 23,
 
-        /// <summary>
-        /// Allows for moving of members between voice channels.
-        /// </summary>
-        MoveMembers = 24,
+    /// <summary>
+    /// Allows for moving of members between voice channels.
+    /// </summary>
+    MoveMembers = 24,
 
-        /// <summary>
-        /// Allows for using voice activity detection in a voice channel.
-        /// </summary>
-        UseVoiceActivity = 25,
+    /// <summary>
+    /// Allows for using voice activity detection in a voice channel.
+    /// </summary>
+    UseVoiceActivity = 25,
 
-        /// <summary>
-        /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
-        /// </summary>
-        ManageRoles = 28,
+    /// <summary>
+    /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
+    /// </summary>
+    ManageRoles = 28,
 
-        /// <summary>
-        /// Allows the user to request to speak in a stage channel.
-        /// </summary>
-        RequestToSpeak = 32,
+    /// <summary>
+    /// Allows the user to request to speak in a stage channel.
+    /// </summary>
+    RequestToSpeak = 32,
 
-        /// <summary>
-        /// Allows the user to manage scheduled events.
-        /// </summary>
-        ManageEvents = 33,
+    /// <summary>
+    /// Allows the user to manage scheduled events.
+    /// </summary>
+    ManageEvents = 33,
 
-        /// <summary>
-        /// Allows for launching activities in a voice channel.
-        /// </summary>
-        StartEmbeddedActivities = 39
-    }
+    /// <summary>
+    /// Allows for launching activities in a voice channel.
+    /// </summary>
+    StartEmbeddedActivities = 39
 }

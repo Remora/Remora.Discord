@@ -30,8 +30,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using OneOf;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -41,100 +41,100 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestChannelAPI" />
+[PublicAPI]
+public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannelAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestChannelAPI" />
-    [PublicAPI]
-    public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannelAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestChannelAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestChannelAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> GetChannelAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IChannel>
+        (
+            $"channels/{channelID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IChannel>> ModifyChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<Stream> icon = default,
+        Optional<ChannelType> type = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentId = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<bool> isArchived = default,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
+        Optional<bool> isLocked = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<string?> rtcRegion = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.HasValue && name.Value.Length is > 100 or < 1)
         {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> GetChannelAsync
-        (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
+        if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
         {
-            return this.RestHttpClient.GetAsync<IChannel>
-            (
-                $"channels/{channelID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
+            return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IChannel>> ModifyChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<Stream> icon = default,
-            Optional<ChannelType> type = default,
-            Optional<int?> position = default,
-            Optional<string?> topic = default,
-            Optional<bool?> isNsfw = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<int?> bitrate = default,
-            Optional<int?> userLimit = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
-            Optional<Snowflake?> parentId = default,
-            Optional<VideoQualityMode?> videoQualityMode = default,
-            Optional<bool> isArchived = default,
-            Optional<AutoArchiveDuration> autoArchiveDuration = default,
-            Optional<bool> isLocked = default,
-            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
-            Optional<string?> rtcRegion = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+        if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
         {
-            if (name.HasValue && name.Value.Length is > 100 or < 1)
+            return new ArgumentOutOfRangeError(nameof(userLimit), "The user limit must be between 0 and 99.");
+        }
+
+        Optional<string> base64EncodedIcon = default;
+        if (icon.HasValue)
+        {
+            byte[] bytes;
+            if (icon.Value is MemoryStream ms)
             {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters.");
+                bytes = ms.ToArray();
+            }
+            else
+            {
+                await using var copy = new MemoryStream();
+                await icon.Value.CopyToAsync(copy, ct);
+
+                bytes = copy.ToArray();
             }
 
-            if (topic.HasValue && topic.Value?.Length is > 1024 or < 0)
-            {
-                return new ArgumentOutOfRangeError(nameof(topic), "The topic must be between 0 and 1024 characters.");
-            }
+            base64EncodedIcon = Convert.ToBase64String(bytes);
+        }
 
-            if (userLimit.HasValue && userLimit.Value is > 99 or < 0)
-            {
-                return new ArgumentOutOfRangeError(nameof(userLimit), "The user limit must be between 0 and 99.");
-            }
-
-            Optional<string> base64EncodedIcon = default;
-            if (icon.HasValue)
-            {
-                byte[] bytes;
-                if (icon.Value is MemoryStream ms)
-                {
-                    bytes = ms.ToArray();
-                }
-                else
-                {
-                    await using var copy = new MemoryStream();
-                    await icon.Value.CopyToAsync(copy, ct);
-
-                    bytes = copy.ToArray();
-                }
-
-                base64EncodedIcon = Convert.ToBase64String(bytes);
-            }
-
-            return await this.RestHttpClient.PatchAsync<IChannel>
-            (
-                $"channels/{channelID}",
-                b => b
+        return await this.RestHttpClient.PatchAsync<IChannel>
+        (
+            $"channels/{channelID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -160,326 +160,326 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyGroupDMChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<Stream> icon = default,
-            CancellationToken ct = default
-        )
-        {
-            return ModifyChannelAsync(channelID, name, icon, ct: ct);
-        }
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyGroupDMChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<Stream> icon = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync(channelID, name, icon, ct: ct);
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyGuildTextChannelAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyGuildTextChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<ChannelType> type = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentId = default,
+        Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
         (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<ChannelType> type = default,
-            Optional<int?> position = default,
-            Optional<string?> topic = default,
-            Optional<bool?> isNsfw = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
-            Optional<Snowflake?> parentId = default,
-            Optional<AutoArchiveDuration> defaultAutoArchiveDuration = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+            channelID,
+            name,
+            type: type,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            rateLimitPerUser: rateLimitPerUser,
+            permissionOverwrites: permissionOverwrites,
+            parentId: parentId,
+            defaultAutoArchiveDuration: defaultAutoArchiveDuration,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<int?> bitrate = default,
+        Optional<int?> userLimit = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentId = default,
+        Optional<string?> rtcRegion = default,
+        Optional<VideoQualityMode?> videoQualityMode = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            bitrate: bitrate,
+            userLimit: userLimit,
+            permissionOverwrites: permissionOverwrites,
+            parentId: parentId,
+            rtcRegion: rtcRegion,
+            videoQualityMode: videoQualityMode,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<ChannelType> type = default,
+        Optional<int?> position = default,
+        Optional<string?> topic = default,
+        Optional<bool?> isNsfw = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentId = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            type: type,
+            position: position,
+            topic: topic,
+            isNsfw: isNsfw,
+            permissionOverwrites: permissionOverwrites,
+            parentId: parentId,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyGuildStoreChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<int?> position = default,
+        Optional<bool?> isNsfw = default,
+        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<Snowflake?> parentId = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            position: position,
+            isNsfw: isNsfw,
+            permissionOverwrites: permissionOverwrites,
+            parentId: parentId,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> ModifyThreadChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> name = default,
+        Optional<bool> isArchived = default,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
+        Optional<bool> isLocked = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return ModifyChannelAsync
+        (
+            channelID,
+            name,
+            isArchived: isArchived,
+            autoArchiveDuration: autoArchiveDuration,
+            isLocked: isLocked,
+            rateLimitPerUser: rateLimitPerUser,
+            reason: reason,
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteChannelAsync
+    (
+        Snowflake channelID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
+    (
+        Snowflake channelID,
+        Optional<Snowflake> around = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        var hasAny = around.HasValue || before.HasValue || after.HasValue;
+        var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue;
+        if (hasAny && !hasStrictlyOne)
         {
-            return ModifyChannelAsync
+            return new NotSupportedError
             (
-                channelID,
-                name,
-                type: type,
-                position: position,
-                topic: topic,
-                isNsfw: isNsfw,
-                rateLimitPerUser: rateLimitPerUser,
-                permissionOverwrites: permissionOverwrites,
-                parentId: parentId,
-                defaultAutoArchiveDuration: defaultAutoArchiveDuration,
-                reason: reason,
-                ct: ct
+                $"{nameof(around)}, {nameof(before)}, and {nameof(after)} are mutually exclusive."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyGuildVoiceChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<int?> position = default,
-            Optional<int?> bitrate = default,
-            Optional<int?> userLimit = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
-            Optional<Snowflake?> parentId = default,
-            Optional<string?> rtcRegion = default,
-            Optional<VideoQualityMode?> videoQualityMode = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+        if (limit.HasValue && limit.Value is > 100 or < 1)
         {
-            return ModifyChannelAsync
+            return new ArgumentOutOfRangeError
             (
-                channelID,
-                name,
-                position: position,
-                bitrate: bitrate,
-                userLimit: userLimit,
-                permissionOverwrites: permissionOverwrites,
-                parentId: parentId,
-                rtcRegion: rtcRegion,
-                videoQualityMode: videoQualityMode,
-                reason: reason,
-                ct: ct
+                nameof(limit),
+                "The message limit must be between 1 and 100."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyGuildNewsChannelAsync
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
         (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<ChannelType> type = default,
-            Optional<int?> position = default,
-            Optional<string?> topic = default,
-            Optional<bool?> isNsfw = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
-            Optional<Snowflake?> parentId = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return ModifyChannelAsync
-            (
-                channelID,
-                name,
-                type: type,
-                position: position,
-                topic: topic,
-                isNsfw: isNsfw,
-                permissionOverwrites: permissionOverwrites,
-                parentId: parentId,
-                reason: reason,
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyGuildStoreChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<int?> position = default,
-            Optional<bool?> isNsfw = default,
-            Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
-            Optional<Snowflake?> parentId = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return ModifyChannelAsync
-            (
-                channelID,
-                name,
-                position: position,
-                isNsfw: isNsfw,
-                permissionOverwrites: permissionOverwrites,
-                parentId: parentId,
-                reason: reason,
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> ModifyThreadChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> name = default,
-            Optional<bool> isArchived = default,
-            Optional<AutoArchiveDuration> autoArchiveDuration = default,
-            Optional<bool> isLocked = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return ModifyChannelAsync
-            (
-                channelID,
-                name,
-                isArchived: isArchived,
-                autoArchiveDuration: autoArchiveDuration,
-                isLocked: isLocked,
-                rateLimitPerUser: rateLimitPerUser,
-                reason: reason,
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteChannelAsync
-        (
-            Snowflake channelID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IMessage>>> GetChannelMessagesAsync
-        (
-            Snowflake channelID,
-            Optional<Snowflake> around = default,
-            Optional<Snowflake> before = default,
-            Optional<Snowflake> after = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            var hasAny = around.HasValue || before.HasValue || after.HasValue;
-            var hasStrictlyOne = around.HasValue ^ before.HasValue ^ after.HasValue;
-            if (hasAny && !hasStrictlyOne)
+            $"channels/{channelID}/messages",
+            b =>
             {
-                return new NotSupportedError
-                (
-                    $"{nameof(around)}, {nameof(before)}, and {nameof(after)} are mutually exclusive."
-                );
-            }
-
-            if (limit.HasValue && limit.Value is > 100 or < 1)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(limit),
-                    "The message limit must be between 1 and 100."
-                );
-            }
-
-            return await this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
-            (
-                $"channels/{channelID}/messages",
-                b =>
+                if (around.HasValue)
                 {
-                    if (around.HasValue)
-                    {
-                        b.AddQueryParameter("around", around.Value.ToString());
-                    }
+                    b.AddQueryParameter("around", around.Value.ToString());
+                }
 
-                    if (before.HasValue)
-                    {
-                        b.AddQueryParameter("before", before.Value.ToString());
-                    }
-
-                    if (after.HasValue)
-                    {
-                        b.AddQueryParameter("after", after.Value.ToString());
-                    }
-
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
-
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage>> GetChannelMessageAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IMessage>
-            (
-                $"channels/{channelID}/messages/{messageID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> CreateMessageAsync
-        (
-            Snowflake channelID,
-            Optional<string> content = default,
-            Optional<string> nonce = default,
-            Optional<bool> isTTS = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IAllowedMentions> allowedMentions = default,
-            Optional<IMessageReference> messageReference = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<Snowflake>> stickerIds = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            if (nonce.HasValue && nonce.Value.Length > 25)
-            {
-                return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
-            }
-
-            if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIds.HasValue)
-            {
-                return new InvalidOperationError
-                (
-                    $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, or " +
-                    $"{nameof(stickerIds)} is required."
-                );
-            }
-
-            return await this.RestHttpClient.PostAsync<IMessage>
-            (
-                $"channels/{channelID}/messages",
-                b =>
+                if (before.HasValue)
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    b.AddQueryParameter("before", before.Value.ToString());
+                }
+
+                if (after.HasValue)
+                {
+                    b.AddQueryParameter("after", after.Value.ToString());
+                }
+
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
+
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage>> GetChannelMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IMessage>
+        (
+            $"channels/{channelID}/messages/{messageID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> CreateMessageAsync
+    (
+        Snowflake channelID,
+        Optional<string> content = default,
+        Optional<string> nonce = default,
+        Optional<bool> isTTS = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<IMessageReference> messageReference = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<Snowflake>> stickerIds = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        if (nonce.HasValue && nonce.Value.Length > 25)
+        {
+            return new ArgumentOutOfRangeError(nameof(nonce), "The nonce length must be less than 25 characters.");
+        }
+
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue && !stickerIds.HasValue)
+        {
+            return new InvalidOperationError
+            (
+                $"At least one of {nameof(content)}, {nameof(attachments)}, {nameof(embeds)}, or " +
+                $"{nameof(stickerIds)} is required."
+            );
+        }
+
+        return await this.RestHttpClient.PostAsync<IMessage>
+        (
+            $"channels/{channelID}/messages",
+            b =>
+            {
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
+                {
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                    }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -495,204 +495,204 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
-            );
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> CrosspostMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        return await this.RestHttpClient.PostAsync<IMessage>
+        (
+            $"channels/{channelID}/messages/{messageID}/crosspost",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> CreateReactionAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string emoji,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
+        (
+            $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteOwnReactionAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string emoji,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteUserReactionAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string emoji,
+        Snowflake user,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IUser>>> GetReactionsAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string emoji,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        if (limit.HasValue && limit.Value is > 100 or < 1)
+        {
+            return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> CrosspostMessageAsync
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IUser>>
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
-        {
-            return await this.RestHttpClient.PostAsync<IMessage>
-            (
-                $"channels/{channelID}/messages/{messageID}/crosspost",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> CreateReactionAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            string emoji,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteOwnReactionAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            string emoji,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteUserReactionAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            string emoji,
-            Snowflake user,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IUser>>> GetReactionsAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            string emoji,
-            Optional<Snowflake> after = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            if (limit.HasValue && limit.Value is > 100 or < 1)
+            $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
+            b =>
             {
-                return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
-            }
-
-            return await this.RestHttpClient.GetAsync<IReadOnlyList<IUser>>
-            (
-                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
-                b =>
+                if (after.HasValue)
                 {
-                    if (after.HasValue)
-                    {
-                        b.AddQueryParameter("after", after.Value.ToString());
-                    }
+                    b.AddQueryParameter("after", after.Value.ToString());
+                }
 
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteAllReactionsAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteAllReactionsAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            CancellationToken ct = default
-        )
+            $"channels/{channelID}/messages/{messageID}/reactions",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteAllReactionsForEmojiAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string emoji,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> EditMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<MessageFlags?> flags = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        CancellationToken ct = default
+    )
+    {
+        if (!content.HasValue && !attachments.HasValue && !embeds.HasValue)
         {
-            return this.RestHttpClient.DeleteAsync
+            return new InvalidOperationError
             (
-                $"channels/{channelID}/messages/{messageID}/reactions",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                $"At least one of {nameof(content)}, {nameof(attachments)}, or {nameof(embeds)} is required."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteAllReactionsForEmojiAsync
+        return await this.RestHttpClient.PatchAsync<IMessage>
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            string emoji,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> EditMessageAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<MessageFlags?> flags = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            if (!content.HasValue && !attachments.HasValue && !embeds.HasValue)
+            $"channels/{channelID}/messages/{messageID}",
+            b =>
             {
-                return new InvalidOperationError
-                (
-                    $"At least one of {nameof(content)}, {nameof(attachments)}, or {nameof(embeds)} is required."
-                );
-            }
-
-            return await this.RestHttpClient.PatchAsync<IMessage>
-            (
-                $"channels/{channelID}/messages/{messageID}",
-                b =>
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                    }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -705,50 +705,50 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}/messages/{messageID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result> BulkDeleteMessagesAsync
+    (
+        Snowflake channelID,
+        IReadOnlyList<Snowflake> messageIDs,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (messageIDs.Count is > 100 or < 2)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(messageIDs),
+                "The number of messages to delete must be between 2 and 100."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteMessageAsync
+        return await this.RestHttpClient.PostAsync
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/messages/{messageID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result> BulkDeleteMessagesAsync
-        (
-            Snowflake channelID,
-            IReadOnlyList<Snowflake> messageIDs,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (messageIDs.Count is > 100 or < 2)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(messageIDs),
-                    "The number of messages to delete must be between 2 and 100."
-                );
-            }
-
-            return await this.RestHttpClient.PostAsync
-            (
-                $"channels/{channelID}/messages/bulk-delete",
-                b => b
+            $"channels/{channelID}/messages/bulk-delete",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -759,26 +759,26 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
-            );
-        }
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> EditChannelPermissionsAsync
+    /// <inheritdoc />
+    public virtual Task<Result> EditChannelPermissionsAsync
+    (
+        Snowflake channelID,
+        Snowflake overwriteID,
+        Optional<IDiscordPermissionSet> allow = default,
+        Optional<IDiscordPermissionSet> deny = default,
+        Optional<PermissionOverwriteType> type = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake channelID,
-            Snowflake overwriteID,
-            Optional<IDiscordPermissionSet> allow = default,
-            Optional<IDiscordPermissionSet> deny = default,
-            Optional<PermissionOverwriteType> type = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/permissions/{overwriteID}",
-                b => b
+            $"channels/{channelID}/permissions/{overwriteID}",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -790,62 +790,62 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
+        (
+            $"channels/{channelID}/invites",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IInvite>> CreateChannelInviteAsync
+    (
+        Snowflake channelID,
+        Optional<TimeSpan> maxAge = default,
+        Optional<int> maxUses = default,
+        Optional<bool> isTemporary = default,
+        Optional<bool> isUnique = default,
+        Optional<InviteTarget> targetType = default,
+        Optional<Snowflake> targetUserID = default,
+        Optional<Snowflake> targetApplicationID = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(maxAge),
+                "The maximum age must be between 0 and 604800 seconds."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IInvite>>> GetChannelInvitesAsync
-        (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
+        if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
         {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
+            return new ArgumentOutOfRangeError
             (
-                $"channels/{channelID}/invites",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(maxUses),
+                "The maximum number of uses must be between 0 and 100."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IInvite>> CreateChannelInviteAsync
+        return await this.RestHttpClient.PostAsync<IInvite>
         (
-            Snowflake channelID,
-            Optional<TimeSpan> maxAge = default,
-            Optional<int> maxUses = default,
-            Optional<bool> isTemporary = default,
-            Optional<bool> isUnique = default,
-            Optional<InviteTarget> targetType = default,
-            Optional<Snowflake> targetUserID = default,
-            Optional<Snowflake> targetApplicationID = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (maxAge.HasValue && maxAge.Value.TotalSeconds is < 0 or > 604800)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(maxAge),
-                    "The maximum age must be between 0 and 604800 seconds."
-                );
-            }
-
-            if (maxUses.HasValue && maxUses.Value is < 0 or > 100)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(maxUses),
-                    "The maximum number of uses must be between 0 and 100."
-                );
-            }
-
-            return await this.RestHttpClient.PostAsync<IInvite>
-            (
-                $"channels/{channelID}/invites",
-                b => b
+            $"channels/{channelID}/invites",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -865,39 +865,39 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteChannelPermissionAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteChannelPermissionAsync
+    (
+        Snowflake channelID,
+        Snowflake overwriteID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            Snowflake overwriteID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/permissions/{overwriteID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"channels/{channelID}/permissions/{overwriteID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IFollowedChannel>> FollowNewsChannelAsync
+    (
+        Snowflake channelID,
+        Snowflake webhookChannelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IFollowedChannel>
         (
-            Snowflake channelID,
-            Snowflake webhookChannelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<IFollowedChannel>
-            (
-                $"channels/{channelID}/followers",
-                b => b.WithJson
+            $"channels/{channelID}/followers",
+            b => b.WithJson
                 (
                     p =>
                     {
@@ -905,88 +905,88 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> TriggerTypingIndicatorAsync
+    /// <inheritdoc />
+    public virtual Task<Result> TriggerTypingIndicatorAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync
-            (
-                $"channels/{channelID}/typing",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/typing",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IMessage>>> GetPinnedMessagesAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
-            (
-                $"channels/{channelID}/pins",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/pins",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> PinMessageAsync
+    /// <inheritdoc />
+    public virtual Task<Result> PinMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/pins/{messageID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"channels/{channelID}/pins/{messageID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> UnpinMessageAsync
+    /// <inheritdoc />
+    public virtual Task<Result> UnpinMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            Snowflake messageID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/pins/{messageID}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"channels/{channelID}/pins/{messageID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> GroupDMAddRecipientAsync
+    /// <inheritdoc />
+    public virtual Task<Result> GroupDMAddRecipientAsync
+    (
+        Snowflake channelID,
+        Snowflake userID,
+        string accessToken,
+        Optional<string> nickname = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake channelID,
-            Snowflake userID,
-            string accessToken,
-            Optional<string> nickname = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/recipients/{userID}",
-                b => b.WithJson
+            $"channels/{channelID}/recipients/{userID}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -995,47 +995,47 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct
-            );
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result> GroupDMRemoveRecipientAsync
+    (
+        Snowflake channelID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
+        (
+            $"channels/{channelID}/recipients/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IChannel>> StartThreadWithMessageAsync
+    (
+        Snowflake channelID,
+        Snowflake messageID,
+        string name,
+        Optional<AutoArchiveDuration> autoArchiveDuration = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result> GroupDMRemoveRecipientAsync
+        return await this.RestHttpClient.PostAsync<IChannel>
         (
-            Snowflake channelID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/recipients/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IChannel>> StartThreadWithMessageAsync
-        (
-            Snowflake channelID,
-            Snowflake messageID,
-            string name,
-            Optional<AutoArchiveDuration> autoArchiveDuration = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (name.Length is < 1 or > 100)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
-            }
-
-            return await this.RestHttpClient.PostAsync<IChannel>
-            (
-                $"channels/{channelID}/messages/{messageID}/threads",
-                b => b
+            $"channels/{channelID}/messages/{messageID}/threads",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -1047,56 +1047,56 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IChannel>> StartThreadWithoutMessageAsync
+    (
+        Snowflake channelID,
+        string name,
+        AutoArchiveDuration autoArchiveDuration,
+        ChannelType type,
+        Optional<bool> isInvitable = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    ) =>
+        StartThreadWithoutMessageAsync
+        (
+            channelID,
+            name,
+            autoArchiveDuration,
+            new Optional<ChannelType>(type),
+            isInvitable,
+            rateLimitPerUser,
+            reason,
+            ct
+        );
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IChannel>> StartThreadWithoutMessageAsync
+    (
+        Snowflake channelID,
+        string name,
+        AutoArchiveDuration autoArchiveDuration,
+        Optional<ChannelType> type = default,
+        Optional<bool> isInvitable = default,
+        Optional<int?> rateLimitPerUser = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.Length is < 1 or > 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IChannel>> StartThreadWithoutMessageAsync
+        return await this.RestHttpClient.PostAsync<IChannel>
         (
-            Snowflake channelID,
-            string name,
-            AutoArchiveDuration autoArchiveDuration,
-            ChannelType type,
-            Optional<bool> isInvitable = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        ) =>
-            StartThreadWithoutMessageAsync
-            (
-                channelID,
-                name,
-                autoArchiveDuration,
-                new Optional<ChannelType>(type),
-                isInvitable,
-                rateLimitPerUser,
-                reason,
-                ct
-            );
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IChannel>> StartThreadWithoutMessageAsync
-        (
-            Snowflake channelID,
-            string name,
-            AutoArchiveDuration autoArchiveDuration,
-            Optional<ChannelType> type = default,
-            Optional<bool> isInvitable = default,
-            Optional<int?> rateLimitPerUser = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (name.Length is < 1 or > 100)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 1 and 100 characters");
-            }
-
-            return await this.RestHttpClient.PostAsync<IChannel>
-            (
-                $"channels/{channelID}/threads",
-                b => b
+            $"channels/{channelID}/threads",
+            b => b
                 .AddAuditLogReason(reason)
                 .WithJson
                 (
@@ -1110,216 +1110,215 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> JoinThreadAsync(Snowflake channelID, CancellationToken ct = default)
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/thread-members/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> AddThreadMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result> JoinThreadAsync(Snowflake channelID, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake channelID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync
-            (
-                $"channels/{channelID}/thread-members/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/thread-members/@me",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/thread-members/@me",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> RemoveThreadMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result> AddThreadMemberAsync
+    (
+        Snowflake channelID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync
         (
-            Snowflake channelID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"channels/{channelID}/thread-members/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/thread-members/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IThreadMember>> GetThreadMemberAsync
+    /// <inheritdoc />
+    public virtual Task<Result> LeaveThreadAsync(Snowflake channelID, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            Snowflake userID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IThreadMember>
-            (
-                $"channels/{channelID}/thread-members/{userID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/thread-members/@me",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+    /// <inheritdoc />
+    public virtual Task<Result> RemoveThreadMemberAsync
+    (
+        Snowflake channelID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
-            (
-                $"channels/{channelID}/thread-members",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/thread-members/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IThreadMember>> GetThreadMemberAsync
+    (
+        Snowflake channelID,
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IThreadMember>
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-            (
-                $"channels/{channelID}/threads/active",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"channels/{channelID}/thread-members/{userID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
         (
-            Snowflake channelID,
-            Optional<DateTimeOffset> before = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-            (
-                $"channels/{channelID}/threads/archived/public",
-                b =>
+            $"channels/{channelID}/thread-members",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
+        (
+            $"channels/{channelID}/threads/active",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
+        (
+            $"channels/{channelID}/threads/archived/public",
+            b =>
+            {
+                if (before.HasValue)
                 {
-                    if (before.HasValue)
-                    {
-                        var offset = before.Value.Offset;
-                        var value = before.Value.ToString
-                        (
-                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                        );
+                    var offset = before.Value.Offset;
+                    var value = before.Value.ToString
+                    (
+                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                    );
 
-                        b.AddQueryParameter("before", value);
-                    }
+                    b.AddQueryParameter("before", value);
+                }
 
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
-
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
-        (
-            Snowflake channelID,
-            Optional<DateTimeOffset> before = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-            (
-                $"channels/{channelID}/threads/archived/private",
-                b =>
+                if (limit.HasValue)
                 {
-                    if (before.HasValue)
-                    {
-                        var offset = before.Value.Offset;
-                        var value = before.Value.ToString
-                        (
-                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                        );
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
 
-                        b.AddQueryParameter("before", value);
-                    }
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
 
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
-
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
         (
-            Snowflake channelID,
-            Optional<DateTimeOffset> before = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-            (
-                $"channels/{channelID}/users/@me/threads/archived/private",
-                b =>
+            $"channels/{channelID}/threads/archived/private",
+            b =>
+            {
+                if (before.HasValue)
                 {
-                    if (before.HasValue)
-                    {
-                        var offset = before.Value.Offset;
-                        var value = before.Value.ToString
-                        (
-                            $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                        );
+                    var offset = before.Value.Offset;
+                    var value = before.Value.ToString
+                    (
+                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                    );
 
-                        b.AddQueryParameter("before", value);
-                    }
+                    b.AddQueryParameter("before", value);
+                }
 
-                    if (limit.HasValue)
-                    {
-                        b.AddQueryParameter("limit", limit.Value.ToString());
-                    }
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
+    (
+        Snowflake channelID,
+        Optional<DateTimeOffset> before = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
+        (
+            $"channels/{channelID}/users/@me/threads/archived/private",
+            b =>
+            {
+                if (before.HasValue)
+                {
+                    var offset = before.Value.Offset;
+                    var value = before.Value.ToString
+                    (
+                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
+                    );
+
+                    b.AddQueryParameter("before", value);
+                }
+
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
+
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
     }
 }

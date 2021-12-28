@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a custom activity button.
+/// </summary>
+[PublicAPI]
+public interface IActivityButton
 {
     /// <summary>
-    /// Represents a custom activity button.
+    /// Gets the text shown on the button (1-32 characters).
     /// </summary>
-    [PublicAPI]
-    public interface IActivityButton
-    {
-        /// <summary>
-        /// Gets the text shown on the button (1-32 characters).
-        /// </summary>
-        string Label { get; }
+    string Label { get; }
 
-        /// <summary>
-        /// Gets the URL opened when clicking the button (1-512 characters).
-        /// </summary>
-        string URL { get; }
-    }
+    /// <summary>
+    /// Gets the URL opened when clicking the button (1-512 characters).
+    /// </summary>
+    string URL { get; }
 }

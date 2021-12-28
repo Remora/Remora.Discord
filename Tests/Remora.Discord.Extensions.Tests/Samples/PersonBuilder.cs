@@ -20,64 +20,62 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using Remora.Discord.Extensions.Builder;
 using Remora.Discord.Extensions.Errors;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Tests.Samples
+namespace Remora.Discord.Extensions.Tests.Samples;
+
+/// <summary>
+/// Builds a person.
+/// </summary>
+internal class PersonBuilder : BuilderBase<Person>
 {
     /// <summary>
-    /// Builds a person.
+    /// Gets the person's name.
     /// </summary>
-    internal class PersonBuilder : BuilderBase<Person>
+    public string Name { get; }
+
+    /// <summary>
+    /// Gets the person's age.
+    /// </summary>
+    public int Age { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PersonBuilder"/> class.
+    /// </summary>
+    /// <param name="name">The person's name.</param>
+    /// <param name="age">The person's age.</param>
+    public PersonBuilder(string name, int age)
     {
-        /// <summary>
-        /// Gets the person's name.
-        /// </summary>
-        public string Name { get; }
+        this.Name = name;
+        this.Age = age;
+    }
 
-        /// <summary>
-        /// Gets the person's age.
-        /// </summary>
-        public int Age { get; }
+    /// <inheritdoc />
+    public override Result<Person> Build()
+    {
+        var validationResult = Validate();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersonBuilder"/> class.
-        /// </summary>
-        /// <param name="name">The person's name.</param>
-        /// <param name="age">The person's age.</param>
-        public PersonBuilder(string name, int age)
+        return validationResult.IsSuccess
+            ? new Person(this.Name, this.Age)
+            : Result<Person>.FromError(validationResult);
+    }
+
+    /// <inheritdoc />
+    public override Result Validate()
+    {
+        var nameValidate = ValidateLength(nameof(this.Name), this.Name, 5, false);
+        if (!nameValidate.IsSuccess)
         {
-            Name = name;
-            Age = age;
+            return Result.FromError(nameValidate.Error);
         }
 
-        /// <inheritdoc />
-        public override Result<Person> Build()
+        if (this.Age < 1 || this.Age > 100)
         {
-            var validationResult = this.Validate();
-
-            return validationResult.IsSuccess
-                ? new Person(Name, Age)
-                : Result<Person>.FromError(validationResult);
+            return Result.FromError(new ValidationError(nameof(this.Age), "Age must be between 1 and 100."));
         }
 
-        /// <inheritdoc />
-        public override Result Validate()
-        {
-            var nameValidate = ValidateLength(nameof(Name), Name, 5, false);
-            if (!nameValidate.IsSuccess)
-            {
-                return Result.FromError(nameValidate.Error);
-            }
-
-            if (Age < 1 || Age > 100)
-            {
-                return Result.FromError(new ValidationError(nameof(Age), "Age must be between 1 and 100."));
-            }
-
-            return Result.FromSuccess();
-        }
+        return Result.FromSuccess();
     }
 }

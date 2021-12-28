@@ -23,12 +23,11 @@
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.Errors
-{
-    /// <summary>
-    /// Represents an error which occurred due to a validation error.
-    /// </summary>
-    /// <param name="PropertyName">The name of the argument.</param>
-    /// <param name="Reason">The reason validation failed.</param>
-    public record ValidationError([InvokerParameterName] string PropertyName, string Reason) : ResultError($"Failed to validate {PropertyName}: {Reason}");
-}
+namespace Remora.Discord.Extensions.Errors;
+
+/// <summary>
+/// Represents an error which occurred due to a validation error.
+/// </summary>
+/// <param name="PropertyName">The name of the argument.</param>
+/// <param name="Reason">The reason validation failed.</param>
+public record ValidationError([InvokerParameterName] string PropertyName, string Reason) : ResultError($"Failed to validate {PropertyName}: {Reason}");

@@ -24,67 +24,66 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a guild template.
+/// </summary>
+[PublicAPI]
+public interface ITemplate
 {
     /// <summary>
-    /// Represents a guild template.
+    /// Gets the template code (a unique ID).
     /// </summary>
-    [PublicAPI]
-    public interface ITemplate
-    {
-        /// <summary>
-        /// Gets the template code (a unique ID).
-        /// </summary>
-        string Code { get; }
+    string Code { get; }
 
-        /// <summary>
-        /// Gets the name of the template.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the template.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the description for the template.
-        /// </summary>
-        string? Description { get; }
+    /// <summary>
+    /// Gets the description for the template.
+    /// </summary>
+    string? Description { get; }
 
-        /// <summary>
-        /// Gets the number of times this template has been used.
-        /// </summary>
-        int UsageCount { get; }
+    /// <summary>
+    /// Gets the number of times this template has been used.
+    /// </summary>
+    int UsageCount { get; }
 
-        /// <summary>
-        /// Gets the ID of the user who created the template.
-        /// </summary>
-        Snowflake CreatorID { get; }
+    /// <summary>
+    /// Gets the ID of the user who created the template.
+    /// </summary>
+    Snowflake CreatorID { get; }
 
-        /// <summary>
-        /// Gets the user who created the template.
-        /// </summary>
-        IUser Creator { get; }
+    /// <summary>
+    /// Gets the user who created the template.
+    /// </summary>
+    IUser Creator { get; }
 
-        /// <summary>
-        /// Gets the time when the template was created.
-        /// </summary>
-        DateTimeOffset CreatedAt { get; }
+    /// <summary>
+    /// Gets the time when the template was created.
+    /// </summary>
+    DateTimeOffset CreatedAt { get; }
 
-        /// <summary>
-        /// Gets the last time the template was updated.
-        /// </summary>
-        DateTimeOffset UpdatedAt { get; }
+    /// <summary>
+    /// Gets the last time the template was updated.
+    /// </summary>
+    DateTimeOffset UpdatedAt { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the template is based on.
-        /// </summary>
-        Snowflake SourceGuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the template is based on.
+    /// </summary>
+    Snowflake SourceGuildID { get; }
 
-        /// <summary>
-        /// Gets the guild snapshot this template contains.
-        /// </summary>
-        IGuildTemplate SerializedSourceGuild { get; }
+    /// <summary>
+    /// Gets the guild snapshot this template contains.
+    /// </summary>
+    IGuildTemplate SerializedSourceGuild { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the template has unsynchronized changes.
-        /// </summary>
-        bool? IsDirty { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the template has unsynchronized changes.
+    /// </summary>
+    bool? IsDirty { get; }
 }

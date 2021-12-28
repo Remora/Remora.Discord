@@ -24,13 +24,12 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the Hello event.
+/// </summary>
+[PublicAPI]
+public class IntegrationUpdateTests : GatewayEventTestBase<IIntegrationUpdate>
 {
-    /// <summary>
-    /// Tests the Hello event.
-    /// </summary>
-    [PublicAPI]
-    public class IntegrationUpdateTests : GatewayEventTestBase<IIntegrationUpdate>
-    {
-    }
 }

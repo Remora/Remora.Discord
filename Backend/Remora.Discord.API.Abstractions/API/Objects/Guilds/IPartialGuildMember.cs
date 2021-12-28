@@ -25,42 +25,44 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents partial information about a guild member.
+/// </summary>
+[PublicAPI]
+public interface IPartialGuildMember
 {
-    /// <summary>
-    /// Represents partial information about a guild member.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialGuildMember
-    {
-        /// <inheritdoc cref="IGuildMember.User" />
-        Optional<IUser> User { get; }
+    /// <inheritdoc cref="IGuildMember.User" />
+    Optional<IUser> User { get; }
 
-        /// <inheritdoc cref="IGuildMember.Nickname" />
-        Optional<string?> Nickname { get; }
+    /// <inheritdoc cref="IGuildMember.Nickname" />
+    Optional<string?> Nickname { get; }
 
-        /// <inheritdoc cref="IGuildMember.Avatar"/>
-        Optional<IImageHash?> Avatar { get; }
+    /// <inheritdoc cref="IGuildMember.Avatar"/>
+    Optional<IImageHash?> Avatar { get; }
 
-        /// <inheritdoc cref="IGuildMember.Roles" />
-        Optional<IReadOnlyList<Snowflake>> Roles { get; }
+    /// <inheritdoc cref="IGuildMember.Roles" />
+    Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <inheritdoc cref="IGuildMember.JoinedAt" />
-        Optional<DateTimeOffset> JoinedAt { get; }
+    /// <inheritdoc cref="IGuildMember.JoinedAt" />
+    Optional<DateTimeOffset> JoinedAt { get; }
 
-        /// <inheritdoc cref="IGuildMember.PremiumSince" />
-        Optional<DateTimeOffset?> PremiumSince { get; }
+    /// <inheritdoc cref="IGuildMember.PremiumSince" />
+    Optional<DateTimeOffset?> PremiumSince { get; }
 
-        /// <inheritdoc cref="IGuildMember.IsDeafened" />
-        Optional<bool> IsDeafened { get; }
+    /// <inheritdoc cref="IGuildMember.IsDeafened" />
+    Optional<bool> IsDeafened { get; }
 
-        /// <inheritdoc cref="IGuildMember.IsMuted" />
-        Optional<bool> IsMuted { get; }
+    /// <inheritdoc cref="IGuildMember.IsMuted" />
+    Optional<bool> IsMuted { get; }
 
-        /// <inheritdoc cref="IGuildMember.IsPending" />
-        Optional<bool?> IsPending { get; }
+    /// <inheritdoc cref="IGuildMember.IsPending" />
+    Optional<bool?> IsPending { get; }
 
-        /// <inheritdoc cref="IGuildMember.Permissions" />
-        Optional<IDiscordPermissionSet> Permissions { get; }
-    }
+    /// <inheritdoc cref="IGuildMember.Permissions" />
+    Optional<IDiscordPermissionSet> Permissions { get; }
+
+    /// <inheritdoc cref="IGuildMember.CommunicationDisabledUntil"/>
+    Optional<DateTimeOffset?> CommunicationDisabledUntil { get; }
 }

@@ -26,42 +26,41 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents initial gateway state information.
+/// </summary>
+[PublicAPI]
+public interface IReady : IGatewayEvent
 {
     /// <summary>
-    /// Represents initial gateway state information.
+    /// Gets the gateway version.
     /// </summary>
-    [PublicAPI]
-    public interface IReady : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the gateway version.
-        /// </summary>
-        int Version { get; }
+    int Version { get; }
 
-        /// <summary>
-        /// Gets information about the current user.
-        /// </summary>
-        IUser User { get; }
+    /// <summary>
+    /// Gets information about the current user.
+    /// </summary>
+    IUser User { get; }
 
-        /// <summary>
-        /// Gets a list of guilds the user is in.
-        /// </summary>
-        IReadOnlyList<IUnavailableGuild> Guilds { get; }
+    /// <summary>
+    /// Gets a list of guilds the user is in.
+    /// </summary>
+    IReadOnlyList<IUnavailableGuild> Guilds { get; }
 
-        /// <summary>
-        /// Gets the session ID. Used for resuming.
-        /// </summary>
-        string SessionID { get; }
+    /// <summary>
+    /// Gets the session ID. Used for resuming.
+    /// </summary>
+    string SessionID { get; }
 
-        /// <summary>
-        /// Gets the shard information associated with this session.
-        /// </summary>
-        Optional<IShardIdentification> Shard { get; }
+    /// <summary>
+    /// Gets the shard information associated with this session.
+    /// </summary>
+    Optional<IShardIdentification> Shard { get; }
 
-        /// <summary>
-        /// Gets the OAuth2 application associated with this session.
-        /// </summary>
-        IPartialApplication Application { get; }
-    }
+    /// <summary>
+    /// Gets the OAuth2 application associated with this session.
+    /// </summary>
+    IPartialApplication Application { get; }
 }

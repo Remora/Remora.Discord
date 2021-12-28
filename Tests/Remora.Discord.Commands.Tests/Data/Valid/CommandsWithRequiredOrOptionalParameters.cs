@@ -28,20 +28,19 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
-{
-    public class CommandsWithRequiredOrOptionalParameters : CommandGroup
-    {
-        [Command("required")]
-        public Task<IResult> Required(int required)
-        {
-            throw new NotImplementedException();
-        }
+namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-        [Command("optional")]
-        public Task<IResult> Optional(int optional = 0)
-        {
-            throw new NotImplementedException();
-        }
+public class CommandsWithRequiredOrOptionalParameters : CommandGroup
+{
+    [Command("required")]
+    public Task<IResult> Required(int required)
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("optional")]
+    public Task<IResult> Optional(int optional = 0)
+    {
+        throw new NotImplementedException();
     }
 }

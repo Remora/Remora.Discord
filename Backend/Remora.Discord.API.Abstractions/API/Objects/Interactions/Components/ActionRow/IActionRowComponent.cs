@@ -23,15 +23,14 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a row of interactive components.
+/// </summary>
+[PublicAPI]
+public interface IActionRowComponent : IMessageComponent
 {
-    /// <summary>
-    /// Represents a row of interactive components.
-    /// </summary>
-    [PublicAPI]
-    public interface IActionRowComponent : IMessageComponent
-    {
-        /// <inheritdoc cref="IComponent.Components"/>
-        IReadOnlyList<IMessageComponent> Components { get; }
-    }
+    /// <inheritdoc cref="IComponent.Components"/>
+    IReadOnlyList<IMessageComponent> Components { get; }
 }

@@ -23,12 +23,11 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the Hello event.
+/// </summary>
+public class GuildStickersUpdateTests : GatewayEventTestBase<IGuildStickersUpdate>
 {
-    /// <summary>
-    /// Tests the Hello event.
-    /// </summary>
-    public class GuildStickersUpdateTests : GatewayEventTestBase<IGuildStickersUpdate>
-    {
-    }
 }

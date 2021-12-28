@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the deletion of an invite link.
+/// </summary>
+[PublicAPI]
+public interface IInviteDelete : IGatewayEvent
 {
     /// <summary>
-    /// Represents the deletion of an invite link.
+    /// Gets the ID fo the channel the invite is for.
     /// </summary>
-    [PublicAPI]
-    public interface IInviteDelete : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID fo the channel the invite is for.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the unique invite code.
-        /// </summary>
-        string Code { get; }
-    }
+    /// <summary>
+    /// Gets the unique invite code.
+    /// </summary>
+    string Code { get; }
 }

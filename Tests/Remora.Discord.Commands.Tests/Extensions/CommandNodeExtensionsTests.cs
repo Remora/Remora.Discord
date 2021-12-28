@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Remora.Commands.Groups;
@@ -31,69 +30,68 @@ using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Tests.Data.Ephemeral;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Extensions
+namespace Remora.Discord.Commands.Tests.Extensions;
+
+/// <summary>
+/// Tests the <see cref="CommandNodeExtensions"/> class.
+/// </summary>
+public static class CommandNodeExtensionsTests
 {
     /// <summary>
-    /// Tests the <see cref="CommandNodeExtensions"/> class.
+    /// Tests the <see cref="CommandNodeExtensions.FindCustomAttributeOnLocalTree{T}(Remora.Commands.Trees.Nodes.CommandNode, bool)"/> method.
     /// </summary>
-    public static class CommandNodeExtensionsTests
+    public class FindCustomAttributeOnLocalTreeTests
     {
         /// <summary>
-        /// Tests the <see cref="CommandNodeExtensions.FindCustomAttributeOnLocalTree{T}(Remora.Commands.Trees.Nodes.CommandNode, bool)"/> method.
+        /// Tests whether the method finds a custom attribute that decorates the command.
         /// </summary>
-        public class FindCustomAttributeOnLocalTreeTests
+        [Fact]
+        public void FindsAttributeOnCommand()
         {
-            /// <summary>
-            /// Tests whether the method finds a custom attribute that decorates the command.
-            /// </summary>
-            [Fact]
-            public void FindsAttributeOnCommand()
-            {
-                CommandTree tree = BuildCommandTree<EphemeralCommand>();
-                BoundCommandNode node = tree.Search("a").Single();
+            var tree = BuildCommandTree<EphemeralCommand>();
+            var node = tree.Search("a").Single();
 
-                Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
-            }
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
+        }
 
-            /// <summary>
-            /// Tests whether the method finds a custom attribute that decorates the group, but not the command.
-            /// </summary>
-            [Fact]
-            public void FindsAttributeOnGroup()
-            {
-                CommandTree tree = BuildCommandTree<EphemeralGroup>();
-                BoundCommandNode node = tree.Search
-                (
-                    new[] { "a", "b" },
-                    new Dictionary<string, IReadOnlyList<string>>()
-                ).Single();
+        /// <summary>
+        /// Tests whether the method finds a custom attribute that decorates the group, but not the command.
+        /// </summary>
+        [Fact]
+        public void FindsAttributeOnGroup()
+        {
+            var tree = BuildCommandTree<EphemeralGroup>();
+            var node = tree.Search
+            (
+                new[] { "a", "b" },
+                new Dictionary<string, IReadOnlyList<string>>()
+            ).Single();
 
-                Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
-            }
+            Assert.NotNull(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>());
+        }
 
-            /// <summary>
-            /// Tests whether the method ignores ancestors of a command that have the given attribute, when specified.
-            /// </summary>
-            [Fact]
-            public void IgnoresAttributeOnAncestorWhenSpecified()
-            {
-                CommandTree tree = BuildCommandTree<EphemeralGroup>();
-                BoundCommandNode node = tree.Search
-                (
-                    new[] { "a", "b" },
-                    new Dictionary<string, IReadOnlyList<string>>()
-                ).Single();
+        /// <summary>
+        /// Tests whether the method ignores ancestors of a command that have the given attribute, when specified.
+        /// </summary>
+        [Fact]
+        public void IgnoresAttributeOnAncestorWhenSpecified()
+        {
+            var tree = BuildCommandTree<EphemeralGroup>();
+            var node = tree.Search
+            (
+                new[] { "a", "b" },
+                new Dictionary<string, IReadOnlyList<string>>()
+            ).Single();
 
-                Assert.Null(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>(false));
-            }
+            Assert.Null(node.Node.FindCustomAttributeOnLocalTree<EphemeralAttribute>(false));
+        }
 
-            private static CommandTree BuildCommandTree<TModule>() where TModule : CommandGroup
-            {
-                CommandTreeBuilder builder = new();
-                builder.RegisterModule<TModule>();
+        private static CommandTree BuildCommandTree<TModule>() where TModule : CommandGroup
+        {
+            CommandTreeBuilder builder = new();
+            builder.RegisterModule<TModule>();
 
-                return builder.Build();
-            }
+            return builder.Build();
         }
     }
 }

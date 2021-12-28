@@ -25,102 +25,101 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a message.
+/// </summary>
+[PublicAPI]
+public interface IPartialMessage
 {
-    /// <summary>
-    /// Represents a message.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialMessage
-    {
-        /// <inheritdoc cref="IMessage.ID" />
-        Optional<Snowflake> ID { get; }
+    /// <inheritdoc cref="IMessage.ID" />
+    Optional<Snowflake> ID { get; }
 
-        /// <inheritdoc cref="IMessage.ChannelID" />
-        Optional<Snowflake> ChannelID { get; }
+    /// <inheritdoc cref="IMessage.ChannelID" />
+    Optional<Snowflake> ChannelID { get; }
 
-        /// <inheritdoc cref="IMessage.GuildID" />
-        Optional<Snowflake> GuildID { get; }
+    /// <inheritdoc cref="IMessage.GuildID" />
+    Optional<Snowflake> GuildID { get; }
 
-        /// <inheritdoc cref="IMessage.Author" />
-        Optional<IUser> Author { get; }
+    /// <inheritdoc cref="IMessage.Author" />
+    Optional<IUser> Author { get; }
 
-        /// <inheritdoc cref="IMessage.Member" />
-        Optional<IPartialGuildMember> Member { get; }
+    /// <inheritdoc cref="IMessage.Member" />
+    Optional<IPartialGuildMember> Member { get; }
 
-        /// <inheritdoc cref="IMessage.Content" />
-        Optional<string> Content { get; }
+    /// <inheritdoc cref="IMessage.Content" />
+    Optional<string> Content { get; }
 
-        /// <inheritdoc cref="IMessage.Timestamp" />
-        Optional<DateTimeOffset> Timestamp { get; }
+    /// <inheritdoc cref="IMessage.Timestamp" />
+    Optional<DateTimeOffset> Timestamp { get; }
 
-        /// <inheritdoc cref="IMessage.EditedTimestamp" />
-        Optional<DateTimeOffset?> EditedTimestamp { get; }
+    /// <inheritdoc cref="IMessage.EditedTimestamp" />
+    Optional<DateTimeOffset?> EditedTimestamp { get; }
 
-        /// <inheritdoc cref="IMessage.IsTTS" />
-        Optional<bool> IsTTS { get; }
+    /// <inheritdoc cref="IMessage.IsTTS" />
+    Optional<bool> IsTTS { get; }
 
-        /// <inheritdoc cref="IMessage.MentionsEveryone" />
-        Optional<bool> MentionsEveryone { get; }
+    /// <inheritdoc cref="IMessage.MentionsEveryone" />
+    Optional<bool> MentionsEveryone { get; }
 
-        /// <inheritdoc cref="IMessage.Mentions" />
-        Optional<IReadOnlyList<IUserMention>> Mentions { get; }
+    /// <inheritdoc cref="IMessage.Mentions" />
+    Optional<IReadOnlyList<IUserMention>> Mentions { get; }
 
-        /// <inheritdoc cref="IMessage.MentionedRoles" />
-        Optional<IReadOnlyList<Snowflake>> MentionedRoles { get; }
+    /// <inheritdoc cref="IMessage.MentionedRoles" />
+    Optional<IReadOnlyList<Snowflake>> MentionedRoles { get; }
 
-        /// <inheritdoc cref="IMessage.MentionedChannels" />
-        Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
+    /// <inheritdoc cref="IMessage.MentionedChannels" />
+    Optional<IReadOnlyList<IChannelMention>> MentionedChannels { get; }
 
-        /// <inheritdoc cref="IMessage.Attachments" />
-        Optional<IReadOnlyList<IAttachment>> Attachments { get; }
+    /// <inheritdoc cref="IMessage.Attachments" />
+    Optional<IReadOnlyList<IAttachment>> Attachments { get; }
 
-        /// <inheritdoc cref="IMessage.Embeds" />
-        Optional<IReadOnlyList<IEmbed>> Embeds { get; }
+    /// <inheritdoc cref="IMessage.Embeds" />
+    Optional<IReadOnlyList<IEmbed>> Embeds { get; }
 
-        /// <inheritdoc cref="IMessage.Reactions" />
-        Optional<IReadOnlyList<IReaction>> Reactions { get; }
+    /// <inheritdoc cref="IMessage.Reactions" />
+    Optional<IReadOnlyList<IReaction>> Reactions { get; }
 
-        /// <inheritdoc cref="IMessage.Nonce" />
-        Optional<string> Nonce { get; }
+    /// <inheritdoc cref="IMessage.Nonce" />
+    Optional<string> Nonce { get; }
 
-        /// <inheritdoc cref="IMessage.IsPinned" />
-        Optional<bool> IsPinned { get; }
+    /// <inheritdoc cref="IMessage.IsPinned" />
+    Optional<bool> IsPinned { get; }
 
-        /// <inheritdoc cref="IMessage.WebhookID" />
-        Optional<Snowflake> WebhookID { get; }
+    /// <inheritdoc cref="IMessage.WebhookID" />
+    Optional<Snowflake> WebhookID { get; }
 
-        /// <inheritdoc cref="IMessage.Type" />
-        Optional<MessageType> Type { get; }
+    /// <inheritdoc cref="IMessage.Type" />
+    Optional<MessageType> Type { get; }
 
-        /// <inheritdoc cref="IMessage.Activity" />
-        Optional<IMessageActivity> Activity { get; }
+    /// <inheritdoc cref="IMessage.Activity" />
+    Optional<IMessageActivity> Activity { get; }
 
-        /// <inheritdoc cref="IMessage.Application" />
-        Optional<IPartialApplication> Application { get; }
+    /// <inheritdoc cref="IMessage.Application" />
+    Optional<IPartialApplication> Application { get; }
 
-        /// <inheritdoc cref="IMessage.ApplicationID" />
-        Optional<Snowflake> ApplicationID { get; }
+    /// <inheritdoc cref="IMessage.ApplicationID" />
+    Optional<Snowflake> ApplicationID { get; }
 
-        /// <inheritdoc cref="IMessage.MessageReference" />
-        Optional<IMessageReference> MessageReference { get;  }
+    /// <inheritdoc cref="IMessage.MessageReference" />
+    Optional<IMessageReference> MessageReference { get;  }
 
-        /// <inheritdoc cref="IMessage.Flags" />
-        Optional<MessageFlags> Flags { get; }
+    /// <inheritdoc cref="IMessage.Flags" />
+    Optional<MessageFlags> Flags { get; }
 
-        /// <inheritdoc cref="IMessage.ReferencedMessage" />
-        Optional<IMessage?> ReferencedMessage { get; }
+    /// <inheritdoc cref="IMessage.ReferencedMessage" />
+    Optional<IMessage?> ReferencedMessage { get; }
 
-        /// <inheritdoc cref="IMessage.Interaction" />
-        Optional<IMessageInteraction> Interaction { get; }
+    /// <inheritdoc cref="IMessage.Interaction" />
+    Optional<IMessageInteraction> Interaction { get; }
 
-        /// <inheritdoc cref="IMessage.Thread" />
-        Optional<IChannel> Thread { get; }
+    /// <inheritdoc cref="IMessage.Thread" />
+    Optional<IChannel> Thread { get; }
 
-        /// <inheritdoc cref="IMessage.Components" />
-        Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    /// <inheritdoc cref="IMessage.Components" />
+    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
-        /// <inheritdoc cref="IMessage.StickerItems" />
-        Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
-    }
+    /// <inheritdoc cref="IMessage.StickerItems" />
+    Optional<IReadOnlyList<IStickerItem>> StickerItems { get; }
 }

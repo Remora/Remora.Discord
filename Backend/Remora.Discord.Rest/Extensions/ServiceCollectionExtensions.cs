@@ -41,190 +41,189 @@ using Remora.Discord.Rest.Polly;
 using Remora.Rest;
 using Remora.Rest.Extensions;
 
-namespace Remora.Discord.Rest.Extensions
+namespace Remora.Discord.Rest.Extensions;
+
+/// <summary>
+/// Defines various extension methods for the <see cref="IServiceCollection"/> interface.
+/// </summary>
+[PublicAPI]
+public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Defines various extension methods for the <see cref="IServiceCollection"/> interface.
+    /// Adds the services required for Discord's REST API.
     /// </summary>
-    [PublicAPI]
-    public static class ServiceCollectionExtensions
+    /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="tokenFactory">A function that creates or retrieves the authorization token.</param>
+    /// <param name="buildClient">Extra client building operations.</param>
+    /// <returns>The service collection, with the services added.</returns>
+    public static IServiceCollection AddDiscordRest
+    (
+        this IServiceCollection serviceCollection,
+        Func<IServiceProvider, string> tokenFactory,
+        Action<IHttpClientBuilder>? buildClient = null
+    )
     {
-        /// <summary>
-        /// Adds the services required for Discord's REST API.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <param name="tokenFactory">A function that creates or retrieves the authorization token.</param>
-        /// <param name="buildClient">Extra client building operations.</param>
-        /// <returns>The service collection, with the services added.</returns>
-        public static IServiceCollection AddDiscordRest
+        serviceCollection.ConfigureDiscordJsonConverters();
+
+        serviceCollection
+            .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
+
+        serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
-            this IServiceCollection serviceCollection,
-            Func<IServiceProvider, string> tokenFactory,
-            Action<IHttpClientBuilder>? buildClient = null
-        )
-        {
-            serviceCollection.ConfigureDiscordJsonConverters();
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection
-                .AddSingleton<ITokenStore>(serviceProvider => new TokenStore(tokenFactory(serviceProvider)));
+        serviceCollection.TryAddTransient<IDiscordRestChannelAPI>(s => new DiscordRestChannelAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestEmojiAPI>(s => new DiscordRestEmojiAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestChannelAPI>(s => new DiscordRestChannelAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestGatewayAPI>(s => new DiscordRestGatewayAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestEmojiAPI>(s => new DiscordRestEmojiAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestGuildAPI>(s => new DiscordRestGuildAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestGatewayAPI>(s => new DiscordRestGatewayAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestGuildScheduledEventAPI>(s => new DiscordRestGuildScheduledEventAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestGuildAPI>(s => new DiscordRestGuildAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestInviteAPI>(s => new DiscordRestInviteAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestGuildScheduledEventAPI>(s => new DiscordRestGuildScheduledEventAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestUserAPI>(s => new DiscordRestUserAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestInviteAPI>(s => new DiscordRestInviteAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestVoiceAPI>(s => new DiscordRestVoiceAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestUserAPI>(s => new DiscordRestUserAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestWebhookAPI>(s => new DiscordRestWebhookAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestVoiceAPI>(s => new DiscordRestVoiceAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestTemplateAPI>(s => new DiscordRestTemplateAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestWebhookAPI>(s => new DiscordRestWebhookAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestInteractionAPI>(s => new DiscordRestInteractionAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestTemplateAPI>(s => new DiscordRestTemplateAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestApplicationAPI>(s => new DiscordRestApplicationAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestInteractionAPI>(s => new DiscordRestInteractionAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestOAuth2API>(s => new DiscordRestOAuth2API
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestApplicationAPI>(s => new DiscordRestApplicationAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestStageInstanceAPI>(s => new DiscordRestStageInstanceAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestOAuth2API>(s => new DiscordRestOAuth2API
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        serviceCollection.TryAddTransient<IDiscordRestStickerAPI>(s => new DiscordRestStickerAPI
+        (
+            s.GetRequiredService<IRestHttpClient>(),
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+        ));
 
-            serviceCollection.TryAddTransient<IDiscordRestStageInstanceAPI>(s => new DiscordRestStageInstanceAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+        var rateLimitPolicy = DiscordRateLimitPolicy.Create();
+        var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
+        var clientBuilder = serviceCollection
+            .AddRestHttpClient<RestError>("Discord")
+            .ConfigureHttpClient((services, client) =>
+            {
+                var assemblyName = Assembly.GetExecutingAssembly().GetName();
+                var name = assemblyName.Name ?? "Remora.Discord";
+                var version = assemblyName.Version ?? new Version(1, 0, 0);
 
-            serviceCollection.TryAddTransient<IDiscordRestStickerAPI>(s => new DiscordRestStickerAPI
-            (
-                s.GetRequiredService<IRestHttpClient>(),
-                s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
-            ));
+                var tokenStore = services.GetRequiredService<ITokenStore>();
 
-            var rateLimitPolicy = DiscordRateLimitPolicy.Create();
-            var retryDelay = Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromSeconds(1), 5);
-            var clientBuilder = serviceCollection
-                .AddRestHttpClient<RestError>("Discord")
-                .ConfigureHttpClient((services, client) =>
-                {
-                    var assemblyName = Assembly.GetExecutingAssembly().GetName();
-                    var name = assemblyName.Name ?? "Remora.Discord";
-                    var version = assemblyName.Version ?? new Version(1, 0, 0);
-
-                    var tokenStore = services.GetRequiredService<ITokenStore>();
-
-                    client.BaseAddress = Constants.BaseURL;
-                    client.DefaultRequestHeaders.UserAgent.Add
-                    (
-                        new ProductInfoHeaderValue(name, version.ToString())
-                    );
-
-                    var token = tokenStore.Token;
-                    if (string.IsNullOrWhiteSpace(token))
-                    {
-                        throw new InvalidOperationException("The authentication token has to contain something.");
-                    }
-
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
-                    (
-                        "Bot",
-                        token
-                    );
-                })
-                .AddTransientHttpErrorPolicy
+                client.BaseAddress = Constants.BaseURL;
+                client.DefaultRequestHeaders.UserAgent.Add
                 (
-                    b => b
-                        .WaitAndRetryAsync(retryDelay)
-                        .WrapAsync(rateLimitPolicy)
-                )
-                .AddPolicyHandler
-                (
-                    Policy.HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
-                        .WaitAndRetryAsync
-                        (
-                            1,
-                            (_, response, _) =>
-                            {
-                                if (response.Result == default)
-                                {
-                                    return TimeSpan.FromSeconds(1);
-                                }
-
-                                return response.Result.Headers.RetryAfter is null or { Delta: null }
-                                    ? TimeSpan.FromSeconds(1)
-                                    : response.Result.Headers.RetryAfter.Delta.Value;
-                            },
-                            (_, _, _, _) => Task.CompletedTask
-                        )
+                    new ProductInfoHeaderValue(name, version.ToString())
                 );
 
-            // Run extra user-provided client building operations.
-            buildClient?.Invoke(clientBuilder);
+                var token = tokenStore.Token;
+                if (string.IsNullOrWhiteSpace(token))
+                {
+                    throw new InvalidOperationException("The authentication token has to contain something.");
+                }
 
-            return serviceCollection;
-        }
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
+                (
+                    "Bot",
+                    token
+                );
+            })
+            .AddTransientHttpErrorPolicy
+            (
+                b => b
+                    .WaitAndRetryAsync(retryDelay)
+                    .WrapAsync(rateLimitPolicy)
+            )
+            .AddPolicyHandler
+            (
+                Policy.HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                    .WaitAndRetryAsync
+                    (
+                        1,
+                        (_, response, _) =>
+                        {
+                            if (response.Result == default)
+                            {
+                                return TimeSpan.FromSeconds(1);
+                            }
+
+                            return response.Result.Headers.RetryAfter is null or { Delta: null }
+                                ? TimeSpan.FromSeconds(1)
+                                : response.Result.Headers.RetryAfter.Delta.Value;
+                        },
+                        (_, _, _, _) => Task.CompletedTask
+                    )
+            );
+
+        // Run extra user-provided client building operations.
+        buildClient?.Invoke(clientBuilder);
+
+        return serviceCollection;
     }
 }

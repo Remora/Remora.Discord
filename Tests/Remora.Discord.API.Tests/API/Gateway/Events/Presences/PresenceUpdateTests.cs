@@ -22,23 +22,21 @@
 
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <inheritdoc />
+public class PresenceUpdateTests : GatewayEventTestBase<IPresenceUpdate>
 {
-    /// <inheritdoc />
-    public class PresenceUpdateTests : GatewayEventTestBase<IPresenceUpdate>
+    /// <inheritdoc/>
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc/>
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "id",           // undocumented field in "activities[]" objects
-                "sync_id",      // undocumented field in "activities[]" objects
-                "session_id"
-            }
-        };
-    }
+            "id",           // undocumented field in "activities[]" objects
+            "sync_id",      // undocumented field in "activities[]" objects
+            "session_id"
+        }
+    };
 }

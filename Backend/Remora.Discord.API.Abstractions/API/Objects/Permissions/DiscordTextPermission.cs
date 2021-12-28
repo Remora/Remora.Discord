@@ -22,115 +22,114 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
+/// applicable to text channels.
+/// </summary>
+[PublicAPI]
+public enum DiscordTextPermission
 {
     /// <summary>
-    /// Enumerates a subset of the full <see cref="DiscordPermission"/> enumeration, containing only the permissions
-    /// applicable to text channels.
+    /// Allows creation of instant invites.
     /// </summary>
-    [PublicAPI]
-    public enum DiscordTextPermission
-    {
-        /// <summary>
-        /// Allows creation of instant invites.
-        /// </summary>
-        CreateInstantInvite = 0,
+    CreateInstantInvite = 0,
 
-        /// <summary>
-        /// Allows management and editing of channels.
-        /// </summary>
-        ManageChannels = 4,
+    /// <summary>
+    /// Allows management and editing of channels.
+    /// </summary>
+    ManageChannels = 4,
 
-        /// <summary>
-        /// Allows for the addition of reactions to messages.
-        /// </summary>
-        AddReactions = 6,
+    /// <summary>
+    /// Allows for the addition of reactions to messages.
+    /// </summary>
+    AddReactions = 6,
 
-        /// <summary>
-        /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
-        /// referred to as "Read Messages" in the Discord client.
-        /// </summary>
-        ViewChannel = 10,
+    /// <summary>
+    /// Allows guild members to view a channel, which includes reading messages in text channels. This may be
+    /// referred to as "Read Messages" in the Discord client.
+    /// </summary>
+    ViewChannel = 10,
 
-        /// <summary>
-        /// Allows for sending messages in a channel.
-        /// </summary>
-        SendMessages = 11,
+    /// <summary>
+    /// Allows for sending messages in a channel.
+    /// </summary>
+    SendMessages = 11,
 
-        /// <summary>
-        /// Allows for sending of /tts messages.
-        /// </summary>
-        SendTTSMessages = 12,
+    /// <summary>
+    /// Allows for sending of /tts messages.
+    /// </summary>
+    SendTTSMessages = 12,
 
-        /// <summary>
-        /// Allows for deletion of other user's messages.
-        /// </summary>
-        ManageMessages = 13,
+    /// <summary>
+    /// Allows for deletion of other user's messages.
+    /// </summary>
+    ManageMessages = 13,
 
-        /// <summary>
-        /// Links sent by users with this permission will be auto-embedded.
-        /// </summary>
-        EmbedLinks = 14,
+    /// <summary>
+    /// Links sent by users with this permission will be auto-embedded.
+    /// </summary>
+    EmbedLinks = 14,
 
-        /// <summary>
-        /// Allows for uploading images and files.
-        /// </summary>
-        AttachFiles = 15,
+    /// <summary>
+    /// Allows for uploading images and files.
+    /// </summary>
+    AttachFiles = 15,
 
-        /// <summary>
-        /// Allows for reading of message history.
-        /// </summary>
-        ReadMessageHistory = 16,
+    /// <summary>
+    /// Allows for reading of message history.
+    /// </summary>
+    ReadMessageHistory = 16,
 
-        /// <summary>
-        /// Allows for using the @everyone tag to notify all users in a guild, and the @here tag to notify all online
-        /// users in a channel.
-        /// </summary>
-        MentionEveryone = 17,
+    /// <summary>
+    /// Allows for using the @everyone tag to notify all users in a guild, and the @here tag to notify all online
+    /// users in a channel.
+    /// </summary>
+    MentionEveryone = 17,
 
-        /// <summary>
-        /// Allows the usage of custom emojis from other servers.
-        /// </summary>
-        UseExternalEmojis = 18,
+    /// <summary>
+    /// Allows the usage of custom emojis from other servers.
+    /// </summary>
+    UseExternalEmojis = 18,
 
-        /// <summary>
-        /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
-        /// </summary>
-        ManageRoles = 28,
+    /// <summary>
+    /// Allows management and editing of roles. This may be displayed as "Manage Permissions" in the Discord client.
+    /// </summary>
+    ManageRoles = 28,
 
-        /// <summary>
-        /// Allows management and editing of webhooks.
-        /// </summary>
-        ManageWebhooks = 29,
+    /// <summary>
+    /// Allows management and editing of webhooks.
+    /// </summary>
+    ManageWebhooks = 29,
 
-        /// <summary>
-        /// Allows usage of slash commands.
-        /// </summary>
-        UseSlashCommands = 31,
+    /// <summary>
+    /// Allows usage of slash commands.
+    /// </summary>
+    UseSlashCommands = 31,
 
-        /// <summary>
-        /// Allows the user to manage threads.
-        /// </summary>
-        ManageThreads = 34,
+    /// <summary>
+    /// Allows the user to manage threads.
+    /// </summary>
+    ManageThreads = 34,
 
-        /// <summary>
-        /// Allows the user to create public threads.
-        /// </summary>
-        CreatePublicThreads = 35,
+    /// <summary>
+    /// Allows the user to create public threads.
+    /// </summary>
+    CreatePublicThreads = 35,
 
-        /// <summary>
-        /// Allows the user to create private threads.
-        /// </summary>
-        CreatePrivateThreads = 36,
+    /// <summary>
+    /// Allows the user to create private threads.
+    /// </summary>
+    CreatePrivateThreads = 36,
 
-        /// <summary>
-        /// Allows the user to use stickers from other servers.
-        /// </summary>
-        UseExternalStickers = 37,
+    /// <summary>
+    /// Allows the user to use stickers from other servers.
+    /// </summary>
+    UseExternalStickers = 37,
 
-        /// <summary>
-        /// Allows the user to send messages in threads.
-        /// </summary>
-        SendMessagesInThreads = 38
-    }
+    /// <summary>
+    /// Allows the user to send messages in threads.
+    /// </summary>
+    SendMessagesInThreads = 38
 }

@@ -32,313 +32,237 @@ using Remora.Discord.Gateway.Transport;
 using Remora.Results;
 using Xunit.Sdk;
 
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport;
+
+/// <summary>
+/// Represents a mocked transport service.
+/// </summary>
+public class MockedTransportService : IPayloadTransportService
 {
+    private readonly IReadOnlyList<MockedTransportSequence> _sequences;
+    private readonly IReadOnlyList<MockedTransportSequence> _continuousSequences;
+    private readonly MockedTransportServiceOptions _serviceOptions;
+    private readonly CancellationTokenSource _finisher;
+
+    private readonly List<MockedTransportSequence> _finishedSequences = new();
+
+    private readonly SemaphoreSlim _semaphore = new(1);
+
+    private DateTimeOffset _lastAdvance;
+
+    /// <inheritdoc />
+    public bool IsConnected { get; private set; }
+
     /// <summary>
-    /// Represents a mocked transport service.
+    /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
     /// </summary>
-    public class MockedTransportService : IPayloadTransportService
+    /// <param name="sequences">The sequences in use.</param>
+    /// <param name="continuousSequences">The continuous sequences in use.</param>
+    /// <param name="serviceOptions">The service options.</param>
+    /// <param name="finisher">The token source to cancel when all sequences are finished.</param>
+    public MockedTransportService
+    (
+        IReadOnlyList<MockedTransportSequence> sequences,
+        IReadOnlyList<MockedTransportSequence> continuousSequences,
+        MockedTransportServiceOptions serviceOptions,
+        CancellationTokenSource finisher
+    )
     {
-        private readonly IReadOnlyList<MockedTransportSequence> _sequences;
-        private readonly IReadOnlyList<MockedTransportSequence> _continuousSequences;
-        private readonly MockedTransportServiceOptions _serviceOptions;
-        private readonly CancellationTokenSource _finisher;
+        _sequences = sequences;
+        _continuousSequences = continuousSequences;
+        _serviceOptions = serviceOptions;
+        _finisher = finisher;
 
-        private readonly List<MockedTransportSequence> _finishedSequences = new();
+        _lastAdvance = DateTimeOffset.UtcNow;
+    }
 
-        private readonly SemaphoreSlim _semaphore = new(1);
-
-        private DateTimeOffset _lastAdvance;
-
-        /// <inheritdoc />
-        public bool IsConnected { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MockedTransportService"/> class.
-        /// </summary>
-        /// <param name="sequences">The sequences in use.</param>
-        /// <param name="continuousSequences">The continuous sequences in use.</param>
-        /// <param name="serviceOptions">The service options.</param>
-        /// <param name="finisher">The token source to cancel when all sequences are finished.</param>
-        public MockedTransportService
-        (
-            IReadOnlyList<MockedTransportSequence> sequences,
-            IReadOnlyList<MockedTransportSequence> continuousSequences,
-            MockedTransportServiceOptions serviceOptions,
-            CancellationTokenSource finisher
-        )
+    /// <inheritdoc />
+    public async Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default)
+    {
+        try
         {
-            _sequences = sequences;
-            _continuousSequences = continuousSequences;
-            _serviceOptions = serviceOptions;
-            _finisher = finisher;
+            await _semaphore.WaitAsync(ct);
 
-            _lastAdvance = DateTimeOffset.UtcNow;
-        }
-
-        /// <inheritdoc />
-        public async Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default)
-        {
-            try
+            foreach (var sequence in _sequences.Except(_finishedSequences))
             {
-                await _semaphore.WaitAsync(ct);
-
-                foreach (var sequence in _sequences.Except(_finishedSequences))
+                if (sequence.Current is not ConnectEvent c)
                 {
-                    if (sequence.Current is not ConnectEvent c)
-                    {
-                        continue;
-                    }
-
-                    switch (c.Matches(endpoint))
-                    {
-                        case EventMatch.Pass:
-                        {
-                            if (!sequence.MoveNext())
-                            {
-                                _finishedSequences.Add(sequence);
-                            }
-
-                            _lastAdvance = DateTimeOffset.UtcNow;
-
-                            break;
-                        }
-                        case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(endpoint));
-                        }
-                    }
+                    continue;
                 }
 
-                foreach (var continuousSequence in _continuousSequences)
+                switch (c.Matches(endpoint))
                 {
-                    if (continuousSequence.Current is not ConnectEvent c)
+                    case EventMatch.Pass:
                     {
-                        continue;
+                        if (!sequence.MoveNext())
+                        {
+                            _finishedSequences.Add(sequence);
+                        }
+
+                        _lastAdvance = DateTimeOffset.UtcNow;
+
+                        break;
                     }
-
-                    switch (c.Matches(endpoint))
+                    case EventMatch.Fail:
                     {
-                        case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
-                            {
-                                continuousSequence.Reset();
-                            }
-
-                            break;
-                        }
-                        case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(endpoint));
-                        }
+                        throw new TrueException("An event in a sequence failed.", null);
+                    }
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(endpoint));
                     }
                 }
-
-                var remainingSequences = _sequences.Except(_finishedSequences).ToList();
-                if (remainingSequences.Count == 0)
-                {
-                    _finisher.Cancel();
-                }
-
-                CheckTimeout();
-
-                this.IsConnected = true;
-                return Result.FromSuccess();
             }
-            finally
-            {
-                _semaphore.Release();
-            }
-        }
 
-        /// <inheritdoc />
-        public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
-        {
-            try
+            foreach (var continuousSequence in _continuousSequences)
             {
-                await _semaphore.WaitAsync(ct);
-
-                foreach (var sequence in _sequences.Except(_finishedSequences))
+                if (continuousSequence.Current is not ConnectEvent c)
                 {
-                    if (sequence.Current is not ReceiveEvent r)
-                    {
-                        continue;
-                    }
-
-                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
-                    {
-                        case EventMatch.Pass:
-                        {
-                            if (!sequence.MoveNext())
-                            {
-                                _finishedSequences.Add(sequence);
-                            }
-
-                            _lastAdvance = DateTimeOffset.UtcNow;
-
-                            break;
-                        }
-                        case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(payload));
-                        }
-                    }
+                    continue;
                 }
 
-                foreach (var continuousSequence in _continuousSequences)
+                switch (c.Matches(endpoint))
                 {
-                    if (continuousSequence.Current is not ReceiveEvent r)
+                    case EventMatch.Pass:
                     {
-                        continue;
-                    }
-
-                    switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
-                    {
-                        case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
-                            {
-                                continuousSequence.Reset();
-                            }
-
-                            break;
-                        }
-                        case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(payload));
-                        }
-                    }
-                }
-
-                var remainingSequences = _sequences.Except(_finishedSequences).ToList();
-                if (remainingSequences.Count == 0)
-                {
-                    _finisher.Cancel();
-                }
-
-                CheckTimeout();
-
-                return Result.FromSuccess();
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
-        }
-
-        /// <inheritdoc />
-        public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
-        {
-            while (!ct.IsCancellationRequested)
-            {
-                try
-                {
-                    await _semaphore.WaitAsync(ct);
-
-                    foreach (var sequence in _sequences.Except(_finishedSequences))
-                    {
-                        switch (sequence.Current)
-                        {
-                            case SendEvent s:
-                            {
-                                var payload = s.CreatePayload();
-                                if (!sequence.MoveNext())
-                                {
-                                    _finishedSequences.Add(sequence);
-                                }
-
-                                _lastAdvance = DateTimeOffset.UtcNow;
-
-                                return Result<IPayload>.FromSuccess(payload);
-                            }
-
-                            case SendExceptionEvent se:
-                            {
-                                if (!sequence.MoveNext())
-                                {
-                                    _finishedSequences.Add(sequence);
-                                }
-
-                                this.IsConnected = false;
-                                throw se.CreateException();
-                            }
-                        }
-                    }
-
-                    foreach (var continuousSequence in _continuousSequences)
-                    {
-                        if (continuousSequence.Current is not SendEvent s)
-                        {
-                            continue;
-                        }
-
-                        var payload = s.CreatePayload();
                         if (!continuousSequence.MoveNext())
                         {
                             continuousSequence.Reset();
                         }
 
-                        return Result<IPayload>.FromSuccess(payload);
+                        break;
                     }
-
-                    var remainingSequences = _sequences.Except(_finishedSequences).ToList();
-                    if (remainingSequences.Count == 0)
+                    case EventMatch.Fail:
                     {
-                        _finisher.Cancel();
+                        throw new TrueException("An event in a continuous sequence failed.", null);
                     }
-
-                    CheckTimeout();
-
-                    await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
-                }
-                finally
-                {
-                    _semaphore.Release();
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(endpoint));
+                    }
                 }
             }
 
-            return await Task.FromCanceled<Result<IPayload>>(ct);
-        }
+            var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+            if (remainingSequences.Count == 0)
+            {
+                _finisher.Cancel();
+            }
 
-        /// <inheritdoc />
-        public async Task<Result> DisconnectAsync
-        (
-            bool reconnectionIntended,
-            CancellationToken ct = default
-        )
+            CheckTimeout();
+
+            this.IsConnected = true;
+            return Result.FromSuccess();
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
+    {
+        try
+        {
+            await _semaphore.WaitAsync(ct);
+
+            foreach (var sequence in _sequences.Except(_finishedSequences))
+            {
+                if (sequence.Current is not ReceiveEvent r)
+                {
+                    continue;
+                }
+
+                switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                {
+                    case EventMatch.Pass:
+                    {
+                        if (!sequence.MoveNext())
+                        {
+                            _finishedSequences.Add(sequence);
+                        }
+
+                        _lastAdvance = DateTimeOffset.UtcNow;
+
+                        break;
+                    }
+                    case EventMatch.Fail:
+                    {
+                        throw new TrueException("An event in a sequence failed.", null);
+                    }
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(payload));
+                    }
+                }
+            }
+
+            foreach (var continuousSequence in _continuousSequences)
+            {
+                if (continuousSequence.Current is not ReceiveEvent r)
+                {
+                    continue;
+                }
+
+                switch (r.Matches(payload, _serviceOptions.IgnoreUnexpected))
+                {
+                    case EventMatch.Pass:
+                    {
+                        if (!continuousSequence.MoveNext())
+                        {
+                            continuousSequence.Reset();
+                        }
+
+                        break;
+                    }
+                    case EventMatch.Fail:
+                    {
+                        throw new TrueException("An event in a continuous sequence failed.", null);
+                    }
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(payload));
+                    }
+                }
+            }
+
+            var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+            if (remainingSequences.Count == 0)
+            {
+                _finisher.Cancel();
+            }
+
+            CheckTimeout();
+
+            return Result.FromSuccess();
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
+    {
+        while (!ct.IsCancellationRequested)
         {
             try
             {
@@ -346,15 +270,11 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 foreach (var sequence in _sequences.Except(_finishedSequences))
                 {
-                    if (sequence.Current is not DisconnectEvent d)
+                    switch (sequence.Current)
                     {
-                        continue;
-                    }
-
-                    switch (d.Matches())
-                    {
-                        case EventMatch.Pass:
+                        case SendEvent s:
                         {
+                            var payload = s.CreatePayload();
                             if (!sequence.MoveNext())
                             {
                                 _finishedSequences.Add(sequence);
@@ -362,54 +282,36 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                             _lastAdvance = DateTimeOffset.UtcNow;
 
-                            break;
+                            return Result<IPayload>.FromSuccess(payload);
                         }
-                        case EventMatch.Fail:
+
+                        case SendExceptionEvent se:
                         {
-                            throw new TrueException("An event in a sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(d));
+                            if (!sequence.MoveNext())
+                            {
+                                _finishedSequences.Add(sequence);
+                            }
+
+                            this.IsConnected = false;
+                            throw se.CreateException();
                         }
                     }
                 }
 
                 foreach (var continuousSequence in _continuousSequences)
                 {
-                    if (continuousSequence.Current is not DisconnectEvent d)
+                    if (continuousSequence.Current is not SendEvent s)
                     {
                         continue;
                     }
 
-                    switch (d.Matches())
+                    var payload = s.CreatePayload();
+                    if (!continuousSequence.MoveNext())
                     {
-                        case EventMatch.Pass:
-                        {
-                            if (!continuousSequence.MoveNext())
-                            {
-                                continuousSequence.Reset();
-                            }
-
-                            break;
-                        }
-                        case EventMatch.Fail:
-                        {
-                            throw new TrueException("An event in a continuous sequence failed.", null);
-                        }
-                        case EventMatch.Ignore:
-                        {
-                            break;
-                        }
-                        default:
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(d));
-                        }
+                        continuousSequence.Reset();
                     }
+
+                    return Result<IPayload>.FromSuccess(payload);
                 }
 
                 var remainingSequences = _sequences.Except(_finishedSequences).ToList();
@@ -420,8 +322,7 @@ namespace Remora.Discord.Gateway.Tests.Transport
 
                 CheckTimeout();
 
-                this.IsConnected = false;
-                return Result.FromSuccess();
+                await Task.Delay(TimeSpan.FromMilliseconds(10), ct);
             }
             finally
             {
@@ -429,28 +330,126 @@ namespace Remora.Discord.Gateway.Tests.Transport
             }
         }
 
-        /// <summary>
-        /// Checks that the service has advanced in time.
-        /// </summary>
-        private void CheckTimeout()
+        return await Task.FromCanceled<Result<IPayload>>(ct);
+    }
+
+    /// <inheritdoc />
+    public async Task<Result> DisconnectAsync
+    (
+        bool reconnectionIntended,
+        CancellationToken ct = default
+    )
+    {
+        try
         {
-            if (_finisher.IsCancellationRequested)
+            await _semaphore.WaitAsync(ct);
+
+            foreach (var sequence in _sequences.Except(_finishedSequences))
             {
-                // We're fine; the sequence is finished (and probably just took some time to process)
-                return;
+                if (sequence.Current is not DisconnectEvent d)
+                {
+                    continue;
+                }
+
+                switch (d.Matches())
+                {
+                    case EventMatch.Pass:
+                    {
+                        if (!sequence.MoveNext())
+                        {
+                            _finishedSequences.Add(sequence);
+                        }
+
+                        _lastAdvance = DateTimeOffset.UtcNow;
+
+                        break;
+                    }
+                    case EventMatch.Fail:
+                    {
+                        throw new TrueException("An event in a sequence failed.", null);
+                    }
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(d));
+                    }
+                }
             }
 
-            var timeout = _serviceOptions.Timeout;
-            if (Debugger.IsAttached)
+            foreach (var continuousSequence in _continuousSequences)
             {
-                // Extend the timeout
-                timeout += TimeSpan.FromMinutes(10);
+                if (continuousSequence.Current is not DisconnectEvent d)
+                {
+                    continue;
+                }
+
+                switch (d.Matches())
+                {
+                    case EventMatch.Pass:
+                    {
+                        if (!continuousSequence.MoveNext())
+                        {
+                            continuousSequence.Reset();
+                        }
+
+                        break;
+                    }
+                    case EventMatch.Fail:
+                    {
+                        throw new TrueException("An event in a continuous sequence failed.", null);
+                    }
+                    case EventMatch.Ignore:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        throw new ArgumentOutOfRangeException(nameof(d));
+                    }
+                }
             }
 
-            if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
+            var remainingSequences = _sequences.Except(_finishedSequences).ToList();
+            if (remainingSequences.Count == 0)
             {
-                throw new TestTimeoutException((int)_serviceOptions.Timeout.TotalMilliseconds);
+                _finisher.Cancel();
             }
+
+            CheckTimeout();
+
+            this.IsConnected = false;
+            return Result.FromSuccess();
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <summary>
+    /// Checks that the service has advanced in time.
+    /// </summary>
+    private void CheckTimeout()
+    {
+        if (_finisher.IsCancellationRequested)
+        {
+            // We're fine; the sequence is finished (and probably just took some time to process)
+            return;
+        }
+
+        var timeout = _serviceOptions.Timeout;
+        if (Debugger.IsAttached)
+        {
+            // Extend the timeout
+            timeout += TimeSpan.FromMinutes(10);
+        }
+
+        if (DateTimeOffset.UtcNow - _lastAdvance > timeout)
+        {
+            throw new TestTimeoutException((int)_serviceOptions.Timeout.TotalMilliseconds);
         }
     }
 }

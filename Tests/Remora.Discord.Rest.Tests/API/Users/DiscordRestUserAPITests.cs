@@ -25,6 +25,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
@@ -35,368 +36,367 @@ using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Users
+namespace Remora.Discord.Rest.Tests.API.Users;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestUserAPI"/> class.
+/// </summary>
+public class DiscordRestUserAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestUserAPI"/> class.
+    /// Tests the <see cref="DiscordRestUserAPI.GetUserAsync"/> method.
     /// </summary>
-    public class DiscordRestUserAPITests
+    public class GetCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetUserAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+            );
 
-                var result = await api.GetCurrentUserAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetCurrentUserAsync();
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetUserAsync"/> method.
+    /// </summary>
+    public class GetUserAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetUserAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetUserAsync : RestAPITestBase<IDiscordRestUserAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var userId = new Snowflake(0);
+            var userId = DiscordSnowflake.New(0);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/{userId}")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/{userId}")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+            );
 
-                var result = await api.GetUserAsync(userId);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetUserAsync(userId);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.ModifyCurrentUserAsync"/> method.
+    /// </summary>
+    public class ModifyCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.ModifyCurrentUserAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ModifyCurrentUserAsync : RestAPITestBase<IDiscordRestUserAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var username = "aa";
+            var username = "aa";
 
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(9894494448401390090);
-                avatar.Position = 0;
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(9894494448401390090);
+            avatar.Position = 0;
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar", p => p.IsString())
-                            )
+                            o => o
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar", p => p.IsString())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+            );
 
-                var result = await api.ModifyCurrentUserAsync(username, avatar);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.ModifyCurrentUserAsync(username, avatar);
+            ResultAssert.Successful(result);
+        }
 
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNullableRequestCorrectly()
-            {
-                var username = "aa";
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
+        {
+            var username = "aa";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("username", p => p.Is(username))
-                                    .WithProperty("avatar", p => p.IsNull())
-                            )
+                            o => o
+                                .WithProperty("username", p => p.Is(username))
+                                .WithProperty("avatar", p => p.IsNull())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+            );
 
-                var result = await api.ModifyCurrentUserAsync(username, null);
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfAvatarIsUnknownFormat()
-            {
-                var username = "aa";
-
-                // Create a dummy PNG image
-                await using var avatar = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(avatar);
-                binaryWriter.Write(0x000000);
-                avatar.Position = 0;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
-                );
-
-                var result = await api.ModifyCurrentUserAsync(username, avatar);
-                ResultAssert.Unsuccessful(result);
-            }
+            var result = await api.ModifyCurrentUserAsync(username, null);
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetCurrentUserGuildsAsync : RestAPITestBase<IDiscordRestUserAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfAvatarIsUnknownFormat()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var before = new Snowflake(0);
-                var after = new Snowflake(1);
-                var limit = 10;
+            var username = "aa";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                        .WithQueryString
+            // Create a dummy PNG image
+            await using var avatar = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(avatar);
+            binaryWriter.Write(0x000000);
+            avatar.Position = 0;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}users/@me")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IUser)])
+            );
+
+            var result = await api.ModifyCurrentUserAsync(username, avatar);
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildsAsync"/> method.
+    /// </summary>
+    public class GetCurrentUserGuildsAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var before = DiscordSnowflake.New(0);
+            var after = DiscordSnowflake.New(1);
+            var limit = 10;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .WithQueryString
+                    (
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("before", before.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString()),
+                            new KeyValuePair<string, string>("limit", limit.ToString())
+                        }
+                    )
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfLimitIsTooLow()
+        {
+            var limit = 0;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.GetCurrentUserGuildsAsync(limit: limit);
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorIfLimitIsTooHigh()
+        {
+            var limit = 201;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.GetCurrentUserGuildsAsync(limit: limit);
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildMemberAsync"/> method.
+    /// </summary>
+    public class GetCurrentUserGuildMemberAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds/{guildId}/member")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
+            );
+
+            var result = await api.GetCurrentUserGuildMemberAsync(guildId);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.LeaveGuildAsync"/> method.
+    /// </summary>
+    public class LeaveGuildAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}users/@me/guilds/{guildId}")
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.LeaveGuildAsync(guildId);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetUserDMsAsync"/> method.
+    /// </summary>
+    public class GetUserDMsAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/channels")
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.GetUserDMsAsync();
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.CreateDMAsync"/> method.
+    /// </summary>
+    public class CreateDMAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var recipientID = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}users/@me/channels")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            new[]
-                            {
-                                new KeyValuePair<string, string>("before", before.ToString()),
-                                new KeyValuePair<string, string>("after", after.ToString()),
-                                new KeyValuePair<string, string>("limit", limit.ToString())
-                            }
+                            o => o
+                                .WithProperty("recipient_id", p => p.Is(recipientID.ToString()))
                         )
-                        .Respond("application/json", "[]")
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
+            );
 
-                var result = await api.GetCurrentUserGuildsAsync(before, after, limit);
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfLimitIsTooLow()
-            {
-                var limit = 0;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.GetCurrentUserGuildsAsync(limit: limit);
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorIfLimitIsTooHigh()
-            {
-                var limit = 201;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds")
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.GetCurrentUserGuildsAsync(limit: limit);
-                ResultAssert.Unsuccessful(result);
-            }
+            var result = await api.CreateDMAsync(recipientID);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestUserAPI.GetUserConnectionsAsync"/> method.
+    /// </summary>
+    public class GetUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetCurrentUserGuildMemberAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetCurrentUserGuildMemberAsync : RestAPITestBase<IDiscordRestUserAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = new Snowflake(0);
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/connections")
+                    .Respond("application/json", "[]")
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/guilds/{guildId}/member")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildMember)])
-                );
-
-                var result = await api.GetCurrentUserGuildMemberAsync(guildId);
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.LeaveGuildAsync"/> method.
-        /// </summary>
-        public class LeaveGuildAsync : RestAPITestBase<IDiscordRestUserAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = new Snowflake(0);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}users/@me/guilds/{guildId}")
-                        .Respond(HttpStatusCode.NoContent)
-                );
-
-                var result = await api.LeaveGuildAsync(guildId);
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetUserDMsAsync"/> method.
-        /// </summary>
-        public class GetUserDMsAsync : RestAPITestBase<IDiscordRestUserAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/channels")
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.GetUserDMsAsync();
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.CreateDMAsync"/> method.
-        /// </summary>
-        public class CreateDMAsync : RestAPITestBase<IDiscordRestUserAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var recipientID = new Snowflake(0);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}users/@me/channels")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("recipient_id", p => p.Is(recipientID.ToString()))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
-                );
-
-                var result = await api.CreateDMAsync(recipientID);
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestUserAPI.GetUserConnectionsAsync"/> method.
-        /// </summary>
-        public class GetUserConnectionsAsync : RestAPITestBase<IDiscordRestUserAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}users/@me/connections")
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.GetUserConnectionsAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetUserConnectionsAsync();
+            ResultAssert.Successful(result);
         }
     }
 }

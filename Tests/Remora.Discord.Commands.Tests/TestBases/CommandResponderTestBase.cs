@@ -25,49 +25,48 @@ using Microsoft.Extensions.DependencyInjection;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Responders;
 
-namespace Remora.Discord.Commands.Tests.TestBases
+namespace Remora.Discord.Commands.Tests.TestBases;
+
+/// <summary>
+/// Tests the command responder.
+/// </summary>
+public abstract class CommandResponderTestBase : IDisposable
 {
+    private readonly IServiceScope _scope;
+
     /// <summary>
-    /// Tests the command responder.
+    /// Gets the responder under test.
     /// </summary>
-    public abstract class CommandResponderTestBase : IDisposable
+    protected CommandResponder Responder { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CommandResponderTestBase"/> class.
+    /// </summary>
+    public CommandResponderTestBase()
     {
-        private readonly IServiceScope _scope;
+        var serviceCollection = new ServiceCollection()
+            .AddDiscordCommands();
 
-        /// <summary>
-        /// Gets the responder under test.
-        /// </summary>
-        protected CommandResponder Responder { get; }
+        // ReSharper disable once VirtualMemberCallInConstructor
+        ConfigureServices(serviceCollection);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CommandResponderTestBase"/> class.
-        /// </summary>
-        public CommandResponderTestBase()
-        {
-            var serviceCollection = new ServiceCollection()
-                .AddDiscordCommands();
+        var services = serviceCollection.BuildServiceProvider();
 
-            // ReSharper disable once VirtualMemberCallInConstructor
-            ConfigureServices(serviceCollection);
+        _scope = services.CreateScope();
+        this.Responder = _scope.ServiceProvider.GetRequiredService<CommandResponder>();
+    }
 
-            var services = serviceCollection.BuildServiceProvider();
+    /// <summary>
+    /// Configures additional required services.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    protected virtual void ConfigureServices(IServiceCollection serviceCollection)
+    {
+    }
 
-            _scope = services.CreateScope();
-            this.Responder = _scope.ServiceProvider.GetRequiredService<CommandResponder>();
-        }
-
-        /// <summary>
-        /// Configures additional required services.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        protected virtual void ConfigureServices(IServiceCollection serviceCollection)
-        {
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            _scope.Dispose();
-        }
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _scope.Dispose();
     }
 }

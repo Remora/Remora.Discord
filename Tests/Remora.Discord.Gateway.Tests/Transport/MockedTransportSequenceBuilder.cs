@@ -29,141 +29,140 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Tests.Transport.Events;
 using Xunit.Sdk;
 
-namespace Remora.Discord.Gateway.Tests.Transport
+namespace Remora.Discord.Gateway.Tests.Transport;
+
+/// <summary>
+/// Builds an action sequence for a mocked transport service.
+/// </summary>
+public class MockedTransportSequenceBuilder
 {
+    private readonly List<IEvent> _sequence = new();
+
     /// <summary>
-    /// Builds an action sequence for a mocked transport service.
+    /// Expects a connection to the following URI.
     /// </summary>
-    public class MockedTransportSequenceBuilder
+    /// <param name="connectionUri">The connection URI.</param>
+    /// <returns>The builder, with the expectation.</returns>
+    public MockedTransportSequenceBuilder ExpectConnection(Uri? connectionUri = null)
     {
-        private readonly List<IEvent> _sequence = new();
-
-        /// <summary>
-        /// Expects a connection to the following URI.
-        /// </summary>
-        /// <param name="connectionUri">The connection URI.</param>
-        /// <returns>The builder, with the expectation.</returns>
-        public MockedTransportSequenceBuilder ExpectConnection(Uri? connectionUri = null)
-        {
-            _sequence.Add
+        _sequence.Add
+        (
+            new ConnectEvent
             (
-                new ConnectEvent
-                (
-                    u =>
+                u =>
+                {
+                    if (connectionUri is null)
                     {
-                        if (connectionUri is null)
-                        {
-                            // always passes
-                            return EventMatch.Pass;
-                        }
-
-                        if (connectionUri != u)
-                        {
-                            throw new EqualException(connectionUri, u);
-                        }
-
+                        // always passes
                         return EventMatch.Pass;
                     }
-                )
-            );
 
-            return this;
-        }
-
-        /// <summary>
-        /// Expects a connection to the following URI.
-        /// </summary>
-        /// <returns>The builder, with the expectation.</returns>
-        public MockedTransportSequenceBuilder ExpectDisconnect()
-        {
-            _sequence.Add(new DisconnectEvent());
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an expected incoming payload.
-        /// </summary>
-        /// <param name="expectation">A predicate that matches the expected payload.</param>
-        /// <typeparam name="TExpected">The expected type.</typeparam>
-        /// <returns>The action builder, with the expectation.</returns>
-        public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected?, bool>? expectation = null)
-            where TExpected : IGatewayCommand
-        {
-            _sequence.Add
-            (
-                new ReceiveEvent
-                (
-                    (p, ignoreUnexpected) =>
+                    if (connectionUri != u)
                     {
-                        if (p is not IPayload<TExpected> expected)
-                        {
-                            if (ignoreUnexpected)
-                            {
-                                return EventMatch.Ignore;
-                            }
-
-                            var actualTypename = p.GetType().IsGenericType
-                                ? p.GetType().GetGenericArguments()[0].Name
-                                : p.GetType().Name;
-
-                            throw new IsTypeException(typeof(TExpected).Name, actualTypename);
-                        }
-
-                        if (expectation is null)
-                        {
-                            return EventMatch.Pass;
-                        }
-
-                        return expectation(expected.Data)
-                            ? EventMatch.Pass
-                            : EventMatch.Fail;
+                        throw new EqualException(connectionUri, u);
                     }
-                )
-            );
 
-            return this;
-        }
+                    return EventMatch.Pass;
+                }
+            )
+        );
 
-        /// <summary>
-        /// Adds a sent payload.
-        /// </summary>
-        /// <param name="payload">The payload to send.</param>
-        /// <typeparam name="TResponse">The type of the payload to send.</typeparam>
-        /// <returns>The action builder, with the payload.</returns>
-        public MockedTransportSequenceBuilder Send<TResponse>(TResponse payload)
-            where TResponse : IGatewayEvent
-        {
-            _sequence.Add(new SendEvent(() => new Payload<TResponse>(payload)));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a sent payload.
-        /// </summary>
-        /// <typeparam name="TResponse">The type of the payload to send.</typeparam>
-        /// <returns>The action builder, with the payload.</returns>
-        public MockedTransportSequenceBuilder Send<TResponse>()
-            where TResponse : IGatewayEvent, new()
-        {
-            _sequence.Add(new SendEvent(() => new Payload<TResponse>(new TResponse())));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an instruction to throw an exception in the server-to-client transport stream.
-        /// </summary>
-        /// <param name="exceptionFactory">A factory function for the exception to be thrown.</param>
-        /// <returns>The action builder, with the exception.</returns>
-        public MockedTransportSequenceBuilder SendException(Func<Exception> exceptionFactory)
-        {
-            _sequence.Add(new SendExceptionEvent(exceptionFactory));
-            return this;
-        }
-
-        /// <summary>
-        /// Builds the transport sequence.
-        /// </summary>
-        /// <returns>The transport sequence.</returns>
-        public MockedTransportSequence Build() => new(_sequence);
+        return this;
     }
+
+    /// <summary>
+    /// Expects a connection to the following URI.
+    /// </summary>
+    /// <returns>The builder, with the expectation.</returns>
+    public MockedTransportSequenceBuilder ExpectDisconnect()
+    {
+        _sequence.Add(new DisconnectEvent());
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an expected incoming payload.
+    /// </summary>
+    /// <param name="expectation">A predicate that matches the expected payload.</param>
+    /// <typeparam name="TExpected">The expected type.</typeparam>
+    /// <returns>The action builder, with the expectation.</returns>
+    public MockedTransportSequenceBuilder Expect<TExpected>(Func<TExpected?, bool>? expectation = null)
+        where TExpected : IGatewayCommand
+    {
+        _sequence.Add
+        (
+            new ReceiveEvent
+            (
+                (p, ignoreUnexpected) =>
+                {
+                    if (p is not IPayload<TExpected> expected)
+                    {
+                        if (ignoreUnexpected)
+                        {
+                            return EventMatch.Ignore;
+                        }
+
+                        var actualTypename = p.GetType().IsGenericType
+                            ? p.GetType().GetGenericArguments()[0].Name
+                            : p.GetType().Name;
+
+                        throw new IsTypeException(typeof(TExpected).Name, actualTypename);
+                    }
+
+                    if (expectation is null)
+                    {
+                        return EventMatch.Pass;
+                    }
+
+                    return expectation(expected.Data)
+                        ? EventMatch.Pass
+                        : EventMatch.Fail;
+                }
+            )
+        );
+
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a sent payload.
+    /// </summary>
+    /// <param name="payload">The payload to send.</param>
+    /// <typeparam name="TResponse">The type of the payload to send.</typeparam>
+    /// <returns>The action builder, with the payload.</returns>
+    public MockedTransportSequenceBuilder Send<TResponse>(TResponse payload)
+        where TResponse : IGatewayEvent
+    {
+        _sequence.Add(new SendEvent(() => new Payload<TResponse>(payload)));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a sent payload.
+    /// </summary>
+    /// <typeparam name="TResponse">The type of the payload to send.</typeparam>
+    /// <returns>The action builder, with the payload.</returns>
+    public MockedTransportSequenceBuilder Send<TResponse>()
+        where TResponse : IGatewayEvent, new()
+    {
+        _sequence.Add(new SendEvent(() => new Payload<TResponse>(new TResponse())));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an instruction to throw an exception in the server-to-client transport stream.
+    /// </summary>
+    /// <param name="exceptionFactory">A factory function for the exception to be thrown.</param>
+    /// <returns>The action builder, with the exception.</returns>
+    public MockedTransportSequenceBuilder SendException(Func<Exception> exceptionFactory)
+    {
+        _sequence.Add(new SendExceptionEvent(exceptionFactory));
+        return this;
+    }
+
+    /// <summary>
+    /// Builds the transport sequence.
+    /// </summary>
+    /// <returns>The transport sequence.</returns>
+    public MockedTransportSequence Build() => new(_sequence);
 }

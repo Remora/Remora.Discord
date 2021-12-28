@@ -23,31 +23,30 @@
 using Remora.Discord.Commands.Extensions;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Extensions
+namespace Remora.Discord.Commands.Tests.Extensions;
+
+/// <summary>
+/// Tests the <see cref="StringExtensions"/> class.
+/// </summary>
+public static class StringExtensionTests
 {
     /// <summary>
-    /// Tests the <see cref="StringExtensions"/> class.
+    /// Tests the <see cref="StringExtensions.Unmention"/> method.
     /// </summary>
-    public static class StringExtensionTests
+    public class Unmention
     {
         /// <summary>
-        /// Tests the <see cref="StringExtensions.Unmention"/> method.
+        /// Tests whether the method correctly unwraps various mention variants.
         /// </summary>
-        public class Unmention
+        /// <param name="value">The variant under test.</param>
+        [InlineData("<@135347310845624320>")]
+        [InlineData("<@!135347310845624320>")]
+        [InlineData("<#135347310845624320>")]
+        [InlineData("<@&135347310845624320>")]
+        [Theory]
+        public void UnmentionsValueCorrectly(string value)
         {
-            /// <summary>
-            /// Tests whether the method correctly unwraps various mention variants.
-            /// </summary>
-            /// <param name="value">The variant under test.</param>
-            [InlineData("<@135347310845624320>")]
-            [InlineData("<@!135347310845624320>")]
-            [InlineData("<#135347310845624320>")]
-            [InlineData("<@&135347310845624320>")]
-            [Theory]
-            public void UnmentionsValueCorrectly(string value)
-            {
-                Assert.Equal("135347310845624320", value.Unmention());
-            }
+            Assert.Equal("135347310845624320", value.Unmention());
         }
     }
 }

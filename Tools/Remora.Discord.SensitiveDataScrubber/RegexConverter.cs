@@ -25,24 +25,23 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace Remora.Discord.SensitiveDataScrubber
-{
-    /// <summary>
-    /// Converts instances of the <see cref="Regex"/> class to and from JSON.
-    /// </summary>
-    public class RegexConverter : JsonConverter<Regex>
-    {
-        /// <inheritdoc/>
-        public override Regex? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var value = reader.GetString();
-            return value is null ? null : new Regex(value, RegexOptions.Compiled);
-        }
+namespace Remora.Discord.SensitiveDataScrubber;
 
-        /// <inheritdoc />
-        public override void Write(Utf8JsonWriter writer, Regex value, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(value.ToString());
-        }
+/// <summary>
+/// Converts instances of the <see cref="Regex"/> class to and from JSON.
+/// </summary>
+public class RegexConverter : JsonConverter<Regex>
+{
+    /// <inheritdoc/>
+    public override Regex? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var value = reader.GetString();
+        return value is null ? null : new Regex(value, RegexOptions.Compiled);
+    }
+
+    /// <inheritdoc />
+    public override void Write(Utf8JsonWriter writer, Regex value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString());
     }
 }

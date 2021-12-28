@@ -27,32 +27,31 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Audit Log API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestAuditLogAPI
 {
     /// <summary>
-    /// Represents the Discord Audit Log API.
+    /// Gets an audit log page for the given guild.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestAuditLogAPI
-    {
-        /// <summary>
-        /// Gets an audit log page for the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="userID">The ID of the user to filter on.</param>
-        /// <param name="actionType">The action type to filter on.</param>
-        /// <param name="before">The ID of the audit log entry to limit searches before.</param>
-        /// <param name="limit">The number of log entries to limit the request to.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IAuditLog>> GetAuditLogAsync
-        (
-            Snowflake guildID,
-            Optional<Snowflake> userID = default,
-            Optional<AuditLogEvent> actionType = default,
-            Optional<Snowflake> before = default,
-            Optional<byte> limit = default,
-            CancellationToken ct = default
-        );
-    }
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="userID">The ID of the user to filter on.</param>
+    /// <param name="actionType">The action type to filter on.</param>
+    /// <param name="before">The ID of the audit log entry to limit searches before.</param>
+    /// <param name="limit">The number of log entries to limit the request to.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IAuditLog>> GetAuditLogAsync
+    (
+        Snowflake guildID,
+        Optional<Snowflake> userID = default,
+        Optional<AuditLogEvent> actionType = default,
+        Optional<Snowflake> before = default,
+        Optional<byte> limit = default,
+        CancellationToken ct = default
+    );
 }

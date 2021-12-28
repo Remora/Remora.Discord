@@ -23,36 +23,35 @@
 using System.Collections.Generic;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents data that was resolved during serverside execution of the command.
+/// </summary>
+public interface IApplicationCommandInteractionDataResolved
 {
     /// <summary>
-    /// Represents data that was resolved during serverside execution of the command.
+    /// Gets the resolved users, if any.
     /// </summary>
-    public interface IApplicationCommandInteractionDataResolved
-    {
-        /// <summary>
-        /// Gets the resolved users, if any.
-        /// </summary>
-        Optional<IReadOnlyDictionary<Snowflake, IUser>> Users { get; }
+    Optional<IReadOnlyDictionary<Snowflake, IUser>> Users { get; }
 
-        /// <summary>
-        /// Gets the resolved guild members, if any.
-        /// </summary>
-        Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members { get; }
+    /// <summary>
+    /// Gets the resolved guild members, if any.
+    /// </summary>
+    Optional<IReadOnlyDictionary<Snowflake, IPartialGuildMember>> Members { get; }
 
-        /// <summary>
-        /// Gets the resolved roles, if any.
-        /// </summary>
-        Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles { get; }
+    /// <summary>
+    /// Gets the resolved roles, if any.
+    /// </summary>
+    Optional<IReadOnlyDictionary<Snowflake, IRole>> Roles { get; }
 
-        /// <summary>
-        /// Gets the resolved channels, if any.
-        /// </summary>
-        Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels { get; }
+    /// <summary>
+    /// Gets the resolved channels, if any.
+    /// </summary>
+    Optional<IReadOnlyDictionary<Snowflake, IPartialChannel>> Channels { get; }
 
-        /// <summary>
-        /// Gets the resolved messages, if any.
-        /// </summary>
-        Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages { get; }
-    }
+    /// <summary>
+    /// Gets the resolved messages, if any.
+    /// </summary>
+    Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages { get; }
 }

@@ -24,60 +24,59 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents return payload data for an interaction response.
+/// </summary>
+[PublicAPI]
+public interface IInteractionCallbackData
 {
     /// <summary>
-    /// Represents return payload data for an interaction response.
+    /// Gets a value indicating whether the message is a TTS message.
     /// </summary>
-    [PublicAPI]
-    public interface IInteractionCallbackData
-    {
-        /// <summary>
-        /// Gets a value indicating whether the message is a TTS message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<bool> IsTTS { get; }
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<bool> IsTTS { get; }
 
-        /// <summary>
-        /// Gets the content of the message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<string> Content { get; }
+    /// <summary>
+    /// Gets the content of the message.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<string> Content { get; }
 
-        /// <summary>
-        /// Gets the embeds of the message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<IReadOnlyList<IEmbed>> Embeds { get; }
+    /// <summary>
+    /// Gets the embeds of the message.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<IReadOnlyList<IEmbed>> Embeds { get; }
 
-        /// <summary>
-        /// Gets the allowed mentions in the message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<IAllowedMentions> AllowedMentions { get; }
+    /// <summary>
+    /// Gets the allowed mentions in the message.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<IAllowedMentions> AllowedMentions { get; }
 
-        /// <summary>
-        /// Gets the callback flags.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<InteractionCallbackDataFlags> Flags { get; }
+    /// <summary>
+    /// Gets the callback flags.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<InteractionCallbackDataFlags> Flags { get; }
 
-        /// <summary>
-        /// Gets the components attached to the message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    /// <summary>
+    /// Gets the components attached to the message.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
-        /// <summary>
-        /// Gets the attachments attached to the message.
-        /// </summary>
-        /// <remarks>Only relevant for message interactions.</remarks>
-        Optional<IReadOnlyList<IPartialAttachment>> Attachments { get; }
+    /// <summary>
+    /// Gets the attachments attached to the message.
+    /// </summary>
+    /// <remarks>Only relevant for message interactions.</remarks>
+    Optional<IReadOnlyList<IPartialAttachment>> Attachments { get; }
 
-        /// <summary>
-        /// Gets the autocomplete choices.
-        /// </summary>
-        /// <remarks>Only relevant for autocomplete interactions.</remarks>
-        Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices { get; }
-    }
+    /// <summary>
+    /// Gets the autocomplete choices.
+    /// </summary>
+    /// <remarks>Only relevant for autocomplete interactions.</remarks>
+    Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices { get; }
 }

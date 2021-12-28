@@ -28,25 +28,24 @@ using Remora.Discord.API.Tests.Services;
 
 using Xunit;
 
-namespace Remora.Discord.API.Tests.TestBases
-{
-    /// <inheritdoc />
-    public abstract class GatewayTestBase<TType, TEventDataSource>
-        : JsonBackedTypeTestBase<IPayload, TEventDataSource> where TEventDataSource : TheoryData, new()
-    {
-        /// <summary>
-        /// Tests whether the type can be deserialized from a JSON object.
-        /// </summary>
-        /// <param name="sampleDataFile">The sample data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableTheory]
-        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task DeserializedCorrectType(SampleDataDescriptor sampleDataFile)
-        {
-            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
+namespace Remora.Discord.API.Tests.TestBases;
 
-            Assert.IsAssignableFrom<IPayload<TType>>(payload);
-        }
+/// <inheritdoc />
+public abstract class GatewayTestBase<TType, TEventDataSource>
+    : JsonBackedTypeTestBase<IPayload, TEventDataSource> where TEventDataSource : TheoryData, new()
+{
+    /// <summary>
+    /// Tests whether the type can be deserialized from a JSON object.
+    /// </summary>
+    /// <param name="sampleDataFile">The sample data.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [SkippableTheory]
+    [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
+    public async Task DeserializedCorrectType(SampleDataDescriptor sampleDataFile)
+    {
+        await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
+        var payload = await JsonSerializer.DeserializeAsync<IPayload>(sampleData, this.Options);
+
+        Assert.IsAssignableFrom<IPayload<TType>>(payload);
     }
 }

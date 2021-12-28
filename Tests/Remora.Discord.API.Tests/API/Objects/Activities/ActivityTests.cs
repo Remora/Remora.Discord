@@ -23,24 +23,22 @@
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <summary>
+/// Tests the <see cref="Activity"/> type.
+/// </summary>
+public class ActivityTests : ObjectTestBase<IActivity>
 {
-    /// <summary>
-    /// Tests the <see cref="Activity"/> type.
-    /// </summary>
-    public class ActivityTests : ObjectTestBase<IActivity>
+    /// <inheritdoc/>
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc/>
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "id",        // undocumented field
-                "session_id" // undocumented field
-            }
-        };
-    }
+            "id",        // undocumented field
+            "session_id" // undocumented field
+        }
+    };
 }

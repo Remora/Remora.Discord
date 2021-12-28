@@ -22,41 +22,40 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various widget image styles.
+/// </summary>
+[PublicAPI]
+public enum WidgetImageStyle
 {
     /// <summary>
-    /// Enumerates various widget image styles.
+    /// A small shield-style (GitHub shields) with the Discord icon and a member count.
     /// </summary>
-    [PublicAPI]
-    public enum WidgetImageStyle
-    {
-        /// <summary>
-        /// A small shield-style (GitHub shields) with the Discord icon and a member count.
-        /// </summary>
-        Shield,
+    Shield,
 
-        /// <summary>
-        /// A large image with the guild icon, name, and online member count. "POWERED BY DISCORD" as the footer of the
-        /// widget.
-        /// </summary>
-        Banner1,
+    /// <summary>
+    /// A large image with the guild icon, name, and online member count. "POWERED BY DISCORD" as the footer of the
+    /// widget.
+    /// </summary>
+    Banner1,
 
-        /// <summary>
-        /// A smaller widget style with the guild icon, name, and online member count. Split on the right with the
-        /// Discord logo.
-        /// </summary>
-        Banner2,
+    /// <summary>
+    /// A smaller widget style with the guild icon, name, and online member count. Split on the right with the
+    /// Discord logo.
+    /// </summary>
+    Banner2,
 
-        /// <summary>
-        /// A large image with the guild icon, name, and online member count. In the footer, the Discord logo s on the
-        /// left, and "Chat Now" on the right.
-        /// </summary>
-        Banner3,
+    /// <summary>
+    /// A large image with the guild icon, name, and online member count. In the footer, the Discord logo s on the
+    /// left, and "Chat Now" on the right.
+    /// </summary>
+    Banner3,
 
-        /// <summary>
-        /// A large Discord logo at the top of the widget with the guild icon, name, and online member count in the
-        /// middle portion of the widget, and a "JOIN MY SERVER" button at the bottom.
-        /// </summary>
-        Banner4
-    }
+    /// <summary>
+    /// A large Discord logo at the top of the widget with the guild icon, name, and online member count in the
+    /// middle portion of the widget, and a "JOIN MY SERVER" button at the bottom.
+    /// </summary>
+    Banner4
 }

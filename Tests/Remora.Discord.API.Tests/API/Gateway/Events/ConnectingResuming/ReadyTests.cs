@@ -23,12 +23,11 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the Ready event.
+/// </summary>
+public class ReadyTests : GatewayEventTestBase<IReady>
 {
-    /// <summary>
-    /// Tests the Ready event.
-    /// </summary>
-    public class ReadyTests : GatewayEventTestBase<IReady>
-    {
-    }
 }

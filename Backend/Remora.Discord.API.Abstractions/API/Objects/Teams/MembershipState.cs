@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various membership states.
+/// </summary>
+[PublicAPI]
+public enum MembershipState
 {
     /// <summary>
-    /// Enumerates various membership states.
+    /// The user has been invited to, but is not yet part of, the team.
     /// </summary>
-    [PublicAPI]
-    public enum MembershipState
-    {
-        /// <summary>
-        /// The user has been invited to, but is not yet part of, the team.
-        /// </summary>
-        Invited = 1,
+    Invited = 1,
 
-        /// <summary>
-        /// The user is a part of the team.
-        /// </summary>
-        Accepted = 2
-    }
+    /// <summary>
+    /// The user is a part of the team.
+    /// </summary>
+    Accepted = 2
 }

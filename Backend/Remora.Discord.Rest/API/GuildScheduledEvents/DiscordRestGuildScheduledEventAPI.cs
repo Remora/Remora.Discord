@@ -84,6 +84,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Optional<DateTimeOffset> scheduledEndTime,
         Optional<string> description,
         GuildScheduledEventEntityType entityType,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -139,6 +140,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                     }
                 );
 
+                b.AddAuditLogReason(reason);
                 b.WithRateLimitContext();
             },
             ct: ct
@@ -184,6 +186,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Optional<string> description = default,
         Optional<GuildScheduledEventEntityType> entityType = default,
         Optional<GuildScheduledEventStatus> status = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -240,6 +243,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                     }
                 );
 
+                b.AddAuditLogReason(reason);
                 b.WithRateLimitContext();
             },
             ct: ct

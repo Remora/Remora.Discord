@@ -24,48 +24,47 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a partial invite.
+/// </summary>
+[PublicAPI]
+public interface IPartialInvite
 {
-    /// <summary>
-    /// Represents a partial invite.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialInvite
-    {
-        /// <inheritdoc cref="IInvite.Code" />
-        Optional<string> Code { get; }
+    /// <inheritdoc cref="IInvite.Code" />
+    Optional<string> Code { get; }
 
-        /// <inheritdoc cref="IInvite.Guild" />
-        Optional<IPartialGuild> Guild { get; }
+    /// <inheritdoc cref="IInvite.Guild" />
+    Optional<IPartialGuild> Guild { get; }
 
-        /// <inheritdoc cref="IInvite.Channel" />
-        Optional<IPartialChannel?> Channel { get; }
+    /// <inheritdoc cref="IInvite.Channel" />
+    Optional<IPartialChannel?> Channel { get; }
 
-        /// <inheritdoc cref="IInvite.Inviter" />
-        Optional<IUser> Inviter { get; }
+    /// <inheritdoc cref="IInvite.Inviter" />
+    Optional<IUser> Inviter { get; }
 
-        /// <inheritdoc cref="IInvite.TargetType" />
-        Optional<InviteTarget> TargetType { get; }
+    /// <inheritdoc cref="IInvite.TargetType" />
+    Optional<InviteTarget> TargetType { get; }
 
-        /// <inheritdoc cref="IInvite.TargetUser" />
-        Optional<IPartialUser> TargetUser { get; }
+    /// <inheritdoc cref="IInvite.TargetUser" />
+    Optional<IPartialUser> TargetUser { get; }
 
-        /// <inheritdoc cref="IInvite.TargetApplication" />
-        Optional<IPartialApplication> TargetApplication { get; }
+    /// <inheritdoc cref="IInvite.TargetApplication" />
+    Optional<IPartialApplication> TargetApplication { get; }
 
-        /// <inheritdoc cref="IInvite.ApproximatePresenceCount" />
-        Optional<int> ApproximatePresenceCount { get; }
+    /// <inheritdoc cref="IInvite.ApproximatePresenceCount" />
+    Optional<int> ApproximatePresenceCount { get; }
 
-        /// <inheritdoc cref="IInvite.ApproximateMemberCount" />
-        Optional<int> ApproximateMemberCount { get; }
+    /// <inheritdoc cref="IInvite.ApproximateMemberCount" />
+    Optional<int> ApproximateMemberCount { get; }
 
-        /// <inheritdoc cref="IInvite.ExpiresAt" />
-        Optional<DateTimeOffset?> ExpiresAt { get; }
+    /// <inheritdoc cref="IInvite.ExpiresAt" />
+    Optional<DateTimeOffset?> ExpiresAt { get; }
 
-        /// <inheritdoc cref="IInvite.StageInstance" />
-        Optional<IInviteStageInstance> StageInstance { get; }
+    /// <inheritdoc cref="IInvite.StageInstance" />
+    Optional<IInviteStageInstance> StageInstance { get; }
 
-        /// <inheritdoc cref="IInvite.GuildScheduledEvent" />
-        Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
-    }
+    /// <inheritdoc cref="IInvite.GuildScheduledEvent" />
+    Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
 }

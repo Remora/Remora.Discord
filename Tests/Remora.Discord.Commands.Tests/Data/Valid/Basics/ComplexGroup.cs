@@ -28,46 +28,45 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402
 
-namespace Remora.Discord.Commands.Tests.Data.Valid.Basics
+namespace Remora.Discord.Commands.Tests.Data.Valid.Basics;
+
+[Group("a")]
+public class ComplexGroup : CommandGroup
 {
-    [Group("a")]
-    public class ComplexGroup : CommandGroup
+    [Group("b")]
+    public class SubGroup : CommandGroup
     {
-        [Group("b")]
-        public class SubGroup : CommandGroup
-        {
-            [Command("c")]
-            public Task<IResult> C()
-            {
-                throw new NotImplementedException();
-            }
-
-            [Command("d")]
-            public Task<IResult> D()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        [Command("e")]
-        public Task<IResult> E()
+        [Command("c")]
+        public Task<IResult> C()
         {
             throw new NotImplementedException();
         }
 
-        [Command("f")]
-        public Task<IResult> F()
+        [Command("d")]
+        public Task<IResult> D()
         {
             throw new NotImplementedException();
         }
     }
 
-    public class ComplexGroupUnnamedPart : CommandGroup
+    [Command("e")]
+    public Task<IResult> E()
     {
-        [Command("g")]
-        public Task<IResult> G()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
+
+    [Command("f")]
+    public Task<IResult> F()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class ComplexGroupUnnamedPart : CommandGroup
+{
+    [Command("g")]
+    public Task<IResult> G()
+    {
+        throw new NotImplementedException();
     }
 }

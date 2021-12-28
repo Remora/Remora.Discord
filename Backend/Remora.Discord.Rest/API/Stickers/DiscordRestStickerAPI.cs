@@ -26,7 +26,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -35,183 +34,182 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestStickerAPI" />
+[PublicAPI]
+public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestStickerAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestStickerAPI" />
-    [PublicAPI]
-    public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestStickerAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestStickerAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestStickerAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<ISticker>
-            (
-                $"stickers/{id}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<INitroStickerPacks>> ListNitroStickerPacksAsync(CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<INitroStickerPacks>
-            (
-                "sticker-packs",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync
+    /// <inheritdoc />
+    public virtual Task<Result<ISticker>> GetStickerAsync(Snowflake id, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<ISticker>
         (
-            Snowflake guildId,
-            CancellationToken ct = default
-        )
+            $"stickers/{id}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<INitroStickerPacks>> ListNitroStickerPacksAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<INitroStickerPacks>
+        (
+            "sticker-packs",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<ISticker>>> ListGuildStickersAsync
+    (
+        Snowflake guildId,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<ISticker>>
+        (
+            $"guilds/{guildId}/stickers",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<ISticker>> GetGuildStickerAsync
+    (
+        Snowflake guildId,
+        Snowflake stickerId,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<ISticker>
+        (
+            $"guilds/{guildId}/stickers/{stickerId}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<ISticker>> CreateGuildStickerAsync
+    (
+        Snowflake guildId,
+        string name,
+        string description,
+        string tags,
+        FileData file,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.Length is < 2 or > 30)
         {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<ISticker>>
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
+        }
+
+        if (description.Length is not 0 and (< 2 or > 30))
+        {
+            return new ArgumentOutOfRangeError
             (
-                $"guilds/{guildId}/stickers",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(description), "The description must be either empty, or between 2 and 30 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<ISticker>> GetGuildStickerAsync
-        (
-            Snowflake guildId,
-            Snowflake stickerId,
-            CancellationToken ct = default
-        )
+        if (tags.Length is < 2 or > 200)
         {
-            return this.RestHttpClient.GetAsync<ISticker>
+            return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
+        }
+
+        return await this.RestHttpClient.PostAsync<ISticker>
+        (
+            $"guilds/{guildId}/stickers",
+            b => b
+                .AddAuditLogReason(reason)
+                .AddContent(new StringContent(name), nameof(name))
+                .AddContent(new StringContent(description), nameof(description))
+                .AddContent(new StringContent(tags), nameof(tags))
+                .AddContent(new StreamContent(file.Content), nameof(file), file.Name)
+                .WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<ISticker>> ModifyGuildStickerAsync
+    (
+        Snowflake guildId,
+        Snowflake stickerId,
+        Optional<string> name = default,
+        Optional<string?> description = default,
+        Optional<string> tags = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.HasValue && name.Value.Length is < 2 or > 30)
+        {
+            return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
+        }
+
+        if (description.IsDefined(out var descriptionValue) && descriptionValue.Length is not 0 and (< 2 or > 30))
+        {
+            return new ArgumentOutOfRangeError
             (
-                $"guilds/{guildId}/stickers/{stickerId}",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(description), "The description must be either empty, or between 2 and 30 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<ISticker>> CreateGuildStickerAsync
-        (
-            Snowflake guildId,
-            string name,
-            string description,
-            string tags,
-            FileData file,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
+        if (tags.HasValue && tags.Value.Length is < 2 or > 200)
         {
-            if (name.Length is < 2 or > 30)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
-            }
+            return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
+        }
 
-            if (description.Length is not 0 and (< 2 or > 30))
-            {
-                return new ArgumentOutOfRangeError
+        return await this.RestHttpClient.PatchAsync<ISticker>
+        (
+            $"guilds/{guildId}/stickers/{stickerId}",
+            b => b
+                .AddAuditLogReason(reason)
+                .WithJson
                 (
-                    nameof(description), "The description must be either empty, or between 2 and 30 characters."
-                );
-            }
+                    json =>
+                    {
+                        json.Write("name", name, this.JsonOptions);
+                        json.Write("description", description, this.JsonOptions);
+                        json.Write("tags", tags, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-            if (tags.Length is < 2 or > 200)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
-            }
-
-            return await this.RestHttpClient.PostAsync<ISticker>
-            (
-                $"guilds/{guildId}/stickers",
-                b => b
-                    .AddAuditLogReason(reason)
-                    .AddContent(new StringContent(name), nameof(name))
-                    .AddContent(new StringContent(description), nameof(description))
-                    .AddContent(new StringContent(tags), nameof(tags))
-                    .AddContent(new StreamContent(file.Content), nameof(file), file.Name)
-                    .WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<ISticker>> ModifyGuildStickerAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildStickerAsync
+    (
+        Snowflake guildId,
+        Snowflake stickerId,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake guildId,
-            Snowflake stickerId,
-            Optional<string> name = default,
-            Optional<string?> description = default,
-            Optional<string> tags = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            if (name.HasValue && name.Value.Length is < 2 or > 30)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The name must be between 2 and 30 characters.");
-            }
-
-            if (description.IsDefined(out var descriptionValue) && descriptionValue.Length is not 0 and (< 2 or > 30))
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(description), "The description must be either empty, or between 2 and 30 characters."
-                );
-            }
-
-            if (tags.HasValue && tags.Value.Length is < 2 or > 200)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "The tags must be between 2 and 200 characters.");
-            }
-
-            return await this.RestHttpClient.PatchAsync<ISticker>
-            (
-                $"guilds/{guildId}/stickers/{stickerId}",
-                b => b
-                    .AddAuditLogReason(reason)
-                    .WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("name", name, this.JsonOptions);
-                            json.Write("description", description, this.JsonOptions);
-                            json.Write("tags", tags, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGuildStickerAsync
-        (
-            Snowflake guildId,
-            Snowflake stickerId,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"guilds/{guildId}/stickers/{stickerId}",
-                b => b.AddAuditLogReason(reason).WithRateLimitContext(),
-                ct
-            );
-        }
+            $"guilds/{guildId}/stickers/{stickerId}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
     }
 }

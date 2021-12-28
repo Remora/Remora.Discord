@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about an embed author.
+/// </summary>
+[PublicAPI]
+public interface IEmbedAuthor
 {
     /// <summary>
-    /// Represents information about an embed author.
+    /// Gets the name of the author.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedAuthor
-    {
-        /// <summary>
-        /// Gets the name of the author.
-        /// </summary>
-        string Name { get; }
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the Url of the author.
-        /// </summary>
-        Optional<string> Url { get; }
+    /// <summary>
+    /// Gets the Url of the author.
+    /// </summary>
+    Optional<string> Url { get; }
 
-        /// <summary>
-        /// Gets the icon URL of the author.
-        /// </summary>
-        Optional<string> IconUrl { get; }
+    /// <summary>
+    /// Gets the icon URL of the author.
+    /// </summary>
+    Optional<string> IconUrl { get; }
 
-        /// <summary>
-        /// Gets the proxied icon URL of the thumbnail.
-        /// </summary>
-        Optional<string> ProxyIconUrl { get; }
-    }
+    /// <summary>
+    /// Gets the proxied icon URL of the thumbnail.
+    /// </summary>
+    Optional<string> ProxyIconUrl { get; }
 }

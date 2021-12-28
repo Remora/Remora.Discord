@@ -24,62 +24,61 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a preview of a public guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildPreview
 {
     /// <summary>
-    /// Represents a preview of a public guild.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildPreview
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the name of the guild.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the guild.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the guild's icon.
-        /// </summary>
-        IImageHash? Icon { get; }
+    /// <summary>
+    /// Gets the guild's icon.
+    /// </summary>
+    IImageHash? Icon { get; }
 
-        /// <summary>
-        /// Gets the guild's splash banner.
-        /// </summary>
-        IImageHash? Splash { get; }
+    /// <summary>
+    /// Gets the guild's splash banner.
+    /// </summary>
+    IImageHash? Splash { get; }
 
-        /// <summary>
-        /// Gets the guild's Discovery splash banner.
-        /// </summary>
-        IImageHash? DiscoverySplash { get; }
+    /// <summary>
+    /// Gets the guild's Discovery splash banner.
+    /// </summary>
+    IImageHash? DiscoverySplash { get; }
 
-        /// <summary>
-        /// Gets a list of emojis in the server.
-        /// </summary>
-        IReadOnlyList<IEmoji> Emojis { get; }
+    /// <summary>
+    /// Gets a list of emojis in the server.
+    /// </summary>
+    IReadOnlyList<IEmoji> Emojis { get; }
 
-        /// <summary>
-        /// Gets a list of guild features.
-        /// </summary>
-        IReadOnlyList<GuildFeature> Features { get; }
+    /// <summary>
+    /// Gets a list of guild features.
+    /// </summary>
+    IReadOnlyList<GuildFeature> Features { get; }
 
-        /// <summary>
-        /// Gets the approximate count of online members.
-        /// </summary>
-        Optional<int> ApproximatePresenceCount { get; }
+    /// <summary>
+    /// Gets the approximate count of online members.
+    /// </summary>
+    Optional<int> ApproximatePresenceCount { get; }
 
-        /// <summary>
-        /// Gets the approximate count of total members.
-        /// </summary>
-        Optional<int> ApproximateMemberCount { get; }
+    /// <summary>
+    /// Gets the approximate count of total members.
+    /// </summary>
+    Optional<int> ApproximateMemberCount { get; }
 
-        /// <summary>
-        /// Gets the description of the guild, if the guild is discoverable.
-        /// </summary>
-        string? Description { get; }
-    }
+    /// <summary>
+    /// Gets the description of the guild, if the guild is discoverable.
+    /// </summary>
+    string? Description { get; }
 }

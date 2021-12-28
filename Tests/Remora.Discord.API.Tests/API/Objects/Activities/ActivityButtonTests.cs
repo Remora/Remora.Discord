@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <summary>
+/// Tests the <see cref="ActivityButton"/> type.
+/// </summary>
+public class ActivityButtonTests : ObjectTestBase<IActivityButton>
 {
-    /// <summary>
-    /// Tests the <see cref="ActivityButton"/> type.
-    /// </summary>
-    public class ActivityButtonTests : ObjectTestBase<IActivityButton>
-    {
-    }
 }

@@ -28,15 +28,14 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Valid.Basics
+namespace Remora.Discord.Commands.Tests.Data.Valid.Basics;
+
+[Group("a")]
+public class NamedGroupWithSingleCommand : CommandGroup
 {
-    [Group("a")]
-    public class NamedGroupWithSingleCommand : CommandGroup
+    [Command("b")]
+    public Task<IResult> B()
     {
-        [Command("b")]
-        public Task<IResult> B()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }
