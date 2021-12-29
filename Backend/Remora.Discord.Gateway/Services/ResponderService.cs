@@ -97,37 +97,39 @@ public class ResponderService : IResponderTypeRepository
 
     /// <inheritdoc />
     public IReadOnlyList<Type> GetEarlyResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
-    {
-        var typeKey = typeof(IResponder<TGatewayEvent>);
-        if (!_registeredEarlyResponderTypes.TryGetValue(typeKey, out var responderTypes))
-        {
-            return Array.Empty<Type>();
-        }
-
-        return responderTypes;
-    }
+        => GetResponderTypes<TGatewayEvent>(_registeredEarlyResponderTypes);
 
     /// <inheritdoc />
     public IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
-    {
-        var typeKey = typeof(IResponder<TGatewayEvent>);
-        if (!_registeredResponderTypes.TryGetValue(typeKey, out var responderTypes))
-        {
-            return Array.Empty<Type>();
-        }
-
-        return responderTypes;
-    }
+        => GetResponderTypes<TGatewayEvent>(_registeredResponderTypes);
 
     /// <inheritdoc />
     public IReadOnlyList<Type> GetLateResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent
+        => GetResponderTypes<TGatewayEvent>(_registeredLateResponderTypes);
+
+    /// <summary>
+    /// Gets all responder types that are relevant for the given event.
+    /// </summary>
+    /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+    /// <param name="responderGroup">The responder group that responders should be retrieved from.</param>
+    /// <returns>A list of responder types.</returns>
+    public static IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>
+    (
+        IReadOnlyDictionary<Type, List<Type>> responderGroup
+    )
+        where TGatewayEvent : IGatewayEvent
     {
         var typeKey = typeof(IResponder<TGatewayEvent>);
-        if (!_registeredLateResponderTypes.TryGetValue(typeKey, out var responderTypes))
+
+        // Fetch any responders which want all events
+        if (!responderGroup.TryGetValue(typeof(IResponder<IGatewayEvent>), out var anyResponderTypes))
         {
-            return Array.Empty<Type>();
+            anyResponderTypes = new List<Type>();
         }
 
-        return responderTypes;
+        // And add on the ones wanting this event type in particular
+        return responderGroup.TryGetValue(typeKey, out var typedResponderTypes)
+            ? anyResponderTypes.Concat(typedResponderTypes).ToList()
+            : anyResponderTypes;
     }
 }
