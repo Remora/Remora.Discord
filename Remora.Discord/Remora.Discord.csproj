@@ -10,8 +10,8 @@
             $(BaseDescription)
 
             This package is a metapackage for Remora.Discord, providing references to everything you need to get
-            started. Note that this package implies a dependency on the latest version of Remora.Discord's packages,
-            with no regard for API compatibility across builds.
+            started. Note that this package implies a dependency on the latest version of Remora.Discord's main 
+            packages, with no regard for API compatibility across builds.
 
             Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
@@ -20,15 +20,19 @@
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+        <EmbedUntrackedSources>false</EmbedUntrackedSources>
+        <EmbedAllSources>false</EmbedAllSources>
         <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Remora.Discord.Hosting" Version="*" />
-        <PackageReference Include="Remora.Discord.Extensions" Version="*" />
-
-        <!-- This reference implies Gateway, Commands, and Interactivity  -->
-        <PackageReference Include="Remora.Discord.Pagination" Version="*" />
+      <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Extensions\Remora.Discord.Extensions.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Hosting\Remora.Discord.Hosting.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Pagination\Remora.Discord.Pagination.csproj" />
     </ItemGroup>
 
 </Project>
