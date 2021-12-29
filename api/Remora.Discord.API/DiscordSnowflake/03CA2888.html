@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IPAddressConverter.Write(Utf8JsonWriter, IPAddress, JsonSerializerOptions) Method</title>
+        <title>Remora.Discord Documentation - API - DiscordSnowflake.New(ulong) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,7 +72,8 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -134,13 +135,13 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters">Remora<wbr>.Discord<wbr>.API<wbr>.Json<wbr>.Converters</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API">Remora<wbr>.Discord<wbr>.API</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter">IPAddressConverter</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API/DiscordSnowflake">DiscordSnowflake</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter/80C41DDC">Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter/61668398">Write<wbr>(Utf8JsonWriter, <wbr>IPAddress, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API/DiscordSnowflake/03CA2888">New<wbr>(ulong)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API/DiscordSnowflake/B4E3EA95">TryParse<wbr>(string, <wbr>Snowflake?)<wbr></a></li>
 
 
                     </ul>
@@ -155,29 +156,33 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter">IPAddressConverter</a>.</h3>
-	<h1>Write<wbr>(Utf8JsonWriter, <wbr>IPAddress, <wbr>Json<wbr>Serializer<wbr>Options)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API/DiscordSnowflake">DiscordSnowflake</a>.</h3>
+	<h1>New<wbr>(ulong)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
-	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Initializes a new instance of a Snowflake with the Discord epoch.
+    </div>
+
 		<div class="panel panel-default">
   			<div class="panel-body">	
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters">Remora<wbr>.Discord<wbr>.API<wbr>.Json<wbr>.Converters</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API">Remora<wbr>.Discord<wbr>.API</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json.Converters/IPAddressConverter">IPAddressConverter</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API/DiscordSnowflake">DiscordSnowflake</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public override void Write(Utf8JsonWriter writer, IPAddress value, JsonSerializerOptions options)</code></pre>
+	<pre><code>public static Snowflake New(ulong value)</code></pre>
 
 
 
@@ -195,19 +200,9 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>writer</td>
-						<td>Utf8JsonWriter</td>
-						<td></td>
-					</tr>
-					<tr>
 						<td>value</td>
-						<td>IPAddress</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>options</td>
-						<td>Json<wbr>Serializer<wbr>Options</td>
-						<td></td>
+						<td>ulong</td>
+						<td>The snowflake value.</td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -224,8 +219,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>void</td>
-					<td></td>
+					<td>Snowflake</td>
+					<td>A snowflake.</td>
 				</tr>
 			</tbody></table>
 		</div>

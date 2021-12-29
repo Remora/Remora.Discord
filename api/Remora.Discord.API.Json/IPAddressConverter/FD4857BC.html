@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordSnowflake.New(ulong) Method</title>
+        <title>Remora.Discord Documentation - API - IPAddressConverter.Read(Utf8JsonReader, Type, JsonSerializerOptions) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,8 +72,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
-<p><a href="#Syntax">Syntax</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -135,13 +134,13 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Rest.Core">Remora<wbr>.Rest<wbr>.Core</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake">DiscordSnowflake</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/IPAddressConverter">IPAddressConverter</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake/EAE6BD3A">New<wbr>(ulong)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake/0DD955BB">TryParse<wbr>(string, <wbr>Snowflake?)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Json/IPAddressConverter/FD4857BC">Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Json/IPAddressConverter/7F9A1695">Write<wbr>(Utf8JsonWriter, <wbr>IPAddress, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
 
 
                     </ul>
@@ -156,33 +155,29 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake">DiscordSnowflake</a>.</h3>
-	<h1>New<wbr>(ulong)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Json/IPAddressConverter">IPAddressConverter</a>.</h3>
+	<h1>Read<wbr>(Utf8JsonReader, <wbr>Type, <wbr>Json<wbr>Serializer<wbr>Options)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
-		<h1 id="Summary">Summary</h1>
-	<div class="lead">
-    Initialzes a new instance of a Snowflake with the Discord epoch.
-    </div>
-
+	
 		<div class="panel panel-default">
   			<div class="panel-body">	
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Rest.Core">Remora<wbr>.Rest<wbr>.Core</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json">Remora<wbr>.Discord<wbr>.API<wbr>.Json</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Rest.Core/DiscordSnowflake">DiscordSnowflake</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Json/IPAddressConverter">IPAddressConverter</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static Snowflake New(ulong value)</code></pre>
+	<pre><code>public override IPAddress Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)</code></pre>
 
 
 
@@ -200,9 +195,19 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>value</td>
-						<td>ulong</td>
-						<td>The snowflake value.</td>
+						<td>reader</td>
+						<td>Utf8JsonReader</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>typeToConvert</td>
+						<td>Type</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>options</td>
+						<td>Json<wbr>Serializer<wbr>Options</td>
+						<td></td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -219,8 +224,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Snowflake</td>
-					<td>A snowflake.</td>
+					<td>IPAddress</td>
+					<td></td>
 				</tr>
 			</tbody></table>
 		</div>

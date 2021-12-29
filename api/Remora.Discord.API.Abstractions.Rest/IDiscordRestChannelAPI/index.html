@@ -193,8 +193,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI">Caching<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -204,10 +204,10 @@
 							graph BT
 	Type["IDiscordRestChannelAPI"]
 class Type type-node
-	Implementing0["DiscordRestChannelAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI"
-	Implementing1["CachingDiscordRestChannelAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI"
+	Implementing0["CachingDiscordRestChannelAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI"
+	Implementing1["DiscordRestChannelAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI"
 
 						</div>
 					</div>
