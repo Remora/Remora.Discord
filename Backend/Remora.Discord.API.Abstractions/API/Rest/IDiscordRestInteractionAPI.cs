@@ -40,6 +40,10 @@ public interface IDiscordRestInteractionAPI
     /// <summary>
     /// Creates a response to an interaction from the gateway.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="interactionID">The ID of the interaction.</param>
     /// <param name="interactionToken">The interaction token.</param>
     /// <param name="response">The response.</param>
@@ -77,6 +81,10 @@ public interface IDiscordRestInteractionAPI
     /// <summary>
     /// Edits the initial interaction response.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="token">The interaction token.</param>
     /// <param name="content">The new content, if any.</param>
@@ -123,6 +131,9 @@ public interface IDiscordRestInteractionAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
+    ///
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="token">The interaction token.</param>
@@ -173,6 +184,10 @@ public interface IDiscordRestInteractionAPI
     /// <summary>
     /// Edits an interaction followup message.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="token">The interaction token.</param>
     /// <param name="messageID">The ID of the message.</param>

@@ -42,6 +42,10 @@ public interface IDiscordRestGuildAPI
     /// <summary>
     /// Creates a new guild. This can only by used by bots in less than 10 guilds.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="name">The name of the guild (2-100 characters).</param>
     /// <param name="icon">The icon.</param>
     /// <param name="verificationLevel">The verification level.</param>
@@ -103,6 +107,10 @@ public interface IDiscordRestGuildAPI
     /// <summary>
     /// Modifies the guild with the given ID.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The new name of the guild.</param>
     /// <param name="verificationLevel">The new verification level of the guild.</param>
@@ -499,6 +507,10 @@ public interface IDiscordRestGuildAPI
     /// <summary>
     /// Creates a new guild role.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The name of the new role.</param>
     /// <param name="permissions">The permissions of the new role.</param>
@@ -543,6 +555,10 @@ public interface IDiscordRestGuildAPI
     /// <summary>
     /// Modifies the given role.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="roleID">The ID of the role.</param>
     /// <param name="name">The new name of the role.</param>

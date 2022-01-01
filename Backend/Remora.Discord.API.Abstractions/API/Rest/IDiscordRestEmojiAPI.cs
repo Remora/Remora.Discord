@@ -66,6 +66,10 @@ public interface IDiscordRestEmojiAPI
     /// <summary>
     /// Creates a new emoji for the given guild with the given parameters.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="name">The name of the new emoji.</param>
     /// <param name="image">The image data.</param>

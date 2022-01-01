@@ -50,6 +50,10 @@ public interface IDiscordRestChannelAPI
     /// <summary>
     /// Modifies the given channel.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="icon">The new icon.</param>
@@ -103,6 +107,10 @@ public interface IDiscordRestChannelAPI
     /// <summary>
     /// Modifies the given group DM channel.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="channelID">The ID of the channel.</param>
     /// <param name="name">The new name of the channel.</param>
     /// <param name="icon">The new icon.</param>
@@ -324,6 +332,9 @@ public interface IDiscordRestChannelAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
+    ///
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
     /// </summary>
     /// <param name="channelID">The ID of the channel.</param>
@@ -478,6 +489,9 @@ public interface IDiscordRestChannelAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
+    ///
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
     /// <param name="channelID">The ID of the channel the message is in.</param>
     /// <param name="messageID">The ID of the message.</param>

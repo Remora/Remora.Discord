@@ -41,6 +41,10 @@ public interface IDiscordRestWebhookAPI
     /// <summary>
     /// Creates a new webhook.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="channelID">The ID of the channel the webhook is for.</param>
     /// <param name="name">The name of the webhook.</param>
     /// <param name="avatar">The avatar of the webhook.</param>
@@ -107,6 +111,10 @@ public interface IDiscordRestWebhookAPI
     /// <summary>
     /// Modifies the given webhook.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="webhookID">The ID of the webhook.</param>
     /// <param name="name">The new name of the webhook.</param>
     /// <param name="avatar">The new avatar of the webhook.</param>
@@ -125,6 +133,10 @@ public interface IDiscordRestWebhookAPI
     /// <summary>
     /// Modifies the given webhook.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="webhookID">The ID of the webhook.</param>
     /// <param name="token">The token for the webhook.</param>
     /// <param name="name">The new name of the webhook.</param>
@@ -168,6 +180,9 @@ public interface IDiscordRestWebhookAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
+    ///
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
     /// <param name="webhookID">The ID of the webhook.</param>
     /// <param name="token">The token for the webhook.</param>
@@ -237,6 +252,9 @@ public interface IDiscordRestWebhookAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
+    ///
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
     /// <param name="webhookID">The ID of the webhook.</param>
     /// <param name="token">The token for the webhook.</param>

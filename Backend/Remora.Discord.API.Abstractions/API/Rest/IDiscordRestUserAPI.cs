@@ -55,6 +55,10 @@ public interface IDiscordRestUserAPI
     /// <summary>
     /// Modifies the current user.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="username">The new username.</param>
     /// <param name="avatar">The new avatar.</param>
     /// <param name="ct">The cancellation token for this operation.</param>

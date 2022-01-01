@@ -76,6 +76,10 @@ public interface IDiscordRestStickerAPI
     /// <summary>
     /// Creates a new sticker in the given guild.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="guildId">The ID of the guild.</param>
     /// <param name="name">The name of the new sticker.</param>
     /// <param name="description">The description of the new sticker.</param>

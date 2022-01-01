@@ -52,6 +52,10 @@ public interface IDiscordRestTemplateAPI
     /// <summary>
     /// Creates a new guild from the given template.
     /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
     /// <param name="templateCode">The template code.</param>
     /// <param name="name">The name of the new guild.</param>
     /// <param name="icon">The icon of the new guild.</param>
