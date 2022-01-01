@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
@@ -456,16 +457,6 @@ public static class KeyHelpers
     public static object CreateWebhookMessageCacheKey(string token, in Snowflake messageID)
     {
         return (typeof(IMessage), token, messageID);
-    }
-
-    /// <summary>
-    /// Creates a cache key for a <see cref="IThreadQueryResponse"/> instance.
-    /// </summary>
-    /// <param name="channelID">The ID of the queried channel.</param>
-    /// <returns>The cache key.</returns>
-    public static object CreateThreadQueryResponseCacheKey(in Snowflake channelID)
-    {
-        return (typeof(IThreadQueryResponse), channelID);
     }
 
     /// <summary>

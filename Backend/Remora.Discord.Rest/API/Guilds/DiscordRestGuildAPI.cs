@@ -574,27 +574,6 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
-    public virtual Task<Result<string>> ModifyCurrentUserNickAsync
-    (
-        Snowflake guildID,
-        Optional<string?> nickname = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    )
-    {
-        return this.RestHttpClient.PatchAsync<string>
-        (
-            $"guilds/{guildID}/members/@me/nick",
-            b => b
-                .AddAuditLogReason(reason)
-                .WithJson(json => json.Write("nick", nickname, this.JsonOptions))
-                .WithRateLimitContext(),
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
     public virtual Task<Result> AddGuildMemberRoleAsync
     (
         Snowflake guildID,

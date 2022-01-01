@@ -780,35 +780,6 @@ public interface IDiscordRestChannelAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    [Obsolete("Pass the channel type explicitly. This method will be removed in API v10.")]
-    Task<Result<IChannel>> StartThreadWithoutMessageAsync
-    (
-        Snowflake channelID,
-        string name,
-        AutoArchiveDuration autoArchiveDuration,
-        Optional<ChannelType> type = default,
-        Optional<bool> isInvitable = default,
-        Optional<int?> rateLimitPerUser = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Starts a new private thread.
-    /// </summary>
-    /// <param name="channelID">The channel to start the thread in.</param>
-    /// <param name="name">The name of the thread.</param>
-    /// <param name="autoArchiveDuration">The time of inactivity after which to archive the thread.</param>
-    /// <param name="type">
-    /// The thread type to create. Discord defaults to creating a <see cref="ChannelType.GuildPrivateThread"/>,
-    /// but this is likely to change in a future API version. Prefer always setting this explicitly.</param>
-    /// <param name="isInvitable">The value indicating whether non-moderators can add other non-moderators to the thread.</param>
-    /// <param name="rateLimitPerUser">
-    /// The message rate limit per user, that is, the number of seconds they have to wait between sending messages.
-    /// </param>
-    /// <param name="reason">The reason to mark the action in the audit log with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result<IChannel>> StartThreadWithoutMessageAsync
     (
         Snowflake channelID,
@@ -896,67 +867,6 @@ public interface IDiscordRestChannelAPI
     Task<Result<IReadOnlyList<IThreadMember>>> ListThreadMembersAsync
     (
         Snowflake channelID,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Lists the active threads in the given channel.
-    /// </summary>
-    /// <param name="channelID">The channel.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    [Obsolete("Use IDiscordRestGuildAPI::ListActiveThreadsAsync instead. This method will be removed in API v10.")]
-    Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
-    (
-        Snowflake channelID,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Lists any public archived threads in the given channel.
-    /// </summary>
-    /// <param name="channelID">The channel.</param>
-    /// <param name="before">Limits the search to threads before the given timestamp.</param>
-    /// <param name="limit">Limits the search to a certain number of threads.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Lists any private archived threads in the given channel.
-    /// </summary>
-    /// <param name="channelID">The channel.</param>
-    /// <param name="before">Limits the search to threads before the given timestamp.</param>
-    /// <param name="limit">Limits the search to a certain number of threads.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
-    /// Lists joined private archived threads in the given channel.
-    /// </summary>
-    /// <param name="channelID">The channel.</param>
-    /// <param name="before">Limits the search to threads before the given timestamp.</param>
-    /// <param name="limit">Limits the search to a certain number of threads.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
         CancellationToken ct = default
     );
 }

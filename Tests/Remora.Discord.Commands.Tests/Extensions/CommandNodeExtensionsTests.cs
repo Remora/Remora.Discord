@@ -23,7 +23,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Remora.Commands.Groups;
-using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Extensions;

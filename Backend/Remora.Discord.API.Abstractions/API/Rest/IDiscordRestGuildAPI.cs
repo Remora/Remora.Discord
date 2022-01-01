@@ -364,23 +364,6 @@ public interface IDiscordRestGuildAPI
     );
 
     /// <summary>
-    /// Modifies the nickname of the current user.
-    /// </summary>
-    /// <param name="guildID">The ID of the guild.</param>
-    /// <param name="nickname">The new nickname.</param>
-    /// <param name="reason">The reason to mark the action in the audit log with.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>A modification result which may or may not have succeeded.</returns>
-    [Obsolete("Deprecated in favour of " + nameof(ModifyCurrentMemberAsync) + ".")]
-    Task<Result<string>> ModifyCurrentUserNickAsync
-    (
-        Snowflake guildID,
-        Optional<string?> nickname = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    );
-
-    /// <summary>
     /// Adds a role to a guild member.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>

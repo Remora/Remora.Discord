@@ -1052,36 +1052,12 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IChannel>> StartThreadWithoutMessageAsync
-    (
-        Snowflake channelID,
-        string name,
-        AutoArchiveDuration autoArchiveDuration,
-        ChannelType type,
-        Optional<bool> isInvitable = default,
-        Optional<int?> rateLimitPerUser = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    ) =>
-        StartThreadWithoutMessageAsync
-        (
-            channelID,
-            name,
-            autoArchiveDuration,
-            new Optional<ChannelType>(type),
-            isInvitable,
-            rateLimitPerUser,
-            reason,
-            ct
-        );
-
-    /// <inheritdoc />
     public virtual async Task<Result<IChannel>> StartThreadWithoutMessageAsync
     (
         Snowflake channelID,
         string name,
         AutoArchiveDuration autoArchiveDuration,
-        Optional<ChannelType> type = default,
+        ChannelType type,
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<string> reason = default,
@@ -1195,129 +1171,6 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         (
             $"channels/{channelID}/thread-members",
             b => b.WithRateLimitContext(),
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
-    (
-        Snowflake channelID,
-        CancellationToken ct = default
-    )
-    {
-        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-        (
-            $"channels/{channelID}/threads/active",
-            b => b.WithRateLimitContext(),
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-        (
-            $"channels/{channelID}/threads/archived/public",
-            b =>
-            {
-                if (before.HasValue)
-                {
-                    var offset = before.Value.Offset;
-                    var value = before.Value.ToString
-                    (
-                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                    );
-
-                    b.AddQueryParameter("before", value);
-                }
-
-                if (limit.HasValue)
-                {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
-                }
-
-                b.WithRateLimitContext();
-            },
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-        (
-            $"channels/{channelID}/threads/archived/private",
-            b =>
-            {
-                if (before.HasValue)
-                {
-                    var offset = before.Value.Offset;
-                    var value = before.Value.ToString
-                    (
-                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                    );
-
-                    b.AddQueryParameter("before", value);
-                }
-
-                if (limit.HasValue)
-                {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
-                }
-
-                b.WithRateLimitContext();
-            },
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
-    public virtual Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        return this.RestHttpClient.GetAsync<IThreadQueryResponse>
-        (
-            $"channels/{channelID}/users/@me/threads/archived/private",
-            b =>
-            {
-                if (before.HasValue)
-                {
-                    var offset = before.Value.Offset;
-                    var value = before.Value.ToString
-                    (
-                        $"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'ffffff'+'{offset.Hours:D2}':'{offset.Minutes:D2}"
-                    );
-
-                    b.AddQueryParameter("before", value);
-                }
-
-                if (limit.HasValue)
-                {
-                    b.AddQueryParameter("limit", limit.Value.ToString());
-                }
-
-                b.WithRateLimitContext();
-            },
             ct: ct
         );
     }

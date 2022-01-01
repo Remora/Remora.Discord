@@ -26,7 +26,6 @@ using Moq;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Rest.Core;
 using Xunit;
 
 #pragma warning disable CS1591, SA1600

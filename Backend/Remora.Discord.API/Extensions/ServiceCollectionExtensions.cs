@@ -497,8 +497,6 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
-        options.AddDataObjectConverter<IThreadQueryResponse, ThreadQueryResponse>();
-
         return options;
     }
 

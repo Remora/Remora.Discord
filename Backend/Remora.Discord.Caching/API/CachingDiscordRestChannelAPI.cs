@@ -471,7 +471,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         Snowflake channelID,
         string name,
         AutoArchiveDuration autoArchiveDuration,
-        Optional<ChannelType> type = default,
+        ChannelType type,
         Optional<bool> isInvitable = default,
         Optional<int?> rateLimitPerUser = default,
         Optional<string> reason = default,
@@ -499,108 +499,6 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         _cacheService.Cache(key, createResult.Entity);
 
         return createResult;
-    }
-
-    /// <inheritdoc />
-    public override async Task<Result<IThreadQueryResponse>> ListActiveThreadsAsync
-    (
-        Snowflake channelID,
-        CancellationToken ct = default
-    )
-    {
-        var key = KeyHelpers.CreateThreadQueryResponseCacheKey(channelID);
-        if (_cacheService.TryGetValue<IThreadQueryResponse>(key, out var cachedInstance))
-        {
-            return Result<IThreadQueryResponse>.FromSuccess(cachedInstance);
-        }
-
-        var getResult = await base.ListActiveThreadsAsync(channelID, ct);
-        if (!getResult.IsSuccess)
-        {
-            return getResult;
-        }
-
-        _cacheService.Cache(key, getResult.Entity);
-
-        foreach (var channel in getResult.Entity.Threads)
-        {
-            var channelKey = KeyHelpers.CreateChannelCacheKey(channel.ID);
-            _cacheService.Cache(channelKey, channel);
-        }
-
-        return getResult;
-    }
-
-    /// <inheritdoc />
-    public override async Task<Result<IThreadQueryResponse>> ListPublicArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        var getResult = await base.ListPublicArchivedThreadsAsync(channelID, before, limit, ct);
-        if (!getResult.IsSuccess)
-        {
-            return getResult;
-        }
-
-        foreach (var channel in getResult.Entity.Threads)
-        {
-            var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
-            _cacheService.Cache(key, channel);
-        }
-
-        return getResult;
-    }
-
-    /// <inheritdoc />
-    public override async Task<Result<IThreadQueryResponse>> ListPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        var getResult = await base.ListPrivateArchivedThreadsAsync(channelID, before, limit, ct);
-        if (!getResult.IsSuccess)
-        {
-            return getResult;
-        }
-
-        foreach (var channel in getResult.Entity.Threads)
-        {
-            var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
-            _cacheService.Cache(key, channel);
-        }
-
-        return getResult;
-    }
-
-    /// <inheritdoc />
-    public override async Task<Result<IThreadQueryResponse>> ListJoinedPrivateArchivedThreadsAsync
-    (
-        Snowflake channelID,
-        Optional<DateTimeOffset> before = default,
-        Optional<int> limit = default,
-        CancellationToken ct = default
-    )
-    {
-        var getResult = await base.ListJoinedPrivateArchivedThreadsAsync(channelID, before, limit, ct);
-        if (!getResult.IsSuccess)
-        {
-            return getResult;
-        }
-
-        foreach (var channel in getResult.Entity.Threads)
-        {
-            var key = KeyHelpers.CreateChannelCacheKey(channel.ID);
-            _cacheService.Cache(key, channel);
-        }
-
-        return getResult;
     }
 
     /// <inheritdoc />
