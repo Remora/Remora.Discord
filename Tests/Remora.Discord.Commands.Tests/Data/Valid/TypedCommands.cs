@@ -26,6 +26,7 @@ using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Attributes;
+using Remora.Rest.Core;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
@@ -35,7 +36,7 @@ namespace Remora.Discord.Commands.Tests.Data.Valid;
 public class TypedCommands : CommandGroup
 {
     [Command("sbyte-value")]
-    public Task<IResult> CommandWithIntValue(sbyte value)
+    public Task<IResult> CommandWithSByteValue(sbyte value)
     {
         throw new NotImplementedException();
     }
@@ -124,39 +125,27 @@ public class TypedCommands : CommandGroup
         throw new NotImplementedException();
     }
 
-    [Command("channel-value")]
-    public Task<IResult> CommandWithChannelValue(IChannel value)
-    {
-        throw new NotImplementedException();
-    }
-
-    [Command("typed-channel-value")]
-    public Task<IResult> CommandWithTypedChannelValue([ChannelTypes(ChannelType.GuildText)] IChannel value)
-    {
-        throw new NotImplementedException();
-    }
-
     [Command("member-value")]
     public Task<IResult> CommandWithMemberValue(IGuildMember value)
     {
         throw new NotImplementedException();
     }
 
+    [Command("channel-value")]
+    public Task<IResult> CommandWithChannelValue(IChannel value)
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("snowflake-value")]
+    public Task<IResult> CommandWithSnowflakeValue(Snowflake value)
+    {
+        throw new NotImplementedException();
+    }
+
     [Command("enum-value")]
-    public Task<IResult> CommandWithEnumValue(TestEnum value)
+    public Task<IResult> CommandWithEnumValue(DummyEnum value)
     {
         throw new NotImplementedException();
     }
-
-    [Command("hint-value")]
-    public Task<IResult> CommandWithHintValue([DiscordTypeHint(TypeHint.Role)] string value)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public enum TestEnum
-{
-    Value1,
-    Value2
 }

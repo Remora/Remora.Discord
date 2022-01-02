@@ -29,6 +29,15 @@
       <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.Xor.cs">
         <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
       </Compile>
+      <Compile Update="Data\Valid\SpecialTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Data\Valid\OptionalTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Data\Valid\NullableTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 //
-//  GroupWithEnumParameterWithDescriptionOverrides.cs
+//  DescriptionEnum.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Threading.Tasks;
-using Remora.Commands.Attributes;
-using Remora.Commands.Groups;
-using Remora.Results;
-
-#pragma warning disable CS1591, SA1600, SA1402, SA1602
+using System.ComponentModel;
 
 namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-public class GroupWithEnumParameterWithDescriptionOverrides : CommandGroup
+#pragma warning disable CS1591, SA1602
+
+/// <summary>
+/// An enum with various DescriptionAttribute annotations.
+/// </summary>
+public enum DescriptionEnum
 {
-    [Command("description-enum")]
-    public Task<Result> CommandWithDescriptionEnum(DescriptionEnum value)
-    {
-        throw new NotImplementedException();
-    }
+    [Description("A longer description")]
+    A,
+
+    // None
+    B
 }

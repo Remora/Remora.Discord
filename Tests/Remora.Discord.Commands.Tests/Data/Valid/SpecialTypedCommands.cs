@@ -1,5 +1,5 @@
 //
-//  GroupWithEnumParameterWithDescriptionOverrides.cs
+//  SpecialTypedCommands.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -24,16 +24,31 @@ using System;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.Commands.Attributes;
+using Remora.Rest.Core;
 using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
 namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-public class GroupWithEnumParameterWithDescriptionOverrides : CommandGroup
+public class SpecialTypedCommands : CommandGroup
 {
-    [Command("description-enum")]
-    public Task<Result> CommandWithDescriptionEnum(DescriptionEnum value)
+    [Command("typed-channel-value")]
+    public Task<IResult> CommandWithTypedChannelValue([ChannelTypes(ChannelType.GuildText)] IChannel value)
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("hinted-string-value")]
+    public Task<IResult> CommandWithHintValue([DiscordTypeHint(TypeHint.Role)] string value)
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("hinted-snowflake-value")]
+    public Task<IResult> CommandWithHintValue([DiscordTypeHint(TypeHint.Channel)] Snowflake value)
     {
         throw new NotImplementedException();
     }

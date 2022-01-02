@@ -1,5 +1,5 @@
 //
-//  GroupWithEnumParameterWithDescriptionOverrides.cs
+//  GroupWithEnumParameterWithDisplayOverrides.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,10 +30,10 @@ using Remora.Results;
 
 namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-public class GroupWithEnumParameterWithDescriptionOverrides : CommandGroup
+public class GroupWithEnumParameterWithDisplayOverrides : CommandGroup
 {
-    [Command("description-enum")]
-    public Task<Result> CommandWithDescriptionEnum(DescriptionEnum value)
+    [Command("display-enum")]
+    public Task<Result> CommandWithDisplayEnum(DisplayEnum value)
     {
         throw new NotImplementedException();
     }

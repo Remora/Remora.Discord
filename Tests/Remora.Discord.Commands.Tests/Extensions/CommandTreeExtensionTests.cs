@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Remora.Commands.Trees;
@@ -378,145 +379,6 @@ public class CommandTreeExtensionTests
             /// Tests whether the method responds appropriately to a successful case.
             /// </summary>
             [Fact]
-            public void CreatesTypedOptionsCorrectly()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<TypedCommands>();
-
-                var tree = builder.Build();
-
-                var result = tree.CreateApplicationCommands();
-                var commands = result.Entity;
-
-                ResultAssert.Successful(result);
-                Assert.NotNull(commands);
-
-                void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
-                {
-                    var command = commands.FirstOrDefault(c => c.Name == commandName);
-                    Assert.NotNull(command);
-
-                    var parameter = command!.Options.Value[0];
-                    Assert.Equal(type, parameter.Type);
-                }
-
-                AssertExistsWithType("sbyte-value", Integer);
-                AssertExistsWithType("byte-value", Integer);
-                AssertExistsWithType("short-value", Integer);
-                AssertExistsWithType("ushort-value", Integer);
-                AssertExistsWithType("int-value", Integer);
-                AssertExistsWithType("uint-value", Integer);
-                AssertExistsWithType("long-value", Integer);
-                AssertExistsWithType("ulong-value", Integer);
-
-                AssertExistsWithType("float-value", Number);
-                AssertExistsWithType("double-value", Number);
-                AssertExistsWithType("decimal-value", Number);
-
-                AssertExistsWithType("string-value", String);
-
-                AssertExistsWithType("bool-value", Boolean);
-
-                AssertExistsWithType("role-value", ApplicationCommandOptionType.Role);
-                AssertExistsWithType("user-value", ApplicationCommandOptionType.User);
-
-                AssertExistsWithType("channel-value", ApplicationCommandOptionType.Channel);
-                var channelCommand = commands.First(c => c.Name == "channel-value");
-                var channelParameter = channelCommand.Options.Value[0];
-                Assert.False(channelParameter.ChannelTypes.HasValue);
-
-                AssertExistsWithType("typed-channel-value", ApplicationCommandOptionType.Channel);
-                var typedChannelCommand = commands.First(c => c.Name == "typed-channel-value");
-                var typedChannelParameter = typedChannelCommand.Options.Value[0];
-                Assert.True(typedChannelParameter.ChannelTypes.HasValue);
-                Assert.True(typedChannelParameter.ChannelTypes.Value.Count == 1);
-                Assert.True(typedChannelParameter.ChannelTypes.Value[0] == ChannelType.GuildText);
-
-                AssertExistsWithType("member-value", ApplicationCommandOptionType.User);
-
-                AssertExistsWithType("enum-value", String);
-                var enumCommand = commands.First(c => c.Name == "enum-value");
-                var enumParameter = enumCommand.Options.Value[0];
-                Assert.True(enumParameter.Choices.HasValue);
-
-                var enumChoices = enumParameter.Choices.Value;
-                Assert.Equal(2, enumChoices.Count);
-                Assert.Collection
-                (
-                    enumChoices,
-                    choice =>
-                    {
-                        Assert.Equal(nameof(TestEnum.Value1), choice.Name);
-                        Assert.True(choice.Value.IsT0);
-                        Assert.Equal(nameof(TestEnum.Value1), choice.Value.AsT0);
-                    },
-                    choice =>
-                    {
-                        Assert.Equal(nameof(TestEnum.Value2), choice.Name);
-                        Assert.True(choice.Value.IsT0);
-                        Assert.Equal(nameof(TestEnum.Value2), choice.Value.AsT0);
-                    }
-                );
-
-                AssertExistsWithType("hint-value", ApplicationCommandOptionType.Role);
-            }
-
-            /// <summary>
-            /// Tests whether the method responds appropriately to a successful case.
-            /// </summary>
-            [Fact]
-            public void CreatesDescriptionOverriddenEnumOptionsCorrectly()
-            {
-                var builder = new CommandTreeBuilder();
-                builder.RegisterModule<GroupWithEnumParameterWithDescriptionOverrides>();
-
-                var tree = builder.Build();
-
-                var result = tree.CreateApplicationCommands();
-                var commands = result.Entity;
-
-                ResultAssert.Successful(result);
-                Assert.NotNull(commands);
-
-                void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
-                {
-                    var command = commands.FirstOrDefault(c => c.Name == commandName);
-                    Assert.NotNull(command);
-
-                    var parameter = command!.Options.Value[0];
-                    Assert.Equal(type, parameter.Type);
-                }
-
-                AssertExistsWithType("description-enum", String);
-                var enumCommand = commands.First(c => c.Name == "description-enum");
-
-                var enumParameter = enumCommand.Options.Value[0];
-                Assert.True(enumParameter.Choices.HasValue);
-
-                var enumChoices = enumParameter.Choices.Value;
-                Assert.Equal(2, enumChoices.Count);
-                Assert.Collection
-                (
-                    enumChoices,
-                    choice =>
-                    {
-                        Assert.Equal("A longer description", choice.Name);
-                        Assert.True(choice.Value.IsT0);
-                        Assert.Equal(nameof(DescriptionEnum.A), choice.Value.AsT0);
-                    },
-                    choice =>
-                    {
-                        Assert.Equal(nameof(DescriptionEnum.B), choice.Name);
-                        Assert.True(choice.Value.IsT0);
-                        Assert.Equal(nameof(DescriptionEnum.B), choice.Value.AsT0);
-                    }
-                );
-            }
-
-            /// <summary>
-            /// Tests whether the method responds appropriately to a successful case.
-            /// </summary>
-            [Fact]
             public void CreatesRequiredOptionsCorrectly()
             {
                 var builder = new CommandTreeBuilder();
@@ -658,6 +520,343 @@ public class CommandTreeExtensionTests
 
                 Assert.Equal(ApplicationCommandType.ChatInput, normal.Type.Value);
                 Assert.Equal(ApplicationCommandType.Message, message.Type.Value);
+            }
+        }
+
+        /// <summary>
+        /// Tests various cases related to types and type hints.
+        /// </summary>
+        public class Types
+        {
+            /// <summary>
+            /// Gets complex test data.
+            /// </summary>
+            public static IEnumerable<object?[]> ComplexTestData => new[]
+            {
+                new object?[]
+                {
+                    typeof(TypedCommands),
+                    "enum-value",
+                    ApplicationCommandOptionType.String,
+                    null,
+                    new Action<IApplicationCommandOptionChoice>[]
+                    {
+                        a =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.A), a.Name);
+                            Assert.True(a.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.A), a.Value.AsT0);
+                        },
+                        b =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.B), b.Name);
+                            Assert.True(b.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.B), b.Value.AsT0);
+                        }
+                    }
+                },
+                new object?[]
+                {
+                    typeof(NullableTypedCommands),
+                    "nullable-enum-value",
+                    ApplicationCommandOptionType.String,
+                    null,
+                    new Action<IApplicationCommandOptionChoice>[]
+                    {
+                        a =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.A), a.Name);
+                            Assert.True(a.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.A), a.Value.AsT0);
+                        },
+                        b =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.B), b.Name);
+                            Assert.True(b.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.B), b.Value.AsT0);
+                        }
+                    }
+                },
+                new object?[]
+                {
+                    typeof(OptionalTypedCommands),
+                    "optional-enum-value",
+                    ApplicationCommandOptionType.String,
+                    null,
+                    new Action<IApplicationCommandOptionChoice>[]
+                    {
+                        a =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.A), a.Name);
+                            Assert.True(a.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.A), a.Value.AsT0);
+                        },
+                        b =>
+                        {
+                            Assert.Equal(nameof(DummyEnum.B), b.Name);
+                            Assert.True(b.Value.IsT0);
+                            Assert.Equal(nameof(DummyEnum.B), b.Value.AsT0);
+                        }
+                    }
+                },
+                new object[]
+                {
+                    typeof(SpecialTypedCommands),
+                    "typed-channel-value",
+                    ApplicationCommandOptionType.Channel,
+                    new Action<ChannelType>[] { c => Assert.Equal(c, ChannelType.GuildText) }
+                },
+                new object[]
+                {
+                    typeof(SpecialTypedCommands),
+                    "hinted-string-value",
+                    ApplicationCommandOptionType.Role
+                },
+                new object[]
+                {
+                    typeof(SpecialTypedCommands),
+                    "hinted-snowflake-value",
+                    ApplicationCommandOptionType.Channel
+                },
+            };
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            /// <param name="moduleType">The module to register.</param>
+            /// <param name="commandName">The name of the command to search for.</param>
+            /// <param name="type">The type of the actual command.</param>
+            /// <param name="channelTypeAsserter">
+            /// The channel types the parameter should be constrained to, if any.
+            /// </param>
+            /// <param name="choiceAsserter">The choices that should have been created, if any.</param>
+            [Theory]
+            [InlineData(typeof(TypedCommands), "sbyte-value", Integer)]
+            [InlineData(typeof(TypedCommands), "byte-value", Integer)]
+            [InlineData(typeof(TypedCommands), "short-value", Integer)]
+            [InlineData(typeof(TypedCommands), "ushort-value", Integer)]
+            [InlineData(typeof(TypedCommands), "int-value", Integer)]
+            [InlineData(typeof(TypedCommands), "uint-value", Integer)]
+            [InlineData(typeof(TypedCommands), "long-value", Integer)]
+            [InlineData(typeof(TypedCommands), "ulong-value", Integer)]
+            [InlineData(typeof(TypedCommands), "float-value", Number)]
+            [InlineData(typeof(TypedCommands), "double-value", Number)]
+            [InlineData(typeof(TypedCommands), "decimal-value", Number)]
+            [InlineData(typeof(TypedCommands), "string-value", ApplicationCommandOptionType.String)]
+            [InlineData(typeof(TypedCommands), "bool-value", ApplicationCommandOptionType.Boolean)]
+            [InlineData(typeof(TypedCommands), "role-value", ApplicationCommandOptionType.Role)]
+            [InlineData(typeof(TypedCommands), "user-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(TypedCommands), "member-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(TypedCommands), "channel-value", ApplicationCommandOptionType.Channel)]
+            [InlineData(typeof(TypedCommands), "snowflake-value", ApplicationCommandOptionType.String)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-sbyte-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-byte-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-short-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-ushort-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-int-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-uint-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-long-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-ulong-value", Integer)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-float-value", Number)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-double-value", Number)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-decimal-value", Number)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-string-value", ApplicationCommandOptionType.String)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-bool-value", ApplicationCommandOptionType.Boolean)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-role-value", ApplicationCommandOptionType.Role)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-user-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-member-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-channel-value", ApplicationCommandOptionType.Channel)]
+            [InlineData(typeof(NullableTypedCommands), "nullable-snowflake-value", ApplicationCommandOptionType.String)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-sbyte-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-byte-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-short-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-ushort-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-int-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-uint-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-long-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-ulong-value", Integer)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-float-value", Number)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-double-value", Number)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-decimal-value", Number)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-string-value", ApplicationCommandOptionType.String)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-bool-value", ApplicationCommandOptionType.Boolean)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-role-value", ApplicationCommandOptionType.Role)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-user-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-member-value", ApplicationCommandOptionType.User)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-channel-value", ApplicationCommandOptionType.Channel)]
+            [InlineData(typeof(OptionalTypedCommands), "optional-snowflake-value", ApplicationCommandOptionType.String)]
+            [MemberData(nameof(ComplexTestData))]
+            public void CreatesTypedOptionsCorrectly
+            (
+                Type moduleType,
+                string commandName,
+                ApplicationCommandOptionType type,
+                Action<ChannelType>[]? channelTypeAsserter = null,
+                Action<IApplicationCommandOptionChoice>[]? choiceAsserter = null
+            )
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule(moduleType);
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                var commands = result.Entity;
+
+                ResultAssert.Successful(result);
+                Assert.NotNull(commands);
+
+                var command = commands.FirstOrDefault(c => c.Name == commandName);
+                Assert.NotNull(command);
+
+                var parameter = command!.Options.Value[0];
+                Assert.Equal(type, parameter.Type);
+
+                if (choiceAsserter is not null)
+                {
+                    var choices = parameter.Choices.Value;
+                    Assert.Collection(choices, choiceAsserter);
+                }
+                else
+                {
+                    Assert.False(parameter.Choices.HasValue);
+                }
+
+                if (channelTypeAsserter is not null)
+                {
+                    var channelTypes = parameter.ChannelTypes.Value;
+                    Assert.Collection(channelTypes, channelTypeAsserter);
+                }
+                else
+                {
+                    Assert.False(parameter.ChannelTypes.HasValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tests various cases involving enumerations.
+        /// </summary>
+        public class Enums
+        {
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesDescriptionOverriddenEnumOptionsCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<GroupWithEnumParameterWithDescriptionOverrides>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                var commands = result.Entity;
+
+                ResultAssert.Successful(result);
+                Assert.NotNull(commands);
+
+                void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
+                {
+                    var command = commands.FirstOrDefault(c => c.Name == commandName);
+                    Assert.NotNull(command);
+
+                    var parameter = command!.Options.Value[0];
+                    Assert.Equal(type, parameter.Type);
+                }
+
+                AssertExistsWithType("description-enum", ApplicationCommandOptionType.String);
+                var enumCommand = commands.First(c => c.Name == "description-enum");
+
+                var enumParameter = enumCommand.Options.Value[0];
+                Assert.True(enumParameter.Choices.HasValue);
+
+                var enumChoices = enumParameter.Choices.Value;
+                Assert.Collection
+                (
+                    enumChoices,
+                    choice =>
+                    {
+                        Assert.Equal("A longer description", choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DescriptionEnum.A), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal(nameof(DescriptionEnum.B), choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DescriptionEnum.B), choice.Value.AsT0);
+                    }
+                );
+            }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesDisplayOverriddenEnumOptionsCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<GroupWithEnumParameterWithDisplayOverrides>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                var commands = result.Entity;
+
+                ResultAssert.Successful(result);
+                Assert.NotNull(commands);
+
+                void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
+                {
+                    var command = commands.FirstOrDefault(c => c.Name == commandName);
+                    Assert.NotNull(command);
+
+                    var parameter = command!.Options.Value[0];
+                    Assert.Equal(type, parameter.Type);
+                }
+
+                AssertExistsWithType("display-enum", ApplicationCommandOptionType.String);
+                var enumCommand = commands.First(c => c.Name == "display-enum");
+
+                var enumParameter = enumCommand.Options.Value[0];
+                Assert.True(enumParameter.Choices.HasValue);
+
+                var enumChoices = enumParameter.Choices.Value;
+                Assert.Collection
+                (
+                    enumChoices,
+                    choice =>
+                    {
+                        Assert.Equal("A description", choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DisplayEnum.A), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal("A name", choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DisplayEnum.B), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal("A preferred description", choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DisplayEnum.C), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal(nameof(DisplayEnum.D), choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DisplayEnum.D), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal(nameof(DisplayEnum.E), choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(DisplayEnum.E), choice.Value.AsT0);
+                    }
+                );
             }
         }
 
