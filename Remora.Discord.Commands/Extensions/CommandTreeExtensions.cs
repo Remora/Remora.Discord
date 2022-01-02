@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -624,15 +625,38 @@ public static class CommandTreeExtensions
     )
     {
         var member = enumType.GetMember(enumName).Single();
-        var name = member.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumName;
 
+        // Slightly complex selection logic
+        string GetEnumMemberDisplayName()
+        {
+            var descriptionAttribute = member.GetCustomAttribute<DescriptionAttribute>();
+            if (descriptionAttribute is not null)
+            {
+                return descriptionAttribute.Description;
+            }
+
+            var displayAttribute = member.GetCustomAttribute<DisplayAttribute>();
+            if (displayAttribute is null)
+            {
+                return enumName;
+            }
+
+            if (displayAttribute.Description is not null)
+            {
+                return displayAttribute.Description;
+            }
+
+            return displayAttribute.Name ?? enumName;
+        }
+
+        var name = GetEnumMemberDisplayName();
         if (name.Length > MaxChoiceNameLength)
         {
             return new UnsupportedFeatureError
             (
                 $"The name of the enumeration member {enumType.Name}::{enumName} is too long " +
                 $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
-                $"[{nameof(DescriptionAttribute)}], or rename the member."
+                "[Description] or [Display], or rename the member."
             );
         }
 
