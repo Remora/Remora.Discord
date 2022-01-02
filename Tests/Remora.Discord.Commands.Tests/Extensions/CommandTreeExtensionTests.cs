@@ -858,6 +858,57 @@ public class CommandTreeExtensionTests
                     }
                 );
             }
+
+            /// <summary>
+            /// Tests whether the method responds appropriately to a successful case.
+            /// </summary>
+            [Fact]
+            public void CreatesExclusionOverriddenEnumOptionsCorrectly()
+            {
+                var builder = new CommandTreeBuilder();
+                builder.RegisterModule<GroupWithEnumParameterWithExclusionOverrides>();
+
+                var tree = builder.Build();
+
+                var result = tree.CreateApplicationCommands();
+                var commands = result.Entity;
+
+                ResultAssert.Successful(result);
+                Assert.NotNull(commands);
+
+                void AssertExistsWithType(string commandName, ApplicationCommandOptionType type)
+                {
+                    var command = commands.FirstOrDefault(c => c.Name == commandName);
+                    Assert.NotNull(command);
+
+                    var parameter = command!.Options.Value[0];
+                    Assert.Equal(type, parameter.Type);
+                }
+
+                AssertExistsWithType("excluded-enum", ApplicationCommandOptionType.String);
+                var enumCommand = commands.First(c => c.Name == "excluded-enum");
+
+                var enumParameter = enumCommand.Options.Value[0];
+                Assert.True(enumParameter.Choices.HasValue);
+
+                var enumChoices = enumParameter.Choices.Value;
+                Assert.Collection
+                (
+                    enumChoices,
+                    choice =>
+                    {
+                        Assert.Equal(nameof(ExcludedEnum.A), choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(ExcludedEnum.A), choice.Value.AsT0);
+                    },
+                    choice =>
+                    {
+                        Assert.Equal(nameof(ExcludedEnum.B), choice.Name);
+                        Assert.True(choice.Value.IsT0);
+                        Assert.Equal(nameof(ExcludedEnum.B), choice.Value.AsT0);
+                    }
+                );
+            }
         }
 
         /// <summary>

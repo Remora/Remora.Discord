@@ -614,10 +614,10 @@ public static class CommandTreeExtensions
             );
         }
 
-        return choiceConversions.Select(c => c.Entity).ToList();
+        return choiceConversions.Select(c => c.Entity).Where(e => e is not null).ToList()!;
     }
 
-    private static Result<IApplicationCommandOptionChoice> CreateApplicationCommandOptionChoice
+    private static Result<IApplicationCommandOptionChoice?> CreateApplicationCommandOptionChoice
     (
         Type enumType,
         string enumName,
@@ -625,6 +625,11 @@ public static class CommandTreeExtensions
     )
     {
         var member = enumType.GetMember(enumName).Single();
+
+        if (member.GetCustomAttribute<ExcludeFromChoicesAttribute>() is not null)
+        {
+            return Result<IApplicationCommandOptionChoice?>.FromSuccess(null);
+        }
 
         // Slightly complex selection logic
         string GetEnumMemberDisplayName()
