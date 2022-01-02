@@ -171,8 +171,8 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Creates a followup message.
-    </div>
+     Creates a followup message.
+     </div>
 
 		<div class="panel panel-default">
   			<div class="panel-body">	
@@ -194,9 +194,12 @@
 
 	<h1 id="Remarks">Remarks</h1>
 	<div>
-    At least one of <span name="content" class="paramref">content</span>, <span name="embeds" class="paramref">embeds</span>, or <span name="attachments" class="paramref">attachments</span> must be
-    present.
-    </div>
+     At least one of <span name="content" class="paramref">content</span>, <span name="embeds" class="paramref">embeds</span>, or <span name="attachments" class="paramref">attachments</span> must be
+     present.
+    
+     Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+     afterwards, ensure that what you pass is a copy that the method can take ownership of.
+     </div>
 
 
 
@@ -255,11 +258,11 @@
 						<td>attachments</td>
 						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 						<td>
-    The attachments to associate with the response. Each file may be a new file in the form of
-    <code class="cs">FileData</code>, or an existing one that should be retained in the form of a
-    <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></code>. If this request edits the original message, then any attachments not
-    mentioned in this parameter will be deleted.
-    </td>
+     The attachments to associate with the response. Each file may be a new file in the form of
+     <code class="cs">FileData</code>, or an existing one that should be retained in the form of a
+     <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></code>. If this request edits the original message, then any attachments not
+     mentioned in this parameter will be deleted.
+     </td>
 					</tr>
 					<tr>
 						<td>ct</td>

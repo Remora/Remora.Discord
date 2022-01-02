@@ -289,12 +289,15 @@ public interface IDiscordRestChannelAPI</code></pre>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Posts a message to the given channel.
-    <remarks>
-    At least one of <paramref name="content">, <paramref name="embeds">, or <paramref name="attachments"> must be
-    present.
-    </paramref></paramref></paramref></remarks>
-    </div>
+     Posts a message to the given channel.
+     <remarks>
+     At least one of <paramref name="content">, <paramref name="embeds">, or <paramref name="attachments"> must be
+     present.
+    
+     Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+     afterwards, ensure that what you pass is a copy that the method can take ownership of.
+     </paramref></paramref></paramref></remarks>
+     </div>
 								</td>
 							</tr>
 							<tr>
@@ -392,8 +395,8 @@ public interface IDiscordRestChannelAPI</code></pre>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Edits a previously sent message.
-    </div>
+     Edits a previously sent message.
+     </div>
 								</td>
 							</tr>
 							<tr>
@@ -505,42 +508,6 @@ public interface IDiscordRestChannelAPI</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/BFCA6FC1">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse">IThreadQueryResponse</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Lists the active threads in the given channel.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/15DF1558">List<wbr>Joined<wbr>Private<wbr>Archived<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse">IThreadQueryResponse</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Lists joined private archived threads in the given channel.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/D0B7A72A">List<wbr>Private<wbr>Archived<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse">IThreadQueryResponse</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Lists any private archived threads in the given channel.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/5E1DE7DC">List<wbr>Public<wbr>Archived<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset&gt;<wbr>, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse">IThreadQueryResponse</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Lists any public archived threads in the given channel.
-    </div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/5B666037">List<wbr>Thread<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMember">IThreadMember</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 								<td>
@@ -641,15 +608,6 @@ public interface IDiscordRestChannelAPI</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/3C9459FF">Start<wbr>Thread<wbr>Without<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Auto<wbr>Archive<wbr>Duration, <wbr>ChannelType, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Starts a new private thread.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestChannelAPI/E637942D">Start<wbr>Thread<wbr>Without<wbr>Message<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Auto<wbr>Archive<wbr>Duration, <wbr>Optional<wbr>&lt;ChannelType&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>

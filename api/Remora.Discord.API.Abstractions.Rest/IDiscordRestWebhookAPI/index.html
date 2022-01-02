@@ -193,8 +193,8 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI">Caching<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI">Caching<wbr>Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -204,10 +204,10 @@
 							graph BT
 	Type["IDiscordRestWebhookAPI"]
 class Type type-node
-	Implementing0["CachingDiscordRestWebhookAPI"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI"
-	Implementing1["DiscordRestWebhookAPI"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
+	Implementing0["DiscordRestWebhookAPI"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI"
+	Implementing1["CachingDiscordRestWebhookAPI"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestWebhookAPI"
 
 						</div>
 					</div>
@@ -298,8 +298,8 @@ public interface IDiscordRestWebhookAPI</code></pre>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Edits a message posted by a webhook.
-    </div>
+     Edits a message posted by a webhook.
+     </div>
 								</td>
 							</tr>
 							<tr>
@@ -307,8 +307,8 @@ public interface IDiscordRestWebhookAPI</code></pre>
 								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage?</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Executes the given webhook.
-    </div>
+     Executes the given webhook.
+     </div>
 								</td>
 							</tr>
 							<tr>

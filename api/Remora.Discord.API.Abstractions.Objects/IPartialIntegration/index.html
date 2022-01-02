@@ -245,7 +245,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ITemplate">ITemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMember">IThreadMember</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadMetadata">IThreadMetadata</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IThreadQueryResponse">IThreadQueryResponse</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUnavailableGuild">IUnavailableGuild</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUser">IUser</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IUserMention">IUserMention</a></li>
@@ -343,9 +342,9 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate">IIntegrationUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate">IIntegrationUpdate</a></li>								
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate">IIntegrationCreate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -355,12 +354,12 @@
 							graph BT
 	Type["IPartialIntegration"]
 class Type type-node
-	Implementing0["IIntegrationCreate"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate"
+	Implementing0["IIntegration"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
 	Implementing1["IIntegrationUpdate"]-.-&gt;Type
 	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationUpdate"
-	Implementing2["IIntegration"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration"
+	Implementing2["IIntegrationCreate"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IIntegrationCreate"
 
 						</div>
 					</div>

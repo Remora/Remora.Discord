@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -202,6 +203,11 @@
 	<pre><code>public virtual Task&lt;Result&lt;IWebhook&gt;&gt; ModifyWebhookWithTokenAsync(Snowflake webhookID, string token, Optional&lt;string&gt; name = null, Optional&lt;Stream?&gt; avatar = null, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    </div>
 
 
 

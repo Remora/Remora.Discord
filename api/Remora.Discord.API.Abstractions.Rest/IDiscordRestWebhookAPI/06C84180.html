@@ -176,8 +176,8 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Executes the given webhook.
-    </div>
+     Executes the given webhook.
+     </div>
 
 		<div class="panel panel-default">
   			<div class="panel-body">	
@@ -199,9 +199,12 @@
 
 	<h1 id="Remarks">Remarks</h1>
 	<div>
-    At least one of <span name="content" class="paramref">content</span>, <span name="embeds" class="paramref">embeds</span>, or <span name="attachments" class="paramref">attachments</span> must be
-    present.
-    </div>
+     At least one of <span name="content" class="paramref">content</span>, <span name="embeds" class="paramref">embeds</span>, or <span name="attachments" class="paramref">attachments</span> must be
+     present.
+    
+     Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+     afterwards, ensure that what you pass is a copy that the method can take ownership of.
+     </div>
 
 
 
@@ -230,8 +233,8 @@
 						<td>shouldWait</td>
 						<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 						<td>
-    Whether the call should block until the server has confirmed that the message was sent.
-    </td>
+     Whether the call should block until the server has confirmed that the message was sent.
+     </td>
 					</tr>
 					<tr>
 						<td>content</td>
@@ -272,19 +275,19 @@
 						<td>components</td>
 						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a>&gt;<wbr>&gt;<wbr></td>
 						<td>
-    The components that should be included with the message. The webhook must be application-owned to use this
-    parameter.
-    </td>
+     The components that should be included with the message. The webhook must be application-owned to use this
+     parameter.
+     </td>
 					</tr>
 					<tr>
 						<td>attachments</td>
 						<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;OneOf<wbr>&lt;FileData, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a>&gt;<wbr>&gt;<wbr>&gt;<wbr></td>
 						<td>
-    The attachments to associate with the response. Each file may be a new file in the form of
-    <code class="cs">FileData</code>, or an existing one that should be retained in the form of a
-    <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></code>. If this request edits the original message, then any attachments not
-    mentioned in this parameter will be deleted.
-    </td>
+     The attachments to associate with the response. Each file may be a new file in the form of
+     <code class="cs">FileData</code>, or an existing one that should be retained in the form of a
+     <code class="cs"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></code>. If this request edits the original message, then any attachments not
+     mentioned in this parameter will be deleted.
+     </td>
 					</tr>
 					<tr>
 						<td>ct</td>
@@ -308,9 +311,9 @@
 				<tbody><tr>
 					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage?</a>&gt;<wbr>&gt;<wbr></td>
 					<td>
-    A result which may or may not have succeeded. The returned message is null if <span name="shouldWait" class="paramref">shouldWait</span>
-    is false.
-    </td>
+     A result which may or may not have succeeded. The returned message is null if <span name="shouldWait" class="paramref">shouldWait</span>
+     is false.
+     </td>
 				</tr>
 			</tbody></table>
 		</div>

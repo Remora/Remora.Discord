@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -169,7 +170,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F52A2F0B">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/8F70A24C">List<wbr>Guild<wbr>Members<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;int&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/5115CE3D">Modify<wbr>Current<wbr>Member<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/4EF6506A">Modify<wbr>Current<wbr>User<wbr>Nick<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/70B0BDD6">Modify<wbr>Current<wbr>User<wbr>Voice<wbr>State<wbr>Async<wbr>(Snowflake, <wbr>Snowflake, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Date<wbr>Time<wbr>Offset?&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/0748C795">ModifyGuildAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Verification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Message<wbr>Notification<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Explicit<wbr>Content<wbr>Filter<wbr>Level?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;TimeSpan&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>System<wbr>Channel<wbr>Flags&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;GuildFeature&gt;<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/DE6A3097">Modify<wbr>Guild<wbr>Channel<wbr>Positions<wbr>Async<wbr>(Snowflake, <wbr>IReadOnlyList<wbr>&lt;<wbr>(<wbr>Snowflake <wbr>Channel<wbr>I<wbr>D, <wbr>int? Position, <wbr>bool? <wbr>Lock<wbr>Permissions, <wbr>Snowflake? ParentID)<wbr>&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
@@ -230,6 +230,11 @@
 	<pre><code>public override Task&lt;Result&lt;IRole&gt;&gt; CreateGuildRoleAsync(Snowflake guildID, Optional&lt;string&gt; name = null, Optional&lt;IDiscordPermissionSet&gt; permissions = null, Optional&lt;Color&gt; colour = null, Optional&lt;bool&gt; isHoisted = null, Optional&lt;Stream&gt; icon = null, Optional&lt;string&gt; unicodeEmoji = null, Optional&lt;bool&gt; isMentionable = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    </div>
 
 
 
