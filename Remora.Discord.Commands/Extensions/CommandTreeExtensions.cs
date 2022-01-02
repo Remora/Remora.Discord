@@ -463,11 +463,16 @@ public static class CommandTreeExtensions
                 }
             }
 
+            // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
+            // TODO: Maybe more cases?
             var parameterType = parameter.Parameter.ParameterType;
+            var actualParameterType = parameterType.IsNullable() || parameterType.IsOptional()
+                ? parameterType.GetGenericArguments().Single()
+                : parameterType;
 
             var typeHint = parameter.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
             var discordType = typeHint is null
-                ? ToApplicationCommandOptionType(parameterType)
+                ? ToApplicationCommandOptionType(actualParameterType)
                 : (ApplicationCommandOptionType)typeHint.TypeHint;
 
             var getChannelTypes = CreateChannelTypesOption(command, parameter, discordType);
@@ -478,12 +483,13 @@ public static class CommandTreeExtensions
 
             Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
             Optional<bool> enableAutocomplete = default;
-            if (parameterType.IsEnum)
+
+            if (actualParameterType.IsEnum)
             {
                 // Add the choices directly
-                if (Enum.GetValues(parameterType).Length <= MaxChoiceValues)
+                if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
                 {
-                    var createChoices = CreateApplicationCommandEnumOptionChoices(parameterType);
+                    var createChoices = CreateApplicationCommandEnumOptionChoices(actualParameterType);
                     if (!createChoices.IsSuccess)
                     {
                         return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
