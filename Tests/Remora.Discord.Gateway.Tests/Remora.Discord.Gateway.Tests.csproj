@@ -11,7 +11,7 @@
 
     <ItemGroup>
       <PackageReference Include="Moq" Version="4.16.1" />
-      <PackageReference Include="OneOf" Version="3.0.203" />
+      <PackageReference Include="OneOf" Version="3.0.205" />
     </ItemGroup>
 
 </Project>
