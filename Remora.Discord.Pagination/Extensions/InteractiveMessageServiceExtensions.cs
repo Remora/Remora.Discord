@@ -91,7 +91,7 @@ public static class InteractiveMessageServiceExtensions
         return await interactiveMessages.SendInteractiveEmbedWithPersistentDataAsync
         (
             channel,
-            pages[0],
+            pages[0] with { Footer = new EmbedFooter($"Page 1/{pages.Count}") },
             m => m.ID.ToString(),
             _ => data,
             options,
