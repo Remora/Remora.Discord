@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.2</Version>
+        <Version>2022.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -16,10 +16,7 @@
             Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Implement support for excluding certain enumeration members from slash command choices.
-            Implement support for DisplayAttribute.
-            Implement better support for nullable and optional arguments.
+            Add missing footer override.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

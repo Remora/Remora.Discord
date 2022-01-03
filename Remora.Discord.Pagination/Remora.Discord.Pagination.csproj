@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple implementations of pagination for messages via buttons.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Add missing footer override.
         </PackageReleaseNotes>
     </PropertyGroup>
 
