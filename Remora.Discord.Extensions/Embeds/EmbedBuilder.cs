@@ -296,8 +296,8 @@ public class EmbedBuilder : BuilderBase<Embed>
     public EmbedBuilder WithAuthor
     (
         string name,
-        string url = "",
-        string iconUrl = ""
+        string? url = null,
+        string? iconUrl = null
     )
     {
         this.Author = new EmbedAuthorBuilder(name, url, iconUrl);
@@ -327,7 +327,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <param name="text">The text of the footer.</param>
     /// <param name="iconUrl">The url of the icon.</param>
     /// <returns>The current <see cref="EmbedBuilder"/> for chaining.</returns>
-    public EmbedBuilder WithFooter(string text, string iconUrl = "")
+    public EmbedBuilder WithFooter(string text, string? iconUrl = null)
     {
         this.Footer = new EmbedFooterBuilder(text, iconUrl);
         return this;
@@ -351,7 +351,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// <param name="value">The value of the field.</param>
     /// <param name="inline">Whether the field should be shown inline.</param>
     /// <returns>A result indicating the success or failure of the operation.</returns>
-    public Result AddField(string name, string value, bool inline = false)
+    public Result<EmbedBuilder> AddField(string name, string value, bool inline = false)
         => AddField(new EmbedField(name, value, inline));
 
     /// <summary>
@@ -359,7 +359,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="field">The <see cref="IEmbedField"/>.</param>
     /// <returns>A result indicating the success or failure of the operation.</returns>
-    public Result AddField(IEmbedField field)
+    public Result<EmbedBuilder> AddField(IEmbedField field)
     {
         if (_fields.Count >= EmbedConstants.MaxFieldCount)
         {
@@ -367,7 +367,7 @@ public class EmbedBuilder : BuilderBase<Embed>
         }
 
         _fields.Add(field);
-        return Result.FromSuccess();
+        return Result<EmbedBuilder>.FromSuccess(this);
     }
 
     /// <summary>
@@ -375,7 +375,7 @@ public class EmbedBuilder : BuilderBase<Embed>
     /// </summary>
     /// <param name="fields">The collection of fields to use.</param>
     /// <returns>A result indicating the success or failure of the operation.</returns>
-    public Result SetFields(ICollection<IEmbedField> fields)
+    public Result<EmbedBuilder> SetFields(ICollection<IEmbedField> fields)
     {
         if (fields.Count >= EmbedConstants.MaxFieldCount)
         {
@@ -383,7 +383,7 @@ public class EmbedBuilder : BuilderBase<Embed>
         }
 
         _fields = fields.ToList();
-        return Result.FromSuccess();
+        return Result<EmbedBuilder>.FromSuccess(this);
     }
 
     /// <summary>
