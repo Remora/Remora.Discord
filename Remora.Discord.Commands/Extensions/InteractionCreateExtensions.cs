@@ -71,7 +71,8 @@ public static class InteractionCreateExtensions
             interactionCreate.ID,
             interactionCreate.ApplicationID,
             interactionData,
-            interactionCreate.Message
+            interactionCreate.Message,
+            interactionCreate.Locale
         );
     }
 }
