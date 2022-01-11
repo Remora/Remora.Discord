@@ -86,4 +86,12 @@ public interface IInteraction
     /// Gets the message the component was attached to.
     /// </summary>
     Optional<IMessage> Message { get; }
+
+    /// <summary>
+    /// Gets the locale of the invoking user.
+    /// </summary>
+    /// <remarks>
+    /// This is sent for all interaction types, except <see cref="InteractionType.Ping"/>.
+    /// </remarks>
+    Optional<string> Locale { get; }
 }
