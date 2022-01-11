@@ -262,7 +262,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
+    public async Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
     (
         Snowflake guildID,
         Snowflake eventID,
@@ -273,7 +273,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
+        if (limit.HasValue && limit.Value is < 1 or >= 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
+        }
+
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>

@@ -147,7 +147,7 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="eventID">The ID of the event.</param>
-    /// <param name="limit">The maximum number of users to return.</param>
+    /// <param name="limit">The maximum number of users to return (max 100).</param>
     /// <param name="withMember">Whether member information should be included.</param>
     /// <param name="before">Restrict the returned users to ones before this ID.</param>
     /// <param name="after">Restrict the returned users to ones after this ID.</param>
