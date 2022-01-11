@@ -155,7 +155,8 @@ public interface IMessage : IPartialMessage
     new Optional<IPartialApplication> Application { get; }
 
     /// <summary>
-    /// Gets the ID of the application the message's interaction belongs to. Sent with interactions.
+    /// Gets the ID of the application the message's interaction belongs to. Sent with interactions or application-owned
+    /// webhooks.
     /// </summary>
     new Optional<Snowflake> ApplicationID { get; }
 
