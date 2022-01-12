@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using Remora.Commands;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
@@ -52,6 +53,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
 
+    private readonly ITreeNameResolver? _treeNameResolver;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandResponder"/> class.
     /// </summary>
@@ -62,6 +65,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// <param name="contextInjection">The injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
+    /// <param name="treeNameResolver">The tree name resolver, if one is available.</param>
     public CommandResponder
     (
         CommandService commandService,
@@ -70,7 +74,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         IServiceProvider services,
         ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
-        IOptions<TreeSearchOptions> treeSearchOptions
+        IOptions<TreeSearchOptions> treeSearchOptions,
+        ITreeNameResolver? treeNameResolver = null
     )
     {
         _commandService = commandService;
@@ -81,6 +86,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
 
         _tokenizerOptions = tokenizerOptions.Value;
         _treeSearchOptions = treeSearchOptions.Value;
+
+        _treeNameResolver = treeNameResolver;
     }
 
     /// <inheritdoc/>
@@ -211,6 +218,19 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return preExecution;
         }
 
+        string? treeName = null;
+        var allowDefaultTree = false;
+        if (_treeNameResolver is not null)
+        {
+            var getTreeName = await _treeNameResolver.GetTreeNameAsync(commandContext, ct);
+            if (!getTreeName.IsSuccess)
+            {
+                return Result.FromError(getTreeName);
+            }
+
+            (treeName, allowDefaultTree) = getTreeName.Entity;
+        }
+
         // Run the actual command
         var executeResult = await _commandService.TryExecuteAsync
         (
@@ -218,8 +238,36 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             _services,
             _tokenizerOptions,
             _treeSearchOptions,
+            treeName,
             ct
         );
+
+        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
+        if (executeResult.IsSuccess || !tryDefaultTree)
+        {
+            return await _eventCollector.RunPostExecutionEvents
+            (
+                _services,
+                commandContext,
+                executeResult.IsSuccess ? executeResult.Entity : executeResult,
+                ct
+            );
+        }
+
+        var oldResult = executeResult;
+        executeResult = await _commandService.TryExecuteAsync
+        (
+            content,
+            _services,
+            _tokenizerOptions,
+            _treeSearchOptions,
+            ct: ct
+        );
+
+        if (!executeResult.IsSuccess)
+        {
+            executeResult = new AggregateError(oldResult, executeResult);
+        }
 
         // Run any user-provided post execution events, passing along either the result of the command itself, or if
         // execution failed, the reason why

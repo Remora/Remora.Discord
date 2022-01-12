@@ -21,10 +21,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Options;
+using Remora.Commands;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
@@ -33,6 +35,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -56,6 +59,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
 
+    private readonly ITreeNameResolver? _treeNameResolver;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="InteractionResponder"/> class.
     /// </summary>
@@ -67,6 +72,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
     /// <param name="contextInjection">The context injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
+    /// <param name="treeNameResolver">The tree name resolver, if available.</param>
     public InteractionResponder
     (
         CommandService commandService,
@@ -76,7 +82,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         IServiceProvider services,
         ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
-        IOptions<TreeSearchOptions> treeSearchOptions
+        IOptions<TreeSearchOptions> treeSearchOptions,
+        ITreeNameResolver? treeNameResolver = null
     )
     {
         _commandService = commandService;
@@ -88,6 +95,8 @@ public class InteractionResponder : IResponder<IInteractionCreate>
 
         _tokenizerOptions = tokenizerOptions.Value;
         _treeSearchOptions = treeSearchOptions.Value;
+
+        _treeNameResolver = treeNameResolver;
     }
 
     /// <inheritdoc />
@@ -122,6 +131,60 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             return preExecution;
         }
 
+        string? treeName = null;
+        var allowDefaultTree = false;
+        if (_treeNameResolver is not null)
+        {
+            var getTreeName = await _treeNameResolver.GetTreeNameAsync(context, ct);
+            if (!getTreeName.IsSuccess)
+            {
+                return Result.FromError(getTreeName);
+            }
+
+            (treeName, allowDefaultTree) = getTreeName.Entity;
+        }
+
+        var executeResult = await TryExecuteCommand(gatewayEvent, commandPath, parameters, context, treeName, ct);
+
+        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
+        if (executeResult.IsSuccess || !tryDefaultTree)
+        {
+            return await _eventCollector.RunPostExecutionEvents
+            (
+                _services,
+                context,
+                executeResult.IsSuccess ? executeResult.Entity : executeResult,
+                ct
+            );
+        }
+
+        var oldResult = executeResult;
+        executeResult = await TryExecuteCommand(gatewayEvent, commandPath, parameters, context, treeName, ct);
+
+        if (!executeResult.IsSuccess)
+        {
+            executeResult = new AggregateError(oldResult, executeResult);
+        }
+
+        return await _eventCollector.RunPostExecutionEvents
+        (
+            _services,
+            context,
+            executeResult.IsSuccess ? executeResult.Entity : executeResult,
+            ct
+        );
+    }
+
+    private async Task<Result<IResult>> TryExecuteCommand
+    (
+        IInteractionCreate gatewayEvent,
+        IReadOnlyList<string> commandPath,
+        IReadOnlyDictionary<string, IReadOnlyList<string>> parameters,
+        InteractionContext context,
+        string? treeName,
+        CancellationToken ct = default
+    )
+    {
         var prepareCommand = await _commandService.TryPrepareCommandAsync
         (
             commandPath,
@@ -129,19 +192,13 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             _services,
             searchOptions: _treeSearchOptions,
             tokenizerOptions: _tokenizerOptions,
+            treeName: treeName,
             ct: ct
         );
 
         if (!prepareCommand.IsSuccess)
         {
-            // Early bailout
-            return await _eventCollector.RunPostExecutionEvents
-            (
-                _services,
-                context,
-                prepareCommand,
-                ct
-            );
+            return Result.FromError(prepareCommand);
         }
 
         var preparedCommand = prepareCommand.Entity;
@@ -150,54 +207,51 @@ public class InteractionResponder : IResponder<IInteractionCreate>
             .FindCustomAttributeOnLocalTree<SuppressInteractionResponseAttribute>();
 
         var shouldSendResponse = !(suppressResponseAttribute?.Suppress ?? _options.SuppressAutomaticResponses);
-        if (shouldSendResponse)
+        if (!shouldSendResponse)
         {
-            // Signal Discord that we'll be handling this one asynchronously
-            var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
-
-            var ephemeralAttribute = preparedCommand.Command.Node
-                .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
-
-            var sendEphemeral = (ephemeralAttribute is null && _options.UseEphemeralResponses) ||
-                                ephemeralAttribute?.IsEphemeral == true;
-
-            if (sendEphemeral)
-            {
-                response = response with
-                {
-                    Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral)
-                };
-            }
-
-            var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
+            return await _commandService.TryExecuteAsync
             (
-                gatewayEvent.ID,
-                gatewayEvent.Token,
-                response,
-                ct: ct
+                preparedCommand,
+                _services,
+                ct
             );
+        }
 
-            if (!interactionResponse.IsSuccess)
+        // Signal Discord that we'll be handling this one asynchronously
+        var response = new InteractionResponse(InteractionCallbackType.DeferredChannelMessageWithSource);
+
+        var ephemeralAttribute = preparedCommand.Command.Node
+            .FindCustomAttributeOnLocalTree<EphemeralAttribute>();
+
+        var sendEphemeral = (ephemeralAttribute is null && _options.UseEphemeralResponses) ||
+                            ephemeralAttribute?.IsEphemeral == true;
+
+        if (sendEphemeral)
+        {
+            response = response with
             {
-                return interactionResponse;
-            }
+                Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral)
+            };
+        }
+
+        var interactionResponse = await _interactionAPI.CreateInteractionResponseAsync
+        (
+            gatewayEvent.ID,
+            gatewayEvent.Token,
+            response,
+            ct: ct
+        );
+
+        if (!interactionResponse.IsSuccess)
+        {
+            return interactionResponse;
         }
 
         // Run the actual command
-        var executeResult = await _commandService.TryExecuteAsync
+        return await _commandService.TryExecuteAsync
         (
             preparedCommand,
             _services,
-            ct
-        );
-
-        // Run any user-provided post execution events, passing along either the result of the command itself, or if
-        // execution failed, the reason why
-        return await _eventCollector.RunPostExecutionEvents
-        (
-            _services,
-            context,
-            executeResult.IsSuccess ? executeResult.Entity : executeResult,
             ct
         );
     }
