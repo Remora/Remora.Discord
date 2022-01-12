@@ -44,5 +44,6 @@ public record InteractionCreate
     string Token,
     int Version,
     Optional<IMessage> Message = default,
-    Optional<string> Locale = default
+    Optional<string> Locale = default,
+    Optional<string> GuildLocale = default
 ) : IInteractionCreate;
