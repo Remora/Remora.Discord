@@ -121,7 +121,9 @@ public class Program
             {
                 services
                     .AddDiscordCommands(true)
-                    .AddCommandGroup<InteractiveCommands>()
+                    .AddCommandTree()
+                        .WithCommandGroup<InteractiveCommands>()
+                        .Finish()
                     .AddInteractivity()
                     .AddPagination()
                     .AddInteractiveEntity<ColourDropdownEntity>();

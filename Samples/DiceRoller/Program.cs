@@ -71,7 +71,8 @@ public class Program
             {
                 services
                     .AddDiscordCommands()
-                    .AddCommandGroup<DiceRollCommands>();
+                    .AddCommandTree()
+                    .WithCommandGroup<DiceRollCommands>();
 
                 services.AddHttpClient();
             }

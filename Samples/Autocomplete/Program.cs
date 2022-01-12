@@ -118,7 +118,9 @@ public class Program
             {
                 services
                     .AddDiscordCommands(true)
-                    .AddCommandGroup<AutocompleteCommands>()
+                    .AddCommandTree()
+                        .WithCommandGroup<AutocompleteCommands>()
+                        .Finish()
                     .AddAutocompleteProvider<DictionaryAutocompleteProvider>();
             }
         )

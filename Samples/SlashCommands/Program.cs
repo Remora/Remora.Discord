@@ -118,7 +118,8 @@ public class Program
             {
                 services
                     .AddDiscordCommands(true)
-                    .AddCommandGroup<HttpCatCommands>();
+                    .AddCommandTree()
+                        .WithCommandGroup<HttpCatCommands>();
             }
         )
         .ConfigureLogging
