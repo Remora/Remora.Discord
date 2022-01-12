@@ -86,5 +86,15 @@ namespace Remora.Discord.API.Abstractions.Objects
         /// Gets the message the component was attached to.
         /// </summary>
         Optional<IMessage> Message { get; }
+
+        /// <summary>
+        /// Gets the locale of the user of the interaction.
+        /// </summary>
+        Optional<string> Locale { get; }
+
+        /// <summary>
+        /// Gets the locale of the guild the interaction was sent from.
+        /// </summary>
+        Optional<string> GuildLocale { get; }
     }
 }

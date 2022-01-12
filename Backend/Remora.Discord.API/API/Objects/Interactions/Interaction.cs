@@ -42,5 +42,7 @@ public record Interaction
     Optional<IUser> User,
     string Token,
     int Version,
-    Optional<IMessage> Message = default
+    Optional<IMessage> Message = default,
+    Optional<string> Locale = default,
+    Optional<string> GuildLocale = default
 ) : IInteraction;
