@@ -58,8 +58,6 @@ public static class CommandTreeExtensions
     private const int MaxChoiceValues = 25;
     private const int MaxCommandParameters = 25;
     private const int MaxCommandStringifiedLength = 4000;
-    private const int MaxChoiceNameLength = 100;
-    private const int MaxChoiceValueLength = 100;
     private const int MaxCommandDescriptionLength = 100;
     private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
@@ -490,7 +488,7 @@ public static class CommandTreeExtensions
                 // Add the choices directly
                 if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
                 {
-                    var createChoices = CreateApplicationCommandEnumOptionChoices(actualParameterType);
+                    var createChoices = EnumExtensions.GetEnumChoices(actualParameterType);
                     if (!createChoices.IsSuccess)
                     {
                         return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
@@ -587,102 +585,6 @@ public static class CommandTreeExtensions
         }
 
         return channelTypes;
-    }
-
-    private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandEnumOptionChoices
-    (
-        Type parameterType
-    )
-    {
-        var values = Enum.GetValues(parameterType);
-        var choiceConversions = values.Cast<object>().Select
-            (
-                v => CreateApplicationCommandOptionChoice
-                (
-                    parameterType,
-                    Enum.GetName(parameterType, v) ?? throw new InvalidOperationException(),
-                    v
-                )
-            )
-            .ToList();
-
-        if (choiceConversions.Any(c => !c.IsSuccess))
-        {
-            return Result<IReadOnlyList<IApplicationCommandOptionChoice>>.FromError
-            (
-                choiceConversions.First(c => !c.IsSuccess)
-            );
-        }
-
-        return choiceConversions.Select(c => c.Entity).Where(e => e is not null).ToList()!;
-    }
-
-    private static Result<IApplicationCommandOptionChoice?> CreateApplicationCommandOptionChoice
-    (
-        Type enumType,
-        string enumName,
-        object enumValue
-    )
-    {
-        var member = enumType.GetMember(enumName).Single();
-
-        if (member.GetCustomAttribute<ExcludeFromChoicesAttribute>() is not null)
-        {
-            return Result<IApplicationCommandOptionChoice?>.FromSuccess(null);
-        }
-
-        // Slightly complex selection logic
-        string GetEnumMemberDisplayName()
-        {
-            var descriptionAttribute = member.GetCustomAttribute<DescriptionAttribute>();
-            if (descriptionAttribute is not null)
-            {
-                return descriptionAttribute.Description;
-            }
-
-            var displayAttribute = member.GetCustomAttribute<DisplayAttribute>();
-            if (displayAttribute is null)
-            {
-                return enumName;
-            }
-
-            if (displayAttribute.Description is not null)
-            {
-                return displayAttribute.Description;
-            }
-
-            return displayAttribute.Name ?? enumName;
-        }
-
-        var name = GetEnumMemberDisplayName();
-        if (name.Length > MaxChoiceNameLength)
-        {
-            return new UnsupportedFeatureError
-            (
-                $"The name of the enumeration member {enumType.Name}::{enumName} is too long " +
-                $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
-                "[Description] or [Display], or rename the member."
-            );
-        }
-
-        var valueString = enumName;
-        if (valueString.Length <= MaxChoiceValueLength)
-        {
-            return new ApplicationCommandOptionChoice(name, valueString);
-        }
-
-        // Try converting the enum's value representation
-        valueString = enumValue.ToString() ?? throw new InvalidOperationException();
-        if (valueString.Length > MaxChoiceValueLength)
-        {
-            return new UnsupportedFeatureError
-            (
-                $"The length of the enumeration member {enumType.Name}::{enumName} value is too long " +
-                $"(max {MaxChoiceValueLength})."
-            );
-        }
-
-        return new ApplicationCommandOptionChoice(name, valueString);
     }
 
     private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)
