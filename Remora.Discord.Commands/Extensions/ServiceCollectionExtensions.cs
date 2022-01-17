@@ -117,6 +117,9 @@ public static class ServiceCollectionExtensions
 
         serviceCollection.AddCommands();
 
+        // Add the default prefix matcher if the end user hasn't already registered one
+        serviceCollection.TryAddTransient<ICommandPrefixMatcher, SimplePrefixMatcher>();
+
         if (useDefaultCommandResponder)
         {
             serviceCollection.AddCommandResponder();

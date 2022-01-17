@@ -53,6 +53,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
 
+    private readonly ICommandPrefixMatcher _prefixMatcher;
     private readonly ITreeNameResolver? _treeNameResolver;
 
     /// <summary>
@@ -66,6 +67,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
     /// <param name="treeNameResolver">The tree name resolver, if one is available.</param>
+    /// <param name="prefixMatcher">The prefix matcher, if one is available.</param>
     public CommandResponder
     (
         CommandService commandService,
@@ -75,6 +77,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
         IOptions<TreeSearchOptions> treeSearchOptions,
+        ICommandPrefixMatcher prefixMatcher,
         ITreeNameResolver? treeNameResolver = null
     )
     {
@@ -88,6 +91,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         _treeSearchOptions = treeSearchOptions.Value;
 
         _treeNameResolver = treeNameResolver;
+        _prefixMatcher = prefixMatcher;
     }
 
     /// <inheritdoc/>
@@ -97,14 +101,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         CancellationToken ct = default
     )
     {
-        if (_options.Prefix is not null)
-        {
-            if (!gatewayEvent.Content.StartsWith(_options.Prefix))
-            {
-                return Result.FromSuccess();
-            }
-        }
-
         var createContext = gatewayEvent.CreateContext();
         if (!createContext.IsSuccess)
         {
@@ -137,14 +133,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         if (!gatewayEvent.Content.IsDefined(out var content))
         {
             return Result.FromSuccess();
-        }
-
-        if (_options.Prefix is not null)
-        {
-            if (!content.StartsWith(_options.Prefix))
-            {
-                return Result.FromSuccess();
-            }
         }
 
         var createContext = gatewayEvent.CreateContext();
@@ -202,14 +190,19 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         // Provide the created context to any services inside this scope
         _contextInjection.Context = commandContext;
 
-        // Strip off the prefix
-        if (_options.Prefix is not null)
+        var checkPrefix = await _prefixMatcher.MatchesPrefixAsync(content, ct);
+        if (!checkPrefix.IsDefined(out var check))
         {
-            content = content
-            [
-                (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
-            ];
+            return Result.FromError(checkPrefix);
         }
+
+        if (!check.Matches)
+        {
+            return Result.FromSuccess();
+        }
+
+        // Strip off the prefix
+        content = content[check.ContentStartIndex..];
 
         // Run any user-provided pre execution events
         var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
