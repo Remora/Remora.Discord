@@ -24,6 +24,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Remora.Commands;
 using Remora.Commands.Services;
@@ -53,7 +54,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
 
-    private readonly ICommandPrefixMatcher _prefixMatcher;
     private readonly ITreeNameResolver? _treeNameResolver;
 
     /// <summary>
@@ -67,7 +67,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
     /// <param name="treeNameResolver">The tree name resolver, if one is available.</param>
-    /// <param name="prefixMatcher">The prefix matcher, if one is available.</param>
     public CommandResponder
     (
         CommandService commandService,
@@ -77,7 +76,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
         IOptions<TreeSearchOptions> treeSearchOptions,
-        ICommandPrefixMatcher prefixMatcher,
         ITreeNameResolver? treeNameResolver = null
     )
     {
@@ -91,7 +89,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         _treeSearchOptions = treeSearchOptions.Value;
 
         _treeNameResolver = treeNameResolver;
-        _prefixMatcher = prefixMatcher;
     }
 
     /// <inheritdoc/>
@@ -190,7 +187,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         // Provide the created context to any services inside this scope
         _contextInjection.Context = commandContext;
 
-        var checkPrefix = await _prefixMatcher.MatchesPrefixAsync(content, ct);
+        var prefixMatcher = _services.GetRequiredService<ICommandPrefixMatcher>();
+        var checkPrefix = await prefixMatcher.MatchesPrefixAsync(content, ct);
         if (!checkPrefix.IsDefined(out var check))
         {
             return Result.FromError(checkPrefix);
