@@ -5,15 +5,16 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>17.0.0</Version>
+        <Version>18.0.0</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Add the locale to the interaction context.
-            Implement interaction locales.
+            Implement support for user-facing prefix handling.
+            Refactor choice creation for enumerations.
+            Implement support for runtime command tree selection.
         </PackageReleaseNotes>
     </PropertyGroup>
 
