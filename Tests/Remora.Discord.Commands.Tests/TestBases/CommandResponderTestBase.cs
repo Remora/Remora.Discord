@@ -50,7 +50,7 @@ public abstract class CommandResponderTestBase : IDisposable
         // ReSharper disable once VirtualMemberCallInConstructor
         ConfigureServices(serviceCollection);
 
-        var services = serviceCollection.BuildServiceProvider();
+        var services = serviceCollection.BuildServiceProvider(true);
 
         _scope = services.CreateScope();
         this.Responder = _scope.ServiceProvider.GetRequiredService<CommandResponder>();

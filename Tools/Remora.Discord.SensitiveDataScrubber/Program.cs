@@ -65,7 +65,7 @@ internal class Program
 
         var services = new ServiceCollection()
             .AddLogging(c => c.AddConsole())
-            .BuildServiceProvider();
+            .BuildServiceProvider(true);
 
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogInformation("Loading patterns...");

@@ -56,7 +56,8 @@ public class ContextTests
             .AddCommandGroup<GroupWithContext>()
             .AddCommandGroup<GroupWithInteractionContext>()
             .AddCommandGroup<GroupWithMessageContext>()
-            .BuildServiceProvider();
+            .BuildServiceProvider(true)
+            .CreateScope().ServiceProvider;
 
         _commands = _services.GetRequiredService<CommandService>();
         _contextInjection = _services.GetRequiredService<ContextInjectionService>();

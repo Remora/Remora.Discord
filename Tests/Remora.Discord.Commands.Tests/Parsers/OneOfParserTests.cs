@@ -51,7 +51,7 @@ public class OneOfParserTests
             .AddParser<DoubleParser>()
             .AddParser<StringParser>()
             .AddParser<OneOfParser>()
-            .BuildServiceProvider();
+            .BuildServiceProvider(true);
 
         _parser = (OneOfParser)services.GetServices<ITypeParser>().First(p => p is OneOfParser);
     }
