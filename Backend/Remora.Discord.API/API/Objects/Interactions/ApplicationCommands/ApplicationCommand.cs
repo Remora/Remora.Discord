@@ -41,5 +41,7 @@ public record ApplicationCommand
     string Description,
     Optional<IReadOnlyList<IApplicationCommandOption>> Options,
     Optional<bool> DefaultPermission,
-    Snowflake Version
+    Snowflake Version,
+    Optional<bool> DmPermission = default,
+    Optional<DiscordPermissionSet?> DefaultMemberPermissions = default
 ) : IApplicationCommand;
