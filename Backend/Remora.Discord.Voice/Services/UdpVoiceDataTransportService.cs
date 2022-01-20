@@ -37,7 +37,6 @@ using Remora.Discord.Voice.Abstractions.Services;
 using Remora.Discord.Voice.Errors;
 using Remora.Discord.Voice.Interop.Sodium;
 using Remora.Discord.Voice.Objects.UdpDataProtocol;
-using Remora.Discord.Voice.Util;
 using Remora.Results;
 
 namespace Remora.Discord.Voice.Services
@@ -51,17 +50,19 @@ namespace Remora.Discord.Voice.Services
     /// This class consumes/outputs Opus data packets, and performs the necessary encryption functions internally.
     /// </remarks>
     [PublicAPI]
-    public sealed class UdpVoiceDataTransportService : IVoiceDataTranportService, IDisposable
+    public class UdpVoiceDataTransportService : IVoiceDataTranportService, IDisposable
     {
         private static readonly IReadOnlyDictionary<string, SupportedEncryptionMode> SupportedEncryptionModes;
 
+        private readonly IMemoryOwner<byte> _nonceMemory;
         private readonly DiscordVoiceClientOptions _options;
 
         private UdpClient _client;
-        private Sodium? _encryptor;
         private SupportedEncryptionMode _encryptionMode;
-        private uint _ssrc;
+        private Sodium? _encryptor;
+        private IMemoryOwner<byte> _packetMemory;
         private ushort _sequence;
+        private uint _ssrc;
         private uint _timestamp;
 
         /// <inheritdoc />
@@ -96,6 +97,8 @@ namespace Remora.Discord.Voice.Services
             _client = new UdpClient();
             _options = options.Value;
             _encryptionMode = SupportedEncryptionMode.XSalsa20_Poly1305;
+            _nonceMemory = MemoryPool<byte>.Shared.Rent((int)Sodium.NonceSize);
+            _packetMemory = MemoryPool<byte>.Shared.Rent(512);
 
             // Randomise as per the RTP specification recommendation.
             _sequence = (ushort)random.Next(0, ushort.MaxValue);
@@ -134,13 +137,13 @@ namespace Remora.Discord.Voice.Services
                     IPDiscoveryRequest.CalculateEmbeddedLength(discoveryBufferSize)
                 ).Pack(discoveryBuffer.Memory.Span);
 
-                await _client.Client.SendAsync(discoveryBuffer.Memory[0..discoveryBufferSize], SocketFlags.None, ct).ConfigureAwait(false);
+                await _client.Client.SendAsync(discoveryBuffer.Memory[..discoveryBufferSize], SocketFlags.None, ct).ConfigureAwait(false);
 
                 using var cts = new CancellationTokenSource(1000);
                 var bytesRead = await _client.Client.ReceiveAsync(discoveryBuffer.Memory, SocketFlags.None, cts.Token).ConfigureAwait(false);
                 if (bytesRead != discoveryBufferSize)
                 {
-                    return new VoiceUdpError("Failed to receive an IP discovery packet: timed out.");
+                    return new VoiceUdpError("Failed to receive IP discovery packet: timed out.");
                 }
 
                 this.IsConnected = true;
@@ -183,7 +186,7 @@ namespace Remora.Discord.Voice.Services
         /// <inheritdoc />
         public Result Disconnect()
         {
-            _client.Close();
+            _client.Close(); // This directly disposes the client
             _client = new UdpClient();
 
             _ssrc = 0;
@@ -194,7 +197,7 @@ namespace Remora.Discord.Voice.Services
         }
 
         /// <inheritdoc />
-        public Result SendFrame(ReadOnlySpan<byte> frame, int pcm16Length)
+        public async ValueTask<Result> SendFrameAsync(ReadOnlyMemory<byte> frame, int frameSize, CancellationToken ct = default)
         {
             if (!this.IsConnected)
             {
@@ -203,7 +206,7 @@ namespace Remora.Discord.Voice.Services
 
             if (_encryptor is null)
             {
-                return new InvalidOperationError("The transport function must be initialized before frames can be sent.");
+                return new InvalidOperationError("The transport service must be initialized before frames can be sent.");
             }
 
             try
@@ -219,22 +222,28 @@ namespace Remora.Discord.Voice.Services
                     _ => 0
                 };
 
-                Span<byte> packet = stackalloc byte[packetSize];
-                Span<byte> nonce = stackalloc byte[(int)Sodium.NonceSize];
+                if (_packetMemory.Memory.Length < packetSize)
+                {
+                    _packetMemory.Dispose();
+                    _packetMemory = MemoryPool<byte>.Shared.Rent(packetSize);
+                }
 
-                WriteRtpHeader(packet, pcm16Length);
-                WriteNonce(nonce, packet, packet[0..rtpHeaderSize]);
+                Memory<byte> nonce = _nonceMemory.Memory[.. (int)Sodium.NonceSize];
+                Memory<byte> packet = _packetMemory.Memory[..packetSize];
 
-                var encryptionResult = _encryptor!.Encrypt(frame, packet.Slice(rtpHeaderSize, encryptedFrameSize), nonce);
+                WriteRtpHeader(packet.Span, frameSize);
+                WriteNonce(nonce.Span, packet.Span, packet.Span[0..rtpHeaderSize]);
+
+                var encryptionResult = _encryptor!.Encrypt(frame.Span, packet.Span.Slice(rtpHeaderSize, encryptedFrameSize), nonce.Span);
                 if (!encryptionResult.IsSuccess)
                 {
                     return encryptionResult;
                 }
 
-                _client.Client.Send(packet, SocketFlags.None, out SocketError errorCode);
-                if (errorCode is not SocketError.Success)
+                int amountSent = await _client.Client.SendAsync(packet, SocketFlags.None, ct).ConfigureAwait(false);
+                if (amountSent != packetSize)
                 {
-                    return new VoiceTransmitError(errorCode, "Failed to send voice data packet.");
+                    return new VoiceTransmitError("Size of actual sent data did not match expected length.");
                 }
 
                 return Result.FromSuccess();
@@ -246,15 +255,56 @@ namespace Remora.Discord.Voice.Services
         }
 
         /// <inheritdoc />
-        public async Task<Result> SendFrameAsync(ReadOnlyMemory<byte> frame, int pcm16Length, CancellationToken ct = default)
-        {
-            return await Task.Run(() => SendFrame(frame.Span, pcm16Length), ct).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
         public void Dispose()
         {
-            _client.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Fills a buffer with zeroes.
+        /// </summary>
+        /// <param name="buffer">The buffer to fill.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static void ZeroFill(Span<byte> buffer)
+        {
+            int zero = 0;
+            var i = 0;
+
+            for (; i < buffer.Length / sizeof(int); i++)
+            {
+                MemoryMarshal.Write(buffer, ref zero);
+            }
+
+            var remainder = buffer.Length % sizeof(int);
+            if (remainder == 0)
+            {
+                return;
+            }
+
+            for (; i < buffer.Length; i++)
+            {
+                buffer[i] = 0;
+            }
+        }
+
+        /// <summary>
+        /// Disposes of both managed and unmanaged resources.
+        /// </summary>
+        /// <param name="disposing">A value indicating whether or not to dispose of managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _client.Dispose();
+                _nonceMemory.Dispose();
+                _packetMemory.Dispose();
+            }
 
             this.IsDisposed = true;
         }
@@ -263,9 +313,9 @@ namespace Remora.Discord.Voice.Services
         /// Writes an RTP header to the given buffer and updates the internal RTP state.
         /// </summary>
         /// <param name="buffer">The buffer to write the header to.</param>
-        /// <param name="pcm16Length">The length of the PCM-16 frame.</param>
+        /// <param name="frameSize">The number of audio samples in the packet.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void WriteRtpHeader(Span<byte> buffer, int pcm16Length)
+        private void WriteRtpHeader(Span<byte> buffer, int frameSize)
         {
             buffer[0] = 0x80;
             buffer[1] = 0x78;
@@ -279,13 +329,13 @@ namespace Remora.Discord.Voice.Services
             BinaryPrimitives.WriteUInt32BigEndian(buffer[4..], _timestamp);
             BinaryPrimitives.WriteUInt32BigEndian(buffer[8..], _ssrc);
 
-            _timestamp += (uint)Pcm16Util.CalculateFrameSize(pcm16Length);
+            _timestamp += (uint)frameSize;
         }
 
         /// <summary>
-        /// Generates a nonce and writes it to the packet buffer.
+        /// Generates a nonce and writes it to the correct buffer, depending on the internal encryption mode..
         /// </summary>
-        /// <param name="nonceBuffer">The output nonce buffer.</param>
+        /// <param name="nonceBuffer">The output nonce buffer. It is expected that this nonce buffer is the correct size.</param>
         /// <param name="packetBuffer">The packet buffer.</param>
         /// <param name="rtpHeader">The RTP header, used as the nonce when in <see cref="SupportedEncryptionMode.XSalsa20_Poly1305"/> mode.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -306,33 +356,6 @@ namespace Remora.Discord.Voice.Services
                     BinaryPrimitives.WriteUInt32BigEndian(nonceBuffer, _timestamp);
                     nonceBuffer[..sizeof(uint)].CopyTo(packetBuffer[^sizeof(uint)..]);
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Fills a buffer with zeroes.
-        /// </summary>
-        /// <param name="buffer">The buffer to fill.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ZeroFill(Span<byte> buffer)
-        {
-            int zero = 0;
-            var i = 0;
-
-            for (; i < buffer.Length / sizeof(int); i++)
-            {
-                MemoryMarshal.Write(buffer, ref zero);
-            }
-
-            var remainder = buffer.Length % sizeof(int);
-            if (remainder == 0)
-            {
-                return;
-            }
-
-            for (; i < buffer.Length; i++)
-            {
-                buffer[i] = 0;
             }
         }
     }

@@ -20,7 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Net.Sockets;
 using JetBrains.Annotations;
 using Remora.Results;
 
@@ -32,7 +31,6 @@ namespace Remora.Discord.Voice.Errors
     [PublicAPI]
     public record VoiceTransmitError
     (
-        SocketError ErrorCode,
         string Message
     ) : ResultError(Message);
 }

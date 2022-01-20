@@ -63,7 +63,7 @@ namespace Remora.Discord.Voice
         private readonly HeartbeatData _heartbeatData;
         private readonly SemaphoreSlim _transmitSemaphore;
         private readonly IAudioTranscoderService _defaultTranscoder;
-        private readonly IMemoryOwner<byte> _silenceFrameBuffer;
+        private readonly byte[] _silenceFrameBuffer;
 
         /// <summary>
         /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
@@ -152,10 +152,7 @@ namespace Remora.Discord.Voice
             _transmitSemaphore = new SemaphoreSlim(1, 1);
             _defaultTranscoder = defaultTranscoder;
 
-            _silenceFrameBuffer = MemoryPool<byte>.Shared.Rent(3);
-            _silenceFrameBuffer.Memory.Span[0] = 0xF8;
-            _silenceFrameBuffer.Memory.Span[0] = 0xFF;
-            _silenceFrameBuffer.Memory.Span[0] = 0xFE;
+            _silenceFrameBuffer = new byte[] { 0xF8, 0xFF, 0xFE };
 
             this.ConnectionStatus = GatewayConnectionStatus.Offline;
         }
@@ -385,7 +382,7 @@ namespace Remora.Discord.Voice
                     var sendFrameResult = await _dataService.SendFrameAsync
                     (
                         opusBuffer.Memory[0..encodeResult.Entity],
-                        read,
+                        Pcm16Util.CalculateFrameSize(read),
                         ct
                     ).ConfigureAwait(false);
 
@@ -395,7 +392,7 @@ namespace Remora.Discord.Voice
                     }
                 }
 
-                var sendSilence = SendSilenceFrames(sampleSize, ct);
+                var sendSilence = await SendSilenceFramesAsync(sampleSize, ct).ConfigureAwait(false);
                 if (!sendSilence.IsSuccess)
                 {
                     return sendSilence;
@@ -438,7 +435,6 @@ namespace Remora.Discord.Voice
             }
 
             _transmitSemaphore.Dispose();
-            _silenceFrameBuffer.Dispose();
         }
 
         /// <summary>
@@ -673,7 +669,7 @@ namespace Remora.Discord.Voice
 
                 _receivedPayloads.Enqueue(sessionDescription);
                 _dataService.Initialize(sessionDescription.Data.SecretKey);
-                SendSilenceFrames(_defaultTranscoder.SampleSize, ct); // Can be the key to enabling voice receiving in some cases
+                SendSilenceFramesAsync(_defaultTranscoder.SampleSize, ct); // Can be the key to enabling voice receiving in some cases
 
                 break;
             }
@@ -1234,11 +1230,11 @@ namespace Remora.Discord.Voice
         /// <param name="sampleSize">The size of a normal audio sample for the transmission.</param>
         /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
         /// <returns>A result representing the outcome of the operation.</returns>
-        private Result SendSilenceFrames(int sampleSize, CancellationToken ct = default)
+        private async Task<Result> SendSilenceFramesAsync(int sampleSize, CancellationToken ct)
         {
             for (int i = 0; i < 5 && !ct.IsCancellationRequested && !_disconnectRequestedSource.IsCancellationRequested; i++)
             {
-                var sendFrameResult = _dataService.SendFrame(_silenceFrameBuffer.Memory.Span[..3], sampleSize);
+                var sendFrameResult = await _dataService.SendFrameAsync(_silenceFrameBuffer, sampleSize, ct);
                 if (!sendFrameResult.IsSuccess)
                 {
                     return sendFrameResult;

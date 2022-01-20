@@ -40,9 +40,7 @@ namespace Remora.Discord.Voice.Abstractions.Services
     /// payloads to/from a Discord voice server. It is not specifically concerned with the actual protocol used underneath the
     /// hood, and instead only presents abstract I/O operations.
     ///
-    /// Some assumptions are made in regards to endpoints and availability of operations (one is expected to be able to
-    /// connect and disconnect separately from sending and receiving, for example), but generally, it is kept to a
-    /// minimum.
+    /// Some assumptions are made in regards to the Discord voice protocol.
     /// </summary>
     /// </remarks>
     [PublicAPI]
@@ -54,10 +52,11 @@ namespace Remora.Discord.Voice.Abstractions.Services
         bool IsConnected { get; }
 
         /// <summary>
-        /// Selects a supported encryption mode from the provided list.
+        /// Selects a supported encryption mode from the provided list,
+        /// and sets the internal encryption mode to the chosen value.
         /// </summary>
-        /// <param name="encryptionModes">The list of encryption modes to check for support on.</param>
-        /// <returns>A result representing the outcome of the operation.</returns>
+        /// <param name="encryptionModes">The list of offered encryption modes.</param>
+        /// <returns>A result representing the outcome of the operation, and containing the selected encryption mode if successful.</returns>
         Result<string> SelectSupportedEncryptionMode(IReadOnlyList<string> encryptionModes);
 
         /// <summary>
@@ -79,18 +78,10 @@ namespace Remora.Discord.Voice.Abstractions.Services
         /// Sends an audio data frame.
         /// </summary>
         /// <param name="frame">The data frame.</param>
-        /// <param name="pcm16Length">The byte length of the PCM-16 data that the frame was constructed from.</param>
-        /// <returns>A result representing the outcome of the operation.</returns>
-        Result SendFrame(ReadOnlySpan<byte> frame, int pcm16Length);
-
-        /// <summary>
-        /// Sends an audio data frame.
-        /// </summary>
-        /// <param name="frame">The data frame.</param>
-        /// <param name="pcm16Length">The byte length of the PCM-16 data that the frame was constructed from.</param>
+        /// <param name="frameSize">The number of audio samples in the packet.</param>
         /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
         /// <returns>A result representing the outcome of the operation.</returns>
-        Task<Result> SendFrameAsync(ReadOnlyMemory<byte> frame, int pcm16Length, CancellationToken ct = default);
+        ValueTask<Result> SendFrameAsync(ReadOnlyMemory<byte> frame, int frameSize, CancellationToken ct = default);
 
         /// <summary>
         /// Disconnects from the transport endpoint.
