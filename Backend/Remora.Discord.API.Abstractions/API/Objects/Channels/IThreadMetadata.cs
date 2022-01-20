@@ -56,4 +56,9 @@ public interface IThreadMetadata
     /// Gets a value indicating whether non-moderators can add other non-moderators.
     /// </summary>
     Optional<bool> IsInvitable { get; }
+
+    /// <summary>
+    /// Gets a value indicating when the thread was created. Only populated for threads created after 2022-01-09 (YYYY-MM-DD).
+    /// </summary>
+    Optional<DateTimeOffset> CreationTimestamp { get; }
 }

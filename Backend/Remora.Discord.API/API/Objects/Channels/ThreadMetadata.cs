@@ -35,5 +35,6 @@ public record ThreadMetadata
     AutoArchiveDuration AutoArchiveDuration,
     DateTimeOffset ArchiveTimestamp,
     bool IsLocked,
-    Optional<bool> IsInvitable
+    Optional<bool> IsInvitable,
+    Optional<DateTimeOffset> CreationTimestamp
 ) : IThreadMetadata;

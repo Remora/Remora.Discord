@@ -493,7 +493,8 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMetadata, ThreadMetadata>()
             .WithPropertyName(m => m.IsArchived, "archived")
-            .WithPropertyName(m => m.IsLocked, "locked");
+            .WithPropertyName(m => m.IsLocked, "locked")
+            .WithPropertyName(m => m.CreationTimestamp, "create_timestamp");
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
