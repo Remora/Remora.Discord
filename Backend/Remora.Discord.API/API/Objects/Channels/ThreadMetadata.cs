@@ -36,5 +36,5 @@ public record ThreadMetadata
     DateTimeOffset ArchiveTimestamp,
     bool IsLocked,
     Optional<bool> IsInvitable,
-    Optional<DateTimeOffset> CreationTimestamp
+    Optional<DateTimeOffset> CreateTimestamp
 ) : IThreadMetadata;
