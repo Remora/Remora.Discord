@@ -925,6 +925,7 @@ public class DiscordGatewayClient : IDisposable
 
             if (receiveReady.Entity is not IPayload<IReady> ready)
             {
+                _log.LogTrace("Payload Body: {Body}", receiveReady.Entity.ToString());
                 return new GatewayError
                 (
                     $"The payload after identification was not a Ready payload.{Environment.NewLine}\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}\tActual: {receiveReady.Entity.GetType().FullName}",
