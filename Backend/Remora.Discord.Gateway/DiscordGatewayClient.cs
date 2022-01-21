@@ -927,7 +927,7 @@ public class DiscordGatewayClient : IDisposable
             {
                 return new GatewayError
                 (
-                    "The payload after identification was not a Ready payload.",
+                    $"The payload after identification was not a Ready payload.{Environment.NewLine}\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}\tActual: {receiveReady.Entity.GetType().FullName}",
                     true
                 );
             }

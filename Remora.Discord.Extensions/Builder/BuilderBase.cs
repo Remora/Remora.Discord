@@ -21,6 +21,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Remora.Discord.Extensions.Errors;
 using Remora.Results;
 
@@ -35,14 +37,30 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
     /// <inheritdoc />
     public abstract Result Validate();
 
+    /// <inheritdoc cref="ValidateUrl(string, string?, bool, IReadOnlyCollection{string})"/>
+    /// <param name="propertyName">The name of the property you are testing.</param>
+    /// <param name="url">The text of the url.</param>
+    /// <param name="allowNull">If true, a null url will return a successful result.</param>
+    /// <param name="schemes">A collection of valid uri schemes for this context. If not provided, schemes includes "http" and "https".</param>
+    internal static Result ValidateUrl(string propertyName, string? url, bool allowNull, params string[] schemes)
+    {
+        if (schemes.Length == 0)
+        {
+            schemes = new string[2] { "http", "https" };
+        }
+
+        return ValidateUrl(propertyName, url, allowNull, schemes);
+    }
+
     /// <summary>
     /// Validates a URL to ensure it is a valid URL.
     /// </summary>
     /// <param name="propertyName">The name of the property you are testing.</param>
     /// <param name="url">The text of the url.</param>
     /// <param name="allowNull">If true, a null url will return a successful result.</param>
+    /// <param name="schemes">A collection of valid uri schemes for this context.</param>
     /// <returns>Returns a successful result if the url is valid; otherwise, a failed result.</returns>
-    internal static Result ValidateUrl(string propertyName, string? url, bool allowNull)
+    internal static Result ValidateUrl(string propertyName, string? url, bool allowNull, IReadOnlyCollection<string> schemes)
     {
         if (url is null)
         {
@@ -60,7 +78,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
         (
             Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
             Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
-            uri is { Scheme: "http" or "https" }
+            schemes.Contains(uri.Scheme, StringComparer.InvariantCultureIgnoreCase)
         )
         {
             return Result.FromSuccess();
