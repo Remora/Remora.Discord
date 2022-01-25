@@ -22,12 +22,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Utility;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -84,6 +86,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Optional<DateTimeOffset> scheduledEndTime,
         Optional<string> description,
         GuildScheduledEventEntityType entityType,
+        Optional<Stream> image,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -120,6 +123,20 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
+        var imageData = default(Optional<string?>);
+
+        if (image.IsDefined(out var imageStream))
+        {
+            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
+
+            if (!imageDataResult.IsSuccess)
+            {
+                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
+            }
+
+            imageData = imageDataResult.Entity;
+        }
+
         return await this.RestHttpClient.PostAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events",
@@ -137,6 +154,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                         json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("entity_type", entityType, this.JsonOptions);
+                        json.Write("image", imageData, this.JsonOptions);
                     }
                 );
 
@@ -186,6 +204,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Optional<string> description = default,
         Optional<GuildScheduledEventEntityType> entityType = default,
         Optional<GuildScheduledEventStatus> status = default,
+        Optional<Stream> image = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -222,6 +241,20 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
+        var imageData = default(Optional<string?>);
+
+        if (image.IsDefined(out var imageStream))
+        {
+            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
+
+            if (!imageDataResult.IsSuccess)
+            {
+                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
+            }
+
+            imageData = imageDataResult.Entity;
+        }
+
         return await this.RestHttpClient.PatchAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}",
@@ -240,6 +273,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                         json.Write("description", description, this.JsonOptions);
                         json.Write("entity_type", entityType, this.JsonOptions);
                         json.Write("status", status, this.JsonOptions);
+                        json.Write("image", imageData, this.JsonOptions);
                     }
                 );
 

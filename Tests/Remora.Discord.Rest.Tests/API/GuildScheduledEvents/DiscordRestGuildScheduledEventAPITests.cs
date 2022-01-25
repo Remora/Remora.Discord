@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -83,6 +84,11 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(9894494448401390090);
+            image.Position = 0;
+
             var guildID = DiscordSnowflake.New(1);
             var channelID = DiscordSnowflake.New(2);
             var entityMetadata = new GuildScheduledEventEntityMetadata();
@@ -115,6 +121,7 @@ public class DiscordRestGuildScheduledEventAPITests
 
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("entity_type", p => p.Is((int)entityType))
+                                .WithProperty("image", p => p.IsString())
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
@@ -132,6 +139,7 @@ public class DiscordRestGuildScheduledEventAPITests
                 scheduledEndTime,
                 description,
                 entityType,
+                image,
                 reason
             );
 
@@ -181,6 +189,11 @@ public class DiscordRestGuildScheduledEventAPITests
         [Fact]
         public async Task PerformsRequestCorrectly()
         {
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(9894494448401390090);
+            image.Position = 0;
+
             var guildID = DiscordSnowflake.New(1);
             var eventID = DiscordSnowflake.New(2);
             var channelID = DiscordSnowflake.New(3);
@@ -216,6 +229,7 @@ public class DiscordRestGuildScheduledEventAPITests
                                 .WithProperty("description", p => p.Is(description))
                                 .WithProperty("entity_type", p => p.Is((int)entityType))
                                 .WithProperty("status", p => p.Is((int)status))
+                                .WithProperty("image", p => p.IsString())
                         )
                     )
                     .WithHeaders(Constants.AuditLogHeaderName, reason)
@@ -235,6 +249,7 @@ public class DiscordRestGuildScheduledEventAPITests
                 description,
                 entityType,
                 status,
+                image,
                 reason
             );
 
