@@ -71,6 +71,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "hoist", typeof(bool) },
         { "icon_hash", typeof(IImageHash) },
         { "id", typeof(Snowflake) },
+        { "invitable", typeof(bool) },
         { "inviter_id", typeof(Snowflake) },
         { "location", typeof(string) },
         { "locked", typeof(bool) },
