@@ -619,6 +619,11 @@ public enum DiscordError
     InvalidGuild = 50055,
 
     /// <summary>
+    /// Some message type is invalid.
+    /// </summary>
+    InvalidMessageType = 50068,
+
+    /// <summary>
     /// You need a payment source to redeem this gift.
     /// </summary>
     PaymentSourceRequiredForRedemption = 50070,
