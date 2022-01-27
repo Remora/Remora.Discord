@@ -61,10 +61,11 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         Snowflake channelID,
         string name,
         Optional<Stream?> avatar,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var createWebhook = await base.CreateWebhookAsync(channelID, name, avatar, ct);
+        var createWebhook = await base.CreateWebhookAsync(channelID, name, avatar, reason, ct);
         if (!createWebhook.IsSuccess)
         {
             return createWebhook;
@@ -82,10 +83,11 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     public override async Task<Result> DeleteWebhookAsync
     (
         Snowflake webhookID,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var deleteWebhook = await base.DeleteWebhookAsync(webhookID, ct);
+        var deleteWebhook = await base.DeleteWebhookAsync(webhookID, reason, ct);
         if (!deleteWebhook.IsSuccess)
         {
             return deleteWebhook;
@@ -181,10 +183,11 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
         Optional<Snowflake> channelID = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var modifyWebhook = await base.ModifyWebhookAsync(webhookID, name, avatar, channelID, ct);
+        var modifyWebhook = await base.ModifyWebhookAsync(webhookID, name, avatar, channelID, reason, ct);
         if (!modifyWebhook.IsSuccess)
         {
             return modifyWebhook;
@@ -264,10 +267,11 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
     (
         Snowflake webhookID,
         string token,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var deleteWebhook = await base.DeleteWebhookWithTokenAsync(webhookID, token, ct);
+        var deleteWebhook = await base.DeleteWebhookWithTokenAsync(webhookID, token, reason, ct);
         if (!deleteWebhook.IsSuccess)
         {
             return deleteWebhook;
@@ -312,10 +316,11 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         string token,
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
-        var modifyWebhook = await base.ModifyWebhookWithTokenAsync(webhookID, token, name, avatar, ct);
+        var modifyWebhook = await base.ModifyWebhookWithTokenAsync(webhookID, token, name, avatar, reason, ct);
         if (!modifyWebhook.IsSuccess)
         {
             return modifyWebhook;

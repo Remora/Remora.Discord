@@ -63,6 +63,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Snowflake channelID,
         string name,
         Optional<Stream?> avatar,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -95,6 +96,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
             ct: ct
         );
@@ -168,6 +170,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
         Optional<Snowflake> channelID = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -191,6 +194,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
             ct: ct
         );
@@ -203,6 +207,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         string token,
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -225,19 +230,25 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
             ct: ct
         );
     }
 
     /// <inheritdoc />
-    public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
+    public virtual Task<Result> DeleteWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
     {
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{webhookID}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
         );
     }
 
@@ -246,14 +257,15 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
     (
         Snowflake webhookID,
         string token,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{webhookID}/{token}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
         );
     }
 

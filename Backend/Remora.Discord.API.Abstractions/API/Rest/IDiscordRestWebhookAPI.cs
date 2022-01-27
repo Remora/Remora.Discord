@@ -48,6 +48,7 @@ public interface IDiscordRestWebhookAPI
     /// <param name="channelID">The ID of the channel the webhook is for.</param>
     /// <param name="name">The name of the webhook.</param>
     /// <param name="avatar">The avatar of the webhook.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IWebhook>> CreateWebhookAsync
@@ -55,6 +56,7 @@ public interface IDiscordRestWebhookAPI
         Snowflake channelID,
         string name,
         Optional<Stream?> avatar,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -119,6 +121,7 @@ public interface IDiscordRestWebhookAPI
     /// <param name="name">The new name of the webhook.</param>
     /// <param name="avatar">The new avatar of the webhook.</param>
     /// <param name="channelID">The new channel of the webhook.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<IWebhook>> ModifyWebhookAsync
@@ -127,6 +130,7 @@ public interface IDiscordRestWebhookAPI
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
         Optional<Snowflake> channelID = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -141,6 +145,7 @@ public interface IDiscordRestWebhookAPI
     /// <param name="token">The token for the webhook.</param>
     /// <param name="name">The new name of the webhook.</param>
     /// <param name="avatar">The new avatar of the webhook.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
@@ -149,6 +154,7 @@ public interface IDiscordRestWebhookAPI
         string token,
         Optional<string> name = default,
         Optional<Stream?> avatar = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -156,21 +162,29 @@ public interface IDiscordRestWebhookAPI
     /// Deletes the given webhook.
     /// </summary>
     /// <param name="webhookID">The ID of the webhook.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A deletion result which may or may not have succeeded.</returns>
-    Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default);
+    Task<Result> DeleteWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
 
     /// <summary>
     /// Deletes the given webhook.
     /// </summary>
     /// <param name="webhookID">The ID of the webhook.</param>
     /// <param name="token">The token for the webhook.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A deletion result which may or may not have succeeded.</returns>
     Task<Result> DeleteWebhookWithTokenAsync
     (
         Snowflake webhookID,
         string token,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 

@@ -58,6 +58,7 @@ public class DiscordRestWebhookAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "aaa";
+            var reason = "agag";
 
             // Create a dummy PNG image
             await using var avatar = new MemoryStream();
@@ -78,6 +79,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("avatar", p => p.IsString())
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
             );
 
@@ -85,7 +87,8 @@ public class DiscordRestWebhookAPITests
             (
                 channelId,
                 name,
-                avatar
+                avatar,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -339,6 +342,7 @@ public class DiscordRestWebhookAPITests
         {
             var webhookId = DiscordSnowflake.New(0);
             var name = "aaa";
+            var reason = "gagag";
 
             // Create a dummy PNG image
             await using var avatar = new MemoryStream();
@@ -362,6 +366,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("channel_id", p => p.Is(channelId.ToString()))
                         )
                     )
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
             );
 
@@ -370,7 +375,8 @@ public class DiscordRestWebhookAPITests
                 webhookId,
                 name,
                 avatar,
-                channelId
+                channelId,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -464,6 +470,7 @@ public class DiscordRestWebhookAPITests
             var webhookId = DiscordSnowflake.New(0);
             var token = "aasdasdaa";
             var name = "aaa";
+            var reason = "agaga";
 
             // Create a dummy PNG image
             await using var avatar = new MemoryStream();
@@ -475,6 +482,7 @@ public class DiscordRestWebhookAPITests
             (
                 b => b
                     .Expect(HttpMethod.Patch, $"{Constants.BaseURL}webhooks/{webhookId}/{token}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond("application/json", SampleRepository.Samples[typeof(IWebhook)])
             );
 
@@ -483,7 +491,8 @@ public class DiscordRestWebhookAPITests
                 webhookId,
                 token,
                 name,
-                avatar
+                avatar,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -571,17 +580,20 @@ public class DiscordRestWebhookAPITests
         public async Task PerformsRequestCorrectly()
         {
             var webhookID = DiscordSnowflake.New(0);
+            var reason = "aagag";
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
 
             var result = await api.DeleteWebhookAsync
             (
-                webhookID
+                webhookID,
+                reason
             );
 
             ResultAssert.Successful(result);
@@ -602,18 +614,21 @@ public class DiscordRestWebhookAPITests
         {
             var webhookID = DiscordSnowflake.New(0);
             var token = "aa";
+            var reason = "agaga";
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Delete, $"{Constants.BaseURL}webhooks/{webhookID}/{token}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
                     .Respond(HttpStatusCode.NoContent)
             );
 
             var result = await api.DeleteWebhookWithTokenAsync
             (
                 webhookID,
-                token
+                token,
+                reason
             );
 
             ResultAssert.Successful(result);
