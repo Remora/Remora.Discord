@@ -649,6 +649,11 @@ public enum DiscordError
     BeforeIsEarlierThanThreadCreation = 50085,
 
     /// <summary>
+    /// Community server channels must be text channels.
+    /// </summary>
+    CommunityServerChannelMustBeTextChannel = 50086,
+
+    /// <summary>
     /// This server is not available in your location.
     /// </summary>
     ServerUnavailableInYourLocation = 50095,
