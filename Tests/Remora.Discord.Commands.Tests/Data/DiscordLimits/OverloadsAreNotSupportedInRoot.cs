@@ -28,20 +28,19 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
-{
-    public class OverloadsAreNotSupportedInRoot : CommandGroup
-    {
-        [Command("a")]
-        public Task<IResult> A()
-        {
-            throw new NotImplementedException();
-        }
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
 
-        [Command("a")]
-        public Task<IResult> A(int value)
-        {
-            throw new NotImplementedException();
-        }
+public class OverloadsAreNotSupportedInRoot : CommandGroup
+{
+    [Command("a")]
+    public Task<IResult> A()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Command("a")]
+    public Task<IResult> A(int value)
+    {
+        throw new NotImplementedException();
     }
 }

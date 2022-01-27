@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a followed news channel.
+/// </summary>
+[PublicAPI]
+public interface IFollowedChannel
 {
     /// <summary>
-    /// Represents a followed news channel.
+    /// Gets the ID of the followed channel.
     /// </summary>
-    [PublicAPI]
-    public interface IFollowedChannel
-    {
-        /// <summary>
-        /// Gets the ID of the followed channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel where updates are posted.
-        /// </summary>
-        Snowflake WebhookID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the channel where updates are posted.
+    /// </summary>
+    Snowflake WebhookID { get; }
 }

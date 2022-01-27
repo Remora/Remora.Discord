@@ -24,47 +24,46 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents payload data for a command.
+/// </summary>
+[PublicAPI]
+public interface IInteractionData
 {
     /// <summary>
-    /// Represents payload data for a command.
+    /// Gets the ID of the invoked command.
     /// </summary>
-    [PublicAPI]
-    public interface IInteractionData
-    {
-        /// <summary>
-        /// Gets the ID of the invoked command.
-        /// </summary>
-        Optional<Snowflake> ID { get; }
+    Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the name of the invoked command.
-        /// </summary>
-        Optional<string> Name { get; }
+    /// <summary>
+    /// Gets the name of the invoked command.
+    /// </summary>
+    Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets any entities that were resolved while executing the command serverside.
-        /// </summary>
-        Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
+    /// <summary>
+    /// Gets any entities that were resolved while executing the command serverside.
+    /// </summary>
+    Optional<IApplicationCommandInteractionDataResolved> Resolved { get; }
 
-        /// <summary>
-        /// Gets the parameters and values supplied by the user.
-        /// </summary>
-        Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
+    /// <summary>
+    /// Gets the parameters and values supplied by the user.
+    /// </summary>
+    Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options { get; }
 
-        /// <summary>
-        /// Gets the custom ID associated with this interaction.
-        /// </summary>
-        Optional<string> CustomID { get; }
+    /// <summary>
+    /// Gets the custom ID associated with this interaction.
+    /// </summary>
+    Optional<string> CustomID { get; }
 
-        /// <summary>
-        /// Gets the type of component that the data originated from.
-        /// </summary>
-        Optional<ComponentType> ComponentType { get; }
+    /// <summary>
+    /// Gets the type of component that the data originated from.
+    /// </summary>
+    Optional<ComponentType> ComponentType { get; }
 
-        /// <summary>
-        /// Gets the values selected by the user.
-        /// </summary>
-        Optional<IReadOnlyList<string>> Values { get; }
-    }
+    /// <summary>
+    /// Gets the values selected by the user.
+    /// </summary>
+    Optional<IReadOnlyList<string>> Values { get; }
 }

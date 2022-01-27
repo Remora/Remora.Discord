@@ -22,7 +22,6 @@
 
 using System;
 using OneOf;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.Commands.Attributes;
 
@@ -35,49 +34,41 @@ public class MaxValueAttribute : Attribute
     /// <summary>
     /// Gets the maximum allowed value.
     /// </summary>
-    public Optional<OneOf<ulong, long, float, double>> Value { get; }
+    public OneOf<ulong, long, float, double> Value { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(long? maxValue = default)
+    public MaxValueAttribute(long maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = maxValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(ulong? maxValue = default)
+    public MaxValueAttribute(ulong maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = maxValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(float? maxValue = default)
+    public MaxValueAttribute(float maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = maxValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MaxValueAttribute"/> class.
     /// </summary>
     /// <param name="maxValue">The maximum value.</param>
-    public MaxValueAttribute(double? maxValue = default)
+    public MaxValueAttribute(double maxValue = default)
     {
-        this.Value = maxValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(maxValue.Value);
+        this.Value = maxValue;
     }
 }

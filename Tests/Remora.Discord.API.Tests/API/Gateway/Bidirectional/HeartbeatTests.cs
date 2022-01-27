@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Bidirectional
+namespace Remora.Discord.API.Tests.Gateway.Bidirectional;
+
+/// <summary>
+/// Tests the <see cref="Heartbeat"/> command.
+/// </summary>
+public class HeartbeatTests : GatewayBidirectionalTestBase<IHeartbeat>
 {
-    /// <summary>
-    /// Tests the <see cref="Heartbeat"/> command.
-    /// </summary>
-    public class HeartbeatTests : GatewayBidirectionalTestBase<IHeartbeat>
-    {
-    }
 }

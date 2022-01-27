@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a Discord image hash.
+/// </summary>
+[PublicAPI]
+public interface IImageHash
 {
     /// <summary>
-    /// Represents a Discord image hash.
+    /// Gets the raw value.
     /// </summary>
-    [PublicAPI]
-    public interface IImageHash
-    {
-        /// <summary>
-        /// Gets the raw value.
-        /// </summary>
-        string Value { get; }
+    string Value { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the hash has a gif alternative.
-        /// </summary>
-        bool HasGif { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the hash has a gif alternative.
+    /// </summary>
+    bool HasGif { get; }
 }

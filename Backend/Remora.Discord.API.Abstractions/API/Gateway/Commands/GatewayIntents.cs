@@ -25,154 +25,153 @@ using JetBrains.Annotations;
 
 #pragma warning disable SA1629
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Enumerates the gateway intents that can be specified.
+/// </summary>
+[PublicAPI, Flags]
+public enum GatewayIntents
 {
     /// <summary>
-    /// Enumerates the gateway intents that can be specified.
+    /// Subscribes to the following events:
+    ///     - GUILD_CREATE
+    ///     - GUILD_UPDATE
+    ///     - GUILD_DELETE
+    ///     - GUILD_ROLE_CREATE
+    ///     - GUILD_ROLE_UPDATE
+    ///     - GUILD_ROLE_DELETE
+    ///     - CHANNEL_CREATE
+    ///     - CHANNEL_UPDATE
+    ///     - CHANNEL_DELETE
+    ///     - CHANNEL_PINS_UPDATE
+    ///     - THREAD_CREATE
+    ///     - THREAD_UPDATE
+    ///     - THREAD_DELETE
+    ///     - THREAD_LIST_SYNC
+    ///     - THREAD_MEMBER_UPDATE
+    ///     - THREAD_MEMBERS_UPDATE
+    ///     - STAGE_INSTANCE_UPDATE
+    ///     - STAGE_INSTANCE_DELETE
     /// </summary>
-    [PublicAPI, Flags]
-    public enum GatewayIntents
-    {
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_CREATE
-        ///     - GUILD_UPDATE
-        ///     - GUILD_DELETE
-        ///     - GUILD_ROLE_CREATE
-        ///     - GUILD_ROLE_UPDATE
-        ///     - GUILD_ROLE_DELETE
-        ///     - CHANNEL_CREATE
-        ///     - CHANNEL_UPDATE
-        ///     - CHANNEL_DELETE
-        ///     - CHANNEL_PINS_UPDATE
-        ///     - THREAD_CREATE
-        ///     - THREAD_UPDATE
-        ///     - THREAD_DELETE
-        ///     - THREAD_LIST_SYNC
-        ///     - THREAD_MEMBER_UPDATE
-        ///     - THREAD_MEMBERS_UPDATE
-        ///     - STAGE_INSTANCE_UPDATE
-        ///     - STAGE_INSTANCE_DELETE
-        /// </summary>
-        Guilds = 1 << 0,
+    Guilds = 1 << 0,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_MEMBER_ADD
-        ///     - GUILD_MEMBER_UPDATE
-        ///     - GUILD_MEMBER_REMOVE
-        ///     - THREAD_MEMBERS_UPDATE
-        /// </summary>
-        GuildMembers = 1 << 1,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - GUILD_MEMBER_ADD
+    ///     - GUILD_MEMBER_UPDATE
+    ///     - GUILD_MEMBER_REMOVE
+    ///     - THREAD_MEMBERS_UPDATE
+    /// </summary>
+    GuildMembers = 1 << 1,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_BAN_ADD
-        ///     - GUILD_BAN_REMOVE
-        /// </summary>
-        GuildBans = 1 << 2,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - GUILD_BAN_ADD
+    ///     - GUILD_BAN_REMOVE
+    /// </summary>
+    GuildBans = 1 << 2,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_EMOJIS_UPDATE
-        ///     - GUILD_STICKERS_UPDATE
-        /// </summary>
-        GuildEmojisAndStickers = 1 << 3,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - GUILD_EMOJIS_UPDATE
+    ///     - GUILD_STICKERS_UPDATE
+    /// </summary>
+    GuildEmojisAndStickers = 1 << 3,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_INTEGRATIONS_UPDATE
-        ///     - INTEGRATION_CREATE
-        ///     - INTEGRATION_UPDATE
-        ///     - INTEGRATION_DELETE
-        /// </summary>
-        GuildIntegrations = 1 << 4,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - GUILD_INTEGRATIONS_UPDATE
+    ///     - INTEGRATION_CREATE
+    ///     - INTEGRATION_UPDATE
+    ///     - INTEGRATION_DELETE
+    /// </summary>
+    GuildIntegrations = 1 << 4,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - WEBHOOKS_UPDATE
-        /// </summary>
-        GuildWebhooks = 1 << 5,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - WEBHOOKS_UPDATE
+    /// </summary>
+    GuildWebhooks = 1 << 5,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - INVITE_CREATE
-        ///     - INVITE_DELETE
-        /// </summary>
-        GuildInvites = 1 << 6,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - INVITE_CREATE
+    ///     - INVITE_DELETE
+    /// </summary>
+    GuildInvites = 1 << 6,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - VOICE_STATE_UPDATE
-        /// </summary>
-        GuildVoiceStates = 1 << 7,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - VOICE_STATE_UPDATE
+    /// </summary>
+    GuildVoiceStates = 1 << 7,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - PRESENCE_UPDATE
-        /// </summary>
-        GuildPresences = 1 << 8,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - PRESENCE_UPDATE
+    /// </summary>
+    GuildPresences = 1 << 8,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - MESSAGE_CREATE
-        ///     - MESSAGE_UPDATE
-        ///     - MESSAGE_DELETE
-        ///     - MESSAGE_DELETE_BULK
-        /// </summary>
-        GuildMessages = 1 << 9,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_CREATE
+    ///     - MESSAGE_UPDATE
+    ///     - MESSAGE_DELETE
+    ///     - MESSAGE_DELETE_BULK
+    /// </summary>
+    GuildMessages = 1 << 9,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - MESSAGE_REACTION_ADD
-        ///     - MESSAGE_REACTION_REMOVE
-        ///     - MESSAGE_REACTION_REMOVE_ALL
-        ///     - MESSAGE_REACTION_REMOVE_EMOJI
-        /// </summary>
-        GuildMessageReactions = 1 << 10,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_REACTION_ADD
+    ///     - MESSAGE_REACTION_REMOVE
+    ///     - MESSAGE_REACTION_REMOVE_ALL
+    ///     - MESSAGE_REACTION_REMOVE_EMOJI
+    /// </summary>
+    GuildMessageReactions = 1 << 10,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - TYPING_START
-        /// </summary>
-        GuildMessageTyping = 1 << 11,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - TYPING_START
+    /// </summary>
+    GuildMessageTyping = 1 << 11,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - MESSAGE_CREATE
-        ///     - MESSAGE_UPDATE
-        ///     - MESSAGE_DELETE
-        ///     - CHANNEL_PINS_UPDATE
-        /// </summary>
-        DirectMessages = 1 << 12,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_CREATE
+    ///     - MESSAGE_UPDATE
+    ///     - MESSAGE_DELETE
+    ///     - CHANNEL_PINS_UPDATE
+    /// </summary>
+    DirectMessages = 1 << 12,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - MESSAGE_REACTION_ADD
-        ///     - MESSAGE_REACTION_REMOVE
-        ///     - MESSAGE_REACTION_REMOVE_ALL
-        ///     - MESSAGE_REACTION_REMOVE_EMOJI
-        /// </summary>
-        DirectMessageReactions = 1 << 13,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - MESSAGE_REACTION_ADD
+    ///     - MESSAGE_REACTION_REMOVE
+    ///     - MESSAGE_REACTION_REMOVE_ALL
+    ///     - MESSAGE_REACTION_REMOVE_EMOJI
+    /// </summary>
+    DirectMessageReactions = 1 << 13,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - TYPING_START
-        /// </summary>
-        DirectMessageTyping = 1 << 14,
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - TYPING_START
+    /// </summary>
+    DirectMessageTyping = 1 << 14,
 
-        /// <summary>
-        /// Subscribes to the following events:
-        ///     - GUILD_SCHEDULED_EVENT_CREATE
-        ///     - GUILD_SCHEDULED_EVENT_UPDATE
-        ///     - GUILD_SCHEDULED_EVENT_DELETE
-        ///     - GUILD_SCHEDULED_EVENT_USER_ADD **
-        ///     - GUILD_SCHEDULED_EVENT_USER_REMOVE **
-        /// </summary>
-        /// <remarks>
-        /// GUILD_SCHEDULED_EVENT_USER_ADD and GUILD_SCHEDULED_EVENT_USER_REMOVE are currently experimental and not
-        /// officially supported.
-        /// </remarks>
-        GuildScheduledEvents = 1 << 16
-    }
+    /// <summary>
+    /// Subscribes to the following events:
+    ///     - GUILD_SCHEDULED_EVENT_CREATE
+    ///     - GUILD_SCHEDULED_EVENT_UPDATE
+    ///     - GUILD_SCHEDULED_EVENT_DELETE
+    ///     - GUILD_SCHEDULED_EVENT_USER_ADD **
+    ///     - GUILD_SCHEDULED_EVENT_USER_REMOVE **
+    /// </summary>
+    /// <remarks>
+    /// GUILD_SCHEDULED_EVENT_USER_ADD and GUILD_SCHEDULED_EVENT_USER_REMOVE are currently experimental and not
+    /// officially supported.
+    /// </remarks>
+    GuildScheduledEvents = 1 << 16
 }

@@ -23,23 +23,22 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents detailed information about errors in a property from Discord.
+/// </summary>
+[PublicAPI]
+public interface IPropertyErrorDetails
 {
     /// <summary>
-    /// Represents detailed information about errors in a property from Discord.
+    /// Gets a set of error details regarding inner properties, if any. If the property is an array, the key
+    /// corresponds to the index in the array.
     /// </summary>
-    [PublicAPI]
-    public interface IPropertyErrorDetails
-    {
-        /// <summary>
-        /// Gets a set of error details regarding inner properties, if any. If the property is an array, the key
-        /// corresponds to the index in the array.
-        /// </summary>
-        IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors { get; }
+    IReadOnlyDictionary<string, IPropertyErrorDetails>? MemberErrors { get; }
 
-        /// <summary>
-        /// Gets a list of error details regarding this property, if any.
-        /// </summary>
-        IReadOnlyList<IErrorDetails>? Errors { get; }
-    }
+    /// <summary>
+    /// Gets a list of error details regarding this property, if any.
+    /// </summary>
+    IReadOnlyList<IErrorDetails>? Errors { get; }
 }

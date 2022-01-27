@@ -25,22 +25,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to a guild's emojis.
+/// </summary>
+[PublicAPI]
+public interface IGuildEmojisUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to a guild's emojis.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildEmojisUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the guild's emojis.
-        /// </summary>
-        IReadOnlyList<IEmoji> Emojis { get; }
-    }
+    /// <summary>
+    /// Gets the guild's emojis.
+    /// </summary>
+    IReadOnlyList<IEmoji> Emojis { get; }
 }

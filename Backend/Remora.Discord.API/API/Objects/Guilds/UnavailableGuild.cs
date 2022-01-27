@@ -30,4 +30,4 @@ namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="IUnavailableGuild" />
 [PublicAPI]
-public record UnavailableGuild(Snowflake GuildID, Optional<bool> IsUnavailable = default) : IUnavailableGuild;
+public record UnavailableGuild(Snowflake ID, Optional<bool> IsUnavailable = default) : IUnavailableGuild;

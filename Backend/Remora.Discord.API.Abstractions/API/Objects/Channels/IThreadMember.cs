@@ -25,44 +25,43 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a thread member.
+/// </summary>
+[PublicAPI]
+public interface IThreadMember
 {
     /// <summary>
-    /// Represents a thread member.
+    /// Gets the ID of the thread.
     /// </summary>
-    [PublicAPI]
-    public interface IThreadMember
-    {
-        /// <summary>
-        /// Gets the ID of the thread.
-        /// </summary>
-        Optional<Snowflake> ID { get; }
+    Optional<Snowflake> ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the user.
-        /// </summary>
-        Optional<Snowflake> UserID { get; }
+    /// <summary>
+    /// Gets the ID of the user.
+    /// </summary>
+    Optional<Snowflake> UserID { get; }
 
-        /// <summary>
-        /// Gets the time the current user last joined the thread.
-        /// </summary>
-        DateTimeOffset JoinTimestamp { get; }
+    /// <summary>
+    /// Gets the time the current user last joined the thread.
+    /// </summary>
+    DateTimeOffset JoinTimestamp { get; }
 
-        /// <summary>
-        /// Gets any user-thread settings.
-        /// </summary>
-        ThreadMemberFlags Flags { get; }
+    /// <summary>
+    /// Gets any user-thread settings.
+    /// </summary>
+    ThreadMemberFlags Flags { get; }
 
-        /// <summary>
-        /// Gets the guild member object related to the thread member.
-        /// </summary>
-        /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
-        Optional<IGuildMember> Member { get; }
+    /// <summary>
+    /// Gets the guild member object related to the thread member.
+    /// </summary>
+    /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
+    Optional<IGuildMember> Member { get; }
 
-        /// <summary>
-        /// Gets the presence information related to the thread member.
-        /// </summary>
-        /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
-        Optional<IPartialPresence?> Presence { get; }
-    }
+    /// <summary>
+    /// Gets the presence information related to the thread member.
+    /// </summary>
+    /// <remarks>This field is typically only set in <see cref="IThreadMembersUpdate"/> events.</remarks>
+    Optional<IPartialPresence?> Presence { get; }
 }

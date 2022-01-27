@@ -26,32 +26,31 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Emoji API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestOAuth2API
 {
     /// <summary>
-    /// Represents the Discord Emoji API.
+    /// Gets the bot's OAuth2 application object. Flags are typically not included.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestOAuth2API
-    {
-        /// <summary>
-        /// Gets the bot's OAuth2 application object. Flags are typically not included.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
-        (
-            CancellationToken ct = default
-        );
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IApplication>> GetCurrentBotApplicationInformationAsync
+    (
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Gets information about the bot's current authorizations.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
-        (
-            CancellationToken ct = default
-        );
-    }
+    /// <summary>
+    /// Gets information about the bot's current authorizations.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IAuthorizationInformation>> GetCurrentAuthorizationInformationAsync
+    (
+        CancellationToken ct = default
+    );
 }

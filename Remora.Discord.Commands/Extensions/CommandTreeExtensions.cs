@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -57,8 +58,6 @@ public static class CommandTreeExtensions
     private const int MaxChoiceValues = 25;
     private const int MaxCommandParameters = 25;
     private const int MaxCommandStringifiedLength = 4000;
-    private const int MaxChoiceNameLength = 100;
-    private const int MaxChoiceValueLength = 100;
     private const int MaxCommandDescriptionLength = 100;
     private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
@@ -463,11 +462,16 @@ public static class CommandTreeExtensions
                 }
             }
 
+            // Unwrap the parameter type if it's a Nullable<T> or Optional<T>
+            // TODO: Maybe more cases?
             var parameterType = parameter.Parameter.ParameterType;
+            var actualParameterType = parameterType.IsNullable() || parameterType.IsOptional()
+                ? parameterType.GetGenericArguments().Single()
+                : parameterType;
 
             var typeHint = parameter.Parameter.GetCustomAttribute<DiscordTypeHintAttribute>();
             var discordType = typeHint is null
-                ? ToApplicationCommandOptionType(parameterType)
+                ? ToApplicationCommandOptionType(actualParameterType)
                 : (ApplicationCommandOptionType)typeHint.TypeHint;
 
             var getChannelTypes = CreateChannelTypesOption(command, parameter, discordType);
@@ -478,12 +482,13 @@ public static class CommandTreeExtensions
 
             Optional<IReadOnlyList<IApplicationCommandOptionChoice>> choices = default;
             Optional<bool> enableAutocomplete = default;
-            if (parameterType.IsEnum)
+
+            if (actualParameterType.IsEnum)
             {
                 // Add the choices directly
-                if (Enum.GetValues(parameterType).Length <= MaxChoiceValues)
+                if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
                 {
-                    var createChoices = CreateApplicationCommandEnumOptionChoices(parameterType);
+                    var createChoices = EnumExtensions.GetEnumChoices(actualParameterType);
                     if (!createChoices.IsSuccess)
                     {
                         return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
@@ -528,8 +533,8 @@ public static class CommandTreeExtensions
                 choices,
                 ChannelTypes: getChannelTypes.Entity,
                 EnableAutocomplete: enableAutocomplete,
-                MinValue: minValue?.Value ?? default,
-                MaxValue: maxValue?.Value ?? default
+                MinValue: minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+                MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>)
             );
 
             parameterOptions.Add(parameterOption);
@@ -580,74 +585,6 @@ public static class CommandTreeExtensions
         }
 
         return channelTypes;
-    }
-
-    private static Result<IReadOnlyList<IApplicationCommandOptionChoice>> CreateApplicationCommandEnumOptionChoices
-    (
-        Type parameterType
-    )
-    {
-        var values = Enum.GetValues(parameterType);
-        var choiceConversions = values.Cast<object>().Select
-            (
-                v => CreateApplicationCommandOptionChoice
-                (
-                    parameterType,
-                    Enum.GetName(parameterType, v) ?? throw new InvalidOperationException(),
-                    v
-                )
-            )
-            .ToList();
-
-        if (choiceConversions.Any(c => !c.IsSuccess))
-        {
-            return Result<IReadOnlyList<IApplicationCommandOptionChoice>>.FromError
-            (
-                choiceConversions.First(c => !c.IsSuccess)
-            );
-        }
-
-        return choiceConversions.Select(c => c.Entity).ToList();
-    }
-
-    private static Result<IApplicationCommandOptionChoice> CreateApplicationCommandOptionChoice
-    (
-        Type enumType,
-        string enumName,
-        object enumValue
-    )
-    {
-        var member = enumType.GetMember(enumName).Single();
-        var name = member.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumName;
-
-        if (name.Length > MaxChoiceNameLength)
-        {
-            return new UnsupportedFeatureError
-            (
-                $"The name of the enumeration member {enumType.Name}::{enumName} is too long " +
-                $"(max {MaxChoiceNameLength}). Either configure a shorter name with " +
-                $"[{nameof(DescriptionAttribute)}], or rename the member."
-            );
-        }
-
-        var valueString = enumName;
-        if (valueString.Length <= MaxChoiceValueLength)
-        {
-            return new ApplicationCommandOptionChoice(name, valueString);
-        }
-
-        // Try converting the enum's value representation
-        valueString = enumValue.ToString() ?? throw new InvalidOperationException();
-        if (valueString.Length > MaxChoiceValueLength)
-        {
-            return new UnsupportedFeatureError
-            (
-                $"The length of the enumeration member {enumType.Name}::{enumName} value is too long " +
-                $"(max {MaxChoiceValueLength})."
-            );
-        }
-
-        return new ApplicationCommandOptionChoice(name, valueString);
     }
 
     private static ApplicationCommandOptionType ToApplicationCommandOptionType(Type parameterType)

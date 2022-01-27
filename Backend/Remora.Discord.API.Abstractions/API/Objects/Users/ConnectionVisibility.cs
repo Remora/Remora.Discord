@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various connection visibility types.
+/// </summary>
+[PublicAPI]
+public enum ConnectionVisibility
 {
     /// <summary>
-    /// Enumerates various connection visibility types.
+    /// Invisible to everyone except the user themselves.
     /// </summary>
-    [PublicAPI]
-    public enum ConnectionVisibility
-    {
-        /// <summary>
-        /// Invisible to everyone except the user themselves.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// Visible to everyone.
-        /// </summary>
-        Everyone = 1
-    }
+    /// <summary>
+    /// Visible to everyone.
+    /// </summary>
+    Everyone = 1
 }

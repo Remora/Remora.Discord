@@ -26,201 +26,198 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
-{
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
-    {
-        private readonly CacheService _cacheService;
+namespace Remora.Discord.Caching.API;
 
-        /// <inheritdoc cref="DiscordRestTemplateAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestTemplateAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestTemplateAPI : DiscordRestTemplateAPI
+{
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestTemplateAPI(IRestHttpClient, JsonSerializerOptions)" />
+    public CachingDiscordRestTemplateAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions)
+    {
+        _cacheService = cacheService;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<ITemplate>> GetTemplateAsync
+    (
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        if (_cacheService.TryGetValue<ITemplate>(key, out var cachedInstance))
         {
-            _cacheService = cacheService;
+            return Result<ITemplate>.FromSuccess(cachedInstance);
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<ITemplate>> GetTemplateAsync
-        (
-            string templateCode,
-            CancellationToken ct = default
-        )
+        var getTemplate = await base.GetTemplateAsync(templateCode, ct);
+        if (!getTemplate.IsSuccess)
         {
-            var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
-            if (_cacheService.TryGetValue<ITemplate>(key, out var cachedInstance))
-            {
-                return Result<ITemplate>.FromSuccess(cachedInstance);
-            }
-
-            var getTemplate = await base.GetTemplateAsync(templateCode, ct);
-            if (!getTemplate.IsSuccess)
-            {
-                return getTemplate;
-            }
-
-            var template = getTemplate.Entity;
-            _cacheService.Cache(key, template);
-
             return getTemplate;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<ITemplate>> CreateGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string name,
-            Optional<string?> description = default,
-            CancellationToken ct = default
-        )
+        var template = getTemplate.Entity;
+        _cacheService.Cache(key, template);
+
+        return getTemplate;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<ITemplate>> CreateGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string name,
+        Optional<string?> description = default,
+        CancellationToken ct = default
+    )
+    {
+        var createTemplate = await base.CreateGuildTemplateAsync(guildID, name, description, ct);
+        if (!createTemplate.IsSuccess)
         {
-            var createTemplate = await base.CreateGuildTemplateAsync(guildID, name, description, ct);
-            if (!createTemplate.IsSuccess)
-            {
-                return createTemplate;
-            }
-
-            var template = createTemplate.Entity;
-            var key = KeyHelpers.CreateTemplateCacheKey(template.Code);
-
-            _cacheService.Cache(key, template);
-
             return createTemplate;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<ITemplate>> DeleteGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        )
+        var template = createTemplate.Entity;
+        var key = KeyHelpers.CreateTemplateCacheKey(template.Code);
+
+        _cacheService.Cache(key, template);
+
+        return createTemplate;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<ITemplate>> DeleteGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        var deleteTemplate = await base.DeleteGuildTemplateAsync(guildID, templateCode, ct);
+        if (!deleteTemplate.IsSuccess)
         {
-            var deleteTemplate = await base.DeleteGuildTemplateAsync(guildID, templateCode, ct);
-            if (!deleteTemplate.IsSuccess)
-            {
-                return deleteTemplate;
-            }
-
-            var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
-            _cacheService.Evict<ITemplate>(key);
-
             return deleteTemplate;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
+        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        _cacheService.Evict<ITemplate>(key);
+
+        return deleteTemplate;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<ITemplate>>> GetGuildTemplatesAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateGuildTemplatesCacheKey(guildID);
+        if (_cacheService.TryGetValue<IReadOnlyList<ITemplate>>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateGuildTemplatesCacheKey(guildID);
-            if (_cacheService.TryGetValue<IReadOnlyList<ITemplate>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<ITemplate>>.FromSuccess(cachedInstance);
-            }
+            return Result<IReadOnlyList<ITemplate>>.FromSuccess(cachedInstance);
+        }
 
-            var getTemplates = await base.GetGuildTemplatesAsync(guildID, ct);
-            if (!getTemplates.IsSuccess)
-            {
-                return getTemplates;
-            }
-
-            var templates = getTemplates.Entity;
-            _cacheService.Cache(key, templates);
-
-            foreach (var template in templates)
-            {
-                var templateKey = KeyHelpers.CreateTemplateCacheKey(template.Code);
-                _cacheService.Cache(templateKey, template);
-            }
-
+        var getTemplates = await base.GetGuildTemplatesAsync(guildID, ct);
+        if (!getTemplates.IsSuccess)
+        {
             return getTemplates;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<ITemplate>> ModifyGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            string name,
-            Optional<string> description,
-            CancellationToken ct = default
-        )
+        var templates = getTemplates.Entity;
+        _cacheService.Cache(key, templates);
+
+        foreach (var template in templates)
         {
-            var modifyTemplate = await base.ModifyGuildTemplateAsync(guildID, templateCode, name, description, ct);
-            if (!modifyTemplate.IsSuccess)
-            {
-                return modifyTemplate;
-            }
+            var templateKey = KeyHelpers.CreateTemplateCacheKey(template.Code);
+            _cacheService.Cache(templateKey, template);
+        }
 
-            var template = modifyTemplate.Entity;
-            var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+        return getTemplates;
+    }
 
-            _cacheService.Cache(key, template);
-
+    /// <inheritdoc />
+    public override async Task<Result<ITemplate>> ModifyGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        string name,
+        Optional<string> description,
+        CancellationToken ct = default
+    )
+    {
+        var modifyTemplate = await base.ModifyGuildTemplateAsync(guildID, templateCode, name, description, ct);
+        if (!modifyTemplate.IsSuccess)
+        {
             return modifyTemplate;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<ITemplate>> SyncGuildTemplateAsync
-        (
-            Snowflake guildID,
-            string templateCode,
-            CancellationToken ct = default
-        )
+        var template = modifyTemplate.Entity;
+        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+
+        _cacheService.Cache(key, template);
+
+        return modifyTemplate;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<ITemplate>> SyncGuildTemplateAsync
+    (
+        Snowflake guildID,
+        string templateCode,
+        CancellationToken ct = default
+    )
+    {
+        var syncTemplate = await base.SyncGuildTemplateAsync(guildID, templateCode, ct);
+        if (!syncTemplate.IsSuccess)
         {
-            var syncTemplate = await base.SyncGuildTemplateAsync(guildID, templateCode, ct);
-            if (!syncTemplate.IsSuccess)
-            {
-                return syncTemplate;
-            }
-
-            var template = syncTemplate.Entity;
-            var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
-
-            _cacheService.Cache(key, template);
-
             return syncTemplate;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IGuild>> CreateGuildFromTemplateAsync
-        (
-            string templateCode,
-            string name,
-            Optional<Stream> icon = default,
-            CancellationToken ct = default
-        )
+        var template = syncTemplate.Entity;
+        var key = KeyHelpers.CreateTemplateCacheKey(templateCode);
+
+        _cacheService.Cache(key, template);
+
+        return syncTemplate;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IGuild>> CreateGuildFromTemplateAsync
+    (
+        string templateCode,
+        string name,
+        Optional<Stream> icon = default,
+        CancellationToken ct = default
+    )
+    {
+        var createGuild = await base.CreateGuildFromTemplateAsync(templateCode, name, icon, ct);
+        if (!createGuild.IsSuccess)
         {
-            var createGuild = await base.CreateGuildFromTemplateAsync(templateCode, name, icon, ct);
-            if (!createGuild.IsSuccess)
-            {
-                return createGuild;
-            }
-
-            var guild = createGuild.Entity;
-            var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
-
-            _cacheService.Cache(key, guild);
-
             return createGuild;
         }
+
+        var guild = createGuild.Entity;
+        var key = KeyHelpers.CreateGuildCacheKey(guild.ID);
+
+        _cacheService.Cache(key, guild);
+
+        return createGuild;
     }
 }

@@ -23,32 +23,31 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents stage information in an invite.
+/// </summary>
+[PublicAPI]
+public interface IInviteStageInstance
 {
     /// <summary>
-    /// Represents stage information in an invite.
+    /// Gets the speaking members of the stage.
     /// </summary>
-    [PublicAPI]
-    public interface IInviteStageInstance
-    {
-        /// <summary>
-        /// Gets the speaking members of the stage.
-        /// </summary>
-        IReadOnlyList<IPartialGuildMember> Members { get; }
+    IReadOnlyList<IPartialGuildMember> Members { get; }
 
-        /// <summary>
-        /// Gets the number of stage participants.
-        /// </summary>
-        int ParticipantCount { get; }
+    /// <summary>
+    /// Gets the number of stage participants.
+    /// </summary>
+    int ParticipantCount { get; }
 
-        /// <summary>
-        /// Gets the number of users speaking in the stage.
-        /// </summary>
-        int SpeakerCount { get; }
+    /// <summary>
+    /// Gets the number of users speaking in the stage.
+    /// </summary>
+    int SpeakerCount { get; }
 
-        /// <summary>
-        /// Gets the topic of the stage.
-        /// </summary>
-        string Topic { get; }
-    }
+    /// <summary>
+    /// Gets the topic of the stage.
+    /// </summary>
+    string Topic { get; }
 }

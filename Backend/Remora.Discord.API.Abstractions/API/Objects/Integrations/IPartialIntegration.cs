@@ -24,57 +24,56 @@ using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a partial integration object.
+/// </summary>
+[PublicAPI]
+public interface IPartialIntegration
 {
-    /// <summary>
-    /// Represents a partial integration object.
-    /// </summary>
-    [PublicAPI]
-    public interface IPartialIntegration
-    {
-        /// <inheritdoc cref="IIntegration.ID" />
-        Optional<Snowflake> ID { get; }
+    /// <inheritdoc cref="IIntegration.ID" />
+    Optional<Snowflake> ID { get; }
 
-        /// <inheritdoc cref="IIntegration.Name" />
-        Optional<string> Name { get; }
+    /// <inheritdoc cref="IIntegration.Name" />
+    Optional<string> Name { get; }
 
-        /// <inheritdoc cref="IIntegration.Type" />
-        Optional<string> Type { get; }
+    /// <inheritdoc cref="IIntegration.Type" />
+    Optional<string> Type { get; }
 
-        /// <inheritdoc cref="IIntegration.IsEnabled" />
-        Optional<bool> IsEnabled { get; }
+    /// <inheritdoc cref="IIntegration.IsEnabled" />
+    Optional<bool> IsEnabled { get; }
 
-        /// <inheritdoc cref="IIntegration.IsSyncing" />
-        Optional<bool> IsSyncing { get; }
+    /// <inheritdoc cref="IIntegration.IsSyncing" />
+    Optional<bool> IsSyncing { get; }
 
-        /// <inheritdoc cref="IIntegration.RoleID" />
-        Optional<Snowflake> RoleID { get; }
+    /// <inheritdoc cref="IIntegration.RoleID" />
+    Optional<Snowflake> RoleID { get; }
 
-        /// <inheritdoc cref="IIntegration.EnableEmoticons" />
-        Optional<bool> EnableEmoticons { get; }
+    /// <inheritdoc cref="IIntegration.EnableEmoticons" />
+    Optional<bool> EnableEmoticons { get; }
 
-        /// <inheritdoc cref="IIntegration.ExpireBehaviour" />
-        Optional<IntegrationExpireBehaviour> ExpireBehaviour { get; }
+    /// <inheritdoc cref="IIntegration.ExpireBehaviour" />
+    Optional<IntegrationExpireBehaviour> ExpireBehaviour { get; }
 
-        /// <inheritdoc cref="IIntegration.ExpireGracePeriod" />
-        Optional<TimeSpan> ExpireGracePeriod { get; }
+    /// <inheritdoc cref="IIntegration.ExpireGracePeriod" />
+    Optional<TimeSpan> ExpireGracePeriod { get; }
 
-        /// <inheritdoc cref="IIntegration.User" />
-        Optional<IUser> User { get; }
+    /// <inheritdoc cref="IIntegration.User" />
+    Optional<IUser> User { get; }
 
-        /// <inheritdoc cref="IIntegration.Account" />
-        Optional<IAccount> Account { get; }
+    /// <inheritdoc cref="IIntegration.Account" />
+    Optional<IAccount> Account { get; }
 
-        /// <inheritdoc cref="IIntegration.SyncedAt" />
-        Optional<DateTimeOffset> SyncedAt { get; }
+    /// <inheritdoc cref="IIntegration.SyncedAt" />
+    Optional<DateTimeOffset> SyncedAt { get; }
 
-        /// <inheritdoc cref="IIntegration.SubscriberCount" />
-        Optional<int> SubscriberCount { get; }
+    /// <inheritdoc cref="IIntegration.SubscriberCount" />
+    Optional<int> SubscriberCount { get; }
 
-        /// <inheritdoc cref="IIntegration.IsRevoked" />
-        Optional<bool> IsRevoked { get; }
+    /// <inheritdoc cref="IIntegration.IsRevoked" />
+    Optional<bool> IsRevoked { get; }
 
-        /// <inheritdoc cref="IIntegration.Application" />
-        Optional<IIntegrationApplication> Application { get; }
-    }
+    /// <inheritdoc cref="IIntegration.Application" />
+    Optional<IIntegrationApplication> Application { get; }
 }

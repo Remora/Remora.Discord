@@ -26,8 +26,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
-using Polly;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -36,78 +34,78 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
-{
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestApplicationAPI" />
-    [PublicAPI]
-    public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApplicationAPI
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestApplicationAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+namespace Remora.Discord.Rest.API;
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestApplicationAPI" />
+[PublicAPI]
+public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApplicationAPI
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestApplicationAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The json options.</param>
+    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
+    {
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        CancellationToken ct
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
-            Snowflake applicationID,
-            CancellationToken ct
-        )
+            $"applications/{applicationID}/commands",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        string name,
+        string description,
+        Optional<IReadOnlyList<IApplicationCommandOption>> options,
+        Optional<bool> defaultPermission,
+        Optional<ApplicationCommandType> type,
+        CancellationToken ct
+    )
+    {
+        if (name.Length is < 1 or > 32)
         {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
+            return new ArgumentOutOfRangeError
             (
-                $"applications/{applicationID}/commands",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(name),
+                "The name must be between 1 and 32 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IApplicationCommand>> CreateGlobalApplicationCommandAsync
-        (
-            Snowflake applicationID,
-            string name,
-            string description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            Optional<bool> defaultPermission,
-            Optional<ApplicationCommandType> type,
-            CancellationToken ct
-        )
+        if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (name.Length is < 1 or > 32)
+            if (description.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
-                    nameof(name),
-                    "The name must be between 1 and 32 characters."
+                    nameof(description),
+                    "The description must be between 1 and 100 characters."
                 );
             }
+        }
+        else
+        {
+            description = string.Empty;
+        }
 
-            if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
-            {
-                if (description.Length is < 1 or > 100)
-                {
-                    return new ArgumentOutOfRangeError
-                    (
-                        nameof(description),
-                        "The description must be between 1 and 100 characters."
-                    );
-                }
-            }
-            else
-            {
-                description = string.Empty;
-            }
-
-            return await this.RestHttpClient.PostAsync<IApplicationCommand>
-            (
-                $"applications/{applicationID}/commands",
-                b => b.WithJson
+        return await this.RestHttpClient.PostAsync<IApplicationCommand>
+        (
+            $"applications/{applicationID}/commands",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -119,47 +117,47 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        IReadOnlyList<IBulkApplicationCommandData> commands,
+        CancellationToken ct = default)
+    {
+        if (commands.Any(c => c.Name.Length is < 1 or > 32))
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(commands),
+                "Command names must be between 1 and 32 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGlobalApplicationCommandsAsync
+        if
         (
-            Snowflake applicationID,
-            IReadOnlyList<IBulkApplicationCommandData> commands,
-            CancellationToken ct = default)
-        {
-            if (commands.Any(c => c.Name.Length is < 1 or > 32))
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(commands),
-                    "Command names must be between 1 and 32 characters."
-                );
-            }
-
-            if
+            commands.Any
             (
-                commands.Any
-                (
-                    c =>
-                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
-                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
-                )
+                c =>
+                    (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                    c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
             )
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(commands),
-                    "Command descriptions must be between 1 and 100 characters."
-                );
-            }
-
-            return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+        )
+        {
+            return new ArgumentOutOfRangeError
             (
-                $"applications/{applicationID}/commands",
-                b => b.WithJsonArray
+                nameof(commands),
+                "Command descriptions must be between 1 and 100 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+        (
+            $"applications/{applicationID}/commands",
+            b => b.WithJsonArray
                 (
                     json =>
                     {
@@ -181,60 +179,60 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IApplicationCommand>> GetGlobalApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake commandID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IApplicationCommand>
+        (
+            $"applications/{applicationID}/commands/{commandID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake commandID,
+        Optional<string> name,
+        Optional<string> description,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+        Optional<bool> defaultPermission,
+        CancellationToken ct
+    )
+    {
+        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The name must be between 1 and 32 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IApplicationCommand>> GetGlobalApplicationCommandAsync
-        (
-            Snowflake applicationID,
-            Snowflake commandID,
-            CancellationToken ct = default
-        )
+        if (description.HasValue && description.Value.Length is < 1 or > 100)
         {
-            return this.RestHttpClient.GetAsync<IApplicationCommand>
+            return new ArgumentOutOfRangeError
             (
-                $"applications/{applicationID}/commands/{commandID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(description),
+                "The description must be between 1 and 100 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IApplicationCommand>> EditGlobalApplicationCommandAsync
+        return await this.RestHttpClient.PatchAsync<IApplicationCommand>
         (
-            Snowflake applicationID,
-            Snowflake commandID,
-            Optional<string> name,
-            Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-            Optional<bool> defaultPermission,
-            CancellationToken ct
-        )
-        {
-            if (name.HasValue && name.Value.Length is < 1 or > 32)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(name),
-                    "The name must be between 1 and 32 characters."
-                );
-            }
-
-            if (description.HasValue && description.Value.Length is < 1 or > 100)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(description),
-                    "The description must be between 1 and 100 characters."
-                );
-            }
-
-            return await this.RestHttpClient.PatchAsync<IApplicationCommand>
-            (
-                $"applications/{applicationID}/commands/{commandID}",
-                b => b
+            $"applications/{applicationID}/commands/{commandID}",
+            b => b
                 .WithJson
                 (
                     json =>
@@ -246,44 +244,44 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGlobalApplicationCommandAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGlobalApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake commandID,
+        CancellationToken ct
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake applicationID,
-            Snowflake commandID,
-            CancellationToken ct
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"applications/{applicationID}/commands/{commandID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"applications/{applicationID}/commands/{commandID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGuildApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        CancellationToken ct
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
-            Snowflake applicationID,
-            Snowflake guildID,
-            CancellationToken ct
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"applications/{applicationID}/guilds/{guildID}/commands",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>>
+    /// <inheritdoc />
+    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>>
         BulkOverwriteGuildApplicationCommandsAsync
         (
             Snowflake applicationID,
@@ -291,37 +289,37 @@ namespace Remora.Discord.Rest.API
             IReadOnlyList<IBulkApplicationCommandData> commands,
             CancellationToken ct = default
         )
+    {
+        if (commands.Any(c => c.Name.Length is < 1 or > 32))
         {
-            if (commands.Any(c => c.Name.Length is < 1 or > 32))
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(commands),
-                    "Command names must be between 1 and 32 characters."
-                );
-            }
-
-            if
+            return new ArgumentOutOfRangeError
             (
-                commands.Any
-                (
-                    c =>
-                        (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
-                        c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
-                )
+                nameof(commands),
+                "Command names must be between 1 and 32 characters."
+            );
+        }
+
+        if
+        (
+            commands.Any
+            (
+                c =>
+                    (!c.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput) &&
+                    c.Description.IsDefined(out var description) && description.Length is < 1 or > 100
             )
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(commands),
-                    "Command descriptions must be between 1 and 100 characters."
-                );
-            }
-
-            return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+        )
+        {
+            return new ArgumentOutOfRangeError
             (
-                $"applications/{applicationID}/guilds/{guildID}/commands",
-                b => b.WithJsonArray
+                nameof(commands),
+                "Command descriptions must be between 1 and 100 characters."
+            );
+        }
+
+        return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
+        (
+            $"applications/{applicationID}/guilds/{guildID}/commands",
+            b => b.WithJsonArray
                 (
                     json =>
                     {
@@ -343,52 +341,52 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        string name,
+        string description,
+        Optional<IReadOnlyList<IApplicationCommandOption>> options,
+        Optional<bool> defaultPermission,
+        Optional<ApplicationCommandType> type,
+        CancellationToken ct
+    )
+    {
+        if (name.Length is < 1 or > 32)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The name must be between 1 and 32 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IApplicationCommand>> CreateGuildApplicationCommandAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            string name,
-            string description,
-            Optional<IReadOnlyList<IApplicationCommandOption>> options,
-            Optional<bool> defaultPermission,
-            Optional<ApplicationCommandType> type,
-            CancellationToken ct
-        )
+        if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
         {
-            if (name.Length is < 1 or > 32)
+            if (description.Length is < 1 or > 100)
             {
                 return new ArgumentOutOfRangeError
                 (
-                    nameof(name),
-                    "The name must be between 1 and 32 characters."
+                    nameof(description),
+                    "The description must be between 1 and 100 characters."
                 );
             }
+        }
+        else
+        {
+            description = string.Empty;
+        }
 
-            if (!type.IsDefined() || type.Value is ApplicationCommandType.ChatInput)
-            {
-                if (description.Length is < 1 or > 100)
-                {
-                    return new ArgumentOutOfRangeError
-                    (
-                        nameof(description),
-                        "The description must be between 1 and 100 characters."
-                    );
-                }
-            }
-            else
-            {
-                description = string.Empty;
-            }
-
-            return await this.RestHttpClient.PostAsync<IApplicationCommand>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands",
-                b => b.WithJson
+        return await this.RestHttpClient.PostAsync<IApplicationCommand>
+        (
+            $"applications/{applicationID}/guilds/{guildID}/commands",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -400,62 +398,62 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IApplicationCommand>> GetGuildApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        Snowflake commandID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IApplicationCommand>
+        (
+            $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        Snowflake commandID,
+        Optional<string> name,
+        Optional<string> description,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
+        Optional<bool> defaultPermission,
+        CancellationToken ct
+    )
+    {
+        if (name.HasValue && name.Value.Length is < 1 or > 32)
+        {
+            return new ArgumentOutOfRangeError
+            (
+                nameof(name),
+                "The name must be between 1 and 32 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IApplicationCommand>> GetGuildApplicationCommandAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            Snowflake commandID,
-            CancellationToken ct = default
-        )
+        if (description.HasValue && description.Value.Length is < 1 or > 100)
         {
-            return this.RestHttpClient.GetAsync<IApplicationCommand>
+            return new ArgumentOutOfRangeError
             (
-                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
+                nameof(description),
+                "The description must be between 1 and 100 characters."
             );
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IApplicationCommand>> EditGuildApplicationCommandAsync
+        return await this.RestHttpClient.PatchAsync<IApplicationCommand>
         (
-            Snowflake applicationID,
-            Snowflake guildID,
-            Snowflake commandID,
-            Optional<string> name,
-            Optional<string> description,
-            Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-            Optional<bool> defaultPermission,
-            CancellationToken ct
-        )
-        {
-            if (name.HasValue && name.Value.Length is < 1 or > 32)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(name),
-                    "The name must be between 1 and 32 characters."
-                );
-            }
-
-            if (description.HasValue && description.Value.Length is < 1 or > 100)
-            {
-                return new ArgumentOutOfRangeError
-                (
-                    nameof(description),
-                    "The description must be between 1 and 100 characters."
-                );
-            }
-
-            return await this.RestHttpClient.PatchAsync<IApplicationCommand>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-                b => b.WithJson
+            $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -466,75 +464,75 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteGuildApplicationCommandAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteGuildApplicationCommandAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        Snowflake commandID,
+        CancellationToken ct
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake applicationID,
-            Snowflake guildID,
-            Snowflake commandID,
-            CancellationToken ct
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
         GetGuildApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,
             Snowflake guildID,
             CancellationToken ct = default
         )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
         (
-            Snowflake applicationID,
-            Snowflake guildID,
-            Snowflake commandID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IGuildApplicationCommandPermissions>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildApplicationCommandPermissions>> GetApplicationCommandPermissionsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        Snowflake commandID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IGuildApplicationCommandPermissions>
         (
-            Snowflake applicationID,
-            Snowflake guildID,
-            Snowflake commandID,
-            IReadOnlyList<IApplicationCommandPermissions> permissions,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PutAsync<IGuildApplicationCommandPermissions>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
-                b => b.WithJson
+            $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IGuildApplicationCommandPermissions>> EditApplicationCommandPermissionsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        Snowflake commandID,
+        IReadOnlyList<IApplicationCommandPermissions> permissions,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PutAsync<IGuildApplicationCommandPermissions>
+        (
+            $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -543,12 +541,12 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IGuildApplicationCommandPermissions>>>
         BatchEditApplicationCommandPermissionsAsync
         (
             Snowflake applicationID,
@@ -556,11 +554,11 @@ namespace Remora.Discord.Rest.API
             IReadOnlyList<IPartialGuildApplicationCommandPermissions> permissions,
             CancellationToken ct = default
         )
-        {
-            return this.RestHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
-            (
-                $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-                b => b.WithJsonArray
+    {
+        return this.RestHttpClient.PutAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
+        (
+            $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
+            b => b.WithJsonArray
                 (
                     json =>
                     {
@@ -571,8 +569,7 @@ namespace Remora.Discord.Rest.API
                     }
                 )
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
     }
 }

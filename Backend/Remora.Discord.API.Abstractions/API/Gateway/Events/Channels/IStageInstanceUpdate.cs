@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update of a stage instance.
+/// </summary>
+[PublicAPI]
+public interface IStageInstanceUpdate : IStageInstance, IGatewayEvent
 {
-    /// <summary>
-    /// Represents an update of a stage instance.
-    /// </summary>
-    [PublicAPI]
-    public interface IStageInstanceUpdate : IStageInstance, IGatewayEvent
-    {
-    }
 }

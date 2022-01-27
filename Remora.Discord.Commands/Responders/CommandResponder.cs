@@ -21,21 +21,20 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Remora.Commands;
 using Remora.Commands.Services;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Contexts;
+using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Responders;
@@ -55,6 +54,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     private readonly TokenizerOptions _tokenizerOptions;
     private readonly TreeSearchOptions _treeSearchOptions;
 
+    private readonly ITreeNameResolver? _treeNameResolver;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CommandResponder"/> class.
     /// </summary>
@@ -65,6 +66,7 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
     /// <param name="contextInjection">The injection service.</param>
     /// <param name="tokenizerOptions">The tokenizer options.</param>
     /// <param name="treeSearchOptions">The tree search options.</param>
+    /// <param name="treeNameResolver">The tree name resolver, if one is available.</param>
     public CommandResponder
     (
         CommandService commandService,
@@ -73,7 +75,8 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         IServiceProvider services,
         ContextInjectionService contextInjection,
         IOptions<TokenizerOptions> tokenizerOptions,
-        IOptions<TreeSearchOptions> treeSearchOptions
+        IOptions<TreeSearchOptions> treeSearchOptions,
+        ITreeNameResolver? treeNameResolver = null
     )
     {
         _commandService = commandService;
@@ -84,29 +87,26 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
 
         _tokenizerOptions = tokenizerOptions.Value;
         _treeSearchOptions = treeSearchOptions.Value;
+
+        _treeNameResolver = treeNameResolver;
     }
 
     /// <inheritdoc/>
     public virtual async Task<Result> RespondAsync
     (
-        IMessageCreate? gatewayEvent,
+        IMessageCreate gatewayEvent,
         CancellationToken ct = default
     )
     {
-        if (gatewayEvent is null)
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
         {
-            return Result.FromSuccess();
+            return Result.FromError(createContext);
         }
 
-        if (_options.Prefix is not null)
-        {
-            if (!gatewayEvent.Content.StartsWith(_options.Prefix))
-            {
-                return Result.FromSuccess();
-            }
-        }
+        var context = createContext.Entity;
 
-        var author = gatewayEvent.Author;
+        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -117,89 +117,30 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        var context = new MessageContext
-        (
-            gatewayEvent.ChannelID,
-            author,
-            gatewayEvent.ID,
-            new PartialMessage
-            (
-                gatewayEvent.ID,
-                gatewayEvent.ChannelID,
-                gatewayEvent.GuildID,
-                new Optional<IUser>(gatewayEvent.Author),
-                gatewayEvent.Member,
-                gatewayEvent.Content,
-                gatewayEvent.Timestamp,
-                gatewayEvent.EditedTimestamp,
-                gatewayEvent.IsTTS,
-                gatewayEvent.MentionsEveryone,
-                new Optional<IReadOnlyList<IUserMention>>(gatewayEvent.Mentions),
-                new Optional<IReadOnlyList<Snowflake>>(gatewayEvent.MentionedRoles),
-                gatewayEvent.MentionedChannels,
-                new Optional<IReadOnlyList<IAttachment>>(gatewayEvent.Attachments),
-                new Optional<IReadOnlyList<IEmbed>>(gatewayEvent.Embeds),
-                gatewayEvent.Reactions,
-                gatewayEvent.Nonce,
-                gatewayEvent.IsPinned,
-                gatewayEvent.WebhookID,
-                gatewayEvent.Type,
-                gatewayEvent.Activity,
-                gatewayEvent.Application,
-                gatewayEvent.ApplicationID,
-                gatewayEvent.MessageReference,
-                gatewayEvent.Flags,
-                gatewayEvent.ReferencedMessage,
-                gatewayEvent.Interaction,
-                gatewayEvent.Thread,
-                gatewayEvent.Components,
-                gatewayEvent.StickerItems
-            )
-        );
-
         return await ExecuteCommandAsync(gatewayEvent.Content, context, ct);
     }
 
     /// <inheritdoc/>
     public virtual async Task<Result> RespondAsync
     (
-        IMessageUpdate? gatewayEvent,
+        IMessageUpdate gatewayEvent,
         CancellationToken ct = default
     )
     {
-        if (gatewayEvent is null)
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!gatewayEvent.ID.IsDefined(out var messageID))
-        {
-            return Result.FromSuccess();
-        }
-
-        if (!gatewayEvent.ChannelID.IsDefined(out var channelID))
-        {
-            return Result.FromSuccess();
-        }
-
         if (!gatewayEvent.Content.IsDefined(out var content))
         {
             return Result.FromSuccess();
         }
 
-        if (_options.Prefix is not null)
+        var createContext = gatewayEvent.CreateContext();
+        if (!createContext.IsSuccess)
         {
-            if (!content.StartsWith(_options.Prefix))
-            {
-                return Result.FromSuccess();
-            }
+            return Result.FromError(createContext);
         }
 
-        if (!gatewayEvent.Author.IsDefined(out var author))
-        {
-            return Result.FromSuccess();
-        }
+        var context = createContext.Entity;
 
+        var author = context.User;
         if (author.IsBot.IsDefined(out var isBot) && isBot)
         {
             return Result.FromSuccess();
@@ -226,14 +167,6 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return Result.FromSuccess();
         }
 
-        var context = new MessageContext
-        (
-            channelID,
-            author,
-            messageID,
-            gatewayEvent
-        );
-
         return await ExecuteCommandAsync(content, context, ct);
     }
 
@@ -254,14 +187,20 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
         // Provide the created context to any services inside this scope
         _contextInjection.Context = commandContext;
 
-        // Strip off the prefix
-        if (_options.Prefix is not null)
+        var prefixMatcher = _services.GetRequiredService<ICommandPrefixMatcher>();
+        var checkPrefix = await prefixMatcher.MatchesPrefixAsync(content, ct);
+        if (!checkPrefix.IsDefined(out var check))
         {
-            content = content
-            [
-                (content.IndexOf(_options.Prefix, StringComparison.Ordinal) + _options.Prefix.Length)..
-            ];
+            return Result.FromError(checkPrefix);
         }
+
+        if (!check.Matches)
+        {
+            return Result.FromSuccess();
+        }
+
+        // Strip off the prefix
+        content = content[check.ContentStartIndex..];
 
         // Run any user-provided pre execution events
         var preExecution = await _eventCollector.RunPreExecutionEvents(_services, commandContext, ct);
@@ -270,15 +209,56 @@ public class CommandResponder : IResponder<IMessageCreate>, IResponder<IMessageU
             return preExecution;
         }
 
+        string? treeName = null;
+        var allowDefaultTree = false;
+        if (_treeNameResolver is not null)
+        {
+            var getTreeName = await _treeNameResolver.GetTreeNameAsync(commandContext, ct);
+            if (!getTreeName.IsSuccess)
+            {
+                return Result.FromError(getTreeName);
+            }
+
+            (treeName, allowDefaultTree) = getTreeName.Entity;
+        }
+
         // Run the actual command
         var executeResult = await _commandService.TryExecuteAsync
         (
             content,
             _services,
-            tokenizerOptions: _tokenizerOptions,
-            searchOptions: _treeSearchOptions,
+            _tokenizerOptions,
+            _treeSearchOptions,
+            treeName,
+            ct
+        );
+
+        var tryDefaultTree = allowDefaultTree && (treeName is not null || treeName != Constants.DefaultTreeName);
+        if (executeResult.IsSuccess || !tryDefaultTree)
+        {
+            return await _eventCollector.RunPostExecutionEvents
+            (
+                _services,
+                commandContext,
+                executeResult.IsSuccess ? executeResult.Entity : executeResult,
+                ct
+            );
+        }
+
+        var oldResult = executeResult;
+        executeResult = await _commandService.TryExecuteAsync
+        (
+            content,
+            _services,
+            _tokenizerOptions,
+            _treeSearchOptions,
             ct: ct
         );
+
+        if (!executeResult.IsSuccess)
+        {
+            executeResult = new AggregateError(oldResult, executeResult);
+        }
 
         // Run any user-provided post execution events, passing along either the result of the command itself, or if
         // execution failed, the reason why

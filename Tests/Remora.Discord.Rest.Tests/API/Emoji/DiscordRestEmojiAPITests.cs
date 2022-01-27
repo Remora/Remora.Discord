@@ -26,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
@@ -36,291 +37,290 @@ using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Emoji
+namespace Remora.Discord.Rest.Tests.API.Emoji;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestEmojiAPI"/> class.
+/// </summary>
+public class DiscordRestEmojiAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestEmojiAPI"/> class.
+    /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
     /// </summary>
-    public class DiscordRestEmojiAPITests
+    public class ListGuildEmojisAsync : RestAPITestBase<IDiscordRestEmojiAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ListGuildEmojisAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
+            var guildId = DiscordSnowflake.New(0);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithNoContent()
-                        .Respond("application/json", "[ ]")
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .WithNoContent()
+                    .Respond("application/json", "[ ]")
+            );
 
-                var result = await api.ListGuildEmojisAsync(guildId);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.ListGuildEmojisAsync(guildId);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+    /// </summary>
+    public class GetGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var emojiId = DiscordSnowflake.New(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
+
+            var result = await api.GetGuildEmojiAsync(guildId, emojiId);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+    /// </summary>
+    public class CreateGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var name = "ff";
+            var reason = "test";
+
+            // Create a dummy PNG image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(9894494448401390090);
+            image.Position = 0;
+
+            var roles = Array.Empty<Snowflake>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("image", p => p.IsString())
+                                .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
+
+            var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles, reason);
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorForUnknownImageFormat()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var emojiId = DiscordSnowflake.New(1);
+            var guildId = DiscordSnowflake.New(0);
+            var name = "ff";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
+            // Create a dummy PNG image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(0x00000000);
+            image.Position = 0;
 
-                var result = await api.GetGuildEmojiAsync(guildId, emojiId);
-                ResultAssert.Successful(result);
-            }
+            var roles = Array.Empty<Snowflake>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .WithJson
+                    (
+                        j => j.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("image", p => p.IsString())
+                                .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
+
+            var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class CreateGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsErrorForTooLargeImage()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var name = "ff";
-                var reason = "test";
+            var guildId = DiscordSnowflake.New(0);
+            var name = "ff";
 
-                // Create a dummy PNG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(9894494448401390090);
-                image.Position = 0;
+            // Create a dummy PNG image
+            await using var image = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(image);
+            binaryWriter.Write(new byte[256001]);
+            image.Position = 0;
 
-                var roles = Array.Empty<Snowflake>();
+            var roles = Array.Empty<Snowflake>();
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("image", p => p.IsString())
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("image", p => p.IsString())
+                                .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
 
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
+            ResultAssert.Unsuccessful(result);
+        }
+    }
 
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorForUnknownImageFormat()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var name = "ff";
+    /// <summary>
+    /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+    /// </summary>
+    public class ModifyGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+            var emojiId = DiscordSnowflake.New(1);
+            var name = "ff";
+            var roles = new List<Snowflake>();
+            var reason = "test";
 
-                // Create a dummy PNG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(0x00000000);
-                image.Position = 0;
-
-                var roles = Array.Empty<Snowflake>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("image", p => p.IsString())
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
 
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsErrorForTooLargeImage()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var name = "ff";
-
-                // Create a dummy PNG image
-                await using var image = new MemoryStream();
-                await using var binaryWriter = new BinaryWriter(image);
-                binaryWriter.Write(new byte[256001]);
-                image.Position = 0;
-
-                var roles = Array.Empty<Snowflake>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}guilds/{guildId}/emojis")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("image", p => p.IsString())
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
-
-                var result = await api.CreateGuildEmojiAsync(guildId, name, image, roles);
-                ResultAssert.Unsuccessful(result);
-            }
+            var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, roles, reason);
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ModifyGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsNullableRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var emojiId = DiscordSnowflake.New(1);
-                var name = "ff";
-                var roles = new List<Snowflake>();
-                var reason = "test";
+            var guildId = DiscordSnowflake.New(0);
+            var emojiId = DiscordSnowflake.New(1);
+            var name = "ff";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .WithJson
+                    (
+                        j => j.IsObject
                         (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("roles", p => p.IsArray(a => a.WithCount(0)))
-                            )
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("roles", p => p.IsNull())
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
+            );
 
-                var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, roles, reason);
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsNullableRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var emojiId = DiscordSnowflake.New(1);
-                var name = "ff";
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
-                        .WithJson
-                        (
-                            j => j.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("roles", p => p.IsNull())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IEmoji)])
-                );
-
-                var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, null);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.ModifyGuildEmojiAsync(guildId, emojiId, name, null);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+    /// </summary>
+    public class DeleteGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestEmojiAPI.ListGuildEmojisAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteGuildEmojiAsync : RestAPITestBase<IDiscordRestEmojiAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var guildId = DiscordSnowflake.New(0);
-                var emojiId = DiscordSnowflake.New(1);
-                var reason = "test";
+            var guildId = DiscordSnowflake.New(0);
+            var emojiId = DiscordSnowflake.New(1);
+            var reason = "test";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .Respond(HttpStatusCode.NoContent)
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}guilds/{guildId}/emojis/{emojiId}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond(HttpStatusCode.NoContent)
+            );
 
-                var result = await api.DeleteGuildEmojiAsync(guildId, emojiId, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.DeleteGuildEmojiAsync(guildId, emojiId, reason);
+            ResultAssert.Successful(result);
         }
     }
 }

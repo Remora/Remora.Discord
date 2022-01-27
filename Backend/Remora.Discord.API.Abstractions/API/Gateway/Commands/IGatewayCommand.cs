@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents a marker interface for gateway commands.
+/// </summary>
+[PublicAPI]
+public interface IGatewayCommand : IGatewayPayloadData
 {
-    /// <summary>
-    /// Represents a marker interface for gateway commands.
-    /// </summary>
-    [PublicAPI]
-    public interface IGatewayCommand : IGatewayPayloadData
-    {
-    }
 }

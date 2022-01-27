@@ -24,44 +24,43 @@ using System.Collections.Generic;
 using System.Numerics;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a Discord permission set.
+/// </summary>
+[PublicAPI]
+public interface IDiscordPermissionSet
 {
     /// <summary>
-    /// Represents a Discord permission set.
+    /// Gets the raw value of the permission set.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordPermissionSet
-    {
-        /// <summary>
-        /// Gets the raw value of the permission set.
-        /// </summary>
-        BigInteger Value { get; }
+    BigInteger Value { get; }
 
-        /// <summary>
-        /// Determines whether the set allows the given permission.
-        /// </summary>
-        /// <param name="permission">The permission.</param>
-        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
-        bool HasPermission(DiscordPermission permission);
+    /// <summary>
+    /// Determines whether the set allows the given permission.
+    /// </summary>
+    /// <param name="permission">The permission.</param>
+    /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+    bool HasPermission(DiscordPermission permission);
 
-        /// <summary>
-        /// Determines whether the set allows the given permission.
-        /// </summary>
-        /// <param name="permission">The permission.</param>
-        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
-        bool HasPermission(DiscordTextPermission permission);
+    /// <summary>
+    /// Determines whether the set allows the given permission.
+    /// </summary>
+    /// <param name="permission">The permission.</param>
+    /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+    bool HasPermission(DiscordTextPermission permission);
 
-        /// <summary>
-        /// Determines whether the set allows the given permission.
-        /// </summary>
-        /// <param name="permission">The permission.</param>
-        /// <returns>true if the given permission is in the set; otherwise, false.</returns>
-        bool HasPermission(DiscordVoicePermission permission);
+    /// <summary>
+    /// Determines whether the set allows the given permission.
+    /// </summary>
+    /// <param name="permission">The permission.</param>
+    /// <returns>true if the given permission is in the set; otherwise, false.</returns>
+    bool HasPermission(DiscordVoicePermission permission);
 
-        /// <summary>
-        /// Gets a list of the <see cref="DiscordPermission"/> values contained within the set.
-        /// </summary>
-        /// <returns>A list of <see cref="DiscordPermission"/> value.</returns>
-        IReadOnlyList<DiscordPermission> GetPermissions();
-    }
+    /// <summary>
+    /// Gets a list of the <see cref="DiscordPermission"/> values contained within the set.
+    /// </summary>
+    /// <returns>A list of <see cref="DiscordPermission"/> value.</returns>
+    IReadOnlyList<DiscordPermission> GetPermissions();
 }

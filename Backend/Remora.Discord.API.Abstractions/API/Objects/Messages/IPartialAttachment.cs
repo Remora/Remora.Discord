@@ -23,40 +23,39 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <inheritdoc cref="IAttachment"/>
+[PublicAPI]
+public interface IPartialAttachment
 {
-    /// <inheritdoc cref="IAttachment"/>
-    [PublicAPI]
-    public interface IPartialAttachment
-    {
-        /// <inheritdoc cref="IAttachment.ID"/>
-        Optional<Snowflake> ID { get; }
+    /// <inheritdoc cref="IAttachment.ID"/>
+    Optional<Snowflake> ID { get; }
 
-        /// <inheritdoc cref="IAttachment.Filename"/>
-        Optional<string> Filename { get; }
+    /// <inheritdoc cref="IAttachment.Filename"/>
+    Optional<string> Filename { get; }
 
-        /// <inheritdoc cref="IAttachment.Description"/>
-        Optional<string> Description { get; }
+    /// <inheritdoc cref="IAttachment.Description"/>
+    Optional<string> Description { get; }
 
-        /// <inheritdoc cref="IAttachment.ContentType"/>
-        Optional<string> ContentType { get; }
+    /// <inheritdoc cref="IAttachment.ContentType"/>
+    Optional<string> ContentType { get; }
 
-        /// <inheritdoc cref="IAttachment.Size"/>
-        Optional<int> Size { get; }
+    /// <inheritdoc cref="IAttachment.Size"/>
+    Optional<int> Size { get; }
 
-        /// <inheritdoc cref="IAttachment.Url"/>
-        Optional<string> Url { get; }
+    /// <inheritdoc cref="IAttachment.Url"/>
+    Optional<string> Url { get; }
 
-        /// <inheritdoc cref="IAttachment.ProxyUrl"/>
-        Optional<string> ProxyUrl { get; }
+    /// <inheritdoc cref="IAttachment.ProxyUrl"/>
+    Optional<string> ProxyUrl { get; }
 
-        /// <inheritdoc cref="IAttachment.Height"/>
-        Optional<int?> Height { get; }
+    /// <inheritdoc cref="IAttachment.Height"/>
+    Optional<int?> Height { get; }
 
-        /// <inheritdoc cref="IAttachment.Width"/>
-        Optional<int?> Width { get; }
+    /// <inheritdoc cref="IAttachment.Width"/>
+    Optional<int?> Width { get; }
 
-        /// <inheritdoc cref="IAttachment.IsEphemeral"/>
-        Optional<bool> IsEphemeral { get; }
-    }
+    /// <inheritdoc cref="IAttachment.IsEphemeral"/>
+    Optional<bool> IsEphemeral { get; }
 }

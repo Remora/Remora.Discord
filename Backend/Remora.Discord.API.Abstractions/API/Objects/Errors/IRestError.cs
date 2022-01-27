@@ -26,27 +26,26 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Results;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an error reported by the REST API.
+/// </summary>
+[PublicAPI]
+public interface IRestError
 {
     /// <summary>
-    /// Represents an error reported by the REST API.
+    /// Gets the error code.
     /// </summary>
-    [PublicAPI]
-    public interface IRestError
-    {
-        /// <summary>
-        /// Gets the error code.
-        /// </summary>
-        DiscordError Code { get; }
+    DiscordError Code { get; }
 
-        /// <summary>
-        /// Gets the per-property error details.
-        /// </summary>
-        Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors { get; }
+    /// <summary>
+    /// Gets the per-property error details.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, OneOf<IPropertyErrorDetails, IReadOnlyList<IErrorDetails>>>> Errors { get; }
 
-        /// <summary>
-        /// Gets a descriptive error message.
-        /// </summary>
-        string Message { get; }
-    }
+    /// <summary>
+    /// Gets a descriptive error message.
+    /// </summary>
+    string Message { get; }
 }

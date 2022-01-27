@@ -23,13 +23,12 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various thread member flags.
+/// </summary>
+[PublicAPI, Flags]
+public enum ThreadMemberFlags
 {
-    /// <summary>
-    /// Enumerates various thread member flags.
-    /// </summary>
-    [PublicAPI, Flags]
-    public enum ThreadMemberFlags
-    {
-    }
 }

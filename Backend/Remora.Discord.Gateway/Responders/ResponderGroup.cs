@@ -22,28 +22,27 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Gateway.Responders
+namespace Remora.Discord.Gateway.Responders;
+
+/// <summary>
+/// Enumerates various responder groups. Responders registered within a group run in parallel, but are ordered among
+/// the groups.
+/// </summary>
+[PublicAPI]
+public enum ResponderGroup
 {
     /// <summary>
-    /// Enumerates various responder groups. Responders registered within a group run in parallel, but are ordered among
-    /// the groups.
+    /// This responder runs before all other groups.
     /// </summary>
-    [PublicAPI]
-    public enum ResponderGroup
-    {
-        /// <summary>
-        /// This responder runs before all other groups.
-        /// </summary>
-        Early,
+    Early,
 
-        /// <summary>
-        /// This responder runs when responders normally run.
-        /// </summary>
-        Normal,
+    /// <summary>
+    /// This responder runs when responders normally run.
+    /// </summary>
+    Normal,
 
-        /// <summary>
-        /// This responder runs after all other groups.
-        /// </summary>
-        Late
-    }
+    /// <summary>
+    /// This responder runs after all other groups.
+    /// </summary>
+    Late
 }

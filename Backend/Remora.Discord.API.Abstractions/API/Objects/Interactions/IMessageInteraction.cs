@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents additional data sent on a message that is a response to an interaction.
+/// </summary>
+[PublicAPI]
+public interface IMessageInteraction
 {
     /// <summary>
-    /// Represents additional data sent on a message that is a response to an interaction.
+    /// Gets the ID of the interaction.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageInteraction
-    {
-        /// <summary>
-        /// Gets the ID of the interaction.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the interaction type.
-        /// </summary>
-        InteractionType Type { get; }
+    /// <summary>
+    /// Gets the interaction type.
+    /// </summary>
+    InteractionType Type { get; }
 
-        /// <summary>
-        /// Gets the name of the application command.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the application command.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the user who invoked the interaction.
-        /// </summary>
-        IUser User { get; }
-    }
+    /// <summary>
+    /// Gets the user who invoked the interaction.
+    /// </summary>
+    IUser User { get; }
 }

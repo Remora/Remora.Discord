@@ -22,32 +22,31 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various activity types.
+/// </summary>
+[PublicAPI]
+public enum MessageActivityType
 {
     /// <summary>
-    /// Enumerates various activity types.
+    /// An invitation to join the activity.
     /// </summary>
-    [PublicAPI]
-    public enum MessageActivityType
-    {
-        /// <summary>
-        /// An invitation to join the activity.
-        /// </summary>
-        Join = 1,
+    Join = 1,
 
-        /// <summary>
-        /// An invitation to spectate the activity.
-        /// </summary>
-        Spectate = 2,
+    /// <summary>
+    /// An invitation to spectate the activity.
+    /// </summary>
+    Spectate = 2,
 
-        /// <summary>
-        /// An invitation to listen to the activity.
-        /// </summary>
-        Listen = 3,
+    /// <summary>
+    /// An invitation to listen to the activity.
+    /// </summary>
+    Listen = 3,
 
-        /// <summary>
-        /// A request to join the activity.
-        /// </summary>
-        JoinRequest = 4
-    }
+    /// <summary>
+    /// A request to join the activity.
+    /// </summary>
+    JoinRequest = 4
 }

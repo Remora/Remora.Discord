@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about an embed provider.
+/// </summary>
+[PublicAPI]
+public interface IEmbedProvider
 {
     /// <summary>
-    /// Represents information about an embed provider.
+    /// Gets the name of the provider.
     /// </summary>
-    [PublicAPI]
-    public interface IEmbedProvider
-    {
-        /// <summary>
-        /// Gets the name of the provider.
-        /// </summary>
-        Optional<string> Name { get; }
+    Optional<string> Name { get; }
 
-        /// <summary>
-        /// Gets the URL of the provider.
-        /// </summary>
-        Optional<string> Url { get; }
-    }
+    /// <summary>
+    /// Gets the URL of the provider.
+    /// </summary>
+    Optional<string> Url { get; }
 }

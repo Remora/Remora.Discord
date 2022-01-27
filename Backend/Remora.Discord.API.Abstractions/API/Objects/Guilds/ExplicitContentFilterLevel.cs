@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various content filter levels.
+/// </summary>
+[PublicAPI]
+public enum ExplicitContentFilterLevel
 {
     /// <summary>
-    /// Enumerates various content filter levels.
+    /// No filtering is applied.
     /// </summary>
-    [PublicAPI]
-    public enum ExplicitContentFilterLevel
-    {
-        /// <summary>
-        /// No filtering is applied.
-        /// </summary>
-        Disabled = 0,
+    Disabled = 0,
 
-        /// <summary>
-        /// Filtering is applied to members without roles.
-        /// </summary>
-        MembersWithoutRoles = 1,
+    /// <summary>
+    /// Filtering is applied to members without roles.
+    /// </summary>
+    MembersWithoutRoles = 1,
 
-        /// <summary>
-        /// Filtering is applied to all members.
-        /// </summary>
-        AllMembers = 2
-    }
+    /// <summary>
+    /// Filtering is applied to all members.
+    /// </summary>
+    AllMembers = 2
 }

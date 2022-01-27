@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various presence states for a user.
+/// </summary>
+[PublicAPI]
+public enum ClientStatus
 {
     /// <summary>
-    /// Enumerates various presence states for a user.
+    /// The user is idle.
     /// </summary>
-    [PublicAPI]
-    public enum ClientStatus
-    {
-        /// <summary>
-        /// The user is idle.
-        /// </summary>
-        Idle,
+    Idle,
 
-        /// <summary>
-        /// The user is invisible.
-        /// </summary>
-        Invisible,
+    /// <summary>
+    /// The user is invisible.
+    /// </summary>
+    Invisible,
 
-        /// <summary>
-        /// The user is not to be disturbed.
-        /// </summary>
-        DND,
+    /// <summary>
+    /// The user is not to be disturbed.
+    /// </summary>
+    DND,
 
-        /// <summary>
-        /// The user is online.
-        /// </summary>
-        Online,
+    /// <summary>
+    /// The user is online.
+    /// </summary>
+    Online,
 
-        /// <summary>
-        /// The user is offline.
-        /// </summary>
-        Offline
-    }
+    /// <summary>
+    /// The user is offline.
+    /// </summary>
+    Offline
 }

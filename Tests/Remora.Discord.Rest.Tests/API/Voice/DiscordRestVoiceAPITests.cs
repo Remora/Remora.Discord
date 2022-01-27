@@ -29,35 +29,34 @@ using Remora.Discord.Tests;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Voice
+namespace Remora.Discord.Rest.Tests.API.Voice;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestVoiceAPI"/> class.
+/// </summary>
+public class DiscordRestVoiceAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestVoiceAPI"/> class.
+    /// Tests the <see cref="DiscordRestVoiceAPI.ListVoiceRegionsAsync"/> method.
     /// </summary>
-    public class DiscordRestVoiceAPITests
+    public class ListVoiceRegionsAsync : RestAPITestBase<IDiscordRestVoiceAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestVoiceAPI.ListVoiceRegionsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class ListVoiceRegionsAsync : RestAPITestBase<IDiscordRestVoiceAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}voice/regions")
-                        .Respond("application/json", "[]")
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}voice/regions")
+                    .Respond("application/json", "[]")
+            );
 
-                var result = await api.ListVoiceRegionsAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.ListVoiceRegionsAsync();
+            ResultAssert.Successful(result);
         }
     }
 }

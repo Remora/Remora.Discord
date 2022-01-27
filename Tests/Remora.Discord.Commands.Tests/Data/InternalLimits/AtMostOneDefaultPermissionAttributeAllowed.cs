@@ -27,47 +27,46 @@ using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.InternalLimits
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
+
+/// <summary>
+/// Wraps two test groups.
+/// </summary>
+public class AtMostOneDefaultPermissionAttributeAllowed
 {
     /// <summary>
-    /// Wraps two test groups.
+    /// Wraps named test groups.
     /// </summary>
-    public class AtMostOneDefaultPermissionAttributeAllowed
+    public class Named
     {
         /// <summary>
-        /// Wraps named test groups.
+        /// The first group.
         /// </summary>
-        public class Named
+        [DiscordDefaultPermission(true)]
+        [Group("a")]
+        public class GroupOne : CommandGroup
         {
             /// <summary>
-            /// The first group.
+            /// The first command.
             /// </summary>
-            [DiscordDefaultPermission(true)]
-            [Group("a")]
-            public class GroupOne : CommandGroup
-            {
-                /// <summary>
-                /// The first command.
-                /// </summary>
-                /// <returns>Nothing.</returns>
-                [Command("b")]
-                public Task<Result> B() => throw new NotImplementedException();
-            }
+            /// <returns>Nothing.</returns>
+            [Command("b")]
+            public Task<Result> B() => throw new NotImplementedException();
+        }
 
+        /// <summary>
+        /// The second group.
+        /// </summary>
+        [DiscordDefaultPermission(false)]
+        [Group("a")]
+        public class GroupTwo : CommandGroup
+        {
             /// <summary>
-            /// The second group.
+            /// The second command.
             /// </summary>
-            [DiscordDefaultPermission(false)]
-            [Group("a")]
-            public class GroupTwo : CommandGroup
-            {
-                /// <summary>
-                /// The second command.
-                /// </summary>
-                /// <returns>Nothing.</returns>
-                [Command("c")]
-                public Task<Result> C() => throw new NotImplementedException();
-            }
+            /// <returns>Nothing.</returns>
+            [Command("c")]
+            public Task<Result> C() => throw new NotImplementedException();
         }
     }
 }

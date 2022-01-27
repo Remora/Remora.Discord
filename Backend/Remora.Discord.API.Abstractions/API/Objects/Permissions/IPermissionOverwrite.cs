@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a channel- or category-specific permission overwrite.
+/// </summary>
+[PublicAPI]
+public interface IPermissionOverwrite
 {
     /// <summary>
-    /// Represents a channel- or category-specific permission overwrite.
+    /// Gets the ID of the role or user ID that the overwrite affects.
     /// </summary>
-    [PublicAPI]
-    public interface IPermissionOverwrite
-    {
-        /// <summary>
-        /// Gets the ID of the role or user ID that the overwrite affects.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the type of the overwrite.
-        /// </summary>
-        PermissionOverwriteType Type { get; }
+    /// <summary>
+    /// Gets the type of the overwrite.
+    /// </summary>
+    PermissionOverwriteType Type { get; }
 
-        /// <summary>
-        /// Gets the set of permissions that are explicitly allowed.
-        /// </summary>
-        IDiscordPermissionSet Allow { get; }
+    /// <summary>
+    /// Gets the set of permissions that are explicitly allowed.
+    /// </summary>
+    IDiscordPermissionSet Allow { get; }
 
-        /// <summary>
-        /// Gets the set of permissions that are explicitly denied.
-        /// </summary>
-        IDiscordPermissionSet Deny { get; }
-    }
+    /// <summary>
+    /// Gets the set of permissions that are explicitly denied.
+    /// </summary>
+    IDiscordPermissionSet Deny { get; }
 }

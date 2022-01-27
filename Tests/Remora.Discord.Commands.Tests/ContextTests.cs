@@ -35,76 +35,76 @@ using Remora.Discord.Tests;
 using Remora.Rest.Core;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests
+namespace Remora.Discord.Commands.Tests;
+
+/// <summary>
+/// Tests injection of various command contexts.
+/// </summary>
+public class ContextTests
 {
+    private readonly IServiceProvider _services;
+    private readonly CommandService _commands;
+    private readonly ContextInjectionService _contextInjection;
+
     /// <summary>
-    /// Tests injection of various command contexts.
+    /// Initializes a new instance of the <see cref="ContextTests"/> class.
     /// </summary>
-    public class ContextTests
+    public ContextTests()
     {
-        private readonly IServiceProvider _services;
-        private readonly CommandService _commands;
-        private readonly ContextInjectionService _contextInjection;
+        _services = new ServiceCollection()
+            .AddDiscordCommands()
+            .AddCommandGroup<GroupWithContext>()
+            .AddCommandGroup<GroupWithInteractionContext>()
+            .AddCommandGroup<GroupWithMessageContext>()
+            .BuildServiceProvider(true)
+            .CreateScope().ServiceProvider;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContextTests"/> class.
-        /// </summary>
-        public ContextTests()
-        {
-            _services = new ServiceCollection()
-                .AddDiscordCommands()
-                .AddCommandGroup<GroupWithContext>()
-                .AddCommandGroup<GroupWithInteractionContext>()
-                .AddCommandGroup<GroupWithMessageContext>()
-                .BuildServiceProvider();
+        _commands = _services.GetRequiredService<CommandService>();
+        _contextInjection = _services.GetRequiredService<ContextInjectionService>();
+    }
 
-            _commands = _services.GetRequiredService<CommandService>();
-            _contextInjection = _services.GetRequiredService<ContextInjectionService>();
-        }
+    /// <summary>
+    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanExecuteCommandFromGroupThatWantsInterfaceContext()
+    {
+        var dummyContext = new Mock<ICommandContext>().Object;
+        _contextInjection.Context = dummyContext;
 
-        /// <summary>
-        /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanExecuteCommandFromGroupThatWantsInterfaceContext()
-        {
-            var dummyContext = new Mock<ICommandContext>().Object;
-            _contextInjection.Context = dummyContext;
+        var result = await _commands.TryExecuteAsync("interface command", _services);
+        ResultAssert.Successful(result);
+    }
 
-            var result = await _commands.TryExecuteAsync("interface command", _services);
-            ResultAssert.Successful(result);
-        }
+    /// <summary>
+    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanExecuteCommandFromGroupThatWantsMessageContext()
+    {
+        var dummyMessage = new Mock<IPartialMessage>();
+        dummyMessage.Setup(m => m.GuildID).Returns(default(Snowflake));
 
-        /// <summary>
-        /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanExecuteCommandFromGroupThatWantsMessageContext()
-        {
-            var dummyMessage = new Mock<IPartialMessage>();
-            dummyMessage.Setup(m => m.GuildID).Returns(default(Snowflake));
+        var dummyContext = new MessageContext(default, null!, default, dummyMessage.Object);
+        _contextInjection.Context = dummyContext;
 
-            var dummyContext = new MessageContext(default, null!, default, dummyMessage.Object);
-            _contextInjection.Context = dummyContext;
+        var result = await _commands.TryExecuteAsync("message command", _services);
+        ResultAssert.Successful(result);
+    }
 
-            var result = await _commands.TryExecuteAsync("message command", _services);
-            ResultAssert.Successful(result);
-        }
+    /// <summary>
+    /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
+    {
+        var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, null!, default, default);
+        _contextInjection.Context = dummyContext;
 
-        /// <summary>
-        /// Tests whether a command in a group that requires an <see cref="ICommandContext"/> can be executed.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanExecuteCommandFromGroupThatWantsInteractionContext()
-        {
-            var dummyContext = new InteractionContext(default, default, null!, default, null!, default, default, null!, default);
-            _contextInjection.Context = dummyContext;
-
-            var result = await _commands.TryExecuteAsync("interaction command", _services);
-            ResultAssert.Successful(result);
-        }
+        var result = await _commands.TryExecuteAsync("interaction command", _services);
+        ResultAssert.Successful(result);
     }
 }

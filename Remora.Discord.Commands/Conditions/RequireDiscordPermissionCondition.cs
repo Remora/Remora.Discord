@@ -315,15 +315,14 @@ public class RequireDiscordPermissionCondition :
         LogicalOperator logicalOperator
     )
     {
-        var passesCheck = false;
-        passesCheck = logicalOperator switch
+        var passesCheck = logicalOperator switch
         {
             LogicalOperator.Not => permissionInformation.Values.All(v => !v),
             LogicalOperator.And => permissionInformation.Values.All(v => v),
             LogicalOperator.Or => permissionInformation.Values.Any(v => v),
             LogicalOperator.Xor => permissionInformation.Values.Aggregate
             (
-                passesCheck,
+                false,
                 (current, value) => current ^ value
             ),
             _ => throw new ArgumentOutOfRangeException()

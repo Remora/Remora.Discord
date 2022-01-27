@@ -29,28 +29,27 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Ephemeral
+namespace Remora.Discord.Commands.Tests.Data.Ephemeral;
+
+public class EphemeralCommand : CommandGroup
 {
-    public class EphemeralCommand : CommandGroup
+    [Command("a")]
+    [Ephemeral]
+    public Task<Result> A()
     {
-        [Command("a")]
-        [Ephemeral]
-        public Task<Result> A()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        [Command("b")]
-        public Task<Result> B()
-        {
-            throw new NotImplementedException();
-        }
+    [Command("b")]
+    public Task<Result> B()
+    {
+        throw new NotImplementedException();
+    }
 
-        [Command("c")]
-        [Ephemeral(false)]
-        public Task<Result> C()
-        {
-            throw new NotImplementedException();
-        }
+    [Command("c")]
+    [Ephemeral(false)]
+    public Task<Result> C()
+    {
+        throw new NotImplementedException();
     }
 }

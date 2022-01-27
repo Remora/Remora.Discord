@@ -26,9 +26,7 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using OneOf;
-using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Extensions;
 using Remora.Discord.API.Objects;
 using Remora.Rest.Core;
 using Remora.Rest.Json;
@@ -56,6 +54,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "channel_id", typeof(Snowflake) },
         { "code", typeof(string) },
         { "color", typeof(Color) },
+        { "communication_disabled_until", typeof(DateTimeOffset) },
         { "deaf", typeof(bool) },
         { "default_auto_archive_duration", typeof(AutoArchiveDuration) },
         { "default_message_notifications", typeof(MessageNotificationLevel) },

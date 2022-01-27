@@ -24,47 +24,46 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a pack of stickers.
+/// </summary>
+[PublicAPI]
+public interface IStickerPack
 {
     /// <summary>
-    /// Represents a pack of stickers.
+    /// Gets the ID of the sticker pack.
     /// </summary>
-    [PublicAPI]
-    public interface IStickerPack
-    {
-        /// <summary>
-        /// Gets the ID of the sticker pack.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the stickers in the pack.
-        /// </summary>
-        IReadOnlyList<ISticker> Stickers { get; }
+    /// <summary>
+    /// Gets the stickers in the pack.
+    /// </summary>
+    IReadOnlyList<ISticker> Stickers { get; }
 
-        /// <summary>
-        /// Gets the name of the sticker pack.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the sticker pack.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the sticker pack's stock keeping unit ID.
-        /// </summary>
-        Snowflake SKUID { get; }
+    /// <summary>
+    /// Gets the sticker pack's stock keeping unit ID.
+    /// </summary>
+    Snowflake SKUID { get; }
 
-        /// <summary>
-        /// Gets the ID of the sticker in the pack which is shown as the pack's icon.
-        /// </summary>
-        Optional<Snowflake> CoverStickerID { get; }
+    /// <summary>
+    /// Gets the ID of the sticker in the pack which is shown as the pack's icon.
+    /// </summary>
+    Optional<Snowflake> CoverStickerID { get; }
 
-        /// <summary>
-        /// Gets the description of the pack.
-        /// </summary>
-        string Description { get; }
+    /// <summary>
+    /// Gets the description of the pack.
+    /// </summary>
+    string Description { get; }
 
-        /// <summary>
-        /// Gets the ID of the sticker pack's banner image.
-        /// </summary>
-        Optional<Snowflake> BannerAssetID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the sticker pack's banner image.
+    /// </summary>
+    Optional<Snowflake> BannerAssetID { get; }
 }

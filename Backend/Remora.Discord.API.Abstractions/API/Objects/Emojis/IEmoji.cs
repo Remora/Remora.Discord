@@ -24,76 +24,75 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an emoji.
+/// </summary>
+[PublicAPI]
+public interface IEmoji : IPartialEmoji
 {
     /// <summary>
-    /// Represents an emoji.
+    /// Gets the ID of the emoji.
     /// </summary>
-    [PublicAPI]
-    public interface IEmoji : IPartialEmoji
-    {
-        /// <summary>
-        /// Gets the ID of the emoji.
-        /// </summary>
-        new Snowflake? ID { get; }
+    new Snowflake? ID { get; }
 
-        /// <summary>
-        /// Gets the name of the emoji.
-        /// </summary>
-        new string? Name { get; }
+    /// <summary>
+    /// Gets the name of the emoji.
+    /// </summary>
+    new string? Name { get; }
 
-        /// <summary>
-        /// Gets a list of roles this emoji is whitelisted to.
-        /// </summary>
-        new Optional<IReadOnlyList<Snowflake>> Roles { get; }
+    /// <summary>
+    /// Gets a list of roles this emoji is whitelisted to.
+    /// </summary>
+    new Optional<IReadOnlyList<Snowflake>> Roles { get; }
 
-        /// <summary>
-        /// Gets the user that created this emoji.
-        /// </summary>
-        new Optional<IUser> User { get; }
+    /// <summary>
+    /// Gets the user that created this emoji.
+    /// </summary>
+    new Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji must be wrapped in colons.
-        /// </summary>
-        new Optional<bool> RequireColons { get; }
+    /// <summary>
+    /// Gets a value indicating whether this emoji must be wrapped in colons.
+    /// </summary>
+    new Optional<bool> RequireColons { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is managed.
-        /// </summary>
-        new Optional<bool> IsManaged { get; }
+    /// <summary>
+    /// Gets a value indicating whether this emoji is managed.
+    /// </summary>
+    new Optional<bool> IsManaged { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is animated.
-        /// </summary>
-        new Optional<bool> IsAnimated { get; }
+    /// <summary>
+    /// Gets a value indicating whether this emoji is animated.
+    /// </summary>
+    new Optional<bool> IsAnimated { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
-        /// </summary>
-        new Optional<bool> IsAvailable { get; }
+    /// <summary>
+    /// Gets a value indicating whether this emoji is available. May be false due to a loss of server boosts.
+    /// </summary>
+    new Optional<bool> IsAvailable { get; }
 
-        /// <inheritdoc/>
-        Optional<Snowflake?> IPartialEmoji.ID => this.ID;
+    /// <inheritdoc/>
+    Optional<Snowflake?> IPartialEmoji.ID => this.ID;
 
-        /// <inheritdoc/>
-        Optional<string?> IPartialEmoji.Name => this.Name;
+    /// <inheritdoc/>
+    Optional<string?> IPartialEmoji.Name => this.Name;
 
-        /// <inheritdoc/>
-        Optional<IReadOnlyList<Snowflake>> IPartialEmoji.Roles => this.Roles;
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<Snowflake>> IPartialEmoji.Roles => this.Roles;
 
-        /// <inheritdoc/>
-        Optional<IUser> IPartialEmoji.User => this.User;
+    /// <inheritdoc/>
+    Optional<IUser> IPartialEmoji.User => this.User;
 
-        /// <inheritdoc/>
-        Optional<bool> IPartialEmoji.RequireColons => this.RequireColons;
+    /// <inheritdoc/>
+    Optional<bool> IPartialEmoji.RequireColons => this.RequireColons;
 
-        /// <inheritdoc/>
-        Optional<bool> IPartialEmoji.IsManaged => this.IsManaged;
+    /// <inheritdoc/>
+    Optional<bool> IPartialEmoji.IsManaged => this.IsManaged;
 
-        /// <inheritdoc/>
-        Optional<bool> IPartialEmoji.IsAnimated => this.IsAnimated;
+    /// <inheritdoc/>
+    Optional<bool> IPartialEmoji.IsAnimated => this.IsAnimated;
 
-        /// <inheritdoc/>
-        Optional<bool> IPartialEmoji.IsAvailable => this.IsAvailable;
-    }
+    /// <inheritdoc/>
+    Optional<bool> IPartialEmoji.IsAvailable => this.IsAvailable;
 }

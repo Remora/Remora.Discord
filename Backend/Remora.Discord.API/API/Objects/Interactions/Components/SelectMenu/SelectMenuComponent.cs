@@ -33,10 +33,10 @@ public record SelectMenuComponent
 (
     string CustomID,
     IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder,
-    Optional<int> MinValues,
-    Optional<int> MaxValues,
-    Optional<bool> IsDisabled
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
 ) : ISelectMenuComponent, IDefaultedComponent
 {
     /// <inheritdoc/>

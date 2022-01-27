@@ -23,42 +23,41 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about a live stage.
+/// </summary>
+[PublicAPI]
+public interface IStageInstance
 {
     /// <summary>
-    /// Represents information about a live stage.
+    /// Gets the ID of the stage instance.
     /// </summary>
-    [PublicAPI]
-    public interface IStageInstance
-    {
-        /// <summary>
-        /// Gets the ID of the stage instance.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the instance is in.
-        /// </summary>
-        Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the instance is in.
+    /// </summary>
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the stage channel the instance is associated with.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the stage channel the instance is associated with.
+    /// </summary>
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the topic of the instance.
-        /// </summary>
-        string Topic { get; }
+    /// <summary>
+    /// Gets the topic of the instance.
+    /// </summary>
+    string Topic { get; }
 
-        /// <summary>
-        /// Gets the privacy level of the instance.
-        /// </summary>
-        StagePrivacyLevel PrivacyLevel { get; }
+    /// <summary>
+    /// Gets the privacy level of the instance.
+    /// </summary>
+    StagePrivacyLevel PrivacyLevel { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether stage discovery is disabled for the instance.
-        /// </summary>
-        bool IsDiscoveryDisabled { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether stage discovery is disabled for the instance.
+    /// </summary>
+    bool IsDiscoveryDisabled { get; }
 }

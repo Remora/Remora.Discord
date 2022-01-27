@@ -24,17 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the creation of an integration.
+/// </summary>
+[PublicAPI]
+public interface IIntegrationUpdate : IIntegration, IGatewayEvent
 {
     /// <summary>
-    /// Represents the creation of an integration.
+    /// Gets the ID of the guild the integration was updated on.
     /// </summary>
-    [PublicAPI]
-    public interface IIntegrationUpdate : IIntegration, IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild the integration was updated on.
-        /// </summary>
-        Snowflake GuildID { get; }
-    }
+    Snowflake GuildID { get; }
 }

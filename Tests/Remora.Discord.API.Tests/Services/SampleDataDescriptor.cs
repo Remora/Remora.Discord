@@ -22,40 +22,39 @@
 
 using System.IO;
 
-namespace Remora.Discord.API.Tests.Services
+namespace Remora.Discord.API.Tests.Services;
+
+/// <summary>
+/// Describes a file containing sample data, for testing.
+/// </summary>
+public class SampleDataDescriptor
 {
     /// <summary>
-    /// Describes a file containing sample data, for testing.
+    /// Initializes a new instance of the <see cref="SampleDataDescriptor"/> class.
     /// </summary>
-    public class SampleDataDescriptor
+    /// <param name="basePath">The value to use for <see cref="BasePath"/>.</param>
+    /// <param name="relativePath">The value to use for <see cref="RelativePath"/>.</param>
+    public SampleDataDescriptor(string basePath, string relativePath)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleDataDescriptor"/> class.
-        /// </summary>
-        /// <param name="basePath">The value to use for <see cref="BasePath"/>.</param>
-        /// <param name="relativePath">The value to use for <see cref="RelativePath"/>.</param>
-        public SampleDataDescriptor(string basePath, string relativePath)
-        {
-            this.BasePath = basePath;
-            this.RelativePath = relativePath;
-        }
-
-        /// <summary>
-        /// Gets the base path at which the sample data file may be found.
-        /// </summary>
-        public string BasePath { get; }
-
-        /// <summary>
-        /// Gets the full filesystem path of the sample data file.
-        /// </summary>
-        public string FullPath => Path.Combine(this.BasePath, this.RelativePath);
-
-        /// <summary>
-        /// Gets the path to the sample data file, relative to other sample data files.
-        /// </summary>
-        public string RelativePath { get; }
-
-        /// <inheritdoc/>
-        public override string ToString() => this.RelativePath;
+        this.BasePath = basePath;
+        this.RelativePath = relativePath;
     }
+
+    /// <summary>
+    /// Gets the base path at which the sample data file may be found.
+    /// </summary>
+    public string BasePath { get; }
+
+    /// <summary>
+    /// Gets the full filesystem path of the sample data file.
+    /// </summary>
+    public string FullPath => Path.Combine(this.BasePath, this.RelativePath);
+
+    /// <summary>
+    /// Gets the path to the sample data file, relative to other sample data files.
+    /// </summary>
+    public string RelativePath { get; }
+
+    /// <inheritdoc/>
+    public override string ToString() => this.RelativePath;
 }

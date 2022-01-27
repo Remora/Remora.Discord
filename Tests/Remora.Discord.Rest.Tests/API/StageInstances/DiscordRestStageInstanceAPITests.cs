@@ -23,156 +23,155 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API
+namespace Remora.Discord.Rest.Tests.API;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestStageInstanceAPI"/> class.
+/// </summary>
+public class DiscordRestStageInstanceAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestStageInstanceAPI"/> class.
+    /// Tests the <see cref="DiscordRestStageInstanceAPI.CreateStageInstanceAsync"/> method.
     /// </summary>
-    public class DiscordRestStageInstanceAPITests
+    public class CreateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.CreateStageInstanceAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class CreateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelID = DiscordSnowflake.New(1);
-                var topic = "aa";
-                var privacyLevel = StagePrivacyLevel.GuildOnly;
-                var reason = "test";
+            var channelID = DiscordSnowflake.New(1);
+            var topic = "aa";
+            var privacyLevel = StagePrivacyLevel.GuildOnly;
+            var reason = "test";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}stage-instances")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}stage-instances")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("channel_id", p => p.Is(channelID.ToString()))
-                                    .WithProperty("topic", p => p.Is(topic))
-                                    .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
-                            )
+                            o => o
+                                .WithProperty("channel_id", p => p.Is(channelID.ToString()))
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+            );
 
-                var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, reason);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestStageInstanceAPI.GetStageInstanceAsync"/> method.
+    /// </summary>
+    public class GetStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.GetStageInstanceAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelID = DiscordSnowflake.New(1);
+            var channelID = DiscordSnowflake.New(1);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}stage-instances/{channelID}")
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+            );
 
-                var result = await api.GetStageInstanceAsync(channelID);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetStageInstanceAsync(channelID);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestStageInstanceAPI.UpdateStageInstanceAsync"/> method.
+    /// </summary>
+    public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.UpdateStageInstanceAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelID = DiscordSnowflake.New(1);
-                var topic = "aa";
-                var privacyLevel = StagePrivacyLevel.GuildOnly;
-                var reason = "test";
+            var channelID = DiscordSnowflake.New(1);
+            var topic = "aa";
+            var privacyLevel = StagePrivacyLevel.GuildOnly;
+            var reason = "test";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}stage-instances/{channelID}")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .WithJson
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("topic", p => p.Is(topic))
-                                    .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
-                            )
+                            o => o
+                                .WithProperty("topic", p => p.Is(topic))
+                                .WithProperty("privacy_level", p => p.Is((int)privacyLevel))
                         )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
+            );
 
-                var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel, reason);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestStageInstanceAPI.DeleteStageInstance"/> method.
+    /// </summary>
+    public class DeleteStageInstance : RestAPITestBase<IDiscordRestStageInstanceAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestStageInstanceAPI.DeleteStageInstance"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteStageInstance : RestAPITestBase<IDiscordRestStageInstanceAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var channelID = DiscordSnowflake.New(1);
-                var reason = "test";
+            var channelID = DiscordSnowflake.New(1);
+            var reason = "test";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}stage-instances/{channelID}")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .WithNoContent()
-                        .Respond(HttpStatusCode.NoContent)
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}stage-instances/{channelID}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .WithNoContent()
+                    .Respond(HttpStatusCode.NoContent)
+            );
 
-                var result = await api.DeleteStageInstance(channelID, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.DeleteStageInstance(channelID, reason);
+            ResultAssert.Successful(result);
         }
     }
 }

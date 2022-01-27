@@ -29,30 +29,29 @@ using Remora.Results;
 // ReSharper disable SA1402 - we allow two types in this file, because one is a marker interface of the other
 #pragma warning disable SA1402
 
-namespace Remora.Discord.Gateway.Responders
+namespace Remora.Discord.Gateway.Responders;
+
+/// <summary>
+/// Represents a marker interface for event responders.
+/// </summary>
+[PublicAPI]
+public interface IResponder
+{
+}
+
+/// <summary>
+/// Represents a type that can respond to certain gateway events.
+/// </summary>
+/// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
+[PublicAPI]
+public interface IResponder<in TGatewayEvent> : IResponder
+    where TGatewayEvent : IGatewayEvent
 {
     /// <summary>
-    /// Represents a marker interface for event responders.
+    /// Responds to the given gateway event, handling it asynchronously.
     /// </summary>
-    [PublicAPI]
-    public interface IResponder
-    {
-    }
-
-    /// <summary>
-    /// Represents a type that can respond to certain gateway events.
-    /// </summary>
-    /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-    [PublicAPI]
-    public interface IResponder<in TGatewayEvent> : IResponder
-        where TGatewayEvent : IGatewayEvent
-    {
-        /// <summary>
-        /// Responds to the given gateway event, handling it asynchronously.
-        /// </summary>
-        /// <param name="gatewayEvent">The event to respond to.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A response result which may or may not have succeeded.</returns>
-        Task<Result> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default);
-    }
+    /// <param name="gatewayEvent">The event to respond to.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A response result which may or may not have succeeded.</returns>
+    Task<Result> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default);
 }

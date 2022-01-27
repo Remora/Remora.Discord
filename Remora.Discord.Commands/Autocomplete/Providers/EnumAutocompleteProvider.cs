@@ -26,9 +26,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FuzzySharp;
-using Humanizer;
+using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Extensions;
 
 namespace Remora.Discord.Commands.Autocomplete;
 
@@ -39,7 +39,16 @@ namespace Remora.Discord.Commands.Autocomplete;
 public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
     where TEnum : struct, Enum
 {
-    private static readonly string[] Names = Enum.GetNames(typeof(TEnum));
+    private readonly ILogger<EnumAutocompleteProvider<TEnum>> _logger;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EnumAutocompleteProvider{TEnum}"/> class.
+    /// </summary>
+    /// <param name="logger">The logging instance for this type.</param>
+    public EnumAutocompleteProvider(ILogger<EnumAutocompleteProvider<TEnum>> logger)
+    {
+        _logger = logger;
+    }
 
     /// <inheritdoc />
     public ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>> GetSuggestionsAsync
@@ -49,13 +58,28 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
         CancellationToken ct = default
     )
     {
+        var getChoices = EnumExtensions.GetEnumChoices<TEnum>();
+        if (getChoices.IsDefined(out var choices))
+        {
+            return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
+            (
+                choices
+                    .OrderByDescending(choice => Fuzz.Ratio(userInput, choice.Name))
+                    .Take(25)
+                    .ToList()
+            );
+        }
+
+        _logger.LogWarning
+        (
+            "No autocomplete suggestions available for enumeration \"{TypeName}\": {Message}",
+            typeof(TEnum).Name,
+            getChoices.Error!.Message
+        );
+
         return new ValueTask<IReadOnlyList<IApplicationCommandOptionChoice>>
         (
-            Names
-                .OrderByDescending(n => Fuzz.Ratio(userInput, n))
-                .Take(25)
-                .Select(n => new ApplicationCommandOptionChoice(n.Humanize().Transform(To.TitleCase), n))
-                .ToList()
+            Array.Empty<IApplicationCommandOptionChoice>()
         );
     }
 }

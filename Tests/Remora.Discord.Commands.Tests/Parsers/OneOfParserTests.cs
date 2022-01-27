@@ -31,74 +31,73 @@ using Remora.Discord.Commands.Parsers;
 using Remora.Discord.Tests;
 using Xunit;
 
-namespace Remora.Discord.Commands.Tests.Parsers
+namespace Remora.Discord.Commands.Tests.Parsers;
+
+/// <summary>
+/// Tests the <see cref="OneOfParser"/> class.
+/// </summary>
+public class OneOfParserTests
 {
+    private readonly OneOfParser _parser;
+
     /// <summary>
-    /// Tests the <see cref="OneOfParser"/> class.
+    /// Initializes a new instance of the <see cref="OneOfParserTests"/> class.
     /// </summary>
-    public class OneOfParserTests
+    public OneOfParserTests()
     {
-        private readonly OneOfParser _parser;
+        var services = new ServiceCollection()
+            .AddSingleton<TypeParserService>()
+            .AddParser<Int32Parser>()
+            .AddParser<DoubleParser>()
+            .AddParser<StringParser>()
+            .AddParser<OneOfParser>()
+            .BuildServiceProvider(true);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OneOfParserTests"/> class.
-        /// </summary>
-        public OneOfParserTests()
-        {
-            var services = new ServiceCollection()
-                .AddSingleton<TypeParserService>()
-                .AddParser<Int32Parser>()
-                .AddParser<DoubleParser>()
-                .AddParser<StringParser>()
-                .AddParser<OneOfParser>()
-                .BuildServiceProvider();
+        _parser = (OneOfParser)services.GetServices<ITypeParser>().First(p => p is OneOfParser);
+    }
 
-            _parser = (OneOfParser)services.GetServices<ITypeParser>().First(p => p is OneOfParser);
-        }
+    /// <summary>
+    /// Tests whether the parser can parse a single-argument OneOf.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanParseSingleArgumentOneOfAsync()
+    {
+        var type = typeof(OneOf<string>);
+        var token = "wooga";
 
-        /// <summary>
-        /// Tests whether the parser can parse a single-argument OneOf.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanParseSingleArgumentOneOfAsync()
-        {
-            var type = typeof(OneOf<string>);
-            var token = "wooga";
+        var tryParse = await _parser.TryParseAsync(token, type);
+        ResultAssert.Successful(tryParse);
+        Assert.IsType<OneOf<string>>(tryParse.Entity);
 
-            var tryParse = await _parser.TryParseAsync(token, type);
-            ResultAssert.Successful(tryParse);
-            Assert.IsType<OneOf<string>>(tryParse.Entity);
+        var result = (OneOf<string>)tryParse.Entity!;
+        Assert.Equal(token, result);
+    }
 
-            var result = (OneOf<string>)tryParse.Entity!;
-            Assert.Equal(token, result);
-        }
+    /// <summary>
+    /// Tests whether the parser can parse a multi-argument OneOf.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanParseMultiArgumentOneOfAsync()
+    {
+        var type = typeof(OneOf<int, double>);
+        var integerToken = "0";
 
-        /// <summary>
-        /// Tests whether the parser can parse a multi-argument OneOf.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanParseMultiArgumentOneOfAsync()
-        {
-            var type = typeof(OneOf<int, double>);
-            var integerToken = "0";
+        var tryParseInteger = await _parser.TryParseAsync(integerToken, type);
+        ResultAssert.Successful(tryParseInteger);
+        Assert.IsType<OneOf<int, double>>(tryParseInteger.Entity);
 
-            var tryParseInteger = await _parser.TryParseAsync(integerToken, type);
-            ResultAssert.Successful(tryParseInteger);
-            Assert.IsType<OneOf<int, double>>(tryParseInteger.Entity);
+        var integerResult = (OneOf<int, double>)tryParseInteger.Entity!;
+        Assert.Equal(0, integerResult);
 
-            var integerResult = (OneOf<int, double>)tryParseInteger.Entity!;
-            Assert.Equal(0, integerResult);
+        var doubleToken = "1.0";
 
-            var doubleToken = "1.0";
+        var tryParseDouble = await _parser.TryParseAsync(doubleToken, type);
+        ResultAssert.Successful(tryParseDouble);
+        Assert.IsType<OneOf<int, double>>(tryParseDouble.Entity);
 
-            var tryParseDouble = await _parser.TryParseAsync(doubleToken, type);
-            ResultAssert.Successful(tryParseDouble);
-            Assert.IsType<OneOf<int, double>>(tryParseDouble.Entity);
-
-            var doubleResult = (OneOf<int, double>)tryParseDouble.Entity!;
-            Assert.Equal(1.0, doubleResult);
-        }
+        var doubleResult = (OneOf<int, double>)tryParseDouble.Entity!;
+        Assert.Equal(1.0, doubleResult);
     }
 }

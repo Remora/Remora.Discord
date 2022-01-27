@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the various premium levels.
+/// </summary>
+[PublicAPI]
+public enum PremiumType
 {
     /// <summary>
-    /// Enumerates the various premium levels.
+    /// The user has no premium status.
     /// </summary>
-    [PublicAPI]
-    public enum PremiumType
-    {
-        /// <summary>
-        /// The user has no premium status.
-        /// </summary>
-        None = 0,
+    None = 0,
 
-        /// <summary>
-        /// The user has a Nitro Classic subscription.
-        /// </summary>
-        NitroClassic = 1,
+    /// <summary>
+    /// The user has a Nitro Classic subscription.
+    /// </summary>
+    NitroClassic = 1,
 
-        /// <summary>
-        /// The user has a Nitro subscription.
-        /// </summary>
-        Nitro = 2
-    }
+    /// <summary>
+    /// The user has a Nitro subscription.
+    /// </summary>
+    Nitro = 2
 }

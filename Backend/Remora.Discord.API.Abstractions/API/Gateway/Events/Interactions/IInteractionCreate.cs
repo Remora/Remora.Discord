@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a user-invoked slash command.
+/// </summary>
+[PublicAPI]
+public interface IInteractionCreate : IInteraction, IGatewayEvent
 {
-    /// <summary>
-    /// Represents a user-invoked slash command.
-    /// </summary>
-    [PublicAPI]
-    public interface IInteractionCreate : IInteraction, IGatewayEvent
-    {
-    }
 }

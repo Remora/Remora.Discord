@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a channel in a welcome screen.
+/// </summary>
+[PublicAPI]
+public interface IWelcomeScreenChannel
 {
     /// <summary>
-    /// Represents a channel in a welcome screen.
+    /// Gets the ID of the channel.
     /// </summary>
-    [PublicAPI]
-    public interface IWelcomeScreenChannel
-    {
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the description shown for the channel.
-        /// </summary>
-        string Description { get; }
+    /// <summary>
+    /// Gets the description shown for the channel.
+    /// </summary>
+    string Description { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild emoji used for the channel.
-        /// </summary>
-        Snowflake? EmojiID { get; }
+    /// <summary>
+    /// Gets the ID of the guild emoji used for the channel.
+    /// </summary>
+    Snowflake? EmojiID { get; }
 
-        /// <summary>
-        /// Gets the name or unicode string of the emoji used for the channel.
-        /// </summary>
-        string? EmojiName { get; }
-    }
+    /// <summary>
+    /// Gets the name or unicode string of the emoji used for the channel.
+    /// </summary>
+    string? EmojiName { get; }
 }

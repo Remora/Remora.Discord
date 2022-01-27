@@ -23,42 +23,41 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents application information for a Discord integration.
+/// </summary>
+[PublicAPI]
+public interface IIntegrationApplication
 {
     /// <summary>
-    /// Represents application information for a Discord integration.
+    /// Gets the ID of the application.
     /// </summary>
-    [PublicAPI]
-    public interface IIntegrationApplication
-    {
-        /// <summary>
-        /// Gets the ID of the application.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the name of the application.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the application.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the application's icon.
-        /// </summary>
-        IImageHash? Icon { get; }
+    /// <summary>
+    /// Gets the application's icon.
+    /// </summary>
+    IImageHash? Icon { get; }
 
-        /// <summary>
-        /// Gets the description of the application.
-        /// </summary>
-        string Description { get; }
+    /// <summary>
+    /// Gets the description of the application.
+    /// </summary>
+    string Description { get; }
 
-        /// <summary>
-        /// Gets the summary of the application.
-        /// </summary>
-        string Summary { get; }
+    /// <summary>
+    /// Gets the summary of the application.
+    /// </summary>
+    string Summary { get; }
 
-        /// <summary>
-        /// Gets the bot associated with this application.
-        /// </summary>
-        Optional<IUser> Bot { get; }
-    }
+    /// <summary>
+    /// Gets the bot associated with this application.
+    /// </summary>
+    Optional<IUser> Bot { get; }
 }

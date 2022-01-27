@@ -22,52 +22,51 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various button styles.
+/// </summary>
+[PublicAPI]
+public enum ButtonComponentStyle
 {
     /// <summary>
-    /// Enumerates various button styles.
+    /// A standard-looking blurple button.
     /// </summary>
-    [PublicAPI]
-    public enum ButtonComponentStyle
-    {
-        /// <summary>
-        /// A standard-looking blurple button.
-        /// </summary>
-        /// <remarks>
-        /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
-        /// </remarks>
-        Primary = 1,
+    /// <remarks>
+    /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
+    /// </remarks>
+    Primary = 1,
 
-        /// <summary>
-        /// A grey, incognito button.
-        /// </summary>
-        /// <remarks>
-        /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
-        /// </remarks>
-        Secondary = 2,
+    /// <summary>
+    /// A grey, incognito button.
+    /// </summary>
+    /// <remarks>
+    /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
+    /// </remarks>
+    Secondary = 2,
 
-        /// <summary>
-        /// A green button, indicating confirmation or success.
-        /// </summary>
-        /// <remarks>
-        /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
-        /// </remarks>
-        Success = 3,
+    /// <summary>
+    /// A green button, indicating confirmation or success.
+    /// </summary>
+    /// <remarks>
+    /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
+    /// </remarks>
+    Success = 3,
 
-        /// <summary>
-        /// A red button, indicating rejection or danger.
-        /// </summary>
-        /// <remarks>
-        /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
-        /// </remarks>
-        Danger = 4,
+    /// <summary>
+    /// A red button, indicating rejection or danger.
+    /// </summary>
+    /// <remarks>
+    /// This button style requires a valid value in <see cref="IButtonComponent.CustomID"/>.
+    /// </remarks>
+    Danger = 4,
 
-        /// <summary>
-        /// A grey button with a link.
-        /// </summary>
-        /// <remarks>
-        /// This button style requires a valid value in <see cref="IButtonComponent.URL"/>.
-        /// </remarks>
-        Link = 5
-    }
+    /// <summary>
+    /// A grey button with a link.
+    /// </summary>
+    /// <remarks>
+    /// This button style requires a valid value in <see cref="IButtonComponent.URL"/>.
+    /// </remarks>
+    Link = 5
 }

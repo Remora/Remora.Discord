@@ -23,10 +23,9 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <inheritdoc />
+public class WebhooksUpdateTests : GatewayEventTestBase<IWebhooksUpdate>
 {
-    /// <inheritdoc />
-    public class WebhooksUpdateTests : GatewayEventTestBase<IWebhooksUpdate>
-    {
-    }
 }

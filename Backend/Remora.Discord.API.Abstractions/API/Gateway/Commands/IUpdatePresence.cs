@@ -25,32 +25,31 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents a command to update the presence of a user.
+/// </summary>
+[PublicAPI]
+public interface IUpdatePresence : IGatewayCommand
 {
     /// <summary>
-    /// Represents a command to update the presence of a user.
+    /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.
     /// </summary>
-    [PublicAPI]
-    public interface IUpdatePresence : IGatewayCommand
-    {
-        /// <summary>
-        /// Gets the unix time in milliseconds of when the client went idle, or null if the client is not idle.
-        /// </summary>
-        DateTimeOffset? Since { get; }
+    DateTimeOffset? Since { get; }
 
-        /// <summary>
-        /// Gets the user's new activities.
-        /// </summary>
-        IReadOnlyList<IActivity> Activities { get; }
+    /// <summary>
+    /// Gets the user's new activities.
+    /// </summary>
+    IReadOnlyList<IActivity> Activities { get; }
 
-        /// <summary>
-        /// Gets the user's status.
-        /// </summary>
-        ClientStatus Status { get; }
+    /// <summary>
+    /// Gets the user's status.
+    /// </summary>
+    ClientStatus Status { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the user is AFK.
-        /// </summary>
-        bool IsAFK { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the user is AFK.
+    /// </summary>
+    bool IsAFK { get; }
 }

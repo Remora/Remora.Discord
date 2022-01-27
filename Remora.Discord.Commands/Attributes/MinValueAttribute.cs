@@ -22,7 +22,6 @@
 
 using System;
 using OneOf;
-using Remora.Rest.Core;
 
 namespace Remora.Discord.Commands.Attributes;
 
@@ -35,49 +34,41 @@ public class MinValueAttribute : Attribute
     /// <summary>
     /// Gets the minimum allowed value.
     /// </summary>
-    public Optional<OneOf<ulong, long, float, double>> Value { get; }
+    public OneOf<ulong, long, float, double> Value { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(long? minValue = default)
+    public MinValueAttribute(long minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = minValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(ulong? minValue = default)
+    public MinValueAttribute(ulong minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = minValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(float? minValue = default)
+    public MinValueAttribute(float minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = minValue;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MinValueAttribute"/> class.
     /// </summary>
     /// <param name="minValue">The minimum value.</param>
-    public MinValueAttribute(double? minValue = default)
+    public MinValueAttribute(double minValue = default)
     {
-        this.Value = minValue is null
-            ? default
-            : new Optional<OneOf<ulong, long, float, double>>(minValue.Value);
+        this.Value = minValue;
     }
 }

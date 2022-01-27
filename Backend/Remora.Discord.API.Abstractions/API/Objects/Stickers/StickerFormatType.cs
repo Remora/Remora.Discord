@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates sticker format types.
+/// </summary>
+[PublicAPI]
+public enum StickerFormatType
 {
     /// <summary>
-    /// Enumerates sticker format types.
+    /// The sticker is a PNG image.
     /// </summary>
-    [PublicAPI]
-    public enum StickerFormatType
-    {
-        /// <summary>
-        /// The sticker is a PNG image.
-        /// </summary>
-        PNG = 1,
+    PNG = 1,
 
-        /// <summary>
-        /// The sticker is an APNG image.
-        /// </summary>
-        APNG = 2,
+    /// <summary>
+    /// The sticker is an APNG image.
+    /// </summary>
+    APNG = 2,
 
-        /// <summary>
-        /// The sticker is a Discord "Lottie" sticker.
-        /// </summary>
-        Lottie = 3
-    }
+    /// <summary>
+    /// The sticker is a Discord "Lottie" sticker.
+    /// </summary>
+    Lottie = 3
 }

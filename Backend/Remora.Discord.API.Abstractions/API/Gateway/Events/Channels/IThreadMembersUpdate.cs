@@ -25,37 +25,36 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to the member list of a thread.
+/// </summary>
+[PublicAPI]
+public interface IThreadMembersUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to the member list of a thread.
+    /// Gets the ID of the thread.
     /// </summary>
-    [PublicAPI]
-    public interface IThreadMembersUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the thread.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the approximate member count of members in the thread. Stops counting after 50.
-        /// </summary>
-        int MemberCount { get; }
+    /// <summary>
+    /// Gets the approximate member count of members in the thread. Stops counting after 50.
+    /// </summary>
+    int MemberCount { get; }
 
-        /// <summary>
-        /// Gets the users who were added to the thread.
-        /// </summary>
-        Optional<IReadOnlyList<IThreadMember>> AddedMembers { get; }
+    /// <summary>
+    /// Gets the users who were added to the thread.
+    /// </summary>
+    Optional<IReadOnlyList<IThreadMember>> AddedMembers { get; }
 
-        /// <summary>
-        /// Gets the IDs of the users who were removed from the thread.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> RemovedMemberIDs { get; }
-    }
+    /// <summary>
+    /// Gets the IDs of the users who were removed from the thread.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> RemovedMemberIDs { get; }
 }

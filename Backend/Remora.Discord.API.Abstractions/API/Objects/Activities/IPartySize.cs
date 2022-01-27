@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a party size object.
+/// </summary>
+[PublicAPI]
+public interface IPartySize
 {
     /// <summary>
-    /// Represents a party size object.
+    /// Gets the current number of people in the party.
     /// </summary>
-    [PublicAPI]
-    public interface IPartySize
-    {
-        /// <summary>
-        /// Gets the current number of people in the party.
-        /// </summary>
-        int CurrentSize { get; }
+    int CurrentSize { get; }
 
-        /// <summary>
-        /// Gets the maximum size of the party.
-        /// </summary>
-        int MaxSize { get; }
-    }
+    /// <summary>
+    /// Gets the maximum size of the party.
+    /// </summary>
+    int MaxSize { get; }
 }

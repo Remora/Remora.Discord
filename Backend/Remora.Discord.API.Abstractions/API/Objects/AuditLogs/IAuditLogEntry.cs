@@ -24,47 +24,46 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an entry in the audit log.
+/// </summary>
+[PublicAPI]
+public interface IAuditLogEntry
 {
     /// <summary>
-    /// Represents an entry in the audit log.
+    /// Gets the ID of the log entry target. Typically, this is a snowflake.
     /// </summary>
-    [PublicAPI]
-    public interface IAuditLogEntry
-    {
-        /// <summary>
-        /// Gets the ID of the log entry target. Typically, this is a snowflake.
-        /// </summary>
-        string? TargetID { get; }
+    string? TargetID { get; }
 
-        /// <summary>
-        /// Gets a list of audit log changes.
-        /// </summary>
-        Optional<IReadOnlyList<IAuditLogChange>> Changes { get; }
+    /// <summary>
+    /// Gets a list of audit log changes.
+    /// </summary>
+    Optional<IReadOnlyList<IAuditLogChange>> Changes { get; }
 
-        /// <summary>
-        /// Gets the user who made the changes.
-        /// </summary>
-        Snowflake? UserID { get; }
+    /// <summary>
+    /// Gets the user who made the changes.
+    /// </summary>
+    Snowflake? UserID { get; }
 
-        /// <summary>
-        /// Gets the ID of the entry.
-        /// </summary>
-        Snowflake ID { get; }
+    /// <summary>
+    /// Gets the ID of the entry.
+    /// </summary>
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the type of action that occurred.
-        /// </summary>
-        AuditLogEvent ActionType { get; }
+    /// <summary>
+    /// Gets the type of action that occurred.
+    /// </summary>
+    AuditLogEvent ActionType { get; }
 
-        /// <summary>
-        /// Gets additional info for certain action types.
-        /// </summary>
-        Optional<IOptionalAuditEntryInfo> Options { get; }
+    /// <summary>
+    /// Gets additional info for certain action types.
+    /// </summary>
+    Optional<IOptionalAuditEntryInfo> Options { get; }
 
-        /// <summary>
-        /// Gets the reason for the change (0-512 characters).
-        /// </summary>
-        Optional<string> Reason { get; }
-    }
+    /// <summary>
+    /// Gets the reason for the change (0-512 characters).
+    /// </summary>
+    Optional<string> Reason { get; }
 }

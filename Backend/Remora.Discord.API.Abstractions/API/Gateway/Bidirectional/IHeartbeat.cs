@@ -24,17 +24,16 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional
+namespace Remora.Discord.API.Abstractions.Gateway.Bidirectional;
+
+/// <summary>
+/// Represents a heartbeat command to or from Discord.
+/// </summary>
+[PublicAPI]
+public interface IHeartbeat : IGatewayCommand, IGatewayEvent
 {
     /// <summary>
-    /// Represents a heartbeat command to or from Discord.
+    /// Gets the last sequence number received by the client.
     /// </summary>
-    [PublicAPI]
-    public interface IHeartbeat : IGatewayCommand, IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the last sequence number received by the client.
-        /// </summary>
-        long? LastSequenceNumber { get; }
-    }
+    long? LastSequenceNumber { get; }
 }

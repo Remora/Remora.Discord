@@ -25,1966 +25,1965 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Applications
+namespace Remora.Discord.Rest.Tests.API.Applications;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestApplicationAPI"/> class.
+/// </summary>
+public class DiscordRestApplicationAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestApplicationAPI"/> class.
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetGlobalApplicationCommandsAsync"/> method.
     /// </summary>
-    public class DiscordRestApplicationAPITests
+    public class GetGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetGlobalApplicationCommandsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
+            var applicationID = DiscordSnowflake.New(0);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithNoContent()
-                        .Respond("application/json", "[ ]")
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithNoContent()
+                    .Respond("application/json", "[ ]")
+            );
 
-                var result = await api.GetGlobalApplicationCommandsAsync
-                (
-                    applicationID
-                );
+            var result = await api.GetGlobalApplicationCommandsAsync
+            (
+                applicationID
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.CreateGlobalApplicationCommandAsync"/> method.
+    /// </summary>
+    public class CreateGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.CreateGlobalApplicationCommandAsync"/> method.
+        /// Tests whether the API method performs its request correctly for chat command.
         /// </summary>
-        public class CreateGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForChatCommand()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for chat command.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForChatCommand()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var type = ApplicationCommandType.ChatInput;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
+            var applicationID = DiscordSnowflake.New(0);
+            var type = ApplicationCommandType.ChatInput;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for user commands.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForUserCommand()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var type = ApplicationCommandType.User;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(string.Empty))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for message commands.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForMessageCommand()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var type = ApplicationCommandType.Message;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(string.Empty))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var name = string.Empty;
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-                var type = ApplicationCommandType.ChatInput;
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var name = new string('a', 33);
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var name = "aaa";
-                var description = string.Empty;
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var name = "aaa";
-                var description = new string('a', 101);
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGlobalApplicationCommandsAsync"/> method.
-        /// </summary>
-        public class BulkOverwriteGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
                     (
-                        Name: "aaa",
-                        Description: "bbbb",
-                        Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true,
-                        Type: ApplicationCommandType.ChatInput
-                    ),
-                    new BulkApplicationCommandData
-                    (
-                        Name: "ccc",
-                        Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: true,
-                        Type: ApplicationCommandType.Message
-                    ),
-                    new BulkApplicationCommandData
-                    (
-                        Name: "eee",
-                        Description: "ffff"
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
                     )
-                };
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .WithJson
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly for user commands.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForUserCommand()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var type = ApplicationCommandType.User;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            json => json.IsArray
-                            (
-                                a => a
-                                    .WithElement
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(string.Empty))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly for message commands.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForMessageCommand()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var type = ApplicationCommandType.Message;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(string.Empty))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var name = string.Empty;
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+            var type = ApplicationCommandType.ChatInput;
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var name = new string('a', 33);
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var name = "aaa";
+            var description = string.Empty;
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var name = "aaa";
+            var description = new string('a', 101);
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGlobalApplicationCommandAsync
+            (
+                applicationID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGlobalApplicationCommandsAsync"/> method.
+    /// </summary>
+    public class BulkOverwriteGlobalApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: "aaa",
+                    Description: "bbbb",
+                    Options: new List<ApplicationCommandOption>(),
+                    DefaultPermission: true,
+                    Type: ApplicationCommandType.ChatInput
+                ),
+                new BulkApplicationCommandData
+                (
+                    Name: "ccc",
+                    Options: new List<ApplicationCommandOption>(),
+                    DefaultPermission: true,
+                    Type: ApplicationCommandType.Message
+                ),
+                new BulkApplicationCommandData
+                (
+                    Name: "eee",
+                    Description: "ffff"
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsArray
+                        (
+                            a => a
+                                .WithElement
+                                (
+                                    0,
+                                    e => e.IsObject
                                     (
-                                        0,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[0].Name))
-                                                .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
-                                                .WithProperty("description", p => p.Is(commands[0].Description.Value))
-                                                .WithProperty("options", p => p.IsArray(
-                                                    ar => ar.WithCount(0)))
-                                                .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[0].Name))
+                                            .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
+                                            .WithProperty("description", p => p.Is(commands[0].Description.Value))
+                                            .WithProperty("options", p => p.IsArray(
+                                                ar => ar.WithCount(0)))
+                                            .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
                                     )
-                                    .WithElement
+                                )
+                                .WithElement
+                                (
+                                    1,
+                                    e => e.IsObject
                                     (
-                                        1,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[1].Name))
-                                                .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                                .WithProperty("options", p => p.IsArray(
-                                                    ar => ar.WithCount(0)))
-                                                .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[1].Name))
+                                            .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
+                                            .WithProperty("options", p => p.IsArray(
+                                                ar => ar.WithCount(0)))
+                                            .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
                                     )
-                                    .WithElement
+                                )
+                                .WithElement
+                                (
+                                    2,
+                                    e => e.IsObject
                                     (
-                                        2,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[2].Name))
-                                                .WithoutProperty("type")
-                                                .WithProperty("description", p => p.Is(commands[2].Description.Value))
-                                                .WithoutProperty("options")
-                                                .WithoutProperty("default_permission")
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[2].Name))
+                                            .WithoutProperty("type")
+                                            .WithProperty("description", p => p.Is(commands[2].Description.Value))
+                                            .WithoutProperty("options")
+                                            .WithoutProperty("default_permission")
                                     )
-                            )
+                                )
                         )
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    applicationID,
-                    commands
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
-                    (
-                        Name: string.Empty,
-                        Description: "wwww"
                     )
-                };
+                    .Respond("application/json", "[]")
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
+            (
+                applicationID,
+                commands
+            );
 
-                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    applicationID,
-                    commands
-                );
+            ResultAssert.Successful(result);
+        }
 
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commands = new[]
             {
-                var applicationID = DiscordSnowflake.New(0);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+                new BulkApplicationCommandData
+                (
+                    Name: string.Empty,
+                    Description: "wwww"
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
+            (
+                applicationID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: new string('a', 33),
+                    Description: "wwww"
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
+            (
+                applicationID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: "aaa",
+                    Description: string.Empty
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
+            (
+                applicationID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: "aaa",
+                    Description: new string('w', 101)
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
+            (
+                applicationID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetGlobalApplicationCommandAsync"/> method.
+    /// </summary>
+    public class GetGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.GetGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.EditGlobalApplicationCommandAsync"/> method.
+    /// </summary>
+    public class EditGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
+
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithJson
                     (
-                        Name: new string('a', 33),
-                        Description: "wwww"
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
                     )
-                };
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.EditGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    applicationID,
-                    commands
-                );
+            ResultAssert.Successful(result);
+        }
 
-                ResultAssert.Unsuccessful(result);
-            }
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
 
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+            var name = string.Empty;
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithJson
                     (
-                        Name: "aaa",
-                        Description: string.Empty
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
                     )
-                };
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Post, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.EditGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    applicationID,
-                    commands
-                );
+            ResultAssert.Unsuccessful(result);
+        }
 
-                ResultAssert.Unsuccessful(result);
-            }
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
 
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+            var name = new string('a', 33);
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithJson
                     (
-                        Name: "aaa",
-                        Description: new string('w', 101)
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
                     )
-                };
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.EditGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                var result = await api.BulkOverwriteGlobalApplicationCommandsAsync
-                (
-                    applicationID,
-                    commands
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetGlobalApplicationCommandAsync"/> method.
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
         /// </summary>
-        public class GetGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.GetGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID
-                );
-
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.EditGlobalApplicationCommandAsync"/> method.
-        /// </summary>
-        public class EditGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var name = string.Empty;
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var name = new string('a', 33);
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var name = "aaa";
-                var description = string.Empty;
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var name = "aaa";
-                var description = new string('a', 101);
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGlobalApplicationCommandAsync
-                (
-                    applicationID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.DeleteGlobalApplicationCommandAsync"/> method.
-        /// </summary>
-        public class DeleteGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var commandID = DiscordSnowflake.New(1);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Delete, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
-                        )
-                        .WithNoContent()
-                        .Respond(HttpStatusCode.NoContent)
-                );
-
-                var result = await api.DeleteGlobalApplicationCommandAsync(applicationID, commandID);
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandsAsync"/> method.
-        /// </summary>
-        public class GetGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Get,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithNoContent()
-                        .Respond("application/json", "[ ]")
-                );
-
-                var result = await api.GetGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID
-                );
-
-                ResultAssert.Successful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.CreateGuildApplicationCommandAsync"/> method.
-        /// </summary>
-        public class CreateGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for chat commands.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForChatCommands()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var type = ApplicationCommandType.ChatInput;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for user commands.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForUserCommands()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var type = ApplicationCommandType.User;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(string.Empty))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method performs its request correctly for message commands.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectlyForMessageCommands()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var type = ApplicationCommandType.Message;
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("type", p => p.Is((int)type))
-                                    .WithProperty("description", p => p.Is(string.Empty))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options,
-                    type: type
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var name = string.Empty;
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var name = new string('a', 33);
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var name = "aaa";
-                var description = string.Empty;
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-
-                var name = "aaa";
-                var description = new string('a', 101);
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Post,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.CreateGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-        }
-
-        /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGuildApplicationCommandsAsync"/> method.
-        /// </summary>
-        public class BulkOverwriteGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
-        {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
+
+            var name = "aaa";
+            var description = string.Empty;
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithJson
                     (
-                        "aaa",
-                        "bbbb",
-                        new List<ApplicationCommandOption>(),
-                        true,
-                        ApplicationCommandType.ChatInput
-                    ),
-                    new BulkApplicationCommandData
-                    (
-                        "ccc",
-                        Options: new List<ApplicationCommandOption>(),
-                        DefaultPermission: false,
-                        Type: ApplicationCommandType.Message
-                    ),
-                    new BulkApplicationCommandData
-                    (
-                        Name: "eee",
-                        Description: "ffff"
-                    ),
-                };
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
-                        .WithJson
+                        json => json.IsObject
                         (
-                            json => json.IsArray
-                            (
-                                a => a
-                                    .WithElement
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.EditGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
+
+            var name = "aaa";
+            var description = new string('a', 101);
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Patch, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}")
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.EditGlobalApplicationCommandAsync
+            (
+                applicationID,
+                commandID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.DeleteGlobalApplicationCommandAsync"/> method.
+    /// </summary>
+    public class DeleteGlobalApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var commandID = DiscordSnowflake.New(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete, $"{Constants.BaseURL}applications/{applicationID}/commands/{commandID}"
+                    )
+                    .WithNoContent()
+                    .Respond(HttpStatusCode.NoContent)
+            );
+
+            var result = await api.DeleteGlobalApplicationCommandAsync(applicationID, commandID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandsAsync"/> method.
+    /// </summary>
+    public class GetGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithNoContent()
+                    .Respond("application/json", "[ ]")
+            );
+
+            var result = await api.GetGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.CreateGuildApplicationCommandAsync"/> method.
+    /// </summary>
+    public class CreateGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly for chat commands.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForChatCommands()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var type = ApplicationCommandType.ChatInput;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly for user commands.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForUserCommands()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var type = ApplicationCommandType.User;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(string.Empty))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method performs its request correctly for message commands.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectlyForMessageCommands()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var type = ApplicationCommandType.Message;
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("type", p => p.Is((int)type))
+                                .WithProperty("description", p => p.Is(string.Empty))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options,
+                type: type
+            );
+
+            ResultAssert.Successful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var name = string.Empty;
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var name = new string('a', 33);
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var name = "aaa";
+            var description = string.Empty;
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var name = "aaa";
+            var description = new string('a', 101);
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Post,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.CreateGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.BulkOverwriteGuildApplicationCommandsAsync"/> method.
+    /// </summary>
+    public class BulkOverwriteGuildApplicationCommandsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    "aaa",
+                    "bbbb",
+                    new List<ApplicationCommandOption>(),
+                    true,
+                    ApplicationCommandType.ChatInput
+                ),
+                new BulkApplicationCommandData
+                (
+                    "ccc",
+                    Options: new List<ApplicationCommandOption>(),
+                    DefaultPermission: false,
+                    Type: ApplicationCommandType.Message
+                ),
+                new BulkApplicationCommandData
+                (
+                    Name: "eee",
+                    Description: "ffff"
+                ),
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .WithJson
+                    (
+                        json => json.IsArray
+                        (
+                            a => a
+                                .WithElement
+                                (
+                                    0,
+                                    e => e.IsObject
                                     (
-                                        0,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[0].Name))
-                                                .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
-                                                .WithProperty("description", p => p.Is(commands[0].Description.Value))
-                                                .WithProperty("options", p => p.IsArray(
-                                                    ar => ar.WithCount(0)))
-                                                .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[0].Name))
+                                            .WithProperty("type", p => p.Is((int)commands[0].Type.Value))
+                                            .WithProperty("description", p => p.Is(commands[0].Description.Value))
+                                            .WithProperty("options", p => p.IsArray(
+                                                ar => ar.WithCount(0)))
+                                            .WithProperty("default_permission", p => p.Is(commands[0].DefaultPermission.Value))
                                     )
-                                    .WithElement
+                                )
+                                .WithElement
+                                (
+                                    1,
+                                    e => e.IsObject
                                     (
-                                        1,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[1].Name))
-                                                .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
-                                                .WithProperty("options", p => p.IsArray(
-                                                    ar => ar.WithCount(0)))
-                                                .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[1].Name))
+                                            .WithProperty("type", p => p.Is((int)commands[1].Type.Value))
+                                            .WithProperty("options", p => p.IsArray(
+                                                ar => ar.WithCount(0)))
+                                            .WithProperty("default_permission", p => p.Is(commands[1].DefaultPermission.Value))
                                     )
-                                    .WithElement
+                                )
+                                .WithElement
+                                (
+                                    2,
+                                    e => e.IsObject
                                     (
-                                        2,
-                                        e => e.IsObject
-                                        (
-                                            o => o
-                                                .WithProperty("name", p => p.Is(commands[2].Name))
-                                                .WithoutProperty("type")
-                                                .WithProperty("description", p => p.Is(commands[2].Description.Value))
-                                                .WithoutProperty("options")
-                                                .WithoutProperty("default_permission")
-                                        )
+                                        o => o
+                                            .WithProperty("name", p => p.Is(commands[2].Name))
+                                            .WithoutProperty("type")
+                                            .WithProperty("description", p => p.Is(commands[2].Description.Value))
+                                            .WithoutProperty("options")
+                                            .WithoutProperty("default_permission")
                                     )
-                            )
+                                )
                         )
-                        .Respond("application/json", "[]")
-                );
-
-                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID,
-                    commands
-                );
-
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
-                    (
-                        Name: string.Empty,
-                        Description: "wwww"
                     )
-                };
+                    .Respond("application/json", "[]")
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.BulkOverwriteGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID,
+                commands
+            );
 
-                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID,
-                    commands
-                );
+            ResultAssert.Successful(result);
+        }
 
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commands = new[]
             {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+                new BulkApplicationCommandData
+                (
+                    Name: string.Empty,
+                    Description: "wwww"
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: new string('a', 33),
+                    Description: "wwww"
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: "aaa",
+                    Description: string.Empty
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+
+        /// <summary>
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commands = new[]
+            {
+                new BulkApplicationCommandData
+                (
+                    Name: "aaa",
+                    Description: new string('a', 101)
+                )
+            };
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
+
+            var result = await api.BulkOverwriteGuildApplicationCommandsAsync
+            (
+                applicationID,
+                guildID,
+                commands
+            );
+
+            ResultAssert.Unsuccessful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandAsync"/> method.
+    /// </summary>
+    public class GetGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
                     (
-                        Name: new string('a', 33),
-                        Description: "wwww"
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
-                };
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.GetGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID
+            );
 
-                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID,
-                    commands
-                );
+            ResultAssert.Successful(result);
+        }
+    }
 
-                ResultAssert.Unsuccessful(result);
-            }
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.EditGuildApplicationCommandAsync"/> method.
+    /// </summary>
+    public class EditGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+            var name = "aaa";
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
                     (
-                        Name: "aaa",
-                        Description: string.Empty
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
                     )
-                };
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID,
-                    commands
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commands = new[]
-                {
-                    new BulkApplicationCommandData
+                    .WithJson
                     (
-                        Name: "aaa",
-                        Description: new string('a', 101)
+                        json => json.IsObject
+                        (
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
+                        )
                     )
-                };
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Put, $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands")
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+            var result = await api.EditGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                var result = await api.BulkOverwriteGuildApplicationCommandsAsync
-                (
-                    applicationID,
-                    guildID,
-                    commands
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Successful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandAsync"/> method.
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
         /// </summary>
-        public class GetGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooShort()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var name = string.Empty;
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Get,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
                         )
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var result = await api.GetGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID
-                );
+            var result = await api.EditGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                ResultAssert.Successful(result);
-            }
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.EditGuildApplicationCommandAsync"/> method.
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
         /// </summary>
-        public class EditGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfNameIsTooLong()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var name = "aaa";
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
+            var name = new string('a', 33);
+            var description = "wwww";
+            var options = new List<ApplicationCommandOption>();
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
                         )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var result = await api.EditGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
+            var result = await api.EditGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                name,
+                description,
+                options
+            );
 
-                ResultAssert.Successful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
-
-                var name = string.Empty;
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfNameIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
-
-                var name = new string('a', 33);
-                var description = "wwww";
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
-
-                var name = "aaa";
-                var description = string.Empty;
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
-
-            /// <summary>
-            /// Tests whether the API method returns a client-side error if a failure condition is met.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
-
-                var name = "aaa";
-                var description = new string('a', 101);
-                var options = new List<ApplicationCommandOption>();
-
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Patch,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o
-                                    .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("description", p => p.Is(description))
-                                    .WithProperty("options", p => p.IsArray())
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
-                );
-
-                var result = await api.EditGuildApplicationCommandAsync
-                (
-                    applicationID,
-                    guildID,
-                    commandID,
-                    name,
-                    description,
-                    options
-                );
-
-                ResultAssert.Unsuccessful(result);
-            }
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.DeleteGuildApplicationCommandAsync"/> method.
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
         /// </summary>
-        public class DeleteGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooShort()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var name = "aaa";
+            var description = string.Empty;
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Delete,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
                         )
-                        .WithNoContent()
-                        .Respond(HttpStatusCode.NoContent)
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var result = await api.DeleteGuildApplicationCommandAsync(applicationID, guildID, commandID);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.EditGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
 
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandPermissionsAsync"/> method.
+        /// Tests whether the API method returns a client-side error if a failure condition is met.
         /// </summary>
-        public class GetGuildApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task ReturnsUnsuccessfulIfDescriptionIsTooLong()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var name = "aaa";
+            var description = new string('a', 101);
+            var options = new List<ApplicationCommandOption>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Patch,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Get,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                            o => o
+                                .WithProperty("name", p => p.Is(name))
+                                .WithProperty("description", p => p.Is(description))
+                                .WithProperty("options", p => p.IsArray())
                         )
-                        .WithNoContent()
-                        .Respond("application/json", "[]")
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplicationCommand)])
+            );
 
-                var result = await api.GetGuildApplicationCommandPermissionsAsync(applicationID, guildID);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.EditGuildApplicationCommandAsync
+            (
+                applicationID,
+                guildID,
+                commandID,
+                name,
+                description,
+                options
+            );
+
+            ResultAssert.Unsuccessful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.DeleteGuildApplicationCommandAsync"/> method.
+    /// </summary>
+    public class DeleteGuildApplicationCommandAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.GetApplicationCommandPermissionsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Get,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
-                        )
-                        .WithNoContent()
-                        .Respond
-                        (
-                            "application/json",
-                            SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)]
-                        )
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Delete,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}"
+                    )
+                    .WithNoContent()
+                    .Respond(HttpStatusCode.NoContent)
+            );
 
-                var result = await api.GetApplicationCommandPermissionsAsync(applicationID, guildID, commandID);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.DeleteGuildApplicationCommandAsync(applicationID, guildID, commandID);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetGuildApplicationCommandPermissionsAsync"/> method.
+    /// </summary>
+    public class GetGuildApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.EditApplicationCommandPermissionsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class EditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
-                var commandID = DiscordSnowflake.New(2);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
 
-                var permissions = Array.Empty<IApplicationCommandPermissions>();
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                    )
+                    .WithNoContent()
+                    .Respond("application/json", "[]")
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
-                        (
-                            HttpMethod.Put,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
-                        )
-                        .WithJson
-                        (
-                            json => json.IsObject
-                            (
-                                o => o.WithProperty("permissions", p => p.IsArray(a => a.WithCount(0)))
-                            )
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
-                );
-
-                var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetGuildApplicationCommandPermissionsAsync(applicationID, guildID);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.GetApplicationCommandPermissionsAsync"/> method.
+    /// </summary>
+    public class GetApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestApplicationAPI.BatchEditApplicationCommandPermissionsAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class BatchEditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var applicationID = DiscordSnowflake.New(0);
-                var guildID = DiscordSnowflake.New(1);
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
 
-                var permissions = Array.Empty<IPartialGuildApplicationCommandPermissions>();
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Get,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                    )
+                    .WithNoContent()
+                    .Respond
+                    (
+                        "application/json",
+                        SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)]
+                    )
+            );
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect
+            var result = await api.GetApplicationCommandPermissionsAsync(applicationID, guildID, commandID);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.EditApplicationCommandPermissionsAsync"/> method.
+    /// </summary>
+    public class EditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+            var commandID = DiscordSnowflake.New(2);
+
+            var permissions = Array.Empty<IApplicationCommandPermissions>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsObject
                         (
-                            HttpMethod.Put,
-                            $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                            o => o.WithProperty("permissions", p => p.IsArray(a => a.WithCount(0)))
                         )
-                        .WithJson
-                        (
-                            json => json.IsArray
-                            (
-                                a => a.WithCount(0)
-                            )
-                        )
-                        .Respond("application/json", "[]")
-                );
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildApplicationCommandPermissions)])
+            );
 
-                var result = await api.BatchEditApplicationCommandPermissionsAsync(applicationID, guildID, permissions);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.EditApplicationCommandPermissionsAsync(applicationID, guildID, commandID, permissions);
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestApplicationAPI.BatchEditApplicationCommandPermissionsAsync"/> method.
+    /// </summary>
+    public class BatchEditApplicationCommandPermissionsAsync : RestAPITestBase<IDiscordRestApplicationAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var applicationID = DiscordSnowflake.New(0);
+            var guildID = DiscordSnowflake.New(1);
+
+            var permissions = Array.Empty<IPartialGuildApplicationCommandPermissions>();
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect
+                    (
+                        HttpMethod.Put,
+                        $"{Constants.BaseURL}applications/{applicationID}/guilds/{guildID}/commands/permissions"
+                    )
+                    .WithJson
+                    (
+                        json => json.IsArray
+                        (
+                            a => a.WithCount(0)
+                        )
+                    )
+                    .Respond("application/json", "[]")
+            );
+
+            var result = await api.BatchEditApplicationCommandPermissionsAsync(applicationID, guildID, permissions);
+            ResultAssert.Successful(result);
         }
     }
 }

@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to a voice server of a guild.
+/// </summary>
+[PublicAPI]
+public interface IVoiceServerUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to a voice server of a guild.
+    /// Gets the voice server token.
     /// </summary>
-    [PublicAPI]
-    public interface IVoiceServerUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the voice server token.
-        /// </summary>
-        string Token { get; }
+    string Token { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the voice server host.
-        /// </summary>
-        string? Endpoint { get; }
-    }
+    /// <summary>
+    /// Gets the voice server host.
+    /// </summary>
+    string? Endpoint { get; }
 }

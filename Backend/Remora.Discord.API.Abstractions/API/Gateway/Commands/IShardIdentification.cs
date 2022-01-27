@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents an identification set for a sharded connection.
+/// </summary>
+[PublicAPI]
+public interface IShardIdentification
 {
     /// <summary>
-    /// Represents an identification set for a sharded connection.
+    /// Gets the ID of this shard.
     /// </summary>
-    [PublicAPI]
-    public interface IShardIdentification
-    {
-        /// <summary>
-        /// Gets the ID of this shard.
-        /// </summary>
-        int ShardID { get; }
+    int ShardID { get; }
 
-        /// <summary>
-        /// Gets the total number of shards.
-        /// </summary>
-        int ShardCount { get; }
-    }
+    /// <summary>
+    /// Gets the total number of shards.
+    /// </summary>
+    int ShardCount { get; }
 }

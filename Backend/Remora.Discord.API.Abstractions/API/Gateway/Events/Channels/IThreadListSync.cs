@@ -25,32 +25,31 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Sent when the current user gains access to a thread channel.
+/// </summary>
+[PublicAPI]
+public interface IThreadListSync : IGatewayEvent
 {
     /// <summary>
-    /// Sent when the current user gains access to a thread channel.
+    /// Gets the ID of the guild that the thread is synchronizing on.
     /// </summary>
-    [PublicAPI]
-    public interface IThreadListSync : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild that the thread is synchronizing on.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the parent channel IDs whose threads are being synced.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> ChannelIDs { get; }
+    /// <summary>
+    /// Gets the parent channel IDs whose threads are being synced.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> ChannelIDs { get; }
 
-        /// <summary>
-        /// Gets all active threads that the current user can access.
-        /// </summary>
-        IReadOnlyList<IChannel> Threads { get; }
+    /// <summary>
+    /// Gets all active threads that the current user can access.
+    /// </summary>
+    IReadOnlyList<IChannel> Threads { get; }
 
-        /// <summary>
-        /// Gets all thread member objects from the synchronized threads.
-        /// </summary>
-        IReadOnlyList<IThreadMember> Members { get; }
-    }
+    /// <summary>
+    /// Gets all thread member objects from the synchronized threads.
+    /// </summary>
+    IReadOnlyList<IThreadMember> Members { get; }
 }

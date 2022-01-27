@@ -1,5 +1,5 @@
 //
-//  IThreadQueryResponse.cs
+//  IButtonInteractiveEntity.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,31 +20,26 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
+using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.Interactivity;
+
+/// <summary>
+/// Represents an entity that responds to button interactions.
+/// </summary>
+[PublicAPI]
+public interface IButtonInteractiveEntity : IInteractiveEntity
 {
     /// <summary>
-    /// Represents a response object from the REST API regarding a thread query.
+    /// Handles a button interaction; that is, a user pressed a button attached to a message.
     /// </summary>
-    [PublicAPI, Obsolete("Will be removed in API v10.")]
-    public interface IThreadQueryResponse
-    {
-        /// <summary>
-        /// Gets the threads returned by the query.
-        /// </summary>
-        IReadOnlyList<IChannel> Threads { get; }
-
-        /// <summary>
-        /// Gets a set of member objects that map to the returned threads the current user has joined.
-        /// </summary>
-        IReadOnlyList<IThreadMember> Members { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether more threads could be returned on a subsequent call.
-        /// </summary>
-        bool HasMore { get; }
-    }
+    /// <param name="user">The user who pressed the button.</param>
+    /// <param name="customID">The button's own unique ID.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result> HandleInteractionAsync(IUser user, string customID, CancellationToken ct = default);
 }

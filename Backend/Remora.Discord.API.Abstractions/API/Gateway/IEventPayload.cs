@@ -22,27 +22,26 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway
+namespace Remora.Discord.API.Abstractions.Gateway;
+
+/// <summary>
+/// Represents an event payload.
+/// </summary>
+[PublicAPI]
+public interface IEventPayload : IPayload
 {
     /// <summary>
-    /// Represents an event payload.
+    /// Gets the name of the event.
     /// </summary>
-    [PublicAPI]
-    public interface IEventPayload : IPayload
-    {
-        /// <summary>
-        /// Gets the name of the event.
-        /// </summary>
-        string? EventName { get; }
+    string? EventName { get; }
 
-        /// <summary>
-        /// Gets the operation code of the event.
-        /// </summary>
-        OperationCode OperationCode { get; }
+    /// <summary>
+    /// Gets the operation code of the event.
+    /// </summary>
+    OperationCode OperationCode { get; }
 
-        /// <summary>
-        /// Gets the sequence number of the event.
-        /// </summary>
-        int SequenceNumber { get; }
-    }
+    /// <summary>
+    /// Gets the sequence number of the event.
+    /// </summary>
+    int SequenceNumber { get; }
 }

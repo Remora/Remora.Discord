@@ -22,36 +22,35 @@
 
 using System.Collections.Generic;
 
-namespace Remora.Discord.Commands.Tests.Conditions
+namespace Remora.Discord.Commands.Tests.Conditions;
+
+public partial class RequireDiscordPermissionConditionTests
 {
-    public partial class RequireDiscordPermissionConditionTests
+    /// <summary>
+    /// Gets the test cases.
+    /// </summary>
+    public static IEnumerable<object[]> Cases
     {
-        /// <summary>
-        /// Gets the test cases.
-        /// </summary>
-        public static IEnumerable<object[]> Cases
+        get
         {
-            get
+            foreach (var andCase in AndCases())
             {
-                foreach (var andCase in AndCases())
-                {
-                    yield return andCase;
-                }
+                yield return andCase;
+            }
 
-                foreach (var orCases in OrCases())
-                {
-                    yield return orCases;
-                }
+            foreach (var orCases in OrCases())
+            {
+                yield return orCases;
+            }
 
-                foreach (var xorCase in XorCases())
-                {
-                    yield return xorCase;
-                }
+            foreach (var xorCase in XorCases())
+            {
+                yield return xorCase;
+            }
 
-                foreach (var notCase in NotCases())
-                {
-                    yield return notCase;
-                }
+            foreach (var notCase in NotCases())
+            {
+                yield return notCase;
             }
         }
     }

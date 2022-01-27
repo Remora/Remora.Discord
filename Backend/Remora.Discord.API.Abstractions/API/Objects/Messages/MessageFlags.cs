@@ -23,53 +23,52 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various message flags.
+/// </summary>
+[PublicAPI, Flags]
+public enum MessageFlags
 {
     /// <summary>
-    /// Enumerates various message flags.
+    /// The message has been published to subscribed channels.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum MessageFlags
-    {
-        /// <summary>
-        /// The message has been published to subscribed channels.
-        /// </summary>
-        Crossposted = 1 << 0,
+    Crossposted = 1 << 0,
 
-        /// <summary>
-        /// The message originated from a message in another channel.
-        /// </summary>
-        IsCrosspost = 1 << 1,
+    /// <summary>
+    /// The message originated from a message in another channel.
+    /// </summary>
+    IsCrosspost = 1 << 1,
 
-        /// <summary>
-        /// No embeds should be included when serializing the message.
-        /// </summary>
-        SuppressEmbeds = 1 << 2,
+    /// <summary>
+    /// No embeds should be included when serializing the message.
+    /// </summary>
+    SuppressEmbeds = 1 << 2,
 
-        /// <summary>
-        /// The source message for this crosspost has been deleted.
-        /// </summary>
-        SourceMessageDeleted = 1 << 3,
+    /// <summary>
+    /// The source message for this crosspost has been deleted.
+    /// </summary>
+    SourceMessageDeleted = 1 << 3,
 
-        /// <summary>
-        /// This message came from the urgent message system.
-        /// </summary>
-        Urgent = 1 << 4,
+    /// <summary>
+    /// This message came from the urgent message system.
+    /// </summary>
+    Urgent = 1 << 4,
 
-        /// <summary>
-        /// The message has an associated thread with the same ID as the message.
-        /// </summary>
-        HasThread = 1 << 5,
+    /// <summary>
+    /// The message has an associated thread with the same ID as the message.
+    /// </summary>
+    HasThread = 1 << 5,
 
-        /// <summary>
-        /// The message will only be visible to the executing user.
-        /// </summary>
-        Ephemeral = 1 << 6,
+    /// <summary>
+    /// The message will only be visible to the executing user.
+    /// </summary>
+    Ephemeral = 1 << 6,
 
-        /// <summary>
-        /// The message is a loading message, created by an interaction response (typically, this shows that the bot is
-        /// "thinking".)
-        /// </summary>
-        Loading = 1 << 6
-    }
+    /// <summary>
+    /// The message is a loading message, created by an interaction response (typically, this shows that the bot is
+    /// "thinking".)
+    /// </summary>
+    Loading = 1 << 6
 }

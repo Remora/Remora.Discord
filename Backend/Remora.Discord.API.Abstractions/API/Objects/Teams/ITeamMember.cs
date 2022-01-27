@@ -24,32 +24,31 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a Discord developer team member.
+/// </summary>
+[PublicAPI]
+public interface ITeamMember
 {
     /// <summary>
-    /// Represents a Discord developer team member.
+    /// Gets the user's membership state on the team.
     /// </summary>
-    [PublicAPI]
-    public interface ITeamMember
-    {
-        /// <summary>
-        /// Gets the user's membership state on the team.
-        /// </summary>
-        MembershipState MembershipState { get; }
+    MembershipState MembershipState { get; }
 
-        /// <summary>
-        /// Gets the permissions of the member. Currently, always '[ "*" ]'.
-        /// </summary>
-        IReadOnlyList<string> Permissions { get; }
+    /// <summary>
+    /// Gets the permissions of the member. Currently, always '[ "*" ]'.
+    /// </summary>
+    IReadOnlyList<string> Permissions { get; }
 
-        /// <summary>
-        /// Gets the ID of the parent team of which the user is a member.
-        /// </summary>
-        Snowflake TeamID { get; }
+    /// <summary>
+    /// Gets the ID of the parent team of which the user is a member.
+    /// </summary>
+    Snowflake TeamID { get; }
 
-        /// <summary>
-        /// Gets the user that's part of the team.
-        /// </summary>
-        IPartialUser User { get; }
-    }
+    /// <summary>
+    /// Gets the user that's part of the team.
+    /// </summary>
+    IPartialUser User { get; }
 }

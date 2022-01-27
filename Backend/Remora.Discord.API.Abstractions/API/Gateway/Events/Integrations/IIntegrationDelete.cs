@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the creation of an integration.
+/// </summary>
+[PublicAPI]
+public interface IIntegrationDelete : IGatewayEvent
 {
     /// <summary>
-    /// Represents the creation of an integration.
+    /// Gets the ID of the deleted integration.
     /// </summary>
-    [PublicAPI]
-    public interface IIntegrationDelete : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the deleted integration.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the integration was deleted on.
-        /// </summary>
-        Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the integration was deleted on.
+    /// </summary>
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the application the integration was associated with.
-        /// </summary>
-        Optional<Snowflake> ApplicationID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the application the integration was associated with.
+    /// </summary>
+    Optional<Snowflake> ApplicationID { get; }
 }

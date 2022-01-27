@@ -1,5 +1,5 @@
 //
-//  ThreadQueryResponse.cs
+//  InteractivityResponderOptions.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,18 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.Interactivity.Responders;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IThreadQueryResponse" />
-[PublicAPI, Obsolete("Will be removed in API v10.")]
-public record ThreadQueryResponse
-(
-    IReadOnlyList<IChannel> Threads,
-    IReadOnlyList<IThreadMember> Members,
-    bool HasMore
-) : IThreadQueryResponse;
+/// <summary>
+/// Defines various options for the interactivity responder.
+/// </summary>
+/// <param name="SuppressAutomaticResponses">
+/// true if the responder shouldn't automatically create interaction responses; otherwise, false.
+/// </param>
+public record InteractivityResponderOptions(bool SuppressAutomaticResponses = false);

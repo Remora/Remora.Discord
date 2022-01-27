@@ -24,42 +24,41 @@ using System;
 using System.Collections.Generic;
 using CommandLine;
 
-namespace Remora.Discord.SensitiveDataScrubber
+namespace Remora.Discord.SensitiveDataScrubber;
+
+/// <summary>
+/// Represents the command-line options of the program.
+/// </summary>
+public class ProgramOptions
 {
     /// <summary>
-    /// Represents the command-line options of the program.
+    /// Gets the files to scrub.
     /// </summary>
-    public class ProgramOptions
+    [Option('i', "input", Min = 1, Required = true, HelpText = "The files or directories to scrub.")]
+    public IReadOnlyList<string> InputFiles { get; }
+
+    /// <summary>
+    /// Gets the output directory.
+    /// </summary>
+    [Option('o', "output-directory", HelpText = "The output directory.")]
+    public string OutputDirectory { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the original file should be overwritten instead of creating a copy.
+    /// </summary>
+    [Option("overwrite", HelpText = "Whether the original file should be overwritten instead of creating a copy.")]
+    public bool Overwrite { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProgramOptions"/> class.
+    /// </summary>
+    /// <param name="inputFiles">The files to scrub.</param>
+    /// <param name="outputDirectory">The output directory.</param>
+    /// <param name="overwrite">Whether the original file should be overwritten instead of creating a copy.</param>
+    public ProgramOptions(IReadOnlyList<string> inputFiles, string? outputDirectory, bool overwrite)
     {
-        /// <summary>
-        /// Gets the files to scrub.
-        /// </summary>
-        [Option('i', "input", Min = 1, Required = true, HelpText = "The files or directories to scrub.")]
-        public IReadOnlyList<string> InputFiles { get; }
-
-        /// <summary>
-        /// Gets the output directory.
-        /// </summary>
-        [Option('o', "output-directory", HelpText = "The output directory.")]
-        public string OutputDirectory { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the original file should be overwritten instead of creating a copy.
-        /// </summary>
-        [Option("overwrite", HelpText = "Whether the original file should be overwritten instead of creating a copy.")]
-        public bool Overwrite { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProgramOptions"/> class.
-        /// </summary>
-        /// <param name="inputFiles">The files to scrub.</param>
-        /// <param name="outputDirectory">The output directory.</param>
-        /// <param name="overwrite">Whether the original file should be overwritten instead of creating a copy.</param>
-        public ProgramOptions(IReadOnlyList<string> inputFiles, string? outputDirectory, bool overwrite)
-        {
-            this.InputFiles = inputFiles;
-            this.OutputDirectory = outputDirectory ?? Environment.CurrentDirectory;
-            this.Overwrite = overwrite;
-        }
+        this.InputFiles = inputFiles;
+        this.OutputDirectory = outputDirectory ?? Environment.CurrentDirectory;
+        this.Overwrite = overwrite;
     }
 }

@@ -22,21 +22,19 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <inheritdoc />
+public class MessageComponentTests : ObjectTestBase<IMessageComponent>
 {
     /// <inheritdoc />
-    public class MessageComponentTests : ObjectTestBase<IMessageComponent>
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "unknown_field"
-            }
-        };
-    }
+            "unknown_field"
+        }
+    };
 }

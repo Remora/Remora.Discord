@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <summary>
+/// Tests the <see cref="ActivitySecrets"/> type.
+/// </summary>
+public class ActivitySecretsTests : ObjectTestBase<IActivitySecrets>
 {
-    /// <summary>
-    /// Tests the <see cref="ActivitySecrets"/> type.
-    /// </summary>
-    public class ActivitySecretsTests : ObjectTestBase<IActivitySecrets>
-    {
-    }
 }

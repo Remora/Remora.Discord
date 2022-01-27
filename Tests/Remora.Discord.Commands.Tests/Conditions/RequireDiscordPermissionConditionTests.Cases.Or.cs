@@ -24,87 +24,86 @@ using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 
-namespace Remora.Discord.Commands.Tests.Conditions
+namespace Remora.Discord.Commands.Tests.Conditions;
+
+public partial class RequireDiscordPermissionConditionTests
 {
-    public partial class RequireDiscordPermissionConditionTests
+    private static IEnumerable<object[]> OrCases()
     {
-        private static IEnumerable<object[]> OrCases()
+        var a = DiscordPermission.SendMessages;
+        var b = DiscordPermission.ReadMessageHistory;
+        var c = DiscordPermission.EmbedLinks;
+
+        yield return new object[]
         {
-            var a = DiscordPermission.SendMessages;
-            var b = DiscordPermission.ReadMessageHistory;
-            var c = DiscordPermission.EmbedLinks;
+            LogicalOperator.Or,
+            new[] { a },
+            new[] { a },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a },
-                new[] { a },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a },
+            new[] { b },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a },
-                new[] { b },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a },
+            new[] { a, b },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a },
-                new[] { a, b },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a },
+            new[] { b, c },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a },
-                new[] { b, c },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a, b },
+            new[] { a, b },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a, b },
-                new[] { a, b },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a, b },
+            new[] { a, c },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a, b },
-                new[] { a, c },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a, b },
+            new[] { a },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a, b },
-                new[] { a },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a, b },
+            new[] { b },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a, b },
-                new[] { b },
-                true
-            };
-
-            yield return new object[]
-            {
-                LogicalOperator.Or,
-                new[] { a, b },
-                new[] { c },
-                false
-            };
-        }
+        yield return new object[]
+        {
+            LogicalOperator.Or,
+            new[] { a, b },
+            new[] { c },
+            false
+        };
     }
 }

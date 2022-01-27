@@ -23,12 +23,11 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the ThreadDelete event.
+/// </summary>
+public class ThreadDeleteTests : GatewayEventTestBase<IThreadDelete>
 {
-    /// <summary>
-    /// Tests the ThreadDelete event.
-    /// </summary>
-    public class ThreadDeleteTests : GatewayEventTestBase<IThreadDelete>
-    {
-    }
 }

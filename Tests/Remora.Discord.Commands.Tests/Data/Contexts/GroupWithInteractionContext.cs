@@ -28,23 +28,22 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Contexts
+namespace Remora.Discord.Commands.Tests.Data.Contexts;
+
+[Group("interaction")]
+public class GroupWithInteractionContext : CommandGroup
 {
-    [Group("interaction")]
-    public class GroupWithInteractionContext : CommandGroup
+    // ReSharper disable once NotAccessedField.Local
+    private readonly ICommandContext _context;
+
+    public GroupWithInteractionContext(ICommandContext context)
     {
-        // ReSharper disable once NotAccessedField.Local
-        private readonly ICommandContext _context;
+        _context = context;
+    }
 
-        public GroupWithInteractionContext(ICommandContext context)
-        {
-            _context = context;
-        }
-
-        [Command("command")]
-        public Task<Result> Command()
-        {
-            return Task.FromResult(Result.FromSuccess());
-        }
+    [Command("command")]
+    public Task<Result> Command()
+    {
+        return Task.FromResult(Result.FromSuccess());
     }
 }

@@ -5,22 +5,34 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.5</Version>
+        <Version>2022.7</Version>
         <Description>
             $(BaseDescription)
 
             This package is a metapackage for Remora.Discord, providing references to everything you need to get
-            started.
+            started. Note that this package implies a dependency on the latest version of Remora.Discord's main
+            packages, with no regard for API compatibility across builds.
+
+            Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
         </PackageReleaseNotes>
+
+        <!-- No need for build output, since this is a metapackage -->
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+        <EmbedUntrackedSources>false</EmbedUntrackedSources>
+        <EmbedAllSources>false</EmbedAllSources>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Backend\Remora.Discord.Gateway\Remora.Discord.Gateway.csproj" />
       <ProjectReference Include="..\Remora.Discord.Commands\Remora.Discord.Commands.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Extensions\Remora.Discord.Extensions.csproj" />
       <ProjectReference Include="..\Remora.Discord.Hosting\Remora.Discord.Hosting.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Interactivity\Remora.Discord.Interactivity.csproj" />
+      <ProjectReference Include="..\Remora.Discord.Pagination\Remora.Discord.Pagination.csproj" />
     </ItemGroup>
 
 </Project>

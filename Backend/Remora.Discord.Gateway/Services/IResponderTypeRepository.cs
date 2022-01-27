@@ -25,33 +25,32 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.Gateway.Services
+namespace Remora.Discord.Gateway.Services;
+
+/// <summary>
+/// Represents a type that can serve lists of registered responder types for gateway events.
+/// </summary>
+[PublicAPI]
+public interface IResponderTypeRepository
 {
     /// <summary>
-    /// Represents a type that can serve lists of registered responder types for gateway events.
+    /// Gets all responder types that are relevant for the given event, and should run before any other responders.
     /// </summary>
-    [PublicAPI]
-    public interface IResponderTypeRepository
-    {
-        /// <summary>
-        /// Gets all responder types that are relevant for the given event, and should run before any other responders.
-        /// </summary>
-        /// <typeparam name="TGatewayEvent">The event type.</typeparam>
-        /// <returns>A list of responder types.</returns>
-        IReadOnlyList<Type> GetEarlyResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
+    /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+    /// <returns>A list of responder types.</returns>
+    IReadOnlyList<Type> GetEarlyResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
 
-        /// <summary>
-        /// Gets all responder types that are relevant for the given event.
-        /// </summary>
-        /// <typeparam name="TGatewayEvent">The event type.</typeparam>
-        /// <returns>A list of responder types.</returns>
-        IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
+    /// <summary>
+    /// Gets all responder types that are relevant for the given event.
+    /// </summary>
+    /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+    /// <returns>A list of responder types.</returns>
+    IReadOnlyList<Type> GetResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
 
-        /// <summary>
-        /// Gets all responder types that are relevant for the given event, and should run after any other responders.
-        /// </summary>
-        /// <typeparam name="TGatewayEvent">The event type.</typeparam>
-        /// <returns>A list of responder types.</returns>
-        IReadOnlyList<Type> GetLateResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
-    }
+    /// <summary>
+    /// Gets all responder types that are relevant for the given event, and should run after any other responders.
+    /// </summary>
+    /// <typeparam name="TGatewayEvent">The event type.</typeparam>
+    /// <returns>A list of responder types.</returns>
+    IReadOnlyList<Type> GetLateResponderTypes<TGatewayEvent>() where TGatewayEvent : IGatewayEvent;
 }

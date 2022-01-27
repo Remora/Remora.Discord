@@ -24,30 +24,29 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a dropdown of selectable values.
+/// </summary>
+[PublicAPI]
+public interface ISelectMenuComponent : IMessageComponent
 {
-    /// <summary>
-    /// Represents a dropdown of selectable values.
-    /// </summary>
-    [PublicAPI]
-    public interface ISelectMenuComponent : IMessageComponent
-    {
-        /// <inheritdoc cref="IComponent.CustomID"/>
-        string CustomID { get; }
+    /// <inheritdoc cref="IComponent.CustomID"/>
+    string CustomID { get; }
 
-        /// <inheritdoc cref="IComponent.Options"/>
-        IReadOnlyList<ISelectOption> Options { get; }
+    /// <inheritdoc cref="IComponent.Options"/>
+    IReadOnlyList<ISelectOption> Options { get; }
 
-        /// <inheritdoc cref="IComponent.Placeholder"/>
-        Optional<string> Placeholder { get; }
+    /// <inheritdoc cref="IComponent.Placeholder"/>
+    Optional<string> Placeholder { get; }
 
-        /// <inheritdoc cref="IComponent.MinValues"/>
-        Optional<int> MinValues { get; }
+    /// <inheritdoc cref="IComponent.MinValues"/>
+    Optional<int> MinValues { get; }
 
-        /// <inheritdoc cref="IComponent.MaxValues"/>
-        Optional<int> MaxValues { get; }
+    /// <inheritdoc cref="IComponent.MaxValues"/>
+    Optional<int> MaxValues { get; }
 
-        /// <inheritdoc cref="IComponent.IsDisabled"/>
-        Optional<bool> IsDisabled { get; }
-    }
+    /// <inheritdoc cref="IComponent.IsDisabled"/>
+    Optional<bool> IsDisabled { get; }
 }

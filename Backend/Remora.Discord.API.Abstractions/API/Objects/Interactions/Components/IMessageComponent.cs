@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents the base type for all components.
+/// </summary>
+[PublicAPI]
+public interface IMessageComponent
 {
-    /// <summary>
-    /// Represents the base type for all components.
-    /// </summary>
-    [PublicAPI]
-    public interface IMessageComponent
-    {
-    }
 }

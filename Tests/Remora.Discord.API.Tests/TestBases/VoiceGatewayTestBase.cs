@@ -27,25 +27,24 @@ using Remora.Discord.API.Abstractions.VoiceGateway;
 using Remora.Discord.API.Tests.Services;
 using Xunit;
 
-namespace Remora.Discord.API.Tests.TestBases
-{
-    /// <inheritdoc />
-    public abstract class VoiceGatewayTestBase<TType, TEventDataSource>
-        : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource> where TType : IVoiceGatewayPayloadData where TEventDataSource : TheoryData, new()
-    {
-        /// <summary>
-        /// Tests whether the type can be deserialized from a JSON object.
-        /// </summary>
-        /// <param name="sampleDataFile">The sample data.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [SkippableTheory]
-        [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
-        public async Task DeserializedCorrectType(SampleDataDescriptor sampleDataFile)
-        {
-            await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
-            var payload = await JsonSerializer.DeserializeAsync<IVoicePayload>(sampleData, this.Options);
+namespace Remora.Discord.API.Tests.TestBases;
 
-            Assert.IsAssignableFrom<IVoicePayload<TType>>(payload);
-        }
+/// <inheritdoc />
+public abstract class VoiceGatewayTestBase<TType, TEventDataSource>
+    : JsonBackedTypeTestBase<IVoicePayload, TEventDataSource> where TType : IVoiceGatewayPayloadData where TEventDataSource : TheoryData, new()
+{
+    /// <summary>
+    /// Tests whether the type can be deserialized from a JSON object.
+    /// </summary>
+    /// <param name="sampleDataFile">The sample data.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [SkippableTheory]
+    [MemberData(nameof(SampleSource), DisableDiscoveryEnumeration = true)]
+    public async Task DeserializedCorrectType(SampleDataDescriptor sampleDataFile)
+    {
+        await using var sampleData = File.OpenRead(sampleDataFile.FullPath);
+        var payload = await JsonSerializer.DeserializeAsync<IVoicePayload>(sampleData, this.Options);
+
+        Assert.IsAssignableFrom<IVoicePayload<TType>>(payload);
     }
 }

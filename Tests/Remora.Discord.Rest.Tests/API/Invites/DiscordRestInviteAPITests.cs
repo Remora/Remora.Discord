@@ -23,86 +23,85 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Discord.Rest.Tests.TestBases;
 using Remora.Discord.Tests;
-using Remora.Rest.Core;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.Invites
+namespace Remora.Discord.Rest.Tests.API.Invites;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestInviteAPI"/> class.
+/// </summary>
+public class DiscordRestInviteAPITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestInviteAPI"/> class.
+    /// Tests the <see cref="DiscordRestInviteAPI.GetInviteAsync"/> method.
     /// </summary>
-    public class DiscordRestInviteAPITests
+    public class GetInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestInviteAPI.GetInviteAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var inviteCode = "brr";
-                var withCounts = true;
-                var withExpiration = false;
-                var eventID = DiscordSnowflake.New(1);
+            var inviteCode = "brr";
+            var withCounts = true;
+            var withExpiration = false;
+            var eventID = DiscordSnowflake.New(1);
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}invites/{inviteCode}")
-                        .WithQueryString
-                        (
-                            new[]
-                            {
-                                new KeyValuePair<string, string>("with_counts", withCounts.ToString()),
-                                new KeyValuePair<string, string>("with_expiration", withExpiration.ToString()),
-                                new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString()),
-                            }
-                        )
-                        .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}invites/{inviteCode}")
+                    .WithQueryString
+                    (
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("with_counts", withCounts.ToString()),
+                            new KeyValuePair<string, string>("with_expiration", withExpiration.ToString()),
+                            new KeyValuePair<string, string>("guild_scheduled_event_id", eventID.ToString()),
+                        }
+                    )
+                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+            );
 
-                var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration, eventID);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetInviteAsync(inviteCode, withCounts, withExpiration, eventID);
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestInviteAPI.GetInviteAsync"/> method.
+    /// </summary>
+    public class DeleteInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestInviteAPI.GetInviteAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class DeleteInviteAsync : RestAPITestBase<IDiscordRestInviteAPI>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var inviteCode = "brr";
-                var reason = "test";
+            var inviteCode = "brr";
+            var reason = "test";
 
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
-                        .WithHeaders(Constants.AuditLogHeaderName, reason)
-                        .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Delete, $"{Constants.BaseURL}invites/{inviteCode}")
+                    .WithHeaders(Constants.AuditLogHeaderName, reason)
+                    .Respond("application/json", SampleRepository.Samples[typeof(IInvite)])
+            );
 
-                var result = await api.DeleteInviteAsync(inviteCode, reason);
-                ResultAssert.Successful(result);
-            }
+            var result = await api.DeleteInviteAsync(inviteCode, reason);
+            ResultAssert.Successful(result);
         }
     }
 }

@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a collection of platform statues.
+/// </summary>
+[PublicAPI]
+public interface IClientStatuses
 {
     /// <summary>
-    /// Represents a collection of platform statues.
+    /// Gets the status of the user on desktop.
     /// </summary>
-    [PublicAPI]
-    public interface IClientStatuses
-    {
-        /// <summary>
-        /// Gets the status of the user on desktop.
-        /// </summary>
-        Optional<ClientStatus> Desktop { get; }
+    Optional<ClientStatus> Desktop { get; }
 
-        /// <summary>
-        /// Gets the status of the user on mobile.
-        /// </summary>
-        Optional<ClientStatus> Mobile { get; }
+    /// <summary>
+    /// Gets the status of the user on mobile.
+    /// </summary>
+    Optional<ClientStatus> Mobile { get; }
 
-        /// <summary>
-        /// Gets the status of the user in the browser.
-        /// </summary>
-        Optional<ClientStatus> Web { get; }
-    }
+    /// <summary>
+    /// Gets the status of the user in the browser.
+    /// </summary>
+    Optional<ClientStatus> Web { get; }
 }

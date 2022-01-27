@@ -24,91 +24,90 @@ using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Conditions;
 
-namespace Remora.Discord.Commands.Tests.Conditions
+namespace Remora.Discord.Commands.Tests.Conditions;
+
+public partial class RequireDiscordPermissionConditionTests
 {
-    public partial class RequireDiscordPermissionConditionTests
+    /// <summary>
+    /// Produces a set of test cases for the <see cref="LogicalOperator.And"/> operator.
+    /// </summary>
+    /// <returns>The test cases.</returns>
+    private static IEnumerable<object[]> AndCases()
     {
-        /// <summary>
-        /// Produces a set of test cases for the <see cref="LogicalOperator.And"/> operator.
-        /// </summary>
-        /// <returns>The test cases.</returns>
-        private static IEnumerable<object[]> AndCases()
+        var a = DiscordPermission.SendMessages;
+        var b = DiscordPermission.ReadMessageHistory;
+        var c = DiscordPermission.EmbedLinks;
+
+        yield return new object[]
         {
-            var a = DiscordPermission.SendMessages;
-            var b = DiscordPermission.ReadMessageHistory;
-            var c = DiscordPermission.EmbedLinks;
+            LogicalOperator.And,
+            new[] { a },
+            new[] { a },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a },
-                new[] { a },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a },
+            new[] { b },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a },
-                new[] { b },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a },
+            new[] { a, b },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a },
-                new[] { a, b },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a },
+            new[] { b, c },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a },
-                new[] { b, c },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a, b },
+            new[] { a, b },
+            true
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a, b },
-                new[] { a, b },
-                true
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a, b },
+            new[] { a, c },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a, b },
-                new[] { a, c },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a, b },
+            new[] { a },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a, b },
-                new[] { a },
-                false
-            };
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a, b },
+            new[] { b },
+            false
+        };
 
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a, b },
-                new[] { b },
-                false
-            };
-
-            yield return new object[]
-            {
-                LogicalOperator.And,
-                new[] { a, b },
-                new[] { c },
-                false
-            };
-        }
+        yield return new object[]
+        {
+            LogicalOperator.And,
+            new[] { a, b },
+            new[] { c },
+            false
+        };
     }
 }

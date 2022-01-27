@@ -23,17 +23,16 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various interaction callback data flags.
+/// </summary>
+[PublicAPI, Flags]
+public enum InteractionCallbackDataFlags
 {
     /// <summary>
-    /// Enumerates various interaction callback data flags.
+    /// The message will only be visible to the executing user.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum InteractionCallbackDataFlags
-    {
-        /// <summary>
-        /// The message will only be visible to the executing user.
-        /// </summary>
-        Ephemeral = 1 << 6
-    }
+    Ephemeral = 1 << 6
 }
