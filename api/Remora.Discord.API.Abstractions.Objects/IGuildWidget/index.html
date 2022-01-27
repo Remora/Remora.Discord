@@ -74,7 +74,6 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Properties">Properties</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -192,6 +191,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildTemplate">IGuildTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildThreadQueryResponse">I<wbr>Guild<wbr>Thread<wbr>Query<wbr>Response</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidgetSettings">IGuildWidgetSettings</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IImageHash">IImageHash</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegration">IIntegration</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IIntegrationApplication">I<wbr>Integration<wbr>Application</a></li>
@@ -279,7 +279,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventPrivacyLevel">Guild<wbr>Scheduled<wbr>Event<wbr>Privacy<wbr>Level</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/GuildScheduledEventStatus">Guild<wbr>Scheduled<wbr>Event<wbr>Status</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IntegrationExpireBehaviour">Integration<wbr>Expire<wbr>Behaviour</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackDataFlags">Interaction<wbr>Callback<wbr>Data<wbr>Flags</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionCallbackType">Interaction<wbr>Callback<wbr>Type</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InteractionType">InteractionType</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/InviteTarget">InviteTarget</a></li>
@@ -324,7 +323,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents an embedded invite widget.
+    Represents the status and invite widget for a guild.
     </div>
 
 		<div class="panel panel-default">
@@ -354,28 +353,10 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[PublicAPI]
-public interface IGuildWidget</code></pre>
+	<pre><code>public interface IGuildWidget</code></pre>
 
 
 
-	<h1 id="Attributes">Attributes</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover two-cols">
-				<thead>
-					<tr>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>PublicAPI</td>
-						<td></td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
 
 
 
@@ -395,20 +376,56 @@ public interface IGuildWidget</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/E5515427">ChannelID</a></td>
-								<td>Snowflake?</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/A1E6769F">Channels</a></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a>&gt;<wbr></td>
 								<td>
 									<div>
-    Gets the ID of the channel invites are generated for.
+    Gets the voice and stage channels accessible by @everyone.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/870F81B5">IsEnabled</a></td>
-								<td>bool</td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/98790685">ID</a></td>
+								<td>Snowflake</td>
 								<td>
 									<div>
-    Gets a value indicating whether the widget is enabled.
+    Gets the ID of the guild.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/06B878E7">InstantInvite</a></td>
+								<td>string?</td>
+								<td>
+									<div>
+    Gets the instant invite link or code for the guild.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/AB283121">Members</a></td>
+								<td>IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser">IPartialUser</a>&gt;<wbr></td>
+								<td>
+									<div>
+    Gets "special" widget user objects with presence information (max 100).
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/FC62429F">Name</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Gets the name of the guild (2-100 characters).
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget/24E47D2D">PresenceCount</a></td>
+								<td>int</td>
+								<td>
+									<div>
+    Gets the number of online members in this guild.
     </div>
 								</td>
 							</tr>

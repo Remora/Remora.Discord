@@ -164,6 +164,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/C81F6A2D">Get<wbr>Guild<wbr>Vanity<wbr>Url<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/944B21F6">Get<wbr>Guild<wbr>Voice<wbr>Regions<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/7CB66DF1">Get<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/77C7FC22">GetGuildWidgetAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/B46FBAAC">Get<wbr>Guild<wbr>Widget<wbr>Image<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Widget<wbr>Image<wbr>Style&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestGuildAPI/4C11AABA">Get<wbr>Guild<wbr>Widget<wbr>Settings<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F52A2F0B">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
@@ -226,7 +227,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public override Task&lt;Result&lt;IGuildWidget&gt;&gt; GetGuildWidgetSettingsAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public override Task&lt;Result&lt;IGuildWidgetSettings&gt;&gt; GetGuildWidgetSettingsAsync(Snowflake guildID, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -268,7 +269,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidgetSettings">IGuildWidgetSettings</a>&gt;<wbr>&gt;<wbr></td>
 					<td>A retrieval result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>

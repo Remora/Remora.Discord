@@ -164,6 +164,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/C81F6A2D">Get<wbr>Guild<wbr>Vanity<wbr>Url<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/75C0D7D1">Get<wbr>Guild<wbr>Voice<wbr>Regions<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/19924726">Get<wbr>Guild<wbr>Welcome<wbr>Screen<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/77C7FC22">GetGuildWidgetAsync<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/B46FBAAC">Get<wbr>Guild<wbr>Widget<wbr>Image<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;<wbr>Widget<wbr>Image<wbr>Style&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/BFAEA587">Get<wbr>Guild<wbr>Widget<wbr>Settings<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestGuildAPI/F52A2F0B">List<wbr>Active<wbr>Threads<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
@@ -226,7 +227,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public virtual Task&lt;Result&lt;IGuildWidget&gt;&gt; ModifyGuildWidgetAsync(Snowflake guildID, Optional&lt;bool&gt; isEnabled = null, Optional&lt;Snowflake?&gt; channelID = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>public virtual Task&lt;Result&lt;IGuildWidgetSettings&gt;&gt; ModifyGuildWidgetAsync(Snowflake guildID, Optional&lt;bool&gt; isEnabled = null, Optional&lt;Snowflake?&gt; channelID = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
 
 
 
@@ -283,7 +284,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidget">IGuildWidget</a>&gt;<wbr>&gt;<wbr></td>
+					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IGuildWidgetSettings">IGuildWidgetSettings</a>&gt;<wbr>&gt;<wbr></td>
 					<td>A modification result which may or may not have succeeded.</td>
 				</tr>
 			</tbody></table>
