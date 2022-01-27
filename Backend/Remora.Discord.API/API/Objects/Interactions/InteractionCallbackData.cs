@@ -37,7 +37,7 @@ public record InteractionCallbackData
     Optional<string> Content = default,
     Optional<IReadOnlyList<IEmbed>> Embeds = default,
     Optional<IAllowedMentions> AllowedMentions = default,
-    Optional<InteractionCallbackDataFlags> Flags = default,
+    Optional<MessageFlags> Flags = default,
     Optional<IReadOnlyList<IMessageComponent>> Components = default,
     Optional<IReadOnlyList<IPartialAttachment>> Attachments = default,
     Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices = default

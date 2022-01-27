@@ -60,7 +60,7 @@ public interface IInteractionCallbackData
     /// Gets the callback flags.
     /// </summary>
     /// <remarks>Only relevant for message interactions.</remarks>
-    Optional<InteractionCallbackDataFlags> Flags { get; }
+    Optional<MessageFlags> Flags { get; }
 
     /// <summary>
     /// Gets the components attached to the message.

@@ -230,7 +230,7 @@ public class InteractionResponder : IResponder<IInteractionCreate>
         {
             response = response with
             {
-                Data = new InteractionCallbackData(Flags: InteractionCallbackDataFlags.Ephemeral)
+                Data = new InteractionCallbackData(Flags: MessageFlags.Ephemeral)
             };
         }
 
