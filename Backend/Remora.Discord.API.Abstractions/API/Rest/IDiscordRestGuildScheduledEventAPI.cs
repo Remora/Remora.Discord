@@ -81,7 +81,7 @@ public interface IDiscordRestGuildScheduledEventAPI
         Optional<DateTimeOffset> scheduledEndTime,
         Optional<string> description,
         GuildScheduledEventEntityType entityType,
-        Optional<Stream> image,
+        Optional<Stream> image = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );
