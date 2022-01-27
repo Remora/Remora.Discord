@@ -70,5 +70,5 @@ public enum MessageFlags
     /// The message is a loading message, created by an interaction response (typically, this shows that the bot is
     /// "thinking".)
     /// </summary>
-    Loading = 1 << 6
+    Loading = 1 << 7
 }
