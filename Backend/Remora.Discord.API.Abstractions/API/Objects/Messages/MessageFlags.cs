@@ -70,5 +70,11 @@ public enum MessageFlags
     /// The message is a loading message, created by an interaction response (typically, this shows that the bot is
     /// "thinking".)
     /// </summary>
-    Loading = 1 << 7
+    Loading = 1 << 7,
+
+    /// <summary>
+    /// The message failed to mention some roles and add their members to the thread. This is a status flag and is not
+    /// settable in user code.
+    /// </summary>
+    FailedToMentionSomeRolesInThread = 1 << 8
 }
