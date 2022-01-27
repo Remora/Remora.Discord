@@ -930,7 +930,9 @@ public class DiscordGatewayClient : IDisposable
                 _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
                 return new GatewayError
                 (
-                    $"The payload after identification was not a Ready payload.{Environment.NewLine}\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}\tActual: {receiveReady.Entity.GetType().FullName}",
+                    $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
+                    $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
+                    $"\tActual: {receiveReady.Entity.GetType().FullName}",
                     true
                 );
             }
