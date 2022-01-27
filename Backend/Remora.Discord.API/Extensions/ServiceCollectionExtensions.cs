@@ -584,6 +584,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildWidgetSettings, GuildWidgetSettings>()
             .WithPropertyName(w => w.IsEnabled, "enabled");
 
+        options.AddDataObjectConverter<IGuildWidget, GuildWidget>();
         options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
         options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
         options.AddDataObjectConverter<IGuildThreadQueryResponse, GuildThreadQueryResponse>();

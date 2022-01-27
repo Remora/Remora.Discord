@@ -22,10 +22,17 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
+using Remora.Rest.Xunit;
 
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
 public class GuildWidgetTests : ObjectTestBase<IGuildWidget>
 {
+    /// <inheritdoc />
+    protected override JsonAssertOptions AssertOptions => JsonAssertOptions.Default with
+    {
+        // undocumented values
+        AllowMissing = new[] { "status", "avatar_url" }
+    };
 }

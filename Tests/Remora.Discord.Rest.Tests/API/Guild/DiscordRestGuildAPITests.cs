@@ -2009,7 +2009,7 @@ public class DiscordRestGuildAPITests
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.json")
                     .WithNoContent()
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidget)])
             );
 
             var result = await api.GetGuildWidgetAsync
