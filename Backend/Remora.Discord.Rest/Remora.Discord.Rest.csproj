@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>27.1.0</Version>
+        <Version>28.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,14 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Implement clientside limits for GetGuildScheduledEventUsersAsync.
+            Implement new message flag.
+            InteractionCallbackDataFlags is no more; long live MessageFlags!
+            Implement new error code.
+            Implement support for flags on normal messages.
+            Implement changes to guild widget handling.
+            Add audit log reason support to more endpoints.
+            Add guild stickers to the preview object.
+            Add missing change key.
         </PackageReleaseNotes>
     </PropertyGroup>
 
