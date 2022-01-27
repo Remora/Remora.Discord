@@ -407,6 +407,11 @@ public enum DiscordError
     MaxNumberOfGuildWidgetSettingUpdatesReached = 30042,
 
     /// <summary>
+    /// Maximum number of edits to messages older than 1 hour reached. Try again later.
+    /// </summary>
+    MaxNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
+
+    /// <summary>
     /// Unauthorized. Provide a valid token and try again.
     /// </summary>
     Unauthorized = 40001,
