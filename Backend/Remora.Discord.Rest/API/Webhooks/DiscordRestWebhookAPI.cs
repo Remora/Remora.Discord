@@ -284,6 +284,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         Optional<Snowflake> threadID = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -337,6 +338,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext();

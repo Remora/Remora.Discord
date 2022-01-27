@@ -332,7 +332,6 @@ public interface IDiscordRestChannelAPI
     /// <remarks>
     /// At least one of <paramref name="content"/>, <paramref name="embeds"/>, or <paramref name="attachments"/> must be
     /// present.
-    ///
     /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
     /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
     /// </remarks>
@@ -352,6 +351,7 @@ public interface IDiscordRestChannelAPI
     /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
     /// mentioned in this parameter will be deleted.
     /// </param>
+    /// <param name="flags">The message flags.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> CreateMessageAsync
@@ -366,6 +366,7 @@ public interface IDiscordRestChannelAPI
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<Snowflake>> stickerIds = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     );
 

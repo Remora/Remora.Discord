@@ -114,6 +114,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
         Optional<Snowflake> threadID = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -131,6 +132,7 @@ public class CachingDiscordRestWebhookAPI : DiscordRestWebhookAPI
             threadID,
             components,
             attachments,
+            flags,
             ct
         );
 

@@ -430,6 +430,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<Snowflake>> stickerIds = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -492,6 +493,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("components", components, this.JsonOptions);
                             json.Write("sticker_ids", stickerIds, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext();

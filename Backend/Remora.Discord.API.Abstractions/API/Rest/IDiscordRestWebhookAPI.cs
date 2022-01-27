@@ -220,6 +220,7 @@ public interface IDiscordRestWebhookAPI
     /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
     /// mentioned in this parameter will be deleted.
     /// </param>
+    /// <param name="flags">The message flags.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>
     /// A result which may or may not have succeeded. The returned message is null if <paramref name="shouldWait"/>
@@ -239,6 +240,7 @@ public interface IDiscordRestWebhookAPI
         Optional<Snowflake> threadID = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     );
 

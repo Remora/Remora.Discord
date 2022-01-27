@@ -249,8 +249,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         Optional<IReadOnlyList<IEmbed>> embeds = default,
         Optional<IAllowedMentions> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<MessageFlags> flags = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -295,8 +295,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                             json.Write("embeds", embeds, this.JsonOptions);
                             json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
-                            json.Write("flags", flags, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext();

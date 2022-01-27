@@ -725,6 +725,7 @@ public class DiscordRestChannelAPITests
             var nonce = "aasda";
             var tts = false;
             var allowedMentions = new AllowedMentions();
+            var flags = MessageFlags.SuppressEmbeds;
 
             var api = CreateAPI
             (
@@ -739,6 +740,7 @@ public class DiscordRestChannelAPITests
                                 .WithProperty("nonce", p => p.Is(nonce))
                                 .WithProperty("tts", p => p.Is(tts))
                                 .WithProperty("allowed_mentions", p => p.IsObject())
+                                .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -750,7 +752,8 @@ public class DiscordRestChannelAPITests
                 content,
                 nonce,
                 tts,
-                allowedMentions: allowedMentions
+                allowedMentions: allowedMentions,
+                flags: flags
             );
 
             ResultAssert.Successful(result);

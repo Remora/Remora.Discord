@@ -64,8 +64,8 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
         Optional<IReadOnlyList<IEmbed>> embeds = default,
         Optional<IAllowedMentions> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<MessageFlags> flags = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -78,8 +78,8 @@ public class CachingDiscordRestInteractionAPI : DiscordRestInteractionAPI
             embeds,
             allowedMentions,
             components,
-            flags,
             attachments,
+            flags,
             ct
         );
 

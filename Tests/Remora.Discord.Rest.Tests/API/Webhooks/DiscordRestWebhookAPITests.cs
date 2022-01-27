@@ -658,6 +658,7 @@ public class DiscordRestWebhookAPITests
             var allowedMentions = new AllowedMentions();
             var threadID = DiscordSnowflake.New(1);
             var components = new List<IMessageComponent>();
+            var flags = MessageFlags.SuppressEmbeds;
 
             var api = CreateAPI
             (
@@ -676,6 +677,7 @@ public class DiscordRestWebhookAPITests
                                 .WithProperty("allowed_mentions", p => p.IsObject())
                                 .WithProperty("thread_id", p => p.Is(threadID.ToString()))
                                 .WithProperty("components", p => p.IsArray())
+                                .WithProperty("flags", p => p.Is((int)flags))
                         )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IMessage)])
@@ -692,7 +694,8 @@ public class DiscordRestWebhookAPITests
                 tts,
                 allowedMentions: allowedMentions,
                 threadID: threadID,
-                components: components
+                components: components,
+                flags: flags
             );
 
             ResultAssert.Successful(result);

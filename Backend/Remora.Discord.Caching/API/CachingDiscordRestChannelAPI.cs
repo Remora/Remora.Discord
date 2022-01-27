@@ -203,6 +203,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         Optional<IReadOnlyList<IMessageComponent>> components = default,
         Optional<IReadOnlyList<Snowflake>> stickerIds = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     )
     {
@@ -218,6 +219,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
             components,
             stickerIds,
             attachments,
+            flags,
             ct
         );
 

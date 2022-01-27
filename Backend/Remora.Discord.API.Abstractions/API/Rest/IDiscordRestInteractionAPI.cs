@@ -142,13 +142,13 @@ public interface IDiscordRestInteractionAPI
     /// <param name="embeds">The embeds in the message.</param>
     /// <param name="allowedMentions">The set of allowed mentions of the message.</param>
     /// <param name="components">The components that should be included with the message.</param>
-    /// <param name="flags">The message flags to use.</param>
     /// <param name="attachments">
     /// The attachments to associate with the response. Each file may be a new file in the form of
     /// <see cref="FileData"/>, or an existing one that should be retained in the form of a
     /// <see cref="IPartialAttachment"/>. If this request edits the original message, then any attachments not
     /// mentioned in this parameter will be deleted.
     /// </param>
+    /// <param name="flags">The message flags to use.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     Task<Result<IMessage>> CreateFollowupMessageAsync
@@ -160,8 +160,8 @@ public interface IDiscordRestInteractionAPI
         Optional<IReadOnlyList<IEmbed>> embeds = default,
         Optional<IAllowedMentions> allowedMentions = default,
         Optional<IReadOnlyList<IMessageComponent>> components = default,
-        Optional<MessageFlags> flags = default,
         Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
         CancellationToken ct = default
     );
 
