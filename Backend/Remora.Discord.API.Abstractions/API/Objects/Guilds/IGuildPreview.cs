@@ -81,4 +81,9 @@ public interface IGuildPreview
     /// Gets the description of the guild, if the guild is discoverable.
     /// </summary>
     string? Description { get; }
+
+    /// <summary>
+    /// Gets the custom stickers the guild has.
+    /// </summary>
+    IReadOnlyList<ISticker> Stickers { get; }
 }
