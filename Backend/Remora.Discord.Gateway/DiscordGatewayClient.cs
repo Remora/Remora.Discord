@@ -27,6 +27,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -925,9 +927,10 @@ public class DiscordGatewayClient : IDisposable
 
             if (receiveReady.Entity is not IPayload<IReady> ready)
             {
+                _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
                 return new GatewayError
                 (
-                    "The payload after identification was not a Ready payload.",
+                    $"The payload after identification was not a Ready payload.{Environment.NewLine}\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}\tActual: {receiveReady.Entity.GetType().FullName}",
                     true
                 );
             }
