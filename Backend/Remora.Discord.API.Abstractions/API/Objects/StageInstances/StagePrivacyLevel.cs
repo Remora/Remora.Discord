@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -33,6 +34,7 @@ public enum StagePrivacyLevel
     /// <summary>
     /// The stage instance is visible publicly, such as in stage discovery.
     /// </summary>
+    [Obsolete]
     Public = 1,
 
     /// <summary>

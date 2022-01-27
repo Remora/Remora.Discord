@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
@@ -59,5 +60,6 @@ public interface IStageInstance
     /// <summary>
     /// Gets a value indicating whether stage discovery is disabled for the instance.
     /// </summary>
+    [Obsolete]
     bool IsDiscoveryDisabled { get; }
 }
