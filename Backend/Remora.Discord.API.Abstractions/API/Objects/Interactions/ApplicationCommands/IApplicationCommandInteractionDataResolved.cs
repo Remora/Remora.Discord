@@ -54,4 +54,9 @@ public interface IApplicationCommandInteractionDataResolved
     /// Gets the resolved messages, if any.
     /// </summary>
     Optional<IReadOnlyDictionary<Snowflake, IPartialMessage>> Messages { get; }
+
+    /// <summary>
+    /// Gets the resolved attachments, if any.
+    /// </summary>
+    Optional<IReadOnlyDictionary<Snowflake, IAttachment>> Attachments { get; }
 }

@@ -29,6 +29,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Remora.Commands.Extensions;
 using Remora.Commands.Tokenization;
 using Remora.Commands.Trees;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Commands.Autocomplete;
 using Remora.Discord.Commands.Conditions;
 using Remora.Discord.Commands.Contexts;
@@ -157,6 +158,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddSingleton<SlashService>();
         serviceCollection.AddAutocompleteProvider(typeof(EnumAutocompleteProvider<>));
         serviceCollection.AddResponder<AutocompleteResponder>();
+        serviceCollection.AddParser<AttachmentParser>();
 
         return serviceCollection;
     }
