@@ -101,7 +101,7 @@ public interface IChannel : IPartialChannel
     new Optional<IReadOnlyList<IUser>> Recipients { get; }
 
     /// <summary>
-    /// Gets the icon of the channel.
+    /// Gets the icon of the group DM.
     /// </summary>
     new Optional<IImageHash?> Icon { get; }
 
