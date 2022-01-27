@@ -665,7 +665,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
-    Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
+    Task<Result<IGuildWidgetSettings>> GetGuildWidgetSettingsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
@@ -680,12 +680,24 @@ public interface IDiscordRestGuildAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
+    Task<Result<IGuildWidgetSettings>> ModifyGuildWidgetAsync
     (
         Snowflake guildID,
         Optional<bool> isEnabled = default,
         Optional<Snowflake?> channelID = default,
         Optional<string> reason = default,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets the status and invite widget for the guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result<IGuildWidget>> GetGuildWidgetAsync
+    (
+        Snowflake guildID,
         CancellationToken ct = default
     );
 

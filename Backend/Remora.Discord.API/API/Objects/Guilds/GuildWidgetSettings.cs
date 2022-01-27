@@ -1,5 +1,5 @@
 //
-//  GuildWidget.cs
+//  GuildWidgetSettings.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
+#pragma warning disable CS1591
+
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
-public record GuildWidget
-(
-    Snowflake ID,
-    string Name,
-    string? InstantInvite,
-    IReadOnlyList<IPartialChannel> Channels,
-    IReadOnlyList<IPartialUser> Members,
-    int PresenceCount
-) : IGuildWidget;
+/// <inheritdoc cref="IGuildWidgetSettings" />
+[PublicAPI]
+public record GuildWidgetSettings(bool IsEnabled, Snowflake? ChannelID) : IGuildWidgetSettings;

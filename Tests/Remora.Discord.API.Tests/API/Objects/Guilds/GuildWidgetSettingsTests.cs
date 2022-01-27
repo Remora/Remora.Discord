@@ -1,5 +1,5 @@
 //
-//  GuildWidget.cs
+//  GuildWidgetSettingsTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
+using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Tests.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
-public record GuildWidget
-(
-    Snowflake ID,
-    string Name,
-    string? InstantInvite,
-    IReadOnlyList<IPartialChannel> Channels,
-    IReadOnlyList<IPartialUser> Members,
-    int PresenceCount
-) : IGuildWidget;
+/// <inheritdoc />
+public class GuildWidgetSettingsTests : ObjectTestBase<IGuildWidgetSettings>
+{
+}

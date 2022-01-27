@@ -581,7 +581,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildPreview, GuildPreview>()
             .WithPropertyConverter(p => p.Features, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)));
 
-        options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
+        options.AddDataObjectConverter<IGuildWidgetSettings, GuildWidgetSettings>()
             .WithPropertyName(w => w.IsEnabled, "enabled");
 
         options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();

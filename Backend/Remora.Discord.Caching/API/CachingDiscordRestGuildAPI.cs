@@ -822,16 +822,16 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
+    public override async Task<Result<IGuildWidgetSettings>> GetGuildWidgetSettingsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
         var key = KeyHelpers.CreateGuildWidgetSettingsCacheKey(guildID);
-        if (_cacheService.TryGetValue<IGuildWidget>(key, out var cachedInstance))
+        if (_cacheService.TryGetValue<IGuildWidgetSettings>(key, out var cachedInstance))
         {
-            return Result<IGuildWidget>.FromSuccess(cachedInstance);
+            return Result<IGuildWidgetSettings>.FromSuccess(cachedInstance);
         }
 
         var getResult = await base.GetGuildWidgetSettingsAsync(guildID, ct);
@@ -847,7 +847,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public override async Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
+    public override async Task<Result<IGuildWidgetSettings>> ModifyGuildWidgetAsync
     (
         Snowflake guildID,
         Optional<bool> isEnabled = default,

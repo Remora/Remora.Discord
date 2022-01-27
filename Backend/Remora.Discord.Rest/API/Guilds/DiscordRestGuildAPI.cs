@@ -1009,13 +1009,13 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IGuildWidget>> GetGuildWidgetSettingsAsync
+    public virtual Task<Result<IGuildWidgetSettings>> GetGuildWidgetSettingsAsync
     (
         Snowflake guildID,
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IGuildWidget>
+        return this.RestHttpClient.GetAsync<IGuildWidgetSettings>
         (
             $"guilds/{guildID}/widget",
             b => b.WithRateLimitContext(),
@@ -1024,7 +1024,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IGuildWidget>> ModifyGuildWidgetAsync
+    public virtual Task<Result<IGuildWidgetSettings>> ModifyGuildWidgetAsync
     (
         Snowflake guildID,
         Optional<bool> isEnabled = default,
@@ -1033,7 +1033,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.PatchAsync<IGuildWidget>
+        return this.RestHttpClient.PatchAsync<IGuildWidgetSettings>
         (
             $"guilds/{guildID}/widget",
             b => b
@@ -1047,6 +1047,17 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     }
                 )
                 .WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public Task<Result<IGuildWidget>> GetGuildWidgetAsync(Snowflake guildID, CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IGuildWidget>
+        (
+            $"guilds/{guildID}/widget.json",
+            b => b.WithRateLimitContext(),
             ct: ct
         );
     }

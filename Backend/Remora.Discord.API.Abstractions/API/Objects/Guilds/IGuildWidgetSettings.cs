@@ -1,5 +1,5 @@
 //
-//  GuildWidget.cs
+//  IGuildWidgetSettings.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using Remora.Discord.API.Abstractions.Objects;
+using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
-public record GuildWidget
-(
-    Snowflake ID,
-    string Name,
-    string? InstantInvite,
-    IReadOnlyList<IPartialChannel> Channels,
-    IReadOnlyList<IPartialUser> Members,
-    int PresenceCount
-) : IGuildWidget;
+/// <summary>
+/// Represents settings related to the status and invite widget for a guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildWidgetSettings
+{
+    /// <summary>
+    /// Gets a value indicating whether the widget is enabled.
+    /// </summary>
+    bool IsEnabled { get; }
+
+    /// <summary>
+    /// Gets the ID of the channel invites are generated for.
+    /// </summary>
+    Snowflake? ChannelID { get; }
+}

@@ -1932,7 +1932,7 @@ public class DiscordRestGuildAPITests
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget")
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidget)])
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
             );
 
             var result = await api.GetGuildWidgetSettingsAsync
@@ -1975,7 +1975,7 @@ public class DiscordRestGuildAPITests
                                 .WithProperty("channel_id", p => p.Is(channelId.ToString()))
                         )
                     )
-                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidget)])
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
             );
 
             var result = await api.ModifyGuildWidgetAsync
@@ -1984,6 +1984,37 @@ public class DiscordRestGuildAPITests
                 enabled,
                 channelId,
                 reason
+            );
+
+            ResultAssert.Successful(result);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="DiscordRestGuildAPI.GetGuildWidgetAsync"/> method.
+    /// </summary>
+    public class GetGuildWidgetAsync : RestAPITestBase<IDiscordRestGuildAPI>
+    {
+        /// <summary>
+        /// Tests whether the API method performs its request correctly.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
+        {
+            var guildId = DiscordSnowflake.New(0);
+
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/widget.json")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IGuildWidgetSettings)])
+            );
+
+            var result = await api.GetGuildWidgetAsync
+            (
+                guildId
             );
 
             ResultAssert.Successful(result);

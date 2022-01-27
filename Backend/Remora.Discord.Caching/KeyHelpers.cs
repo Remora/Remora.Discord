@@ -252,13 +252,13 @@ public static class KeyHelpers
     }
 
     /// <summary>
-    /// Creates a cache key for an <see cref="IGuildWidget"/> instance.
+    /// Creates a cache key for an <see cref="IGuildWidgetSettings"/> instance.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <returns>The cache key.</returns>
     public static object CreateGuildWidgetSettingsCacheKey(in Snowflake guildID)
     {
-        return (typeof(IGuildWidget), guildID);
+        return (typeof(IGuildWidgetSettings), guildID);
     }
 
     /// <summary>
