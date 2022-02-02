@@ -1,5 +1,5 @@
 ﻿//
-//  LoggingBehavior.cs
+//  ResultLoggingBehavior.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -36,31 +36,42 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
     /// </summary>
     /// <typeparam name="TRequest">The type of request to handle.</typeparam>
     /// <typeparam name="TResponse">The type of response to be returned as a <see cref="Result{TResponse}"/>.</typeparam>
-    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    public class ResultLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>>
+        where TRequest : IRequest<Result<TResponse>>
     {
-        private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+        private readonly ILogger<ResultLoggingBehavior<TRequest, TResponse>> _logger;
         private static readonly string NotificationTypeName = typeof(TRequest).Name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggingBehavior{TRequest, TResponse}"/> class.
+        /// Initializes a new instance of the <see cref="ResultLoggingBehavior{TRequest, TResponse}"/> class.
         /// </summary>
         /// <param name="logger">A logger for this instance.</param>
-        public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
+        public ResultLoggingBehavior(ILogger<ResultLoggingBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
         {
-            _logger.LogInformation("Handling {Request}", NotificationTypeName);
+            _logger.LogInformation("Handling '{Request}'...", NotificationTypeName);
 
             var sw = Stopwatch.StartNew();
             var response = await next();
             sw.Stop();
 
-            _logger.LogInformation("Handled {Response} in {Elapsed}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5));
+            if (response.IsSuccess)
+            {
+                _logger.LogInformation("Successfully handled '{Request}' in {Elapsed}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5));
+            }
+            else if (response.Error is ExceptionError exe)
+            {
+                _logger.LogError(exe.Exception, "Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5), exe.Message);
+            }
+            else
+            {
+                _logger.LogWarning("Request '{Request}' failed after {Elapsed}.", NotificationTypeName, sw.Elapsed.Humanize(precision: 5));
+            }
 
             return response;
         }
