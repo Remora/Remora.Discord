@@ -23,8 +23,6 @@
 	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
 	  <PackageReference Include="Remora.Discord.API.Abstractions" Version="53.0.0" />
 	  <PackageReference Include="Remora.Discord.Gateway" Version="6.2.9" />
-	  <PackageReference Include="StructureMap" Version="4.7.1" />
-	  <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="2.0.0" />
 	</ItemGroup>
 
 </Project>
