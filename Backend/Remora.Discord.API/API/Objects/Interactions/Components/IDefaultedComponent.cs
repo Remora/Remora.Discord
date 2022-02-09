@@ -66,4 +66,7 @@ internal interface IDefaultedComponent : IComponent
 
     /// <inheritdoc/>
     Optional<int> IComponent.MaxValues => default;
+
+    /// <inheritdoc/>
+    Optional<string> IComponent.Title => default;
 }
