@@ -42,5 +42,6 @@ public record Component
     Optional<IReadOnlyList<ISelectOption>> Options,
     Optional<string> Placeholder,
     Optional<int> MinValues,
-    Optional<int> MaxValues
+    Optional<int> MaxValues,
+    Optional<string> Title
 ) : IMessageComponent, IComponent;

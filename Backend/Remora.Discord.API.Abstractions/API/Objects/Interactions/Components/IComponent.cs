@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects.Form;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -125,4 +126,12 @@ public interface IComponent
     /// Valid for <see cref="ISelectMenuComponent"/>s.
     /// </remarks>
     Optional<int> MaxValues { get; }
+
+    /// <summary>
+    /// Gets the title for the component.
+    /// </summary>
+    /// <remarks>
+    /// Valid for <see cref="IModalComponent"/>s.
+    /// </remarks>
+    Optional<string> Title { get; }
 }
