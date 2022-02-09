@@ -69,4 +69,16 @@ internal interface IDefaultedComponent : IComponent
 
     /// <inheritdoc/>
     Optional<string> IComponent.Title => default;
+
+    /// <inheritdoc/>
+    Optional<string> IComponent.Value => default;
+
+    /// <inheritdoc/>
+    Optional<int> IComponent.MinimumLength => default;
+
+    /// <inheritdoc/>
+    Optional<int> IComponent.MaximumLength => default;
+
+    /// <inheritdoc/>
+    Optional<bool> IComponent.IsRequired => default;
 }

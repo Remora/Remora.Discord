@@ -1,5 +1,5 @@
 //
-//  IModalComponent.cs
+//  TextInputStyle.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using Remora.Rest.Core;
-
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a modal component with one or more component fields.
+/// Represents the style of a <see cref="ITextInputComponent"/>
 /// </summary>
-public interface IModalComponent : IMessageComponent
+public enum TextInputStyle
 {
-    /// <inheritdoc cref="IComponent.CustomID"/>
-    Optional<string> CustomID { get; }
+    /// <summary>
+    /// Represents that this input is a short, single-line input.
+    /// </summary>
+    Short = 1,
 
-    /// <inheritdoc cref="IComponent.Title"/>
-    Optional<string> Title { get; }
-
-    /// <inheritdoc cref="IComponent.Components"/>
-    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    /// <summary>
+    /// Represents that this input is a long, multi-line input.
+    /// </summary>
+    Paragraph = 2
 }

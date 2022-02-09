@@ -1,5 +1,5 @@
 //
-//  IModalComponent.cs
+//  ITextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a modal component with one or more component fields.
+/// Represents a text-based input component.
 /// </summary>
-public interface IModalComponent : IMessageComponent
+/// <remarks>
+/// Currently only valid for <see cref="IModalComponent.Components"/>
+/// </remarks>
+public interface ITextInputComponent : IMessageComponent
 {
-    /// <inheritdoc cref="IComponent.CustomID"/>
-    Optional<string> CustomID { get; }
+    /// <inheritdoc cref="IComponent.Label"/>
+    Optional<string> Label { get; }
 
-    /// <inheritdoc cref="IComponent.Title"/>
-    Optional<string> Title { get; }
+    /// <inheritdoc cref="IComponent.MinimumLength"/>
+    Optional<int> MinimumLength { get; }
 
-    /// <inheritdoc cref="IComponent.Components"/>
-    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    /// <inheritdoc cref="IComponent.MaximumLength"/>
+    Optional<int> MaximumLength { get; }
+
+    /// <inheritdoc cref="IComponent.IsRequired"/>
+    Optional<bool> IsRequired { get; }
+
+    /// <inheritdoc cref="IComponent.Value"/>
+    Optional<string> Value { get; }
 }

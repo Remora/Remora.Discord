@@ -43,5 +43,9 @@ public record Component
     Optional<string> Placeholder,
     Optional<int> MinValues,
     Optional<int> MaxValues,
-    Optional<string> Title
+    Optional<string> Title,
+    Optional<int> MinimumLength,
+    Optional<int> MaximumLength,
+    Optional<bool> IsRequired,
+    Optional<string> Value
 ) : IMessageComponent, IComponent;

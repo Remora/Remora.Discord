@@ -43,5 +43,10 @@ public enum ComponentType
     /// <summary>
     /// A menu of selectable options.
     /// </summary>
-    SelectMenu = 3
+    SelectMenu = 3,
+
+    /// <summary>
+    /// A modal with one or more components.
+    /// </summary>
+    Modal = 4,
 }

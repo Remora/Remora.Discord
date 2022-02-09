@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Remora.Discord.API.Abstractions.Objects.Form;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -134,4 +133,30 @@ public interface IComponent
     /// Valid for <see cref="IModalComponent"/>s.
     /// </remarks>
     Optional<string> Title { get; }
+
+    /// <summary>
+    /// Gets the minimum length of the input, maximum of 4000.
+    /// </summary>
+    /// <remarks>
+    /// Must be greater than zero and less than or equal to <see cref="MaximumLength"/> if specified.
+    /// </remarks>
+    Optional<int> MinimumLength { get; }
+
+    /// <summary>
+    /// Gets the maximum length of the input, maximum of 4000.
+    /// </summary>
+    /// <remarks>
+    /// Must be greater than zero and or equal to <see cref="MinimumLength"/> if specified.
+    /// </remarks>
+    Optional<int> MaximumLength { get; }
+
+    /// <summary>
+    /// Gets whether this component is required.
+    /// </summary>
+    Optional<bool> IsRequired { get; }
+
+    /// <summary>
+    /// Gets the pre-filled value for this component.
+    /// </summary>
+    Optional<string> Value { get; }
 }
