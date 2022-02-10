@@ -70,7 +70,7 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
             }
             else
             {
-                _logger.LogWarning("Request '{Request}' failed after {Elapsed}.", NotificationTypeName, sw.Elapsed.Humanize(precision: 5));
+                _logger.LogWarning("Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5), response.Error.Message);
             }
 
             return response;
