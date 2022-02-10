@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record ThreadDeleteRequest<TThreadDelete>(TThreadDelete ThreadDelete) : IGatewayEventRequest<TThreadDelete>
+    public sealed record ThreadDeleteRequest<TThreadDelete>(TThreadDelete Event) : IGatewayEventRequest<TThreadDelete>
         where TThreadDelete : IThreadDelete;
 }

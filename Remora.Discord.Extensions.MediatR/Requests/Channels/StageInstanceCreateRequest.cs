@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record StageInstanceCreateRequest<TStageInstanceCreate>(TStageInstanceCreate StageInstanceCreate) : IGatewayEventRequest<TStageInstanceCreate>
+    public sealed record StageInstanceCreateRequest<TStageInstanceCreate>(TStageInstanceCreate Event) : IGatewayEventRequest<TStageInstanceCreate>
         where TStageInstanceCreate : IStageInstanceCreate;
 }

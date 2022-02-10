@@ -33,5 +33,9 @@ namespace Remora.Discord.Extensions.MediatR.Requests
     public interface IGatewayEventRequest<TGatewayEvent> : IRequest<Result>
         where TGatewayEvent : IGatewayEvent
     {
+        /// <summary>
+        /// Gets the gateway event published in this request.
+        /// </summary>
+        TGatewayEvent Event { get; }
     }
 }

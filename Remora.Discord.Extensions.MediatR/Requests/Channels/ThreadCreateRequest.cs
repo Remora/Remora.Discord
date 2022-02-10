@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record ThreadCreateRequest<TThreadCreate>(TThreadCreate ThreadCreate) : IGatewayEventRequest<TThreadCreate>
+    public sealed record ThreadCreateRequest<TThreadCreate>(TThreadCreate Event) : IGatewayEventRequest<TThreadCreate>
         where TThreadCreate : IThreadCreate;
 }

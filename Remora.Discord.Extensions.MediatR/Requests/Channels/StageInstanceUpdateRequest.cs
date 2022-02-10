@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record StageInstanceUpdateRequest<TStageInstanceUpdate>(TStageInstanceUpdate StageInstanceUpdate) : IGatewayEventRequest<TStageInstanceUpdate>
+    public sealed record StageInstanceUpdateRequest<TStageInstanceUpdate>(TStageInstanceUpdate Event) : IGatewayEventRequest<TStageInstanceUpdate>
         where TStageInstanceUpdate : IStageInstanceUpdate;
 }

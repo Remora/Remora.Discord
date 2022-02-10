@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record ThreadMemberUpdateRequest<TThreadMemberUpdate>(TThreadMemberUpdate ThreadMemberUpdate) : IGatewayEventRequest<TThreadMemberUpdate>
+    public sealed record ThreadMemberUpdateRequest<TThreadMemberUpdate>(TThreadMemberUpdate Event) : IGatewayEventRequest<TThreadMemberUpdate>
         where TThreadMemberUpdate : IThreadMemberUpdate;
 }

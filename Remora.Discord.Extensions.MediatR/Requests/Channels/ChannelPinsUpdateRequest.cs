@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record ChannelPinsUpdateRequest<TChannelPinsUpdate>(TChannelPinsUpdate ChannelPinsUpdate) : IGatewayEventRequest<TChannelPinsUpdate>
+    public sealed record ChannelPinsUpdateRequest<TChannelPinsUpdate>(TChannelPinsUpdate Event) : IGatewayEventRequest<TChannelPinsUpdate>
         where TChannelPinsUpdate : IChannelPinsUpdate;
 }

@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record StageInstanceDeleteRequest<TStageInstanceDelete>(TStageInstanceDelete StageInstanceDelete) : IGatewayEventRequest<TStageInstanceDelete>
+    public sealed record StageInstanceDeleteRequest<TStageInstanceDelete>(TStageInstanceDelete Event) : IGatewayEventRequest<TStageInstanceDelete>
         where TStageInstanceDelete : IStageInstanceDelete;
 }

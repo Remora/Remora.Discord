@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record ThreadListSyncRequest<TThreadListSync>(TThreadListSync ThreadListSync) : IGatewayEventRequest<TThreadListSync>
+    public sealed record ThreadListSyncRequest<TThreadListSync>(TThreadListSync Event) : IGatewayEventRequest<TThreadListSync>
         where TThreadListSync : IThreadListSync;
 }

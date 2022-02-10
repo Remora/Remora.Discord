@@ -25,6 +25,6 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 namespace Remora.Discord.Extensions.MediatR.Requests.Channels
 {
     /// <inheritdoc />
-    public record ChannelCreateRequest<TChannelCreate>(TChannelCreate ChannelCreate) : IGatewayEventRequest<TChannelCreate>
+    public sealed record ChannelCreateRequest<TChannelCreate>(TChannelCreate Event) : IGatewayEventRequest<TChannelCreate>
         where TChannelCreate : IChannelCreate;
 }

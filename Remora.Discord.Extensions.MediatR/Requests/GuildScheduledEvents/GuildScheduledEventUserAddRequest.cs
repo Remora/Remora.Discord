@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.GuildScheduledEvents
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record GuildScheduledEventUserAddRequest<TGuildScheduledEventUserAdd>(TGuildScheduledEventUserAdd GuildScheduledEventUserAdd) : IGatewayEventRequest<TGuildScheduledEventUserAdd>
+    public sealed record GuildScheduledEventUserAddRequest<TGuildScheduledEventUserAdd>(TGuildScheduledEventUserAdd Event) : IGatewayEventRequest<TGuildScheduledEventUserAdd>
         where TGuildScheduledEventUserAdd : IGuildScheduledEventUserAdd;
 }

@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record UnknownEventRequest<TUnknownEvent>(TUnknownEvent UnknownEvent) : IGatewayEventRequest<TUnknownEvent>
+    public sealed record UnknownEventRequest<TUnknownEvent>(TUnknownEvent Event) : IGatewayEventRequest<TUnknownEvent>
         where TUnknownEvent : IUnknownEvent;
 }
