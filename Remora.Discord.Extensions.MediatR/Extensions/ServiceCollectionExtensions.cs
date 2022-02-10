@@ -37,7 +37,7 @@ namespace Remora.Discord.Extensions.MediatR.Extensions
         /// <summary>
         /// Creates a new mediator and uses it to broadcast gateway events as requests.
         /// </summary>
-        /// <typeparam name="TEntryPoint">The entry point of the application, typically program.cs.</typeparam>
+        /// <typeparam name="TEntryPoint">The entry point of the application, typically Program.cs.</typeparam>
         /// <param name="services">This service collection instance.</param>
         /// <returns>The current <see cref="IServiceCollection"/> for chaining.</returns>
         public static IServiceCollection AddDiscordMessaging<TEntryPoint>(this IServiceCollection services)
