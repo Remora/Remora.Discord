@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests.Guilds
 {
     /// <inheritdoc />
     [PublicAPI]
-    public record GuildUpdateRequest<TGuildUpdate>(TGuildUpdate Event) : IGatewayEventRequest<TGuildUpdate>
+    public sealed record GuildUpdateRequest<TGuildUpdate>(TGuildUpdate Event) : IGatewayEventRequest<TGuildUpdate>
         where TGuildUpdate : IGuildUpdate;
 }
