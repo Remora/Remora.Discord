@@ -1,5 +1,5 @@
 ﻿//
-//  IGuildDeleteRequest.cs
+//  GuildDeleteRequest.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
