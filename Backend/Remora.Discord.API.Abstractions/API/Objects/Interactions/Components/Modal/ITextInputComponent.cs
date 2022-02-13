@@ -28,22 +28,31 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a text-based input component.
 /// </summary>
 /// <remarks>
-/// Currently only valid for <see cref="IModalComponent.Components"/>
+/// Currently only valid for <see cref="IModalComponent.Components"/>.
 /// </remarks>
 public interface ITextInputComponent : IMessageComponent
 {
     /// <inheritdoc cref="IComponent.Label"/>
-    Optional<string> Label { get; }
+    string Label { get; }
 
-    /// <inheritdoc cref="IComponent.MinimumLength"/>
-    Optional<int> MinimumLength { get; }
+    /// <inheritdoc cref="IComponent.CustomID"/>
+    public string CustomID { get; }
 
-    /// <inheritdoc cref="IComponent.MaximumLength"/>
-    Optional<int> MaximumLength { get; }
+    /// <inheritdoc cref="IComponent.Style"/>
+    public TextInputStyle Style { get; }
+
+    /// <inheritdoc cref="IComponent.MinLength"/>
+    Optional<int> MinLength { get; }
+
+    /// <inheritdoc cref="IComponent.MaxLength"/>
+    Optional<int> MaxLength { get; }
 
     /// <inheritdoc cref="IComponent.IsRequired"/>
     Optional<bool> IsRequired { get; }
 
     /// <inheritdoc cref="IComponent.Value"/>
     Optional<string> Value { get; }
+
+    /// <inheritdoc cref="IComponent.Placeholder"/>
+    Optional<string> Placeholder { get; }
 }

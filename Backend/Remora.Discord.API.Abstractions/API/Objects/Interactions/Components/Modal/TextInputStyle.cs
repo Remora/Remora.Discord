@@ -23,7 +23,7 @@
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents the style of a <see cref="ITextInputComponent"/>
+/// Represents the style of a <see cref="ITextInputComponent"/>.
 /// </summary>
 public enum TextInputStyle
 {

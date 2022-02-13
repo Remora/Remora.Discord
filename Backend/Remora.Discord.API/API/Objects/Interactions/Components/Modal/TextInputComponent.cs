@@ -1,5 +1,5 @@
 //
-//  ButtonComponent.cs
+//  TextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,28 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Objects.Modal;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
-[PublicAPI]
-public record ButtonComponent
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
+public record TextInputComponent
 (
-    ButtonComponentStyle Style,
-    Optional<string> Label = default,
-    Optional<IPartialEmoji> Emoji = default,
-    Optional<string> CustomID = default,
-    Optional<string> URL = default,
-    Optional<bool> IsDisabled = default
-) : IButtonComponent, IDefaultedComponent
+    string Label,
+    string CustomID,
+    TextInputStyle Style,
+    Optional<int> MinLength,
+    Optional<int> MaxLength,
+    Optional<bool> IsRequired,
+    Optional<string> Value,
+    Optional<string> Placeholder
+) : ITextInputComponent, IDefaultedComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.Button;
+    /// <inheritdoc />
+    ComponentType IComponent.Type => ComponentType.TextInput;
 
-    /// <inheritdoc/>
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => OneOf<ButtonComponentStyle, TextInputStyle>.FromT0(this.Style);
+    /// <inheritdoc />
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => OneOf<ButtonComponentStyle, TextInputStyle>.FromT1(this.Style);
 }

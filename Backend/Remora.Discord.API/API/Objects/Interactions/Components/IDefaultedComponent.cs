@@ -21,6 +21,7 @@
 //
 
 using System.Collections.Generic;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -38,7 +39,7 @@ internal interface IDefaultedComponent : IComponent
     ComponentType IComponent.Type => default;
 
     /// <inheritdoc/>
-    Optional<ButtonComponentStyle> IComponent.Style => default;
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => default;
 
     /// <inheritdoc/>
     Optional<string> IComponent.Label => default;
@@ -68,16 +69,13 @@ internal interface IDefaultedComponent : IComponent
     Optional<int> IComponent.MaxValues => default;
 
     /// <inheritdoc/>
-    Optional<string> IComponent.Title => default;
-
-    /// <inheritdoc/>
     Optional<string> IComponent.Value => default;
 
     /// <inheritdoc/>
-    Optional<int> IComponent.MinimumLength => default;
+    Optional<int> IComponent.MinLength => default;
 
     /// <inheritdoc/>
-    Optional<int> IComponent.MaximumLength => default;
+    Optional<int> IComponent.MaxLength => default;
 
     /// <inheritdoc/>
     Optional<bool> IComponent.IsRequired => default;

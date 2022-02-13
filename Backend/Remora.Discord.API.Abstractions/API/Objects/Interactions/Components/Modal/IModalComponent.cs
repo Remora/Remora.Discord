@@ -28,12 +28,14 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents a modal component with one or more component fields.
 /// </summary>
-public interface IModalComponent : IMessageComponent
+public interface IModalComponent
 {
     /// <inheritdoc cref="IComponent.CustomID"/>
     Optional<string> CustomID { get; }
 
-    /// <inheritdoc cref="IComponent.Title"/>
+    /// <summary>
+    /// Gets the title of the modal.
+    /// </summary>
     Optional<string> Title { get; }
 
     /// <inheritdoc cref="IComponent.Components"/>

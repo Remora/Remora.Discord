@@ -26,6 +26,7 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects.Modal;
 
+/// <inheritdoc cref="IModalComponent"/>
 public record ModalComponent
 (
     Optional<string> CustomID,
