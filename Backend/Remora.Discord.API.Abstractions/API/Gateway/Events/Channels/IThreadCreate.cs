@@ -31,4 +31,8 @@ namespace Remora.Discord.API.Abstractions.Gateway.Events;
 [PublicAPI]
 public interface IThreadCreate : IGatewayEvent, IChannel
 {
+    /// <summary>
+    /// Gets a value indicating whether the thread was newly created.
+    /// </summary>
+    bool IsNewlyCreated { get; }
 }

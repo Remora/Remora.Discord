@@ -209,6 +209,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
         options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
+            .WithPropertyName(c => c.IsNewlyCreated, "newly_created")
             .WithPropertyName(c => c.IsNsfw, "nsfw")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
