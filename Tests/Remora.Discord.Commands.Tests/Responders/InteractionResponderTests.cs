@@ -101,7 +101,9 @@ public class InteractionResponderTests
         {
             serviceCollection
                 .Configure<InteractionResponderOptions>(o => o.SuppressAutomaticResponses = true)
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _preExecutionEventMock.Object);
         }
     }
@@ -235,7 +237,9 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _postExecutionEventMock.Object);
         }
     }
@@ -412,7 +416,8 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<EphemeralCommand>();
+                .AddCommandTree()
+                .WithCommandGroup<EphemeralCommand>();
         }
     }
 
@@ -546,7 +551,9 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<EphemeralCommand>()
+                .AddCommandTree()
+                    .WithCommandGroup<EphemeralCommand>()
+                .Finish()
                 .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true );
         }
     }
