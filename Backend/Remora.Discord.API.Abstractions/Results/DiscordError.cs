@@ -462,6 +462,11 @@ public enum DiscordError
     ApplicationCommandWithNameExists = 40041,
 
     /// <summary>
+    /// The interaction has already been acknowledged by the application.
+    /// </summary>
+    InteractionHasAlreadyBeenAcknowledged = 40060,
+
+    /// <summary>
     /// Missing access.
     /// </summary>
     MissingAccess = 50001,
