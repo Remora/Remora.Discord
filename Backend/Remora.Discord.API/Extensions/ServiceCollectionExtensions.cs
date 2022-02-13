@@ -722,6 +722,7 @@ public static class ServiceCollectionExtensions
         options.AddConverter<DiscordPermissionSetConverter>();
 
         options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>();
+        options.AddDataObjectConverter<IPartialPermissionOverwrite, PartialPermissionOverwrite>();
 
         options.AddDataObjectConverter<IRole, Role>()
             .WithPropertyName(r => r.Colour, "color")
