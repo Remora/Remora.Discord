@@ -43,5 +43,6 @@ public record GuildScheduledEvent
     Snowflake? EntityID,
     IGuildScheduledEventEntityMetadata? EntityMetadata,
     Optional<IUser> Creator,
-    Optional<int> UserCount
+    Optional<int> UserCount,
+    IImageHash? Image
 ) : IGuildScheduledEvent;

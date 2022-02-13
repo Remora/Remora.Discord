@@ -106,4 +106,9 @@ public interface IGuildScheduledEvent
     /// Gets the number of users subscribed to the scheduled event.
     /// </summary>
     Optional<int> UserCount { get; }
+
+    /// <summary>
+    /// Gets the cover image of the scheduled event.
+    /// </summary>
+    IImageHash? Image { get; }
 }

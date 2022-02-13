@@ -45,7 +45,8 @@ public record GuildScheduledEventDelete
     Snowflake? EntityID,
     IGuildScheduledEventEntityMetadata? EntityMetadata,
     Optional<IUser> Creator,
-    Optional<int> UserCount
+    Optional<int> UserCount,
+    IImageHash? Image
 ) : GuildScheduledEvent
 (
     ID,
@@ -62,5 +63,6 @@ public record GuildScheduledEventDelete
     EntityID,
     EntityMetadata,
     Creator,
-    UserCount
+    UserCount,
+    Image
 ), IGuildScheduledEventDelete;

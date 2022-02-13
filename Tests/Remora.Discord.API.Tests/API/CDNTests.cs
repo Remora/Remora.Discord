@@ -1000,7 +1000,7 @@ public class CDNTests
         public GetRoleIconUrl()
             : base
             (
-                new Uri("https://cdn.discordapp.com/role-icons/1"),
+                new Uri("https://cdn.discordapp.com/role-icons/0/1"),
                 new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
             )
         {
@@ -1033,11 +1033,66 @@ public class CDNTests
             var imageHash = new ImageHash("1");
 
             var mockedRole = new Mock<IRole>();
+            mockedRole.SetupGet(g => g.ID).Returns(new Snowflake(0));
             mockedRole.SetupGet(g => g.Icon).Returns(imageHash);
 
             var role = mockedRole.Object;
             yield return CDN.GetRoleIconUrl(role, imageFormat, imageSize);
-            yield return CDN.GetRoleIconUrl(imageHash, imageFormat, imageSize);
+            yield return CDN.GetRoleIconUrl(role.ID, imageHash, imageFormat, imageSize);
+        }
+    }
+
+    /// <summary>
+    /// Tests the <see cref="CDN.GetGuildScheduledEventBannerUrl(IGuildScheduledEvent, Optional{CDNImageFormat}, Optional{ushort})"/> method and its
+    /// overloads.
+    /// </summary>
+    public class GetGuildScheduledEventBannerUrl : CDNTestBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetGuildScheduledEventBannerUrl"/> class.
+        /// </summary>
+        public GetGuildScheduledEventBannerUrl()
+            : base
+            (
+                new Uri("https://cdn.discordapp.com/guild-events/0/1"),
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+            )
+        {
+        }
+
+        /// <summary>
+        /// Tests whether the correct address is returned when the instance has no image set.
+        /// </summary>
+        [Fact]
+        public void ReturnsUnsuccessfulResultIfInstanceHasNoImage()
+        {
+            var mockedEvent = new Mock<IGuildScheduledEvent>();
+            mockedEvent.SetupGet(g => g.Image).Returns(default(IImageHash?));
+
+            var scheduledEvent = mockedEvent.Object;
+
+            var getActual = CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, CDNImageFormat.PNG);
+
+            Assert.False(getActual.IsSuccess);
+            Assert.IsType<ImageNotFoundError>(getActual.Error);
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<Result<Uri>> GetImageUris
+        (
+            Optional<CDNImageFormat> imageFormat = default,
+            Optional<ushort> imageSize = default
+        )
+        {
+            var imageHash = new ImageHash("1");
+
+            var mockedEvent = new Mock<IGuildScheduledEvent>();
+            mockedEvent.SetupGet(g => g.ID).Returns(new Snowflake(0));
+            mockedEvent.SetupGet(g => g.Image).Returns(imageHash);
+
+            var scheduledEvent = mockedEvent.Object;
+            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent, imageFormat, imageSize);
+            yield return CDN.GetGuildScheduledEventBannerUrl(scheduledEvent.ID, imageHash, imageFormat, imageSize);
         }
     }
 }
