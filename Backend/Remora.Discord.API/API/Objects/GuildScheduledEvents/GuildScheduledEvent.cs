@@ -32,7 +32,7 @@ public record GuildScheduledEvent
     Snowflake ID,
     Snowflake GuildID,
     Snowflake? ChannelID,
-    Snowflake? CreatorID,
+    Optional<Snowflake?> CreatorID,
     string Name,
     Optional<string> Description,
     DateTimeOffset ScheduledStartTime,
