@@ -48,33 +48,33 @@ public class AttachmentParser : AbstractTypeParser<IAttachment>
     }
 
     /// <inheritdoc/>
-    public override async ValueTask<Result<IAttachment>> TryParseAsync(string token, CancellationToken ct = default)
+    public override ValueTask<Result<IAttachment>> TryParseAsync(string token, CancellationToken ct = default)
     {
         if (_context is not InteractionContext interactionContext)
         {
-            return Result<IAttachment>.FromError(new InvalidOperationError("Cannot parse attachments outside the context of an interaction."));
+            return new(Result<IAttachment>.FromError(new InvalidOperationError("Cannot parse attachments outside the context of an interaction.")));
         }
 
         if (!Snowflake.TryParse(token, out var attachmentID))
         {
-            return Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Invalid attachment ID."));
+            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Invalid attachment ID.")));
         }
 
         if (!interactionContext.Data.Resolved.IsDefined(out var resolvedData))
         {
-            return Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data."));
+            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved data.")));
         }
 
         if (!resolvedData.Attachments.IsDefined(out var resolvedAttachments))
         {
-            return Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments."));
+            return new(Result<IAttachment>.FromError(new ParsingError<IAttachment>(token, "Cannot parse attachments without resolved attachments.")));
         }
 
         if (!resolvedAttachments.TryGetValue(attachmentID.Value, out var resolvedAttachment))
         {
-            return Result<IAttachment>.FromError(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments."));
+            return new(Result<IAttachment>.FromError(new InvalidOperationError($"Attachment with ID {attachmentID} present in options, but not in resolved attachments.")));
         }
 
-        return Result<IAttachment>.FromSuccess(resolvedAttachment);
+        return new(Result<IAttachment>.FromSuccess(resolvedAttachment));
     }
 }
