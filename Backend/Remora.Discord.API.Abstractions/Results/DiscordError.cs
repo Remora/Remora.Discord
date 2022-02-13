@@ -427,6 +427,11 @@ public enum DiscordError
     OpeningDMsTooFast = 40003,
 
     /// <summary>
+    /// Your ability to send messages has been temporarily disabled.
+    /// </summary>
+    SendMessagesHasBeenTemporarilyDisabled = 40004,
+
+    /// <summary>
     /// Request entity too large. Try sending something smaller in size.
     /// </summary>
     RequestEntityTooLarge = 40005,
