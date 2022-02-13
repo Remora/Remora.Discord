@@ -916,10 +916,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionCallbackData, InteractionCallbackData
+                IInteractionMessageCallbackData, InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 
+        options.AddDataObjectConverter<IInteractionAutocompleteCallbackData, InteractionAutocompleteCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();

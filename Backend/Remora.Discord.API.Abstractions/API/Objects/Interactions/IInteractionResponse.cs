@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -39,5 +40,5 @@ public interface IInteractionResponse
     /// <summary>
     /// Gets the response payload.
     /// </summary>
-    Optional<IInteractionCallbackData> Data { get; }
+    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData>> Data { get; }
 }

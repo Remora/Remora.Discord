@@ -280,8 +280,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => r.Data.HasValue &&
-                             r.Data.Value.Flags.HasValue &&
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -320,8 +320,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => !r.Data.HasValue ||
-                             !r.Data.Value.Flags.HasValue ||
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -361,8 +361,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
@@ -403,8 +403,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
@@ -457,8 +457,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => r.Data.HasValue &&
-                             r.Data.Value.Flags.HasValue &&
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -497,8 +497,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => !r.Data.HasValue ||
-                             !r.Data.Value.Flags.HasValue ||
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -538,8 +538,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()

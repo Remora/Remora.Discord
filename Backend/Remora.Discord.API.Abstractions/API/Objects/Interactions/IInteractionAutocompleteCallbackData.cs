@@ -1,5 +1,5 @@
 //
-//  InteractionResponse.cs
+//  IInteractionAutocompleteCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,19 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IInteractionResponse" />
+/// <summary>
+/// Represents return payload data for an autocomplete interaction response.
+/// </summary>
 [PublicAPI]
-public record InteractionResponse
-(
-    InteractionCallbackType Type,
-    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData>> Data = default
-) : IInteractionResponse;
+public interface IInteractionAutocompleteCallbackData
+{
+    /// <summary>
+    /// Gets the autocomplete choices.
+    /// </summary>
+    /// <remarks>Only relevant for autocomplete interactions.</remarks>
+    IReadOnlyList<IApplicationCommandOptionChoice> Choices { get; }
+}
