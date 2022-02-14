@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>1.0.6</Version>
+        <Version>2.0.0-rc1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple implementations of pagination for messages via buttons.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 

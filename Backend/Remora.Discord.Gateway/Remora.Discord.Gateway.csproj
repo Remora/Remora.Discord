@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.2.10</Version>
+        <Version>7.0.0-rc1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 

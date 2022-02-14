@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.11</Version>
+        <Version>5.0.0-rc1</Version>
         <Description>
             $(BaseDescription)
 
             This package provides a simple implementation of a hosted service.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 

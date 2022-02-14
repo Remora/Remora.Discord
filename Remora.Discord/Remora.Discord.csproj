@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.9</Version>
+        <Version>2022.10-rc1</Version>
         <Description>
             $(BaseDescription)
 
@@ -16,15 +16,7 @@
             Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
         <PackageReleaseNotes>
-            Implement modal support.
-            Add type 11 (Attachment).
-            Rework interaction callback data structures.
-            Fix optionality of CreatorID.
-            Add new error code.
-            Fix nullability of create_timestamp.
-            Implement IsNewlyCreated for thread creation events.
-            Implement partial permission overwrites.
-            Implement scheduled event covers.
+            Update and default to API v10.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>5.0.7</Version>
+        <Version>6.0.0-rc1</Version>
         <Description>
             $(BaseDescription)
 
@@ -18,7 +18,7 @@
             component to the appropriate stable component of Remora.Discord.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 
