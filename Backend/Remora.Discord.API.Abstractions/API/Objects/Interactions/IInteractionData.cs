@@ -66,4 +66,9 @@ public interface IInteractionData
     /// Gets the values selected by the user.
     /// </summary>
     Optional<IReadOnlyList<string>> Values { get; }
+
+    /// <summary>
+    /// Gets the components for this interaction.
+    /// </summary>
+    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 }
