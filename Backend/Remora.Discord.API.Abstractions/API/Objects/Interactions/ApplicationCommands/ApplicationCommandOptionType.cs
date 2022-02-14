@@ -78,5 +78,10 @@ public enum ApplicationCommandOptionType
     /// <summary>
     /// The option is a floating-point number (double precision).
     /// </summary>
-    Number = 10
+    Number = 10,
+
+    /// <summary>
+    /// The option is an attachment (an image, document, etc).
+    /// </summary>
+    Attachment = 11,
 }
