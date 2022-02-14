@@ -29,9 +29,9 @@ namespace Remora.Discord.API.Objects;
 /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
 public record TextInputComponent
 (
-    string Label,
     string CustomID,
     TextInputStyle Style,
+    string Label,
     Optional<int> MinLength,
     Optional<int> MaxLength,
     Optional<bool> IsRequired,
@@ -43,5 +43,11 @@ public record TextInputComponent
     ComponentType IComponent.Type => ComponentType.TextInput;
 
     /// <inheritdoc />
+    Optional<string> IComponent.CustomID => this.CustomID;
+
+    /// <inheritdoc />
     Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => new(this.Style);
+
+    /// <inheritdoc />
+    Optional<string> IComponent.Label => this.Label;
 }
