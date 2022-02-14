@@ -43,7 +43,7 @@ public interface IComponent
     /// Gets the components nested under this component.
     /// </summary>
     /// <remarks>
-    /// Valid for <see cref="IActionRowComponent"/>s.
+    /// Valid for <see cref="IActionRowComponent"/>s and <see cref="IModal"/>s.
     /// </remarks>
     Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 

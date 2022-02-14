@@ -64,5 +64,13 @@ public enum InteractionCallbackType
     /// <summary>
     /// Respond to an autocomplete request with suggested choices.
     /// </summary>
-    ApplicationCommandAutocompleteResult = 8
+    ApplicationCommandAutocompleteResult = 8,
+    
+    /// <summary>
+    /// Respond to an interaction with a modal.
+    /// </summary>
+    /// <remarks>
+    /// Only relevant for component-based interactions and application commands.
+    /// </remarks>
+    Modal = 9
 }

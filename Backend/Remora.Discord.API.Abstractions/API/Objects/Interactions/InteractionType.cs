@@ -48,5 +48,10 @@ public enum InteractionType
     /// <summary>
     /// An autocomplete request.
     /// </summary>
-    ApplicationCommandAutocomplete = 4
+    ApplicationCommandAutocomplete = 4,
+
+    /// <summary>
+    /// A modal submission interaction.
+    /// </summary>
+    ModalSubmit = 5
 }
