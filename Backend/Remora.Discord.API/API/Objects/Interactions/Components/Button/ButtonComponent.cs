@@ -43,5 +43,5 @@ public record ButtonComponent
     ComponentType IComponent.Type => ComponentType.Button;
 
     /// <inheritdoc/>
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => OneOf<ButtonComponentStyle, TextInputStyle>.FromT0(this.Style);
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => new(this.Style);
 }

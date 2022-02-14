@@ -68,6 +68,11 @@ public interface IInteractionData
     Optional<IReadOnlyList<string>> Values { get; }
 
     /// <summary>
+    /// Gets the ID of the user or message targeted by an interaction.
+    /// </summary>
+    Optional<Snowflake> TargetID { get; }
+
+    /// <summary>
     /// Gets the components for this interaction.
     /// </summary>
     Optional<IReadOnlyList<IMessageComponent>> Components { get; }

@@ -33,10 +33,13 @@ namespace Remora.Discord.API.Objects;
 internal interface IDefaultedComponent : IComponent
 {
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
+    ComponentType IComponent.Type => default;
 
     /// <inheritdoc/>
-    ComponentType IComponent.Type => default;
+    Optional<string> IComponent.CustomID => default;
+
+    /// <inheritdoc/>
+    Optional<bool> IComponent.IsDisabled => default;
 
     /// <inheritdoc/>
     Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => default;
@@ -48,13 +51,7 @@ internal interface IDefaultedComponent : IComponent
     Optional<IPartialEmoji> IComponent.Emoji => default;
 
     /// <inheritdoc/>
-    Optional<string> IComponent.CustomID => default;
-
-    /// <inheritdoc/>
     Optional<string> IComponent.URL => default;
-
-    /// <inheritdoc/>
-    Optional<bool> IComponent.IsDisabled => default;
 
     /// <inheritdoc/>
     Optional<IReadOnlyList<ISelectOption>> IComponent.Options => default;
@@ -69,7 +66,7 @@ internal interface IDefaultedComponent : IComponent
     Optional<int> IComponent.MaxValues => default;
 
     /// <inheritdoc/>
-    Optional<string> IComponent.Value => default;
+    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
 
     /// <inheritdoc/>
     Optional<int> IComponent.MinLength => default;
@@ -79,4 +76,7 @@ internal interface IDefaultedComponent : IComponent
 
     /// <inheritdoc/>
     Optional<bool> IComponent.IsRequired => default;
+
+    /// <inheritdoc/>
+    Optional<string> IComponent.Value => default;
 }

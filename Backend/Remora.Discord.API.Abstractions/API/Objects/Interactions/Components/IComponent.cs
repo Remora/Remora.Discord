@@ -40,12 +40,20 @@ public interface IComponent
     ComponentType Type { get; }
 
     /// <summary>
-    /// Gets the components nested under this component.
+    /// Gets a custom ID for the component, defined by the developer.
     /// </summary>
     /// <remarks>
-    /// Valid for <see cref="IActionRowComponent"/>s and <see cref="IModal"/>s.
+    /// Valid for <see cref="IButtonComponent"/>s.
     /// </remarks>
-    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    Optional<string> CustomID { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the component is disabled.
+    /// </summary>
+    /// <remarks>
+    /// Valid for <see cref="IButtonComponent"/>s and <see cref="ISelectMenuComponent"/>s.
+    /// </remarks>
+    Optional<bool> IsDisabled { get; }
 
     /// <summary>
     /// Gets the component's style.
@@ -72,28 +80,12 @@ public interface IComponent
     Optional<IPartialEmoji> Emoji { get; }
 
     /// <summary>
-    /// Gets a custom ID for the component, defined by the developer.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
-    /// </remarks>
-    Optional<string> CustomID { get; }
-
-    /// <summary>
     /// Gets the URL used for link-style buttons.
     /// </summary>
     /// <remarks>
     /// Valid for <see cref="IButtonComponent"/>s.
     /// </remarks>
     Optional<string> URL { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether the component is disabled.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s and <see cref="ISelectMenuComponent"/>s.
-    /// </remarks>
-    Optional<bool> IsDisabled { get; }
 
     /// <summary>
     /// Gets the options in a select menu.
@@ -126,6 +118,14 @@ public interface IComponent
     /// Valid for <see cref="ISelectMenuComponent"/>s.
     /// </remarks>
     Optional<int> MaxValues { get; }
+
+    /// <summary>
+    /// Gets the components nested under this component.
+    /// </summary>
+    /// <remarks>
+    /// Valid for <see cref="IActionRowComponent"/>s.
+    /// </remarks>
+    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
     /// <summary>
     /// Gets the minimum length of the input, maximum of 4000.

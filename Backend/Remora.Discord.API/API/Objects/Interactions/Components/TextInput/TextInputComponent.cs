@@ -24,7 +24,7 @@ using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects.Modal;
+namespace Remora.Discord.API.Objects;
 
 /// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
 public record TextInputComponent
@@ -43,5 +43,5 @@ public record TextInputComponent
     ComponentType IComponent.Type => ComponentType.TextInput;
 
     /// <inheritdoc />
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => OneOf<ButtonComponentStyle, TextInputStyle>.FromT1(this.Style);
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => new(this.Style);
 }

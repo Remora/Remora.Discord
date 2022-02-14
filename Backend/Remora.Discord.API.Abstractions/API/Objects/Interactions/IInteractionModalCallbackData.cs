@@ -30,14 +30,14 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public interface IInteractionModalCallbackData
 {
     /// <summary>
-    /// Gets the title for the modal.
-    /// </summary>
-    string Title { get; }
-
-    /// <summary>
     /// Gets the custom ID for the modal.
     /// </summary>
     string CustomID { get; }
+
+    /// <summary>
+    /// Gets the title for the modal.
+    /// </summary>
+    string Title { get; }
 
     /// <summary>
     /// Gets the components for the modal.

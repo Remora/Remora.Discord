@@ -32,14 +32,14 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// </remarks>
 public interface ITextInputComponent : IMessageComponent
 {
-    /// <inheritdoc cref="IComponent.Label"/>
-    string Label { get; }
-
     /// <inheritdoc cref="IComponent.CustomID"/>
     string CustomID { get; }
 
     /// <inheritdoc cref="IComponent.Style"/>
     TextInputStyle Style { get; }
+
+    /// <inheritdoc cref="IComponent.Label"/>
+    string Label { get; }
 
     /// <inheritdoc cref="IComponent.MinLength"/>
     Optional<int> MinLength { get; }
