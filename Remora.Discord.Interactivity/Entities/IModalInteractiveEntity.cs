@@ -1,5 +1,5 @@
 //
-//  IInteractiveEntity.cs
+//  IModalInteractiveEntity.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,34 +20,32 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
 namespace Remora.Discord.Interactivity;
 
 /// <summary>
-/// Marker interface for interactive entities.
+/// Represents an entity that responds to modal submissions.
 /// </summary>
-[PublicAPI]
-public interface IInteractiveEntity
+public interface IModalInteractiveEntity : IInteractiveEntity
 {
     /// <summary>
-    /// Determines if the entity is interested in an interaction for the given component type and custom ID.
+    /// Handles a modal submission; that is, a user submitted a modal form.
     /// </summary>
-    /// <remarks>
-    /// An interested entity will be allowed to handle the interaction, and more than one entity may indicate
-    /// interest for a single interaction. Multiple interested entities will run in parallel, though access to
-    /// persistent in-memory entity data will be synchronized.
-    /// </remarks>
-    /// <param name="componentType">
-    /// The component type, or null if the interaction is not bound to a particular component type. This is generally
-    /// the case for modal interactions.
-    /// </param>
-    /// <param name="customID">The custom ID.</param>
+    /// <param name="user">The user who submitted the modal.</param>
+    /// <param name="customID">The modal's own unique ID.</param>
+    /// <param name="components">The components submitted with the modal.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
-    /// <returns>true if the entity is interested; otherwise, false.</returns>
-    Task<Result<bool>> IsInterestedAsync(ComponentType? componentType, string customID, CancellationToken ct = default);
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result> HandleInteractionAsync
+    (
+        IUser user,
+        string customID,
+        IReadOnlyList<IMessageComponent> components,
+        CancellationToken ct = default
+    );
 }

@@ -33,6 +33,7 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
+using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
 using Remora.Discord.Gateway.Responders;
@@ -92,6 +93,64 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
         var context = createContext.Entity;
         _contextInjectionService.Context = context;
 
+        return context.Data.Components.HasValue
+            ? await HandleModalInteractionAsync(ct, context)
+            : await HandleComponentInteractionAsync(ct, context);
+    }
+
+    private async Task<Result> HandleModalInteractionAsync(CancellationToken ct, InteractionContext context)
+    {
+        if (!context.Data.Components.IsDefined(out var components))
+        {
+            return new InvalidOperationError("The interaction did not contain a custom ID.");
+        }
+
+        if (!context.Data.CustomID.IsDefined(out var customID))
+        {
+            return new InvalidOperationError("The interaction did not contain a custom ID.");
+        }
+
+        if (!_options.SuppressAutomaticResponses)
+        {
+            var response = new InteractionResponse(InteractionCallbackType.DeferredUpdateMessage);
+            var createResponse = await _interactionAPI.CreateInteractionResponseAsync
+            (
+                context.ID,
+                context.Token,
+                response,
+                ct: ct
+            );
+
+            if (!createResponse.IsSuccess)
+            {
+                return createResponse;
+            }
+        }
+
+        var interactionResults = await RunEntityHandlersAsync<IModalInteractiveEntity>
+        (
+            null,
+            customID,
+            (entity, c) => entity.HandleInteractionAsync(context.User, customID, components, c),
+            ct
+        );
+
+        if (!interactionResults.Any())
+        {
+            return new NotFoundError
+            (
+                "No interested interactive entities were found. Did you forget to add any entities interested " +
+                $"in modal submissions (with the ID {customID}) to the service collection?"
+            );
+        }
+
+        return interactionResults.All(r => r.IsSuccess)
+            ? Result.FromSuccess()
+            : new AggregateError(interactionResults.Where(r => !r.IsSuccess).Cast<IResult>().ToArray());
+    }
+
+    private async Task<Result> HandleComponentInteractionAsync(CancellationToken ct, InteractionContext context)
+    {
         if (!context.Data.ComponentType.IsDefined(out var componentType))
         {
             return new InvalidOperationError("The interaction did not contain a component type.");
@@ -178,7 +237,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
 
     private async Task<IReadOnlyList<Result>> RunEntityHandlersAsync<TEntity>
     (
-        ComponentType componentType,
+        ComponentType? componentType,
         string customID,
         Func<TEntity, CancellationToken, Task<Result>> handler,
         CancellationToken ct = default
@@ -230,7 +289,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     private async Task<Result?> RunPersistentEntityHandlerAsync<TEntity>
     (
         InMemoryPersistentInteractiveEntity entity,
-        ComponentType componentType,
+        ComponentType? componentType,
         string customID,
         Func<TEntity, CancellationToken, Task<Result>> handler,
         CancellationToken ct
