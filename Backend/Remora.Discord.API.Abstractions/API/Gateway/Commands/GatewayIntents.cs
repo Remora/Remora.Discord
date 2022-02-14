@@ -162,6 +162,18 @@ public enum GatewayIntents
     DirectMessageTyping = 1 << 14,
 
     /// <summary>
+    /// Does not subscribe to any particular events, but requests that message contents be sent along with the following
+    /// events:
+    ///     - MESSAGE_CREATE
+    ///     - MESSAGE_UPDATE
+    ///     - MESSAGE_DELETE
+    ///
+    /// If this intent is not specified, all raw message content strings will be empty. You may still receive user input
+    /// using interactions, such as slash commands or modals.
+    /// </summary>
+    MessageContents = 1 << 15,
+
+    /// <summary>
     /// Subscribes to the following events:
     ///     - GUILD_SCHEDULED_EVENT_CREATE
     ///     - GUILD_SCHEDULED_EVENT_UPDATE
