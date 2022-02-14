@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a text-based input component.
 /// </summary>
 /// <remarks>
-/// Currently only valid for <see cref="IModal.Components"/>.
+/// Currently only valid for modal components..
 /// </remarks>
 public interface ITextInputComponent : IMessageComponent
 {
@@ -36,10 +36,10 @@ public interface ITextInputComponent : IMessageComponent
     string Label { get; }
 
     /// <inheritdoc cref="IComponent.CustomID"/>
-    public string CustomID { get; }
+    string CustomID { get; }
 
     /// <inheritdoc cref="IComponent.Style"/>
-    public TextInputStyle Style { get; }
+    TextInputStyle Style { get; }
 
     /// <inheritdoc cref="IComponent.MinLength"/>
     Optional<int> MinLength { get; }
