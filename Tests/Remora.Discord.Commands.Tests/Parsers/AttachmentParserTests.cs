@@ -127,7 +127,7 @@ public class AttachmentParserTests
         var mockData = new Mock<IInteractionData>();
         var mockResolvedData = new Mock<IApplicationCommandInteractionDataResolved>();
 
-        mockData.Setup(x => x.Resolved).Returns(() => mockResolvedData.Object);
+        mockData.Setup(x => x.Resolved).Returns(() => new(mockResolvedData.Object));
 
         var mockContext = new InteractionContext
             (
@@ -160,7 +160,7 @@ public class AttachmentParserTests
         var mockData = new Mock<IInteractionData>();
         var mockResolvedData = new Mock<IApplicationCommandInteractionDataResolved>();
 
-        mockData.Setup(x => x.Resolved).Returns(() => mockResolvedData.Object);
+        mockData.Setup(x => x.Resolved).Returns(() => new(mockResolvedData.Object));
 
         mockResolvedData
             .Setup(x => x.Attachments)
@@ -197,7 +197,7 @@ public class AttachmentParserTests
         var mockAttachment = new Mock<IAttachment>();
         var mockResolvedData = new Mock<IApplicationCommandInteractionDataResolved>();
 
-        mockData.Setup(x => x.Resolved).Returns(() => mockResolvedData.Object);
+        mockData.Setup(x => x.Resolved).Returns(() => new(mockResolvedData.Object));
 
         mockAttachment.Setup(x => x.ID).Returns(_attachmentID);
 
