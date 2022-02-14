@@ -5,16 +5,14 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>19.0.2</Version>
+        <Version>19.0.3</Version>
         <Description>
             $(BaseDescription)
 
             This package provides simple glue code for using Remora.Commands with Remora.Discord.
         </Description>
-        <PackageReleaseNotes>1
-            Implement support for user-facing prefix handling.
-            Refactor choice creation for enumerations.
-            Implement support for runtime command tree selection.
+        <PackageReleaseNotes>
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 

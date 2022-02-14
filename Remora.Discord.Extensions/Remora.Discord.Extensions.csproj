@@ -5,15 +5,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>2.0.1</Version>
+		<Version>2.0.2</Version>
 		<Description>
 			$(BaseDescription)
 
 			This package provides utilities and components which extened upon base resources.
 		</Description>
 		<PackageReleaseNotes>
-			Replace empty string defaults with null string defaults.
-			Return Result&lt;EmbedBuilder&gt; from AddField methods.
+			Update dependencies.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 
