@@ -1,0 +1,11 @@
+{
+  "type": 4,
+  "custom_id": "my-input",
+  "style": 1,
+  "label": "aaa",
+  "min_length": 1,
+  "max_length": 2,
+  "required": false,
+  "value": "bbbb",
+  "placeholder": "cccc"
+}
