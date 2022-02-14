@@ -921,6 +921,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(d => d.IsTTS, "tts");
 
         options.AddDataObjectConverter<IInteractionAutocompleteCallbackData, InteractionAutocompleteCallbackData>();
+        options.AddDataObjectConverter<IInteractionModalCallbackData, InteractionModalCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
@@ -954,7 +955,8 @@ public static class ServiceCollectionExtensions
         options.AddConverter<MessageComponentConverter>();
 
         options.AddDataObjectConverter<IComponent, Component>()
-            .WithPropertyName(c => c.IsDisabled, "disabled");
+            .WithPropertyName(c => c.IsDisabled, "disabled")
+            .WithPropertyName(c => c.IsRequired, "required");
 
         options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>();
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
@@ -962,6 +964,9 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
             .WithPropertyName(c => c.IsDisabled, "disabled");
+
+        options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
+            .WithPropertyName(i => i.IsRequired, "required");
 
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
