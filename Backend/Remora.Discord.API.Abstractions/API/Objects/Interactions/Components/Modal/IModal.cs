@@ -1,5 +1,5 @@
 //
-//  IModalComponent.cs
+//  IModal.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,9 +26,9 @@ using Remora.Rest.Core;
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a modal component with one or more component fields.
+/// Represents a popup modal with one or more component fields.
 /// </summary>
-public interface IModalComponent
+public interface IModal
 {
     /// <inheritdoc cref="IComponent.CustomID"/>
     Optional<string> CustomID { get; }

@@ -1,5 +1,5 @@
 //
-//  ModalComponent.cs
+//  Modal.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,10 +26,10 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects.Modal;
 
-/// <inheritdoc cref="IModalComponent"/>
-public record ModalComponent
+/// <inheritdoc cref="IModal"/>
+public record Modal
 (
     Optional<string> CustomID,
     Optional<string> Title,
     Optional<IReadOnlyList<IMessageComponent>> Components
-) : IModalComponent;
+) : IModal;

@@ -28,7 +28,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a text-based input component.
 /// </summary>
 /// <remarks>
-/// Currently only valid for <see cref="IModalComponent.Components"/>.
+/// Currently only valid for <see cref="IModal.Components"/>.
 /// </remarks>
 public interface ITextInputComponent : IMessageComponent
 {
