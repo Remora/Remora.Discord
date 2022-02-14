@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  TextInputStyle.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,20 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Enumerates various interaction types.
+/// Represents the style of a <see cref="ITextInputComponent"/>.
 /// </summary>
-[PublicAPI]
-public enum InteractionType
+public enum TextInputStyle
 {
     /// <summary>
-    /// A Discord-initiated ping to check for connectivity.
+    /// Represents that this input is a short, single-line input.
     /// </summary>
-    Ping = 1,
+    Short = 1,
 
     /// <summary>
-    /// A user-invoked slash command.
+    /// Represents that this input is a long, multi-line input.
     /// </summary>
-    ApplicationCommand = 2,
-
-    /// <summary>
-    /// A user-initiated interaction with a message component.
-    /// </summary>
-    MessageComponent = 3,
-
-    /// <summary>
-    /// An autocomplete request.
-    /// </summary>
-    ApplicationCommandAutocomplete = 4,
-
-    /// <summary>
-    /// A modal submission interaction.
-    /// </summary>
-    ModalSubmit = 5
+    Paragraph = 2
 }

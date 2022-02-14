@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -42,23 +43,23 @@ public interface IComponent
     /// Gets the components nested under this component.
     /// </summary>
     /// <remarks>
-    /// Valid for <see cref="IActionRowComponent"/>s.
+    /// Valid for <see cref="IActionRowComponent"/>s and <see cref="IModal"/>s.
     /// </remarks>
     Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
     /// <summary>
-    /// Gets the button's style.
+    /// Gets the component's style.
     /// </summary>
     /// <remarks>
     /// Valid for <see cref="IButtonComponent"/>s.
     /// </remarks>
-    Optional<ButtonComponentStyle> Style { get; }
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style { get; }
 
     /// <summary>
     /// Gets the label on the button.
     /// </summary>
     /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
+    /// Valid for <see cref="IButtonComponent"/>s and <see cref="ITextInputComponent"/>.
     /// </remarks>
     Optional<string> Label { get; }
 
@@ -106,7 +107,7 @@ public interface IComponent
     /// Gets the placeholder text for a component.
     /// </summary>
     /// <remarks>
-    /// Valid for <see cref="ISelectMenuComponent"/>s.
+    /// Valid for <see cref="ISelectMenuComponent"/>s and <see cref="ITextInputComponent"/>.
     /// </remarks>
     Optional<string> Placeholder { get; }
 
@@ -125,4 +126,30 @@ public interface IComponent
     /// Valid for <see cref="ISelectMenuComponent"/>s.
     /// </remarks>
     Optional<int> MaxValues { get; }
+
+    /// <summary>
+    /// Gets the minimum length of the input, maximum of 4000.
+    /// </summary>
+    /// <remarks>
+    /// Must be greater than zero and less than or equal to <see cref="MaxLength"/> if specified.
+    /// </remarks>
+    Optional<int> MinLength { get; }
+
+    /// <summary>
+    /// Gets the maximum length of the input, maximum of 4000.
+    /// </summary>
+    /// <remarks>
+    /// Must be greater than zero and or equal to <see cref="MinLength"/> if specified.
+    /// </remarks>
+    Optional<int> MaxLength { get; }
+
+    /// <summary>
+    /// Gets whether this component is required.
+    /// </summary>
+    Optional<bool> IsRequired { get; }
+
+    /// <summary>
+    /// Gets the pre-filled value for this component.
+    /// </summary>
+    Optional<string> Value { get; }
 }

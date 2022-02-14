@@ -1,5 +1,5 @@
 //
-//  InteractionType.cs
+//  IInteractionModalCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,38 +20,30 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Collections.Generic;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Enumerates various interaction types.
+/// Represents return payload data for an interaction response.
 /// </summary>
-[PublicAPI]
-public enum InteractionType
+public interface IInteractionModalCallbackData
 {
     /// <summary>
-    /// A Discord-initiated ping to check for connectivity.
+    /// Gets the title for the modal.
     /// </summary>
-    Ping = 1,
+    string Title { get; }
 
     /// <summary>
-    /// A user-invoked slash command.
+    /// Gets the custom ID for the modal.
     /// </summary>
-    ApplicationCommand = 2,
+    string CustomID { get; }
 
     /// <summary>
-    /// A user-initiated interaction with a message component.
+    /// Gets the components for the modal.
     /// </summary>
-    MessageComponent = 3,
-
-    /// <summary>
-    /// An autocomplete request.
-    /// </summary>
-    ApplicationCommandAutocomplete = 4,
-
-    /// <summary>
-    /// A modal submission interaction.
-    /// </summary>
-    ModalSubmit = 5
+    /// <remarks>
+    /// Currently only supports <see cref="ITextInputComponent"/>s.
+    /// </remarks>
+    IReadOnlyList<IMessageComponent> Components { get; }
 }

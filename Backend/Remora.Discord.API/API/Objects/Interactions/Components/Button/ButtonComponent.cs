@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -42,5 +43,5 @@ public record ButtonComponent
     ComponentType IComponent.Type => ComponentType.Button;
 
     /// <inheritdoc/>
-    Optional<ButtonComponentStyle> IComponent.Style => this.Style;
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => OneOf<ButtonComponentStyle, TextInputStyle>.FromT0(this.Style);
 }

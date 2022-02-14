@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -33,7 +34,7 @@ public record Component
 (
     ComponentType Type,
     Optional<IReadOnlyList<IMessageComponent>> Components,
-    Optional<ButtonComponentStyle> Style,
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style,
     Optional<string> Label,
     Optional<IPartialEmoji> Emoji,
     Optional<string> CustomID,
@@ -42,5 +43,10 @@ public record Component
     Optional<IReadOnlyList<ISelectOption>> Options,
     Optional<string> Placeholder,
     Optional<int> MinValues,
-    Optional<int> MaxValues
+    Optional<int> MaxValues,
+    Optional<string> Title,
+    Optional<int> MinLength,
+    Optional<int> MaxLength,
+    Optional<bool> IsRequired,
+    Optional<string> Value
 ) : IMessageComponent, IComponent;

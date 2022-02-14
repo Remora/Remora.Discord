@@ -1,5 +1,5 @@
 //
-//  IInteractionResponse.cs
+//  ITextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,25 +20,39 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a response to an interaction.
+/// Represents a text-based input component.
 /// </summary>
-[PublicAPI]
-public interface IInteractionResponse
+/// <remarks>
+/// Currently only valid for modal components..
+/// </remarks>
+public interface ITextInputComponent : IMessageComponent
 {
-    /// <summary>
-    /// Gets the response type.
-    /// </summary>
-    InteractionCallbackType Type { get; }
+    /// <inheritdoc cref="IComponent.Label"/>
+    string Label { get; }
 
-    /// <summary>
-    /// Gets the response payload.
-    /// </summary>
-    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData, IInteractionModalCallbackData>> Data { get; }
+    /// <inheritdoc cref="IComponent.CustomID"/>
+    string CustomID { get; }
+
+    /// <inheritdoc cref="IComponent.Style"/>
+    TextInputStyle Style { get; }
+
+    /// <inheritdoc cref="IComponent.MinLength"/>
+    Optional<int> MinLength { get; }
+
+    /// <inheritdoc cref="IComponent.MaxLength"/>
+    Optional<int> MaxLength { get; }
+
+    /// <inheritdoc cref="IComponent.IsRequired"/>
+    Optional<bool> IsRequired { get; }
+
+    /// <inheritdoc cref="IComponent.Value"/>
+    Optional<string> Value { get; }
+
+    /// <inheritdoc cref="IComponent.Placeholder"/>
+    Optional<string> Placeholder { get; }
 }
