@@ -36,6 +36,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
@@ -525,7 +526,7 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v=9&encoding=json";
+                var gatewayEndpoint = $"{getGatewayEndpoint.Entity.Url}?v={(int)DiscordAPIVersion.V10}&encoding=json";
                 if (!Uri.TryCreate(gatewayEndpoint, UriKind.Absolute, out var gatewayUri))
                 {
                     return new GatewayError
