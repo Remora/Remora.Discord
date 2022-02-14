@@ -71,6 +71,8 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
                 => JsonSerializer.Deserialize<ButtonComponent>(document.RootElement.GetRawText(), options),
             ComponentType.SelectMenu
                 => JsonSerializer.Deserialize<SelectMenuComponent>(document.RootElement.GetRawText(), options),
+            ComponentType.TextInput
+                => JsonSerializer.Deserialize<TextInputComponent>(document.RootElement.GetRawText(), options),
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
