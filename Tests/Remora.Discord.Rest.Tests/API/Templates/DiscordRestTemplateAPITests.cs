@@ -83,7 +83,7 @@ public class DiscordRestTemplateAPITests
             // Create a dummy PNG image
             await using var icon = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(icon);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             icon.Position = 0;
 
             var api = CreateAPI

@@ -97,7 +97,7 @@ public class DiscordRestInteractionAPITests
             var interactionResponse = new InteractionResponse
             (
                 InteractionCallbackType.ChannelMessageWithSource,
-                new InteractionCallbackData()
+                new(new InteractionMessageCallbackData())
             );
 
             await using var file = new MemoryStream();
@@ -185,7 +185,7 @@ public class DiscordRestInteractionAPITests
             var interactionResponse = new InteractionResponse
             (
                 InteractionCallbackType.ChannelMessageWithSource,
-                new InteractionCallbackData()
+                new(new InteractionMessageCallbackData())
             );
 
             await using var file1 = new MemoryStream();
@@ -297,7 +297,7 @@ public class DiscordRestInteractionAPITests
             var interactionResponse = new InteractionResponse
             (
                 InteractionCallbackType.ChannelMessageWithSource,
-                new InteractionCallbackData()
+                new(new InteractionMessageCallbackData())
             );
 
             await using var file = new MemoryStream();

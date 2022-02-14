@@ -118,7 +118,7 @@ public class DiscordRestEmojiAPITests
             // Create a dummy PNG image
             await using var image = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(image);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             image.Position = 0;
 
             var roles = Array.Empty<Snowflake>();

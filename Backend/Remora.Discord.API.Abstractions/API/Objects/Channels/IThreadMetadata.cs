@@ -60,5 +60,5 @@ public interface IThreadMetadata
     /// <summary>
     /// Gets a value indicating when the thread was created. Only populated for threads created after 2022-01-09 (YYYY-MM-DD).
     /// </summary>
-    Optional<DateTimeOffset> CreateTimestamp { get; }
+    Optional<DateTimeOffset?> CreateTimestamp { get; }
 }

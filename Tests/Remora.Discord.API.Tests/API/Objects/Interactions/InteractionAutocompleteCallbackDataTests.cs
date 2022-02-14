@@ -1,5 +1,5 @@
 //
-//  InteractionCallbackDataTests.cs
+//  InteractionAutocompleteCallbackDataTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,7 +26,7 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
-public class InteractionCallbackDataTests
-    : ObjectTestBase<IInteractionCallbackData>
+public class InteractionAutocompleteCallbackDataTests
+    : ObjectTestBase<IInteractionAutocompleteCallbackData>
 {
 }

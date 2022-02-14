@@ -1,5 +1,5 @@
 //
-//  InteractionResponse.cs
+//  IPartialPermissionOverwrite.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,18 +21,23 @@
 //
 
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
+namespace Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Objects;
-
-/// <inheritdoc cref="IInteractionResponse" />
+/// <inheritdoc cref="IPermissionOverwrite"/>
 [PublicAPI]
-public record InteractionResponse
-(
-    InteractionCallbackType Type,
-    Optional<OneOf<IInteractionMessageCallbackData, IInteractionAutocompleteCallbackData>> Data = default
-) : IInteractionResponse;
+public interface IPartialPermissionOverwrite
+{
+    /// <inheritdoc cref="IPermissionOverwrite.ID"/>
+    Optional<Snowflake> ID { get; }
+
+    /// <inheritdoc cref="IPermissionOverwrite.Type"/>
+    Optional<PermissionOverwriteType> Type { get; }
+
+    /// <inheritdoc cref="IPermissionOverwrite.Allow"/>
+    Optional<IDiscordPermissionSet> Allow { get; }
+
+    /// <inheritdoc cref="IPermissionOverwrite.Deny"/>
+    Optional<IDiscordPermissionSet> Deny { get; }
+}

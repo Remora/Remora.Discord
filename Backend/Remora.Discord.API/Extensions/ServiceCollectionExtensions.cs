@@ -209,6 +209,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
         options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
+            .WithPropertyName(c => c.IsNewlyCreated, "newly_created")
             .WithPropertyName(c => c.IsNsfw, "nsfw")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
@@ -722,6 +723,7 @@ public static class ServiceCollectionExtensions
         options.AddConverter<DiscordPermissionSetConverter>();
 
         options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>();
+        options.AddDataObjectConverter<IPartialPermissionOverwrite, PartialPermissionOverwrite>();
 
         options.AddDataObjectConverter<IRole, Role>()
             .WithPropertyName(r => r.Colour, "color")
@@ -914,10 +916,11 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionCallbackData, InteractionCallbackData
+                IInteractionMessageCallbackData, InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 
+        options.AddDataObjectConverter<IInteractionAutocompleteCallbackData, InteractionAutocompleteCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();

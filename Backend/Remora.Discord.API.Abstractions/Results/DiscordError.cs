@@ -427,6 +427,11 @@ public enum DiscordError
     OpeningDMsTooFast = 40003,
 
     /// <summary>
+    /// Your ability to send messages has been temporarily disabled.
+    /// </summary>
+    SendMessagesHasBeenTemporarilyDisabled = 40004,
+
+    /// <summary>
     /// Request entity too large. Try sending something smaller in size.
     /// </summary>
     RequestEntityTooLarge = 40005,
@@ -455,6 +460,11 @@ public enum DiscordError
     /// An application command with that name already exists.
     /// </summary>
     ApplicationCommandWithNameExists = 40041,
+
+    /// <summary>
+    /// The interaction has already been acknowledged by the application.
+    /// </summary>
+    InteractionHasAlreadyBeenAcknowledged = 40060,
 
     /// <summary>
     /// Missing access.

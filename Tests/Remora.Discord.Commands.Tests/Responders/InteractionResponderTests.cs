@@ -101,7 +101,9 @@ public class InteractionResponderTests
         {
             serviceCollection
                 .Configure<InteractionResponderOptions>(o => o.SuppressAutomaticResponses = true)
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _preExecutionEventMock.Object);
         }
     }
@@ -235,7 +237,9 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _postExecutionEventMock.Object);
         }
     }
@@ -276,8 +280,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => r.Data.HasValue &&
-                             r.Data.Value.Flags.HasValue &&
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -316,8 +320,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => !r.Data.HasValue ||
-                             !r.Data.Value.Flags.HasValue ||
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -357,8 +361,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
@@ -399,8 +403,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
@@ -412,7 +416,8 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<EphemeralCommand>();
+                .AddCommandTree()
+                .WithCommandGroup<EphemeralCommand>();
         }
     }
 
@@ -452,8 +457,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => r.Data.HasValue &&
-                             r.Data.Value.Flags.HasValue &&
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             r.Data.Value.AsT0.Flags.HasValue &&
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -492,8 +497,8 @@ public class InteractionResponderTests
                     It.Is<IInteractionResponse>
                     (
                         r => !r.Data.HasValue ||
-                             !r.Data.Value.Flags.HasValue ||
-                             (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) != 0
+                             !r.Data.Value.AsT0.Flags.HasValue ||
+                             (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) != 0
                     ),
                     It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                     It.IsAny<CancellationToken>()
@@ -533,8 +538,8 @@ public class InteractionResponderTests
                         It.Is<IInteractionResponse>
                         (
                             r => !r.Data.HasValue ||
-                                 !r.Data.Value.Flags.HasValue ||
-                                 (r.Data.Value.Flags.Value & MessageFlags.Ephemeral) == 0
+                                 !r.Data.Value.AsT0.Flags.HasValue ||
+                                 (r.Data.Value.AsT0.Flags.Value & MessageFlags.Ephemeral) == 0
                         ),
                         It.IsAny<Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>>>(),
                         It.IsAny<CancellationToken>()
@@ -546,7 +551,9 @@ public class InteractionResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<EphemeralCommand>()
+                .AddCommandTree()
+                    .WithCommandGroup<EphemeralCommand>()
+                .Finish()
                 .Configure<InteractionResponderOptions>(o => o.UseEphemeralResponses = true );
         }
     }

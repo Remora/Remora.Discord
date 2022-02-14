@@ -27,6 +27,8 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
+#pragma warning disable SA1402
+
 namespace Remora.Discord.Interactivity;
 
 /// <summary>

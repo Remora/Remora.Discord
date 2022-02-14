@@ -22,7 +22,7 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-      <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.1" />
+      <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.2" />
     </ItemGroup>
 
 </Project>

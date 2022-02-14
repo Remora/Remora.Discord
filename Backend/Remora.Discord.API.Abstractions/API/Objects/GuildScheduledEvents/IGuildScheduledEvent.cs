@@ -49,7 +49,7 @@ public interface IGuildScheduledEvent
     /// <summary>
     /// Gets the ID of the user that created the scheduled event.
     /// </summary>
-    Snowflake? CreatorID { get; }
+    Optional<Snowflake?> CreatorID { get; }
 
     /// <summary>
     /// Gets the name of the scheduled event.
@@ -106,4 +106,9 @@ public interface IGuildScheduledEvent
     /// Gets the number of users subscribed to the scheduled event.
     /// </summary>
     Optional<int> UserCount { get; }
+
+    /// <summary>
+    /// Gets the cover image of the scheduled event.
+    /// </summary>
+    IImageHash? Image { get; }
 }
