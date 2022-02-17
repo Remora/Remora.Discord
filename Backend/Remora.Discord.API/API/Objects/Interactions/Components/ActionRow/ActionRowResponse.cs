@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  ActionRowResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -28,24 +28,14 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
 [PublicAPI]
-public record Component
-(
-    ComponentType Type,
-    Optional<string> CustomID,
-    Optional<bool> IsDisabled,
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style,
-    Optional<string> Label,
-    Optional<IPartialEmoji> Emoji,
-    Optional<string> URL,
-    Optional<IReadOnlyList<ISelectOption>> Options,
-    Optional<string> Placeholder,
-    Optional<int> MinValues,
-    Optional<int> MaxValues,
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> Components,
-    Optional<int> MinLength,
-    Optional<int> MaxLength,
-    Optional<bool> IsRequired,
-    Optional<string> Value
-) : IMessageComponent, IMessageComponentResponse, IComponent;
+public record ActionRowResponse(IReadOnlyList<IMessageComponentResponse> Components)
+    : IActionRowResponse, IDefaultedComponent
+{
+    /// <inheritdoc/>
+    ComponentType IComponent.Type => ComponentType.ActionRow;
+
+    /// <inheritdoc/>
+    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => new(OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>.FromT1(this.Components));
+}

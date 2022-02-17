@@ -45,5 +45,5 @@ public interface IInteractionModalCallbackData
     /// <remarks>
     /// Currently only supports <see cref="ITextInputComponent"/>s.
     /// </remarks>
-    IReadOnlyList<IMessageComponent> Components { get; }
+    IReadOnlyList<IMessageComponentResponse> Components { get; }
 }

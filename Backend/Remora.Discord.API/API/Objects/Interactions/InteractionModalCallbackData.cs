@@ -30,5 +30,5 @@ public record InteractionModalCallbackData
 (
     string CustomID,
     string Title,
-    IReadOnlyList<IMessageComponent> Components
+    IReadOnlyList<IMessageComponentResponse> Components
 ) : IInteractionModalCallbackData;

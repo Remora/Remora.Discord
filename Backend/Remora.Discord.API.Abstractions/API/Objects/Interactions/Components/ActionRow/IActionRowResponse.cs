@@ -1,5 +1,5 @@
 //
-//  ActionRowComponent.cs
+//  IActionRowResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,20 +22,15 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
-using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
+/// <summary>
+/// Represents a row of interactive components.
+/// </summary>
 [PublicAPI]
-public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
-    : IActionRowComponent, IDefaultedComponent
+public interface IActionRowResponse : IMessageComponentResponse
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.ActionRow;
-
-    /// <inheritdoc/>
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => new(OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>.FromT0(this.Components));
+    /// <inheritdoc cref="IComponent.Components"/>
+    IReadOnlyList<IMessageComponentResponse> Components { get; }
 }

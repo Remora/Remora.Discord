@@ -125,7 +125,7 @@ public interface IComponent
     /// <remarks>
     /// Valid for <see cref="IActionRowComponent"/>s.
     /// </remarks>
-    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> Components { get; }
 
     /// <summary>
     /// Gets the minimum length of the input, maximum of 4000.

@@ -66,7 +66,7 @@ internal interface IDefaultedComponent : IComponent
     Optional<int> IComponent.MaxValues => default;
 
     /// <inheritdoc/>
-    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
+    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => default;
 
     /// <inheritdoc/>
     Optional<int> IComponent.MinLength => default;

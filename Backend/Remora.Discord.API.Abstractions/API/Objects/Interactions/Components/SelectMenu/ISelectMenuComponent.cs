@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable values.
 /// </summary>
 [PublicAPI]
-public interface ISelectMenuComponent : IMessageComponent
+public interface ISelectMenuComponent : IMessageComponent, IMessageComponentResponse
 {
     /// <inheritdoc cref="IComponent.CustomID"/>
     string CustomID { get; }

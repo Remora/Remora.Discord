@@ -1,5 +1,5 @@
 //
-//  ActionRowComponent.cs
+//  ITextInputResponse.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
-[PublicAPI]
-public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
-    : IActionRowComponent, IDefaultedComponent
+/// <summary>
+/// Represents a text-based input component.
+/// </summary>
+/// <remarks>
+/// Currently only valid for modal components..
+/// </remarks>
+public interface ITextInputResponse : IMessageComponentResponse
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.ActionRow;
+    /// <inheritdoc cref="IComponent.CustomID"/>
+    string CustomID { get; }
 
-    /// <inheritdoc/>
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => new(OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>.FromT0(this.Components));
+    /// <inheritdoc cref="IComponent.Value"/>
+    Optional<string> Value { get; }
 }

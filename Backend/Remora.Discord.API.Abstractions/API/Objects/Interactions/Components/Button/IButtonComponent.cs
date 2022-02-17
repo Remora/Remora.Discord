@@ -29,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a button component.
 /// </summary>
 [PublicAPI]
-public interface IButtonComponent : IMessageComponent
+public interface IButtonComponent : IMessageComponent, IMessageComponentResponse
 {
     /// <inheritdoc cref="IComponent.Style"/>
     ButtonComponentStyle Style { get; }
