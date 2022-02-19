@@ -25,7 +25,7 @@ using JetBrains.Annotations;
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents the base type for all components.
+/// Represents the base type for all partial components. This is a marker interface with no real functionality.
 /// </summary>
 [PublicAPI]
 public interface IPartialMessageComponent

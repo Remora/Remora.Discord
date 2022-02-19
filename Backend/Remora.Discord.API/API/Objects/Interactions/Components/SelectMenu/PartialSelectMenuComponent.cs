@@ -1,5 +1,5 @@
 //
-//  IComponent.cs
+//  PartialSelectMenuComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,22 +22,23 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents the raw view of a message component, with all fields from all types. This is the on-wire Discord
-/// format.
-/// </summary>
+/// <inheritdoc cref="IPartialSelectMenuComponent" />
 [PublicAPI]
-public interface IComponent : IPartialComponent
+public record PartialSelectMenuComponent
+(
+    Optional<string> CustomID,
+    Optional<IReadOnlyList<IPartialSelectOption>> Options,
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
+) : IPartialSelectMenuComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Components"/>
-    new Optional<IReadOnlyList<IMessageComponent>> Components { get; }
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialComponent.Components => Components.HasValue
-        ? new(Components.Value)
-        : default;
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.SelectMenu;
 }

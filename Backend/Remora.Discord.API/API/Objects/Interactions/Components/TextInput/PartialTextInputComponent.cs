@@ -25,10 +25,10 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
+/// <inheritdoc cref="ITextInputComponent" />
 public record PartialTextInputComponent
 (
-    string CustomID,
+    Optional<string> CustomID,
     Optional<string> Value,
     Optional<TextInputStyle> Style,
     Optional<string> Label,
@@ -36,11 +36,8 @@ public record PartialTextInputComponent
     Optional<int> MaxLength,
     Optional<bool> IsRequired,
     Optional<string> Placeholder
-) : IPartialTextInputComponent, IDefaultedPartialComponent
+) : IPartialTextInputComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Type" />
-    ComponentType IPartialComponent.Type => ComponentType.TextInput;
-
-    /// <inheritdoc cref="IPartialComponent.CustomID" />
-    Optional<string> IPartialComponent.CustomID => this.CustomID;
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.TextInput;
 }

@@ -27,14 +27,11 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
+/// <inheritdoc cref="IPartialActionRowComponent" />
 [PublicAPI]
-public record PartialActionRowComponent(IReadOnlyList<IPartialMessageComponent> Components)
-    : IPartialActionRowComponent, IDefaultedComponent
+public record PartialActionRowComponent(Optional<IReadOnlyList<IPartialMessageComponent>> Components)
+    : IPartialActionRowComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Type"/>
-    ComponentType IPartialComponent.Type => ComponentType.ActionRow;
-
-    /// <inheritdoc cref="IPartialComponent.Components"/>
-    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialComponent.Components => new(Components);
+    /// <inheritdoc/>
+    public Optional<ComponentType> Type => ComponentType.ActionRow;
 }

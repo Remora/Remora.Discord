@@ -42,8 +42,5 @@ public interface IInteractionModalCallbackData
     /// <summary>
     /// Gets the components for the modal.
     /// </summary>
-    /// <remarks>
-    /// Currently only supports <see cref="ITextInputComponent"/>s.
-    /// </remarks>
-    IReadOnlyList<IPartialActionRowComponent> Components { get; }
+    IReadOnlyList<IMessageComponent> Components { get; }
 }

@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  IPartialSelectOption.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,32 +20,29 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
-using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Objects;
+namespace Remora.Discord.API.Abstractions.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
+/// <summary>
+/// Represents a single partial selectable option.
+/// </summary>
 [PublicAPI]
-public record Component
-(
-    ComponentType Type,
-    Optional<string> CustomID,
-    Optional<bool> IsDisabled,
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style,
-    Optional<string> Label,
-    Optional<IPartialEmoji> Emoji,
-    Optional<string> URL,
-    Optional<IReadOnlyList<ISelectOption>> Options,
-    Optional<string> Placeholder,
-    Optional<int> MinValues,
-    Optional<int> MaxValues,
-    Optional<IReadOnlyList<IMessageComponent>> Components,
-    Optional<int> MinLength,
-    Optional<int> MaxLength,
-    Optional<bool> IsRequired,
-    Optional<string> Value
-) : IMessageComponent, IComponent;
+public interface IPartialSelectOption
+{
+    /// <inheritdoc cref="ISelectOption.Label"/>
+    Optional<string> Label { get; }
+
+    /// <inheritdoc cref="ISelectOption.Value"/>
+    Optional<string> Value { get; }
+
+    /// <inheritdoc cref="ISelectOption.Description"/>
+    Optional<string> Description { get; }
+
+    /// <inheritdoc cref="ISelectOption.Emoji"/>
+    Optional<IPartialEmoji> Emoji { get; }
+
+    /// <inheritdoc cref="ISelectOption.IsDefault"/>
+    Optional<bool> IsDefault { get; }
+}

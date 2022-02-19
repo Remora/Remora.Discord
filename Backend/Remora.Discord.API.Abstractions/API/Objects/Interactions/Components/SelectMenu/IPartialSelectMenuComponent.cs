@@ -1,5 +1,5 @@
 //
-//  IPartialTextInputComponent.cs
+//  IPartialSelectMenuComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,41 +20,36 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a partial text-based input component.
+/// Represents a partial dropdown of selectable values.
 /// </summary>
 [PublicAPI]
-public interface IPartialTextInputComponent : IPartialMessageComponent
+public interface IPartialSelectMenuComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="ITextInputComponent.Type" />
+    /// <inheritdoc cref="ISelectMenuComponent.Type" />
     Optional<ComponentType> Type { get; }
 
-    /// <inheritdoc cref="ITextInputComponent.CustomID"/>
+    /// <inheritdoc cref="ISelectMenuComponent.CustomID"/>
     Optional<string> CustomID { get; }
 
-    /// <inheritdoc cref="ITextInputComponent.Style"/>
-    Optional<TextInputStyle> Style { get; }
+    /// <inheritdoc cref="ISelectMenuComponent.Options"/>
+    Optional<IReadOnlyList<IPartialSelectOption>> Options { get; }
 
-    /// <inheritdoc cref="ITextInputComponent.Label"/>
-    Optional<string> Label { get; }
-
-    /// <inheritdoc cref="ITextInputComponent.MinLength"/>
-    Optional<int> MinLength { get; }
-
-    /// <inheritdoc cref="ITextInputComponent.MaxLength"/>
-    Optional<int> MaxLength { get; }
-
-    /// <inheritdoc cref="ITextInputComponent.IsRequired"/>
-    Optional<bool> IsRequired { get; }
-
-    /// <inheritdoc cref="ITextInputComponent.Value"/>
-    Optional<string> Value { get; }
-
-    /// <inheritdoc cref="ITextInputComponent.Placeholder"/>
+    /// <inheritdoc cref="ISelectMenuComponent.Placeholder"/>
     Optional<string> Placeholder { get; }
+
+    /// <inheritdoc cref="ISelectMenuComponent.MinValues"/>
+    Optional<int> MinValues { get; }
+
+    /// <inheritdoc cref="ISelectMenuComponent.MaxValues"/>
+    Optional<int> MaxValues { get; }
+
+    /// <inheritdoc cref="ISelectMenuComponent.IsDisabled"/>
+    Optional<bool> IsDisabled { get; }
 }

@@ -29,31 +29,46 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a single selectable option.
 /// </summary>
 [PublicAPI]
-public interface ISelectOption
+public interface ISelectOption : IPartialSelectOption
 {
     /// <summary>
     /// Gets the user-facing name of the option. Max 100 characters.
     /// </summary>
-    string Label { get; }
+    new string Label { get; }
 
     /// <summary>
     /// Gets the developer-defined value of the option. Max 100 characters.
     /// </summary>
-    string Value { get; }
+    new string Value { get; }
 
     /// <summary>
     /// Gets an additional description of the option. Max 100 characters.
     /// </summary>
-    Optional<string> Description { get; }
+    new Optional<string> Description { get; }
 
     /// <summary>
     /// Gets an emoji that will render along with the option.
     /// </summary>
-    Optional<IPartialEmoji> Emoji { get; }
+    new Optional<IPartialEmoji> Emoji { get; }
 
     /// <summary>
     /// Gets a value indicating whether this option will be selected by default. May be <value>true</value> for more
     /// than one option in a multi-select menu.
     /// </summary>
-    Optional<bool> IsDefault { get; }
+    new Optional<bool> IsDefault { get; }
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectOption.Label => this.Label;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectOption.Value => this.Value;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectOption.Description => this.Description;
+
+    /// <inheritdoc/>
+    Optional<IPartialEmoji> IPartialSelectOption.Emoji => this.Emoji;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialSelectOption.IsDefault => this.IsDefault;
 }

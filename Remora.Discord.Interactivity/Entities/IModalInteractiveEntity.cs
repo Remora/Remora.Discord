@@ -45,7 +45,7 @@ public interface IModalInteractiveEntity : IInteractiveEntity
     (
         IUser user,
         string customID,
-        IReadOnlyList<IMessageComponent> components,
+        IReadOnlyList<IPartialMessageComponent> components,
         CancellationToken ct = default
     );
 }

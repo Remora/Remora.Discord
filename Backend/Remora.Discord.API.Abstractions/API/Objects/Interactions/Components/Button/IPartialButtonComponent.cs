@@ -1,5 +1,5 @@
 //
-//  IMessageComponent.cs
+//  IPartialButtonComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,13 +21,34 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents the base type for all components. This is a marker interface with no real functionality.
+/// Represents a partial button component.
 /// </summary>
 [PublicAPI]
-public interface IMessageComponent : IPartialMessageComponent
+public interface IPartialButtonComponent : IPartialMessageComponent
 {
+    /// <inheritdoc cref="IButtonComponent.Type" />
+    Optional<ComponentType> Type { get; }
+
+    /// <inheritdoc cref="IButtonComponent.Style"/>
+    Optional<ButtonComponentStyle> Style { get; }
+
+    /// <inheritdoc cref="IButtonComponent.Label"/>
+    Optional<string> Label { get; }
+
+    /// <inheritdoc cref="IButtonComponent.Emoji"/>
+    Optional<IPartialEmoji> Emoji { get; }
+
+    /// <inheritdoc cref="IButtonComponent.CustomID"/>
+    Optional<string> CustomID { get; }
+
+    /// <inheritdoc cref="IButtonComponent.URL"/>
+    Optional<string> URL { get; }
+
+    /// <inheritdoc cref="IButtonComponent.IsDisabled"/>
+    Optional<bool> IsDisabled { get; }
 }

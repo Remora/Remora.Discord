@@ -75,5 +75,5 @@ public interface IInteractionData
     /// <summary>
     /// Gets the components for this interaction.
     /// </summary>
-    Optional<IReadOnlyList<IMessageComponent>> Components { get; }
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
 }

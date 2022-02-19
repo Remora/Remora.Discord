@@ -22,15 +22,19 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents a row of interactive components.
+/// Represents a partial row of interactive components.
 /// </summary>
 [PublicAPI]
 public interface IPartialActionRowComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="IComponent.Components"/>
-    IReadOnlyList<IPartialMessageComponent> Components { get; }
+    /// <inheritdoc cref="IActionRowComponent.Type" />
+    Optional<ComponentType> Type { get; }
+
+    /// <inheritdoc cref="IActionRowComponent.Components"/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
 }

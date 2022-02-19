@@ -37,14 +37,8 @@ public record SelectMenuComponent
     Optional<int> MinValues = default,
     Optional<int> MaxValues = default,
     Optional<bool> IsDisabled = default
-) : ISelectMenuComponent, IDefaultedComponent
+) : ISelectMenuComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Type"/>
-    ComponentType IPartialComponent.Type => ComponentType.SelectMenu;
-
-    /// <inheritdoc cref="IPartialComponent.CustomID"/>
-    Optional<string> IPartialComponent.CustomID => this.CustomID;
-
-    /// <inheritdoc cref="IPartialComponent.Options"/>
-    Optional<IReadOnlyList<ISelectOption>> IPartialComponent.Options => new(this.Options);
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.SelectMenu;
 }

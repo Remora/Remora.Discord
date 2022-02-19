@@ -1,5 +1,5 @@
 //
-//  InteractionModalCallbackData.cs
+//  PartialButtonComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,15 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
+using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IInteractionModalCallbackData"/>
-public record InteractionModalCallbackData
+/// <inheritdoc cref="IPartialButtonComponent" />
+[PublicAPI]
+public record PartialButtonComponent
 (
-    string CustomID,
-    string Title,
-    IReadOnlyList<IMessageComponent> Components
-) : IInteractionModalCallbackData;
+    Optional<ButtonComponentStyle> Style,
+    Optional<string> Label = default,
+    Optional<IPartialEmoji> Emoji = default,
+    Optional<string> CustomID = default,
+    Optional<string> URL = default,
+    Optional<bool> IsDisabled = default
+) : IPartialButtonComponent
+{
+    /// <inheritdoc />
+    public Optional<ComponentType> Type => ComponentType.Button;
+}

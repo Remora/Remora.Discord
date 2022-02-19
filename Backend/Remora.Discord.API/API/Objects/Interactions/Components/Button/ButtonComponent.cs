@@ -27,7 +27,7 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
+/// <inheritdoc cref="IButtonComponent" />
 [PublicAPI]
 public record ButtonComponent
 (
@@ -37,11 +37,8 @@ public record ButtonComponent
     Optional<string> CustomID = default,
     Optional<string> URL = default,
     Optional<bool> IsDisabled = default
-) : IButtonComponent, IDefaultedComponent
+) : IButtonComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Type"/>
-    ComponentType IPartialComponent.Type => ComponentType.Button;
-
-    /// <inheritdoc cref="IPartialComponent.Style"/>
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IPartialComponent.Style => new(this.Style);
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.Button;
 }

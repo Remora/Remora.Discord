@@ -20,13 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
+/// <inheritdoc cref="ITextInputComponent" />
 public record TextInputComponent
 (
     string CustomID,
@@ -37,17 +36,8 @@ public record TextInputComponent
     Optional<bool> IsRequired,
     Optional<string> Value,
     Optional<string> Placeholder
-) : ITextInputComponent, IDefaultedComponent
+) : ITextInputComponent
 {
-    /// <inheritdoc cref="IPartialComponent.Type" />
-    ComponentType IPartialComponent.Type => ComponentType.TextInput;
-
-    /// <inheritdoc cref="IPartialComponent.CustomID" />
-    Optional<string> IPartialComponent.CustomID => this.CustomID;
-
-    /// <inheritdoc cref="IPartialComponent.Style" />
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IPartialComponent.Style => new(this.Style);
-
-    /// <inheritdoc cref="IPartialComponent.Label" />
-    Optional<string> IPartialComponent.Label => this.Label;
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.TextInput;
 }

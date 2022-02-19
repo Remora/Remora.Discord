@@ -41,5 +41,5 @@ public record InteractionData
     Optional<ComponentType> ComponentType = default,
     Optional<IReadOnlyList<string>> Values = default,
     Optional<Snowflake> TargetID = default,
-    Optional<IReadOnlyList<IMessageComponent>> Components = default
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components = default
 ) : IInteractionData;
