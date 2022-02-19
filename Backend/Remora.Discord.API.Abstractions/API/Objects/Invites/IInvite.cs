@@ -85,6 +85,7 @@ public interface IInvite : IPartialInvite
     /// <summary>
     /// Gets metadata about the stage instance the invite is for, if any.
     /// </summary>
+    [Obsolete("No longer used by Discord.")]
     new Optional<IInviteStageInstance> StageInstance { get; }
 
     /// <summary>
@@ -123,6 +124,7 @@ public interface IInvite : IPartialInvite
     Optional<DateTimeOffset?> IPartialInvite.ExpiresAt => this.ExpiresAt;
 
     /// <inheritdoc/>
+    [Obsolete("No longer used by Discord.")]
     Optional<IInviteStageInstance> IPartialInvite.StageInstance => this.StageInstance;
 
     /// <inheritdoc/>

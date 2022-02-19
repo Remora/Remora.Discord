@@ -63,6 +63,7 @@ public interface IPartialInvite
     Optional<DateTimeOffset?> ExpiresAt { get; }
 
     /// <inheritdoc cref="IInvite.StageInstance" />
+    [Obsolete("No longer used by Discord.")]
     Optional<IInviteStageInstance> StageInstance { get; }
 
     /// <inheritdoc cref="IInvite.GuildScheduledEvent" />

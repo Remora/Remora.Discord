@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -28,7 +29,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Represents stage information in an invite.
 /// </summary>
-[PublicAPI]
+[PublicAPI, Obsolete("No longer used by Discord.")]
 public interface IInviteStageInstance
 {
     /// <summary>
