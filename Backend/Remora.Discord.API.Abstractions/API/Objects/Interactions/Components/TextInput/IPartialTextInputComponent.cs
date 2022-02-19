@@ -1,5 +1,5 @@
 //
-//  ITextInputResponse.cs
+//  IPartialTextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,11 +30,29 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <remarks>
 /// Currently only valid for modal components..
 /// </remarks>
-public interface ITextInputResponse : IMessageComponentResponse
+public interface IPartialTextInputComponent : IPartialMessageComponent
 {
-    /// <inheritdoc cref="IComponent.CustomID"/>
+    /// <inheritdoc cref="IPartialComponent.CustomID"/>
     string CustomID { get; }
 
-    /// <inheritdoc cref="IComponent.Value"/>
+    /// <inheritdoc cref="IPartialComponent.Style"/>
+    Optional<TextInputStyle> Style { get; }
+
+    /// <inheritdoc cref="IPartialComponent.Label"/>
+    Optional<string> Label { get; }
+
+    /// <inheritdoc cref="IPartialComponent.MinLength"/>
+    Optional<int> MinLength { get; }
+
+    /// <inheritdoc cref="IPartialComponent.MaxLength"/>
+    Optional<int> MaxLength { get; }
+
+    /// <inheritdoc cref="IPartialComponent.IsRequired"/>
+    Optional<bool> IsRequired { get; }
+
+    /// <inheritdoc cref="IPartialComponent.Value"/>
     Optional<string> Value { get; }
+
+    /// <inheritdoc cref="IPartialComponent.Placeholder"/>
+    Optional<string> Placeholder { get; }
 }

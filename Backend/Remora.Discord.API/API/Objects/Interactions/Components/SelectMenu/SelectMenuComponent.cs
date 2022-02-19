@@ -39,12 +39,12 @@ public record SelectMenuComponent
     Optional<bool> IsDisabled = default
 ) : ISelectMenuComponent, IDefaultedComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.SelectMenu;
+    /// <inheritdoc cref="IPartialComponent.Type"/>
+    ComponentType IPartialComponent.Type => ComponentType.SelectMenu;
 
-    /// <inheritdoc/>
-    Optional<string> IComponent.CustomID => this.CustomID;
+    /// <inheritdoc cref="IPartialComponent.CustomID"/>
+    Optional<string> IPartialComponent.CustomID => this.CustomID;
 
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<ISelectOption>> IComponent.Options => new(this.Options);
+    /// <inheritdoc cref="IPartialComponent.Options"/>
+    Optional<IReadOnlyList<ISelectOption>> IPartialComponent.Options => new(this.Options);
 }

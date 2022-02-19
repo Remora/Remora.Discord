@@ -43,9 +43,9 @@ public record Component
     Optional<string> Placeholder,
     Optional<int> MinValues,
     Optional<int> MaxValues,
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> Components,
+    Optional<IReadOnlyList<IMessageComponent>> Components,
     Optional<int> MinLength,
     Optional<int> MaxLength,
     Optional<bool> IsRequired,
     Optional<string> Value
-) : IMessageComponent, IMessageComponentResponse, IComponent;
+) : IMessageComponent, IComponent;

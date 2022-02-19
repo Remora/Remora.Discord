@@ -1,5 +1,5 @@
 //
-//  ButtonComponent.cs
+//  PartialComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
@@ -27,21 +28,24 @@ using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
 [PublicAPI]
-public record ButtonComponent
+public record PartialComponent
 (
-    ButtonComponentStyle Style,
-    Optional<string> Label = default,
-    Optional<IPartialEmoji> Emoji = default,
-    Optional<string> CustomID = default,
-    Optional<string> URL = default,
-    Optional<bool> IsDisabled = default
-) : IButtonComponent, IDefaultedComponent
-{
-    /// <inheritdoc cref="IPartialComponent.Type"/>
-    ComponentType IPartialComponent.Type => ComponentType.Button;
-
-    /// <inheritdoc cref="IPartialComponent.Style"/>
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IPartialComponent.Style => new(this.Style);
-}
+    ComponentType Type,
+    Optional<string> CustomID,
+    Optional<bool> IsDisabled,
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style,
+    Optional<string> Label,
+    Optional<IPartialEmoji> Emoji,
+    Optional<string> URL,
+    Optional<IReadOnlyList<ISelectOption>> Options,
+    Optional<string> Placeholder,
+    Optional<int> MinValues,
+    Optional<int> MaxValues,
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components,
+    Optional<int> MinLength,
+    Optional<int> MaxLength,
+    Optional<bool> IsRequired,
+    Optional<string> Value
+) : IPartialMessageComponent, IPartialComponent;

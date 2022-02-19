@@ -953,9 +953,13 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(p => p.HasPermission, "permission");
 
         options.AddConverter<MessageComponentConverter>();
-        options.AddConverter<MessageComponentResponseConverter>();
+        options.AddConverter<PartialMessageComponentConverter>();
 
         options.AddDataObjectConverter<IComponent, Component>()
+            .WithPropertyName(c => c.IsDisabled, "disabled")
+            .WithPropertyName(c => c.IsRequired, "required");
+
+        options.AddDataObjectConverter<IPartialComponent, PartialComponent>()
             .WithPropertyName(c => c.IsDisabled, "disabled")
             .WithPropertyName(c => c.IsRequired, "required");
 
@@ -972,8 +976,8 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
-        options.AddDataObjectConverter<IActionRowResponse, ActionRowResponse>();
-        options.AddDataObjectConverter<ITextInputResponse, TextInputResponse>();
+        options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>();
+        options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>();
 
         return options;
     }

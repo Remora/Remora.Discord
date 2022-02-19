@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
@@ -33,9 +32,9 @@ namespace Remora.Discord.API.Objects;
 public record ActionRowComponent(IReadOnlyList<IMessageComponent> Components)
     : IActionRowComponent, IDefaultedComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.ActionRow;
+    /// <inheritdoc cref="IPartialComponent.Type"/>
+    ComponentType IPartialComponent.Type => ComponentType.ActionRow;
 
-    /// <inheritdoc/>
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => new(OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>.FromT0(this.Components));
+    /// <inheritdoc cref="IComponent.Components"/>
+    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => new(Components);
 }

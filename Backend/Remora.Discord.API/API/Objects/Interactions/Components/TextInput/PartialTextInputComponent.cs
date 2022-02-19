@@ -1,5 +1,5 @@
 //
-//  ActionRowResponse.cs
+//  PartialTextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,22 +20,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
-[PublicAPI]
-public record ActionRowResponse(IReadOnlyList<IMessageComponentResponse> Components)
-    : IActionRowResponse, IDefaultedComponent
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
+public record PartialTextInputComponent
+(
+    string CustomID,
+    Optional<string> Value,
+    Optional<TextInputStyle> Style,
+    Optional<string> Label,
+    Optional<int> MinLength,
+    Optional<int> MaxLength,
+    Optional<bool> IsRequired,
+    Optional<string> Placeholder
+) : IPartialTextInputComponent, IDefaultedPartialComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.ActionRow;
+    /// <inheritdoc cref="IPartialComponent.Type" />
+    ComponentType IPartialComponent.Type => ComponentType.TextInput;
 
-    /// <inheritdoc/>
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> IComponent.Components => new(OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>.FromT1(this.Components));
+    /// <inheritdoc cref="IPartialComponent.CustomID" />
+    Optional<string> IPartialComponent.CustomID => this.CustomID;
 }

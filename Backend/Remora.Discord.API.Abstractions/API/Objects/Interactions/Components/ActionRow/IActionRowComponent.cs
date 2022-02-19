@@ -29,8 +29,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a row of interactive components.
 /// </summary>
 [PublicAPI]
-public interface IActionRowComponent : IMessageComponent
+public interface IActionRowComponent : IPartialActionRowComponent, IMessageComponent
 {
     /// <inheritdoc cref="IComponent.Components"/>
-    IReadOnlyList<IMessageComponent> Components { get; }
+    new IReadOnlyList<IMessageComponent> Components { get; }
+
+    /// <inheritdoc/>
+    IReadOnlyList<IPartialMessageComponent> IPartialActionRowComponent.Components => Components;
 }

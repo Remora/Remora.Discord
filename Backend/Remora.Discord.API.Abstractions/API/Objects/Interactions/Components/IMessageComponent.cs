@@ -28,6 +28,6 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents the base type for all components.
 /// </summary>
 [PublicAPI]
-public interface IMessageComponent
+public interface IMessageComponent : IPartialMessageComponent
 {
 }

@@ -1,5 +1,5 @@
 //
-//  IDefaultedComponent.cs
+//  IDefaultedPartialComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Objects;
 /// <summary>
 /// Acts as a shim for concrete subcomponent types, providing default implementations for inaccessible properties.
 /// </summary>
-internal interface IDefaultedComponent : IComponent
+internal interface IDefaultedPartialComponent : IPartialComponent
 {
     /// <inheritdoc cref="IPartialComponent.Type"/>
     ComponentType IPartialComponent.Type => default;
@@ -65,8 +65,8 @@ internal interface IDefaultedComponent : IComponent
     /// <inheritdoc cref="IPartialComponent.MaxValues"/>
     Optional<int> IPartialComponent.MaxValues => default;
 
-    /// <inheritdoc cref="IComponent.Components"/>
-    Optional<IReadOnlyList<IMessageComponent>> IComponent.Components => default;
+    /// <inheritdoc cref="IPartialComponent.Components"/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialComponent.Components => default;
 
     /// <inheritdoc cref="IPartialComponent.MinLength"/>
     Optional<int> IPartialComponent.MinLength => default;

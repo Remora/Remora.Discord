@@ -39,15 +39,15 @@ public record TextInputComponent
     Optional<string> Placeholder
 ) : ITextInputComponent, IDefaultedComponent
 {
-    /// <inheritdoc />
-    ComponentType IComponent.Type => ComponentType.TextInput;
+    /// <inheritdoc cref="IPartialComponent.Type" />
+    ComponentType IPartialComponent.Type => ComponentType.TextInput;
 
-    /// <inheritdoc />
-    Optional<string> IComponent.CustomID => this.CustomID;
+    /// <inheritdoc cref="IPartialComponent.CustomID" />
+    Optional<string> IPartialComponent.CustomID => this.CustomID;
 
-    /// <inheritdoc />
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IComponent.Style => new(this.Style);
+    /// <inheritdoc cref="IPartialComponent.Style" />
+    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> IPartialComponent.Style => new(this.Style);
 
-    /// <inheritdoc />
-    Optional<string> IComponent.Label => this.Label;
+    /// <inheritdoc cref="IPartialComponent.Label" />
+    Optional<string> IPartialComponent.Label => this.Label;
 }

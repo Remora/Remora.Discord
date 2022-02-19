@@ -22,7 +22,6 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using OneOf;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -32,124 +31,13 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// format.
 /// </summary>
 [PublicAPI]
-public interface IComponent
+public interface IComponent : IPartialComponent
 {
-    /// <summary>
-    /// Gets the component's type.
-    /// </summary>
-    ComponentType Type { get; }
+    /// <inheritdoc cref="IPartialComponent.Components"/>
+    new Optional<IReadOnlyList<IMessageComponent>> Components { get; }
 
-    /// <summary>
-    /// Gets a custom ID for the component, defined by the developer.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
-    /// </remarks>
-    Optional<string> CustomID { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether the component is disabled.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s and <see cref="ISelectMenuComponent"/>s.
-    /// </remarks>
-    Optional<bool> IsDisabled { get; }
-
-    /// <summary>
-    /// Gets the component's style.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
-    /// </remarks>
-    Optional<OneOf<ButtonComponentStyle, TextInputStyle>> Style { get; }
-
-    /// <summary>
-    /// Gets the label on the button.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s and <see cref="ITextInputComponent"/>.
-    /// </remarks>
-    Optional<string> Label { get; }
-
-    /// <summary>
-    /// Gets the emoji displayed in the button.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
-    /// </remarks>
-    Optional<IPartialEmoji> Emoji { get; }
-
-    /// <summary>
-    /// Gets the URL used for link-style buttons.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IButtonComponent"/>s.
-    /// </remarks>
-    Optional<string> URL { get; }
-
-    /// <summary>
-    /// Gets the options in a select menu.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="ISelectMenuComponent"/>s.
-    /// </remarks>
-    Optional<IReadOnlyList<ISelectOption>> Options { get; }
-
-    /// <summary>
-    /// Gets the placeholder text for a component.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="ISelectMenuComponent"/>s and <see cref="ITextInputComponent"/>.
-    /// </remarks>
-    Optional<string> Placeholder { get; }
-
-    /// <summary>
-    /// Gets the minimum number of options that must be selected.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="ISelectMenuComponent"/>s.
-    /// </remarks>
-    Optional<int> MinValues { get; }
-
-    /// <summary>
-    /// Gets the maximum number of options that may be selected.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="ISelectMenuComponent"/>s.
-    /// </remarks>
-    Optional<int> MaxValues { get; }
-
-    /// <summary>
-    /// Gets the components nested under this component.
-    /// </summary>
-    /// <remarks>
-    /// Valid for <see cref="IActionRowComponent"/>s.
-    /// </remarks>
-    Optional<OneOf<IReadOnlyList<IMessageComponent>, IReadOnlyList<IMessageComponentResponse>>> Components { get; }
-
-    /// <summary>
-    /// Gets the minimum length of the input, maximum of 4000.
-    /// </summary>
-    /// <remarks>
-    /// Must be greater than zero and less than or equal to <see cref="MaxLength"/> if specified.
-    /// </remarks>
-    Optional<int> MinLength { get; }
-
-    /// <summary>
-    /// Gets the maximum length of the input, maximum of 4000.
-    /// </summary>
-    /// <remarks>
-    /// Must be greater than zero and or equal to <see cref="MinLength"/> if specified.
-    /// </remarks>
-    Optional<int> MaxLength { get; }
-
-    /// <summary>
-    /// Gets whether this component is required.
-    /// </summary>
-    Optional<bool> IsRequired { get; }
-
-    /// <summary>
-    /// Gets the pre-filled value for this component.
-    /// </summary>
-    Optional<string> Value { get; }
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialComponent.Components => Components.HasValue
+        ? new(Components.Value)
+        : default;
 }

@@ -1,5 +1,5 @@
 //
-//  MessageComponentResponseConverter.cs
+//  PartialMessageComponentConverter.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -31,10 +31,10 @@ namespace Remora.Discord.API.Json;
 /// <summary>
 /// Converts message components to and from JSON.
 /// </summary>
-internal class MessageComponentResponseConverter : JsonConverter<IMessageComponentResponse>
+internal class PartialMessageComponentConverter : JsonConverter<IPartialMessageComponent>
 {
     /// <inheritdoc />
-    public override IMessageComponentResponse? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IPartialMessageComponent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         if (reader.TokenType != JsonTokenType.StartObject)
         {
@@ -66,25 +66,25 @@ internal class MessageComponentResponseConverter : JsonConverter<IMessageCompone
         return type switch
         {
             ComponentType.ActionRow
-                => JsonSerializer.Deserialize<ActionRowResponse>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<PartialActionRowComponent>(document.RootElement.GetRawText(), options),
             ComponentType.Button
                 => JsonSerializer.Deserialize<ButtonComponent>(document.RootElement.GetRawText(), options),
             ComponentType.SelectMenu
                 => JsonSerializer.Deserialize<SelectMenuComponent>(document.RootElement.GetRawText(), options),
             ComponentType.TextInput
-                => JsonSerializer.Deserialize<TextInputResponse>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<PartialTextInputComponent>(document.RootElement.GetRawText(), options),
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
 
     /// <inheritdoc />
-    public override void Write(Utf8JsonWriter writer, IMessageComponentResponse value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IPartialMessageComponent value, JsonSerializerOptions options)
     {
-        if (value is not IComponent component)
+        if (value is not IPartialComponent component)
         {
             throw new ArgumentException
             (
-                $"This implementation requires that the concrete type implements the general-purpose {nameof(IComponent)} interface.",
+                $"This implementation requires that the concrete type implements the general-purpose {nameof(IPartialComponent)} interface.",
                 nameof(value)
             );
         }

@@ -1,5 +1,5 @@
 //
-//  IMessageComponentResponse.cs
+//  IPartialActionRowComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,14 +20,17 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents the base type for all component responses.
+/// Represents a row of interactive components.
 /// </summary>
 [PublicAPI]
-public interface IMessageComponentResponse
+public interface IPartialActionRowComponent : IPartialMessageComponent
 {
+    /// <inheritdoc cref="IComponent.Components"/>
+    IReadOnlyList<IPartialMessageComponent> Components { get; }
 }

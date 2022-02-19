@@ -1,5 +1,5 @@
 //
-//  TextInputResponse.cs
+//  PartialActionRowComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,21 +20,21 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.ITextInputComponent" />
-public record TextInputResponse
-(
-    string CustomID,
-    Optional<string> Value
-) : ITextInputResponse, IDefaultedComponent
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IActionRowComponent" />
+[PublicAPI]
+public record PartialActionRowComponent(IReadOnlyList<IPartialMessageComponent> Components)
+    : IPartialActionRowComponent, IDefaultedComponent
 {
-    /// <inheritdoc />
-    ComponentType IComponent.Type => ComponentType.TextInput;
+    /// <inheritdoc cref="IPartialComponent.Type"/>
+    ComponentType IPartialComponent.Type => ComponentType.ActionRow;
 
-    /// <inheritdoc />
-    Optional<string> IComponent.CustomID => this.CustomID;
+    /// <inheritdoc cref="IPartialComponent.Components"/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialComponent.Components => new(Components);
 }
