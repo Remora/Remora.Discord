@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>52.0.0-rc1</Version>
+        <Version>52.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,6 +14,7 @@
         </Description>
         <PackageReleaseNotes>
             Update and default to API v10.
+            Rework message component structure.
         </PackageReleaseNotes>
     </PropertyGroup>
 
