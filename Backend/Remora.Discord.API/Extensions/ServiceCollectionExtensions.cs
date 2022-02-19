@@ -955,29 +955,36 @@ public static class ServiceCollectionExtensions
         options.AddConverter<MessageComponentConverter>();
         options.AddConverter<PartialMessageComponentConverter>();
 
-        options.AddDataObjectConverter<IComponent, Component>()
-            .WithPropertyName(c => c.IsDisabled, "disabled")
-            .WithPropertyName(c => c.IsRequired, "required");
+        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
+        options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
 
-        options.AddDataObjectConverter<IPartialComponent, PartialComponent>()
-            .WithPropertyName(c => c.IsDisabled, "disabled")
-            .WithPropertyName(c => c.IsRequired, "required");
-
-        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>();
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialButtonComponent, PartialButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
         options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialSelectMenuComponent, PartialSelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
         options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(i => i.IsRequired, "required");
+        options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(i => i.IsRequired, "required");
 
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
-
-        options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>();
-        options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>();
+        options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
+            .WithPropertyName(o => o.IsDefault, "default");
 
         return options;
     }
