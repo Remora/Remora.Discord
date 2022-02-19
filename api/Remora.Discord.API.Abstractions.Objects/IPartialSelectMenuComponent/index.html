@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IComponent Interface</title>
+        <title>Remora.Discord Documentation - API - IPartialSelectMenuComponent Interface</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -167,7 +167,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelMention">IChannelMention</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannelTemplate">IChannelTemplate</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IClientStatuses">IClientStatuses</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent">IComponent</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IConnection">IConnection</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IDiscordPermissionSet">I<wbr>Discord<wbr>Permission<wbr>Set</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IEmbed">IEmbed</a></li>
@@ -211,8 +210,10 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageReference">IMessageReference</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/INitroStickerPacks">INitroStickerPacks</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IOptionalAuditEntryInfo">I<wbr>Optional<wbr>Audit<wbr>Entry<wbr>Info</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialActionRowComponent">I<wbr>Partial<wbr>Action<wbr>Row<wbr>Component</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialApplication">IPartialApplication</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialAttachment">IPartialAttachment</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialButtonComponent">I<wbr>Partial<wbr>Button<wbr>Component</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialChannel">IPartialChannel</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji">IPartialEmoji</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialGuild">IPartialGuild</a></li>
@@ -221,9 +222,13 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialIntegration">IPartialIntegration</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialInvite">IPartialInvite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessage">IPartialMessage</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessageComponent">I<wbr>Partial<wbr>Message<wbr>Component</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPermissionOverwrite">I<wbr>Partial<wbr>Permission<wbr>Overwrite</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialPresence">IPartialPresence</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialRole">IPartialRole</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent">I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectOption">IPartialSelectOption</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialTextInputComponent">I<wbr>Partial<wbr>Text<wbr>Input<wbr>Component</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialUser">IPartialUser</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialVoiceState">IPartialVoiceState</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartySize">IPartySize</a></li>
@@ -322,15 +327,14 @@
 
 
 <section class="content-header">
-	<h1>IComponent <small>Interface</small></h1>
+	<h1>I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component <small>Interface</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents the raw view of a message component, with all fields from all types. This is the on-wire Discord
-    format.
+    Represents a partial dropdown of selectable values.
     </div>
 
 		<div class="panel panel-default">
@@ -342,16 +346,32 @@
 								<dt>Namespace</dt>
 								<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessageComponent">I<wbr>Partial<wbr>Message<wbr>Component</a></li>								
+									</ul>
+								</dd>
 							
 							
 							
+								<dt>Implementing Types</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent">ISelectMenuComponent</a></li>								
+									</ul>
+								</dd>				
 						</dl>
 					</div>		
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type["IComponent"]
+	Type-.-&gt;Interface0["IPartialMessageComponent"]
+	click Interface0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialMessageComponent"
+	Type["IPartialSelectMenuComponent"]
 class Type type-node
+	Implementing0["ISelectMenuComponent"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectMenuComponent"
 
 						</div>
 					</div>
@@ -361,7 +381,7 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[PublicAPI]
-public interface IComponent</code></pre>
+public interface IPartialSelectMenuComponent : IPartialMessageComponent</code></pre>
 
 
 
@@ -401,16 +421,7 @@ public interface IComponent</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/027D28D0">Components</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the components nested under this component.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/36A51E53">CustomID</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/E5F48266">CustomID</a></td>
 								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
@@ -419,16 +430,7 @@ public interface IComponent</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0C8AD23E">Emoji</a></td>
-								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialEmoji">IPartialEmoji</a>&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the emoji displayed in the button.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/FFE39C21">IsDisabled</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/DD21E597">IsDisabled</a></td>
 								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
 								<td>
 									<div>
@@ -437,34 +439,7 @@ public interface IComponent</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/1528F945">IsRequired</a></td>
-								<td>Optional<wbr>&lt;bool&gt;<wbr></td>
-								<td>
-									<div>
-    Gets whether this component is required.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/D62C3E86">Label</a></td>
-								<td>Optional<wbr>&lt;string&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the label on the button.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/F4520F31">MaxLength</a></td>
-								<td>Optional<wbr>&lt;int&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the maximum length of the input, maximum of 4000.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/A080D50A">MaxValues</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/9F9F3A15">MaxValues</a></td>
 								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
@@ -473,16 +448,7 @@ public interface IComponent</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/B5E0E4E6">MinLength</a></td>
-								<td>Optional<wbr>&lt;int&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the minimum length of the input, maximum of 4000.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/E1323EDD">MinValues</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/DE2DD1C2">MinValues</a></td>
 								<td>Optional<wbr>&lt;int&gt;<wbr></td>
 								<td>
 									<div>
@@ -491,56 +457,29 @@ public interface IComponent</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/745443C8">Options</a></td>
-								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ISelectOption">ISelectOption</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/5C7DBAE1">Options</a></td>
+								<td>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectOption">IPartialSelectOption</a>&gt;<wbr>&gt;<wbr></td>
 								<td>
 									<div>
-    Gets the options in a select menu.
+    Gets the options in the select menu.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0710DAD8">Placeholder</a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/21280C0D">Placeholder</a></td>
 								<td>Optional<wbr>&lt;string&gt;<wbr></td>
 								<td>
 									<div>
-    Gets the placeholder text for a component.
+    Gets the placeholder text for the menu.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/54C424BB">Style</a></td>
-								<td>Optional<wbr>&lt;OneOf<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ButtonComponentStyle">ButtonComponentStyle</a>, <wbr><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/TextInputStyle">TextInputStyle</a>&gt;<wbr>&gt;<wbr></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/2D05AC4D">Type</a></td>
+								<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ComponentType">ComponentType</a>&gt;<wbr></td>
 								<td>
 									<div>
-    Gets the component's style.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/F18FF81D">Type</a></td>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ComponentType">ComponentType</a></td>
-								<td>
-									<div>
-    Gets the component's type.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/8A0E2818">URL</a></td>
-								<td>Optional<wbr>&lt;string&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the URL used for link-style buttons.
-    </div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0A24EE95">Value</a></td>
-								<td>Optional<wbr>&lt;string&gt;<wbr></td>
-								<td>
-									<div>
-    Gets the pre-filled value for this component.
+    Gets the type of the component.
     </div>
 								</td>
 							</tr>

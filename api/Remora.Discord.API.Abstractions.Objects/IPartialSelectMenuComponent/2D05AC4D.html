@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - RestRequestBuilderExtensions.WithRateLimitContext(RestRequestBuilder) Method</title>
+        <title>Remora.Discord Documentation - API - IPartialSelectMenuComponent.Type Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,13 +134,18 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent">I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/3FE58F61">AddAuditLogReason<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/756BC3D5">WithRateLimitContext<wbr>(RestRequestBuilder)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/E5F48266">CustomID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/DD21E597">IsDisabled</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/9F9F3A15">MaxValues</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/DE2DD1C2">MinValues</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/5C7DBAE1">Options</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/21280C0D">Placeholder</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent/2D05AC4D">Type</a></li>
 
 
                     </ul>
@@ -156,59 +160,39 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a>.</h3>
-	<h1>WithRateLimitContext<wbr>(RestRequestBuilder)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent">I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component</a>.</h3>
+	<h1>Type <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Sets up a Polly context with an endpoint for rate limiting purposes.
+    Gets the type of the component.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
+  			<div class="panel-body">
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IPartialSelectMenuComponent">I<wbr>Partial<wbr>Select<wbr>Menu<wbr>Component</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder)</code></pre>
+	<pre><code>Optional&lt;ComponentType&gt; Type { get; }</code></pre>
 
 
 
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>builder</td>
-						<td>RestRequestBuilder</td>
-						<td>The request builder.</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -219,8 +203,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>RestRequestBuilder</td>
-					<td>The builder, with the context.</td>
+					<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/ComponentType">ComponentType</a>&gt;<wbr></td>
+					<td></td>
 				</tr>
 			</tbody></table>
 		</div>

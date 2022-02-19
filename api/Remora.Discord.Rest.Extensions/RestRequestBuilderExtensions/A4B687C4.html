@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IComponent.IsRequired Property</title>
+        <title>Remora.Discord Documentation - API - RestRequestBuilderExtensions.WithRateLimitContext(RestRequestBuilder, bool) Method</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,7 +74,8 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Value">Value</a></p>
+<p><a href="#Parameters">Parameters</a></p>
+<p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -134,27 +135,13 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent">IComponent</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Property Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/027D28D0">Components</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/36A51E53">CustomID</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0C8AD23E">Emoji</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/FFE39C21">IsDisabled</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/1528F945">IsRequired</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/D62C3E86">Label</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/F4520F31">MaxLength</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/A080D50A">MaxValues</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/B5E0E4E6">MinLength</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/E1323EDD">MinValues</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/745443C8">Options</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0710DAD8">Placeholder</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/54C424BB">Style</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/F18FF81D">Type</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/8A0E2818">URL</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent/0A24EE95">Value</a></li>
+			<li class="header">Method Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/3FE58F61">AddAuditLogReason<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>Optional<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions/A4B687C4">WithRateLimitContext<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>bool)<wbr></a></li>
 
 
                     </ul>
@@ -169,39 +156,66 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent">IComponent</a>.</h3>
-	<h1>IsRequired <small>Property</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a>.</h3>
+	<h1>WithRateLimitContext<wbr>(<wbr>Rest<wbr>Request<wbr>Builder, <wbr>bool)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets whether this component is required.
+    Sets up a Polly context with an endpoint for rate limiting purposes.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">
+  			<div class="panel-body">	
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions">Remora<wbr>.Discord<wbr>.Rest<wbr>.Extensions</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IComponent">IComponent</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.Rest.Extensions/RestRequestBuilderExtensions">Rest<wbr>Request<wbr>Builder<wbr>Extensions</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Optional&lt;bool&gt; IsRequired { get; }</code></pre>
+	<pre><code>public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder, bool isExemptFromGlobalLimits = false)</code></pre>
 
 
 
 
 
-	<h1 id="Value">Value</h1>
+	<h1 id="Parameters">Parameters</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover three-cols">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>builder</td>
+						<td>RestRequestBuilder</td>
+						<td>The request builder.</td>
+					</tr>
+					<tr>
+						<td>isExemptFromGlobalLimits</td>
+						<td>bool</td>
+						<td>
+    Whether this request is exempt from global rate limits, and doesn't need to consider them.
+    </td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+	<h1 id="ReturnValue">Return Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -212,8 +226,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Optional<wbr>&lt;bool&gt;<wbr></td>
-					<td></td>
+					<td>RestRequestBuilder</td>
+					<td>The builder, with the context.</td>
 				</tr>
 			</tbody></table>
 		</div>
