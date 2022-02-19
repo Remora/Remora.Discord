@@ -73,15 +73,25 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
 
         var now = DateTime.UtcNow;
 
-        // First, take a token from the global limits
-        if (!await _globalRateLimitBucket.TryTakeAsync())
+        // Determine whether this request is exempt from global rate limits
+        var isExemptFromGlobalRateLimits = false;
+        if (context.TryGetValue("exempt-from-global-rate-limits", out var rawExempt) && rawExempt is bool isExempt)
         {
-            var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            isExemptFromGlobalRateLimits = isExempt;
+        }
 
-            var delay = _globalRateLimitBucket.ResetsAt - now;
-            rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+        // First, take a token from the global limits
+        if (!isExemptFromGlobalRateLimits)
+        {
+            if (!await _globalRateLimitBucket.TryTakeAsync())
+            {
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
-            return rateLimitedResponse;
+                var delay = _globalRateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
+            }
         }
 
         // Then, try to take one from the local bucket
