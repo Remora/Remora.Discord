@@ -71,21 +71,31 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             throw new InvalidOperationException("No endpoint set.");
         }
 
-        if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
-        {
-            rateLimitBucket = _globalRateLimitBucket;
-        }
-
         var now = DateTime.UtcNow;
 
-        if (!await rateLimitBucket.TryTakeAsync())
+        // First, take a token from the global limits
+        if (!await _globalRateLimitBucket.TryTakeAsync())
         {
             var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
-            var delay = rateLimitBucket.ResetsAt - now;
+            var delay = _globalRateLimitBucket.ResetsAt - now;
             rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
 
             return rateLimitedResponse;
+        }
+
+        // Then, try to take one from the local bucket
+        if (_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
+        {
+            if (!await rateLimitBucket.TryTakeAsync())
+            {
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+
+                var delay = rateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
+            }
         }
 
         // The request can proceed without hitting rate limits, and we've taken a token
