@@ -24,7 +24,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Objects;
 
 namespace Remora.Discord.API.Json;
 
@@ -60,19 +59,19 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
         if (!Enum.IsDefined(typeof(ComponentType), type))
         {
             // We don't know what this is
-            return JsonSerializer.Deserialize<Component>(document.RootElement.GetRawText(), options);
+            throw new JsonException();
         }
 
         return type switch
         {
             ComponentType.ActionRow
-                => JsonSerializer.Deserialize<ActionRowComponent>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<IActionRowComponent>(document.RootElement.GetRawText(), options),
             ComponentType.Button
-                => JsonSerializer.Deserialize<ButtonComponent>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<IButtonComponent>(document.RootElement.GetRawText(), options),
             ComponentType.SelectMenu
-                => JsonSerializer.Deserialize<SelectMenuComponent>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<ISelectMenuComponent>(document.RootElement.GetRawText(), options),
             ComponentType.TextInput
-                => JsonSerializer.Deserialize<TextInputComponent>(document.RootElement.GetRawText(), options),
+                => JsonSerializer.Deserialize<ITextInputComponent>(document.RootElement.GetRawText(), options),
             _ => throw new ArgumentOutOfRangeException(nameof(type))
         };
     }
@@ -80,15 +79,32 @@ internal class MessageComponentConverter : JsonConverter<IMessageComponent>
     /// <inheritdoc />
     public override void Write(Utf8JsonWriter writer, IMessageComponent value, JsonSerializerOptions options)
     {
-        if (value is not IComponent component)
+        switch (value)
         {
-            throw new ArgumentException
-            (
-                $"This implementation requires that the concrete type implements the general-purpose {nameof(IComponent)} interface.",
-                nameof(value)
-            );
+            case IActionRowComponent actionRow:
+            {
+                JsonSerializer.Serialize(writer, actionRow, options);
+                break;
+            }
+            case IButtonComponent button:
+            {
+                JsonSerializer.Serialize(writer, button, options);
+                break;
+            }
+            case ISelectMenuComponent selectMenu:
+            {
+                JsonSerializer.Serialize(writer, selectMenu, options);
+                break;
+            }
+            case ITextInputComponent textInput:
+            {
+                JsonSerializer.Serialize(writer, textInput, options);
+                break;
+            }
+            default:
+            {
+                throw new ArgumentOutOfRangeException(nameof(value));
+            }
         }
-
-        JsonSerializer.Serialize(writer, component, options);
     }
 }
