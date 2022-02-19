@@ -6,8 +6,10 @@
             "type": 1,
             "components": [
                 {
-                    "value": "a",
                     "type": 4,
+                    "value": "a",
+                    "style": 1,
+                    "label": "My input",
                     "custom_id": "b"
                 }
             ]

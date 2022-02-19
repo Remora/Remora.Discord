@@ -1,11 +1,12 @@
 {
+  "type": 2,
+  "style": 1,
   "label": "none",
-  "value": "priest",
-  "description": "none",
   "emoji": {
-    "name": "none",
+    "name": "brr",
     "id": "999999999999999999",
     "animated": false
   },
-  "default": false
+  "custom_id": "click-me",
+  "disabled": false
 }
