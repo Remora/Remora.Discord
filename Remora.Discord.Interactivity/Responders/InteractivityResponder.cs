@@ -79,7 +79,7 @@ internal sealed class InteractivityResponder : IResponder<IInteractionCreate>
     /// <inheritdoc />
     public async Task<Result> RespondAsync(IInteractionCreate gatewayEvent, CancellationToken ct = default)
     {
-        if (gatewayEvent.Type is not InteractionType.MessageComponent or InteractionType.ModalSubmit)
+        if (gatewayEvent.Type is not (InteractionType.MessageComponent or InteractionType.ModalSubmit))
         {
             return Result.FromSuccess();
         }
