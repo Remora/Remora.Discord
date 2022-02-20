@@ -51,7 +51,7 @@ internal class RateLimitBucket
     /// <summary>
     /// Gets the time when the bucket resets.
     /// </summary>
-    public DateTime ResetsAt { get; }
+    public DateTimeOffset ResetsAt { get; private set; }
 
     /// <summary>
     /// Gets the ID of the bucket.
@@ -71,7 +71,7 @@ internal class RateLimitBucket
     /// <param name="resetsAt">The time when the bucket resets.</param>
     /// <param name="id">The ID of the bucket.</param>
     /// <param name="isGlobal">Whether the rate limit bucket is a global bucket.</param>
-    public RateLimitBucket(int limit, int remaining, DateTime resetsAt, string id, bool isGlobal)
+    public RateLimitBucket(int limit, int remaining, DateTimeOffset resetsAt, string id, bool isGlobal)
     {
         this.Limit = limit;
         this.Remaining = remaining;
@@ -136,7 +136,7 @@ internal class RateLimitBucket
             }
 
             var isGlobal = headers.Contains(Constants.RateLimitGlobalHeaderName);
-            var resetsAt = DateTime.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
+            var resetsAt = DateTimeOffset.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
 
             result = new RateLimitBucket(limit, remaining, resetsAt, id, isGlobal);
             return true;
@@ -145,6 +145,35 @@ internal class RateLimitBucket
         {
             // More than one element in a sequence that expected one and only one
             return false;
+        }
+    }
+
+    /// <summary>
+    /// Resets the rate limit bucket, setting a new reset time.
+    /// </summary>
+    /// <param name="nextReset">The time at which the bucket should reset again.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    public async Task ResetAsync(DateTimeOffset nextReset)
+    {
+        if (nextReset < this.ResetsAt)
+        {
+            throw new ArgumentOutOfRangeException
+            (
+                nameof(nextReset),
+                "The next reset has to be in the future from the perspective of the rate limit bucket."
+            );
+        }
+
+        try
+        {
+            await _semaphore.WaitAsync();
+
+            this.Remaining = this.Limit;
+            this.ResetsAt = nextReset;
+        }
+        finally
+        {
+            _semaphore.Release();
         }
     }
 
@@ -161,7 +190,7 @@ internal class RateLimitBucket
             if (this.Remaining <= 0)
             {
                 // Optimistic allowance; the bucket should have reset by now
-                return this.ResetsAt < DateTime.UtcNow;
+                return this.ResetsAt < DateTimeOffset.UtcNow;
             }
 
             this.Remaining -= 1;
