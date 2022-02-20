@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.0</Version>
+        <Version>3.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,6 +13,8 @@
             components.
         </Description>
         <PackageReleaseNotes>
+            Update dependencies.
+            Allow modal submissions through.
             Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
