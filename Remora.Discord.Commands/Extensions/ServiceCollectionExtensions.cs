@@ -81,6 +81,7 @@ public static class ServiceCollectionExtensions
             {
                 continue;
             }
+
             var everythingAfter = name[(index + localizationDirectory.Length)..];
 
             var firstDotIndex = everythingAfter.IndexOf('.');
