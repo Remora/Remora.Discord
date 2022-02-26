@@ -190,7 +190,7 @@ public enum DiscordPermission
     /// <summary>
     /// Allows usage of slash commands.
     /// </summary>
-    UseSlashCommands = 31,
+    UseApplicationCommands = 31,
 
     /// <summary>
     /// Allows the user to request to speak in a stage channel.
