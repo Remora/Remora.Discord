@@ -230,7 +230,7 @@ public enum DiscordPermission
     /// <summary>
     /// Allows for launching activities in a voice channel.
     /// </summary>
-    StartEmbeddedActivities = 39,
+    UseEmbeddedActivities = 39,
 
     /// <summary>
     /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.

@@ -110,11 +110,11 @@ public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
             DiscordPermission.Connect,
             DiscordPermission.UseVoiceActivity,
             DiscordPermission.SendMessagesInThreads,
-            DiscordPermission.StartEmbeddedActivities
+            DiscordPermission.UseEmbeddedActivities
         };
 
         var permissionSet = new DiscordPermissionSet(permissions);
-        var permission = DiscordPermission.StartEmbeddedActivities;
+        var permission = DiscordPermission.UseEmbeddedActivities;
 
         Assert.True(permissionSet.HasPermission(permission));
     }
@@ -332,7 +332,7 @@ public class DiscordPermissionSetTests : ObjectTestBase<IDiscordPermissionSet>
     [Fact]
     public void CanGetPermissions()
     {
-        var permissions = new[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.StartEmbeddedActivities };
+        var permissions = new[] { DiscordPermission.AddReactions, DiscordPermission.Connect, DiscordPermission.UseVoiceActivity, DiscordPermission.SendMessagesInThreads, DiscordPermission.UseEmbeddedActivities };
         var permissionSet = new DiscordPermissionSet(permissions);
 
         Assert.Equal(permissions, permissionSet.GetPermissions());

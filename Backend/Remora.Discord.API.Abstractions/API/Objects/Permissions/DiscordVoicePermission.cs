@@ -95,5 +95,5 @@ public enum DiscordVoicePermission
     /// <summary>
     /// Allows for launching activities in a voice channel.
     /// </summary>
-    StartEmbeddedActivities = 39
+    UseEmbeddedActivities = 39
 }
