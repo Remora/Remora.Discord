@@ -94,4 +94,14 @@ public interface IApplicationCommandOption
     /// Gets a value indicating whether autocompletion should be enabled for this option.
     /// </summary>
     Optional<bool> EnableAutocomplete { get; }
+
+    /// <summary>
+    /// Gets the localized names of the command.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, string>> NameLocalizations { get; }
+
+    /// <summary>
+    /// Gets the localized descriptions of the command.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, string>> DescriptionLocalizations { get; }
 }

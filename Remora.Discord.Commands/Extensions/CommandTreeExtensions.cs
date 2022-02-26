@@ -24,10 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
+using NGettext;
 using OneOf;
 using Remora.Commands.Signatures;
 using Remora.Commands.Trees;
@@ -36,6 +38,7 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Attributes;
 using Remora.Discord.Commands.Results;
+using Remora.Discord.Commands.Services;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
@@ -156,14 +159,29 @@ public static class CommandTreeExtensions
     (
         this CommandTree tree
     )
+        => CreateApplicationCommands(tree, null);
+
+    /// <summary>
+    /// Converts the command tree to a set of Discord application commands.
+    /// </summary>
+    /// <param name="tree">The command tree.</param>
+    /// <param name="localizationProvider">The localization provider.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    public static Result<IReadOnlyList<IBulkApplicationCommandData>> CreateApplicationCommands
+    (
+        this CommandTree tree,
+        LocalizationProvider? localizationProvider
+    )
     {
+        localizationProvider ??= new LocalizationProvider(new Dictionary<CultureInfo, ICatalog>());
+
         var commands = new List<BulkApplicationCommandData>();
         var commandNames = new Dictionary<int, HashSet<string>>();
         foreach (var node in tree.Root.Children)
         {
             // Using the TryTranslateCommandNode() method here for the sake of code simplicity, even though it
             // returns an "option" object, which isn't truly what we want.
-            var translationResult = TryTranslateCommandNode(node, 1);
+            var translationResult = TryTranslateCommandNode(node, 1, localizationProvider);
             if (!translationResult.IsSuccess)
             {
                 return Result<IReadOnlyList<IBulkApplicationCommandData>>.FromError(translationResult);
@@ -273,7 +291,12 @@ public static class CommandTreeExtensions
         return commands;
     }
 
-    private static Result<IApplicationCommandOption?> TryTranslateCommandNode(IChildNode node, int treeDepth)
+    private static Result<IApplicationCommandOption?> TryTranslateCommandNode
+    (
+        IChildNode node,
+        int treeDepth,
+        LocalizationProvider localizationProvider
+    )
     {
         if (treeDepth > MaxTreeDepth)
         {
@@ -332,22 +355,27 @@ public static class CommandTreeExtensions
                     }
                 }
 
-                var buildOptionsResult = CreateCommandParameterOptions(command);
+                var buildOptionsResult = CreateCommandParameterOptions(command, localizationProvider);
                 if (!buildOptionsResult.IsSuccess)
                 {
                     return Result<IApplicationCommandOption?>.FromError(buildOptionsResult);
                 }
 
-                var key = commandType is not ApplicationCommandType.ChatInput
+                var name = commandType is not ApplicationCommandType.ChatInput
                     ? command.Key
                     : command.Key.ToLowerInvariant();
 
+                var localizedNames = localizationProvider.GetStrings(name);
+                var localizedDescriptions = localizationProvider.GetStrings(command.Shape.Description);
+
                 return new ApplicationCommandOption
                 (
-                    SubCommand, // Might not actually be a sub-command, but the caller will handle that
-                    key,
+                    SubCommand, // Might not actually be a sub-command, but the caller will handle that + TODO: Should this just use commandType directly?
+                    name,
                     command.Shape.Description,
-                    Options: new(buildOptionsResult.Entity)
+                    Options: new(buildOptionsResult.Entity),
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
                 );
             }
             case GroupNode group:
@@ -369,7 +397,13 @@ public static class CommandTreeExtensions
                 var subCommandCount = 0;
                 foreach (var childNode in group.Children)
                 {
-                    var translateChildNodeResult = TryTranslateCommandNode(childNode, treeDepth + 1);
+                    var translateChildNodeResult = TryTranslateCommandNode
+                    (
+                        childNode,
+                        treeDepth + 1,
+                        localizationProvider
+                    );
+
                     if (!translateChildNodeResult.IsSuccess)
                     {
                         return Result<IApplicationCommandOption?>.FromError(translateChildNodeResult);
@@ -408,12 +442,19 @@ public static class CommandTreeExtensions
                     );
                 }
 
+                var name = group.Key.ToLowerInvariant();
+
+                var localizedNames = localizationProvider.GetStrings(name);
+                var localizedDescriptions = localizationProvider.GetStrings(group.Description);
+
                 return new ApplicationCommandOption
                 (
                     SubCommandGroup,
-                    group.Key.ToLowerInvariant(),
+                    name,
                     group.Description,
-                    Options: new(groupOptions)
+                    Options: new(groupOptions),
+                    NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                    DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
                 );
             }
             default:
@@ -428,7 +469,8 @@ public static class CommandTreeExtensions
 
     private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions
     (
-        CommandNode command
+        CommandNode command,
+        LocalizationProvider localizationProvider
     )
     {
         var parameterOptions = new List<IApplicationCommandOption>();
@@ -523,10 +565,16 @@ public static class CommandTreeExtensions
                 );
             }
 
+            var name = parameter.HintName.ToLowerInvariant();
+            var description = parameter.Description;
+
+            var localizedNames = localizationProvider.GetStrings(name);
+            var localizedDescriptions = localizationProvider.GetStrings(description);
+
             var parameterOption = new ApplicationCommandOption
             (
                 discordType,
-                parameter.HintName.ToLowerInvariant(),
+                name,
                 parameter.Description,
                 default,
                 !parameter.IsOmissible(),
@@ -534,7 +582,9 @@ public static class CommandTreeExtensions
                 ChannelTypes: getChannelTypes.Entity,
                 EnableAutocomplete: enableAutocomplete,
                 MinValue: minValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
-                MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>)
+                MaxValue: maxValue?.Value ?? default(Optional<OneOf<ulong, long, float, double>>),
+                NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
+                DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
             );
 
             parameterOptions.Add(parameterOption);

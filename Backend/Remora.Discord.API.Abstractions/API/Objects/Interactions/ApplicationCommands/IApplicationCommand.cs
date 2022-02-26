@@ -78,4 +78,14 @@ public interface IApplicationCommand
     /// Gets a value that increments on substantial changes.
     /// </summary>
     Snowflake Version { get; }
+
+    /// <summary>
+    /// Gets the localized names of the command.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, string>> NameLocalizations { get; }
+
+    /// <summary>
+    /// Gets the localized descriptions of the command.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, string>> DescriptionLocalizations { get; }
 }
