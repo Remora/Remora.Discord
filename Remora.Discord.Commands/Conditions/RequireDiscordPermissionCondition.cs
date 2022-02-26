@@ -46,7 +46,6 @@ public class RequireDiscordPermissionCondition :
     ICondition<RequireDiscordPermissionAttribute, IGuildMember>,
     ICondition<RequireDiscordPermissionAttribute, IRole>
 {
-    private readonly IDiscordRestUserAPI _userAPI;
     private readonly IDiscordRestGuildAPI _guildAPI;
     private readonly IDiscordRestChannelAPI _channelAPI;
     private readonly ICommandContext _context;
@@ -54,19 +53,16 @@ public class RequireDiscordPermissionCondition :
     /// <summary>
     /// Initializes a new instance of the <see cref="RequireDiscordPermissionCondition"/> class.
     /// </summary>
-    /// <param name="userAPI">The user API.</param>
     /// <param name="guildAPI">The guild API.</param>
     /// <param name="channelAPI">The channel API.</param>
     /// <param name="context">The command context.</param>
     public RequireDiscordPermissionCondition
     (
-        IDiscordRestUserAPI userAPI,
         IDiscordRestGuildAPI guildAPI,
         IDiscordRestChannelAPI channelAPI,
         ICommandContext context
     )
     {
-        _userAPI = userAPI;
         _guildAPI = guildAPI;
         _channelAPI = channelAPI;
         _context = context;

@@ -81,7 +81,7 @@ public class RequireBotDiscordPermissionsCondition :
             );
         }
 
-        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID);
+        var getChannel = await _channelAPI.GetChannelAsync(_context.ChannelID, ct);
 
         if (!getChannel.IsSuccess)
         {

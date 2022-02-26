@@ -44,7 +44,6 @@ namespace Remora.Discord.Commands.Tests.Conditions;
 /// </summary>
 public partial class RequireDiscordPermissionConditionTests
 {
-    private readonly Mock<IDiscordRestUserAPI> _userAPIMock;
     private readonly Mock<IDiscordRestGuildAPI> _guildAPIMock;
     private readonly Mock<IDiscordRestChannelAPI> _channelAPIMock;
     private readonly Mock<ICommandContext> _contextMock;
@@ -66,7 +65,6 @@ public partial class RequireDiscordPermissionConditionTests
         var channelID = DiscordSnowflake.New(2);
 
         // Dependency mocks
-        _userAPIMock = new Mock<IDiscordRestUserAPI>();
         _guildAPIMock = new Mock<IDiscordRestGuildAPI>();
         _channelAPIMock = new Mock<IDiscordRestChannelAPI>();
         _contextMock = new Mock<ICommandContext>();
@@ -148,7 +146,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -188,7 +185,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -228,7 +224,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -268,7 +263,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -312,7 +306,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -354,7 +347,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -397,7 +389,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -440,7 +431,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -488,7 +478,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -536,7 +525,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -594,7 +582,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
@@ -652,7 +639,6 @@ public partial class RequireDiscordPermissionConditionTests
 
         var condition = new RequireDiscordPermissionCondition
         (
-            _userAPIMock.Object,
             _guildAPIMock.Object,
             _channelAPIMock.Object,
             _contextMock.Object
