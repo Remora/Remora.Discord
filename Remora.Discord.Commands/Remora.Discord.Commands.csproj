@@ -26,7 +26,8 @@
         <PackageReference Include="Humanizer.Core" Version="2.14.1" />
         <PackageReference Include="Remora.Commands" Version="9.0.1" />
         <PackageReference Include="Remora.Extensions.Options.Immutable" Version="1.0.2" />
-        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+        <!-- Provided by default in .NET 6's runtime pack. As such the reference is not needed. -->
+        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" Condition="'$(TargetFramework)' != 'net6.0'" />
     </ItemGroup>
 
 </Project>
