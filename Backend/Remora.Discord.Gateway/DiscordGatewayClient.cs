@@ -906,10 +906,11 @@ public class DiscordGatewayClient : IDisposable
             (
                 _tokenStore.Token,
                 _gatewayOptions.ConnectionProperties,
-                Intents: _gatewayOptions.Intents,
                 Compress: false,
+                LargeThreshold: _gatewayOptions.LargeThreshold,
                 Shard: shardInformation,
-                Presence: initialPresence
+                Presence: initialPresence,
+                Intents: _gatewayOptions.Intents
             )
         );
 
