@@ -75,7 +75,7 @@ public class CacheService
                 return;
             }
         }
-        
+
         Action cacheAction = instance switch
         {
             IWebhook webhook => () => CacheWebhook(key, webhook),
