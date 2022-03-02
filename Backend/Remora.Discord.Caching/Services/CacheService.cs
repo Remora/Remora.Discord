@@ -131,7 +131,7 @@ public class CacheService
 
     private void CacheWebhook(object key, IWebhook webhook)
     {
-        CacheInstance(key, webhook);
+        CacheInstance<IWebhook>(key, webhook);
 
         if (!webhook.User.IsDefined(out var user))
         {
@@ -144,7 +144,7 @@ public class CacheService
 
     private void CacheTemplate(object key, ITemplate template)
     {
-        CacheInstance(key, template);
+        CacheInstance<ITemplate>(key, template);
 
         var creatorKey = KeyHelpers.CreateUserCacheKey(template.Creator.ID);
         Cache(creatorKey, template.Creator);
@@ -152,7 +152,7 @@ public class CacheService
 
     private void CacheIntegration(object key, IIntegration integration)
     {
-        CacheInstance(key, integration);
+        CacheInstance<IIntegration>(key, integration);
 
         if (!integration.User.IsDefined(out var user))
         {
@@ -165,7 +165,7 @@ public class CacheService
 
     private void CacheBan(object key, IBan ban)
     {
-        CacheInstance(key, ban);
+        CacheInstance<IBan>(key, ban);
 
         var userKey = KeyHelpers.CreateUserCacheKey(ban.User.ID);
         Cache(userKey, ban.User);
@@ -173,7 +173,7 @@ public class CacheService
 
     private void CacheGuildMember(object key, IGuildMember member)
     {
-        CacheInstance(key, member);
+        CacheInstance<IGuildMember>(key, member);
 
         if (!member.User.IsDefined(out var user))
         {
@@ -186,7 +186,7 @@ public class CacheService
 
     private void CacheGuildPreview(object key, IGuildPreview preview)
     {
-        CacheInstance(key, preview);
+        CacheInstance<IGuildPreview>(key, preview);
 
         foreach (var emoji in preview.Emojis)
         {
@@ -202,7 +202,7 @@ public class CacheService
 
     private void CacheGuild(object key, IGuild guild)
     {
-        CacheInstance(key, guild);
+        CacheInstance<IGuild>(key, guild);
 
         if (guild.Channels.IsDefined(out var channels))
         {
@@ -266,7 +266,7 @@ public class CacheService
 
     private void CacheEmoji(object key, IEmoji emoji)
     {
-        CacheInstance(key, emoji);
+        CacheInstance<IEmoji>(key, emoji);
 
         if (!emoji.User.IsDefined(out var creator))
         {
@@ -279,7 +279,7 @@ public class CacheService
 
     private void CacheInvite(object key, IInvite invite)
     {
-        CacheInstance(key, invite);
+        CacheInstance<IInvite>(key, invite);
 
         if (!invite.Inviter.IsDefined(out var inviter))
         {
@@ -292,7 +292,7 @@ public class CacheService
 
     private void CacheMessage(object key, IMessage message)
     {
-        CacheInstance(key, message);
+        CacheInstance<IMessage>(key, message);
 
         var authorKey = KeyHelpers.CreateUserCacheKey(message.Author.ID);
         Cache(authorKey, message.Author);
@@ -313,7 +313,7 @@ public class CacheService
 
     private void CacheChannel(object key, IChannel channel)
     {
-        CacheInstance(key, channel);
+        CacheInstance<IChannel>(key, channel);
         if (!channel.Recipients.IsDefined(out var recipients))
         {
             return;
