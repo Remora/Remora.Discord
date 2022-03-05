@@ -53,6 +53,15 @@ public class DiscordGatewayClientOptions
     public IConnectionProperties ConnectionProperties { get; set; } = new ConnectionProperties("Remora.Discord");
 
     /// <summary>
+    /// Gets or sets the large threshold for the gateway.
+    /// For guilds with members that exceed the threshold, offline members will be omitted.
+    /// </summary>
+    /// <remarks>
+    /// Defaults to 50, max of 250.
+    /// </remarks>
+    public byte LargeThreshold { get; set; } = 50;
+
+    /// <summary>
     /// Gets or sets the shard identification information. This is used to connect the client as a sharded
     /// connection, where events are distributed over a set of active connections.
     /// </summary>
