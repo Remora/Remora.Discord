@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.211" />
+      <PackageReference Include="OneOf" Version="3.0.216" />
       <PackageReference Include="Remora.Rest.Core" Version="2.0.1" />
       <PackageReference Include="Remora.Results" Version="7.1.1" />
     </ItemGroup>
