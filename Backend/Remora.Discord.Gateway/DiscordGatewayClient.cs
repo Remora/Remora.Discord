@@ -400,6 +400,8 @@ public class DiscordGatewayClient : IDisposable
                         "Local transient gateway error: {Error}",
                         gae.Message
                     );
+
+                    withNewSession = !gae.IsSessionResumable;
                     return true;
                 }
 
@@ -460,7 +462,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     return Result.FromError
                     (
-                        new GatewayError("Failed to get the gateway endpoint.", true),
+                        new GatewayError("Failed to get the gateway endpoint.", false, true),
                         getGatewayEndpoint
                     );
                 }
@@ -493,7 +495,7 @@ public class DiscordGatewayClient : IDisposable
                             );
 
                             await Task.Delay(startLimit.ResetAfter, stopRequested);
-                            return new GatewayError("Session start limits reached; retrying...", false);
+                            return new GatewayError("Session start limits reached; retrying...", false, false);
                         }
 
                         _log.LogInformation
@@ -532,6 +534,7 @@ public class DiscordGatewayClient : IDisposable
                     return new GatewayError
                     (
                         "Failed to parse the received gateway endpoint.",
+                        false,
                         true
                     );
                 }
@@ -549,7 +552,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     return Result.FromError
                     (
-                        new GatewayError("Failed to receive the Hello payload.", true),
+                        new GatewayError("Failed to receive the Hello payload.", false, true),
                         receiveHello
                     );
                 }
@@ -560,6 +563,7 @@ public class DiscordGatewayClient : IDisposable
                     return new GatewayError
                     (
                         "The first payload from the gateway was not a hello. Rude!",
+                        false,
                         true
                     );
                 }
@@ -927,6 +931,16 @@ public class DiscordGatewayClient : IDisposable
                 continue;
             }
 
+            if (receiveReady.Entity is IPayload<IInvalidSession> invalidSession)
+            {
+                return new GatewayError
+                (
+                    "The newly created session was invalidated by Discord.",
+                    invalidSession.Data.IsResumable,
+                    false
+                );
+            }
+
             if (receiveReady.Entity is not IPayload<IReady> ready)
             {
                 _log.LogTrace("Payload Body: {Body}", JsonSerializer.Serialize(receiveReady.Entity));
@@ -935,6 +949,7 @@ public class DiscordGatewayClient : IDisposable
                     $"The payload after identification was not a Ready payload.{Environment.NewLine}" +
                     $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
                     $"\tActual: {receiveReady.Entity.GetType().FullName}",
+                    false,
                     true
                 );
             }
@@ -978,13 +993,13 @@ public class DiscordGatewayClient : IDisposable
         {
             if (ct.IsCancellationRequested)
             {
-                return new GatewayError("Operation was cancelled.", false);
+                return new GatewayError("Operation was cancelled.", false, false);
             }
 
             var receiveEvent = await _transportService.ReceivePayloadAsync(ct);
             if (!receiveEvent.IsSuccess)
             {
-                return Result.FromError(new GatewayError("Failed to receive a payload.", false), receiveEvent);
+                return Result.FromError(new GatewayError("Failed to receive a payload.", true, false), receiveEvent);
             }
 
             switch (receiveEvent.Entity)
@@ -1057,6 +1072,7 @@ public class DiscordGatewayClient : IDisposable
                         return new GatewayError
                         (
                             "The server did not respond in time with a heartbeat acknowledgement.",
+                            true,
                             false
                         );
                     }
@@ -1078,7 +1094,7 @@ public class DiscordGatewayClient : IDisposable
                     {
                         return Result.FromError
                         (
-                            new GatewayError("Failed to send a heartbeat.", false),
+                            new GatewayError("Failed to send a heartbeat.", true, false),
                             sendHeartbeat
                         );
                     }
