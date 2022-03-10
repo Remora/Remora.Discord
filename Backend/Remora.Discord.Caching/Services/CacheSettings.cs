@@ -183,7 +183,9 @@ public class CacheSettings
         }
 
         var slidingExpiration = GetSlidingExpirationOrDefault<T>();
-        if (slidingExpiration is not null)
+
+        // See https://github.com/Nihlus/Remora.Discord/pull/165
+        if (slidingExpiration is not null && absoluteExpiration is not null)
         {
             cacheOptions.SetSlidingExpiration(slidingExpiration.Value);
         }
