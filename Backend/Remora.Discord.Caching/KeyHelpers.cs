@@ -185,9 +185,9 @@ public static class KeyHelpers
     /// <param name="guildID">The ID of the guild the ban is in.</param>
     /// <param name="userID">The ID of the banned user.</param>
     /// <returns>The cache key.</returns>
-    public static object CreateGuildBanCacheKey(in Snowflake guildID, in Snowflake userID)
+    public static string CreateGuildBanCacheKey(in Snowflake guildID, in Snowflake userID)
     {
-        return (typeof(IBan), userID, CreateGuildCacheKey(guildID));
+        return $"{CreateGuildCacheKey(guildID)}:Ban:{userID}";
     }
 
     /// <summary>
