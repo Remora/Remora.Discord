@@ -36,6 +36,7 @@ using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
 using Remora.Rest;
+using StackExchange.Redis;
 
 namespace Remora.Discord.Caching.Extensions;
 
@@ -84,12 +85,9 @@ public static class ServiceCollectionExtensions
     /// <returns>The services, with caching enabled.</returns>
     public static IServiceCollection AddDiscordRedisCaching(this IServiceCollection services, Action<RedisCacheOptions>? configureRedisAction = null)
     {
-        configureRedisAction ??= (_) => new RedisCacheOptions()
+        configureRedisAction ??= (s) => s.ConfigurationOptions = new ConfigurationOptions
         {
-            ConfigurationOptions = new()
-            {
-                EndPoints = { { "localhost", 6379 } }
-            }
+            EndPoints = { { "localhost", 6379 } }
         };
 
         services.AddStackExchangeRedisCache(configureRedisAction);
