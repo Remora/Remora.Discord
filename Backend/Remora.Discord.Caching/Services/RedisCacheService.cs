@@ -22,6 +22,7 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
@@ -345,7 +346,7 @@ public class RedisCacheService : ICacheService
             await _cache.SetAsync(evictionKey, existingValue, settings);
         }
 
-        var json = JsonSerializer.Serialize(instance);
+        var json = JsonSerializer.Serialize(instance, _jsonOptions);
 
         await _cache.SetStringAsync(key, json, settings);
     }
