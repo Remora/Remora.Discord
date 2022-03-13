@@ -45,13 +45,13 @@ public class LateCacheResponder :
     IResponder<IMessageDelete>,
     IResponder<IMessageDeleteBulk>
 {
-    private readonly CacheService _cacheService;
+    private readonly ICacheService _cacheService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LateCacheResponder"/> class.
     /// </summary>
     /// <param name="cacheService">The cache service.</param>
-    public LateCacheResponder(CacheService cacheService)
+    public LateCacheResponder(ICacheService cacheService)
     {
         _cacheService = cacheService;
     }
