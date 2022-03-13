@@ -20,9 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Text.Json;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -48,16 +51,56 @@ public static class ServiceCollectionExtensions
     /// <remarks>
     /// The cache uses a run-of-the-mill <see cref="IMemoryCache"/>. Cache entry options for any cached type can be
     /// configured using <see cref="IOptions{CacheSettings}"/>.
+    ///
+    /// When choosing a cache implementation, it should be noted that <see cref="AddDiscordCaching"/> and
+    /// <see cref="AddDiscordRedisCaching"/> cannot be used together.
     /// </remarks>
     /// <param name="services">The services.</param>
     /// <returns>The services, with caching enabled.</returns>
     public static IServiceCollection AddDiscordCaching(this IServiceCollection services)
     {
-        services
-            .AddMemoryCache();
+        services.AddMemoryCache();
 
-        services.AddOptions<CacheSettings>();
         services.TryAddSingleton<CacheService>();
+
+        services.AddCachingAPIAndResponders();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Adds a redis-backed caching implementations of various API types, overriding the normally non-caching versions.
+    /// </summary>
+    /// <remarks>
+    /// The cache uses a run-of-the-mill <see cref="IDistributedMemoryCache"/>. Cache entry options for any cached type can be
+    /// configured using <see cref="IOptions{CacheSettings}"/>.
+    ///
+    /// When choosing a cache implementation, it should be noted that <see cref="AddDiscordCaching"/> and
+    /// <see cref="AddDiscordRedisCaching"/> cannot be used together.
+    /// </remarks>
+    /// <param name="services">The services.</param>
+    /// <param name="configureRedisAction">An action to configure the redis cache. If none is specified, a
+    /// default connection of localhost:6379 will be used.</param>
+    /// <returns>The services, with caching enabled.</returns>
+    public static IServiceCollection AddDiscordRedisCaching(this IServiceCollection services, Action<RedisCacheOptions>? configureRedisAction = null)
+    {
+        configureRedisAction ??= (_) => new RedisCacheOptions()
+        {
+            ConfigurationOptions = new()
+            {
+                EndPoints = { { "localhost", 6379 } }
+            }
+        };
+
+        services.AddStackExchangeRedisCache(configureRedisAction);
+        services.AddCachingAPIAndResponders();
+
+        return services;
+    }
+
+    private static IServiceCollection AddCachingAPIAndResponders(this IServiceCollection services)
+    {
+        services.AddOptions<CacheSettings>();
 
         services
             .Replace(ServiceDescriptor.Transient<IDiscordRestChannelAPI>(s => new CachingDiscordRestChannelAPI
