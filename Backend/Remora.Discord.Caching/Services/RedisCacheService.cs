@@ -93,7 +93,7 @@ public class RedisCacheService : ICacheService
             return Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" was not found in the cache."));
         }
 
-        var deserialized = JsonSerializer.Deserialize<TInstance>(cacheResult, _jsonOptions);
+        var deserialized = JsonSerializer.Deserialize<TInstance>(cacheResult, _jsonOptions)!;
 
         await _cache.RefreshAsync(key);
 
@@ -112,7 +112,7 @@ public class RedisCacheService : ICacheService
             return Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" was not found in the eviction cache."));
         }
 
-        var deserialized = JsonSerializer.Deserialize<TInstance>(cacheResult, _jsonOptions);
+        var deserialized = JsonSerializer.Deserialize<TInstance>(cacheResult, _jsonOptions)!;
 
         await _cache.RefreshAsync(key);
 

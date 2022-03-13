@@ -68,7 +68,7 @@ public class CacheService : ICacheService
         {
             if (absoluteExpiration == TimeSpan.Zero)
             {
-                return ValueTask.CompletedTask;
+                return default;
             }
         }
 
@@ -90,7 +90,7 @@ public class CacheService : ICacheService
 
         cacheAction();
 
-        return ValueTask.CompletedTask;
+        return default; // The same as ValueTask.CompletedTask
     }
 
     /// <inheritdoc/>
@@ -101,11 +101,11 @@ public class CacheService : ICacheService
 
         if (hasExistingValue)
         {
-            return ValueTask.FromResult(Result<TInstance>.FromSuccess(cachedInstance));
+            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromSuccess(cachedInstance));
         }
         else
         {
-            return ValueTask.FromResult(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not possess a value in cache.")));
+            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not possess a value in cache.")));
         }
     }
 
@@ -117,11 +117,11 @@ public class CacheService : ICacheService
 
         if (hasExistingValue)
         {
-            return ValueTask.FromResult(Result<TInstance>.FromSuccess(cachedInstance));
+            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromSuccess(cachedInstance));
         }
         else
         {
-            return ValueTask.FromResult(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not possess a value in cache.")));
+            return new ValueTask<Result<TInstance>>(Result<TInstance>.FromError(new NotFoundError($"The key \"{key}\" did not possess a value in cache.")));
         }
     }
 
@@ -136,7 +136,7 @@ public class CacheService : ICacheService
 
         _memoryCache.Remove(key);
 
-        return ValueTask.CompletedTask;
+        return default;
     }
 
     private async Task CacheWebhook(string key, IWebhook webhook)
