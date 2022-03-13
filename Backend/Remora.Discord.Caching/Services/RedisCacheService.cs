@@ -50,7 +50,7 @@ public class RedisCacheService : ICacheService
     {
         _cacheSettings = settings.Value;
         _cache = cache;
-        jsonOptions.Get("Discord");
+        _jsonOptions = jsonOptions.Get("Discord");
     }
 
     /// <inheritdoc />
