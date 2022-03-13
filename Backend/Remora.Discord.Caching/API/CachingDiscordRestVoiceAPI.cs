@@ -58,9 +58,11 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
     )
     {
         var key = KeyHelpers.CreateVoiceRegionsCacheKey();
-        if (_cacheService.TryGetValue<IReadOnlyList<IVoiceRegion>>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IReadOnlyList<IVoiceRegion>>(key);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cachedInstance);
+            return Result<IReadOnlyList<IVoiceRegion>>.FromSuccess(cacheResult.Entity);
         }
 
         var listRegions = await base.ListVoiceRegionsAsync(ct);
@@ -70,12 +72,12 @@ public class CachingDiscordRestVoiceAPI : DiscordRestVoiceAPI
         }
 
         var regions = listRegions.Entity;
-        _cacheService.Cache(key, regions);
+        await _cacheService.CacheAsync(key, regions);
 
         foreach (var voiceRegion in regions)
         {
             var regionKey = KeyHelpers.CreateVoiceRegionCacheKey(voiceRegion.ID);
-            _cacheService.Cache(regionKey, voiceRegion);
+            await _cacheService.CacheAsync(regionKey, voiceRegion);
         }
 
         return listRegions;

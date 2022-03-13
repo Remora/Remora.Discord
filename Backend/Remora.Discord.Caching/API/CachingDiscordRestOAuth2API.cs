@@ -57,9 +57,11 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentApplicationCacheKey();
-        if (_cacheService.TryGetValue<IApplication>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IApplication>(key);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IApplication>.FromSuccess(cachedInstance);
+            return Result<IApplication>.FromSuccess(cacheResult.Entity);
         }
 
         var getCurrent = await base.GetCurrentBotApplicationInformationAsync(ct);
@@ -69,7 +71,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
         }
 
         var application = getCurrent.Entity;
-        _cacheService.Cache(key, application);
+        await _cacheService.CacheAsync(key, application);
 
         return getCurrent;
     }
@@ -81,9 +83,11 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
     )
     {
         var key = KeyHelpers.CreateCurrentAuthorizationInformationCacheKey();
-        if (_cacheService.TryGetValue<IAuthorizationInformation>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IAuthorizationInformation>(key);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IAuthorizationInformation>.FromSuccess(cachedInstance);
+            return Result<IAuthorizationInformation>.FromSuccess(cacheResult.Entity);
         }
 
         var result = await base.GetCurrentAuthorizationInformationAsync(ct);
@@ -92,7 +96,7 @@ public class CachingDiscordRestOAuth2API : DiscordRestOAuth2API
             return result;
         }
 
-        _cacheService.Cache(key, result.Entity);
+        await _cacheService.CacheAsync(key, result.Entity);
 
         return result;
     }

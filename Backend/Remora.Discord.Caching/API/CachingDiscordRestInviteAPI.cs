@@ -62,9 +62,11 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
     )
     {
         var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-        if (_cacheService.TryGetValue<IInvite>(key, out var cachedInstance))
+        var cacheResult = await _cacheService.TryGetValueAsync<IInvite>(key);
+
+        if (cacheResult.IsSuccess)
         {
-            return Result<IInvite>.FromSuccess(cachedInstance);
+            return Result<IInvite>.FromSuccess(cacheResult.Entity);
         }
 
         var getInvite = await base.GetInviteAsync
@@ -82,7 +84,7 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
         }
 
         var invite = getInvite.Entity;
-        _cacheService.Cache(key, invite);
+        await _cacheService.CacheAsync(key, invite);
 
         return getInvite;
     }
@@ -102,7 +104,7 @@ public class CachingDiscordRestInviteAPI : DiscordRestInviteAPI
         }
 
         var key = KeyHelpers.CreateInviteCacheKey(inviteCode);
-        _cacheService.Evict<IInvite>(key);
+        await _cacheService.EvictAsync<IInvite>(key);
 
         return deleteInvite;
     }
