@@ -61,7 +61,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMemoryCache();
 
-        services.TryAddSingleton<CacheService>();
+        services.TryAddSingleton<ICacheService, CacheService>();
 
         services.AddCachingAPIAndResponders();
 
@@ -95,6 +95,7 @@ public static class ServiceCollectionExtensions
         services.AddStackExchangeRedisCache(configureRedisAction);
         services.AddCachingAPIAndResponders();
 
+        services.TryAddSingleton<ICacheService, RedisCacheService>();
         return services;
     }
 
