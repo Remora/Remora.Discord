@@ -139,7 +139,7 @@ public class CacheService : ICacheService
         return ValueTask.CompletedTask;
     }
 
-    private async Task CacheWebhook(object key, IWebhook webhook)
+    private async Task CacheWebhook(string key, IWebhook webhook)
     {
         CacheInstance(key, webhook);
 
@@ -152,7 +152,7 @@ public class CacheService : ICacheService
         await CacheAsync(userKey, user);
     }
 
-    private async Task CacheTemplate(object key, ITemplate template)
+    private async Task CacheTemplate(string key, ITemplate template)
     {
         CacheInstance(key, template);
 
@@ -160,7 +160,7 @@ public class CacheService : ICacheService
         await CacheAsync(creatorKey, template.Creator);
     }
 
-    private async Task CacheIntegration(object key, IIntegration integration)
+    private async Task CacheIntegration(string key, IIntegration integration)
     {
         CacheInstance(key, integration);
 
@@ -173,7 +173,7 @@ public class CacheService : ICacheService
         await CacheAsync(userKey, user);
     }
 
-    private async Task CacheBan(object key, IBan ban)
+    private async Task CacheBan(string key, IBan ban)
     {
         CacheInstance(key, ban);
 
@@ -181,7 +181,7 @@ public class CacheService : ICacheService
         await CacheAsync(userKey, ban.User);
     }
 
-    private async Task CacheGuildMember(object key, IGuildMember member)
+    private async Task CacheGuildMember(string key, IGuildMember member)
     {
         CacheInstance(key, member);
 
@@ -194,7 +194,7 @@ public class CacheService : ICacheService
         await CacheAsync(userKey, user);
     }
 
-    private async Task CacheGuildPreview(object key, IGuildPreview preview)
+    private async Task CacheGuildPreview(string key, IGuildPreview preview)
     {
         CacheInstance(key, preview);
 
@@ -210,7 +210,7 @@ public class CacheService : ICacheService
         }
     }
 
-    private async Task CacheGuild(object key, IGuild guild)
+    private async Task CacheGuild(string key, IGuild guild)
     {
         CacheInstance(key, guild);
 
@@ -274,7 +274,7 @@ public class CacheService : ICacheService
         }
     }
 
-    private async Task CacheEmoji(object key, IEmoji emoji)
+    private async Task CacheEmoji(string key, IEmoji emoji)
     {
         CacheInstance(key, emoji);
 
@@ -287,7 +287,7 @@ public class CacheService : ICacheService
         await CacheAsync(creatorKey, creator);
     }
 
-    private async Task CacheInvite(object key, IInvite invite)
+    private async Task CacheInvite(string key, IInvite invite)
     {
         CacheInstance(key, invite);
 
@@ -300,7 +300,7 @@ public class CacheService : ICacheService
         await CacheAsync(inviterKey, inviter);
     }
 
-    private async Task CacheMessage(object key, IMessage message)
+    private async Task CacheMessage(string key, IMessage message)
     {
         CacheInstance(key, message);
 
@@ -321,7 +321,7 @@ public class CacheService : ICacheService
         await CacheAsync(referencedMessageKey, referencedMessage);
     }
 
-    private async Task CacheChannel(object key, IChannel channel)
+    private async Task CacheChannel(string key, IChannel channel)
     {
         CacheInstance(key, channel);
         if (!channel.Recipients.IsDefined(out var recipients))
@@ -342,7 +342,7 @@ public class CacheService : ICacheService
     /// <param name="key">The cache key.</param>
     /// <param name="instance">The instance.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
-    private async Task CacheInstance<TInstance>(object key, TInstance instance)
+    private async Task CacheInstance<TInstance>(string key, TInstance instance)
         where TInstance : class
     {
         var entryOptions = _cacheSettings.GetEntryOptions<TInstance>();
