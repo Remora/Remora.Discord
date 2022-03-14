@@ -83,7 +83,10 @@ public class DiscordGatewayClient : IDisposable
     /// <summary>
     /// Holds the currently running responders.
     /// </summary>
-    private readonly ConcurrentQueue<Task<IReadOnlyList<Result>>> _runningResponderDispatches;
+    /// <remarks>
+    /// The value is ignored here, and a dictionary is used in place of a bag or list.
+    /// </remarks>
+    private readonly ConcurrentDictionary<Task<IReadOnlyList<Result>>, byte> _runningResponderDispatches;
 
     /// <summary>
     /// Holds the websocket.
@@ -180,7 +183,7 @@ public class DiscordGatewayClient : IDisposable
         _services = services;
         _responderTypeRepository = responderTypeRepository;
 
-        _runningResponderDispatches = new ConcurrentQueue<Task<IReadOnlyList<Result>>>();
+        _runningResponderDispatches = new ConcurrentDictionary<Task<IReadOnlyList<Result>>, byte>();
 
         _payloadsToSend = new ConcurrentQueue<IPayload>();
         _receivedPayloads = new ConcurrentQueue<IPayload>();
@@ -256,7 +259,7 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 // Finish up the responders
-                foreach (var runningResponder in _runningResponderDispatches)
+                foreach (var (runningResponder, _) in _runningResponderDispatches)
                 {
                     await FinalizeResponderDispatchAsync(runningResponder);
                 }
@@ -597,24 +600,30 @@ public class DiscordGatewayClient : IDisposable
             }
             case GatewayConnectionStatus.Connected:
             {
-                // Process received events and dispatch them to the application
-                if (_receivedPayloads.TryDequeue(out var payload))
+                // Process received events (up to 100 in one go) and dispatch them to the application
+                var dispatchedPayloads = 0;
+                while (!_receivedPayloads.IsEmpty && dispatchedPayloads < 100)
                 {
-                    UnwrapAndDispatchEvent(payload, _disconnectRequestedSource.Token);
+                    if (_receivedPayloads.TryDequeue(out var payload))
+                    {
+                        UnwrapAndDispatchEvent(payload, _disconnectRequestedSource.Token);
+                    }
+
+                    ++dispatchedPayloads;
                 }
 
-                // Unpack one of the running responders, if any are pending
-                if (_runningResponderDispatches.TryDequeue(out var runningResponder))
+                // Finalize any finished dispatches
+                var completedResponders = _runningResponderDispatches
+                    .Where(kvp => kvp.Key.IsCompleted)
+                    .Select(kvp => kvp.Key)
+                    .ToList();
+
+                foreach (var completedResponder in completedResponders)
                 {
-                    if (runningResponder.IsCompleted)
-                    {
-                        await FinalizeResponderDispatchAsync(runningResponder);
-                    }
-                    else
-                    {
-                        _runningResponderDispatches.Enqueue(runningResponder);
-                    }
+                    _ = _runningResponderDispatches.TryRemove(completedResponder, out _);
                 }
+
+                await Task.WhenAll(completedResponders.Select(FinalizeResponderDispatchAsync));
 
                 // Check the send and receive tasks for errors
                 if (_sendTask.IsCompleted)
@@ -635,13 +644,17 @@ public class DiscordGatewayClient : IDisposable
                     }
                 }
 
-                try
+                if (_receivedPayloads.IsEmpty)
                 {
-                    await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
-                }
-                catch (OperationCanceledException)
-                {
-                    // will cleanup below
+                    // fuck all is happening right now, so let's wait a little
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // will cleanup below
+                    }
                 }
 
                 break;
@@ -798,7 +811,11 @@ public class DiscordGatewayClient : IDisposable
             throw new InvalidOperationException();
         }
 
-        _runningResponderDispatches.Enqueue((Task<IReadOnlyList<Result>>)dispatchTask);
+        if (!_runningResponderDispatches.TryAdd((Task<IReadOnlyList<Result>>)dispatchTask, 1))
+        {
+            // something is seriously wrong; goodbye
+            throw new InvalidOperationException();
+        }
     }
 
     /// <summary>
