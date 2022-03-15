@@ -83,12 +83,6 @@ public interface IInvite : IPartialInvite
     new Optional<DateTimeOffset?> ExpiresAt { get; }
 
     /// <summary>
-    /// Gets metadata about the stage instance the invite is for, if any.
-    /// </summary>
-    [Obsolete("No longer used by Discord.")]
-    new Optional<IInviteStageInstance> StageInstance { get; }
-
-    /// <summary>
     /// Gets metadata about the scheduled event the invite points to.
     /// </summary>
     new Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
@@ -122,10 +116,6 @@ public interface IInvite : IPartialInvite
 
     /// <inheritdoc/>
     Optional<DateTimeOffset?> IPartialInvite.ExpiresAt => this.ExpiresAt;
-
-    /// <inheritdoc/>
-    [Obsolete("No longer used by Discord.")]
-    Optional<IInviteStageInstance> IPartialInvite.StageInstance => this.StageInstance;
 
     /// <inheritdoc/>
     Optional<IGuildScheduledEvent> IPartialInvite.GuildScheduledEvent => this.GuildScheduledEvent;

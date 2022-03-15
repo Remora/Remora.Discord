@@ -43,7 +43,5 @@ public record Invite
     Optional<int> ApproximatePresenceCount = default,
     Optional<int> ApproximateMemberCount = default,
     Optional<DateTimeOffset?> ExpiresAt = default,
-    [property: Obsolete("No longer used by Discord.")]
-    Optional<IInviteStageInstance> StageInstance = default,
     Optional<IGuildScheduledEvent> GuildScheduledEvent = default
 ) : IInvite;

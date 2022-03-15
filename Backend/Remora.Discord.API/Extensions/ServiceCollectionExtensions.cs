@@ -657,10 +657,7 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IInvite, Invite>();
-
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
-
-        options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
 
         return options;
     }
