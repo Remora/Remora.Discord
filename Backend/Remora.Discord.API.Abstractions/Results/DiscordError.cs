@@ -212,6 +212,11 @@ public enum DiscordError
     UnknownApplicationCommand = 10063,
 
     /// <summary>
+    /// Unknown voice state.
+    /// </summary>
+    UnknownVoiceState = 10065,
+
+    /// <summary>
     /// Unknown application command permissions.
     /// </summary>
     UnknownApplicationCommandPermissions = 10066,
