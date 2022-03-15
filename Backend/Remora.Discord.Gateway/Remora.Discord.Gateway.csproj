@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>7.0.1</Version>
+        <Version>7.1.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,9 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Update and default to API v10.
+            Minor performance improvements, pending larger rework
+            Implement support for checking IInvalidSession on new sessions.
+            Allow large_threshold to be specified
         </PackageReleaseNotes>
     </PropertyGroup>
 

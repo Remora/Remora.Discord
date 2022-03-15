@@ -5,14 +5,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>3.0.0</Version>
+		<Version>3.0.1</Version>
 		<Description>
 			$(BaseDescription)
 
 			This package provides utilities and components which extened upon base resources.
 		</Description>
 		<PackageReleaseNotes>
-			Update and default to API v10.
+			Update dependencies.
 		</PackageReleaseNotes>
 	</PropertyGroup>
 

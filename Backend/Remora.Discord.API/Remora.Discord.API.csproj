@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>52.0.0</Version>
+        <Version>53.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,8 +13,9 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update and default to API v10.
-            Rework message component structure.
+            Chuck out obsolete members.
+            Update field nullability.
+            Various mixed fixes.
         </PackageReleaseNotes>
     </PropertyGroup>
 
