@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - DiscordError.NoBotsAllowed Field</title>
+        <title>Remora.Discord Documentation - API - DiscordError.UnknownVoiceState Field</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -217,7 +217,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F51F144D">MissingAccess</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8F3BF0C0">MissingOAuth2Scope</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/253E634D">MissingPermission</a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/94D7942E">NoBotsAllowed</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/94D7942E">NoBotsAllowed</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/AC8130BD">NoUserWithTag</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/B437187F">NoteTooLong</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/65CA4197">O<wbr>Auth<wbr>Application<wbr>Does<wbr>Not<wbr>Have<wbr>Bot</a></li>
@@ -283,7 +283,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/0A2F1B62">UnknownStream</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F72C287F">UnknownToken</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/3CA99BFD">UnknownUser</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/EC019CA3">UnknownVoiceState</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/EC019CA3">UnknownVoiceState</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/9650327E">UnknownWebhook</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/F6D4B7FE">Unknown<wbr>Webhook<wbr>Service</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError/8EFA2A06">UnverifiedAccount</a></li>
@@ -306,14 +306,14 @@
 
 <section class="content-header">
 			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Results/DiscordError">DiscordError</a>.</h3>
-	<h1>NoBotsAllowed <small>Field</small></h1>
+	<h1>UnknownVoiceState <small>Field</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Bots cannot use this endpoint.
+    Unknown voice state.
     </div>
 
 		<div class="panel panel-default">
@@ -330,7 +330,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>NoBotsAllowed</code></pre>
+	<pre><code>UnknownVoiceState</code></pre>
 
 
 
@@ -347,7 +347,7 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>20001</td>
+					<td>10065</td>
 					<td>Int32</td>
 				</tr>
 			</tbody></table>

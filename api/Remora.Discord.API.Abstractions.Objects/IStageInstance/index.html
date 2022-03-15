@@ -202,7 +202,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionModalCallbackData">I<wbr>Interaction<wbr>Modal<wbr>Callback<wbr>Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse">IInteractionResponse</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance">IInviteStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>
@@ -352,9 +351,9 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
+											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate">IStageInstanceUpdate</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete">IStageInstanceDelete</a></li>								
 											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate">IStageInstanceCreate</a></li>								
-											<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate">IStageInstanceUpdate</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -364,12 +363,12 @@
 							graph BT
 	Type["IStageInstance"]
 class Type type-node
-	Implementing0["IStageInstanceDelete"]-.-&gt;Type
-	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete"
-	Implementing1["IStageInstanceCreate"]-.-&gt;Type
-	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate"
-	Implementing2["IStageInstanceUpdate"]-.-&gt;Type
-	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate"
+	Implementing0["IStageInstanceUpdate"]-.-&gt;Type
+	click Implementing0 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceUpdate"
+	Implementing1["IStageInstanceDelete"]-.-&gt;Type
+	click Implementing1 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceDelete"
+	Implementing2["IStageInstanceCreate"]-.-&gt;Type
+	click Implementing2 "/Remora.Discord/api/Remora.Discord.API.Abstractions.Gateway.Events/IStageInstanceCreate"
 
 						</div>
 					</div>
@@ -433,6 +432,15 @@ public interface IStageInstance</code></pre>
 								<td>
 									<div>
     Gets the ID of the guild the instance is in.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/525145D4">Guild<wbr>Scheduled<wbr>Event<wbr>I<wbr>D</a></td>
+								<td>Snowflake?</td>
+								<td>
+									<div>
+    Gets the ID of the scheduled event for this stage instance.
     </div>
 								</td>
 							</tr>

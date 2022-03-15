@@ -138,11 +138,11 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Remora.Discord/api/Remora.Discord.Gateway">Remora<wbr>.Discord<wbr>.Gateway</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Enum Types</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/GatewayConnectionStatus">Gateway<wbr>Connection<wbr>Status</a></li>
 			<li class="header">Class Types</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClient">DiscordGatewayClient</a></li>
 				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions">Discord<wbr>Gateway<wbr>Client<wbr>Options</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Gateway/GatewayConnectionStatus">Gateway<wbr>Connection<wbr>Status</a></li>
 
 
                     </ul>
@@ -270,6 +270,16 @@ public class DiscordGatewayClientOptions</code></pre>
 									<div>
     Gets or sets the gateway intents to subscribe to. By default, this is a limited set of intents (guilds and
     their messages).
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway/DiscordGatewayClientOptions/DEB54DEE">LargeThreshold</a></td>
+								<td>byte</td>
+								<td>
+									<div>
+    Gets or sets the large threshold for the gateway.
+    For guilds with members that exceed the threshold, offline members will be omitted.
     </div>
 								</td>
 							</tr>

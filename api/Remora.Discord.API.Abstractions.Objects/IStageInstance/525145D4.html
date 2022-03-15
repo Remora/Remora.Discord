@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Remora.Discord/assets/img/favicon.ico" type="image/x-icon">
-        <title>Remora.Discord Documentation - API - IDiscordRestStageInstanceAPI.UpdateStageInstanceAsync(Snowflake, Optional&lt;string&gt;, Optional&lt;StagePrivacyLevel&gt;, Optional&lt;string&gt;, CancellationToken) Method</title>
+        <title>Remora.Discord Documentation - API - IStageInstance.GuildScheduledEventID Property</title>
         <link href="/Remora.Discord/assets/css/highlight.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Remora.Discord/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -74,8 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+<p><a href="#Value">Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -135,15 +134,18 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Rest</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI">I<wbr>Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></li>
+		<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI/DD0928C2">Create<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;<wbr>Stage<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI/EEB79596">DeleteStageInstance<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI/9B14828F">Get<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>CancellationToken)<wbr></a></li>
-				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI/B2D7A6E3">Update<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Stage<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
+			<li class="header">Property Members</li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/57CE2735">ChannelID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/7465AD01">GuildID</a></li>
+				<li class="selected"><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/525145D4">Guild<wbr>Scheduled<wbr>Event<wbr>I<wbr>D</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/1F414638">ID</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/881EE722">IsDiscoveryDisabled</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/81F8A660">PrivacyLevel</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance/D654D045">Topic</a></li>
 
 
                     </ul>
@@ -158,79 +160,39 @@
 
 
 <section class="content-header">
-			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI">I<wbr>Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a>.</h3>
-	<h1>Update<wbr>Stage<wbr>Instance<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;<wbr>Stage<wbr>Privacy<wbr>Level&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr> <small>Method</small></h1>
+			<h3><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>.</h3>
+	<h1>Guild<wbr>Scheduled<wbr>Event<wbr>I<wbr>D <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Modifies the stage instance of the given stage channel.
+    Gets the ID of the scheduled event for this stage instance.
     </div>
 
 		<div class="panel panel-default">
-  			<div class="panel-body">	
+  			<div class="panel-body">
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Rest</a></dd>
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects">Remora<wbr>.Discord<wbr>.API<wbr>.Abstractions<wbr>.Objects</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Rest/IDiscordRestStageInstanceAPI">I<wbr>Discord<wbr>Rest<wbr>Stage<wbr>Instance<wbr>A<wbr>P<wbr>I</a></dd>		
+						<dd><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>Task&lt;Result&lt;IStageInstance&gt;&gt; UpdateStageInstanceAsync(Snowflake channelID, Optional&lt;string&gt; topic = null, Optional&lt;StagePrivacyLevel&gt; privacyLevel = null, Optional&lt;string&gt; reason = null, CancellationToken ct = default(CancellationToken))</code></pre>
+	<pre><code>Snowflake? GuildScheduledEventID { get; }</code></pre>
 
 
 
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>channelID</td>
-						<td>Snowflake</td>
-						<td>The ID of the stage channel.</td>
-					</tr>
-					<tr>
-						<td>topic</td>
-						<td>Optional<wbr>&lt;string&gt;<wbr></td>
-						<td>The topic of the stage instance (1-120 characters).</td>
-					</tr>
-					<tr>
-						<td>privacyLevel</td>
-						<td>Optional<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/StagePrivacyLevel">StagePrivacyLevel</a>&gt;<wbr></td>
-						<td>The privacy level of the stage instance.</td>
-					</tr>
-					<tr>
-						<td>reason</td>
-						<td>Optional<wbr>&lt;string&gt;<wbr></td>
-						<td>The reason to mark the action in the audit log with.</td>
-					</tr>
-					<tr>
-						<td>ct</td>
-						<td>CancellationToken</td>
-						<td>The cancellation token for this operation.</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
+	<h1 id="Value">Value</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
@@ -241,8 +203,8 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IStageInstance">IStageInstance</a>&gt;<wbr>&gt;<wbr></td>
-					<td>A result which may or may not have succeeded.</td>
+					<td>Snowflake?</td>
+					<td></td>
 				</tr>
 			</tbody></table>
 		</div>

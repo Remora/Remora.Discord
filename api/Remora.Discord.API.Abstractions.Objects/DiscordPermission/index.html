@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Remarks">Remarks</a></p>
 <p><a href="#Attributes">Attributes</a></p>
 <p><a href="#fields">Fields</a></p>
 <hr class="infobar-hidden">
@@ -202,7 +203,6 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionModalCallbackData">I<wbr>Interaction<wbr>Modal<wbr>Callback<wbr>Data</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInteractionResponse">IInteractionResponse</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInvite">IInvite</a></li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IInviteStageInstance">IInviteStageInstance</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessage">IMessage</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageActivity">IMessageActivity</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IMessageComponent">IMessageComponent</a></li>
@@ -390,6 +390,11 @@ class Type type-node
 public enum DiscordPermission</code></pre>
 
 
+	<h1 id="Remarks">Remarks</h1>
+	<div>
+    Note that the values of the enumeration members do not map to the actual values of Discord's permissions - instead,
+    they mark how many bits a value of 1 should be shifted into a <code class="cs">BigInteger</code> to get the actual value.
+    </div>
 
 	<h1 id="Attributes">Attributes</h1>
 	<div class="box">
@@ -651,7 +656,8 @@ public enum DiscordPermission</code></pre>
 								<td>40</td>
 								<td>
 									<div>
-    Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.
+    Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from
+    speaking in voice and stage channels.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -747,21 +753,31 @@ public enum DiscordPermission</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/A64CAEEB">Start<wbr>Embedded<wbr>Activities</a></td>
-								<td>39</td>
-								<td>
-									<div>
-    Allows for launching activities in a voice channel.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/342DD2F1">Stream</a></td>
 								<td>9</td>
 								<td>
 									<div>
     Allows the user to go live.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/6D082519">Use<wbr>Application<wbr>Commands</a></td>
+								<td>31</td>
+								<td>
+									<div>
+    Allows usage of slash commands.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/BC1FEB96">Use<wbr>Embedded<wbr>Activities</a></td>
+								<td>39</td>
+								<td>
+									<div>
+    Allows for launching activities in a voice channel.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -782,16 +798,6 @@ public enum DiscordPermission</code></pre>
 								<td>
 									<div>
     Allows the user to use stickers from other servers.
-    </div>
-											<div><small><em>static</em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/DiscordPermission/718D7473">UseSlashCommands</a></td>
-								<td>31</td>
-								<td>
-									<div>
-    Allows usage of slash commands.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
