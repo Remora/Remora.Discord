@@ -25,7 +25,6 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -36,7 +35,6 @@ using Remora.Discord.Caching.Services;
 using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Responders;
 using Remora.Rest;
-using StackExchange.Redis;
 
 namespace Remora.Discord.Caching.Extensions;
 
