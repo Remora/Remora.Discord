@@ -598,8 +598,8 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
         Optional<IDiscordPermissionSet> permissions = default,
         Optional<Color> colour = default,
         Optional<bool> isHoisted = default,
-        Optional<Stream> icon = default,
-        Optional<string> unicodeEmoji = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
         Optional<bool> isMentionable = default,
         Optional<string> reason = default,
         CancellationToken ct = default

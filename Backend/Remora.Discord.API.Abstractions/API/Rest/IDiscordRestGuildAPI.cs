@@ -512,8 +512,8 @@ public interface IDiscordRestGuildAPI
         Optional<IDiscordPermissionSet> permissions = default,
         Optional<Color> colour = default,
         Optional<bool> isHoisted = default,
-        Optional<Stream> icon = default,
-        Optional<string> unicodeEmoji = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
         Optional<bool> isMentionable = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -768,7 +768,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="requestToSpeakTimestamp">The time when the user requested to speak.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
         Snowflake channelID,

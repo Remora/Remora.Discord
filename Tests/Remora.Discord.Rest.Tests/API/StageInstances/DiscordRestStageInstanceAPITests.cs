@@ -108,7 +108,7 @@ public class DiscordRestStageInstanceAPITests
     }
 
     /// <summary>
-    /// Tests the <see cref="DiscordRestStageInstanceAPI.UpdateStageInstanceAsync"/> method.
+    /// Tests the <see cref="DiscordRestStageInstanceAPI.ModifyStageInstanceAsync"/> method.
     /// </summary>
     public class UpdateStageInstanceAsync : RestAPITestBase<IDiscordRestStageInstanceAPI>
     {
@@ -141,7 +141,7 @@ public class DiscordRestStageInstanceAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
             );
 
-            var result = await api.UpdateStageInstanceAsync(channelID, topic, privacyLevel, reason);
+            var result = await api.ModifyStageInstanceAsync(channelID, topic, privacyLevel, reason);
             ResultAssert.Successful(result);
         }
     }
