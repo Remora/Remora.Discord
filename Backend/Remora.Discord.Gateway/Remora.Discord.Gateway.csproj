@@ -22,4 +22,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="6.0.0" />
+    </ItemGroup>
 </Project>
