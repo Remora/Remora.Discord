@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Backend\Remora.Discord.Caching.Redis\Remora.Discord.Caching.Redis.csproj" />
         <ProjectReference Include="..\..\Backend\Remora.Discord.Caching\Remora.Discord.Caching.csproj" />
         <ProjectReference Include="..\..\Remora.Discord.Hosting\Remora.Discord.Hosting.csproj" />
     </ItemGroup>

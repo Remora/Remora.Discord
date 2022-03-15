@@ -57,10 +57,10 @@ public static class ServiceCollectionExtensions
             EndPoints = { { "localhost", 6379 } }
         };
 
+        services.AddDiscordCaching();
         services.AddStackExchangeRedisCache(configureRedisAction);
-        services.AddCachingAPIAndResponders();
 
-        services.TryAddSingleton<ICacheService, RedisCacheService>();
+        services.Replace(ServiceDescriptor.Singleton<ICacheProvider, RedisCacheProvider>());
         return services;
     }
 }

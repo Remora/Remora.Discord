@@ -41,14 +41,14 @@ namespace Remora.Discord.Caching.API;
 [PublicAPI]
 public class CachingDiscordRestEmojiAPI : DiscordRestEmojiAPI
 {
-    private readonly ICacheService _cacheService;
+    private readonly CacheService _cacheService;
 
     /// <inheritdoc cref="DiscordRestEmojiAPI" />
     public CachingDiscordRestEmojiAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
-        ICacheService cacheService
+        CacheService cacheService
     )
         : base(restHttpClient, jsonOptions)
     {

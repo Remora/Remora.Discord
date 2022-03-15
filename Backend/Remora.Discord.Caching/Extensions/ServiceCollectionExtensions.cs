@@ -60,22 +60,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddMemoryCache();
 
-        services.TryAddSingleton<ICacheService, CacheService>();
+        services.TryAddSingleton<CacheService>();
 
-        services.AddCachingAPIAndResponders();
-
-        return services;
-    }
-
-    /// <summary>
-    /// Adds a caching implementations of various Discord API types and caching responders to the service collection.
-    /// </summary>
-    /// <param name="services">The service collection to add the caching APIs to.</param>
-    /// <remarks>Invoking this method alone is not recommended as an implementation of
-    /// <inheritdoc cref="ICacheService"/> must also be provided. Consider using <see cref="AddDiscordCaching"/> instead.</remarks>
-    /// <returns>The service collection to chain calls with.</returns>
-    public static IServiceCollection AddCachingAPIAndResponders(this IServiceCollection services)
-    {
         services.AddOptions<CacheSettings>();
 
         services

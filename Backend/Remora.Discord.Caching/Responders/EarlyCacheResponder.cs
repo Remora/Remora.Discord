@@ -53,13 +53,13 @@ public class EarlyCacheResponder :
     IResponder<IUserUpdate>,
     IResponder<IInteractionCreate>
 {
-    private readonly ICacheService _cacheService;
+    private readonly CacheService _cacheService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EarlyCacheResponder"/> class.
     /// </summary>
     /// <param name="cacheService">The cache service.</param>
-    public EarlyCacheResponder(ICacheService cacheService)
+    public EarlyCacheResponder(CacheService cacheService)
     {
         _cacheService = cacheService;
     }
