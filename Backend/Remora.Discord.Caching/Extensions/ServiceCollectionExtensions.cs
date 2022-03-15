@@ -70,34 +70,13 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Adds a redis-backed caching implementations of various API types, overriding the normally non-caching versions.
+    /// Adds a caching implementations of various Discord API types and caching responders to the service collection.
     /// </summary>
-    /// <remarks>
-    /// The cache uses a run-of-the-mill <see cref="IDistributedMemoryCache"/>. Cache entry options for any cached type can be
-    /// configured using <see cref="IOptions{CacheSettings}"/>.
-    ///
-    /// When choosing a cache implementation, it should be noted that <see cref="AddDiscordCaching"/> and
-    /// <see cref="AddDiscordRedisCaching"/> cannot be used together.
-    /// </remarks>
-    /// <param name="services">The services.</param>
-    /// <param name="configureRedisAction">An action to configure the redis cache. If none is specified, a
-    /// default connection of localhost:6379 will be used.</param>
-    /// <returns>The services, with caching enabled.</returns>
-    public static IServiceCollection AddDiscordRedisCaching(this IServiceCollection services, Action<RedisCacheOptions>? configureRedisAction = null)
-    {
-        configureRedisAction ??= (s) => s.ConfigurationOptions = new ConfigurationOptions
-        {
-            EndPoints = { { "localhost", 6379 } }
-        };
-
-        services.AddStackExchangeRedisCache(configureRedisAction);
-        services.AddCachingAPIAndResponders();
-
-        services.TryAddSingleton<ICacheService, RedisCacheService>();
-        return services;
-    }
-
-    private static IServiceCollection AddCachingAPIAndResponders(this IServiceCollection services)
+    /// <param name="services">The service collection to add the caching APIs to.</param>
+    /// <remarks>Invoking this method alone is not recommended as an implementation of
+    /// <inheritdoc cref="ICacheService"/> must also be provided. Consider using <see cref="AddDiscordCaching"/> instead.</remarks>
+    /// <returns>The service collection to chain calls with.</returns>
+    public static IServiceCollection AddCachingAPIAndResponders(this IServiceCollection services)
     {
         services.AddOptions<CacheSettings>();
 
