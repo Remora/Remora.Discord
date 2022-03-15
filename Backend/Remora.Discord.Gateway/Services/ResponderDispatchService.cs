@@ -481,6 +481,15 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        await StopAsync();
+        if (!_isRunning)
+        {
+            return;
+        }
+
+        var stopDispatch = await StopAsync();
+        if (!stopDispatch.IsSuccess)
+        {
+            _log.LogError("Failed to stop the dispatch service in DisposeAsync. Panic!");
+        }
     }
 }

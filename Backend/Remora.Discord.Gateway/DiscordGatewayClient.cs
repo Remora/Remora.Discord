@@ -237,7 +237,11 @@ public class DiscordGatewayClient : IDisposable
                     }
                 }
 
-                await _responderDispatch.StopAsync();
+                var stopDispatch = await _responderDispatch.StopAsync();
+                if (!stopDispatch.IsSuccess)
+                {
+                    return stopDispatch;
+                }
 
                 if (stopRequested.IsCancellationRequested)
                 {
