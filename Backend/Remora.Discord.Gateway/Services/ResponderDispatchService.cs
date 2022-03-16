@@ -179,14 +179,20 @@ public class ResponderDispatchService : IAsyncDisposable
             throw new InvalidOperationException();
         }
 
+        // Stop!
         _dispatchCancellationSource.Cancel();
         _payloadsToDispatch.Writer.Complete();
+
+        // Wait for everything to actually stop...
         await _dispatcher;
         await _finalizer;
 
+        // Reset state so we can start again
+        _dispatchCancellationSource = null;
+
         _dispatcher = null;
         _finalizer = null;
-        _dispatchCancellationSource = null;
+
         _payloadsToDispatch = null;
         _respondersToFinalize = null;
 
