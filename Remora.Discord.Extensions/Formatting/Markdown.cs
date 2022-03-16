@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Remora.Discord.API.Objects;
 
 namespace Remora.Discord.Extensions.Formatting
 {
