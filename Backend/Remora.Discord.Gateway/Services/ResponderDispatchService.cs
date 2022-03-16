@@ -240,6 +240,8 @@ public class ResponderDispatchService : IAsyncDisposable
 
             await _respondersToFinalize.Writer.WriteAsync(dispatch.Entity, _dispatchCancellationSource.Token);
         }
+
+        _respondersToFinalize.Writer.Complete();
     }
 
     /// <summary>
