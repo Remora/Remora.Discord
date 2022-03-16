@@ -22,37 +22,36 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a voice region.
+/// </summary>
+[PublicAPI]
+public interface IVoiceRegion
 {
     /// <summary>
-    /// Represents a voice region.
+    /// Gets a unique ID for the region.
     /// </summary>
-    [PublicAPI]
-    public interface IVoiceRegion
-    {
-        /// <summary>
-        /// Gets a unique ID for the region.
-        /// </summary>
-        string ID { get; }
+    string ID { get; }
 
-        /// <summary>
-        /// Gets the name of the region.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the region.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this server is the one closest to the current user's client.
-        /// </summary>
-        bool IsOptimal { get; }
+    /// <summary>
+    /// Gets a value indicating whether this server is the one closest to the current user's client.
+    /// </summary>
+    bool IsOptimal { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this is a deprecated region. Avoid switching to these.
-        /// </summary>
-        bool IsDeprecated { get; }
+    /// <summary>
+    /// Gets a value indicating whether this is a deprecated region. Avoid switching to these.
+    /// </summary>
+    bool IsDeprecated { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether this is a custom region (used for events, etc).
-        /// </summary>
-        bool IsCustom { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether this is a custom region (used for events, etc).
+    /// </summary>
+    bool IsCustom { get; }
 }

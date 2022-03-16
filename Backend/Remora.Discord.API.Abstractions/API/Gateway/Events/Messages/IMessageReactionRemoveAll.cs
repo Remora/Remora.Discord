@@ -23,27 +23,26 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the removal of all reaction from a message.
+/// </summary>
+[PublicAPI]
+public interface IMessageReactionRemoveAll : IGatewayEvent
 {
     /// <summary>
-    /// Represents the removal of all reaction from a message.
+    /// Gets the ID of the channel.
     /// </summary>
-    [PublicAPI]
-    public interface IMessageReactionRemoveAll : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ChannelID { get; }
+    Snowflake ChannelID { get; }
 
-        /// <summary>
-        /// Gets the ID of the message.
-        /// </summary>
-        Snowflake MessageID { get; }
+    /// <summary>
+    /// Gets the ID of the message.
+    /// </summary>
+    Snowflake MessageID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
-    }
+    /// <summary>
+    /// Gets the ID of the guild.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 }

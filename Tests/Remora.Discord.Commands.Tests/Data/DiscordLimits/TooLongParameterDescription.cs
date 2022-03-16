@@ -29,17 +29,16 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
-namespace Remora.Discord.Commands.Tests.Data.DiscordLimits
+namespace Remora.Discord.Commands.Tests.Data.DiscordLimits;
+
+public class TooLongParameterDescription : CommandGroup
 {
-    public class TooLongParameterDescription : CommandGroup
+    [Command("a")]
+    public Task<IResult> A
+    (
+        [Description("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] int value
+    )
     {
-        [Command("a")]
-        public Task<IResult> A
-        (
-            [Description("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")] int value
-        )
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

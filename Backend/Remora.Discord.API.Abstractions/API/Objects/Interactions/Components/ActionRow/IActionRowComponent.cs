@@ -22,16 +22,29 @@
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a row of interactive components.
+/// </summary>
+[PublicAPI]
+public interface IActionRowComponent : IMessageComponent, IPartialActionRowComponent
 {
     /// <summary>
-    /// Represents a row of interactive components.
+    /// Gets the type of the component.
     /// </summary>
-    [PublicAPI]
-    public interface IActionRowComponent : IMessageComponent
-    {
-        /// <inheritdoc cref="IComponent.Components"/>
-        IReadOnlyList<IMessageComponent> Components { get; }
-    }
+    new ComponentType Type { get; }
+
+    /// <summary>
+    /// Gets the components nested under this component.
+    /// </summary>
+    new IReadOnlyList<IMessageComponent> Components { get; }
+
+    /// <inheritdoc/>
+    Optional<ComponentType> IPartialActionRowComponent.Type => this.Type;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IPartialMessageComponent>> IPartialActionRowComponent.Components => new(this.Components);
 }

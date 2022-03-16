@@ -22,27 +22,31 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the various message component types.
+/// </summary>
+[PublicAPI]
+public enum ComponentType
 {
     /// <summary>
-    /// Enumerates the various message component types.
+    /// A row of actions.
     /// </summary>
-    [PublicAPI]
-    public enum ComponentType
-    {
-        /// <summary>
-        /// A row of actions.
-        /// </summary>
-        ActionRow = 1,
+    ActionRow = 1,
 
-        /// <summary>
-        /// A clickable button.
-        /// </summary>
-        Button = 2,
+    /// <summary>
+    /// A clickable button.
+    /// </summary>
+    Button = 2,
 
-        /// <summary>
-        /// A menu of selectable options.
-        /// </summary>
-        SelectMenu = 3
-    }
+    /// <summary>
+    /// A menu of selectable options.
+    /// </summary>
+    SelectMenu = 3,
+
+    /// <summary>
+    /// A text field input.
+    /// </summary>
+    TextInput = 4,
 }

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>47.0.1</Version>
+        <Version>56.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,14 +14,21 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Chuck out obsolete members.
+            Update field nullability.
+            Update error code.
+            Various mixed fixes.
+            Add another error code.
+            Update layout of permission enumerations.
+            Update permission name.
+            Update enumeration member name.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.203" />
-      <PackageReference Include="Remora.Rest.Core" Version="2.0.0" />
-      <PackageReference Include="Remora.Results" Version="7.0.3" />
+      <PackageReference Include="OneOf" Version="3.0.216" />
+      <PackageReference Include="Remora.Rest.Core" Version="2.0.1" />
+      <PackageReference Include="Remora.Results" Version="7.1.1" />
     </ItemGroup>
 
     <ItemGroup>

@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <summary>
+/// Tests the <see cref="ActivityParty"/> type.
+/// </summary>
+public class ActivityPartyTests : ObjectTestBase<IActivityParty>
 {
-    /// <summary>
-    /// Tests the <see cref="ActivityParty"/> type.
-    /// </summary>
-    public class ActivityPartyTests : ObjectTestBase<IActivityParty>
-    {
-    }
 }

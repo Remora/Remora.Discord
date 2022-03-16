@@ -30,16 +30,15 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
-{
-    public class GroupWithContextMenus : CommandGroup
-    {
-        [Command("Do user thing")]
-        [CommandType(ApplicationCommandType.User)]
-        public Task<IResult> UserCommand() => throw new NotImplementedException();
+namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-        [Command("Do message thing")]
-        [CommandType(ApplicationCommandType.Message)]
-        public Task<IResult> MessageCommand() => throw new NotImplementedException();
-    }
+public class GroupWithContextMenus : CommandGroup
+{
+    [Command("Do user thing")]
+    [CommandType(ApplicationCommandType.User)]
+    public Task<IResult> UserCommand() => throw new NotImplementedException();
+
+    [Command("Do message thing")]
+    [CommandType(ApplicationCommandType.Message)]
+    public Task<IResult> MessageCommand() => throw new NotImplementedException();
 }

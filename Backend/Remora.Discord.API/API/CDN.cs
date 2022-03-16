@@ -999,7 +999,12 @@ public static class CDN
         IStickerPack stickerPack,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
-    ) => GetStickerPackBannerUrl(stickerPack.BannerAssetID, imageFormat, imageSize);
+    )
+    {
+        return stickerPack.BannerAssetID.IsDefined(out var assetID)
+            ? GetStickerPackBannerUrl(assetID, imageFormat, imageSize)
+            : new ImageNotFoundError();
+    }
 
     /// <summary>
     /// Gets the CDN URI of the given sticker pack's banner.
@@ -1202,18 +1207,20 @@ public static class CDN
             return new ImageNotFoundError();
         }
 
-        return GetRoleIconUrl(icon, imageFormat, imageSize);
+        return GetRoleIconUrl(role.ID, icon, imageFormat, imageSize);
     }
 
     /// <summary>
     /// Gets the CDN URI of the given role's icon.
     /// </summary>
-    /// <param name="iconHash">The ID of the role.</param>
+    /// <param name="roleID">The ID of the role.</param>
+    /// <param name="iconHash">The image hash.</param>
     /// <param name="imageFormat">The requested image format.</param>
     /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public static Result<Uri> GetRoleIconUrl
     (
+        Snowflake roleID,
         IImageHash iconHash,
         Optional<CDNImageFormat> imageFormat = default,
         Optional<ushort> imageSize = default
@@ -1242,7 +1249,79 @@ public static class CDN
 
         var ub = new UriBuilder(Constants.CDNBaseURL)
         {
-            Path = $"role-icons/{iconHash.Value}.{format.ToFileExtension()}"
+            Path = $"role-icons/{roleID}/{iconHash.Value}.{format.ToFileExtension()}"
+        };
+
+        if (imageSize.HasValue)
+        {
+            ub.Query = $"size={imageSize.Value}";
+        }
+
+        return ub.Uri;
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given scheduled event's banner.
+    /// </summary>
+    /// <param name="scheduledEvent">The role.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    (
+        IGuildScheduledEvent scheduledEvent,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        if (scheduledEvent.Image is null)
+        {
+            return new ImageNotFoundError();
+        }
+
+        return GetGuildScheduledEventBannerUrl(scheduledEvent.ID, scheduledEvent.Image, imageFormat, imageSize);
+    }
+
+    /// <summary>
+    /// Gets the CDN URI of the given scheduled event's banner.
+    /// </summary>
+    /// <param name="eventID">The ID of the event.</param>
+    /// <param name="bannerHash">The banner hash.</param>
+    /// <param name="imageFormat">The requested image format.</param>
+    /// <param name="imageSize">The requested image size. May be any power of two between 16 and 4096.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    public static Result<Uri> GetGuildScheduledEventBannerUrl
+    (
+        Snowflake eventID,
+        IImageHash bannerHash,
+        Optional<CDNImageFormat> imageFormat = default,
+        Optional<ushort> imageSize = default
+    )
+    {
+        var formatValidation = ValidateOrDefaultImageFormat
+        (
+            imageFormat,
+            CDNImageFormat.PNG,
+            CDNImageFormat.JPEG,
+            CDNImageFormat.WebP
+        );
+
+        if (!formatValidation.IsSuccess)
+        {
+            return Result<Uri>.FromError(formatValidation);
+        }
+
+        var format = formatValidation.Entity;
+
+        var checkImageSize = CheckImageSize(imageSize);
+        if (!checkImageSize.IsSuccess)
+        {
+            return Result<Uri>.FromError(checkImageSize);
+        }
+
+        var ub = new UriBuilder(Constants.CDNBaseURL)
+        {
+            Path = $"guild-events/{eventID}/{bannerHash.Value}.{format.ToFileExtension()}"
         };
 
         if (imageSize.HasValue)

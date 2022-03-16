@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the delete of a guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildDelete : IGatewayEvent, IUnavailableGuild
 {
-    /// <summary>
-    /// Represents the delete of a guild.
-    /// </summary>
-    [PublicAPI]
-    public interface IGuildDelete : IGatewayEvent, IUnavailableGuild
-    {
-    }
 }

@@ -23,22 +23,21 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a party of people in an activity.
+/// </summary>
+[PublicAPI]
+public interface IActivityParty
 {
     /// <summary>
-    /// Represents a party of people in an activity.
+    /// Gets the ID of the party.
     /// </summary>
-    [PublicAPI]
-    public interface IActivityParty
-    {
-        /// <summary>
-        /// Gets the ID of the party.
-        /// </summary>
-        Optional<string> ID { get; }
+    Optional<string> ID { get; }
 
-        /// <summary>
-        /// Gets the size of the party.
-        /// </summary>
-        Optional<IPartySize> Size { get; }
-    }
+    /// <summary>
+    /// Gets the size of the party.
+    /// </summary>
+    Optional<IPartySize> Size { get; }
 }

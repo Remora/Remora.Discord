@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various expiration behaviours.
+/// </summary>
+[PublicAPI]
+public enum IntegrationExpireBehaviour
 {
     /// <summary>
-    /// Enumerates various expiration behaviours.
+    /// A role is removed.
     /// </summary>
-    [PublicAPI]
-    public enum IntegrationExpireBehaviour
-    {
-        /// <summary>
-        /// A role is removed.
-        /// </summary>
-        RemoveRole = 0,
+    RemoveRole = 0,
 
-        /// <summary>
-        /// The user is kicked.
-        /// </summary>
-        Kick = 1
-    }
+    /// <summary>
+    /// The user is kicked.
+    /// </summary>
+    Kick = 1
 }

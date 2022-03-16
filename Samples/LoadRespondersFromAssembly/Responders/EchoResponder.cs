@@ -27,44 +27,43 @@ using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
-namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders
+namespace Remora.Discord.Samples.LoadRespondersFromAssembly.Responders;
+
+/// <summary>
+/// A Responder that sends all messages received back to where they were received.
+/// </summary>
+public class EchoResponder : IResponder<IMessageCreate>
 {
+    private readonly IDiscordRestChannelAPI _channelAPI;
+
     /// <summary>
-    /// A Responder that sends all messages received back to where they were received.
+    /// Initializes a new instance of the <see cref="EchoResponder"/> class.
     /// </summary>
-    public class EchoResponder : IResponder<IMessageCreate>
+    /// <param name="channelAPI">The <see cref="IDiscordRestChannelAPI"/>.</param>
+    public EchoResponder(
+        IDiscordRestChannelAPI channelAPI)
     {
-        private readonly IDiscordRestChannelAPI _channelAPI;
+        _channelAPI = channelAPI;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EchoResponder"/> class.
-        /// </summary>
-        /// <param name="channelAPI">The <see cref="IDiscordRestChannelAPI"/>.</param>
-        public EchoResponder(
-            IDiscordRestChannelAPI channelAPI)
+    /// <inheritdoc />
+    public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
+    {
+        if ((gatewayEvent.Author.IsBot.IsDefined(out var isBot) && isBot) ||
+            (gatewayEvent.Author.IsSystem.IsDefined(out var isSystem) && isSystem))
         {
-            _channelAPI = channelAPI;
+            return Result.FromSuccess();
         }
 
-        /// <inheritdoc />
-        public async Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
-        {
-            if ((gatewayEvent.Author.IsBot.IsDefined(out var isBot) && isBot) ||
-                (gatewayEvent.Author.IsSystem.IsDefined(out var isSystem) && isSystem))
-            {
-                return Result.FromSuccess();
-            }
+        var replyResult = await _channelAPI.CreateMessageAsync
+        (
+            gatewayEvent.ChannelID,
+            gatewayEvent.Content,
+            ct: ct
+        );
 
-            var replyResult = await _channelAPI.CreateMessageAsync
-            (
-                gatewayEvent.ChannelID,
-                gatewayEvent.Content,
-                ct: ct
-            );
-
-            return replyResult.IsSuccess
-                ? Result.FromSuccess()
-                : Result.FromError(replyResult);
-        }
+        return replyResult.IsSuccess
+            ? Result.FromSuccess()
+            : Result.FromError(replyResult);
     }
 }

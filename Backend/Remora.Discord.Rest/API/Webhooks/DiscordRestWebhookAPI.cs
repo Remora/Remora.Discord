@@ -29,8 +29,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using OneOf;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Objects;
@@ -41,53 +41,54 @@ using Remora.Rest.Core;
 using Remora.Rest.Extensions;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestWebhookAPI" />
+[PublicAPI]
+public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhookAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestWebhookAPI" />
-    [PublicAPI]
-    public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhookAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
+    /// <param name="jsonOptions">The json options.</param>
+    public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The Discord HTTP client.</param>
-        /// <param name="jsonOptions">The json options.</param>
-        public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IWebhook>> CreateWebhookAsync
+    (
+        Snowflake channelID,
+        string name,
+        Optional<Stream?> avatar,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        if (name.Length is < 1 or > 80)
         {
+            return new ArgumentOutOfRangeError(nameof(name), "Names must be between 1 and 80 characters");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IWebhook>> CreateWebhookAsync
-        (
-            Snowflake channelID,
-            string name,
-            Optional<Stream?> avatar,
-            CancellationToken ct = default
-        )
+        if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
         {
-            if (name.Length is < 1 or > 80)
-            {
-                return new ArgumentOutOfRangeError(nameof(name), "Names must be between 1 and 80 characters");
-            }
+            return new NotSupportedError("Names cannot be \"clyde\".");
+        }
 
-            if (name.Equals("clyde", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return new NotSupportedError("Names cannot be \"clyde\".");
-            }
+        var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+        if (!packAvatar.IsSuccess)
+        {
+            return Result<IWebhook>.FromError(packAvatar);
+        }
 
-            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
-            if (!packAvatar.IsSuccess)
-            {
-                return Result<IWebhook>.FromError(packAvatar);
-            }
+        var avatarData = packAvatar.Entity;
 
-            var avatarData = packAvatar.Entity;
-
-            return await this.RestHttpClient.PostAsync<IWebhook>
-            (
-                $"channels/{channelID}/webhooks",
-                b => b.WithJson
+        return await this.RestHttpClient.PostAsync<IWebhook>
+        (
+            $"channels/{channelID}/webhooks",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -95,94 +96,96 @@ namespace Remora.Discord.Rest.API
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
-                ct: ct
-            );
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+    (
+        Snowflake channelID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+        (
+            $"channels/{channelID}/webhooks",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
+        (
+            $"guilds/{guildID}/webhooks",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IWebhook>> GetWebhookAsync
+    (
+        Snowflake webhookID,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IWebhook>
+        (
+            $"webhooks/{webhookID}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IWebhook>> GetWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IWebhook>
+        (
+            $"webhooks/{webhookID}/{token}",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IWebhook>> ModifyWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> name = default,
+        Optional<Stream?> avatar = default,
+        Optional<Snowflake> channelID = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+        if (!packAvatar.IsSuccess)
+        {
+            return Result<IWebhook>.FromError(packAvatar);
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IWebhook>>> GetChannelWebhooksAsync
+        var avatarData = packAvatar.Entity;
+
+        return await this.RestHttpClient.PatchAsync<IWebhook>
         (
-            Snowflake channelID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
-            (
-                $"channels/{channelID}/webhooks",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IReadOnlyList<IWebhook>>> GetGuildWebhooksAsync
-        (
-            Snowflake guildID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
-            (
-                $"guilds/{guildID}/webhooks",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IWebhook>> GetWebhookAsync
-        (
-            Snowflake webhookID,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IWebhook>
-            (
-                $"webhooks/{webhookID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result<IWebhook>> GetWebhookWithTokenAsync
-        (
-            Snowflake webhookID,
-            string token,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.GetAsync<IWebhook>
-            (
-                $"webhooks/{webhookID}/{token}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual async Task<Result<IWebhook>> ModifyWebhookAsync
-        (
-            Snowflake webhookID,
-            Optional<string> name = default,
-            Optional<Stream?> avatar = default,
-            Optional<Snowflake> channelID = default,
-            CancellationToken ct = default
-        )
-        {
-            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
-            if (!packAvatar.IsSuccess)
-            {
-                return Result<IWebhook>.FromError(packAvatar);
-            }
-
-            var avatarData = packAvatar.Entity;
-
-            return await this.RestHttpClient.PatchAsync<IWebhook>
-            (
-                $"webhooks/{webhookID}",
-                b => b.WithJson
+            $"webhooks/{webhookID}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -191,33 +194,35 @@ namespace Remora.Discord.Rest.API
                         json.Write("channel_id", channelID, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
-                ct: ct
-            );
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<string> name = default,
+        Optional<Stream?> avatar = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
+        if (!packAvatar.IsSuccess)
+        {
+            return Result<IWebhook>.FromError(packAvatar);
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IWebhook>> ModifyWebhookWithTokenAsync
+        var avatarData = packAvatar.Entity;
+
+        return await this.RestHttpClient.PatchAsync<IWebhook>
         (
-            Snowflake webhookID,
-            string token,
-            Optional<string> name = default,
-            Optional<Stream?> avatar = default,
-            CancellationToken ct = default
-        )
-        {
-            var packAvatar = await ImagePacker.PackImageAsync(avatar, ct);
-            if (!packAvatar.IsSuccess)
-            {
-                return Result<IWebhook>.FromError(packAvatar);
-            }
-
-            var avatarData = packAvatar.Entity;
-
-            return await this.RestHttpClient.PatchAsync<IWebhook>
-            (
-                $"webhooks/{webhookID}/{token}",
-                b => b.WithJson
+            $"webhooks/{webhookID}/{token}",
+            b => b.WithJson
                 (
                     json =>
                     {
@@ -225,94 +230,102 @@ namespace Remora.Discord.Rest.API
                         json.Write("avatar", avatarData, this.JsonOptions);
                     }
                 )
+                .AddAuditLogReason(reason)
                 .WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteWebhookAsync(Snowflake webhookID, CancellationToken ct = default)
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"webhooks/{webhookID}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
-
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteWebhookWithTokenAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteWebhookAsync
+    (
+        Snowflake webhookID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake webhookID,
-            string token,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"webhooks/{webhookID}/{token}",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+            $"webhooks/{webhookID}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage?>> ExecuteWebhookAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteWebhookWithTokenAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake webhookID,
-            string token,
-            Optional<bool> shouldWait = default,
-            Optional<string> content = default,
-            Optional<string> username = default,
-            Optional<string> avatarUrl = default,
-            Optional<bool> isTTS = default,
-            Optional<IReadOnlyList<IEmbed>> embeds = default,
-            Optional<IAllowedMentions> allowedMentions = default,
-            Optional<Snowflake> threadID = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.PostAsync<IMessage?>
-            (
-                $"webhooks/{webhookID}/{token}",
-                b =>
+            $"webhooks/{webhookID}/{token}",
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage?>> ExecuteWebhookAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Optional<bool> shouldWait = default,
+        Optional<string> content = default,
+        Optional<string> username = default,
+        Optional<string> avatarUrl = default,
+        Optional<bool> isTTS = default,
+        Optional<IReadOnlyList<IEmbed>> embeds = default,
+        Optional<IAllowedMentions> allowedMentions = default,
+        Optional<Snowflake> threadID = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<MessageFlags> flags = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.PostAsync<IMessage?>
+        (
+            $"webhooks/{webhookID}/{token}",
+            b =>
+            {
+                if (shouldWait.HasValue)
                 {
-                    if (shouldWait.HasValue)
-                    {
-                        b.AddQueryParameter("wait", shouldWait.Value.ToString());
-                    }
+                    b.AddQueryParameter("wait", shouldWait.Value.ToString());
+                }
 
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
+                {
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
+                    for (var i = 0; i < attachments.Value.Count; i++)
+                    {
+                        if (!attachments.Value[i].IsT0)
                         {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
+                            continue;
                         }
-                    }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -325,104 +338,105 @@ namespace Remora.Discord.Rest.API
                             json.Write("thread_id", threadID, this.JsonOptions);
                             json.Write("components", components, this.JsonOptions);
                             json.Write("attachments", attachmentList, this.JsonOptions);
+                            json.Write("flags", flags, this.JsonOptions);
                         }
                     )
                     .WithRateLimitContext();
-                },
-                true,
-                ct
-            );
+            },
+            true,
+            ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual Task<Result<IMessage>> GetWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string webhookToken,
+        Snowflake messageID,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.GetAsync<IMessage>
+        (
+            $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
+            b =>
+            {
+                if (threadID.HasValue)
+                {
+                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                }
+
+                b.WithRateLimitContext();
+            },
+            ct: ct
+        );
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<Result<IMessage>> EditWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Snowflake messageID,
+        Optional<string?> content = default,
+        Optional<IReadOnlyList<IEmbed>?> embeds = default,
+        Optional<IAllowedMentions?> allowedMentions = default,
+        Optional<IReadOnlyList<IMessageComponent>> components = default,
+        Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
+        {
+            return new NotSupportedError("Message content is too long (max 2000).");
         }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IMessage>> GetWebhookMessageAsync
-        (
-            Snowflake webhookID,
-            string webhookToken,
-            Snowflake messageID,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
+        if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
         {
-            return this.RestHttpClient.GetAsync<IMessage>
-            (
-                $"webhooks/{webhookID}/{webhookToken}/messages/{messageID}",
-                b =>
-                {
-                    if (threadID.HasValue)
-                    {
-                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
-                    }
-
-                    b.WithRateLimitContext();
-                },
-                ct: ct
-            );
+            return new NotSupportedError("Too many embeds (max 10).");
         }
 
-        /// <inheritdoc />
-        public virtual async Task<Result<IMessage>> EditWebhookMessageAsync
+        return await this.RestHttpClient.PatchAsync<IMessage>
         (
-            Snowflake webhookID,
-            string token,
-            Snowflake messageID,
-            Optional<string?> content = default,
-            Optional<IReadOnlyList<IEmbed>?> embeds = default,
-            Optional<IAllowedMentions?> allowedMentions = default,
-            Optional<IReadOnlyList<IMessageComponent>> components = default,
-            Optional<IReadOnlyList<OneOf<FileData, IPartialAttachment>>> attachments = default,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
-        {
-            if (content.IsDefined(out var contentValue) && contentValue.Length > 2000)
+            $"webhooks/{webhookID}/{token}/messages/{messageID}",
+            b =>
             {
-                return new NotSupportedError("Message content is too long (max 2000).");
-            }
-
-            if (embeds.IsDefined(out var embedsValue) && embedsValue.Count > 10)
-            {
-                return new NotSupportedError("Too many embeds (max 10).");
-            }
-
-            return await this.RestHttpClient.PatchAsync<IMessage>
-            (
-                $"webhooks/{webhookID}/{token}/messages/{messageID}",
-                b =>
+                Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
+                if (attachments.HasValue)
                 {
-                    Optional<IReadOnlyList<IPartialAttachment>> attachmentList = default;
-                    if (attachments.HasValue)
-                    {
-                        // build attachment list
-                        attachmentList = attachments.Value.Select
+                    // build attachment list
+                    attachmentList = attachments.Value.Select
+                    (
+                        (f, i) => f.Match
                         (
-                            (f, i) => f.Match
-                            (
-                                data => new PartialAttachment(new Snowflake((ulong)i), data.Name, data.Description),
-                                attachment => attachment
-                            )
-                        ).ToList();
+                            data => new PartialAttachment(DiscordSnowflake.New((ulong)i), data.Name, data.Description),
+                            attachment => attachment
+                        )
+                    ).ToList();
 
-                        for (var i = 0; i < attachments.Value.Count; i++)
-                        {
-                            if (!attachments.Value[i].IsT0)
-                            {
-                                continue;
-                            }
-
-                            var (name, stream, _) = attachments.Value[i].AsT0;
-                            var contentName = $"files[{i}]";
-
-                            b.AddContent(new StreamContent(stream), contentName, name);
-                        }
-                    }
-
-                    if (threadID.HasValue)
+                    for (var i = 0; i < attachments.Value.Count; i++)
                     {
-                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
-                    }
+                        if (!attachments.Value[i].IsT0)
+                        {
+                            continue;
+                        }
 
-                    b.WithJson
+                        var (name, stream, _) = attachments.Value[i].AsT0;
+                        var contentName = $"files[{i}]";
+
+                        b.AddContent(new StreamContent(stream), contentName, name);
+                    }
+                }
+
+                if (threadID.HasValue)
+                {
+                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                }
+
+                b.WithJson
                     (
                         json =>
                         {
@@ -434,35 +448,34 @@ namespace Remora.Discord.Rest.API
                         }
                     )
                     .WithRateLimitContext();
-                },
-                ct: ct
-            );
-        }
+            },
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result> DeleteWebhookMessageAsync
+    /// <inheritdoc />
+    public virtual Task<Result> DeleteWebhookMessageAsync
+    (
+        Snowflake webhookID,
+        string token,
+        Snowflake messageID,
+        Optional<Snowflake> threadID = default,
+        CancellationToken ct = default
+    )
+    {
+        return this.RestHttpClient.DeleteAsync
         (
-            Snowflake webhookID,
-            string token,
-            Snowflake messageID,
-            Optional<Snowflake> threadID = default,
-            CancellationToken ct = default
-        )
-        {
-            return this.RestHttpClient.DeleteAsync
-            (
-                $"webhooks/{webhookID}/{token}/messages/{messageID}",
-                b =>
+            $"webhooks/{webhookID}/{token}/messages/{messageID}",
+            b =>
+            {
+                if (threadID.HasValue)
                 {
-                    if (threadID.HasValue)
-                    {
-                        b.AddQueryParameter("thread_id", threadID.Value.ToString());
-                    }
+                    b.AddQueryParameter("thread_id", threadID.Value.ToString());
+                }
 
-                    b.WithRateLimitContext();
-                },
-                ct
-            );
-        }
+                b.WithRateLimitContext();
+            },
+            ct
+        );
     }
 }

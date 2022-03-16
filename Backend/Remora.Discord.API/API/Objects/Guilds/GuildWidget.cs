@@ -20,14 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-#pragma warning disable CS1591
-
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="IGuildWidget" />
-[PublicAPI]
-public record GuildWidget(bool IsEnabled, Snowflake? ChannelID) : IGuildWidget;
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IGuildWidget" />
+public record GuildWidget
+(
+    Snowflake ID,
+    string Name,
+    string? InstantInvite,
+    IReadOnlyList<IPartialChannel> Channels,
+    IReadOnlyList<IPartialUser> Members,
+    int PresenceCount
+) : IGuildWidget;

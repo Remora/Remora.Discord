@@ -27,119 +27,117 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
-using Remora.Discord.API.Json;
 using Remora.Discord.API.Objects;
 using Remora.Discord.Commands.Feedback.Services;
 using Remora.Discord.Samples.DiceRoller.API;
 using Remora.Rest.Json.Policies;
 using Remora.Results;
 
-namespace Remora.Discord.Samples.DiceRoller.Commands
+namespace Remora.Discord.Samples.DiceRoller.Commands;
+
+/// <summary>
+/// Contains commands for rolling dice.
+/// </summary>
+public class DiceRollCommands : CommandGroup
 {
+    private readonly HttpClient _httpClient;
+    private readonly FeedbackService _feedbackService;
+
     /// <summary>
-    /// Contains commands for rolling dice.
+    /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
     /// </summary>
-    public class DiceRollCommands : CommandGroup
+    /// <param name="httpClient">The http client used for API requests.</param>
+    /// <param name="feedbackService">The feedback service.</param>
+    public DiceRollCommands(HttpClient httpClient, FeedbackService feedbackService)
     {
-        private readonly HttpClient _httpClient;
-        private readonly FeedbackService _feedbackService;
+        _httpClient = httpClient;
+        _feedbackService = feedbackService;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiceRollCommands"/> class.
-        /// </summary>
-        /// <param name="httpClient">The http client used for API requests.</param>
-        /// <param name="feedbackService">The feedback service.</param>
-        public DiceRollCommands(HttpClient httpClient, FeedbackService feedbackService)
+    /// <summary>
+    /// Rolls a dice using an online service.
+    /// </summary>
+    /// <param name="value">The command to send to the online service.</param>
+    /// <returns>The result of the operation.</returns>
+    [Command("roll")]
+    public async Task<IResult> RollDiceAsync(string value)
+    {
+        var rollRequests = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (rollRequests.Length == 0)
         {
-            _httpClient = httpClient;
-            _feedbackService = feedbackService;
+            return Result.FromSuccess();
         }
 
-        /// <summary>
-        /// Rolls a dice using an online service.
-        /// </summary>
-        /// <param name="value">The command to send to the online service.</param>
-        /// <returns>The result of the operation.</returns>
-        [Command("roll")]
-        public async Task<IResult> RollDiceAsync(string value)
+        var getRolls = await GetRollsAsync(rollRequests);
+        if (!getRolls.IsSuccess)
         {
-            var rollRequests = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (rollRequests.Length == 0)
-            {
-                return Result.FromSuccess();
-            }
+            var replyWithFailure = await ReplyWithFailureAsync();
 
-            var getRolls = await GetRollsAsync(rollRequests);
-            if (!getRolls.IsSuccess)
-            {
-                var replyWithFailure = await ReplyWithFailureAsync();
-
-                return replyWithFailure.IsSuccess
-                    ? Result.FromError(getRolls)
-                    : replyWithFailure;
-            }
-
-            var rollResponse = getRolls.Entity;
-
-            return await ReplyWithRollsAsync(rollResponse);
+            return replyWithFailure.IsSuccess
+                ? Result.FromError(getRolls)
+                : replyWithFailure;
         }
 
-        private async Task<Result<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
+        var rollResponse = getRolls.Entity;
+
+        return await ReplyWithRollsAsync(rollResponse);
+    }
+
+    private async Task<Result<RollResponse>> GetRollsAsync(string[] parsedRollRequests)
+    {
+        var requestUrl = $"http://roll.diceapi.com/json/{string.Join('/', parsedRollRequests)}";
+
+        using var response = await _httpClient.GetAsync(requestUrl);
+        if (!response.IsSuccessStatusCode)
         {
-            var requestUrl = $"http://roll.diceapi.com/json/{string.Join('/', parsedRollRequests)}";
-
-            using var response = await _httpClient.GetAsync(requestUrl);
-            if (!response.IsSuccessStatusCode)
-            {
-                return new GenericError(response.ReasonPhrase ?? "No reason given.");
-            }
-
-            await using var responseStream = await response.Content.ReadAsStreamAsync();
-
-            var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
-            var rollResponse = await JsonSerializer.DeserializeAsync<RollResponse>(responseStream, jsonOptions);
-
-            if (rollResponse is null)
-            {
-                return new InvalidOperationError("The roll response was null.");
-            }
-
-            return !rollResponse.Success
-                ? new GenericError("Dice rolling failed :(")
-                : rollResponse;
+            return new InvalidOperationError(response.ReasonPhrase ?? "No reason given.");
         }
 
-        private async Task<Result> ReplyWithFailureAsync()
+        await using var responseStream = await response.Content.ReadAsStreamAsync();
+
+        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
+        var rollResponse = await JsonSerializer.DeserializeAsync<RollResponse>(responseStream, jsonOptions);
+
+        if (rollResponse is null)
         {
-            var replyFail = await _feedbackService.SendContextualErrorAsync
+            return new InvalidOperationError("The roll response was null.");
+        }
+
+        return !rollResponse.Success
+            ? new InvalidOperationError("Dice rolling failed :(")
+            : rollResponse;
+    }
+
+    private async Task<Result> ReplyWithFailureAsync()
+    {
+        var replyFail = await _feedbackService.SendContextualErrorAsync
+        (
+            "Dice rolling failed :(",
+            ct: this.CancellationToken
+        );
+
+        return !replyFail.IsSuccess
+            ? Result.FromError(replyFail)
+            : Result.FromSuccess();
+    }
+
+    private async Task<Result> ReplyWithRollsAsync(RollResponse rollResponse)
+    {
+        var rolls = rollResponse.Dice
+            .GroupBy(d => d.Type)
+            .ToDictionary
             (
-                "Dice rolling failed :(",
-                ct: this.CancellationToken
+                g => g.Key,
+                g => g.Select(d => d.Value).Aggregate((a, b) => a + b)
             );
 
-            return !replyFail.IsSuccess
-                ? Result.FromError(replyFail)
-                : Result.FromSuccess();
-        }
+        var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
+        var embed = new Embed("Rolls", Fields: fields, Colour: _feedbackService.Theme.Success);
 
-        private async Task<Result> ReplyWithRollsAsync(RollResponse rollResponse)
-        {
-            var rolls = rollResponse.Dice
-                .GroupBy(d => d.Type)
-                .ToDictionary
-                (
-                    g => g.Key,
-                    g => g.Select(d => d.Value).Aggregate((a, b) => a + b)
-                );
+        var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
 
-            var fields = rolls.Select(kvp => new EmbedField(kvp.Key, kvp.Value.ToString(), true)).ToList();
-            var embed = new Embed("Rolls", Fields: fields, Colour: _feedbackService.Theme.Success);
-
-            var replyRolls = await _feedbackService.SendContextualEmbedAsync(embed, ct: this.CancellationToken);
-
-            return !replyRolls.IsSuccess
-                ? Result.FromError(replyRolls)
-                : Result.FromSuccess();
-        }
+        return !replyRolls.IsSuccess
+            ? Result.FromError(replyRolls)
+            : Result.FromSuccess();
     }
 }

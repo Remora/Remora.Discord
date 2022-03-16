@@ -24,41 +24,40 @@ using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Tests.Responders;
 using Xunit;
 
-namespace Remora.Discord.Gateway.Tests.Tests
+namespace Remora.Discord.Gateway.Tests.Tests;
+
+/// <summary>
+/// Tests for the <see cref="TypeExtensions"/> class.
+/// </summary>
+public class TypeExtensionsTests
 {
     /// <summary>
-    /// Tests for the <see cref="TypeExtensions"/> class.
+    /// Tests for the IResponder method in <see cref="TypeExtensions"/> class.
     /// </summary>
-    public class TypeExtensionsTests
+    public class IsResponder
     {
         /// <summary>
-        /// Tests for the IResponder method in <see cref="TypeExtensions"/> class.
+        /// Tests whether a type implementing IResponder returns true.
         /// </summary>
-        public class IsResponder
+        [Fact]
+        public void ReturnsTrueForTypeImplementingIResponder()
         {
-            /// <summary>
-            /// Tests whether a type implementing IResponder returns true.
-            /// </summary>
-            [Fact]
-            public void ReturnsTrueForTypeImplementingIResponder()
-            {
-                var type = typeof(MockedResponder);
-                var doesImplementResponder = type.IsResponder();
+            var type = typeof(MockedResponder);
+            var doesImplementResponder = type.IsResponder();
 
-                Assert.True(doesImplementResponder);
-            }
+            Assert.True(doesImplementResponder);
+        }
 
-            /// <summary>
-            /// Tests whether a type not implementing IResponder returns true.
-            /// </summary>
-            [Fact]
-            public void ReturnsFalseForTypeNotImplementingIResponder()
-            {
-                var type = typeof(string);
-                var doesImplementResponder = type.IsResponder();
+        /// <summary>
+        /// Tests whether a type not implementing IResponder returns true.
+        /// </summary>
+        [Fact]
+        public void ReturnsFalseForTypeNotImplementingIResponder()
+        {
+            var type = typeof(string);
+            var doesImplementResponder = type.IsResponder();
 
-                Assert.False(doesImplementResponder);
-            }
+            Assert.False(doesImplementResponder);
         }
     }
 }

@@ -29,97 +29,111 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord User API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestUserAPI
 {
     /// <summary>
-    /// Represents the Discord User API.
+    /// Gets the user object of the requester's account.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestUserAPI
-    {
-        /// <summary>
-        /// Gets the user object of the requester's account.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default);
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default);
 
-        /// <summary>
-        /// Gets the user with the given ID.
-        /// </summary>
-        /// <param name="userID">The ID of the user.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default);
+    /// <summary>
+    /// Gets the user with the given ID.
+    /// </summary>
+    /// <param name="userID">The ID of the user.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IUser>> GetUserAsync(Snowflake userID, CancellationToken ct = default);
 
-        /// <summary>
-        /// Modifies the current user.
-        /// </summary>
-        /// <param name="username">The new username.</param>
-        /// <param name="avatar">The new avatar.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A modification result which may or may not have succeeded.</returns>
-        Task<Result<IUser>> ModifyCurrentUserAsync
-        (
-            Optional<string> username,
-            Optional<Stream?> avatar = default,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Modifies the current user.
+    /// </summary>
+    /// <remarks>
+    /// Any streams passed to this method will be disposed of at the end of the call. If you want to reuse the streams
+    /// afterwards, ensure that what you pass is a copy that the method can take ownership of.
+    /// </remarks>
+    /// <param name="username">The new username.</param>
+    /// <param name="avatar">The new avatar.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A modification result which may or may not have succeeded.</returns>
+    Task<Result<IUser>> ModifyCurrentUserAsync
+    (
+        Optional<string> username,
+        Optional<Stream?> avatar = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Gets the guilds the user is in.
-        /// </summary>
-        /// <param name="before">Get guilds before this guild ID.</param>
-        /// <param name="after">Get guilds after this guild ID.</param>
-        /// <param name="limit">The maximum number of guilds to get (1-200). Defaults to 200.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
-        (
-            Optional<Snowflake> before = default,
-            Optional<Snowflake> after = default,
-            Optional<int> limit = default,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Gets the guilds the user is in.
+    /// </summary>
+    /// <param name="before">Get guilds before this guild ID.</param>
+    /// <param name="after">Get guilds after this guild ID.</param>
+    /// <param name="limit">The maximum number of guilds to get (1-200). Defaults to 200.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IPartialGuild>>> GetCurrentUserGuildsAsync
+    (
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
+        Optional<int> limit = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Leaves the given guild.
-        /// </summary>
-        /// <param name="guildID">The ID of the guild.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A deletion result which may or may not have succeeded.</returns>
-        Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default);
+    /// <summary>
+    /// Gets a guild member object for the current user.
+    /// </summary>
+    /// <remarks>
+    /// Requires the "guild.members.read" OAuth" scope.
+    /// </remarks>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync(Snowflake guildID, CancellationToken ct = default);
 
-        /// <summary>
-        /// Gets a list of DM channels the user has. This always returns an empty array for bots.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
-        (
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Leaves the given guild.
+    /// </summary>
+    /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A deletion result which may or may not have succeeded.</returns>
+    Task<Result> LeaveGuildAsync(Snowflake guildID, CancellationToken ct = default);
 
-        /// <summary>
-        /// Creates a new DM channel with the given user.
-        /// </summary>
-        /// <param name="recipientID">The ID of the recipient.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A creation result which may or may not have succeeded.</returns>
-        Task<Result<IChannel>> CreateDMAsync
-        (
-            Snowflake recipientID,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Gets a list of DM channels the user has. This always returns an empty array for bots.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
+    (
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Gets a list of connection objects.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
-        (
-            CancellationToken ct = default
-        );
-    }
+    /// <summary>
+    /// Creates a new DM channel with the given user.
+    /// </summary>
+    /// <param name="recipientID">The ID of the recipient.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A creation result which may or may not have succeeded.</returns>
+    Task<Result<IChannel>> CreateDMAsync
+    (
+        Snowflake recipientID,
+        CancellationToken ct = default
+    );
+
+    /// <summary>
+    /// Gets a list of connection objects.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    (
+        CancellationToken ct = default
+    );
 }

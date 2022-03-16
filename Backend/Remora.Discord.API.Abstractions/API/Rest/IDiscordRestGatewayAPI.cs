@@ -26,26 +26,25 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Gateway REST API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestGatewayAPI
 {
     /// <summary>
-    /// Represents the Discord Gateway REST API.
+    /// Gets a gateway endpoint.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestGatewayAPI
-    {
-        /// <summary>
-        /// Gets a gateway endpoint.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default);
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default);
 
-        /// <summary>
-        /// Gets a gateway endpoint for bots.
-        /// </summary>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A retrieval result which may or may not have succeeded.</returns>
-        Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default);
-    }
+    /// <summary>
+    /// Gets a gateway endpoint for bots.
+    /// </summary>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A retrieval result which may or may not have succeeded.</returns>
+    Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default);
 }

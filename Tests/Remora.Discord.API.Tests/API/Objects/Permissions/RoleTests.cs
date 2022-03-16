@@ -22,21 +22,19 @@
 
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Tests.TestBases;
-using Remora.Discord.Tests;
 using Remora.Rest.Xunit;
 
-namespace Remora.Discord.API.Tests.Objects
+namespace Remora.Discord.API.Tests.Objects;
+
+/// <inheritdoc />
+public class RoleTests : ObjectTestBase<IRole>
 {
     /// <inheritdoc />
-    public class RoleTests : ObjectTestBase<IRole>
+    protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
     {
-        /// <inheritdoc />
-        protected override JsonAssertOptions AssertOptions { get; } = JsonAssertOptions.Default with
+        AllowMissing = new[]
         {
-            AllowMissing = new[]
-            {
-                "permissions_new" // aliased and collapsed to just "permissions"
-            }
-        };
-    }
+            "permissions_new" // aliased and collapsed to just "permissions"
+        }
+    };
 }

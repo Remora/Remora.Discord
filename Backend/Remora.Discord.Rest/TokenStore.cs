@@ -22,24 +22,23 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Rest
-{
-    /// <summary>
-    /// Represents a storage class for a single token.
-    /// </summary>
-    [PublicAPI]
-    public class TokenStore : ITokenStore
-    {
-        /// <inheritdoc />
-        public string Token { get; }
+namespace Remora.Discord.Rest;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TokenStore"/> class.
-        /// </summary>
-        /// <param name="token">The token to store.</param>
-        public TokenStore(string token)
-        {
-            this.Token = token;
-        }
+/// <summary>
+/// Represents a storage class for a single token.
+/// </summary>
+[PublicAPI]
+public class TokenStore : ITokenStore
+{
+    /// <inheritdoc />
+    public string Token { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TokenStore"/> class.
+    /// </summary>
+    /// <param name="token">The token to store.</param>
+    public TokenStore(string token)
+    {
+        this.Token = token;
     }
 }

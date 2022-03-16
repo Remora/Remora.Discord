@@ -32,7 +32,7 @@ public record SelectOption
 (
     string Label,
     string Value,
-    Optional<string> Description,
-    Optional<IPartialEmoji> Emoji,
-    Optional<bool> IsDefault
+    Optional<string> Description = default,
+    Optional<IPartialEmoji> Emoji = default,
+    Optional<bool> IsDefault = default
 ) : ISelectOption;

@@ -26,33 +26,33 @@ using Remora.Discord.Rest.Extensions;
 using Remora.Discord.Unstable.Extensions;
 using RichardSzalay.MockHttp;
 
-namespace Remora.Discord.Rest.Tests.TestBases
+namespace Remora.Discord.Rest.Tests.TestBases;
+
+/// <summary>
+/// Serves as a base class for REST API tests.
+/// </summary>
+/// <typeparam name="TAPI">The API type.</typeparam>
+public abstract class RestAPITestBase<TAPI> where TAPI : notnull
 {
     /// <summary>
-    /// Serves as a base class for REST API tests.
+    /// Creates a configured, mocked API instance.
     /// </summary>
-    /// <typeparam name="TAPI">The API type.</typeparam>
-    public abstract class RestAPITestBase<TAPI> where TAPI : notnull
+    /// <param name="builder">The mock builder.</param>
+    /// <returns>The API instance.</returns>
+    protected TAPI CreateAPI(Action<MockHttpMessageHandler> builder)
     {
-        /// <summary>
-        /// Creates a configured, mocked API instance.
-        /// </summary>
-        /// <param name="builder">The mock builder.</param>
-        /// <returns>The API instance.</returns>
-        protected TAPI CreateAPI(Action<MockHttpMessageHandler> builder)
-        {
-            var services = CreateConfiguredAPIServices(builder);
-            return services.GetRequiredService<TAPI>();
-        }
+        var services = CreateConfiguredAPIServices(builder);
+        return services.GetRequiredService<TAPI>();
+    }
 
-        /// <summary>
-        /// Creates a configured service provider with the given HTTP mock settings.
-        /// </summary>
-        /// <param name="builder">The HTTP mock builder.</param>
-        /// <returns>The configured services.</returns>
-        protected IServiceProvider CreateConfiguredAPIServices(Action<MockHttpMessageHandler> builder)
-        {
-            var serviceContainer = new ServiceCollection()
+    /// <summary>
+    /// Creates a configured service provider with the given HTTP mock settings.
+    /// </summary>
+    /// <param name="builder">The HTTP mock builder.</param>
+    /// <returns>The configured services.</returns>
+    protected IServiceProvider CreateConfiguredAPIServices(Action<MockHttpMessageHandler> builder)
+    {
+        var serviceContainer = new ServiceCollection()
             .AddDiscordRest
             (
                 _ => "TEST_TOKEN",
@@ -70,7 +70,6 @@ namespace Remora.Discord.Rest.Tests.TestBases
             .AddExperimentalDiscordApi()
             .BuildServiceProvider(true);
 
-            return serviceContainer;
-        }
+        return serviceContainer;
     }
 }

@@ -22,122 +22,121 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various guild features.
+/// </summary>
+[PublicAPI]
+public enum GuildFeature
 {
     /// <summary>
-    /// Enumerates various guild features.
+    /// The guild has access to set an animated icon.
     /// </summary>
-    [PublicAPI]
-    public enum GuildFeature
-    {
-        /// <summary>
-        /// The guild has access to set an animated icon.
-        /// </summary>
-        AnimatedIcon,
+    AnimatedIcon,
 
-        /// <summary>
-        /// The guild has access to set a guild banner image.
-        /// </summary>
-        Banner,
+    /// <summary>
+    /// The guild has access to set a guild banner image.
+    /// </summary>
+    Banner,
 
-        /// <summary>
-        /// The guild has access to use commerce features (i.e, create store channels).
-        /// </summary>
-        Commerce,
+    /// <summary>
+    /// The guild has access to use commerce features (i.e, create store channels).
+    /// </summary>
+    Commerce,
 
-        /// <summary>
-        /// The guild has community features enabled.
-        /// </summary>
-        Community,
+    /// <summary>
+    /// The guild has community features enabled.
+    /// </summary>
+    Community,
 
-        /// <summary>
-        /// The guild is able to be discovered in the guild directory.
-        /// </summary>
-        Discoverable,
+    /// <summary>
+    /// The guild is able to be discovered in the guild directory.
+    /// </summary>
+    Discoverable,
 
-        /// <summary>
-        /// The guild is able to be featured in the guild directory.
-        /// </summary>
-        Featurable,
+    /// <summary>
+    /// The guild is able to be featured in the guild directory.
+    /// </summary>
+    Featurable,
 
-        /// <summary>
-        /// The guild has access to set an invite splash background.
-        /// </summary>
-        InviteSplash,
+    /// <summary>
+    /// The guild has access to set an invite splash background.
+    /// </summary>
+    InviteSplash,
 
-        /// <summary>
-        /// The guild has enabled membership screening.
-        /// </summary>
-        MemberVerificationGateEnabled,
+    /// <summary>
+    /// The guild has enabled membership screening.
+    /// </summary>
+    MemberVerificationGateEnabled,
 
-        /// <summary>
-        /// The guild has enabled monetization.
-        /// </summary>
-        MonetizationEnabled,
+    /// <summary>
+    /// The guild has enabled monetization.
+    /// </summary>
+    MonetizationEnabled,
 
-        /// <summary>
-        /// The guild has increased custom sticker slots.
-        /// </summary>
-        MoreStickers,
+    /// <summary>
+    /// The guild has increased custom sticker slots.
+    /// </summary>
+    MoreStickers,
 
-        /// <summary>
-        /// The guild has access to creating news channels.
-        /// </summary>
-        News,
+    /// <summary>
+    /// The guild has access to creating news channels.
+    /// </summary>
+    News,
 
-        /// <summary>
-        /// The guild is partnered.
-        /// </summary>
-        Partnered,
+    /// <summary>
+    /// The guild is partnered.
+    /// </summary>
+    Partnered,
 
-        /// <summary>
-        /// The guild can be previewed before joining.
-        /// </summary>
-        PreviewEnabled,
+    /// <summary>
+    /// The guild can be previewed before joining.
+    /// </summary>
+    PreviewEnabled,
 
-        /// <summary>
-        /// Private threads may be created in the guild.
-        /// </summary>
-        PrivateThreads,
+    /// <summary>
+    /// Private threads may be created in the guild.
+    /// </summary>
+    PrivateThreads,
 
-        /// <summary>
-        /// The guild is able to set role icons.
-        /// </summary>
-        RoleIcons,
+    /// <summary>
+    /// The guild is able to set role icons.
+    /// </summary>
+    RoleIcons,
 
-        /// <summary>
-        /// The guild has access to the seven-day archival time for threads.
-        /// </summary>
-        SevenDayThreadArchive,
+    /// <summary>
+    /// The guild has access to the seven-day archival time for threads.
+    /// </summary>
+    SevenDayThreadArchive,
 
-        /// <summary>
-        /// The guild has access to the three-day archival time for threads.
-        /// </summary>
-        ThreeDayThreadArchive,
+    /// <summary>
+    /// The guild has access to the three-day archival time for threads.
+    /// </summary>
+    ThreeDayThreadArchive,
 
-        /// <summary>
-        /// The guild has enabled ticketed events.
-        /// </summary>
-        TicketedEventsEnabled,
+    /// <summary>
+    /// The guild has enabled ticketed events.
+    /// </summary>
+    TicketedEventsEnabled,
 
-        /// <summary>
-        /// The server has access to set a vanity URL.
-        /// </summary>
-        VanityURL,
+    /// <summary>
+    /// The server has access to set a vanity URL.
+    /// </summary>
+    VanityURL,
 
-        /// <summary>
-        /// The guild is verified.
-        /// </summary>
-        Verified,
+    /// <summary>
+    /// The guild is verified.
+    /// </summary>
+    Verified,
 
-        /// <summary>
-        /// The guild has access to set 384kbps bitrate in voice (previously VIP voice servers).
-        /// </summary>
-        VIPRegions,
+    /// <summary>
+    /// The guild has access to set 384kbps bitrate in voice (previously VIP voice servers).
+    /// </summary>
+    VIPRegions,
 
-        /// <summary>
-        /// The guild has enabled a welcome screen.
-        /// </summary>
-        WelcomeScreenEnabled
-    }
+    /// <summary>
+    /// The guild has enabled a welcome screen.
+    /// </summary>
+    WelcomeScreenEnabled
 }

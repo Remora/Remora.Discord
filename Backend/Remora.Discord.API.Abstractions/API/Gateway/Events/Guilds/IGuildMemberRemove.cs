@@ -24,22 +24,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a user being removed from the guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildMemberRemove : IGatewayEvent
 {
     /// <summary>
-    /// Represents a user being removed from the guild.
+    /// Gets the ID of the guild the member was in.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildMemberRemove : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild the member was in.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the user.
-        /// </summary>
-        IUser User { get; }
-    }
+    /// <summary>
+    /// Gets the user.
+    /// </summary>
+    IUser User { get; }
 }

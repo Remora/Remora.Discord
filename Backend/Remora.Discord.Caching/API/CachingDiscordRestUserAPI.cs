@@ -26,187 +26,209 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
-using Remora.Discord.Rest;
 using Remora.Discord.Rest.API;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Caching.API
-{
-    /// <inheritdoc />
-    [PublicAPI]
-    public class CachingDiscordRestUserAPI : DiscordRestUserAPI
-    {
-        private readonly CacheService _cacheService;
+namespace Remora.Discord.Caching.API;
 
-        /// <inheritdoc cref="DiscordRestUserAPI(IRestHttpClient, JsonSerializerOptions)" />
-        public CachingDiscordRestUserAPI
-        (
-            IRestHttpClient restHttpClient,
-            JsonSerializerOptions jsonOptions,
-            CacheService cacheService
-        )
-            : base(restHttpClient, jsonOptions)
+/// <inheritdoc />
+[PublicAPI]
+public class CachingDiscordRestUserAPI : DiscordRestUserAPI
+{
+    private readonly CacheService _cacheService;
+
+    /// <inheritdoc cref="DiscordRestUserAPI(IRestHttpClient, JsonSerializerOptions)" />
+    public CachingDiscordRestUserAPI
+    (
+        IRestHttpClient restHttpClient,
+        JsonSerializerOptions jsonOptions,
+        CacheService cacheService
+    )
+        : base(restHttpClient, jsonOptions)
+    {
+        _cacheService = cacheService;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IUser>> GetUserAsync
+    (
+        Snowflake userID,
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateUserCacheKey(userID);
+        if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
         {
-            _cacheService = cacheService;
+            return Result<IUser>.FromSuccess(cachedInstance);
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IUser>> GetUserAsync
-        (
-            Snowflake userID,
-            CancellationToken ct = default
-        )
+        var getUser = await base.GetUserAsync(userID, ct);
+        if (!getUser.IsSuccess)
         {
-            var key = KeyHelpers.CreateUserCacheKey(userID);
-            if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
-            {
-                return Result<IUser>.FromSuccess(cachedInstance);
-            }
-
-            var getUser = await base.GetUserAsync(userID, ct);
-            if (!getUser.IsSuccess)
-            {
-                return getUser;
-            }
-
-            var user = getUser.Entity;
-            _cacheService.Cache(key, user);
-
             return getUser;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IChannel>> CreateDMAsync
-        (
-            Snowflake recipientID,
-            CancellationToken ct = default)
+        var user = getUser.Entity;
+        _cacheService.Cache(key, user);
+
+        return getUser;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IChannel>> CreateDMAsync
+    (
+        Snowflake recipientID,
+        CancellationToken ct = default)
+    {
+        var createDM = await base.CreateDMAsync(recipientID, ct);
+        if (!createDM.IsSuccess)
         {
-            var createDM = await base.CreateDMAsync(recipientID, ct);
-            if (!createDM.IsSuccess)
-            {
-                return createDM;
-            }
-
-            var dm = createDM.Entity;
-            var key = KeyHelpers.CreateChannelCacheKey(dm.ID);
-
-            _cacheService.Cache(key, dm);
-
             return createDM;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+        var dm = createDM.Entity;
+        var key = KeyHelpers.CreateChannelCacheKey(dm.ID);
+
+        _cacheService.Cache(key, dm);
+
+        return createDM;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IUser>> GetCurrentUserAsync(CancellationToken ct = default)
+    {
+        var key = KeyHelpers.CreateCurrentUserCacheKey();
+        if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateCurrentUserCacheKey();
-            if (_cacheService.TryGetValue<IUser>(key, out var cachedInstance))
-            {
-                return Result<IUser>.FromSuccess(cachedInstance);
-            }
+            return Result<IUser>.FromSuccess(cachedInstance);
+        }
 
-            var getUser = await base.GetCurrentUserAsync(ct);
-            if (!getUser.IsSuccess)
-            {
-                return getUser;
-            }
-
-            var user = getUser.Entity;
-            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
-
-            // Cache this as both a normal user and our current user
-            _cacheService.Cache(key, user);
-            _cacheService.Cache(userKey, user);
-
+        var getUser = await base.GetCurrentUserAsync(ct);
+        if (!getUser.IsSuccess)
+        {
             return getUser;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
-        (
-            CancellationToken ct = default
-        )
+        var user = getUser.Entity;
+        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+
+        // Cache this as both a normal user and our current user
+        _cacheService.Cache(key, user);
+        _cacheService.Cache(userKey, user);
+
+        return getUser;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<IConnection>>> GetUserConnectionsAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
+        if (_cacheService.TryGetValue<IReadOnlyList<IConnection>>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateCurrentUserConnectionsCacheKey();
-            if (_cacheService.TryGetValue<IReadOnlyList<IConnection>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<IConnection>>.FromSuccess(cachedInstance);
-            }
+            return Result<IReadOnlyList<IConnection>>.FromSuccess(cachedInstance);
+        }
 
-            var getUserConnections = await base.GetUserConnectionsAsync(ct);
-            if (!getUserConnections.IsSuccess)
-            {
-                return getUserConnections;
-            }
-
-            var connections = getUserConnections.Entity;
-            _cacheService.Cache(key, connections);
-
-            foreach (var connection in connections)
-            {
-                var connectionKey = KeyHelpers.CreateConnectionCacheKey(connection.ID);
-                _cacheService.Cache(connectionKey, connection);
-            }
-
+        var getUserConnections = await base.GetUserConnectionsAsync(ct);
+        if (!getUserConnections.IsSuccess)
+        {
             return getUserConnections;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IUser>> ModifyCurrentUserAsync
-        (
-            Optional<string> username,
-            Optional<Stream?> avatar = default,
-            CancellationToken ct = default
-        )
+        var connections = getUserConnections.Entity;
+        _cacheService.Cache(key, connections);
+
+        foreach (var connection in connections)
         {
-            var modifyUser = await base.ModifyCurrentUserAsync(username, avatar, ct);
-            if (!modifyUser.IsSuccess)
-            {
-                return modifyUser;
-            }
+            var connectionKey = KeyHelpers.CreateConnectionCacheKey(connection.ID);
+            _cacheService.Cache(connectionKey, connection);
+        }
 
-            var user = modifyUser.Entity;
-            var key = KeyHelpers.CreateCurrentUserCacheKey();
-            var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+        return getUserConnections;
+    }
 
-            _cacheService.Cache(key, user);
-            _cacheService.Cache(userKey, user);
-
+    /// <inheritdoc />
+    public override async Task<Result<IUser>> ModifyCurrentUserAsync
+    (
+        Optional<string> username,
+        Optional<Stream?> avatar = default,
+        CancellationToken ct = default
+    )
+    {
+        var modifyUser = await base.ModifyCurrentUserAsync(username, avatar, ct);
+        if (!modifyUser.IsSuccess)
+        {
             return modifyUser;
         }
 
-        /// <inheritdoc />
-        public override async Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
-        (
-            CancellationToken ct = default
-        )
+        var user = modifyUser.Entity;
+        var key = KeyHelpers.CreateCurrentUserCacheKey();
+        var userKey = KeyHelpers.CreateUserCacheKey(user.ID);
+
+        _cacheService.Cache(key, user);
+        _cacheService.Cache(userKey, user);
+
+        return modifyUser;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IReadOnlyList<IChannel>>> GetUserDMsAsync
+    (
+        CancellationToken ct = default
+    )
+    {
+        var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
+        if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
         {
-            var key = KeyHelpers.CreateCurrentUserDMsCacheKey();
-            if (_cacheService.TryGetValue<IReadOnlyList<IChannel>>(key, out var cachedInstance))
-            {
-                return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
-            }
+            return Result<IReadOnlyList<IChannel>>.FromSuccess(cachedInstance);
+        }
 
-            var getUserDMs = await base.GetUserDMsAsync(ct);
-            if (!getUserDMs.IsSuccess)
-            {
-                return getUserDMs;
-            }
-
-            var userDMs = getUserDMs.Entity;
-            _cacheService.Cache(key, userDMs);
-
-            foreach (var dm in userDMs)
-            {
-                var channelKey = KeyHelpers.CreateChannelCacheKey(dm.ID);
-                _cacheService.Cache(channelKey, dm);
-            }
-
+        var getUserDMs = await base.GetUserDMsAsync(ct);
+        if (!getUserDMs.IsSuccess)
+        {
             return getUserDMs;
         }
+
+        var userDMs = getUserDMs.Entity;
+        _cacheService.Cache(key, userDMs);
+
+        foreach (var dm in userDMs)
+        {
+            var channelKey = KeyHelpers.CreateChannelCacheKey(dm.ID);
+            _cacheService.Cache(channelKey, dm);
+        }
+
+        return getUserDMs;
+    }
+
+    /// <inheritdoc />
+    public override async Task<Result<IGuildMember>> GetCurrentUserGuildMemberAsync
+    (
+        Snowflake guildID,
+        CancellationToken ct = default
+    )
+    {
+        var result = await base.GetCurrentUserGuildMemberAsync(guildID, ct);
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
+
+        var member = result.Entity;
+        if (!member.User.IsDefined(out var user))
+        {
+            return result;
+        }
+
+        var key = KeyHelpers.CreateGuildMemberKey(guildID, user.ID);
+        _cacheService.Cache(key, member);
+
+        return result;
     }
 }

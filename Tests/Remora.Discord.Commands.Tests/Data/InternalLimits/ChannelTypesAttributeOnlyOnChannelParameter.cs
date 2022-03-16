@@ -30,14 +30,13 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.InternalLimits
+namespace Remora.Discord.Commands.Tests.Data.InternalLimits;
+
+public class ChannelTypesAttributeOnlyOnChannelParameter : CommandGroup
 {
-    public class ChannelTypesAttributeOnlyOnChannelParameter : CommandGroup
+    [Command("a")]
+    public Task<IResult> A([ChannelTypes(ChannelType.GuildText)] bool value)
     {
-        [Command("a")]
-        public Task<IResult> A([ChannelTypes(ChannelType.GuildText)] bool value)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

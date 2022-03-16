@@ -26,12 +26,11 @@ using Remora.Results;
 
 #pragma warning disable CS1591
 
-namespace Remora.Discord.Gateway.Results
-{
-    /// <summary>
-    /// Represents an unexpected closing of the gateway by Discord.
-    /// </summary>
-    [PublicAPI]
-    public record GatewayDiscordError(GatewayCloseStatus CloseStatus)
-        : ResultError($"The gateway closed with Discord close status \"{CloseStatus}\".");
-}
+namespace Remora.Discord.Gateway.Results;
+
+/// <summary>
+/// Represents an unexpected closing of the gateway by Discord.
+/// </summary>
+[PublicAPI]
+public record GatewayDiscordError(GatewayCloseStatus CloseStatus)
+    : ResultError($"The gateway closed with Discord close status \"{CloseStatus}\".");

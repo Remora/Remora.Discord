@@ -23,22 +23,21 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a response object from the REST API regarding a thread query.
+/// </summary>
+[PublicAPI]
+public interface IGuildThreadQueryResponse
 {
     /// <summary>
-    /// Represents a response object from the REST API regarding a thread query.
+    /// Gets the threads returned by the query.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildThreadQueryResponse
-    {
-        /// <summary>
-        /// Gets the threads returned by the query.
-        /// </summary>
-        IReadOnlyList<IChannel> Threads { get; }
+    IReadOnlyList<IChannel> Threads { get; }
 
-        /// <summary>
-        /// Gets a set of member objects that map to the returned threads the current user has joined.
-        /// </summary>
-        IReadOnlyList<IThreadMember> Members { get; }
-    }
+    /// <summary>
+    /// Gets a set of member objects that map to the returned threads the current user has joined.
+    /// </summary>
+    IReadOnlyList<IThreadMember> Members { get; }
 }

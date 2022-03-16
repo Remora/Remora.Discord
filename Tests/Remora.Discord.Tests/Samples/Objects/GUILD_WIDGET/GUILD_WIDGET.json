@@ -1,4 +1,28 @@
 {
-  "enabled": true,
-  "channel_id": "999999999999999999"
+  "id": "999999999999999999",
+  "name": "none",
+  "instant_invite": "https://discord.com/invite/abcdefg",
+  "channels": [
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "position": 2
+    },
+    {
+      "id": "999999999999999999",
+      "name": "none",
+      "position": 1
+    }
+  ],
+  "members": [
+    {
+      "id": "999999999999999999",
+      "username": "none",
+      "discriminator": "9999",
+      "avatar": null,
+      "status": "online",
+      "avatar_url": "https://www.example.org"
+    }
+  ],
+  "presence_count": 1
 }

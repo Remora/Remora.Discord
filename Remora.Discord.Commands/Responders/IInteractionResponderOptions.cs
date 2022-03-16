@@ -42,7 +42,7 @@ public interface IInteractionResponderOptions
 
     /// <summary>
     /// Gets a value indicating whether the <see cref="InteractionResponder"/> should automatically respond to
-    /// interactions with the <see cref="InteractionCallbackDataFlags.Ephemeral"/> flag.
+    /// interactions with the <see cref="MessageFlags.Ephemeral"/> flag.
     /// Ephemeral responses can still be explicitly disabled for a given command/group through use of
     /// <see cref="EphemeralAttribute"/>.
     /// </summary>

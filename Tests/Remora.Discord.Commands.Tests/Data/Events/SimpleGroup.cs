@@ -25,25 +25,24 @@ using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Events
+namespace Remora.Discord.Commands.Tests.Data.Events;
+
+/// <summary>
+/// A simple command group for testing execution events.
+/// </summary>
+public class SimpleGroup : CommandGroup
 {
     /// <summary>
-    /// A simple command group for testing execution events.
+    /// A command that will always execute successfully.
     /// </summary>
-    public class SimpleGroup : CommandGroup
-    {
-        /// <summary>
-        /// A command that will always execute successfully.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [Command("successful")]
-        public Task<Result> Successful() => Task.FromResult(Result.FromSuccess());
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("successful")]
+    public Task<Result> Successful() => Task.FromResult(Result.FromSuccess());
 
-        /// <summary>
-        /// A command that will always execute unsuccessfully.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        [Command("unsuccessful")]
-        public Task<Result> Unsuccessful() => Task.FromResult(Result.FromError(new InvalidOperationError("Oh no!")));
-    }
+    /// <summary>
+    /// A command that will always execute unsuccessfully.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    [Command("unsuccessful")]
+    public Task<Result> Unsuccessful() => Task.FromResult(Result.FromError(new InvalidOperationError("Oh no!")));
 }

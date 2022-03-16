@@ -23,11 +23,10 @@
 using JetBrains.Annotations;
 using Remora.Results;
 
-namespace Remora.Discord.Gateway.Results
-{
-    /// <summary>
-    /// Represents a clientside gateway error.
-    /// </summary>
-    [PublicAPI]
-    public record GatewayError(string Message, bool IsCritical) : ResultError(Message);
-}
+namespace Remora.Discord.Gateway.Results;
+
+/// <summary>
+/// Represents a clientside gateway error.
+/// </summary>
+[PublicAPI]
+public record GatewayError(string Message, bool IsSessionResumable, bool IsCritical) : ResultError(Message);

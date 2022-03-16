@@ -27,4 +27,4 @@ namespace Remora.Discord.API.VoiceGateway.Events;
 
 /// <inheritdoc cref="IVoiceResumed"/>
 [PublicAPI]
-public record VoiceResumed() : IVoiceResumed;
+public record VoiceResumed : IVoiceResumed;

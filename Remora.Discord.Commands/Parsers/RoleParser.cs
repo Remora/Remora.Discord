@@ -27,11 +27,11 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Remora.Commands.Parsers;
 using Remora.Commands.Results;
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Commands.Contexts;
 using Remora.Discord.Commands.Extensions;
-using Remora.Rest.Core;
 using Remora.Results;
 
 namespace Remora.Discord.Commands.Parsers;
@@ -71,7 +71,7 @@ public class RoleParser : AbstractTypeParser<IRole>
         }
 
         var roles = getRoles.Entity;
-        if (!Snowflake.TryParse(value.Unmention(), out var roleID))
+        if (!DiscordSnowflake.TryParse(value.Unmention(), out var roleID))
         {
             // Try a name-based lookup
             var roleByName = roles.FirstOrDefault(r => r.Name.Equals(value, StringComparison.OrdinalIgnoreCase));

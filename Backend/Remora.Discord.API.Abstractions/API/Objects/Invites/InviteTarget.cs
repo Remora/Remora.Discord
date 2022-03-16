@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various target user types.
+/// </summary>
+[PublicAPI]
+public enum InviteTarget
 {
     /// <summary>
-    /// Enumerates various target user types.
+    /// The user is invited to a stream.
     /// </summary>
-    [PublicAPI]
-    public enum InviteTarget
-    {
-        /// <summary>
-        /// The user is invited to a stream.
-        /// </summary>
-        Stream = 1,
+    Stream = 1,
 
-        /// <summary>
-        /// The user is invited to use an embedded application.
-        /// </summary>
-        EmbeddedApplication = 2
-    }
+    /// <summary>
+    /// The user is invited to use an embedded application.
+    /// </summary>
+    EmbeddedApplication = 2
 }

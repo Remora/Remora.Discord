@@ -20,24 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates various privacy levels for stage instances.
+/// </summary>
+[PublicAPI]
+public enum StagePrivacyLevel
 {
     /// <summary>
-    /// Enumerates various privacy levels for stage instances.
+    /// The stage instance is visible publicly, such as in stage discovery.
     /// </summary>
-    [PublicAPI]
-    public enum StagePrivacyLevel
-    {
-        /// <summary>
-        /// The stage instance is visible publicly, such as in stage discovery.
-        /// </summary>
-        Public = 1,
+    [Obsolete]
+    Public = 1,
 
-        /// <summary>
-        /// The stage instance is only visible to guild members.
-        /// </summary>
-        GuildOnly = 2
-    }
+    /// <summary>
+    /// The stage instance is only visible to guild members.
+    /// </summary>
+    GuildOnly = 2
 }

@@ -31,61 +31,60 @@ using Remora.Rest.Xunit.Extensions;
 using RichardSzalay.MockHttp;
 using Xunit;
 
-namespace Remora.Discord.Rest.Tests.API.OAuth2
+namespace Remora.Discord.Rest.Tests.API.OAuth2;
+
+/// <summary>
+/// Tests the <see cref="DiscordRestOAuth2API"/> class.
+/// </summary>
+public class DiscordRestOAuth2APITests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordRestOAuth2API"/> class.
+    /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentBotApplicationInformationAsync"/> method.
     /// </summary>
-    public class DiscordRestOAuth2APITests
+    public class GetCurrentApplicationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
     {
         /// <summary>
-        /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentBotApplicationInformationAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetCurrentApplicationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/applications/@me")
-                        .WithNoContent()
-                        .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/applications/@me")
+                    .WithNoContent()
+                    .Respond("application/json", SampleRepository.Samples[typeof(IApplication)])
+            );
 
-                var result = await api.GetCurrentBotApplicationInformationAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetCurrentBotApplicationInformationAsync();
+            ResultAssert.Successful(result);
         }
+    }
 
+    /// <summary>
+    /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentAuthorizationInformationAsync"/> method.
+    /// </summary>
+    public class GetCurrentAuthorizationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
+    {
         /// <summary>
-        /// Tests the <see cref="DiscordRestOAuth2API.GetCurrentAuthorizationInformationAsync"/> method.
+        /// Tests whether the API method performs its request correctly.
         /// </summary>
-        public class GetCurrentAuthorizationInformationAsync : RestAPITestBase<IDiscordRestOAuth2API>
+        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
+        [Fact]
+        public async Task PerformsRequestCorrectly()
         {
-            /// <summary>
-            /// Tests whether the API method performs its request correctly.
-            /// </summary>
-            /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-            [Fact]
-            public async Task PerformsRequestCorrectly()
-            {
-                var api = CreateAPI
-                (
-                    b => b
-                        .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
-                        .WithNoContent()
-                        .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
-                );
+            var api = CreateAPI
+            (
+                b => b
+                    .Expect(HttpMethod.Get, $"{Constants.BaseURL}oauth2/@me")
+                    .WithNoContent()
+                    .Respond("Authorization/json", SampleRepository.Samples[typeof(IAuthorizationInformation)])
+            );
 
-                var result = await api.GetCurrentAuthorizationInformationAsync();
-                ResultAssert.Successful(result);
-            }
+            var result = await api.GetCurrentAuthorizationInformationAsync();
+            ResultAssert.Successful(result);
         }
     }
 }

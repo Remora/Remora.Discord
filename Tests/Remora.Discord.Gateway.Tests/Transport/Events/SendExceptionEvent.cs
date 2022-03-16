@@ -22,28 +22,27 @@
 
 using System;
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents an exception occuring in server-to-client stream of the transport layer.
+/// </summary>
+public class SendExceptionEvent : IEvent
 {
+    private readonly Func<Exception> _exceptionFactory;
+
     /// <summary>
-    /// Represents an exception occuring in server-to-client stream of the transport layer.
+    /// Initializes a new instance of the <see cref="SendExceptionEvent"/> class.
     /// </summary>
-    public class SendExceptionEvent : IEvent
+    /// <param name="exceptionFactory">The exception factory function.</param>
+    public SendExceptionEvent(Func<Exception> exceptionFactory)
     {
-        private readonly Func<Exception> _exceptionFactory;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendExceptionEvent"/> class.
-        /// </summary>
-        /// <param name="exceptionFactory">The exception factory function.</param>
-        public SendExceptionEvent(Func<Exception> exceptionFactory)
-        {
-            _exceptionFactory = exceptionFactory;
-        }
-
-        /// <summary>
-        /// Creates the exception that should be sent.
-        /// </summary>
-        /// <returns>The exception.</returns>
-        public Exception CreateException() => _exceptionFactory();
+        _exceptionFactory = exceptionFactory;
     }
+
+    /// <summary>
+    /// Creates the exception that should be sent.
+    /// </summary>
+    /// <returns>The exception.</returns>
+    public Exception CreateException() => _exceptionFactory();
 }

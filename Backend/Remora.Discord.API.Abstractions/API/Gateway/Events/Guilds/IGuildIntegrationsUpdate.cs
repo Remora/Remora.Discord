@@ -23,17 +23,16 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents an update to a guild integration.
+/// </summary>
+[PublicAPI]
+public interface IGuildIntegrationsUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents an update to a guild integration.
+    /// Gets the ID of the guild whose integrations were updated.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildIntegrationsUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild whose integrations were updated.
-        /// </summary>
-        Snowflake GuildID { get; }
-    }
+    Snowflake GuildID { get; }
 }

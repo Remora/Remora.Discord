@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.2.0</Version>
+        <Version>7.1.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,11 +13,17 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Add DiscordGatewayClient#Latency.
+            Minor performance improvements, pending larger rework
+            Implement support for checking IInvalidSession on new sessions.
+            Allow large_threshold to be specified
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="6.0.0" />
     </ItemGroup>
 </Project>

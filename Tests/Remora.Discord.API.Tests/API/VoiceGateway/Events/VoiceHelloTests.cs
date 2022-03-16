@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.VoiceGateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 using Remora.Discord.API.VoiceGateway.Events;
 
-namespace Remora.Discord.API.Tests.VoiceGateway.Events
+namespace Remora.Discord.API.Tests.VoiceGateway.Events;
+
+/// <summary>
+/// Tests the <see cref="VoiceHello"/> event.
+/// </summary>
+public class VoiceHelloTests : VoiceGatewayEventTestBase<IVoiceHello>
 {
-    /// <summary>
-    /// Tests the <see cref="VoiceHello"/> event.
-    /// </summary>
-    public class VoiceHelloTests : VoiceGatewayEventTestBase<IVoiceHello>
-    {
-    }
 }

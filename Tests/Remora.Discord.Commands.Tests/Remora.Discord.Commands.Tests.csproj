@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Moq" Version="4.16.1" />
+      <PackageReference Include="Moq" Version="4.17.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -28,6 +28,30 @@
       </Compile>
       <Compile Update="Conditions\RequireDiscordPermissionConditionTests.Cases.Xor.cs">
         <DependentUpon>RequireDiscordPermissionConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Data\Valid\SpecialTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Data\Valid\OptionalTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Data\Valid\NullableTypedCommands.cs">
+        <DependentUpon>TypedCommands.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireBotPermissionsConditionTests.Cases.cs">
+        <DependentUpon>RequireBotPermissionsConditionTests.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireBotPermissionsConditionTests.Cases.And.cs">
+        <DependentUpon>RequireBotPermissionsConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireBotPermissionsConditionTests.Cases.Not.cs">
+        <DependentUpon>RequireBotPermissionsConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireBotPermissionsConditionTests.Cases.Or.cs">
+        <DependentUpon>RequireBotPermissionsConditionTests.Cases.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Conditions\RequireBotPermissionsConditionTests.Cases.Xor.cs">
+        <DependentUpon>RequireBotPermissionsConditionTests.Cases.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

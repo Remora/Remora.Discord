@@ -21,7 +21,6 @@
 //
 
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Remora.Commands.Attributes;
 using Remora.Commands.Groups;
@@ -29,21 +28,13 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600, SA1402, SA1602
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
-{
-    public enum DescriptionEnum
-    {
-        [Description("A longer description")]
-        A,
-        B
-    }
+namespace Remora.Discord.Commands.Tests.Data.Valid;
 
-    public class GroupWithEnumParameterWithDescriptionOverrides : CommandGroup
+public class GroupWithEnumParameterWithDescriptionOverrides : CommandGroup
+{
+    [Command("description-enum")]
+    public Task<Result> CommandWithDescriptionEnum(DescriptionEnum value)
     {
-        [Command("description-enum")]
-        public Task<Result> CommandWithDescriptionEnum(DescriptionEnum value)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }

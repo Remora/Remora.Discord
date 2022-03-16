@@ -82,5 +82,6 @@ public record Guild
     GuildNSFWLevel NSFWLevel,
     Optional<IReadOnlyList<IStageInstance>> StageInstances,
     Optional<IReadOnlyList<ISticker>> Stickers,
-    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents
+    Optional<IReadOnlyList<IGuildScheduledEvent>> GuildScheduledEvents,
+    bool IsPremiumProgressBarEnabled
 ) : IGuild;

@@ -33,18 +33,12 @@ public record SelectMenuComponent
 (
     string CustomID,
     IReadOnlyList<ISelectOption> Options,
-    Optional<string> Placeholder,
-    Optional<int> MinValues,
-    Optional<int> MaxValues,
-    Optional<bool> IsDisabled
-) : ISelectMenuComponent, IDefaultedComponent
+    Optional<string> Placeholder = default,
+    Optional<int> MinValues = default,
+    Optional<int> MaxValues = default,
+    Optional<bool> IsDisabled = default
+) : ISelectMenuComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.SelectMenu;
-
-    /// <inheritdoc/>
-    Optional<string> IComponent.CustomID => this.CustomID;
-
-    /// <inheritdoc/>
-    Optional<IReadOnlyList<ISelectOption>> IComponent.Options => new(this.Options);
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.SelectMenu;
 }

@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a mentioned channel.
+/// </summary>
+[PublicAPI]
+public interface IChannelMention
 {
     /// <summary>
-    /// Represents a mentioned channel.
+    /// Gets the ID of the channel.
     /// </summary>
-    [PublicAPI]
-    public interface IChannelMention
-    {
-        /// <summary>
-        /// Gets the ID of the channel.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the channel is in.
-        /// </summary>
-        Snowflake GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the channel is in.
+    /// </summary>
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the channel type.
-        /// </summary>
-        ChannelType Type { get; }
+    /// <summary>
+    /// Gets the channel type.
+    /// </summary>
+    ChannelType Type { get; }
 
-        /// <summary>
-        /// Gets the name of the channel.
-        /// </summary>
-        string Name { get; }
-    }
+    /// <summary>
+    /// Gets the name of the channel.
+    /// </summary>
+    string Name { get; }
 }

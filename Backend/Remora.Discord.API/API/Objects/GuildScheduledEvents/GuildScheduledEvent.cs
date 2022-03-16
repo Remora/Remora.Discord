@@ -32,9 +32,9 @@ public record GuildScheduledEvent
     Snowflake ID,
     Snowflake GuildID,
     Snowflake? ChannelID,
-    Snowflake? CreatorID,
+    Optional<Snowflake?> CreatorID,
     string Name,
-    Optional<string> Description,
+    Optional<string?> Description,
     DateTimeOffset ScheduledStartTime,
     DateTimeOffset? ScheduledEndTime,
     GuildScheduledEventPrivacyLevel PrivacyLevel,
@@ -43,5 +43,6 @@ public record GuildScheduledEvent
     Snowflake? EntityID,
     IGuildScheduledEventEntityMetadata? EntityMetadata,
     Optional<IUser> Creator,
-    Optional<int> UserCount
+    Optional<int> UserCount,
+    IImageHash? Image
 ) : IGuildScheduledEvent;

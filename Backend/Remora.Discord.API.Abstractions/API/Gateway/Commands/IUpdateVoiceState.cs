@@ -23,32 +23,31 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Commands
+namespace Remora.Discord.API.Abstractions.Gateway.Commands;
+
+/// <summary>
+/// Represents a command to update the voice state of the client.
+/// </summary>
+[PublicAPI]
+public interface IUpdateVoiceState : IGatewayCommand
 {
     /// <summary>
-    /// Represents a command to update the voice state of the client.
+    /// Gets the guild that the status should be updated in.
     /// </summary>
-    [PublicAPI]
-    public interface IUpdateVoiceState : IGatewayCommand
-    {
-        /// <summary>
-        /// Gets the guild that the status should be updated in.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the channel the client wants to join, or null if disconnecting.
-        /// </summary>
-        Snowflake? ChannelID { get; }
+    /// <summary>
+    /// Gets the channel the client wants to join, or null if disconnecting.
+    /// </summary>
+    Snowflake? ChannelID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the client is muted.
-        /// </summary>
-        bool IsSelfMuted { get; }
+    /// <summary>
+    /// Gets a value indicating whether the client is muted.
+    /// </summary>
+    bool IsSelfMuted { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the client is deafened.
-        /// </summary>
-        bool IsSelfDeafened { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the client is deafened.
+    /// </summary>
+    bool IsSelfDeafened { get; }
 }

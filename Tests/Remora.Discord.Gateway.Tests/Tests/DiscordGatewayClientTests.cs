@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -45,365 +46,439 @@ using Remora.Results;
 using Xunit;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
-namespace Remora.Discord.Gateway.Tests.Tests
+namespace Remora.Discord.Gateway.Tests.Tests;
+
+/// <summary>
+/// Tests the <see cref="DiscordGatewayClient"/> class.
+/// </summary>
+public class DiscordGatewayClientTests
 {
     /// <summary>
-    /// Tests the <see cref="DiscordGatewayClient"/> class.
+    /// Tests whether the client can send the correct sequence of events in order to connect normally.
     /// </summary>
-    public class DiscordGatewayClientTests
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanConnectAsync()
     {
-        /// <summary>
-        /// Tests whether the client can send the correct sequence of events in order to connect normally.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanConnectAsync()
-        {
-            var tokenSource = new CancellationTokenSource();
-            var transportMock = new MockedTransportServiceBuilder()
-                .IgnoreUnexpected()
-                .Sequence
-                (
-                    s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                new List<IUnavailableGuild>(),
-                                "mock-session",
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                )
-                .Continuously
-                (
-                    c => c
-                        .Expect<IHeartbeat>()
-                        .Send<HeartbeatAcknowledge>()
-                )
-                .Finish(tokenSource)
-                .Build();
-
-            var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
-
-            var services = new ServiceCollection()
-                .AddDiscordGateway(_ => Constants.MockToken)
-                .Replace(transportMockDescriptor)
-                .Replace(CreateMockedGatewayAPI())
-                .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider(true);
-
-            var client = services.GetRequiredService<DiscordGatewayClient>();
-            var runResult = await client.RunAsync(tokenSource.Token);
-
-            ResultAssert.Successful(runResult);
-        }
-
-        /// <summary>
-        /// Tests whether the client can reconnect and resume properly.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanReconnectAndResumeAsync()
-        {
-            var tokenSource = new CancellationTokenSource();
-            var transportMock = new MockedTransportServiceBuilder()
-                .IgnoreUnexpected()
-                .Sequence
-                (
-                    s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                new List<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                        .Send<Reconnect>()
-                        .ExpectDisconnect()
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Resume>
-                        (
-                            r =>
-                            {
-                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
-                                return true;
-                            }
-                        )
-                        .Send<Resumed>()
-                )
-                .Continuously
-                (
-                    c => c
-                        .Expect<IHeartbeat>()
-                        .Send<HeartbeatAcknowledge>()
-                )
-                .Finish(tokenSource)
-                .Build();
-
-            var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
-
-            var services = new ServiceCollection()
-                .AddDiscordGateway(_ => Constants.MockToken)
-                .Replace(transportMockDescriptor)
-                .Replace(CreateMockedGatewayAPI())
-                .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider(true);
-
-            var client = services.GetRequiredService<DiscordGatewayClient>();
-            var runResult = await client.RunAsync(tokenSource.Token);
-
-            ResultAssert.Successful(runResult);
-        }
-
-        /// <summary>
-        /// Tests whether the client can reconnect and create a new session properly.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanReconnectAndCreateNewSessionAsync()
-        {
-            var tokenSource = new CancellationTokenSource();
-            var transportMock = new MockedTransportServiceBuilder()
-                .IgnoreUnexpected()
-                .Sequence
-                (
-                    s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                new List<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                        .Send<Reconnect>()
-                        .ExpectDisconnect()
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Resume>
-                        (
-                            r =>
-                            {
-                                Assert.Equal(Constants.MockSessionID, r?.SessionID);
-                                return true;
-                            }
-                        )
-                        .Send(new InvalidSession(false))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                new List<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                )
-                .Continuously
-                (
-                    c => c
-                        .Expect<IHeartbeat>()
-                        .Send<HeartbeatAcknowledge>()
-                )
-                .Finish(tokenSource)
-                .Build();
-
-            var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
-
-            var services = new ServiceCollection()
-                .AddDiscordGateway(_ => Constants.MockToken)
-                .Replace(transportMockDescriptor)
-                .Replace(CreateMockedGatewayAPI())
-                .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider(true);
-
-            var client = services.GetRequiredService<DiscordGatewayClient>();
-            var runResult = await client.RunAsync(tokenSource.Token);
-
-            ResultAssert.Successful(runResult);
-        }
-
-        /// <summary>
-        /// Tests whether the gateway can successfully reconnect and re-establish a connection, after a network exception.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
-        [Fact]
-        public async Task CanReconnectAfterExceptionAsync()
-        {
-            var tokenSource = new CancellationTokenSource();
-            var transportMock = new MockedTransportServiceBuilder()
-                .IgnoreUnexpected()
-                .Sequence
-                (
-                    s => s
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                Array.Empty<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                        .SendException(() => new WebSocketException())
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                Array.Empty<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                        .SendException(() => new HttpRequestException())
-                        .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
-                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
-                        .Expect<Identify>
-                        (
-                            i =>
-                            {
-                                Assert.Equal(Constants.MockToken, i?.Token);
-                                return true;
-                            }
-                        )
-                        .Send
-                        (
-                            new Ready
-                            (
-                                8,
-                                Constants.BotUser,
-                                Array.Empty<IUnavailableGuild>(),
-                                Constants.MockSessionID,
-                                default,
-                                new PartialApplication()
-                            )
-                        )
-                )
-                .Continuously
-                (
-                    c => c
-                        .Expect<IHeartbeat>()
-                        .Send<HeartbeatAcknowledge>()
-                )
-                .Finish(tokenSource)
-                .Build();
-
-            var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
-
-            var services = new ServiceCollection()
-                .AddDiscordGateway(_ => Constants.MockToken)
-                .Replace(transportMockDescriptor)
-                .Replace(CreateMockedGatewayAPI())
-                .AddSingleton<IResponderTypeRepository, ResponderService>()
-                .BuildServiceProvider(true);
-
-            var client = services.GetRequiredService<DiscordGatewayClient>();
-            var runResult = await client.RunAsync(tokenSource.Token);
-
-            ResultAssert.Successful(runResult);
-        }
-
-        private static ServiceDescriptor CreateMockedGatewayAPI()
-        {
-            var gatewayAPIMock = new Mock<IDiscordRestGatewayAPI>();
-            gatewayAPIMock.Setup
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
             (
-                a => a.GetGatewayBotAsync(It.IsAny<CancellationToken>())
-            ).ReturnsAsync
-            (
-                Result<IGatewayEndpoint>.FromSuccess
-                (
-                    new GatewayEndpoint
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
                     (
-                        "wss://gateway.discord.gg/"
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
                     )
-                )
-            );
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            "mock-session",
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
 
-            var gatewayApi = gatewayAPIMock.Object;
-            var gatewayAPIMockDescriptor = ServiceDescriptor.Singleton(typeof(IDiscordRestGatewayAPI), gatewayApi);
-            return gatewayAPIMockDescriptor;
-        }
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
+    /// Tests whether the client can reconnect and resume properly.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanReconnectAndResumeAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+                    .Send<Reconnect>()
+                    .ExpectDisconnect()
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Resume>
+                    (
+                        r =>
+                        {
+                            Assert.Equal(Constants.MockSessionID, r?.SessionID);
+                            return true;
+                        }
+                    )
+                    .Send<Resumed>()
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
+    /// Tests whether the client can reconnect and create a new session properly.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanReconnectAndCreateNewSessionAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+                    .Send<Reconnect>()
+                    .ExpectDisconnect()
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Resume>
+                    (
+                        r =>
+                        {
+                            Assert.Equal(Constants.MockSessionID, r?.SessionID);
+                            return true;
+                        }
+                    )
+                    .Send(new InvalidSession(false))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
+    /// Tests whether the client can retry session creation if the attempt is invalidated.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanRetrySessionCreationIfInvalidatedAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new InvalidSession(false)
+                    )
+                    .ExpectDisconnect()
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
+    /// Tests whether the gateway can successfully reconnect and re-establish a connection, after a network exception.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanReconnectAfterExceptionAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            Array.Empty<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+                    .SendException(() => new WebSocketException())
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            Array.Empty<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+                    .SendException(() => new HttpRequestException())
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            Array.Empty<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    private static ServiceDescriptor CreateMockedGatewayAPI()
+    {
+        var gatewayAPIMock = new Mock<IDiscordRestGatewayAPI>();
+        gatewayAPIMock.Setup
+        (
+            a => a.GetGatewayBotAsync(It.IsAny<CancellationToken>())
+        ).ReturnsAsync
+        (
+            Result<IGatewayEndpoint>.FromSuccess
+            (
+                new GatewayEndpoint
+                (
+                    "wss://gateway.discord.gg/"
+                )
+            )
+        );
+
+        var gatewayApi = gatewayAPIMock.Object;
+        var gatewayAPIMockDescriptor = ServiceDescriptor.Singleton(typeof(IDiscordRestGatewayAPI), gatewayApi);
+        return gatewayAPIMockDescriptor;
     }
 }

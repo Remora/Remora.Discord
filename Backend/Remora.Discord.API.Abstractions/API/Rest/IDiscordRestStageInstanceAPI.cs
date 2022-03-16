@@ -27,70 +27,69 @@ using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.API.Abstractions.Rest
+namespace Remora.Discord.API.Abstractions.Rest;
+
+/// <summary>
+/// Represents the Discord Stage Instance REST API.
+/// </summary>
+[PublicAPI]
+public interface IDiscordRestStageInstanceAPI
 {
     /// <summary>
-    /// Represents the Discord Stage Instance REST API.
+    /// Creates a new stage instance associated with the given stage channel.
     /// </summary>
-    [PublicAPI]
-    public interface IDiscordRestStageInstanceAPI
-    {
-        /// <summary>
-        /// Creates a new stage instance associated with the given stage channel.
-        /// </summary>
-        /// <param name="channelID">The ID of the stage channel.</param>
-        /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
-        /// <param name="privacyLevel">The privacy level of the stage instance.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IStageInstance>> CreateStageInstanceAsync
-        (
-            Snowflake channelID,
-            string topic,
-            Optional<StagePrivacyLevel> privacyLevel = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        );
+    /// <param name="channelID">The ID of the stage channel.</param>
+    /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
+    /// <param name="privacyLevel">The privacy level of the stage instance.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result<IStageInstance>> CreateStageInstanceAsync
+    (
+        Snowflake channelID,
+        string topic,
+        Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Gets the stage instance associated with the given stage channel.
-        /// </summary>
-        /// <param name="channelID">The ID of the stage channel.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IStageInstance>> GetStageInstanceAsync(Snowflake channelID, CancellationToken ct = default);
+    /// <summary>
+    /// Gets the stage instance associated with the given stage channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the stage channel.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result<IStageInstance>> GetStageInstanceAsync(Snowflake channelID, CancellationToken ct = default);
 
-        /// <summary>
-        /// Modifies the stage instance of the given stage channel.
-        /// </summary>
-        /// <param name="channelID">The ID of the stage channel.</param>
-        /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
-        /// <param name="privacyLevel">The privacy level of the stage instance.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result<IStageInstance>> UpdateStageInstanceAsync
-        (
-            Snowflake channelID,
-            Optional<string> topic = default,
-            Optional<StagePrivacyLevel> privacyLevel = default,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        );
+    /// <summary>
+    /// Modifies the stage instance of the given stage channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the stage channel.</param>
+    /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
+    /// <param name="privacyLevel">The privacy level of the stage instance.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result<IStageInstance>> ModifyStageInstanceAsync
+    (
+        Snowflake channelID,
+        Optional<string> topic = default,
+        Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
 
-        /// <summary>
-        /// Deletes the stage instance associated with the given stage channel.
-        /// </summary>
-        /// <param name="channelID">The ID of the stage channel.</param>
-        /// <param name="reason">The reason to mark the action in the audit log with.</param>
-        /// <param name="ct">The cancellation token for this operation.</param>
-        /// <returns>A result which may or may not have succeeded.</returns>
-        Task<Result> DeleteStageInstance
-        (
-            Snowflake channelID,
-            Optional<string> reason = default,
-            CancellationToken ct = default
-        );
-    }
+    /// <summary>
+    /// Deletes the stage instance associated with the given stage channel.
+    /// </summary>
+    /// <param name="channelID">The ID of the stage channel.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
+    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <returns>A result which may or may not have succeeded.</returns>
+    Task<Result> DeleteStageInstance
+    (
+        Snowflake channelID,
+        Optional<string> reason = default,
+        CancellationToken ct = default
+    );
 }

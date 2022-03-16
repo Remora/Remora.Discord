@@ -23,57 +23,56 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Enumerates the flags an activity can have.
+/// </summary>
+[PublicAPI, Flags]
+public enum ActivityFlags
 {
     /// <summary>
-    /// Enumerates the flags an activity can have.
+    /// The activity has a specific instance.
     /// </summary>
-    [PublicAPI, Flags]
-    public enum ActivityFlags
-    {
-        /// <summary>
-        /// The activity has a specific instance.
-        /// </summary>
-        Instance = 1 << 0,
+    Instance = 1 << 0,
 
-        /// <summary>
-        /// The activity can be joined.
-        /// </summary>
-        Join = 1 << 1,
+    /// <summary>
+    /// The activity can be joined.
+    /// </summary>
+    Join = 1 << 1,
 
-        /// <summary>
-        /// The activity can be spectated.
-        /// </summary>
-        Spectate = 1 << 2,
+    /// <summary>
+    /// The activity can be spectated.
+    /// </summary>
+    Spectate = 1 << 2,
 
-        /// <summary>
-        /// The activity can be sent a join request.
-        /// </summary>
-        JoinRequest = 1 << 3,
+    /// <summary>
+    /// The activity can be sent a join request.
+    /// </summary>
+    JoinRequest = 1 << 3,
 
-        /// <summary>
-        /// The activity is synchronized? Discord's documentation is unclear.
-        /// </summary>
-        Sync = 1 << 4,
+    /// <summary>
+    /// The activity is synchronized? Discord's documentation is unclear.
+    /// </summary>
+    Sync = 1 << 4,
 
-        /// <summary>
-        /// The activity is currently ongoing? Discord's documentation is unclear.
-        /// </summary>
-        Play = 1 << 5,
+    /// <summary>
+    /// The activity is currently ongoing? Discord's documentation is unclear.
+    /// </summary>
+    Play = 1 << 5,
 
-        /// <summary>
-        /// The activity is restricted to friends only.
-        /// </summary>
-        PartyPrivacyFriends = 1 << 6,
+    /// <summary>
+    /// The activity is restricted to friends only.
+    /// </summary>
+    PartyPrivacyFriends = 1 << 6,
 
-        /// <summary>
-        /// The activity is restricted to members of the same voice channel.
-        /// </summary>
-        PartyPrivacyVoiceChannel = 1 << 7,
+    /// <summary>
+    /// The activity is restricted to members of the same voice channel.
+    /// </summary>
+    PartyPrivacyVoiceChannel = 1 << 7,
 
-        /// <summary>
-        /// The activity is embedded.
-        /// </summary>
-        Embedded = 1 << 8
-    }
+    /// <summary>
+    /// The activity is embedded.
+    /// </summary>
+    Embedded = 1 << 8
 }

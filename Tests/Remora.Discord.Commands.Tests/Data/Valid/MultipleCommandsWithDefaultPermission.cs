@@ -27,39 +27,38 @@ using Remora.Commands.Groups;
 using Remora.Discord.Commands.Attributes;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
+namespace Remora.Discord.Commands.Tests.Data.Valid;
+
+/// <summary>
+/// Wraps two test groups.
+/// </summary>
+public class MultipleCommandsWithDefaultPermission
 {
     /// <summary>
-    /// Wraps two test groups.
+    /// The first group.
     /// </summary>
-    public class MultipleCommandsWithDefaultPermission
+    [DiscordDefaultPermission(true)]
+    public class GroupOne : CommandGroup
     {
         /// <summary>
-        /// The first group.
+        /// The first command.
         /// </summary>
-        [DiscordDefaultPermission(true)]
-        public class GroupOne : CommandGroup
-        {
-            /// <summary>
-            /// The first command.
-            /// </summary>
-            /// <returns>Nothing.</returns>
-            [Command("a")]
-            public Task<Result> A() => throw new NotImplementedException();
-        }
+        /// <returns>Nothing.</returns>
+        [Command("a")]
+        public Task<Result> A() => throw new NotImplementedException();
+    }
 
+    /// <summary>
+    /// The second group.
+    /// </summary>
+    [DiscordDefaultPermission(false)]
+    public class GroupTwo : CommandGroup
+    {
         /// <summary>
-        /// The second group.
+        /// The second command.
         /// </summary>
-        [DiscordDefaultPermission(false)]
-        public class GroupTwo : CommandGroup
-        {
-            /// <summary>
-            /// The second command.
-            /// </summary>
-            /// <returns>Nothing.</returns>
-            [Command("b")]
-            public Task<Result> B() => throw new NotImplementedException();
-        }
+        /// <returns>Nothing.</returns>
+        [Command("b")]
+        public Task<Result> B() => throw new NotImplementedException();
     }
 }

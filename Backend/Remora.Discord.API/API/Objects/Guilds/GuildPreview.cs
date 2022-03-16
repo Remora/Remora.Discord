@@ -42,5 +42,6 @@ public record GuildPreview
     IReadOnlyList<GuildFeature> Features,
     Optional<int> ApproximatePresenceCount,
     Optional<int> ApproximateMemberCount,
-    string? Description
+    string? Description,
+    IReadOnlyList<ISticker> Stickers
 ) : IGuildPreview;

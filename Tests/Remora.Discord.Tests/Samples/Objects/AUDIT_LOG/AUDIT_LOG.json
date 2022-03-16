@@ -1,5 +1,6 @@
 {
     "webhooks": [ ],
+    "guild_scheduled_events": [ ],
     "users": [ ],
     "audit_log_entries": [ ],
     "integrations": [ ],

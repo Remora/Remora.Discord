@@ -34,32 +34,32 @@ using Remora.Discord.Commands.Responders;
 using Remora.Rest.Core;
 using Remora.Results;
 
-namespace Remora.Discord.Commands.Tests.TestBases
+namespace Remora.Discord.Commands.Tests.TestBases;
+
+/// <summary>
+/// Tests the command responder.
+/// </summary>
+public abstract class InteractionResponderTestBase : IDisposable
 {
+    private readonly IServiceScope _scope;
+
     /// <summary>
-    /// Tests the command responder.
+    /// Gets the mocked <see cref="IDiscordRestInteractionAPI"/>.
     /// </summary>
-    public abstract class InteractionResponderTestBase : IDisposable
+    protected Mock<IDiscordRestInteractionAPI> MockInteractionApi { get; }
+
+    /// <summary>
+    /// Gets the responder under test.
+    /// </summary>
+    protected InteractionResponder Responder { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InteractionResponderTestBase"/> class.
+    /// </summary>
+    protected InteractionResponderTestBase()
     {
-        private readonly IServiceScope _scope;
-
-        /// <summary>
-        /// Gets the mocked <see cref="IDiscordRestInteractionAPI"/>.
-        /// </summary>
-        protected Mock<IDiscordRestInteractionAPI> MockInteractionApi { get; }
-
-        /// <summary>
-        /// Gets the responder under test.
-        /// </summary>
-        protected InteractionResponder Responder { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InteractionResponderTestBase"/> class.
-        /// </summary>
-        protected InteractionResponderTestBase()
-        {
-            this.MockInteractionApi = new Mock<IDiscordRestInteractionAPI>();
-            this.MockInteractionApi.Setup
+        this.MockInteractionApi = new Mock<IDiscordRestInteractionAPI>();
+        this.MockInteractionApi.Setup
             (
                 i => i.CreateInteractionResponseAsync
                 (
@@ -72,31 +72,30 @@ namespace Remora.Discord.Commands.Tests.TestBases
             )
             .Returns(Task.FromResult(Result.FromSuccess()));
 
-            var serviceCollection = new ServiceCollection()
-                .AddSingleton(this.MockInteractionApi.Object)
-                .AddDiscordCommands(true);
+        var serviceCollection = new ServiceCollection()
+            .AddSingleton(this.MockInteractionApi.Object)
+            .AddDiscordCommands(true);
 
-            // ReSharper disable once VirtualMemberCallInConstructor
-            ConfigureServices(serviceCollection);
+        // ReSharper disable once VirtualMemberCallInConstructor
+        ConfigureServices(serviceCollection);
 
-            var services = serviceCollection.BuildServiceProvider();
+        var services = serviceCollection.BuildServiceProvider(true);
 
-            _scope = services.CreateScope();
-            this.Responder = _scope.ServiceProvider.GetRequiredService<InteractionResponder>();
-        }
+        _scope = services.CreateScope();
+        this.Responder = _scope.ServiceProvider.GetRequiredService<InteractionResponder>();
+    }
 
-        /// <summary>
-        /// Configures additional required services.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        protected virtual void ConfigureServices(IServiceCollection serviceCollection)
-        {
-        }
+    /// <summary>
+    /// Configures additional required services.
+    /// </summary>
+    /// <param name="serviceCollection">The service collection.</param>
+    protected virtual void ConfigureServices(IServiceCollection serviceCollection)
+    {
+    }
 
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            _scope.Dispose();
-        }
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        _scope.Dispose();
     }
 }

@@ -22,13 +22,12 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Acts as a marker interface for gateway events.
+/// </summary>
+[PublicAPI]
+public interface IGatewayEvent : IGatewayPayloadData
 {
-    /// <summary>
-    /// Acts as a marker interface for gateway events.
-    /// </summary>
-    [PublicAPI]
-    public interface IGatewayEvent : IGatewayPayloadData
-    {
-    }
 }

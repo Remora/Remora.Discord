@@ -35,7 +35,6 @@ using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Gateway.Events.Channels;
 using Remora.Discord.API.Json;
-using Remora.Discord.API.Json.Converters;
 using Remora.Discord.API.Objects;
 using Remora.Discord.API.VoiceGateway.Commands;
 using Remora.Discord.API.VoiceGateway.Events;
@@ -210,6 +209,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
         options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
+            .WithPropertyName(c => c.IsNewlyCreated, "newly_created")
             .WithPropertyName(c => c.IsNsfw, "nsfw")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
@@ -246,6 +246,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildUpdate, GuildUpdate>()
@@ -255,6 +256,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildDelete, GuildDelete>()
@@ -496,8 +498,6 @@ public static class ServiceCollectionExtensions
 
         options.AddDataObjectConverter<IThreadMember, ThreadMember>();
 
-        options.AddDataObjectConverter<IThreadQueryResponse, ThreadQueryResponse>();
-
         return options;
     }
 
@@ -549,6 +549,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IPartialGuild, PartialGuild>()
@@ -558,6 +559,7 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(g => g.IsLarge, "large")
             .WithPropertyName(g => g.IsUnavailable, "unavailable")
             .WithPropertyName(g => g.IsWidgetEnabled, "widget_enabled")
+            .WithPropertyName(g => g.IsPremiumProgressBarEnabled, "premium_progress_bar_enabled")
             .WithPropertyConverter(g => g.AFKTimeout, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
         options.AddDataObjectConverter<IGuildMember, GuildMember>()
@@ -573,7 +575,6 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(m => m.IsPending, "pending");
 
         options.AddDataObjectConverter<IUnavailableGuild, UnavailableGuild>()
-            .WithPropertyName(u => u.GuildID, "id")
             .WithPropertyName(u => u.IsUnavailable, "unavailable");
 
         options.AddDataObjectConverter<IPruneCount, PruneCount>();
@@ -581,9 +582,10 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildPreview, GuildPreview>()
             .WithPropertyConverter(p => p.Features, new StringEnumListConverter<GuildFeature>(new SnakeCaseNamingPolicy(true)));
 
-        options.AddDataObjectConverter<IGuildWidget, GuildWidget>()
+        options.AddDataObjectConverter<IGuildWidgetSettings, GuildWidgetSettings>()
             .WithPropertyName(w => w.IsEnabled, "enabled");
 
+        options.AddDataObjectConverter<IGuildWidget, GuildWidget>();
         options.AddDataObjectConverter<IWelcomeScreen, WelcomeScreen>();
         options.AddDataObjectConverter<IWelcomeScreenChannel, WelcomeScreenChannel>();
         options.AddDataObjectConverter<IGuildThreadQueryResponse, GuildThreadQueryResponse>();
@@ -602,6 +604,9 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IGuildScheduledEventEntityMetadata, GuildScheduledEventEntityMetadata>();
         options.AddDataObjectConverter<IGuildScheduledEventUser, GuildScheduledEventUser>();
         options.AddDataObjectConverter<IGuildScheduledEvent, GuildScheduledEvent>();
+
+        options.AddDataObjectConverter<IGuildScheduledEventUserAdd, GuildScheduledEventUserAdd>();
+        options.AddDataObjectConverter<IGuildScheduledEventUserRemove, GuildScheduledEventUserRemove>();
 
         return options;
     }
@@ -652,10 +657,7 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IInvite, Invite>();
-
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
-
-        options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
 
         return options;
     }
@@ -718,6 +720,7 @@ public static class ServiceCollectionExtensions
         options.AddConverter<DiscordPermissionSetConverter>();
 
         options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>();
+        options.AddDataObjectConverter<IPartialPermissionOverwrite, PartialPermissionOverwrite>();
 
         options.AddDataObjectConverter<IRole, Role>()
             .WithPropertyName(r => r.Colour, "color")
@@ -910,10 +913,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionCallbackData, InteractionCallbackData
+                IInteractionMessageCallbackData, InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 
+        options.AddDataObjectConverter<IInteractionAutocompleteCallbackData, InteractionAutocompleteCallbackData>();
+        options.AddDataObjectConverter<IInteractionModalCallbackData, InteractionModalCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
@@ -945,18 +950,37 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(p => p.HasPermission, "permission");
 
         options.AddConverter<MessageComponentConverter>();
+        options.AddConverter<PartialMessageComponentConverter>();
 
-        options.AddDataObjectConverter<IComponent, Component>()
-            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
+        options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
 
-        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>();
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialButtonComponent, PartialButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
         options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialSelectMenuComponent, PartialSelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
+        options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(i => i.IsRequired, "required");
+        options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(i => i.IsRequired, "required");
+
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
+            .WithPropertyName(o => o.IsDefault, "default");
+        options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
         return options;

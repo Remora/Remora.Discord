@@ -2013,6 +2013,7 @@
     "discovery_splash": null,
     "threads": [],
     "id": "999999999999999999",
-    "application_id": null
+    "application_id": null,
+    "premium_progress_bar_enabled": true
   }
 }

@@ -24,57 +24,56 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a connection between a user account and an external service.
+/// </summary>
+[PublicAPI]
+public interface IConnection
 {
     /// <summary>
-    /// Represents a connection between a user account and an external service.
+    /// Gets the ID of the connection account.
     /// </summary>
-    [PublicAPI]
-    public interface IConnection
-    {
-        /// <summary>
-        /// Gets the ID of the connection account.
-        /// </summary>
-        string ID { get; }
+    string ID { get; }
 
-        /// <summary>
-        /// Gets the username of the connection account.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the username of the connection account.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the type of connection.
-        /// </summary>
-        string Type { get; }
+    /// <summary>
+    /// Gets the type of connection.
+    /// </summary>
+    string Type { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the connection has been revoked.
-        /// </summary>
-        Optional<bool> IsRevoked { get; }
+    /// <summary>
+    /// Gets a value indicating whether the connection has been revoked.
+    /// </summary>
+    Optional<bool> IsRevoked { get; }
 
-        /// <summary>
-        /// Gets a list of server integrations.
-        /// </summary>
-        Optional<IReadOnlyList<IPartialIntegration>> Integrations { get; }
+    /// <summary>
+    /// Gets a list of server integrations.
+    /// </summary>
+    Optional<IReadOnlyList<IPartialIntegration>> Integrations { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the connection is verified.
-        /// </summary>
-        bool IsVerified { get; }
+    /// <summary>
+    /// Gets a value indicating whether the connection is verified.
+    /// </summary>
+    bool IsVerified { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether friend synchronization is enabled.
-        /// </summary>
-        bool IsFriendSyncEnabled { get; }
+    /// <summary>
+    /// Gets a value indicating whether friend synchronization is enabled.
+    /// </summary>
+    bool IsFriendSyncEnabled { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether activities related to this connection are shown in presence updates.
-        /// </summary>
-        bool ShouldShowActivity { get; }
+    /// <summary>
+    /// Gets a value indicating whether activities related to this connection are shown in presence updates.
+    /// </summary>
+    bool ShouldShowActivity { get; }
 
-        /// <summary>
-        /// Gets the visibility of this connection.
-        /// </summary>
-        ConnectionVisibility Visibility { get; }
-    }
+    /// <summary>
+    /// Gets the visibility of this connection.
+    /// </summary>
+    ConnectionVisibility Visibility { get; }
 }

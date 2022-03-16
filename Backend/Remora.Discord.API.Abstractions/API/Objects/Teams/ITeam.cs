@@ -24,37 +24,36 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a developer team on Discord.
+/// </summary>
+[PublicAPI]
+public interface ITeam
 {
     /// <summary>
-    /// Represents a developer team on Discord.
+    /// Gets the team's icon.
     /// </summary>
-    [PublicAPI]
-    public interface ITeam
-    {
-        /// <summary>
-        /// Gets the team's icon.
-        /// </summary>
-        IImageHash? Icon { get; }
+    IImageHash? Icon { get; }
 
-        /// <summary>
-        /// Gets the ID of the team.
-        /// </summary>
-        Snowflake ID { get; }
+    /// <summary>
+    /// Gets the ID of the team.
+    /// </summary>
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the team members.
-        /// </summary>
-        IReadOnlyList<ITeamMember> Members { get; }
+    /// <summary>
+    /// Gets the team members.
+    /// </summary>
+    IReadOnlyList<ITeamMember> Members { get; }
 
-        /// <summary>
-        /// Gets the name of the team.
-        /// </summary>
-        string Name { get; }
+    /// <summary>
+    /// Gets the name of the team.
+    /// </summary>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the user ID of the current team owner.
-        /// </summary>
-        Snowflake OwnerUserID { get; }
-    }
+    /// <summary>
+    /// Gets the user ID of the current team owner.
+    /// </summary>
+    Snowflake OwnerUserID { get; }
 }

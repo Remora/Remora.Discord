@@ -23,12 +23,11 @@
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Events
+namespace Remora.Discord.API.Tests.Gateway.Events;
+
+/// <summary>
+/// Tests the ThreadMembersUpdate event.
+/// </summary>
+public class ThreadMembersUpdateTests : GatewayEventTestBase<IThreadMembersUpdate>
 {
-    /// <summary>
-    /// Tests the ThreadMembersUpdate event.
-    /// </summary>
-    public class ThreadMembersUpdateTests : GatewayEventTestBase<IThreadMembersUpdate>
-    {
-    }
 }

@@ -23,43 +23,42 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents information about session start limits.
+/// </summary>
+[PublicAPI]
+public interface ISessionStartLimit
 {
     /// <summary>
-    /// Represents information about session start limits.
+    /// Gets the total number of session starts the user is allowed.
     /// </summary>
-    [PublicAPI]
-    public interface ISessionStartLimit
-    {
-        /// <summary>
-        /// Gets the total number of session starts the user is allowed.
-        /// </summary>
-        int Total { get; }
+    int Total { get; }
 
-        /// <summary>
-        /// Gets the remaining number of session starts the user is allowed.
-        /// </summary>
-        int Remaining { get; }
+    /// <summary>
+    /// Gets the remaining number of session starts the user is allowed.
+    /// </summary>
+    int Remaining { get; }
 
-        /// <summary>
-        /// Gets the time (in milliseconds) after which the limit resets.
-        /// </summary>
-        TimeSpan ResetAfter { get; }
+    /// <summary>
+    /// Gets the time (in milliseconds) after which the limit resets.
+    /// </summary>
+    TimeSpan ResetAfter { get; }
 
-        /// <summary>
-        /// Gets the maximum number of concurrent identify messages that may be sent if the bot is sharded.
-        ///
-        /// The logic behind this value is slightly complex. Given a maximum concurrency of 16 and 16 shards, all 16
-        /// shards may identify concurrently. However, given a maximum concurrency of 16 and 32 shards, the batching
-        /// properties of this value come into play. Concurrently identifying shards 0 through 15 would be allowed, but
-        /// not shards 0 through 8 and 16 through 24.
-        ///
-        /// Effectively, only shards with different rate limit keys may concurrently identify, where the key is
-        /// calculated as follows.
-        /// <code>
-        /// rate_limit_key = shard_id % max_concurrency
-        /// </code>
-        /// </summary>
-        int MaxConcurrency { get; }
-    }
+    /// <summary>
+    /// Gets the maximum number of concurrent identify messages that may be sent if the bot is sharded.
+    ///
+    /// The logic behind this value is slightly complex. Given a maximum concurrency of 16 and 16 shards, all 16
+    /// shards may identify concurrently. However, given a maximum concurrency of 16 and 32 shards, the batching
+    /// properties of this value come into play. Concurrently identifying shards 0 through 15 would be allowed, but
+    /// not shards 0 through 8 and 16 through 24.
+    ///
+    /// Effectively, only shards with different rate limit keys may concurrently identify, where the key is
+    /// calculated as follows.
+    /// <code>
+    /// rate_limit_key = shard_id % max_concurrency
+    /// </code>
+    /// </summary>
+    int MaxConcurrency { get; }
 }

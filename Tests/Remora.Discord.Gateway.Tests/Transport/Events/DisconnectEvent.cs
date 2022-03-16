@@ -20,20 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-namespace Remora.Discord.Gateway.Tests.Transport.Events
+namespace Remora.Discord.Gateway.Tests.Transport.Events;
+
+/// <summary>
+/// Represents an expected disconnection event.
+/// </summary>
+public class DisconnectEvent : IEvent
 {
     /// <summary>
-    /// Represents an expected disconnection event.
+    /// Determines whether this event matches the given arguments.
     /// </summary>
-    public class DisconnectEvent : IEvent
-    {
-        /// <summary>
-        /// Determines whether this event matches the given arguments.
-        /// </summary>
-        /// <remarks>
-        /// Disconnection events always match.
-        /// </remarks>
-        /// <returns>The match status.</returns>
-        public EventMatch Matches() => EventMatch.Pass;
-    }
+    /// <remarks>
+    /// Disconnection events always match.
+    /// </remarks>
+    /// <returns>The match status.</returns>
+    public EventMatch Matches() => EventMatch.Pass;
 }

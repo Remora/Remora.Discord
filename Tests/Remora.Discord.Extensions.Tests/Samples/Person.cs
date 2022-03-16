@@ -20,35 +20,31 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
-using System.ComponentModel.DataAnnotations;
+namespace Remora.Discord.Extensions.Tests.Samples;
 
-namespace Remora.Discord.Extensions.Tests.Samples
+/// <summary>
+/// A generic person.
+/// </summary>
+internal class Person
 {
     /// <summary>
-    /// A generic person.
+    /// Gets the person's name.
     /// </summary>
-    internal class Person
+    public string Name { get; }
+
+    /// <summary>
+    /// Gets the person's age.
+    /// </summary>
+    public int Age { get; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Person"/> class.
+    /// </summary>
+    /// <param name="name">The person's name.</param>
+    /// <param name="age">The person's age.</param>
+    public Person(string name, int age)
     {
-        /// <summary>
-        /// Gets the person's name.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the person's age.
-        /// </summary>
-        public int Age { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Person"/> class.
-        /// </summary>
-        /// <param name="name">The person's name.</param>
-        /// <param name="age">The person's age.</param>
-        public Person(string name, int age)
-        {
-            Name = name;
-            Age = age;
-        }
+        this.Name = name;
+        this.Age = age;
     }
 }

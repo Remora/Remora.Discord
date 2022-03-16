@@ -28,33 +28,32 @@ using Remora.Results;
 
 #pragma warning disable CS1591, SA1600
 
-namespace Remora.Discord.Commands.Tests.Data.Valid
+namespace Remora.Discord.Commands.Tests.Data.Valid;
+
+public class ValidCommandGroup : CommandGroup
 {
-    public class ValidCommandGroup : CommandGroup
+    [Command("top-level-command")]
+    public Task<IResult> TopLevelCommand()
     {
-        [Command("top-level-command")]
-        public Task<IResult> TopLevelCommand()
+        throw new NotImplementedException();
+    }
+
+    [Group("top-level-group")]
+    public class TopLevelGroup : CommandGroup
+    {
+        [Command("first-level-nested")]
+        public Task<IResult> FirstLevelNestedCommand()
         {
             throw new NotImplementedException();
         }
 
-        [Group("top-level-group")]
-        public class TopLevelGroup : CommandGroup
+        [Group("nested-group")]
+        public class NestedGroup : CommandGroup
         {
-            [Command("first-level-nested")]
-            public Task<IResult> FirstLevelNestedCommand()
+            [Command("second-level-nested")]
+            public Task<IResult> SecondLevelNestedCommand()
             {
                 throw new NotImplementedException();
-            }
-
-            [Group("nested-group")]
-            public class NestedGroup : CommandGroup
-            {
-                [Command("second-level-nested")]
-                public Task<IResult> SecondLevelNestedCommand()
-                {
-                    throw new NotImplementedException();
-                }
             }
         }
     }

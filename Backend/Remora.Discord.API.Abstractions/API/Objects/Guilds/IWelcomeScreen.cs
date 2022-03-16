@@ -23,23 +23,22 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents the welcome screen in a community-enabled server.
+/// </summary>
+[PublicAPI]
+public interface IWelcomeScreen
 {
     /// <summary>
-    /// Represents the welcome screen in a community-enabled server.
+    /// Gets the description shown in the welcome screen.
     /// </summary>
-    [PublicAPI]
-    public interface IWelcomeScreen
-    {
-        /// <summary>
-        /// Gets the description shown in the welcome screen.
-        /// </summary>
-        string? Description { get; }
+    string? Description { get; }
 
-        /// <summary>
-        /// Gets the channels shown in the welcome screen. May contain up to five channels at the time of
-        /// implementation.
-        /// </summary>
-        IReadOnlyList<IWelcomeScreenChannel> WelcomeChannels { get; }
-    }
+    /// <summary>
+    /// Gets the channels shown in the welcome screen. May contain up to five channels at the time of
+    /// implementation.
+    /// </summary>
+    IReadOnlyList<IWelcomeScreenChannel> WelcomeChannels { get; }
 }

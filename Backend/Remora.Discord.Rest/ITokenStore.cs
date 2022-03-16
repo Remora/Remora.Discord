@@ -22,17 +22,16 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.Rest
+namespace Remora.Discord.Rest;
+
+/// <summary>
+/// Represents a storage class for a single token.
+/// </summary>
+[PublicAPI]
+public interface ITokenStore
 {
     /// <summary>
-    /// Represents a storage class for a single token.
+    /// Gets the token.
     /// </summary>
-    [PublicAPI]
-    public interface ITokenStore
-    {
-        /// <summary>
-        /// Gets the token.
-        /// </summary>
-        string Token { get; }
-    }
+    string Token { get; }
 }

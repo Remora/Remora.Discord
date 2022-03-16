@@ -23,13 +23,12 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents the update of a user's presence.
+/// </summary>
+[PublicAPI]
+public interface IPresenceUpdate : IGatewayEvent, IPresence
 {
-    /// <summary>
-    /// Represents the update of a user's presence.
-    /// </summary>
-    [PublicAPI]
-    public interface IPresenceUpdate : IGatewayEvent, IPresence
-    {
-    }
 }

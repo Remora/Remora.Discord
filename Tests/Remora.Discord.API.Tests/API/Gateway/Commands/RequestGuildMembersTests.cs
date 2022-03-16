@@ -24,12 +24,11 @@ using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Gateway.Commands
+namespace Remora.Discord.API.Tests.Gateway.Commands;
+
+/// <summary>
+/// Tests the <see cref="RequestGuildMembers"/> command.
+/// </summary>
+public class RequestGuildMembersTests : GatewayCommandTestBase<IRequestGuildMembers>
 {
-    /// <summary>
-    /// Tests the <see cref="RequestGuildMembers"/> command.
-    /// </summary>
-    public class RequestGuildMembersTests : GatewayCommandTestBase<IRequestGuildMembers>
-    {
-    }
 }

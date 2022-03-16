@@ -24,49 +24,47 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.Options;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
 using Remora.Rest;
 using Remora.Results;
 
-namespace Remora.Discord.Rest.API
+namespace Remora.Discord.Rest.API;
+
+/// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI" />
+[PublicAPI]
+public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGatewayAPI
 {
-    /// <inheritdoc cref="Remora.Discord.API.Abstractions.Rest.IDiscordRestGatewayAPI" />
-    [PublicAPI]
-    public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGatewayAPI
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
+    /// </summary>
+    /// <param name="restHttpClient">The specialized Discord Http client.</param>
+    /// <param name="jsonOptions">The JSON options.</param>
+    public DiscordRestGatewayAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
+        : base(restHttpClient, jsonOptions)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
-        /// </summary>
-        /// <param name="restHttpClient">The specialized Discord Http client.</param>
-        /// <param name="jsonOptions">The JSON options.</param>
-        public DiscordRestGatewayAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-            : base(restHttpClient, jsonOptions)
-        {
-        }
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<IGatewayEndpoint>
-            (
-                "gateway",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+    /// <inheritdoc />
+    public virtual Task<Result<IGatewayEndpoint>> GetGatewayAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IGatewayEndpoint>
+        (
+            "gateway",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
+    }
 
-        /// <inheritdoc />
-        public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default)
-        {
-            return this.RestHttpClient.GetAsync<IGatewayEndpoint>
-            (
-                "gateway/bot",
-                b => b.WithRateLimitContext(),
-                ct: ct
-            );
-        }
+    /// <inheritdoc />
+    public virtual Task<Result<IGatewayEndpoint>> GetGatewayBotAsync(CancellationToken ct = default)
+    {
+        return this.RestHttpClient.GetAsync<IGatewayEndpoint>
+        (
+            "gateway/bot",
+            b => b.WithRateLimitContext(),
+            ct: ct
+        );
     }
 }

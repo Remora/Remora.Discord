@@ -23,30 +23,67 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a button component.
+/// </summary>
+[PublicAPI]
+public interface IButtonComponent : IMessageComponent, IPartialButtonComponent
 {
     /// <summary>
-    /// Represents a button component.
+    /// Gets the type of the component.
     /// </summary>
-    [PublicAPI]
-    public interface IButtonComponent : IMessageComponent
-    {
-        /// <inheritdoc cref="IComponent.Style"/>
-        ButtonComponentStyle Style { get; }
+    new ComponentType Type { get; }
 
-        /// <inheritdoc cref="IComponent.Label"/>
-        Optional<string> Label { get; }
+    /// <summary>
+    /// Gets the button's style.
+    /// </summary>
+    new ButtonComponentStyle Style { get; }
 
-        /// <inheritdoc cref="IComponent.Emoji"/>
-        Optional<IPartialEmoji> Emoji { get; }
+    /// <summary>
+    /// Gets the label on the button.
+    /// </summary>
+    new Optional<string> Label { get; }
 
-        /// <inheritdoc cref="IComponent.CustomID"/>
-        Optional<string> CustomID { get; }
+    /// <summary>
+    /// Gets the emoji displayed in the button.
+    /// </summary>
+    new Optional<IPartialEmoji> Emoji { get; }
 
-        /// <inheritdoc cref="IComponent.URL"/>
-        Optional<string> URL { get; }
+    /// <summary>
+    /// Gets a custom ID for the component, defined by the developer.
+    /// </summary>
+    new Optional<string> CustomID { get; }
 
-        /// <inheritdoc cref="IComponent.IsDisabled"/>
-        Optional<bool> IsDisabled { get; }
-    }
+    /// <summary>
+    /// Gets the URL used for link-style buttons.
+    /// </summary>
+    new Optional<string> URL { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the component is disabled.
+    /// </summary>
+    new Optional<bool> IsDisabled { get; }
+
+    /// <inheritdoc/>
+    Optional<ComponentType> IPartialButtonComponent.Type => this.Type;
+
+    /// <inheritdoc/>
+    Optional<ButtonComponentStyle> IPartialButtonComponent.Style => this.Style;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialButtonComponent.Label => this.Label;
+
+    /// <inheritdoc/>
+    Optional<IPartialEmoji> IPartialButtonComponent.Emoji => this.Emoji;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialButtonComponent.CustomID => this.CustomID;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialButtonComponent.URL => this.URL;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialButtonComponent.IsDisabled => this.IsDisabled;
 }

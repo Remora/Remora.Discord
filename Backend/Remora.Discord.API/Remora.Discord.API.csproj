@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>44.0.1</Version>
+        <Version>53.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,15 +13,17 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Chuck out obsolete members.
+            Update field nullability.
+            Various mixed fixes.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.0" />
-        <PackageReference Include="Remora.Rest" Version="1.1.1" />
+        <PackageReference Include="System.Text.Json" Version="6.0.2" />
+        <PackageReference Include="Remora.Rest" Version="1.2.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -61,6 +63,21 @@
       </Compile>
       <Compile Update="API\Gateway\Commands\ShardIdentification.cs">
         <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\ActionRow\PartialActionRowComponent.cs">
+        <DependentUpon>ActionRowComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\Button\PartialButtonComponent.cs">
+        <DependentUpon>ButtonComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialSelectOption.cs">
+        <DependentUpon>SelectOption.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialSelectMenuComponent.cs">
+        <DependentUpon>SelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\TextInput\PartialTextInputComponent.cs">
+        <DependentUpon>TextInputComponent.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

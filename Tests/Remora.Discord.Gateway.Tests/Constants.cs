@@ -20,36 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Objects;
-using Remora.Rest.Core;
 
-namespace Remora.Discord.Gateway.Tests
+namespace Remora.Discord.Gateway.Tests;
+
+/// <summary>
+/// Holds various constants for use in tests.
+/// </summary>
+public static class Constants
 {
     /// <summary>
-    /// Holds various constants for use in tests.
+    /// Gets the default bot user.
     /// </summary>
-    public static class Constants
-    {
-        /// <summary>
-        /// Gets the default bot user.
-        /// </summary>
-        public static IUser BotUser { get; } = new User
-        (
-            new Snowflake(0),
-            "mock-bot",
-            0,
-            null
-        );
+    public static IUser BotUser { get; } = new User
+    (
+        DiscordSnowflake.New(0),
+        "mock-bot",
+        0,
+        null
+    );
 
-        /// <summary>
-        /// Gets the default mocked token.
-        /// </summary>
-        public static string MockToken { get; } = "mock-token";
+    /// <summary>
+    /// Gets the default mocked token.
+    /// </summary>
+    public static string MockToken { get; } = "mock-token";
 
-        /// <summary>
-        /// Gets the default mocked session ID.
-        /// </summary>
-        public static string MockSessionID { get; } = "mock-session";
-    }
+    /// <summary>
+    /// Gets the default mocked session ID.
+    /// </summary>
+    public static string MockSessionID { get; } = "mock-session";
 }

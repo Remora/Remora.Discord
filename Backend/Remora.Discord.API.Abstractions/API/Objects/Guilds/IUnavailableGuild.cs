@@ -23,23 +23,22 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents an unavailable guild.
+/// </summary>
+[PublicAPI]
+public interface IUnavailableGuild
 {
     /// <summary>
-    /// Represents an unavailable guild.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IUnavailableGuild
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the guild is unavailable. This field is not set if the user was removed from
-        /// the guild.
-        /// </summary>
-        Optional<bool> IsUnavailable { get; }
-    }
+    /// <summary>
+    /// Gets a value indicating whether the guild is unavailable. This field is not set if the user was removed from
+    /// the guild.
+    /// </summary>
+    Optional<bool> IsUnavailable { get; }
 }

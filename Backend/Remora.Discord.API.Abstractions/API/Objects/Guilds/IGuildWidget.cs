@@ -20,25 +20,46 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
+using System.Collections.Generic;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents the status and invite widget for a guild.
+/// </summary>
+public interface IGuildWidget
 {
     /// <summary>
-    /// Represents an embedded invite widget.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildWidget
-    {
-        /// <summary>
-        /// Gets a value indicating whether the widget is enabled.
-        /// </summary>
-        bool IsEnabled { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel invites are generated for.
-        /// </summary>
-        Snowflake? ChannelID { get; }
-    }
+    /// <summary>
+    /// Gets the name of the guild (2-100 characters).
+    /// </summary>
+    string Name { get; }
+
+    /// <summary>
+    /// Gets the instant invite link or code for the guild.
+    /// </summary>
+    string? InstantInvite { get; }
+
+    /// <summary>
+    /// Gets the voice and stage channels accessible by @everyone.
+    /// </summary>
+    IReadOnlyList<IPartialChannel> Channels { get; }
+
+    /// <summary>
+    /// Gets "special" widget user objects with presence information (max 100).
+    /// </summary>
+    /// <remarks>
+    /// The Discord docs are extremely vague about what "special" means here. Your mileage may vary.
+    /// </remarks>
+    IReadOnlyList<IPartialUser> Members { get; }
+
+    /// <summary>
+    /// Gets the number of online members in this guild.
+    /// </summary>
+    int PresenceCount { get; }
 }

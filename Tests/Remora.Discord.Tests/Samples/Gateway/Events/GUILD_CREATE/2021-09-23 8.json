@@ -4930,6 +4930,7 @@
     "region": "us-south",
     "unavailable": false,
     "public_updates_channel_id": "999999999999999999",
-    "icon": "68b329da9893e34099c7d8ad5cb9c940"
+    "icon": "68b329da9893e34099c7d8ad5cb9c940",
+    "premium_progress_bar_enabled": true
   }
 }

@@ -26,17 +26,16 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
-namespace Remora.Discord.Gateway.Tests.Responders
+namespace Remora.Discord.Gateway.Tests.Responders;
+
+/// <summary>
+/// Represents a mocked <see cref="IResponder{T}"/>.
+/// </summary>
+public class MockedResponder : IResponder<IMessageCreate>
 {
-    /// <summary>
-    /// Represents a mocked <see cref="IResponder{T}"/>.
-    /// </summary>
-    public class MockedResponder : IResponder<IMessageCreate>
+    /// <inheritdoc />
+    public Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
     {
-        /// <inheritdoc />
-        public Task<Result> RespondAsync(IMessageCreate gatewayEvent, CancellationToken ct = default)
-        {
-            return Task.FromResult(Result.FromSuccess());
-        }
+        return Task.FromResult(Result.FromSuccess());
     }
 }

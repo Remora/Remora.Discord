@@ -43,5 +43,6 @@ public record GuildMember
     bool IsDeafened,
     bool IsMuted,
     Optional<bool?> IsPending = default,
-    Optional<IDiscordPermissionSet> Permissions = default
+    Optional<IDiscordPermissionSet> Permissions = default,
+    Optional<DateTimeOffset?> CommunicationDisabledUntil = default
 ) : IGuildMember;

@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 using Remora.Results;
@@ -33,6 +35,7 @@ namespace Remora.Discord.API.Abstractions.Rest;
 /// <summary>
 /// Represents the Discord Guild Scheduled Event API.
 /// </summary>
+[PublicAPI]
 public interface IDiscordRestGuildScheduledEventAPI
 {
     /// <summary>
@@ -63,6 +66,8 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// <param name="scheduledEndTime">The time at which the event is scheduled to end, if any.</param>
     /// <param name="description">The description of the event, if any (1-100 characters).</param>
     /// <param name="entityType">The entity type of the event.</param>
+    /// <param name="image">The image of the event, displayed above the information.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A creation result which may or may not have succeeded.</returns>
     Task<Result<IGuildScheduledEvent>> CreateGuildScheduledEventAsync
@@ -76,6 +81,8 @@ public interface IDiscordRestGuildScheduledEventAPI
         Optional<DateTimeOffset> scheduledEndTime,
         Optional<string> description,
         GuildScheduledEventEntityType entityType,
+        Optional<Stream> image = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -109,6 +116,8 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// <param name="description">The new description of the event (1-100 characters).</param>
     /// <param name="entityType">The new entity type associated with the event.</param>
     /// <param name="status">The new status of the event.</param>
+    /// <param name="image">The new image of the event, displayed above the information.</param>
+    /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
     Task<Result<IGuildScheduledEvent>> ModifyGuildScheduledEventAsync
@@ -116,14 +125,16 @@ public interface IDiscordRestGuildScheduledEventAPI
         Snowflake guildID,
         Snowflake eventID,
         Optional<Snowflake> channelID = default,
-        Optional<IGuildScheduledEventEntityMetadata> entityMetadata = default,
+        Optional<IGuildScheduledEventEntityMetadata?> entityMetadata = default,
         Optional<string> name = default,
         Optional<GuildScheduledEventPrivacyLevel> privacyLevel = default,
         Optional<DateTimeOffset> scheduledStartTime = default,
         Optional<DateTimeOffset> scheduledEndTime = default,
-        Optional<string> description = default,
+        Optional<string?> description = default,
         Optional<GuildScheduledEventEntityType> entityType = default,
         Optional<GuildScheduledEventStatus> status = default,
+        Optional<Stream> image = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     );
 
@@ -141,7 +152,7 @@ public interface IDiscordRestGuildScheduledEventAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="eventID">The ID of the event.</param>
-    /// <param name="limit">The maximum number of users to return.</param>
+    /// <param name="limit">The maximum number of users to return (max 100).</param>
     /// <param name="withMember">Whether member information should be included.</param>
     /// <param name="before">Restrict the returned users to ones before this ID.</param>
     /// <param name="after">Restrict the returned users to ones after this ID.</param>

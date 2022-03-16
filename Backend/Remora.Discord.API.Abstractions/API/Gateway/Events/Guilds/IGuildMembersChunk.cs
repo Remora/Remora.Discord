@@ -25,47 +25,46 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a chunk of guild members.
+/// </summary>
+[PublicAPI]
+public interface IGuildMembersChunk : IGatewayEvent
 {
     /// <summary>
-    /// Represents a chunk of guild members.
+    /// Gets the ID of the guild.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildMembersChunk : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the members in this chunk.
-        /// </summary>
-        IReadOnlyList<IGuildMember> Members { get; }
+    /// <summary>
+    /// Gets the members in this chunk.
+    /// </summary>
+    IReadOnlyList<IGuildMember> Members { get; }
 
-        /// <summary>
-        /// Gets the index of this chunk in the expected chunks of the response.
-        /// </summary>
-        int ChunkIndex { get; }
+    /// <summary>
+    /// Gets the index of this chunk in the expected chunks of the response.
+    /// </summary>
+    int ChunkIndex { get; }
 
-        /// <summary>
-        /// Gets the total number of expected chunks for this response.
-        /// </summary>
-        int ChunkCount { get; }
+    /// <summary>
+    /// Gets the total number of expected chunks for this response.
+    /// </summary>
+    int ChunkCount { get; }
 
-        /// <summary>
-        /// Gets a list of guild members that were not found.
-        /// </summary>
-        Optional<IReadOnlyList<Snowflake>> NotFound { get; }
+    /// <summary>
+    /// Gets a list of guild members that were not found.
+    /// </summary>
+    Optional<IReadOnlyList<Snowflake>> NotFound { get; }
 
-        /// <summary>
-        /// Gets the presences of the returned members.
-        /// </summary>
-        Optional<IReadOnlyList<IPresence>> Presences { get; }
+    /// <summary>
+    /// Gets the presences of the returned members.
+    /// </summary>
+    Optional<IReadOnlyList<IPresence>> Presences { get; }
 
-        /// <summary>
-        /// Gets the nonce used in the original request.
-        /// </summary>
-        Optional<string> Nonce { get; }
-    }
+    /// <summary>
+    /// Gets the nonce used in the original request.
+    /// </summary>
+    Optional<string> Nonce { get; }
 }

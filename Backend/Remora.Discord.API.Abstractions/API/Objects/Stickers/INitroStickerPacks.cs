@@ -23,17 +23,16 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a set of sticker packs available to Nitro subscribers.
+/// </summary>
+[PublicAPI]
+public interface INitroStickerPacks
 {
     /// <summary>
-    /// Represents a set of sticker packs available to Nitro subscribers.
+    /// Gets the sticker packs.
     /// </summary>
-    [PublicAPI]
-    public interface INitroStickerPacks
-    {
-        /// <summary>
-        /// Gets the sticker packs.
-        /// </summary>
-        IReadOnlyList<IStickerPack> StickerPacks { get; }
-    }
+    IReadOnlyList<IStickerPack> StickerPacks { get; }
 }

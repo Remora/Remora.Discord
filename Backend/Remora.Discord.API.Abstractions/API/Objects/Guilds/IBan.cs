@@ -22,22 +22,21 @@
 
 using JetBrains.Annotations;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a ban in a guild.
+/// </summary>
+[PublicAPI]
+public interface IBan
 {
     /// <summary>
-    /// Represents a ban in a guild.
+    /// Gets the reason for the ban.
     /// </summary>
-    [PublicAPI]
-    public interface IBan
-    {
-        /// <summary>
-        /// Gets the reason for the ban.
-        /// </summary>
-        string? Reason { get; }
+    string? Reason { get; }
 
-        /// <summary>
-        /// Gets the banned user.
-        /// </summary>
-        IUser User { get; }
-    }
+    /// <summary>
+    /// Gets the banned user.
+    /// </summary>
+    IUser User { get; }
 }

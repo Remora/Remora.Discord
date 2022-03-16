@@ -22,12 +22,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
+using Remora.Discord.Rest.Utility;
 using Remora.Rest;
 using Remora.Rest.Core;
 using Remora.Rest.Extensions;
@@ -84,6 +86,8 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Optional<DateTimeOffset> scheduledEndTime,
         Optional<string> description,
         GuildScheduledEventEntityType entityType,
+        Optional<Stream> image,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -119,6 +123,20 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
+        var imageData = default(Optional<string?>);
+
+        if (image.IsDefined(out var imageStream))
+        {
+            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
+
+            if (!imageDataResult.IsSuccess)
+            {
+                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
+            }
+
+            imageData = imageDataResult.Entity;
+        }
+
         return await this.RestHttpClient.PostAsync<IGuildScheduledEvent>
         (
             $"guilds/{guildID}/scheduled-events",
@@ -136,9 +154,11 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                         json.Write("scheduled_end_time", scheduledEndTime, this.JsonOptions);
                         json.Write("description", description, this.JsonOptions);
                         json.Write("entity_type", entityType, this.JsonOptions);
+                        json.Write("image", imageData, this.JsonOptions);
                     }
                 );
 
+                b.AddAuditLogReason(reason);
                 b.WithRateLimitContext();
             },
             ct: ct
@@ -176,14 +196,16 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Snowflake guildID,
         Snowflake eventID,
         Optional<Snowflake> channelID = default,
-        Optional<IGuildScheduledEventEntityMetadata> entityMetadata = default,
+        Optional<IGuildScheduledEventEntityMetadata?> entityMetadata = default,
         Optional<string> name = default,
         Optional<GuildScheduledEventPrivacyLevel> privacyLevel = default,
         Optional<DateTimeOffset> scheduledStartTime = default,
         Optional<DateTimeOffset> scheduledEndTime = default,
-        Optional<string> description = default,
+        Optional<string?> description = default,
         Optional<GuildScheduledEventEntityType> entityType = default,
         Optional<GuildScheduledEventStatus> status = default,
+        Optional<Stream> image = default,
+        Optional<string> reason = default,
         CancellationToken ct = default
     )
     {
@@ -196,7 +218,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description.IsDefined(out var realDescription) && realDescription.Length is < 1 or > 100)
         {
             return new ArgumentOutOfRangeError
             (
@@ -207,9 +229,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
 
         if
         (
-            entityMetadata.HasValue &&
-            entityMetadata.Value.Location.HasValue &&
-            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+            entityMetadata.IsDefined(out var metadata) &&
+            metadata.Location.HasValue &&
+            metadata.Location.Value.Length is < 1 or > 100
         )
         {
             return new ArgumentOutOfRangeError
@@ -217,6 +239,20 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                 nameof(name),
                 "The location metadata must be between 1 and 100 characters in length."
             );
+        }
+
+        var imageData = default(Optional<string?>);
+
+        if (image.IsDefined(out var imageStream))
+        {
+            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
+
+            if (!imageDataResult.IsSuccess)
+            {
+                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
+            }
+
+            imageData = imageDataResult.Entity;
         }
 
         return await this.RestHttpClient.PatchAsync<IGuildScheduledEvent>
@@ -237,9 +273,11 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
                         json.Write("description", description, this.JsonOptions);
                         json.Write("entity_type", entityType, this.JsonOptions);
                         json.Write("status", status, this.JsonOptions);
+                        json.Write("image", imageData, this.JsonOptions);
                     }
                 );
 
+                b.AddAuditLogReason(reason);
                 b.WithRateLimitContext();
             },
             ct: ct
@@ -258,7 +296,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
     }
 
     /// <inheritdoc />
-    public Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
+    public async Task<Result<IReadOnlyList<IGuildScheduledEventUser>>> GetGuildScheduledEventUsersAsync
     (
         Snowflake guildID,
         Snowflake eventID,
@@ -269,7 +307,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
+        if (limit.HasValue && limit.Value is < 1 or >= 100)
+        {
+            return new ArgumentOutOfRangeError(nameof(limit), "The limit must be between 1 and 100.");
+        }
+
+        return await this.RestHttpClient.GetAsync<IReadOnlyList<IGuildScheduledEventUser>>
         (
             $"guilds/{guildID}/scheduled-events/{eventID}/users",
             b =>

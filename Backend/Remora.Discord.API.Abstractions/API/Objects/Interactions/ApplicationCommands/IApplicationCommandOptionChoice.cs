@@ -23,23 +23,22 @@
 using JetBrains.Annotations;
 using OneOf;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a choice available to a user.
+/// </summary>
+[PublicAPI]
+public interface IApplicationCommandOptionChoice
 {
     /// <summary>
-    /// Represents a choice available to a user.
+    /// Gets the name of the choice.
     /// </summary>
-    [PublicAPI]
-    public interface IApplicationCommandOptionChoice
-    {
-        /// <summary>
-        /// Gets the name of the choice.
-        /// </summary>
-        /// <remarks>This can be up to 100 characters.</remarks>
-        string Name { get; }
+    /// <remarks>This can be up to 100 characters.</remarks>
+    string Name { get; }
 
-        /// <summary>
-        /// Gets the value of the choice.
-        /// </summary>
-        OneOf<string, int, double> Value { get; }
-    }
+    /// <summary>
+    /// Gets the value of the choice.
+    /// </summary>
+    OneOf<string, int, double> Value { get; }
 }

@@ -25,22 +25,21 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Gateway.Events
+namespace Remora.Discord.API.Abstractions.Gateway.Events;
+
+/// <summary>
+/// Represents a change to the stickers in a guild.
+/// </summary>
+[PublicAPI]
+public interface IGuildStickersUpdate : IGatewayEvent
 {
     /// <summary>
-    /// Represents a change to the stickers in a guild.
+    /// Gets the ID of the guild that the update occurred in.
     /// </summary>
-    [PublicAPI]
-    public interface IGuildStickersUpdate : IGatewayEvent
-    {
-        /// <summary>
-        /// Gets the ID of the guild that the update occurred in.
-        /// </summary>
-        Snowflake GuildID { get; }
+    Snowflake GuildID { get; }
 
-        /// <summary>
-        /// Gets the new set of stickers available to the guild.
-        /// </summary>
-        IReadOnlyList<ISticker> Stickers { get; }
-    }
+    /// <summary>
+    /// Gets the new set of stickers available to the guild.
+    /// </summary>
+    IReadOnlyList<ISticker> Stickers { get; }
 }
