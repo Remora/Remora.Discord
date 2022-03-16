@@ -522,7 +522,7 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 _log.LogInformation("Starting dispatch service...");
-                var startDispatch = _responderDispatch.Start(_disconnectRequestedSource.Token);
+                var startDispatch = _responderDispatch.Start();
                 if (!startDispatch.IsSuccess)
                 {
                     return new GatewayError("Failed to start the dispatch service.", false, true);

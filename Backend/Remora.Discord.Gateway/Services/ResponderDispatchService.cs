@@ -83,7 +83,10 @@ public class ResponderDispatchService : IAsyncDisposable
     /// returned a successful result) will be allowed to run to completion.
     /// </summary>
     /// <param name="payload">The payload to dispatch.</param>
-    /// <param name="ct">The cancellation token for this operation.</param>
+    /// <param name="ct">
+    /// The cancellation token for this operation. Note that this is *not* the cancellation token which will be passed
+    /// to any instantiated responders.
+    /// </param>
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> DispatchAsync(IPayload payload, CancellationToken ct = default)
     {
@@ -117,16 +120,15 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Starts the dispatch service, beginning acceptance of payloads for dispatch.
     /// </summary>
-    /// <param name="ct">The cancellation token for the dispatch service.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    internal Result Start(CancellationToken ct = default)
+    public Result Start()
     {
         if (_isRunning)
         {
             return new AlreadyStartedError();
         }
 
-        _dispatchCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        _dispatchCancellationSource = new();
         _payloadsToDispatch = Channel.CreateBounded<IPayload>
         (
             new BoundedChannelOptions(100) { FullMode = BoundedChannelFullMode.Wait }
@@ -134,8 +136,8 @@ public class ResponderDispatchService : IAsyncDisposable
 
         _respondersToFinalize = Channel.CreateUnbounded<Task<IReadOnlyList<Result>>>();
 
-        _dispatcher = Task.Run(DispatcherTaskAsync, ct);
-        _finalizer = Task.Run(FinalizerTaskAsync, ct);
+        _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
+        _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
         _isRunning = true;
         return Result.FromSuccess();
@@ -145,7 +147,7 @@ public class ResponderDispatchService : IAsyncDisposable
     /// Stops the dispatch service, finishing any pending payloads.
     /// </summary>
     /// <returns>A result which may or may not have succeeded.</returns>
-    internal async Task<Result> StopAsync()
+    public async Task<Result> StopAsync()
     {
         if (!_isRunning)
         {
