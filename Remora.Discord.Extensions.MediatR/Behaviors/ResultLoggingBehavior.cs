@@ -35,18 +35,20 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
     /// A pipeline behavior which automatically logs request handling.
     /// </summary>
     /// <typeparam name="TRequest">The type of request to handle.</typeparam>
-    public class ResultLoggingBehavior<TRequest> : IPipelineBehavior<TRequest, Result>
+    /// <typeparam name="TResponse">The type of response to handle. Constrained to <see cref="IResult"/>.</typeparam>
+    internal sealed class ResultLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, Result>
         where TRequest : IRequest<Result>
+        where TResponse : IResult
     {
         // TODO: Make logging level customizable.
-        private readonly ILogger<ResultLoggingBehavior<TRequest>> _logger;
+        private readonly ILogger<ResultLoggingBehavior<TRequest, TResponse>> _logger;
         private static readonly string NotificationTypeName = typeof(TRequest).Name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResultLoggingBehavior{TRequest}"/> class.
+        /// Initializes a new instance of the <see cref="ResultLoggingBehavior{TRequest, TResponse}"/> class.
         /// </summary>
         /// <param name="logger">A logger for this instance.</param>
-        public ResultLoggingBehavior(ILogger<ResultLoggingBehavior<TRequest>> logger)
+        public ResultLoggingBehavior(ILogger<ResultLoggingBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }

@@ -33,14 +33,12 @@ namespace Remora.Discord.Extensions.MediatR.Responders
     /// <summary>
     /// Accepts any <see cref="IGatewayEvent"/> and sends it as a MediatR Request.
     /// </summary>
-    /// <typeparam name="TGatewayEvent">The type of <see cref="IGatewayEvent"/> to send.</typeparam>
-    public sealed class MediatorEventResponder<TGatewayEvent> : IResponder<TGatewayEvent>
-        where TGatewayEvent : IGatewayEvent
+    public sealed class MediatorEventResponder : IResponder<IGatewayEvent>
     {
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediatorEventResponder{TGatewayEvent}"/> class.
+        /// Initializes a new instance of the <see cref="MediatorEventResponder"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
         public MediatorEventResponder(IMediator mediator)
@@ -49,7 +47,7 @@ namespace Remora.Discord.Extensions.MediatR.Responders
         }
 
         /// <inheritdoc />
-        public Task<Result> RespondAsync(TGatewayEvent gatewayEvent, CancellationToken ct = default)
-            => _mediator.Send(new GatewayEventRequest<TGatewayEvent>(gatewayEvent), ct);
+        public Task<Result> RespondAsync(IGatewayEvent gatewayEvent, CancellationToken ct = default)
+            => _mediator.Send(new GatewayEventRequest<IGatewayEvent>(gatewayEvent), ct);
     }
 }

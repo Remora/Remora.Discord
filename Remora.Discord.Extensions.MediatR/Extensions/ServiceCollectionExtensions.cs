@@ -52,10 +52,10 @@ namespace Remora.Discord.Extensions.MediatR.Extensions
             services.AddTransient(typeof(RequestExceptionActionProcessorBehavior<,>), typeof(GatewayEventExceptionHandlerBehavior<,>));
 
             // This pipeline behavior adds logging of the result. Starting/stopping of handling is logged as Trace events.
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<,>));
 
             // Registers a generic Discord Event Responder which forwards events as MediatR events.
-            services.AddResponder(typeof(MediatorEventResponder<>));
+            services.AddResponder<MediatorEventResponder>();
 
             return services;
         }
