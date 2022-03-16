@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,16 +40,22 @@ namespace Remora.Discord.Extensions.MediatR.Extensions
         /// </summary>
         /// <typeparam name="TEntryPoint">The entry point of the application, typically Program.cs.</typeparam>
         /// <param name="services">This service collection instance.</param>
+        /// <param name="mediatrConfiguration">An optional action used to configure MediatR.</param>
         /// <returns>The current <see cref="IServiceCollection"/> for chaining.</returns>
-        public static IServiceCollection AddDiscordMessaging<TEntryPoint>(this IServiceCollection services)
+        public static IServiceCollection AddDiscordMessaging<TEntryPoint>(this IServiceCollection services, Action<MediatRServiceConfiguration>? mediatrConfiguration = null)
             where TEntryPoint : class
         {
-            services.AddMediatR(typeof(TEntryPoint));
+            // Add MediatR itself.
+            services.AddMediatR(mediatrConfiguration, typeof(TEntryPoint));
 
+            // All gateway events return a Result. This handles uncaught exceptions by forcing the handler to return a failed Result with an ExceptionError.
             services.AddTransient(typeof(RequestExceptionActionProcessorBehavior<,>), typeof(GatewayEventExceptionHandlerBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<,>));
 
-            services.AddResponder(typeof(MediatorEventHandler<>));
+            // This pipeline behavior adds logging of the result. Starting/stopping of handling is logged as Trace events.
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<>));
+
+            // Registers a generic Discord Event Responder which forwards events as MediatR events.
+            services.AddResponder(typeof(MediatorEventResponder<>));
 
             return services;
         }

@@ -9,7 +9,7 @@
 		<Description>
 			$(BaseDescription)
 
-			This package provides utilities and components which translate Discord gateway events into MediatR notifications and requests..
+			This package provides utilities and components which translate Discord gateway events into MediatR notifications and requests.
 		</Description>
 		<PackageReleaseNotes>
 			Add base types.

@@ -31,12 +31,11 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
     /// Handles exceptions thrown by RequestHandlers which return <see cref="Result{TResponse}"/>.
     /// </summary>
     /// <typeparam name="TRequest">The type of request.</typeparam>
-    /// <typeparam name="TResponse">The type of response.</typeparam>
-    public sealed class GatewayEventExceptionHandlerBehavior<TRequest, TResponse> : RequestExceptionHandler<TRequest, Result<TResponse>>
-        where TRequest : IRequest<Result<TResponse>>
+    public sealed class GatewayEventExceptionHandlerBehavior<TRequest> : RequestExceptionHandler<TRequest, Result>
+        where TRequest : IRequest<Result>
     {
         /// <inheritdoc/>
-        protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<Result<TResponse>> state)
-            => state.SetHandled(Result<TResponse>.FromError(exception)); // Set response to a failed exception result.
+        protected override void Handle(TRequest request, Exception exception, RequestExceptionHandlerState<Result> state)
+            => state.SetHandled(new ExceptionError(exception)); // Set response to a failed exception result.
     }
 }

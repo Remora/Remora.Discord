@@ -1,5 +1,5 @@
 ﻿//
-//  MediatorEventHandler.cs
+//  MediatorEventResponder.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -34,16 +34,16 @@ namespace Remora.Discord.Extensions.MediatR.Responders
     /// Accepts any <see cref="IGatewayEvent"/> and sends it as a MediatR Request.
     /// </summary>
     /// <typeparam name="TGatewayEvent">The type of <see cref="IGatewayEvent"/> to send.</typeparam>
-    public partial class MediatorEventHandler<TGatewayEvent> : IResponder<TGatewayEvent>
+    public sealed class MediatorEventResponder<TGatewayEvent> : IResponder<TGatewayEvent>
         where TGatewayEvent : IGatewayEvent
     {
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediatorEventHandler{TGatewayEvent}"/> class.
+        /// Initializes a new instance of the <see cref="MediatorEventResponder{TGatewayEvent}"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
-        public MediatorEventHandler(IMediator mediator)
+        public MediatorEventResponder(IMediator mediator)
         {
             _mediator = mediator;
         }

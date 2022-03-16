@@ -21,16 +21,18 @@
 //
 
 using MediatR;
+using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.Extensions.MediatR.Requests;
 using Remora.Results;
 
-namespace Remora.Discord.Extensions.MediatR.Requests
+namespace Remora.Discord.Extensions.MediatR
 {
     /// <summary>
     /// An <see cref="IRequestHandler{TRequest, TResponse}"/> which returns a <see cref="Result"/>.
     /// </summary>
-    /// <typeparam name="TRequest">The type of request to handle.</typeparam>
-    public interface IResultRequestHandler<TRequest> : IRequestHandler<TRequest, Result>
-        where TRequest : IRequest<Result>
+    /// <typeparam name="TGatewayEvent">The type of event to handle.</typeparam>
+    public interface IResultRequestHandler<TGatewayEvent> : IRequestHandler<IGatewayEventRequest<TGatewayEvent>, Result>
+        where TGatewayEvent : IGatewayEvent
     {
     }
 }

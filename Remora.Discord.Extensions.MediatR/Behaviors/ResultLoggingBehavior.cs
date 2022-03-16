@@ -35,24 +35,24 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
     /// A pipeline behavior which automatically logs request handling.
     /// </summary>
     /// <typeparam name="TRequest">The type of request to handle.</typeparam>
-    /// <typeparam name="TResponse">The type of response to be returned as a <see cref="Result{TResponse}"/>.</typeparam>
-    public class ResultLoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, Result<TResponse>>
-        where TRequest : IRequest<Result<TResponse>>
+    public class ResultLoggingBehavior<TRequest> : IPipelineBehavior<TRequest, Result>
+        where TRequest : IRequest<Result>
     {
-        private readonly ILogger<ResultLoggingBehavior<TRequest, TResponse>> _logger;
+        // TODO: Make logging level customizable.
+        private readonly ILogger<ResultLoggingBehavior<TRequest>> _logger;
         private static readonly string NotificationTypeName = typeof(TRequest).Name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResultLoggingBehavior{TRequest, TResponse}"/> class.
+        /// Initializes a new instance of the <see cref="ResultLoggingBehavior{TRequest}"/> class.
         /// </summary>
         /// <param name="logger">A logger for this instance.</param>
-        public ResultLoggingBehavior(ILogger<ResultLoggingBehavior<TRequest, TResponse>> logger)
+        public ResultLoggingBehavior(ILogger<ResultLoggingBehavior<TRequest>> logger)
         {
             _logger = logger;
         }
 
         /// <inheritdoc />
-        public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
+        public async Task<Result> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result> next)
         {
             _logger.LogTrace("Handling '{Request}'...", NotificationTypeName);
 
@@ -71,7 +71,7 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
             }
             else
             {
-                _logger.LogWarning("Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, duration, response.Error.Message);
+                _logger.LogError("Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, duration, response.Error.Message);
             }
 
             return response;
