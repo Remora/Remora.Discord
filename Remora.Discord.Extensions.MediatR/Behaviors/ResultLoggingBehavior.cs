@@ -54,23 +54,24 @@ namespace Remora.Discord.Extensions.MediatR.Behaviors
         /// <inheritdoc />
         public async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<Result<TResponse>> next)
         {
-            _logger.LogInformation("Handling '{Request}'...", NotificationTypeName);
+            _logger.LogTrace("Handling '{Request}'...", NotificationTypeName);
 
             var sw = Stopwatch.StartNew();
             var response = await next();
             sw.Stop();
+            string duration = sw.Elapsed.Humanize(precision: 5);
 
             if (response.IsSuccess)
             {
-                _logger.LogInformation("Successfully handled '{Request}' in {Elapsed}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5));
+                _logger.LogTrace("Successfully handled '{Request}' in {Elapsed}", NotificationTypeName, duration);
             }
             else if (response.Error is ExceptionError exe)
             {
-                _logger.LogError(exe.Exception, "Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5), exe.Message);
+                _logger.LogError(exe.Exception, "Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, duration, exe.Message);
             }
             else
             {
-                _logger.LogWarning("Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, sw.Elapsed.Humanize(precision: 5), response.Error.Message);
+                _logger.LogWarning("Request '{Request}' failed after {Elapsed}: {Reason}", NotificationTypeName, duration, response.Error.Message);
             }
 
             return response;

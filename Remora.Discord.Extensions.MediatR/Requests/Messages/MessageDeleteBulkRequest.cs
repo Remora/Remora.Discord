@@ -1,5 +1,5 @@
 ﻿//
-//  GuildStickersUpdateRequest.cs
+//  MessageDeleteBulkRequest.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -27,6 +27,6 @@ namespace Remora.Discord.Extensions.MediatR.Requests
 {
     /// <inheritdoc />
     [PublicAPI]
-    public sealed record GuildStickersUpdateRequest<TGuildStickersUpdate>(TGuildStickersUpdate Event) : IGatewayEventRequest<TGuildStickersUpdate>
-        where TGuildStickersUpdate : IGuildStickersUpdate;
+    public sealed record MessageDeleteBulkRequest<TMessageDeleteBulk>(TMessageDeleteBulk Event) : IGatewayEventRequest<TMessageDeleteBulk>
+        where TMessageDeleteBulk : IMessageDeleteBulk;
 }

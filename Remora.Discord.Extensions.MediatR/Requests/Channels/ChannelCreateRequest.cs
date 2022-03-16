@@ -20,11 +20,13 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.Extensions.MediatR.Requests.Channels
+namespace Remora.Discord.Extensions.MediatR.Requests
 {
     /// <inheritdoc />
+    [PublicAPI]
     public sealed record ChannelCreateRequest<TChannelCreate>(TChannelCreate Event) : IGatewayEventRequest<TChannelCreate>
         where TChannelCreate : IChannelCreate;
 }

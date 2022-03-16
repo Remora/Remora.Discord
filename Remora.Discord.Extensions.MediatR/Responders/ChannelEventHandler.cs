@@ -20,11 +20,12 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Remora.Discord.API.Abstractions.Gateway.Events;
-using Remora.Discord.Extensions.MediatR.Requests.Channels;
+using Remora.Discord.Extensions.MediatR.Requests;
 using Remora.Discord.Gateway.Responders;
 using Remora.Results;
 
@@ -33,22 +34,19 @@ namespace Remora.Discord.Extensions.MediatR.Responders
     /// <summary>
     /// A class which bundles all channel event responders and broadcasts them as mediator requests.
     /// </summary>
-    public partial class ChannelEventHandler
-        : IResponder<IChannelCreate>,
+    [Obsolete("Replaced with MediatorEventHandler")]
+    public partial class ChannelEventHandler :
+        IResponder<IChannelCreate>,
         IResponder<IChannelDelete>,
         IResponder<IChannelUpdate>,
-
         IResponder<IChannelPinsUpdate>,
-
         IResponder<IStageInstanceCreate>,
         IResponder<IStageInstanceDelete>,
         IResponder<IStageInstanceUpdate>,
-
         IResponder<IThreadCreate>,
         IResponder<IThreadDelete>,
         IResponder<IThreadUpdate>,
         IResponder<IThreadListSync>,
-
         IResponder<IThreadMemberUpdate>,
         IResponder<IThreadMembersUpdate>
     {

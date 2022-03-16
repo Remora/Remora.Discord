@@ -48,7 +48,7 @@ namespace Remora.Discord.Extensions.MediatR.Extensions
             services.AddTransient(typeof(RequestExceptionActionProcessorBehavior<,>), typeof(GatewayEventExceptionHandlerBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<,>));
 
-            services.AddResponder<ChannelEventHandler>();
+            services.AddResponder(typeof(MediatorEventHandler<>));
 
             return services;
         }

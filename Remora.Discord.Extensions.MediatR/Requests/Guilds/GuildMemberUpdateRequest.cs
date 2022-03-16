@@ -23,7 +23,7 @@
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 
-namespace Remora.Discord.Extensions.MediatR.Requests.Guilds
+namespace Remora.Discord.Extensions.MediatR.Requests
 {
     /// <inheritdoc />
     [PublicAPI]
