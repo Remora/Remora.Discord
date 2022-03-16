@@ -267,12 +267,26 @@ public class ResponderDispatchService : IAsyncDisposable
 
         while (!_dispatchCancellationSource.Token.IsCancellationRequested)
         {
-            var responderResults = await await _respondersToFinalize.Reader.ReadAsync
+            var responderResults = await _respondersToFinalize.Reader.ReadAsync
             (
                 _dispatchCancellationSource.Token
             );
 
-            FinalizeResponderDispatch(responderResults);
+            if (!responderResults.IsCompleted)
+            {
+                var timeout = Task.Delay(TimeSpan.FromMilliseconds(10));
+
+                var finishedTask = await Task.WhenAny(responderResults, timeout);
+                if (finishedTask == timeout)
+                {
+                    // This responder is taking too long... put it back on the channel and look at some other stuff
+                    // in the meantime.
+                    await _respondersToFinalize.Writer.WriteAsync(responderResults, _dispatchCancellationSource.Token);
+                    continue;
+                }
+            }
+
+            FinalizeResponderDispatch(await responderResults);
         }
 
         await _respondersToFinalize.Reader.Completion;
