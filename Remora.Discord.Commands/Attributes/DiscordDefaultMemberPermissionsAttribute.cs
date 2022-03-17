@@ -1,5 +1,5 @@
 //
-//  DiscordDefaultMemberPermissionsAttrribute.cs
+//  DiscordDefaultMemberPermissionsAttribute.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
