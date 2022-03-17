@@ -23,81 +23,80 @@
 using JetBrains.Annotations;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.API.Abstractions.Objects
+namespace Remora.Discord.API.Abstractions.Objects;
+
+/// <summary>
+/// Represents a user interaction.
+/// </summary>
+[PublicAPI]
+public interface IInteraction
 {
     /// <summary>
-    /// Represents a user interaction.
+    /// Gets the interaction ID.
     /// </summary>
-    [PublicAPI]
-    public interface IInteraction
-    {
-        /// <summary>
-        /// Gets the interaction ID.
-        /// </summary>
-        Snowflake ID { get; }
+    Snowflake ID { get; }
 
-        /// <summary>
-        /// Gets the application ID that the interaction is for.
-        /// </summary>
-        Snowflake ApplicationID { get; }
+    /// <summary>
+    /// Gets the application ID that the interaction is for.
+    /// </summary>
+    Snowflake ApplicationID { get; }
 
-        /// <summary>
-        /// Gets the type of the interaction.
-        /// </summary>
-        InteractionType Type { get; }
+    /// <summary>
+    /// Gets the type of the interaction.
+    /// </summary>
+    InteractionType Type { get; }
 
-        /// <summary>
-        /// Gets the command data payload.
-        /// </summary>
-        Optional<IInteractionData> Data { get; }
+    /// <summary>
+    /// Gets the command data payload.
+    /// </summary>
+    Optional<IInteractionData> Data { get; }
 
-        /// <summary>
-        /// Gets the ID of the guild the interaction was sent from.
-        /// </summary>
-        Optional<Snowflake> GuildID { get; }
+    /// <summary>
+    /// Gets the ID of the guild the interaction was sent from.
+    /// </summary>
+    Optional<Snowflake> GuildID { get; }
 
-        /// <summary>
-        /// Gets the ID of the channel the interaction was sent from.
-        /// </summary>
-        Optional<Snowflake> ChannelID { get; }
+    /// <summary>
+    /// Gets the ID of the channel the interaction was sent from.
+    /// </summary>
+    Optional<Snowflake> ChannelID { get; }
 
-        /// <summary>
-        /// Gets the guild member that invoked the command.
-        /// </summary>
-        Optional<IGuildMember> Member { get; }
+    /// <summary>
+    /// Gets the guild member that invoked the command.
+    /// </summary>
+    Optional<IGuildMember> Member { get; }
 
-        /// <summary>
-        /// Gets the user that invoked the command.
-        /// </summary>
-        Optional<IUser> User { get; }
+    /// <summary>
+    /// Gets the user that invoked the command.
+    /// </summary>
+    Optional<IUser> User { get; }
 
-        /// <summary>
-        /// Gets a continuation token for responding to the interaction.
-        /// </summary>
-        /// <remarks>This token is valid for 15 minutes.</remarks>
-        string Token { get; }
+    /// <summary>
+    /// Gets a continuation token for responding to the interaction.
+    /// </summary>
+    /// <remarks>This token is valid for 15 minutes.</remarks>
+    string Token { get; }
 
-        /// <summary>
-        /// Gets the version of the interaction API in use. Currently 1.
-        /// </summary>
-        int Version { get; }
+    /// <summary>
+    /// Gets the version of the interaction API in use. Currently 1.
+    /// </summary>
+    int Version { get; }
 
-        /// <summary>
-        /// Gets the message the component was attached to.
-        /// </summary>
-        Optional<IMessage> Message { get; }
+    /// <summary>
+    /// Gets the message the component was attached to.
+    /// </summary>
+    Optional<IMessage> Message { get; }
 
-        /// <summary>
-        /// Gets the locale of the invoking user.
-        /// </summary>
-        /// <remarks>
-        /// This is sent for all interaction types, except <see cref="InteractionType.Ping"/>.
-        /// </remarks>
-        Optional<string> Locale { get; }
+    /// <summary>
+    /// Gets the locale of the invoking user.
+    /// </summary>
+    /// <remarks>
+    /// This is sent for all interaction types, except <see cref="InteractionType.Ping"/>.
+    /// </remarks>
+    Optional<string> Locale { get; }
 
-        /// <summary>
-        /// Gets the locale of the guild the interaction was sent from.
-        /// </summary>
-        Optional<string> GuildLocale { get; }
-    }
+    /// <summary>
+    /// Gets the locale of the guild the interaction was sent from.
+    /// </summary>
+    Optional<string> GuildLocale { get; }
 }
