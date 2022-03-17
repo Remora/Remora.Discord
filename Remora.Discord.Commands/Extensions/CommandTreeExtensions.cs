@@ -201,30 +201,30 @@ public static class CommandTreeExtensions
 
             // Translate from options to bulk data
             Optional<ApplicationCommandType> commandType = default;
-            Optional<bool> defaultPermission = default;
+            Optional<bool> directMessagePermission = default;
+            Optional<IDiscordPermissionSet?> defaultMemberPermissions = default;
             switch (node)
             {
                 case GroupNode groupNode:
                 {
-                    var defaultPermissionAttributes = groupNode.GroupTypes.Select
-                        (
-                            t => t.GetCustomAttribute<DiscordDefaultPermissionAttribute>()
-                        )
-                        .ToList();
+                    // This *should* be acceptable because command permissions cannot
+                    // be applied at the option level, and sub-commands are options.
+                    var groupType = groupNode.GetType();
 
-                    if (defaultPermissionAttributes.Count > 1)
+                    var memberPermissionsAttribute = groupType
+                        .GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
+
+                    var directMessagePermissionAttribute = groupType
+                        .GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+                    if (memberPermissionsAttribute is not null)
                     {
-                        return new UnsupportedFeatureError
-                        (
-                            "In a set of groups with the same name, only one may be marked with a default " +
-                            $"permission attribute (had {defaultPermissionAttributes.Count})."
-                        );
+                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions);
                     }
 
-                    var permissionAttribute = defaultPermissionAttributes.SingleOrDefault();
-                    if (permissionAttribute is not null)
+                    if (directMessagePermissionAttribute is not null)
                     {
-                        defaultPermission = permissionAttribute.DefaultPermission;
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
                     }
 
                     break;
@@ -234,12 +234,20 @@ public static class CommandTreeExtensions
                     commandType = commandNode.GetCommandType();
 
                     // Top-level command outside of a group
-                    var permissionAttribute = commandNode.GroupType
-                        .GetCustomAttribute<DiscordDefaultPermissionAttribute>();
+                    var memberPermissionsAttribute = commandNode.GroupType
+                        .GetCustomAttribute<DiscordDefaultMemberPermissionsAttribute>();
 
-                    if (permissionAttribute is not null)
+                    var directMessagePermissionAttribute = commandNode.GroupType
+                        .GetCustomAttribute<DiscordDefaultDMPermissionAttribute>();
+
+                    if (memberPermissionsAttribute is not null)
                     {
-                        defaultPermission = permissionAttribute.DefaultPermission;
+                        defaultMemberPermissions = new DiscordPermissionSet(memberPermissionsAttribute.Permissions);
+                    }
+
+                    if (directMessagePermissionAttribute is not null)
+                    {
+                        directMessagePermission = directMessagePermissionAttribute.IsExecutableInDMs;
                     }
 
                     break;
@@ -253,8 +261,10 @@ public static class CommandTreeExtensions
                     option.Name,
                     option.Description,
                     option.Options,
-                    defaultPermission,
-                    commandType
+                    default,
+                    commandType,
+                    defaultMemberPermissions,
+                    directMessagePermission
                 )
             );
         }
