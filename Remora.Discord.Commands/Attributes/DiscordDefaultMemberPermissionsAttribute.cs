@@ -31,7 +31,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// can be overridden by moderators.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public class DiscordDefaultMemberPermissionsAttrribute : Attribute
+public class DiscordDefaultMemberPermissionsAttribute : Attribute
 {
     /// <summary>
     /// Gets the required permissions to execute the command.
