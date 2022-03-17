@@ -317,7 +317,7 @@ namespace Remora.Discord.Extensions.Embeds
                 ? avatarUrlResult.Entity
                 : CDN.GetDefaultUserAvatarUrl(user, imageSize: 256).Entity;
 
-            Author = new EmbedAuthorBuilder($"{user.Username}${user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
+            Author = new EmbedAuthorBuilder($"{user.Username}#{user.Discriminator}", iconUrl: avatarUrl.AbsoluteUri);
             return this;
         }
 
