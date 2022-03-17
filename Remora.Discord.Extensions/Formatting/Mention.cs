@@ -24,66 +24,65 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
-namespace Remora.Discord.Extensions.Formatting
+namespace Remora.Discord.Extensions.Formatting;
+
+/// <summary>
+/// Provides helper methods to mention various Discord objects.
+/// </summary>
+[PublicAPI]
+public static class Mention
 {
     /// <summary>
-    /// Provides helper methods to mention various Discord objects.
+    /// Creates a mention string for a user, displaying their username.
     /// </summary>
-    [PublicAPI]
-    public static class Mention
-    {
-        /// <summary>
-        /// Creates a mention string for a user, displaying their username.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>
-        /// A user mention string.
-        /// </returns>
-        public static string User(IUser user) => $"<@{user.ID.Value}>";
-        
-        /// <summary>
-        /// Creates a mention string for a user from their ID, displaying their username.
-        /// </summary>
-        /// <param name="snowflake">The user Snowflake ID.</param>
-        /// <returns>
-        /// A user mention string.
-        /// </returns>
-        public static string User(Snowflake snowflake) => $"<@{snowflake.Value}>";
+    /// <param name="user">The user.</param>
+    /// <returns>
+    /// A user mention string.
+    /// </returns>
+    public static string User(IUser user) => $"<@{user.ID.Value}>";
 
-        /// <summary>
-        /// Creates a mention string for a channel.
-        /// </summary>
-        /// <param name="channel">The channel.</param>
-        /// <returns>
-        /// A channel mention string.
-        /// </returns>
-        public static string Channel(IChannel channel) => $"<#{channel.ID.Value}>";
-        
-        /// <summary>
-        /// Creates a mention string for a channel from its ID.
-        /// </summary>
-        /// <param name="snowflake">The channel Snowflake ID.</param>
-        /// <returns>
-        /// A channel mention string.
-        /// </returns>
-        public static string Channel(Snowflake snowflake) => $"<#{snowflake.Value}>";
+    /// <summary>
+    /// Creates a mention string for a user from their ID, displaying their username.
+    /// </summary>
+    /// <param name="snowflake">The user Snowflake ID.</param>
+    /// <returns>
+    /// A user mention string.
+    /// </returns>
+    public static string User(Snowflake snowflake) => $"<@{snowflake.Value}>";
 
-        /// <summary>
-        /// Creates a mention string for a role from its ID.
-        /// </summary>
-        /// <param name="role">The role.</param>
-        /// <returns>
-        /// A role mention string.
-        /// </returns>
-        public static string Role(IRole role) => $"<@&{role.ID.Value}>";
-        
-        /// <summary>
-        /// Creates a mention string for a role.
-        /// </summary>
-        /// <param name="snowflake">The role Snowflake ID.</param>
-        /// <returns>
-        /// A role mention string.
-        /// </returns>
-        public static string Role(Snowflake snowflake) => $"<@&{snowflake.Value}>";
-    }
+    /// <summary>
+    /// Creates a mention string for a channel.
+    /// </summary>
+    /// <param name="channel">The channel.</param>
+    /// <returns>
+    /// A channel mention string.
+    /// </returns>
+    public static string Channel(IChannel channel) => $"<#{channel.ID.Value}>";
+
+    /// <summary>
+    /// Creates a mention string for a channel from its ID.
+    /// </summary>
+    /// <param name="snowflake">The channel Snowflake ID.</param>
+    /// <returns>
+    /// A channel mention string.
+    /// </returns>
+    public static string Channel(Snowflake snowflake) => $"<#{snowflake.Value}>";
+
+    /// <summary>
+    /// Creates a mention string for a role from its ID.
+    /// </summary>
+    /// <param name="role">The role.</param>
+    /// <returns>
+    /// A role mention string.
+    /// </returns>
+    public static string Role(IRole role) => $"<@&{role.ID.Value}>";
+
+    /// <summary>
+    /// Creates a mention string for a role.
+    /// </summary>
+    /// <param name="snowflake">The role Snowflake ID.</param>
+    /// <returns>
+    /// A role mention string.
+    /// </returns>
+    public static string Role(Snowflake snowflake) => $"<@&{snowflake.Value}>";
 }
