@@ -29,6 +29,7 @@ namespace Remora.Discord.Commands.Attributes;
 /// default.
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
+[Obsolete($"This attribute is no longer used by Discord. Use {nameof(DiscordDefaultMemberPermissionsAttrribute)} and {nameof(DiscordDefaultDMPermissionAttribute)} instead.")]
 public class DiscordDefaultPermissionAttribute : Attribute
 {
     /// <summary>
