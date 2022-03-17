@@ -46,4 +46,10 @@ public interface IBulkApplicationCommandData
 
     /// <inheritdoc cref="IApplicationCommand.Type"/>
     Optional<ApplicationCommandType> Type { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.DefaultMemberPermissions"/>
+    Optional<IDiscordPermissionSet?> DefaultMemberPermissions { get; }
+
+    /// <inheritdoc cref="IApplicationCommand.DmPermission"/>
+    Optional<bool> DmPermission { get; }
 }
