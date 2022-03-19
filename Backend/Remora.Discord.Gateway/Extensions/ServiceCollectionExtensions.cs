@@ -79,7 +79,11 @@ public static class ServiceCollectionExtensions
     /// <param name="group">The group the responder belongs to.</param>
     /// <typeparam name="TResponder">The concrete responder type.</typeparam>
     /// <returns>The service collection, with the responder added.</returns>
-    public static IServiceCollection AddResponder<TResponder>
+    public static IServiceCollection AddResponder
+        <
+            [MeansImplicitUse(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
+            TResponder
+        >
     (
         this IServiceCollection serviceCollection,
         ResponderGroup group = ResponderGroup.Normal
