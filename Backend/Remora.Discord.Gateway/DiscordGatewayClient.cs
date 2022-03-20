@@ -210,6 +210,13 @@ public class DiscordGatewayClient : IDisposable
             _disconnectRequestedSource.Dispose();
             _disconnectRequestedSource = new CancellationTokenSource();
 
+            _log.LogInformation("Starting dispatch service...");
+            var startDispatch = _responderDispatch.Start();
+            if (!startDispatch.IsSuccess)
+            {
+                return startDispatch;
+            }
+
             while (!stopRequested.IsCancellationRequested)
             {
                 var iterationResult = await RunConnectionIterationAsync(stopRequested);
@@ -235,12 +242,6 @@ public class DiscordGatewayClient : IDisposable
                         // Couldn't disconnect cleanly :(
                         return disconnectResult;
                     }
-                }
-
-                var stopDispatch = await _responderDispatch.StopAsync();
-                if (!stopDispatch.IsSuccess)
-                {
-                    return stopDispatch;
                 }
 
                 if (stopRequested.IsCancellationRequested)
@@ -269,6 +270,12 @@ public class DiscordGatewayClient : IDisposable
                 // This token's been cancelled, we'll need a new one to reconnect.
                 _disconnectRequestedSource.Dispose();
                 _disconnectRequestedSource = new CancellationTokenSource();
+            }
+
+            var stopDispatch = await _responderDispatch.StopAsync();
+            if (!stopDispatch.IsSuccess)
+            {
+                return stopDispatch;
             }
 
             var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
@@ -505,7 +512,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     _log.LogWarning
                     (
-                        "There's no session start limits available for this connection. Rate limits may be " +
+                        "There are no session start limits available for this connection. Rate limits may be " +
                         "unexpectedly hit"
                     );
                 }
@@ -519,13 +526,6 @@ public class DiscordGatewayClient : IDisposable
                         false,
                         true
                     );
-                }
-
-                _log.LogInformation("Starting dispatch service...");
-                var startDispatch = _responderDispatch.Start();
-                if (!startDispatch.IsSuccess)
-                {
-                    return new GatewayError("Failed to start the dispatch service.", false, true);
                 }
 
                 _log.LogInformation("Connecting to the gateway...");
@@ -557,7 +557,12 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                var dispatch = await _responderDispatch.DispatchAsync(receiveHello.Entity, _disconnectRequestedSource.Token);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receiveHello.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
                 if (!dispatch.IsSuccess)
                 {
                     return dispatch;
@@ -730,7 +735,12 @@ public class DiscordGatewayClient : IDisposable
                 );
             }
 
-            var dispatch = await _responderDispatch.DispatchAsync(receiveReady.Entity, _disconnectRequestedSource.Token);
+            var dispatch = await _responderDispatch.DispatchAsync
+            (
+                receiveReady.Entity,
+                _disconnectRequestedSource.Token
+            );
+
             if (!dispatch.IsSuccess)
             {
                 return dispatch;
@@ -802,7 +812,12 @@ public class DiscordGatewayClient : IDisposable
                 }
             }
 
-            var dispatch = await _responderDispatch.DispatchAsync(receiveEvent.Entity, _disconnectRequestedSource.Token);
+            var dispatch = await _responderDispatch.DispatchAsync
+            (
+                receiveEvent.Entity,
+                _disconnectRequestedSource.Token
+            );
+
             if (!dispatch.IsSuccess)
             {
                 return dispatch;
@@ -971,7 +986,12 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 // Enqueue the payload for dispatch
-                var dispatch = await _responderDispatch.DispatchAsync(receivedPayload.Entity, _disconnectRequestedSource.Token);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receivedPayload.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
                 if (!dispatch.IsSuccess)
                 {
                     return dispatch;
