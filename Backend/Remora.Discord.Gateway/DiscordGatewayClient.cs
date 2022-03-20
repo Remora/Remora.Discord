@@ -691,11 +691,11 @@ public class DiscordGatewayClient : IDisposable
             (
                 _tokenStore.Token,
                 _gatewayOptions.ConnectionProperties,
-                Compress: false,
-                LargeThreshold: _gatewayOptions.LargeThreshold,
-                Shard: shardInformation,
-                Presence: initialPresence,
-                Intents: _gatewayOptions.Intents
+                false,
+                _gatewayOptions.LargeThreshold,
+                shardInformation,
+                initialPresence,
+                _gatewayOptions.Intents
             )
         );
 
