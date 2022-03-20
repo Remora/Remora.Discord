@@ -996,7 +996,15 @@ public class DiscordGatewayClient : IDisposable
                     }
                     case IPayload<IHeartbeat>:
                     {
-                        SubmitCommand(new HeartbeatAcknowledge());
+                        // 32-bit reads are atomic, so this is fine
+                        var lastSequenceNumber = _lastSequenceNumber;
+
+                        var heartbeat = new Heartbeat
+                        (
+                            lastSequenceNumber == 0 ? null : lastSequenceNumber
+                        );
+
+                        SubmitCommand(heartbeat);
                         continue;
                     }
                     default:
