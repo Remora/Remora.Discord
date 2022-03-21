@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.14</Version>
+        <Version>2022.15</Version>
         <Description>
             $(BaseDescription)
 
@@ -16,7 +16,7 @@
             Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
         <PackageReleaseNotes>
-            Major refactoring of the gateway client's responder dispatch.
+            Fix usage of new responder dispatch.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->
