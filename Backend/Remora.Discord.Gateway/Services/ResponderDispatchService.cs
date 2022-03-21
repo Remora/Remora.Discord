@@ -402,7 +402,7 @@ public class ResponderDispatchService : IAsyncDisposable
                 (
                     async rt =>
                     {
-                        using var serviceScope = _services.CreateScope();
+                        await using var serviceScope = _services.CreateAsyncScope();
                         var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
                             .GetRequiredService(rt);
 
@@ -413,23 +413,6 @@ public class ResponderDispatchService : IAsyncDisposable
                         catch (Exception e)
                         {
                             return e;
-                        }
-                        finally
-                        {
-                            // Suspicious type conversions are disabled here, since the user-defined responders may
-                            // implement IDisposable or IAsyncDisposable.
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IDisposable disposable)
-                            {
-                                disposable.Dispose();
-                            }
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IAsyncDisposable asyncDisposable)
-                            {
-                                await asyncDisposable.DisposeAsync();
-                            }
                         }
                     }
                 )
