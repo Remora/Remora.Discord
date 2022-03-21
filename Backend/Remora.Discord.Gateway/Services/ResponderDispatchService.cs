@@ -27,12 +27,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.Gateway.Responders;
-using Remora.Discord.Gateway.Results;
 using Remora.Results;
 
 namespace Remora.Discord.Gateway.Services;
@@ -40,6 +40,7 @@ namespace Remora.Discord.Gateway.Services;
 /// <summary>
 /// Manages dispatch and processing of gateway payloads.
 /// </summary>
+[PublicAPI]
 public class ResponderDispatchService : IAsyncDisposable
 {
     private readonly IServiceProvider _services;
@@ -49,12 +50,16 @@ public class ResponderDispatchService : IAsyncDisposable
     private readonly Dictionary<Type, Type> _cachedInterfaceTypeArguments;
     private readonly Dictionary<Type, MethodInfo> _cachedDispatchMethods;
 
-    private bool _isRunning;
     private CancellationTokenSource? _dispatchCancellationSource;
     private Task? _dispatcher;
     private Task? _finalizer;
     private Channel<IPayload>? _payloadsToDispatch;
     private Channel<Task<IReadOnlyList<Result>>>? _respondersToFinalize;
+
+    /// <summary>
+    /// Gets a value indicating whether the dispatch service is currently running.
+    /// </summary>
+    public bool IsRunning { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponderDispatchService"/> class.
@@ -90,9 +95,9 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <returns>A result which may or may not have succeeded.</returns>
     public async Task<Result> DispatchAsync(IPayload payload, CancellationToken ct = default)
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException();
         }
 
         if (_dispatchCancellationSource is null)
@@ -120,12 +125,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <summary>
     /// Starts the dispatch service, beginning acceptance of payloads for dispatch.
     /// </summary>
-    /// <returns>A result which may or may not have succeeded.</returns>
-    public Result Start()
+    public void Start()
     {
-        if (_isRunning)
+        if (this.IsRunning)
         {
-            return new AlreadyStartedError();
+            throw new InvalidOperationException("The dispatch service is already running.");
         }
 
         _dispatchCancellationSource = new();
@@ -139,19 +143,18 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatcher = Task.Run(DispatcherTaskAsync, _dispatchCancellationSource.Token);
         _finalizer = Task.Run(FinalizerTaskAsync, _dispatchCancellationSource.Token);
 
-        _isRunning = true;
-        return Result.FromSuccess();
+        this.IsRunning = true;
     }
 
     /// <summary>
     /// Stops the dispatch service, finishing any pending payloads.
     /// </summary>
     /// <returns>A result which may or may not have succeeded.</returns>
-    public async Task<Result> StopAsync()
+    public async Task StopAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
-            return new NotRunningError();
+            throw new InvalidOperationException("The dispatch service is not running.");
         }
 
         if (_dispatcher is null)
@@ -196,8 +199,7 @@ public class ResponderDispatchService : IAsyncDisposable
         _payloadsToDispatch = null;
         _respondersToFinalize = null;
 
-        _isRunning = false;
-        return Result.FromSuccess();
+        this.IsRunning = false;
     }
 
     /// <summary>
@@ -505,15 +507,11 @@ public class ResponderDispatchService : IAsyncDisposable
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        if (!_isRunning)
+        if (!this.IsRunning)
         {
             return;
         }
 
-        var stopDispatch = await StopAsync();
-        if (!stopDispatch.IsSuccess)
-        {
-            _log.LogError("Failed to stop the dispatch service in DisposeAsync. Panic!");
-        }
+        await StopAsync();
     }
 }

@@ -211,11 +211,7 @@ public class DiscordGatewayClient : IDisposable
             _disconnectRequestedSource = new CancellationTokenSource();
 
             _log.LogInformation("Starting dispatch service...");
-            var startDispatch = _responderDispatch.Start();
-            if (!startDispatch.IsSuccess)
-            {
-                return startDispatch;
-            }
+            _responderDispatch.Start();
 
             while (!stopRequested.IsCancellationRequested)
             {
@@ -272,11 +268,7 @@ public class DiscordGatewayClient : IDisposable
                 _disconnectRequestedSource = new CancellationTokenSource();
             }
 
-            var stopDispatch = await _responderDispatch.StopAsync();
-            if (!stopDispatch.IsSuccess)
-            {
-                return stopDispatch;
-            }
+            await _responderDispatch.StopAsync();
 
             var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
             if (!userRequestedDisconnect.IsSuccess)
