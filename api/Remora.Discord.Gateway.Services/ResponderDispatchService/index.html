@@ -74,7 +74,9 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Attributes">Attributes</a></p>
 <p><a href="#Constructors">Constructors</a></p>
+<p><a href="#Properties">Properties</a></p>
 <p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -200,10 +202,28 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class ResponderDispatchService : IAsyncDisposable</code></pre>
+	<pre><code>[PublicAPI]
+public class ResponderDispatchService : IAsyncDisposable</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>PublicAPI</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 
@@ -231,6 +251,30 @@ class Type type-node
 
 
 
+			<h1 id="Properties">Properties</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderDispatchService/F3AAECD2">IsRunning</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Gets a value indicating whether the dispatch service is currently running.
+    </div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 			<h1 id="Methods">Methods</h1>
 			<div class="box">
@@ -263,7 +307,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderDispatchService/9A714403">Start<wbr>()<wbr></a></td>
-								<td>Result</td>
+								<td>void</td>
 								<td>
 									<div>
     Starts the dispatch service, beginning acceptance of payloads for dispatch.
@@ -272,7 +316,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Remora.Discord/api/Remora.Discord.Gateway.Services/ResponderDispatchService/C6C0CFD2">StopAsync<wbr>()<wbr></a></td>
-								<td>Task<wbr>&lt;Result&gt;<wbr></td>
+								<td>Task</td>
 								<td>
 									<div>
     Stops the dispatch service, finishing any pending payloads.
