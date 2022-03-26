@@ -186,7 +186,7 @@ public class AutocompleteResponder : IResponder<IInteractionCreate>
             new InteractionResponse
             (
                 InteractionCallbackType.ApplicationCommandAutocompleteResult,
-                new InteractionCallbackData(Choices: new(suggestions.Take(25).ToList()))
+                new(new InteractionAutocompleteCallbackData(suggestions.Take(25).ToList()))
             ),
             ct: ct
         );

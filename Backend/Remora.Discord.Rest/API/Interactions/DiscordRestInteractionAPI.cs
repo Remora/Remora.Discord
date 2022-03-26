@@ -86,7 +86,9 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 "Response data must be provided with the interaction response if attachments are to be " +
                 "uploaded or retained."
             ),
-            true when response.Data.HasValue && response.Data.Value.Attachments.HasValue => new InvalidOperationError
+            true when response.Data.HasValue &&
+                      response.Data.Value.TryPickT0(out var messageData, out _) &&
+                      messageData.Attachments.HasValue => new InvalidOperationError
             (
                 "The response data may not contain user-supplied attachments; they would be overwritten by this " +
                 $"call. Pass your desired attachments in the {nameof(attachments)} parameter instead."
@@ -111,10 +113,12 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                             b.AddContent(new StreamContent(stream), contentName, name);
                         }
 
-                        if (response is not InteractionResponse
-                            {
-                                Data: { Value: InteractionCallbackData dataRecord }
-                            } responseRecord)
+                        if
+                        (
+                            response is not InteractionResponse { Data.HasValue: true } responseRecord ||
+                            !responseRecord.Data.Value.TryPickT0(out var data, out _) ||
+                            data is not InteractionMessageCallbackData dataRecord
+                        )
                         {
                             throw new InvalidOperationException
                             (
@@ -124,11 +128,11 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                             );
                         }
 
-                        response = responseRecord with { Data = dataRecord with { Attachments = attachmentList } };
+                        response = responseRecord with { Data = new(dataRecord with { Attachments = attachmentList }) };
                     }
 
                     b.WithJson(json => JsonSerializer.Serialize(json, response, this.JsonOptions), false);
-                    b.WithRateLimitContext();
+                    b.WithRateLimitContext(true);
                 },
                 ct
             )
@@ -146,7 +150,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.GetAsync<IMessage>
         (
             $"webhooks/{applicationID}/{interactionToken}/messages/@original",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(true),
             ct: ct
         );
     }
@@ -207,17 +211,17 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 }
 
                 b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("content", content, this.JsonOptions);
-                            json.Write("embeds", embeds, this.JsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("components", components, this.JsonOptions);
-                            json.Write("attachments", attachmentList, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext();
+                (
+                    json =>
+                    {
+                        json.Write("content", content, this.JsonOptions);
+                        json.Write("embeds", embeds, this.JsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                        json.Write("components", components, this.JsonOptions);
+                        json.Write("attachments", attachmentList, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(true);
             },
             ct: ct
         );
@@ -234,8 +238,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{applicationID}/{token}/messages/@original",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.WithRateLimitContext(true),
+            ct
         );
     }
 
@@ -287,19 +291,19 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 }
 
                 b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("content", content, this.JsonOptions);
-                            json.Write("tts", isTTS, this.JsonOptions);
-                            json.Write("embeds", embeds, this.JsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("components", components, this.JsonOptions);
-                            json.Write("attachments", attachmentList, this.JsonOptions);
-                            json.Write("flags", flags, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext();
+                (
+                    json =>
+                    {
+                        json.Write("content", content, this.JsonOptions);
+                        json.Write("tts", isTTS, this.JsonOptions);
+                        json.Write("embeds", embeds, this.JsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                        json.Write("components", components, this.JsonOptions);
+                        json.Write("attachments", attachmentList, this.JsonOptions);
+                        json.Write("flags", flags, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(true);
             },
             ct: ct
         );
@@ -317,7 +321,7 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.GetAsync<IMessage>
         (
             $"webhooks/{applicationID}/{token}/messages/{messageID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(true),
             ct: ct
         );
     }
@@ -379,17 +383,17 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
                 }
 
                 b.WithJson
-                    (
-                        json =>
-                        {
-                            json.Write("content", content, this.JsonOptions);
-                            json.Write("embeds", embeds, this.JsonOptions);
-                            json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
-                            json.Write("components", components, this.JsonOptions);
-                            json.Write("attachments", attachmentList, this.JsonOptions);
-                        }
-                    )
-                    .WithRateLimitContext();
+                (
+                    json =>
+                    {
+                        json.Write("content", content, this.JsonOptions);
+                        json.Write("embeds", embeds, this.JsonOptions);
+                        json.Write("allowed_mentions", allowedMentions, this.JsonOptions);
+                        json.Write("components", components, this.JsonOptions);
+                        json.Write("attachments", attachmentList, this.JsonOptions);
+                    }
+                )
+                .WithRateLimitContext(true);
             },
             ct: ct
         );
@@ -407,8 +411,8 @@ public class DiscordRestInteractionAPI : AbstractDiscordRestAPI, IDiscordRestInt
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{applicationID}/{token}/messages/{messageID}",
-            b => b.WithRateLimitContext(),
-            ct: ct
+            b => b.WithRateLimitContext(true),
+            ct
         );
     }
 }

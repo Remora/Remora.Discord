@@ -1,5 +1,5 @@
 //
-//  Component.cs
+//  TextInputComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,27 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IComponent" />
-[PublicAPI]
-public record Component
+/// <inheritdoc cref="ITextInputComponent" />
+public record TextInputComponent
 (
-    ComponentType Type,
-    Optional<IReadOnlyList<IMessageComponent>> Components,
-    Optional<ButtonComponentStyle> Style,
-    Optional<string> Label,
-    Optional<IPartialEmoji> Emoji,
-    Optional<string> CustomID,
-    Optional<string> URL,
-    Optional<bool> IsDisabled,
-    Optional<IReadOnlyList<ISelectOption>> Options,
-    Optional<string> Placeholder,
-    Optional<int> MinValues,
-    Optional<int> MaxValues
-) : IMessageComponent, IComponent;
+    string CustomID,
+    TextInputStyle Style,
+    string Label,
+    Optional<int> MinLength,
+    Optional<int> MaxLength,
+    Optional<bool> IsRequired,
+    Optional<string> Value,
+    Optional<string> Placeholder
+) : ITextInputComponent
+{
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.TextInput;
+}

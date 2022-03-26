@@ -49,10 +49,22 @@ public static class RestRequestBuilderExtensions
     /// Sets up a Polly context with an endpoint for rate limiting purposes.
     /// </summary>
     /// <param name="builder">The request builder.</param>
+    /// <param name="isExemptFromGlobalLimits">
+    /// Whether this request is exempt from global rate limits, and doesn't need to consider them.
+    /// </param>
     /// <returns>The builder, with the context.</returns>
-    public static RestRequestBuilder WithRateLimitContext(this RestRequestBuilder builder)
+    public static RestRequestBuilder WithRateLimitContext
+    (
+        this RestRequestBuilder builder,
+        bool isExemptFromGlobalLimits = false
+    )
     {
-        var context = new Context { { "endpoint", builder.Endpoint } };
+        var context = new Context
+        {
+            { "endpoint", builder.Endpoint },
+            { "exempt-from-global-rate-limits", isExemptFromGlobalLimits }
+        };
+
         builder.With(r => r.SetPolicyExecutionContext(context));
 
         return builder;

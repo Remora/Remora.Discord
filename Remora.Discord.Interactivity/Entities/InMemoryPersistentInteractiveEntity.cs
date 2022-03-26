@@ -27,6 +27,8 @@ using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Results;
 
+#pragma warning disable SA1402
+
 namespace Remora.Discord.Interactivity;
 
 /// <summary>
@@ -60,7 +62,7 @@ public abstract class InMemoryPersistentInteractiveEntity : IInteractiveEntity
     /// <inheritdoc />
     public abstract Task<Result<bool>> IsInterestedAsync
     (
-        ComponentType componentType,
+        ComponentType? componentType,
         string customID,
         CancellationToken ct = default
     );

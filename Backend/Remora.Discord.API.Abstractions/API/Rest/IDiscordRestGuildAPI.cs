@@ -207,7 +207,7 @@ public interface IDiscordRestGuildAPI
         Optional<int> userLimit = default,
         Optional<int> rateLimitPerUser = default,
         Optional<int> position = default,
-        Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
         Optional<string> reason = default,
@@ -446,7 +446,7 @@ public interface IDiscordRestGuildAPI
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
     /// <param name="userID">The ID of the user.</param>
-    /// <param name="deleteMessageDays">The number of days to delete messages for (0-7).</param>
+    /// <param name="deleteMessageDays">The number of days to delete messages for (0-7). Defaults to 0.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
@@ -512,8 +512,8 @@ public interface IDiscordRestGuildAPI
         Optional<IDiscordPermissionSet> permissions = default,
         Optional<Color> colour = default,
         Optional<bool> isHoisted = default,
-        Optional<Stream> icon = default,
-        Optional<string> unicodeEmoji = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
         Optional<bool> isMentionable = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -768,7 +768,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="requestToSpeakTimestamp">The time when the user requested to speak.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
         Snowflake channelID,

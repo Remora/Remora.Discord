@@ -62,9 +62,6 @@ public interface IPartialInvite
     /// <inheritdoc cref="IInvite.ExpiresAt" />
     Optional<DateTimeOffset?> ExpiresAt { get; }
 
-    /// <inheritdoc cref="IInvite.StageInstance" />
-    Optional<IInviteStageInstance> StageInstance { get; }
-
     /// <inheritdoc cref="IInvite.GuildScheduledEvent" />
     Optional<IGuildScheduledEvent> GuildScheduledEvent { get; }
 }

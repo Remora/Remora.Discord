@@ -212,6 +212,11 @@ public enum DiscordError
     UnknownApplicationCommand = 10063,
 
     /// <summary>
+    /// Unknown voice state.
+    /// </summary>
+    UnknownVoiceState = 10065,
+
+    /// <summary>
     /// Unknown application command permissions.
     /// </summary>
     UnknownApplicationCommandPermissions = 10066,
@@ -427,6 +432,11 @@ public enum DiscordError
     OpeningDMsTooFast = 40003,
 
     /// <summary>
+    /// Your ability to send messages has been temporarily disabled.
+    /// </summary>
+    SendMessagesHasBeenTemporarilyDisabled = 40004,
+
+    /// <summary>
     /// Request entity too large. Try sending something smaller in size.
     /// </summary>
     RequestEntityTooLarge = 40005,
@@ -455,6 +465,11 @@ public enum DiscordError
     /// An application command with that name already exists.
     /// </summary>
     ApplicationCommandWithNameExists = 40041,
+
+    /// <summary>
+    /// The interaction has already been acknowledged by the application.
+    /// </summary>
+    InteractionHasAlreadyBeenAcknowledged = 40060,
 
     /// <summary>
     /// Missing access.
@@ -492,9 +507,9 @@ public enum DiscordError
     CannotSendMessageToUser = 50007,
 
     /// <summary>
-    /// Cannot send messages in a voice channel.
+    /// Cannot send messages in a non-text channel.
     /// </summary>
-    CannotSendMessageToVoiceChannel = 50008,
+    CannotSendMessageToNonTextChannel = 50008,
 
     /// <summary>
     /// Channel verification level is too high for you to gain access.

@@ -195,7 +195,7 @@ public interface IDiscordRestApplicationAPI
     );
 
     /// <summary>
-    /// Gets a global command.
+    /// Gets a guild command.
     /// </summary>
     /// <param name="applicationID">The ID of the bot application.</param>
     /// <param name="guildID">The ID of the guild.</param>

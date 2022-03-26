@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -63,6 +64,7 @@ public interface IPartialApplication
     Optional<IPartialUser?> Owner { get; }
 
     /// <inheritdoc cref="IApplication.Summary" />
+    [Obsolete]
     Optional<string> Summary { get; }
 
     /// <inheritdoc cref="IApplication.VerifyKey" />

@@ -1,5 +1,5 @@
 //
-//  InviteStageInstanceTests.cs
+//  InteractionMessageCallbackDataTests.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -26,6 +26,7 @@ using Remora.Discord.API.Tests.TestBases;
 namespace Remora.Discord.API.Tests.Objects;
 
 /// <inheritdoc />
-public class InviteStageInstanceTests : ObjectTestBase<IInviteStageInstance>
+public class InteractionMessageCallbackDataTests
+    : ObjectTestBase<IInteractionMessageCallbackData>
 {
 }

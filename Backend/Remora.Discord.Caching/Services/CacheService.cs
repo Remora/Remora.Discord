@@ -68,6 +68,14 @@ public class CacheService
     public void Cache<TInstance>(object key, TInstance instance)
         where TInstance : class
     {
+        if (_cacheSettings.GetAbsoluteExpirationOrDefault(typeof(TInstance)) is var absoluteExpiration)
+        {
+            if (absoluteExpiration == TimeSpan.Zero)
+            {
+                return;
+            }
+        }
+
         Action cacheAction = instance switch
         {
             IWebhook webhook => () => CacheWebhook(key, webhook),

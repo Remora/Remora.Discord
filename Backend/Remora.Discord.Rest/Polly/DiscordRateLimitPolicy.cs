@@ -47,9 +47,9 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
     {
         _globalRateLimitBucket = new RateLimitBucket
         (
-            10000,
-            10000,
-            DateTime.Today + TimeSpan.FromDays(1),
+            50,
+            50,
+            DateTimeOffset.UtcNow + TimeSpan.FromSeconds(1),
             "global",
             true
         );
@@ -71,21 +71,49 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             throw new InvalidOperationException("No endpoint set.");
         }
 
-        if (!_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
+        var now = DateTimeOffset.UtcNow;
+
+        // Determine whether this request is exempt from global rate limits
+        var isExemptFromGlobalRateLimits = false;
+        if (context.TryGetValue("exempt-from-global-rate-limits", out var rawExempt) && rawExempt is bool isExempt)
         {
-            rateLimitBucket = _globalRateLimitBucket;
+            isExemptFromGlobalRateLimits = isExempt;
         }
 
-        var now = DateTime.UtcNow;
-
-        if (!await rateLimitBucket.TryTakeAsync())
+        // First, take a token from the global limits
+        if (!isExemptFromGlobalRateLimits)
         {
-            var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            // Check if we need to reset the global limits
+            if (_globalRateLimitBucket.ResetsAt < now)
+            {
+                await _globalRateLimitBucket.ResetAsync(now + TimeSpan.FromSeconds(1));
+            }
 
-            var delay = rateLimitBucket.ResetsAt - now;
-            rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+            if (!await _globalRateLimitBucket.TryTakeAsync())
+            {
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
 
-            return rateLimitedResponse;
+                var delay = _globalRateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
+            }
+        }
+
+        // Then, try to take one from the local bucket
+        if (_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
+        {
+            // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
+            // from Discord
+            if (!await rateLimitBucket.TryTakeAsync())
+            {
+                var rateLimitedResponse = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+
+                var delay = rateLimitBucket.ResetsAt - now;
+                rateLimitedResponse.Headers.RetryAfter = new RetryConditionHeaderValue(delay);
+
+                return rateLimitedResponse;
+            }
         }
 
         // The request can proceed without hitting rate limits, and we've taken a token

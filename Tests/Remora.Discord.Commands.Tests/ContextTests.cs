@@ -53,9 +53,11 @@ public class ContextTests
     {
         _services = new ServiceCollection()
             .AddDiscordCommands()
-            .AddCommandGroup<GroupWithContext>()
-            .AddCommandGroup<GroupWithInteractionContext>()
-            .AddCommandGroup<GroupWithMessageContext>()
+            .AddCommandTree()
+                .WithCommandGroup<GroupWithContext>()
+                .WithCommandGroup<GroupWithInteractionContext>()
+                .WithCommandGroup<GroupWithMessageContext>()
+            .Finish()
             .BuildServiceProvider(true)
             .CreateScope().ServiceProvider;
 

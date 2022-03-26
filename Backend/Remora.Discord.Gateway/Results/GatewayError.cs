@@ -29,4 +29,4 @@ namespace Remora.Discord.Gateway.Results;
 /// Represents a clientside gateway error.
 /// </summary>
 [PublicAPI]
-public record GatewayError(string Message, bool IsCritical) : ResultError(Message);
+public record GatewayError(string Message, bool IsSessionResumable, bool IsCritical) : ResultError(Message);

@@ -62,4 +62,9 @@ public interface IStageInstance
     /// </summary>
     [Obsolete]
     bool IsDiscoveryDisabled { get; }
+
+    /// <summary>
+    /// Gets the ID of the scheduled event for this stage instance.
+    /// </summary>
+    Snowflake? GuildScheduledEventID { get; }
 }

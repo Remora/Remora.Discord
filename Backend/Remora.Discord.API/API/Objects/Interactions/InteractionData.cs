@@ -39,5 +39,7 @@ public record InteractionData
     Optional<IReadOnlyList<IApplicationCommandInteractionDataOption>> Options = default,
     Optional<string> CustomID = default,
     Optional<ComponentType> ComponentType = default,
-    Optional<IReadOnlyList<string>> Values = default
+    Optional<IReadOnlyList<string>> Values = default,
+    Optional<Snowflake> TargetID = default,
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components = default
 ) : IInteractionData;

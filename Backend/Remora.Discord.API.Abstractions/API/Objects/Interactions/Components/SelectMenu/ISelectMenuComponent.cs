@@ -30,23 +30,61 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a dropdown of selectable values.
 /// </summary>
 [PublicAPI]
-public interface ISelectMenuComponent : IMessageComponent
+public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuComponent
 {
-    /// <inheritdoc cref="IComponent.CustomID"/>
-    string CustomID { get; }
+    /// <summary>
+    /// Gets the type of the component.
+    /// </summary>
+    new ComponentType Type { get; }
 
-    /// <inheritdoc cref="IComponent.Options"/>
-    IReadOnlyList<ISelectOption> Options { get; }
+    /// <summary>
+    /// Gets a custom ID for the component, defined by the developer.
+    /// </summary>
+    new string CustomID { get; }
 
-    /// <inheritdoc cref="IComponent.Placeholder"/>
-    Optional<string> Placeholder { get; }
+    /// <summary>
+    /// Gets the options in the select menu.
+    /// </summary>
+    new IReadOnlyList<ISelectOption> Options { get; }
 
-    /// <inheritdoc cref="IComponent.MinValues"/>
-    Optional<int> MinValues { get; }
+    /// <summary>
+    /// Gets the placeholder text for the menu. Max 150 characters.
+    /// </summary>
+    new Optional<string> Placeholder { get; }
 
-    /// <inheritdoc cref="IComponent.MaxValues"/>
-    Optional<int> MaxValues { get; }
+    /// <summary>
+    /// Gets the minimum number of options that must be selected.
+    /// </summary>
+    new Optional<int> MinValues { get; }
 
-    /// <inheritdoc cref="IComponent.IsDisabled"/>
-    Optional<bool> IsDisabled { get; }
+    /// <summary>
+    /// Gets the maximum number of options that may be selected.
+    /// </summary>
+    new Optional<int> MaxValues { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the component is disabled.
+    /// </summary>
+    new Optional<bool> IsDisabled { get; }
+
+    /// <inheritdoc/>
+    Optional<ComponentType> IPartialSelectMenuComponent.Type => this.Type;
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectMenuComponent.CustomID => this.CustomID;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<IPartialSelectOption>> IPartialSelectMenuComponent.Options => new(this.Options);
+
+    /// <inheritdoc/>
+    Optional<string> IPartialSelectMenuComponent.Placeholder => this.Placeholder;
+
+    /// <inheritdoc/>
+    Optional<int> IPartialSelectMenuComponent.MinValues => this.MinValues;
+
+    /// <inheritdoc/>
+    Optional<int> IPartialSelectMenuComponent.MaxValues => this.MaxValues;
+
+    /// <inheritdoc/>
+    Optional<bool> IPartialSelectMenuComponent.IsDisabled => this.IsDisabled;
 }

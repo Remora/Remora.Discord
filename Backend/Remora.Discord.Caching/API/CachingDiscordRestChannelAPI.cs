@@ -96,7 +96,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
         Optional<int?> rateLimitPerUser = default,
         Optional<int?> bitrate = default,
         Optional<int?> userLimit = default,
-        Optional<IReadOnlyList<IPermissionOverwrite>?> permissionOverwrites = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
         Optional<Snowflake?> parentId = default,
         Optional<VideoQualityMode?> videoQualityMode = default,
         Optional<bool> isArchived = default,

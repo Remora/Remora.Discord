@@ -73,7 +73,7 @@ internal sealed class PaginatedMessageEntity :
     /// <inheritdoc/>
     public override Task<Result<bool>> IsInterestedAsync
     (
-        ComponentType componentType,
+        ComponentType? componentType,
         string customID,
         CancellationToken ct = default
     )

@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>50.0.0</Version>
+        <Version>53.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,22 +13,17 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Implement new message flag.
-            InteractionCallbackDataFlags is no more; long live MessageFlags!
-            Implement new error code.
-            Implement support for flags on normal messages.
-            Implement changes to guild widget handling.
-            Add audit log reason support to more endpoints.
-            Add guild stickers to the preview object.
-            Add missing change key.
+            Chuck out obsolete members.
+            Update field nullability.
+            Various mixed fixes.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-        <PackageReference Include="System.Text.Json" Version="6.0.1" />
-        <PackageReference Include="Remora.Rest" Version="1.1.2" />
+        <PackageReference Include="System.Text.Json" Version="6.0.2" />
+        <PackageReference Include="Remora.Rest" Version="1.2.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -68,6 +63,21 @@
       </Compile>
       <Compile Update="API\Gateway\Commands\ShardIdentification.cs">
         <DependentUpon>Identify.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\ActionRow\PartialActionRowComponent.cs">
+        <DependentUpon>ActionRowComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\Button\PartialButtonComponent.cs">
+        <DependentUpon>ButtonComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialSelectOption.cs">
+        <DependentUpon>SelectOption.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\SelectMenu\PartialSelectMenuComponent.cs">
+        <DependentUpon>SelectMenuComponent.cs</DependentUpon>
+      </Compile>
+      <Compile Update="API\Objects\Interactions\Components\TextInput\PartialTextInputComponent.cs">
+        <DependentUpon>TextInputComponent.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

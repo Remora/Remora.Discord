@@ -66,4 +66,14 @@ public interface IInteractionData
     /// Gets the values selected by the user.
     /// </summary>
     Optional<IReadOnlyList<string>> Values { get; }
+
+    /// <summary>
+    /// Gets the ID of the user or message targeted by an interaction.
+    /// </summary>
+    Optional<Snowflake> TargetID { get; }
+
+    /// <summary>
+    /// Gets the components for this interaction.
+    /// </summary>
+    Optional<IReadOnlyList<IPartialMessageComponent>> Components { get; }
 }

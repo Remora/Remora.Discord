@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Rest.Core;
@@ -85,6 +86,7 @@ public interface IApplication : IPartialApplication
     /// <summary>
     /// Gets the summary of the game, if the application is a game sold on the Discord storefront.
     /// </summary>
+    [Obsolete]
     new string Summary { get; }
 
     /// <summary>
@@ -153,6 +155,7 @@ public interface IApplication : IPartialApplication
     Optional<IPartialUser?> IPartialApplication.Owner => new(this.Owner);
 
     /// <inheritdoc/>
+    [Obsolete]
     Optional<string> IPartialApplication.Summary => this.Summary;
 
     /// <inheritdoc/>

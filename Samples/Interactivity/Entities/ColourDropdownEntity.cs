@@ -59,7 +59,7 @@ public class ColourDropdownEntity : ISelectMenuInteractiveEntity
     /// <inheritdoc />
     public Task<Result<bool>> IsInterestedAsync
     (
-        ComponentType componentType,
+        ComponentType? componentType,
         string customID,
         CancellationToken ct = default
     )

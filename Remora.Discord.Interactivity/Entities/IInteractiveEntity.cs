@@ -42,9 +42,12 @@ public interface IInteractiveEntity
     /// interest for a single interaction. Multiple interested entities will run in parallel, though access to
     /// persistent in-memory entity data will be synchronized.
     /// </remarks>
-    /// <param name="componentType">The component type.</param>
+    /// <param name="componentType">
+    /// The component type, or null if the interaction is not bound to a particular component type. This is generally
+    /// the case for modal interactions.
+    /// </param>
     /// <param name="customID">The custom ID.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>true if the entity is interested; otherwise, false.</returns>
-    Task<Result<bool>> IsInterestedAsync(ComponentType componentType, string customID, CancellationToken ct = default);
+    Task<Result<bool>> IsInterestedAsync(ComponentType? componentType, string customID, CancellationToken ct = default);
 }

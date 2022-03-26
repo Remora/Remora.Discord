@@ -209,6 +209,7 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IChannelPinsUpdate, ChannelPinsUpdate>();
 
         options.AddDataObjectConverter<IThreadCreate, ThreadCreate>()
+            .WithPropertyName(c => c.IsNewlyCreated, "newly_created")
             .WithPropertyName(c => c.IsNsfw, "nsfw")
             .WithPropertyConverter(c => c.RateLimitPerUser, new UnitTimeSpanConverter(TimeUnit.Seconds));
 
@@ -656,10 +657,7 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IInvite, Invite>();
-
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
-
-        options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
 
         return options;
     }
@@ -722,6 +720,7 @@ public static class ServiceCollectionExtensions
         options.AddConverter<DiscordPermissionSetConverter>();
 
         options.AddDataObjectConverter<IPermissionOverwrite, PermissionOverwrite>();
+        options.AddDataObjectConverter<IPartialPermissionOverwrite, PartialPermissionOverwrite>();
 
         options.AddDataObjectConverter<IRole, Role>()
             .WithPropertyName(r => r.Colour, "color")
@@ -914,10 +913,12 @@ public static class ServiceCollectionExtensions
         options.AddDataObjectConverter<IInteraction, Interaction>();
         options.AddDataObjectConverter
             <
-                IInteractionCallbackData, InteractionCallbackData
+                IInteractionMessageCallbackData, InteractionMessageCallbackData
             >()
             .WithPropertyName(d => d.IsTTS, "tts");
 
+        options.AddDataObjectConverter<IInteractionAutocompleteCallbackData, InteractionAutocompleteCallbackData>();
+        options.AddDataObjectConverter<IInteractionModalCallbackData, InteractionModalCallbackData>();
         options.AddDataObjectConverter<IInteractionResponse, InteractionResponse>();
 
         options.AddDataObjectConverter<IApplicationCommand, ApplicationCommand>();
@@ -949,18 +950,37 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(p => p.HasPermission, "permission");
 
         options.AddConverter<MessageComponentConverter>();
+        options.AddConverter<PartialMessageComponentConverter>();
 
-        options.AddDataObjectConverter<IComponent, Component>()
-            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
+        options.AddDataObjectConverter<IPartialActionRowComponent, PartialActionRowComponent>()
+            .IncludeWhenSerializing(c => c.Type);
 
-        options.AddDataObjectConverter<IActionRowComponent, ActionRowComponent>();
         options.AddDataObjectConverter<IButtonComponent, ButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialButtonComponent, PartialButtonComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
         options.AddDataObjectConverter<ISelectMenuComponent, SelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(c => c.IsDisabled, "disabled");
+        options.AddDataObjectConverter<IPartialSelectMenuComponent, PartialSelectMenuComponent>()
+            .IncludeWhenSerializing(c => c.Type)
             .WithPropertyName(c => c.IsDisabled, "disabled");
 
+        options.AddDataObjectConverter<ITextInputComponent, TextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(i => i.IsRequired, "required");
+        options.AddDataObjectConverter<IPartialTextInputComponent, PartialTextInputComponent>()
+            .IncludeWhenSerializing(c => c.Type)
+            .WithPropertyName(i => i.IsRequired, "required");
+
         options.AddDataObjectConverter<ISelectOption, SelectOption>()
+            .WithPropertyName(o => o.IsDefault, "default");
+        options.AddDataObjectConverter<IPartialSelectOption, PartialSelectOption>()
             .WithPropertyName(o => o.IsDefault, "default");
 
         return options;

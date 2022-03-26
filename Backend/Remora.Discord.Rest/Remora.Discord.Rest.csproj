@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>28.0.0</Version>
+        <Version>31.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,21 +13,15 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Implement new message flag.
-            InteractionCallbackDataFlags is no more; long live MessageFlags!
-            Implement new error code.
-            Implement support for flags on normal messages.
-            Implement changes to guild widget handling.
-            Add audit log reason support to more endpoints.
-            Add guild stickers to the preview object.
-            Add missing change key.
+            Chuck out obsolete members.
+            Various mixed fixes.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
       <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
-        <PackageReference Include="Remora.Rest" Version="1.1.2" />
+        <PackageReference Include="Remora.Rest" Version="1.2.2" />
     </ItemGroup>
 
     <ItemGroup>

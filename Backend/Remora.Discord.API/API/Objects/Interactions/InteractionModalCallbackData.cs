@@ -1,5 +1,5 @@
 //
-//  IInviteStageInstance.cs
+//  InteractionModalCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,33 +21,14 @@
 //
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents stage information in an invite.
-/// </summary>
-[PublicAPI]
-public interface IInviteStageInstance
-{
-    /// <summary>
-    /// Gets the speaking members of the stage.
-    /// </summary>
-    IReadOnlyList<IPartialGuildMember> Members { get; }
-
-    /// <summary>
-    /// Gets the number of stage participants.
-    /// </summary>
-    int ParticipantCount { get; }
-
-    /// <summary>
-    /// Gets the number of users speaking in the stage.
-    /// </summary>
-    int SpeakerCount { get; }
-
-    /// <summary>
-    /// Gets the topic of the stage.
-    /// </summary>
-    string Topic { get; }
-}
+/// <inheritdoc cref="IInteractionModalCallbackData"/>
+public record InteractionModalCallbackData
+(
+    string CustomID,
+    string Title,
+    IReadOnlyList<IMessageComponent> Components
+) : IInteractionModalCallbackData;

@@ -21,12 +21,13 @@
 //
 
 using JetBrains.Annotations;
+using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IButtonComponent" />
+/// <inheritdoc cref="IButtonComponent" />
 [PublicAPI]
 public record ButtonComponent
 (
@@ -36,11 +37,8 @@ public record ButtonComponent
     Optional<string> CustomID = default,
     Optional<string> URL = default,
     Optional<bool> IsDisabled = default
-) : IButtonComponent, IDefaultedComponent
+) : IButtonComponent
 {
-    /// <inheritdoc/>
-    ComponentType IComponent.Type => ComponentType.Button;
-
-    /// <inheritdoc/>
-    Optional<ButtonComponentStyle> IComponent.Style => this.Style;
+    /// <inheritdoc />
+    public ComponentType Type => ComponentType.Button;
 }

@@ -1,5 +1,5 @@
 //
-//  IInteractionCallbackData.cs
+//  IInteractionMessageCallbackData.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -30,7 +30,7 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents return payload data for an interaction response.
 /// </summary>
 [PublicAPI]
-public interface IInteractionCallbackData
+public interface IInteractionMessageCallbackData
 {
     /// <summary>
     /// Gets a value indicating whether the message is a TTS message.
@@ -73,10 +73,4 @@ public interface IInteractionCallbackData
     /// </summary>
     /// <remarks>Only relevant for message interactions.</remarks>
     Optional<IReadOnlyList<IPartialAttachment>> Attachments { get; }
-
-    /// <summary>
-    /// Gets the autocomplete choices.
-    /// </summary>
-    /// <remarks>Only relevant for autocomplete interactions.</remarks>
-    Optional<IReadOnlyList<IApplicationCommandOptionChoice>> Choices { get; }
 }

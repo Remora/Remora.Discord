@@ -93,7 +93,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IStageInstance>> UpdateStageInstanceAsync
+    public virtual Task<Result<IStageInstance>> ModifyStageInstanceAsync
     (
         Snowflake channelID,
         Optional<string> topic = default,

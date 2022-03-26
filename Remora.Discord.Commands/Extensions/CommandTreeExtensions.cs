@@ -598,6 +598,7 @@ public static class CommandTreeExtensions
             var t when t == typeof(IChannel) => ApplicationCommandOptionType.Channel,
             var t when t.IsInteger() => Integer,
             var t when t.IsFloatingPoint() => Number,
+            var t when t == typeof(IAttachment) => ApplicationCommandOptionType.Attachment,
             _ => ApplicationCommandOptionType.String
         };
 

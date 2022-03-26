@@ -300,7 +300,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<int> userLimit = default,
         Optional<int> rateLimitPerUser = default,
         Optional<int> position = default,
-        Optional<IReadOnlyList<IPermissionOverwrite>> permissionOverwrites = default,
+        Optional<IReadOnlyList<IPartialPermissionOverwrite>> permissionOverwrites = default,
         Optional<Snowflake> parentID = default,
         Optional<bool> isNsfw = default,
         Optional<string> reason = default,
@@ -724,8 +724,8 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         Optional<IDiscordPermissionSet> permissions = default,
         Optional<Color> colour = default,
         Optional<bool> isHoisted = default,
-        Optional<Stream> icon = default,
-        Optional<string> unicodeEmoji = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
         Optional<bool> isMentionable = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -1147,7 +1147,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     }
 
     /// <inheritdoc/>
-    public virtual Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    public virtual Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
         Snowflake channelID,
@@ -1156,7 +1156,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         CancellationToken ct = default
     )
     {
-        return this.RestHttpClient.PatchAsync<IVoiceState>
+        return this.RestHttpClient.PatchAsync
         (
             $"guilds/{guildID}/voice-states/@me",
             b => b.WithJson
@@ -1169,7 +1169,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
                     }
                 )
                 .WithRateLimitContext(),
-            ct: ct
+            ct
         );
     }
 

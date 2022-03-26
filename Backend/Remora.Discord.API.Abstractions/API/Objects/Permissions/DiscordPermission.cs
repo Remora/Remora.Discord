@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Numerics;
 using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
@@ -27,6 +28,10 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// <summary>
 /// Enumerates the various permissions in Discord.
 /// </summary>
+/// <remarks>
+/// Note that the values of the enumeration members do not map to the actual values of Discord's permissions - instead,
+/// they mark how many bits a value of 1 should be shifted into a <see cref="BigInteger"/> to get the actual value.
+/// </remarks>
 [PublicAPI]
 public enum DiscordPermission
 {
@@ -190,7 +195,7 @@ public enum DiscordPermission
     /// <summary>
     /// Allows usage of slash commands.
     /// </summary>
-    UseSlashCommands = 31,
+    UseApplicationCommands = 31,
 
     /// <summary>
     /// Allows the user to request to speak in a stage channel.
@@ -230,10 +235,11 @@ public enum DiscordPermission
     /// <summary>
     /// Allows for launching activities in a voice channel.
     /// </summary>
-    StartEmbeddedActivities = 39,
+    UseEmbeddedActivities = 39,
 
     /// <summary>
-    /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.
+    /// Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from
+    /// speaking in voice and stage channels.
     /// </summary>
     ModerateMembers = 40
 }

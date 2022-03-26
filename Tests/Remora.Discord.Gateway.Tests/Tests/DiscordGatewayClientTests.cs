@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
+using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -65,7 +66,7 @@ public class DiscordGatewayClientTests
             .Sequence
             (
                 s => s
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
@@ -125,7 +126,7 @@ public class DiscordGatewayClientTests
             .Sequence
             (
                 s => s
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
@@ -149,7 +150,7 @@ public class DiscordGatewayClientTests
                     )
                     .Send<Reconnect>()
                     .ExpectDisconnect()
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Resume>
                     (
@@ -198,7 +199,7 @@ public class DiscordGatewayClientTests
             .Sequence
             (
                 s => s
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
@@ -222,7 +223,7 @@ public class DiscordGatewayClientTests
                     )
                     .Send<Reconnect>()
                     .ExpectDisconnect()
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Resume>
                     (
@@ -233,6 +234,81 @@ public class DiscordGatewayClientTests
                         }
                     )
                     .Send(new InvalidSession(false))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new Ready
+                        (
+                            8,
+                            Constants.BotUser,
+                            new List<IUnavailableGuild>(),
+                            Constants.MockSessionID,
+                            default,
+                            new PartialApplication()
+                        )
+                    )
+            )
+            .Continuously
+            (
+                c => c
+                    .Expect<IHeartbeat>()
+                    .Send<HeartbeatAcknowledge>()
+            )
+            .Finish(tokenSource)
+            .Build();
+
+        var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
+
+        var services = new ServiceCollection()
+            .AddDiscordGateway(_ => Constants.MockToken)
+            .Replace(transportMockDescriptor)
+            .Replace(CreateMockedGatewayAPI())
+            .AddSingleton<IResponderTypeRepository, ResponderService>()
+            .BuildServiceProvider(true);
+
+        var client = services.GetRequiredService<DiscordGatewayClient>();
+        var runResult = await client.RunAsync(tokenSource.Token);
+
+        ResultAssert.Successful(runResult);
+    }
+
+    /// <summary>
+    /// Tests whether the client can retry session creation if the attempt is invalidated.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
+    [Fact]
+    public async Task CanRetrySessionCreationIfInvalidatedAsync()
+    {
+        var tokenSource = new CancellationTokenSource();
+        var transportMock = new MockedTransportServiceBuilder()
+            .IgnoreUnexpected()
+            .Sequence
+            (
+                s => s
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                    .Expect<Identify>
+                    (
+                        i =>
+                        {
+                            Assert.Equal(Constants.MockToken, i?.Token);
+                            return true;
+                        }
+                    )
+                    .Send
+                    (
+                        new InvalidSession(false)
+                    )
+                    .ExpectDisconnect()
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                    .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
                         i =>
@@ -291,7 +367,7 @@ public class DiscordGatewayClientTests
             .Sequence
             (
                 s => s
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
@@ -314,7 +390,7 @@ public class DiscordGatewayClientTests
                         )
                     )
                     .SendException(() => new WebSocketException())
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (
@@ -337,7 +413,7 @@ public class DiscordGatewayClientTests
                         )
                     )
                     .SendException(() => new HttpRequestException())
-                    .ExpectConnection(new Uri("wss://gateway.discord.gg/?v=9&encoding=json"))
+                    .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
                     .Send(new Hello(TimeSpan.FromMilliseconds(200)))
                     .Expect<Identify>
                     (

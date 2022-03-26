@@ -63,7 +63,7 @@ public class DiscordRestGuildAPITests
             // Create a dummy PNG image
             await using var icon = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(icon);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             icon.Position = 0;
 
             var verificationLevel = VerificationLevel.High;
@@ -277,7 +277,7 @@ public class DiscordRestGuildAPITests
             // Create a dummy PNG image
             await using var icon = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(icon);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             icon.Position = 0;
 
             var verificationLevel = VerificationLevel.High;
@@ -291,17 +291,17 @@ public class DiscordRestGuildAPITests
 
             await using var splash = new MemoryStream();
             await using var splashBinaryWriter = new BinaryWriter(splash);
-            splashBinaryWriter.Write(9894494448401390090);
+            splashBinaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             splash.Position = 0;
 
             await using var discoverySplash = new MemoryStream();
             await using var discoverySplashBinaryWriter = new BinaryWriter(discoverySplash);
-            discoverySplashBinaryWriter.Write(9894494448401390090);
+            discoverySplashBinaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             discoverySplash.Position = 0;
 
             await using var banner = new MemoryStream();
             await using var bannerBinaryWriter = new BinaryWriter(banner);
-            bannerBinaryWriter.Write(9894494448401390090);
+            bannerBinaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             banner.Position = 0;
 
             var rulesChannelId = DiscordSnowflake.New(3);
@@ -1485,7 +1485,7 @@ public class DiscordRestGuildAPITests
             // Create a dummy PNG image
             await using var icon = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(icon);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             icon.Position = 0;
 
             var unicodeEmoji = "🦈";
@@ -1643,7 +1643,7 @@ public class DiscordRestGuildAPITests
             // Create a dummy PNG image
             await using var icon = new MemoryStream();
             await using var binaryWriter = new BinaryWriter(icon);
-            binaryWriter.Write(9894494448401390090);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
             icon.Position = 0;
 
             var unicodeEmoji = "🦈";

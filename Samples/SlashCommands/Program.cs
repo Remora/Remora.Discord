@@ -28,8 +28,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Remora.Commands.Extensions;
 using Remora.Discord.API;
+using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.Commands.Extensions;
 using Remora.Discord.Commands.Services;
+using Remora.Discord.Gateway;
 using Remora.Discord.Hosting.Extensions;
 using Remora.Discord.Samples.SlashCommands.Commands;
 using Remora.Rest.Core;
@@ -116,6 +118,7 @@ public class Program
         (
             (_, services) =>
             {
+                services.Configure<DiscordGatewayClientOptions>(g => g.Intents |= GatewayIntents.MessageContents);
                 services
                     .AddDiscordCommands(true)
                     .AddCommandTree()

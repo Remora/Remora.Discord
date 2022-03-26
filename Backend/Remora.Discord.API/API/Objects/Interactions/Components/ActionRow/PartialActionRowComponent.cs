@@ -1,5 +1,5 @@
 //
-//  InviteStageInstance.cs
+//  PartialActionRowComponent.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -23,15 +23,15 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Rest.Core;
 
 namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc cref="Remora.Discord.API.Abstractions.Objects.IInviteStageInstance" />
+/// <inheritdoc cref="IPartialActionRowComponent" />
 [PublicAPI]
-public record InviteStageInstance
-(
-    IReadOnlyList<IPartialGuildMember> Members,
-    int ParticipantCount,
-    int SpeakerCount,
-    string Topic
-) : IInviteStageInstance;
+public record PartialActionRowComponent(Optional<IReadOnlyList<IPartialMessageComponent>> Components)
+    : IPartialActionRowComponent
+{
+    /// <inheritdoc/>
+    public Optional<ComponentType> Type => ComponentType.ActionRow;
+}

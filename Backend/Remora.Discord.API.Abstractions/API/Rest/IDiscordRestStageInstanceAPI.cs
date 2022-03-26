@@ -70,7 +70,7 @@ public interface IDiscordRestStageInstanceAPI
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
-    Task<Result<IStageInstance>> UpdateStageInstanceAsync
+    Task<Result<IStageInstance>> ModifyStageInstanceAsync
     (
         Snowflake channelID,
         Optional<string> topic = default,

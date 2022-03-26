@@ -29,25 +29,37 @@ namespace Remora.Discord.API.Abstractions.Objects;
 /// Represents a channel- or category-specific permission overwrite.
 /// </summary>
 [PublicAPI]
-public interface IPermissionOverwrite
+public interface IPermissionOverwrite : IPartialPermissionOverwrite
 {
     /// <summary>
     /// Gets the ID of the role or user ID that the overwrite affects.
     /// </summary>
-    Snowflake ID { get; }
+    new Snowflake ID { get; }
 
     /// <summary>
     /// Gets the type of the overwrite.
     /// </summary>
-    PermissionOverwriteType Type { get; }
+    new PermissionOverwriteType Type { get; }
 
     /// <summary>
     /// Gets the set of permissions that are explicitly allowed.
     /// </summary>
-    IDiscordPermissionSet Allow { get; }
+    new IDiscordPermissionSet Allow { get; }
 
     /// <summary>
     /// Gets the set of permissions that are explicitly denied.
     /// </summary>
-    IDiscordPermissionSet Deny { get; }
+    new IDiscordPermissionSet Deny { get; }
+
+    /// <inheritdoc/>
+    Optional<Snowflake> IPartialPermissionOverwrite.ID => this.ID;
+
+    /// <inheritdoc/>
+    Optional<PermissionOverwriteType> IPartialPermissionOverwrite.Type => this.Type;
+
+    /// <inheritdoc/>
+    Optional<IDiscordPermissionSet> IPartialPermissionOverwrite.Allow => new(this.Allow);
+
+    /// <inheritdoc/>
+    Optional<IDiscordPermissionSet> IPartialPermissionOverwrite.Deny => new(this.Deny);
 }

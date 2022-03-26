@@ -57,6 +57,7 @@ public static class ServiceCollectionExtensions
             .AddDiscordRest(tokenFactory);
 
         serviceCollection.TryAddSingleton<Random>();
+        serviceCollection.TryAddSingleton<ResponderDispatchService>();
         serviceCollection.TryAddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
         serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 

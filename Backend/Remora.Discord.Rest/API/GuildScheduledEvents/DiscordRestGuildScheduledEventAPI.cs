@@ -196,12 +196,12 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
         Snowflake guildID,
         Snowflake eventID,
         Optional<Snowflake> channelID = default,
-        Optional<IGuildScheduledEventEntityMetadata> entityMetadata = default,
+        Optional<IGuildScheduledEventEntityMetadata?> entityMetadata = default,
         Optional<string> name = default,
         Optional<GuildScheduledEventPrivacyLevel> privacyLevel = default,
         Optional<DateTimeOffset> scheduledStartTime = default,
         Optional<DateTimeOffset> scheduledEndTime = default,
-        Optional<string> description = default,
+        Optional<string?> description = default,
         Optional<GuildScheduledEventEntityType> entityType = default,
         Optional<GuildScheduledEventStatus> status = default,
         Optional<Stream> image = default,
@@ -218,7 +218,7 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        if (description.HasValue && description.Value.Length is < 1 or > 100)
+        if (description.IsDefined(out var realDescription) && realDescription.Length is < 1 or > 100)
         {
             return new ArgumentOutOfRangeError
             (
@@ -229,9 +229,9 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
 
         if
         (
-            entityMetadata.HasValue &&
-            entityMetadata.Value.Location.HasValue &&
-            entityMetadata.Value.Location.Value.Length is < 1 or > 100
+            entityMetadata.IsDefined(out var metadata) &&
+            metadata.Location.HasValue &&
+            metadata.Location.Value.Length is < 1 or > 100
         )
         {
             return new ArgumentOutOfRangeError

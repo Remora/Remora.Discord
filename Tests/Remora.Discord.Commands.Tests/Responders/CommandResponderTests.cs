@@ -87,7 +87,9 @@ public class CommandResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _preExecutionEventMock.Object);
         }
     }
@@ -207,7 +209,9 @@ public class CommandResponderTests
         protected override void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddCommandGroup<SimpleGroup>()
+                .AddCommandTree()
+                    .WithCommandGroup<SimpleGroup>()
+                .Finish()
                 .AddScoped(_ => _postExecutionEventMock.Object);
         }
     }

@@ -22,6 +22,7 @@
 
 using System;
 using JetBrains.Annotations;
+using Remora.Discord.API.Abstractions;
 
 namespace Remora.Discord.Rest;
 
@@ -34,7 +35,7 @@ public static class Constants
     /// <summary>
     /// Gets the base API URL.
     /// </summary>
-    public static Uri BaseURL { get; } = new("https://discord.com/api/v9/");
+    public static Uri BaseURL { get; } = new($"https://discord.com/api/v{(int)DiscordAPIVersion.V10}/");
 
     /// <summary>
     /// Gets the name of the audit log reason header.
