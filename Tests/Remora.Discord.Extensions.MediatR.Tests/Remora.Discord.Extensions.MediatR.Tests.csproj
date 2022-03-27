@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Remora.Discord.Extensions.MediatR\Remora.Discord.Extensions.MediatR.csproj" />
+    <ProjectReference Include="..\Remora.Discord.Gateway.Tests\Remora.Discord.Gateway.Tests.csproj" />
   </ItemGroup>
 
 </Project>
