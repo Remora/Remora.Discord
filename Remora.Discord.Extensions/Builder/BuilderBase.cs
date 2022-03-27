@@ -60,7 +60,7 @@ public abstract class BuilderBase<TEntity> : IBuilder<TEntity>
         (
             Uri.IsWellFormedUriString(url, UriKind.Absolute) &&
             Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
-            uri is { Scheme: "http" or "https" }
+            uri is { Scheme: "http" or "https" or "attachment" }
         )
         {
             return Result.FromSuccess();

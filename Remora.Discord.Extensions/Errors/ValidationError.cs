@@ -26,7 +26,7 @@ using Remora.Results;
 namespace Remora.Discord.Extensions.Errors;
 
 /// <summary>
-/// Represents an error which occurred due to a validation error.
+/// Represents an error which occurred while validating a property.
 /// </summary>
 /// <param name="PropertyName">The name of the argument.</param>
 /// <param name="Reason">The reason validation failed.</param>
