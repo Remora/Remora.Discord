@@ -20,78 +20,145 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Moq;
+using Remora.Discord.API;
+using Remora.Discord.API.Abstractions;
+using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Objects;
+using Remora.Discord.API.Abstractions.Rest;
+using Remora.Discord.API.Gateway.Bidirectional;
+using Remora.Discord.API.Gateway.Commands;
 using Remora.Discord.API.Gateway.Events;
 using Remora.Discord.API.Objects;
-using Remora.Discord.Extensions.MediatR.Behaviors;
-using Remora.Discord.Extensions.MediatR.Extensions;
 using Remora.Discord.Extensions.MediatR.Requests;
 using Remora.Discord.Extensions.MediatR.Responders;
+using Remora.Discord.Extensions.MediatR.Tests.Responders;
+using Remora.Discord.Gateway;
 using Remora.Discord.Gateway.Extensions;
+using Remora.Discord.Gateway.Services;
+using Remora.Discord.Gateway.Tests.Transport;
+using Remora.Discord.Gateway.Transport;
+using Remora.Discord.Tests;
 using Remora.Rest.Core;
+using Remora.Results;
 using Xunit;
+
+using GatewayConstants = Remora.Discord.Gateway.Tests.Constants;
 
 namespace Remora.Discord.Extensions.MediatR.Tests
 {
 #pragma warning disable SA1600, CS1591
     public class MediatorTests
     {
-        private readonly IMediator _mediator;
-        private readonly ServiceProvider _serviceProvider;
-
-        public MediatorTests()
-        {
-            _serviceProvider = new ServiceCollection()
-                .AddLogging()
-                .AddMediatR(typeof(Responders.MessageCreateHandler))
-                .AddTransient(typeof(RequestExceptionActionProcessorBehavior<,>), typeof(GatewayEventExceptionHandlerBehavior<,>))
-                .AddTransient(typeof(IPipelineBehavior<,>), typeof(ResultLoggingBehavior<,>))
-
-                .BuildServiceProvider();
-
-            _mediator = _serviceProvider.GetRequiredService<IMediator>();
-        }
-
         [Fact]
         public async Task HandlesEvent()
         {
-            var author = new User(new Snowflake(0), "Test", 1234, null);
-            var messageCreated = new MessageCreate
+            var tokenSource = new CancellationTokenSource();
+            var transportMock = new MockedTransportServiceBuilder()
+                .IgnoreUnexpected()
+                .Sequence
                 (
-                    new Snowflake(1),
-                    new Snowflake(2),
-                    default,
-                    author,
-                    default,
-                    "Hello World!",
-                    System.DateTimeOffset.Now,
-                    null,
-                    false,
-                    false,
-                    new List<IUserMention>().AsReadOnly(),
-                    new List<Snowflake>().AsReadOnly(),
-                    default,
-                    new List<IAttachment>().AsReadOnly(),
-                    new List<IEmbed>().AsReadOnly(),
-                    default,
-                    default,
-                    false,
-                    default,
-                    MessageType.Default
-                );
+                    s => s
+                        .ExpectConnection(new Uri($"wss://gateway.discord.gg/?v={(int)DiscordAPIVersion.V10}&encoding=json"))
+                        .Send(new Hello(TimeSpan.FromMilliseconds(200)))
+                        .Expect<Identify>
+                        (
+                            i =>
+                            {
+                                Assert.Equal(GatewayConstants.MockToken, i?.Token);
+                                return true;
+                            }
+                        )
+                        .Send
+                        (
+                            new Ready
+                            (
+                                10,
+                                GatewayConstants.BotUser,
+                                new List<IUnavailableGuild>(),
+                                GatewayConstants.MockSessionID,
+                                default,
+                                new PartialApplication()
+                            )
+                        )
+                        .Send
+                        (
+                            new MessageCreate
+                            (
+                                DiscordSnowflake.New(0),
+                                DiscordSnowflake.New(1),
+                                DiscordSnowflake.New(2),
+                                GatewayConstants.BotUser,
+                                default,
+                                "Hello world!",
+                                DateTimeOffset.UtcNow,
+                                null,
+                                false,
+                                false,
+                                new List<IUserMention>(),
+                                new List<Snowflake>(),
+                                default,
+                                new List<IAttachment>(),
+                                new List<IEmbed>(),
+                                new List<IReaction>(),
+                                "brr",
+                                false,
+                                default,
+                                MessageType.Default
+                            )
+                        )
+                )
+                .Continuously
+                (
+                    c => c
+                        .Expect<IHeartbeat>()
+                        .Send<HeartbeatAcknowledge>()
+                )
+                .Finish(tokenSource)
+                .Build();
 
-            var mediatorEventResponder = new MediatorEventResponder(_mediator);
+            var transportMockDescriptor = ServiceDescriptor.Singleton(typeof(IPayloadTransportService), transportMock);
 
-            var result = await mediatorEventResponder.RespondAsync(messageCreated);
+            var handler = new MessageCreateHandler();
 
-            Assert.True(result.IsSuccess);
+            var mediator = new Mock<IMediator>();
+            mediator.Setup(m => m.Send(It.IsAny<IGatewayEventRequest<IMessageCreate>>(), It.IsAny<CancellationToken>()))
+                .Callback<IGatewayEventRequest<IMessageCreate>, CancellationToken>((request, ct) =>
+                    handler.Handle(request, ct));
+
+            var services = new ServiceCollection()
+                .AddDiscordGateway(_ => GatewayConstants.MockToken)
+                .Replace(transportMockDescriptor)
+                .Replace(CreateMockedGatewayAPI())
+                .AddSingleton<IResponderTypeRepository, ResponderService>()
+                .AddSingleton(typeof(IMediator), mediator)
+                .AddResponder<MediatorEventResponder>()
+                .BuildServiceProvider(true);
+
+            var client = services.GetRequiredService<DiscordGatewayClient>();
+            var runResult = await client.RunAsync(tokenSource.Token);
+
+            ResultAssert.Successful(runResult);
+        }
+
+        private static ServiceDescriptor CreateMockedGatewayAPI()
+        {
+            var gatewayAPIMock = new Mock<IDiscordRestGatewayAPI>();
+            gatewayAPIMock
+                .Setup(a => a.GetGatewayBotAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result<IGatewayEndpoint>.FromSuccess(new GatewayEndpoint("wss://gateway.discord.gg/")));
+
+            var gatewayApi = gatewayAPIMock.Object;
+            var gatewayAPIMockDescriptor = ServiceDescriptor.Singleton(typeof(IDiscordRestGatewayAPI), gatewayApi);
+            return gatewayAPIMockDescriptor;
         }
     }
 }
