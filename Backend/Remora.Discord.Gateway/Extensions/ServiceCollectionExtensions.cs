@@ -22,12 +22,12 @@
 
 using System;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Microsoft.IO;
 using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
@@ -57,14 +57,14 @@ public static class ServiceCollectionExtensions
             .AddDiscordRest(tokenFactory);
 
         serviceCollection.TryAddSingleton<Random>();
-        serviceCollection.TryAddSingleton<ResponderDispatchService>();
         serviceCollection.TryAddSingleton<IResponderTypeRepository>(s => s.GetRequiredService<IOptions<ResponderService>>().Value);
+        serviceCollection.TryAddSingleton<IResponderDispatchService, DefaultResponderDispatchService>();
         serviceCollection.TryAddSingleton<DiscordGatewayClient>();
 
-        serviceCollection.TryAddTransient<ClientWebSocket>();
+        serviceCollection.TryAddSingleton<RecyclableMemoryStreamManager>();
         serviceCollection.TryAddTransient<IPayloadTransportService>(s => new WebSocketPayloadTransportService
         (
-            s,
+            s.GetRequiredService<RecyclableMemoryStreamManager>(),
             s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
         ));
 

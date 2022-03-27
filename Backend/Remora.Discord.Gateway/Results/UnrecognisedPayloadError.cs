@@ -1,5 +1,5 @@
 //
-//  GatewayConnectionStatus.cs
+//  UnrecognisedPayloadError.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,27 +21,15 @@
 //
 
 using JetBrains.Annotations;
+using Remora.Results;
 
-namespace Remora.Discord.Gateway;
+namespace Remora.Discord.Gateway.Results;
 
 /// <summary>
-/// Enumerates the various states the gateway client can be in.
+/// Represents an error that occurs as a result of an inbound gateway payload not being recognised.
 /// </summary>
+/// <param name="Message">The error message.</param>
+/// <param name="OpCode">The OP code of the payload.</param>
 [PublicAPI]
-public enum GatewayConnectionStatus
-{
-    /// <summary>
-    /// The client is completely offline.
-    /// </summary>
-    Offline,
-
-    /// <summary>
-    /// The client is disconnected from the gateway, but active.
-    /// </summary>
-    Disconnected,
-
-    /// <summary>
-    /// The client is connected and handling events.
-    /// </summary>
-    Connected
-}
+public record UnrecognisedPayloadError(string Message, int? OpCode = null)
+    : ResultError(Message);

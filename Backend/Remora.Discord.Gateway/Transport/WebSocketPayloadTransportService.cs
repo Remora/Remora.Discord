@@ -28,7 +28,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IO;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.Gateway.Results;
 using Remora.Results;
@@ -41,8 +41,21 @@ namespace Remora.Discord.Gateway.Transport;
 [PublicAPI]
 public class WebSocketPayloadTransportService : IPayloadTransportService, IAsyncDisposable
 {
-    private readonly IServiceProvider _services;
+    /// <summary>
+    /// Gets the maximum size in bytes that a command may be.
+    /// </summary>
+    private const int MaxPayloadSize = 4096;
+
+    private readonly RecyclableMemoryStreamManager _memoryStreamManager;
     private readonly JsonSerializerOptions _jsonOptions;
+
+    private readonly SemaphoreSlim _sendSemaphore;
+    private readonly SemaphoreSlim _receiveSemaphore;
+    private readonly Utf8JsonWriter _payloadJsonWriter;
+
+    private bool _isDisposed;
+    private ArrayBufferWriter<byte> _payloadSendBuffer;
+    private CancellationTokenSource _receiveToken;
 
     /// <summary>
     /// Holds the currently available websocket client.
@@ -55,27 +68,41 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// <summary>
     /// Initializes a new instance of the <see cref="WebSocketPayloadTransportService"/> class.
     /// </summary>
-    /// <param name="services">The services available to the application.</param>
+    /// <param name="memoryStreamManager">A <see cref="RecyclableMemoryStream"/> pool.</param>
     /// <param name="jsonOptions">The JSON options.</param>
     public WebSocketPayloadTransportService
     (
-        IServiceProvider services,
+        RecyclableMemoryStreamManager memoryStreamManager,
         JsonSerializerOptions jsonOptions
     )
     {
-        _services = services;
+        _memoryStreamManager = memoryStreamManager;
         _jsonOptions = jsonOptions;
+
+        _sendSemaphore = new SemaphoreSlim(1, 1);
+        _receiveSemaphore = new SemaphoreSlim(1, 1);
+        _receiveToken = new CancellationTokenSource();
+        _payloadSendBuffer = new ArrayBufferWriter<byte>(MaxPayloadSize);
+        _payloadJsonWriter = new Utf8JsonWriter
+        (
+            _payloadSendBuffer,
+            new JsonWriterOptions { SkipValidation = true } // The JSON Serializer should handle everything correctly
+        );
     }
 
     /// <inheritdoc />
     public async Task<Result> ConnectAsync(Uri endpoint, CancellationToken ct = default)
     {
-        if (_clientWebSocket is not null)
+        if (this.IsConnected)
         {
             return new InvalidOperationError("The transport service is already connected.");
         }
 
-        var socket = _services.GetRequiredService<ClientWebSocket>();
+        _receiveToken.Dispose();
+        _receiveToken = new CancellationTokenSource();
+
+        _clientWebSocket?.Dispose();
+        var socket = new ClientWebSocket();
 
         try
         {
@@ -113,56 +140,53 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// <inheritdoc />
     public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
-        if (_clientWebSocket is null)
+        if (_clientWebSocket?.State is not WebSocketState.Open)
         {
             return new InvalidOperationError("The transport service is not connected.");
         }
 
-        if (_clientWebSocket.State != WebSocketState.Open)
-        {
-            return new InvalidOperationError("The socket was not open.");
-        }
+        var semaphoreEntered = false;
 
-        await using var memoryStream = new MemoryStream();
-
-        byte[]? buffer = null;
         try
         {
-            await JsonSerializer.SerializeAsync(memoryStream, payload, _jsonOptions, ct);
-
-            if (memoryStream.Length > 4096)
+            semaphoreEntered = await _sendSemaphore.WaitAsync(100, ct);
+            if (!semaphoreEntered)
             {
-                return new NotSupportedError
-                (
-                    "The payload was too large to be accepted by the gateway."
-                );
+                return new OperationCanceledException("Could not enter semaphore.");
             }
 
-            buffer = ArrayPool<byte>.Shared.Rent((int)memoryStream.Length);
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            JsonSerializer.Serialize(_payloadJsonWriter, payload, _jsonOptions);
 
-            // Copy the data
-            var bufferSegment = new ArraySegment<byte>(buffer, 0, (int)memoryStream.Length);
-            await memoryStream.ReadAsync(bufferSegment, ct);
+            var data = _payloadSendBuffer.WrittenMemory;
 
-            // Send the whole payload as one chunk
-            await _clientWebSocket.SendAsync(bufferSegment, WebSocketMessageType.Text, true, ct);
+            if (data.Length > MaxPayloadSize)
+            {
+                // Reset the backing buffer so we don't hold on to more memory than necessary
+                _payloadSendBuffer = new ArrayBufferWriter<byte>(MaxPayloadSize);
+                _payloadJsonWriter.Reset(_payloadSendBuffer);
+
+                return new NotSupportedError("The payload was too large to be accepted by the gateway.");
+            }
+
+            await _clientWebSocket.SendAsync(data, WebSocketMessageType.Text, true, ct);
 
             if (_clientWebSocket.CloseStatus.HasValue)
             {
-                if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)_clientWebSocket.CloseStatus))
-                {
-                    return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus);
-                }
-
-                return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
+                return ConstructCloseError();
             }
+        }
+        catch (Exception ex)
+        {
+            return ex;
         }
         finally
         {
-            if (buffer is not null)
+            _payloadSendBuffer.Clear();
+            _payloadJsonWriter.Reset();
+
+            if (semaphoreEntered)
             {
-                ArrayPool<byte>.Shared.Return(buffer);
+                _sendSemaphore.Release();
             }
         }
 
@@ -172,58 +196,58 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// <inheritdoc />
     public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
     {
-        if (_clientWebSocket is null)
+        if (_clientWebSocket?.State is not WebSocketState.Open)
         {
             return new InvalidOperationError("The transport service is not connected.");
         }
 
-        if (_clientWebSocket.State != WebSocketState.Open)
-        {
-            return new InvalidOperationError("The socket was not open.");
-        }
-
-        await using var memoryStream = new MemoryStream();
-
-        var buffer = ArrayPool<byte>.Shared.Rent(4096);
+        var semaphoreEntered = false;
 
         try
         {
-            WebSocketReceiveResult result;
+            semaphoreEntered = await _receiveSemaphore.WaitAsync(100, ct);
+            if (!semaphoreEntered)
+            {
+                return new OperationCanceledException("Could not enter semaphore.");
+            }
 
+            await using var ms = _memoryStreamManager.GetStream();
+            using var segmentBufferOwner = MemoryPool<byte>.Shared.Rent(MaxPayloadSize);
+
+            ValueWebSocketReceiveResult socketReceiveResult;
             do
             {
-                result = await _clientWebSocket.ReceiveAsync(buffer, ct);
+                // On the use of the _receiveToken: Cancelling a receive causes a whole manner of annoyances.
+                // The entire socket will be shutdown and disposed internally. Hence, we use our own token
+                // so that we only cancel receives after properly completing a close handshake.
+                socketReceiveResult = await _clientWebSocket.ReceiveAsync(segmentBufferOwner.Memory, _receiveToken.Token);
 
-                if (result.CloseStatus.HasValue)
+                if (socketReceiveResult.MessageType is WebSocketMessageType.Close)
                 {
-                    if (Enum.IsDefined(typeof(GatewayCloseStatus), (int)result.CloseStatus))
-                    {
-                        return new GatewayDiscordError((GatewayCloseStatus)result.CloseStatus);
-                    }
-
-                    return new GatewayWebSocketError(result.CloseStatus.Value);
+                    return ConstructCloseError();
                 }
 
-                await memoryStream.WriteAsync(buffer, 0, result.Count, ct);
+                await ms.WriteAsync(segmentBufferOwner.Memory[..socketReceiveResult.Count], ct);
             }
-            while (!result.EndOfMessage);
+            while (!socketReceiveResult.EndOfMessage);
 
-            memoryStream.Seek(0, SeekOrigin.Begin);
+            ms.Seek(0, SeekOrigin.Begin);
 
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
-            if (payload is null)
-            {
-                return new NotSupportedError
-                (
-                    "The received payload deserialized as a null value."
-                );
-            }
-
-            return Result<IPayload>.FromSuccess(payload);
+            var payload = await JsonSerializer.DeserializeAsync<IPayload>(ms, _jsonOptions, ct);
+            return payload is null
+                ? new UnrecognisedPayloadError("The received payload deserialized as a null value")
+                : Result<IPayload>.FromSuccess(payload);
+        }
+        catch (Exception ex)
+        {
+            return ex;
         }
         finally
         {
-            ArrayPool<byte>.Shared.Return(buffer);
+            if (semaphoreEntered)
+            {
+                _receiveSemaphore.Release();
+            }
         }
     }
 
@@ -234,7 +258,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         CancellationToken ct = default
     )
     {
-        if (_clientWebSocket is null)
+        if (!this.IsConnected || _clientWebSocket is null)
         {
             return new InvalidOperationError("The transport service is not connected.");
         }
@@ -243,7 +267,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         {
             case WebSocketState.Open:
             case WebSocketState.CloseReceived:
-            case WebSocketState.CloseSent:
             {
                 try
                 {
@@ -267,15 +290,14 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                 }
                 catch (OperationCanceledException)
                 {
-                    // We still need to cleanup the socket
+                    // We still need to cleanup
                 }
 
                 break;
             }
         }
 
-        _clientWebSocket.Dispose();
-        _clientWebSocket = null;
+        _receiveToken.Cancel();
 
         this.IsConnected = false;
         return Result.FromSuccess();
@@ -284,11 +306,48 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     /// <inheritdoc />
     public async ValueTask DisposeAsync()
     {
-        if (_clientWebSocket is null)
+        await DisposeAsyncCore().ConfigureAwait(false);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Disposes of managed resources.
+    /// </summary>
+    /// <returns>A <see cref="ValueTask"/> representing the asynchronous operation.</returns>
+    protected virtual async ValueTask DisposeAsyncCore()
+    {
+        if (_isDisposed)
         {
             return;
         }
 
         await DisconnectAsync(false);
+
+        await _payloadJsonWriter.DisposeAsync();
+        _sendSemaphore.Dispose();
+        _receiveSemaphore.Dispose();
+
+        _receiveToken.Cancel();
+        _receiveToken.Dispose();
+
+        _clientWebSocket?.Dispose();
+
+        _isDisposed = true;
+    }
+
+    /// <summary>
+    /// Constructs a relevant error for the websocket having closed.
+    /// </summary>
+    /// <remarks>Assumes the <see cref="_clientWebSocket"/> and its CloseStatus field to be non-null.</remarks>
+    /// <returns>A <see cref="GatewayDiscordError"/> or <see cref="GatewayWebSocketError"/>.</returns>
+    private ResultError ConstructCloseError()
+    {
+        var closeValue = (int)_clientWebSocket!.CloseStatus!.Value;
+        if (Enum.IsDefined(typeof(GatewayCloseStatus), closeValue))
+        {
+            return new GatewayDiscordError((GatewayCloseStatus)_clientWebSocket.CloseStatus.Value);
+        }
+
+        return new GatewayWebSocketError(_clientWebSocket.CloseStatus.Value);
     }
 }
