@@ -131,8 +131,11 @@ namespace Remora.Discord.Extensions.MediatR.Tests
 
             var mediator = new Mock<IMediator>();
             mediator.Setup(m => m.Send(It.IsAny<IGatewayEventRequest<IMessageCreate>>(), It.IsAny<CancellationToken>()))
-                .Callback<IGatewayEventRequest<IMessageCreate>, CancellationToken>((request, ct) =>
-                    handler.Handle(request, ct));
+                .Callback<IGatewayEventRequest<IMessageCreate>, CancellationToken>(async (request, ct) =>
+                {
+                    var handleResult = await handler.Handle(request, ct);
+                    ResultAssert.Successful(handleResult);
+                });
 
             var services = new ServiceCollection()
                 .AddDiscordGateway(_ => GatewayConstants.MockToken)
