@@ -141,11 +141,11 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                         {
                             _logger.LogWarning
                             (
-                                "Failed to connect to the gateway. Connection will be reattempted\n{Error}",
+                                "Failed to connect to the gateway. Connection may be reattempted\n{Error}",
                                 connectResult.Error
                             );
 
-                            if (!await StopAndCheckResultForReconnection(connectResult))
+                            if (!await StopAndCheckResultForReconnectionAsync(connectResult))
                             {
                                 return connectResult;
                             }
@@ -181,7 +181,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                         if (_sendTask.IsCompleted)
                         {
                             var stopResult = await _sendTask;
-                            if (!await StopAndCheckResultForReconnection(stopResult))
+                            if (!await StopAndCheckResultForReconnectionAsync(stopResult))
                             {
                                 return stopResult;
                             }
@@ -198,7 +198,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                         if (_receiveTask.IsCompleted)
                         {
                             var stopResult = await _receiveTask;
-                            if (!await StopAndCheckResultForReconnection(stopResult))
+                            if (!await StopAndCheckResultForReconnectionAsync(stopResult))
                             {
                                 return stopResult;
                             }
@@ -318,7 +318,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// <param name="gatewayUri">The URI of the voice gateway.</param>
     /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
     /// <returns>A <see cref="Result"/> indicating the outcome of the operation.</returns>
-    protected async Task<Result> ConnectToGatewayAndBeginSendTask
+    protected async Task<Result> ConnectToGatewayAndBeginSendTaskAsync
     (
         Uri gatewayUri,
         CancellationToken ct
@@ -552,7 +552,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     /// </summary>
     /// <param name="operationResult">The result.</param>
     /// <returns>A value indicating whether or not to attempt a reconnection.</returns>
-    private async Task<bool> StopAndCheckResultForReconnection(Result operationResult)
+    private async Task<bool> StopAndCheckResultForReconnectionAsync(Result operationResult)
     {
         var shouldReconnect = ShouldReconnect(operationResult, out var withNewSession);
         await StopAsync(shouldReconnect);

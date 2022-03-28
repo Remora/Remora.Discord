@@ -185,7 +185,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         _logger.LogInformation("Connecting to the gateway...");
 
-        var transportConnectResult = await ConnectToGatewayAndBeginSendTask(gatewayUri, ct);
+        var transportConnectResult = await ConnectToGatewayAndBeginSendTaskAsync(gatewayUri, ct);
         if (!transportConnectResult.IsSuccess)
         {
             return transportConnectResult;
@@ -495,7 +495,8 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
                 Intents: _gatewayOptions.Intents,
                 Compress: false,
                 Shard: shardInformation,
-                Presence: initialPresence
+                Presence: initialPresence,
+                LargeThreshold: _gatewayOptions.LargeThreshold
             ),
             ct
         );
@@ -515,7 +516,12 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
             if (receiveReady.Entity is IPayload<IInvalidSession> invalidSession)
             {
-                return new GatewayError("Session invalidated", false, false);
+                return new GatewayError
+                (
+                    "Session invalidated",
+                    invalidSession.Data.IsResumable,
+                    false
+                );
             }
 
             if (receiveReady.Entity is not IPayload<IReady> ready)
