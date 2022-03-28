@@ -79,8 +79,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _memoryStreamManager = memoryStreamManager;
         _jsonOptions = jsonOptions;
 
-        _sendSemaphore = new SemaphoreSlim(1, 1);
-        _receiveSemaphore = new SemaphoreSlim(1, 1);
+        _sendSemaphore = new SemaphoreSlim(1);
+        _receiveSemaphore = new SemaphoreSlim(1);
         _receiveToken = new CancellationTokenSource();
         _payloadSendBuffer = new ArrayBufferWriter<byte>(MaxPayloadSize);
         _payloadJsonWriter = new Utf8JsonWriter
@@ -211,7 +211,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                 return new OperationCanceledException("Could not enter semaphore.");
             }
 
-            await using var ms = _memoryStreamManager.GetStream();
+            await using var memoryStream = _memoryStreamManager.GetStream();
             using var segmentBufferOwner = MemoryPool<byte>.Shared.Rent(MaxPayloadSize);
 
             ValueWebSocketReceiveResult socketReceiveResult;
@@ -227,13 +227,13 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
                     return ConstructCloseError();
                 }
 
-                await ms.WriteAsync(segmentBufferOwner.Memory[..socketReceiveResult.Count], ct);
+                await memoryStream.WriteAsync(segmentBufferOwner.Memory[..socketReceiveResult.Count], ct);
             }
             while (!socketReceiveResult.EndOfMessage);
 
-            ms.Seek(0, SeekOrigin.Begin);
+            memoryStream.Seek(0, SeekOrigin.Begin);
 
-            var payload = await JsonSerializer.DeserializeAsync<IPayload>(ms, _jsonOptions, ct);
+            var payload = await JsonSerializer.DeserializeAsync<IPayload>(memoryStream, _jsonOptions, ct);
             return payload is null
                 ? new UnrecognisedPayloadError("The received payload deserialized as a null value")
                 : Result<IPayload>.FromSuccess(payload);
