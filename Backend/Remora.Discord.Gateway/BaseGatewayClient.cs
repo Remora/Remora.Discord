@@ -166,12 +166,12 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                             _logger.LogError("The responder dispatch service stopped with the error {Error}. Restarting it...", stopResult.Error);
 
                             _responderDispatchTask.Dispose();
-                            _responderDispatchTask = this.DispatchService.RunAsync(this.DisconnectRequestedSource.Token);
+                            _responderDispatchTask = this.DispatchService.RunAsync(_dispatchCts.Token);
                         }
 
                         if (_sendTask is null)
                         {
-                            // Something has gone very wrong!
+                            // Something has gone very wrong! Signal a complete restart
                             await StopAsync(true);
                             this.Status = GatewayConnectionStatus.Offline;
 
@@ -189,6 +189,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 
                         if (_receiveTask is null)
                         {
+                            // Something has gone very wrong! Signal a complete restart
                             await StopAsync(true);
                             this.Status = GatewayConnectionStatus.Offline;
 
@@ -211,8 +212,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                         }
                         catch (TaskCanceledException)
                         {
-                            // We're wrapping up
-                            break;
+                            // We're wrapping up;
                         }
 
                         break;
@@ -421,6 +421,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         _sendTask?.Dispose();
         _receiveTask?.Dispose();
         _responderDispatchTask?.Dispose();
+        _dispatchCts.Dispose();
         this.DisconnectRequestedSource.Dispose();
     }
 
