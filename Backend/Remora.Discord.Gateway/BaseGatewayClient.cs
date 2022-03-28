@@ -26,11 +26,13 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Discord.API.Abstractions.Gateway.Events;
+using Remora.Discord.Gateway.Extensions;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
@@ -42,6 +44,7 @@ namespace Remora.Discord.Gateway;
 /// Provides an abstract implementation of an <see cref="IGatewayClient"/>
 /// that must be extended with relevant connection and resumption flows.
 /// </summary>
+[PublicAPI]
 public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 {
     private readonly ILogger<BaseGatewayClient> _logger;
@@ -356,7 +359,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         if (this.TransportService.IsConnected)
         {
             var disconnectResult = await this.TransportService.DisconnectAsync(reconnectionIntended);
-            if (!disconnectResult.IsSuccess)
+            if (!disconnectResult.IsSuccess && !disconnectResult.HasCancellationError())
             {
                 _logger.LogError("Failed to disconnect the transport service: {Error}", disconnectResult.Error);
                 failedResults.Add(disconnectResult);
@@ -366,7 +369,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         if (_sendTask is not null)
         {
             var sendResult = await _sendTask;
-            if (!sendResult.IsSuccess)
+            if (!sendResult.IsSuccess && !sendResult.HasCancellationError())
             {
                 _logger.LogError("Failed to stop the send task: {Error}", sendResult.Error);
                 failedResults.Add(sendResult);
@@ -376,7 +379,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
         if (_receiveTask is not null)
         {
             var receiveResult = await _receiveTask;
-            if (!receiveResult.IsSuccess)
+            if (!receiveResult.IsSuccess && !receiveResult.HasCancellationError())
             {
                 _logger.LogError("Failed to stop the receive task: {Error}", receiveResult.Error);
                 failedResults.Add(receiveResult);
@@ -390,7 +393,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             if (_responderDispatchTask is not null)
             {
                 var dispatchResult = await _responderDispatchTask;
-                if (!dispatchResult.IsSuccess)
+                if (!dispatchResult.IsSuccess && !dispatchResult.HasCancellationError())
                 {
                     _logger.LogError("Failed to stop the responder dispatch task: {Error}", dispatchResult.Error);
                     failedResults.Add(dispatchResult);

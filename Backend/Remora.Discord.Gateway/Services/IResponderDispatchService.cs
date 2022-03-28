@@ -22,6 +22,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Results;
 
@@ -30,6 +31,7 @@ namespace Remora.Discord.Gateway.Services;
 /// <summary>
 /// Represents a service for dispatching gateway events.
 /// </summary>
+[PublicAPI]
 public interface IResponderDispatchService
 {
     /// <summary>

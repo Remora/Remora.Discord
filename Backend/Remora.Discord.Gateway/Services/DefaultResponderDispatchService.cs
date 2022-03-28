@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Remora.Discord.API.Abstractions.Gateway.Events;
@@ -40,6 +41,7 @@ namespace Remora.Discord.Gateway.Services;
 /// to dispatch payloads to <see cref="IResponder{TGatewayEvent}"/>
 /// types registered in the <see cref="IResponderTypeRepository"/>.
 /// </summary>
+[PublicAPI]
 public class DefaultResponderDispatchService : IResponderDispatchService, IAsyncDisposable
 {
     private readonly ILogger<DefaultResponderDispatchService> _logger;

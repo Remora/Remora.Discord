@@ -23,6 +23,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Remora.Discord.API.Abstractions.Gateway.Commands;
 using Remora.Results;
 
@@ -31,6 +32,7 @@ namespace Remora.Discord.Gateway;
 /// <summary>
 /// Represents a Discord gateway client.
 /// </summary>
+[PublicAPI]
 public interface IGatewayClient
 {
     /// <summary>

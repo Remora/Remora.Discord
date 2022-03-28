@@ -26,6 +26,7 @@ using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API;
@@ -50,6 +51,7 @@ namespace Remora.Discord.Gateway;
 /// Provides an implementation of the <see cref="BaseGatewayClient"/> class,
 /// intended for connecting to the main Discord gateway.
 /// </summary>
+[PublicAPI]
 public sealed class DiscordGatewayClient : BaseGatewayClient
 {
     private readonly ILogger<DiscordGatewayClient> _logger;
