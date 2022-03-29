@@ -115,29 +115,26 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
 
             this.IsRunning = true;
 
-            try
+            await foreach (var gatewayEvent in _eventDispatchQueue.Reader.ReadAllAsync(ct))
             {
-                await foreach (var gatewayEvent in _eventDispatchQueue.Reader.ReadAllAsync(ct))
+                if (_finalizerTask.IsCompleted)
                 {
-                    var dispatchResult = DispatchEvent(gatewayEvent);
-                    if (!dispatchResult.IsSuccess)
-                    {
-                        return Result.FromError(dispatchResult);
-                    }
-
-                    await _responderFinalizationQueue.Writer.WriteAsync(dispatchResult.Entity, ct);
-
-                    if (_finalizerTask.IsCompleted)
-                    {
-                        return await _finalizerTask;
-                    }
+                    return await _finalizerTask;
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                 // This is fine, we must be stopping
+
+                var dispatchResult = DispatchEvent(gatewayEvent);
+                if (!dispatchResult.IsSuccess)
+                {
+                    return Result.FromError(dispatchResult);
+                }
+
+                await _responderFinalizationQueue.Writer.WriteAsync(dispatchResult.Entity, ct);
             }
 
+            return await StopAsync();
+        }
+        catch (OperationCanceledException)
+        {
             return await StopAsync();
         }
         catch (Exception ex)
