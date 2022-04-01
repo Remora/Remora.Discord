@@ -129,7 +129,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="publicUpdatesChannelID">The ID of the new channel for public updates.</param>
     /// <param name="preferredLocale">The new preferred locale.</param>
     /// <param name="features">The new guild features.</param>
-    /// <param name="description">The new discovery description.</param>
+    /// <param name="description">The new description.</param>
     /// <param name="isPremiumProgressBarEnabled">Whether the guild has the boost progress bar enabled.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
