@@ -272,7 +272,7 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
         (
             $"guilds/{guildID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 

@@ -196,7 +196,7 @@ public class DiscordRestGuildAPITests
             var result = await api.CreateGuildAsync
             (
                 name,
-                icon: icon
+                icon
             );
 
             ResultAssert.Unsuccessful(result);

@@ -285,7 +285,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         (
             $"applications/{applicationID}/commands/{commandID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
@@ -528,7 +528,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
             b => b.WithRateLimitContext(this.RateLimitCache),
-            ct: ct
+            ct
         );
     }
 
