@@ -64,17 +64,6 @@ public static class CommandTreeExtensions
     private const int MaxCommandDescriptionLength = 100;
     private const int MaxTreeDepth = 3; // Top level is a depth of 1
 
-    private const string NameRegexPattern = "^[a-z0-9_-]{1,32}$";
-
-    /// <summary>
-    /// Holds a regular expression that matches valid command names.
-    /// </summary>
-    private static readonly Regex NameRegex = new
-    (
-        NameRegexPattern,
-        RegexOptions.Compiled
-    );
-
     /// <summary>
     /// Maps a set of Discord application commands to their respective command nodes.
     /// </summary>
@@ -266,6 +255,9 @@ public static class CommandTreeExtensions
                 }
             }
 
+            var localizedNames = localizationProvider.GetStrings(option.Name);
+            var localizedDescriptions = localizationProvider.GetStrings(option.Description);
+
             commands.Add
             (
                 new BulkApplicationCommandData
@@ -274,7 +266,9 @@ public static class CommandTreeExtensions
                     option.Description,
                     option.Options,
                     defaultPermission,
-                    commandType
+                    commandType,
+                    localizedNames.Count > 0 ? new(localizedNames) : default,
+                    localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
                 )
             );
         }
@@ -319,12 +313,6 @@ public static class CommandTreeExtensions
                 if (command.CommandMethod.GetCustomAttribute<ExcludeFromSlashCommandsAttribute>() is not null)
                 {
                     return Result<IApplicationCommandOption?>.FromSuccess(null);
-                }
-
-                var validateNameResult = ValidateNodeName(command.Key, command);
-                if (!validateNameResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(validateNameResult);
                 }
 
                 var validateDescriptionResult = ValidateNodeDescription(command.Shape.Description, command);
@@ -380,12 +368,6 @@ public static class CommandTreeExtensions
             }
             case GroupNode group:
             {
-                var validateNameResult = ValidateNodeName(group.Key, group);
-                if (!validateNameResult.IsSuccess)
-                {
-                    return Result<IApplicationCommandOption?>.FromError(validateNameResult);
-                }
-
                 var validateDescriptionResult = ValidateNodeDescription(group.Description, group);
                 if (!validateDescriptionResult.IsSuccess)
                 {
@@ -530,7 +512,7 @@ public static class CommandTreeExtensions
                 // Add the choices directly
                 if (Enum.GetValues(actualParameterType).Length <= MaxChoiceValues)
                 {
-                    var createChoices = EnumExtensions.GetEnumChoices(actualParameterType);
+                    var createChoices = EnumExtensions.GetEnumChoices(actualParameterType, localizationProvider);
                     if (!createChoices.IsSuccess)
                     {
                         return Result<IReadOnlyList<IApplicationCommandOption>>.FromError(createChoices);
@@ -679,24 +661,6 @@ public static class CommandTreeExtensions
         }
 
         return length;
-    }
-
-    private static Result ValidateNodeName(string name, IChildNode node)
-    {
-        if (node is CommandNode commandNode && commandNode.GetCommandType() is not ApplicationCommandType.ChatInput)
-        {
-            // These can be anything, basically
-            return Result.FromSuccess();
-        }
-
-        return NameRegex.IsMatch(name)
-            ? Result.FromSuccess()
-            : new UnsupportedFeatureError
-            (
-                $"\"{name}\" is not a valid slash command or group name. " +
-                "Names must match the regex \"^[\\w-]{{1,32}}$\", and be lower-case.",
-                node
-            );
     }
 
     private static Result ValidateNodeDescription(string description, IChildNode node)

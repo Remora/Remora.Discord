@@ -56,13 +56,28 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     public virtual Task<Result<IReadOnlyList<IApplicationCommand>>> GetGlobalApplicationCommandsAsync
     (
         Snowflake applicationID,
-        CancellationToken ct
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/commands",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withLocalizations.HasValue)
+                {
+                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                }
+
+                if (locale.HasValue)
+                {
+                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
@@ -73,10 +88,12 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         string name,
         string description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> options,
-        Optional<bool> defaultPermission,
-        Optional<ApplicationCommandType> type,
-        CancellationToken ct
+        Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.Length is < 1 or > 32)
@@ -116,6 +133,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -206,11 +225,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake commandID,
-        Optional<string> name,
-        Optional<string> description,
-        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-        Optional<bool> defaultPermission,
-        CancellationToken ct
+        Optional<string> name = default,
+        Optional<string> description = default,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.HasValue && name.Value.Length is < 1 or > 32)
@@ -243,6 +264,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -271,26 +294,40 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     (
         Snowflake applicationID,
         Snowflake guildID,
-        CancellationToken ct
+        Optional<bool> withLocalizations = default,
+        Optional<string> locale = default,
+        CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (withLocalizations.HasValue)
+                {
+                    b.AddQueryParameter("with_localizations", withLocalizations.Value.ToString());
+                }
+
+                if (locale.HasValue)
+                {
+                    b.AddHeader(Constants.LocaleHeaderName, locale.Value);
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
 
     /// <inheritdoc />
-    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>>
-        BulkOverwriteGuildApplicationCommandsAsync
-        (
-            Snowflake applicationID,
-            Snowflake guildID,
-            IReadOnlyList<IBulkApplicationCommandData> commands,
-            CancellationToken ct = default
-        )
+    public virtual async Task<Result<IReadOnlyList<IApplicationCommand>>> BulkOverwriteGuildApplicationCommandsAsync
+    (
+        Snowflake applicationID,
+        Snowflake guildID,
+        IReadOnlyList<IBulkApplicationCommandData> commands,
+        CancellationToken ct = default
+    )
     {
         if (commands.Any(c => c.Name.Length is < 1 or > 32))
         {
@@ -354,10 +391,12 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake guildID,
         string name,
         string description,
-        Optional<IReadOnlyList<IApplicationCommandOption>> options,
-        Optional<bool> defaultPermission,
-        Optional<ApplicationCommandType> type,
-        CancellationToken ct
+        Optional<IReadOnlyList<IApplicationCommandOption>> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<ApplicationCommandType> type = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.Length is < 1 or > 32)
@@ -397,6 +436,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.WriteString("description", description);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -427,11 +468,13 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         Snowflake applicationID,
         Snowflake guildID,
         Snowflake commandID,
-        Optional<string> name,
-        Optional<string> description,
-        Optional<IReadOnlyList<IApplicationCommandOption>?> options,
-        Optional<bool> defaultPermission,
-        CancellationToken ct
+        Optional<string> name = default,
+        Optional<string> description = default,
+        Optional<IReadOnlyList<IApplicationCommandOption>?> options = default,
+        Optional<bool> defaultPermission = default,
+        Optional<IReadOnlyDictionary<string, string>?> nameLocalizations = default,
+        Optional<IReadOnlyDictionary<string, string>?> descriptionLocalizations = default,
+        CancellationToken ct = default
     )
     {
         if (name.HasValue && name.Value.Length is < 1 or > 32)
@@ -463,6 +506,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("description", description, this.JsonOptions);
                         json.Write("options", options, this.JsonOptions);
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
+                        json.Write("name_localizations", nameLocalizations, this.JsonOptions);
+                        json.Write("description_localizations", descriptionLocalizations, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),

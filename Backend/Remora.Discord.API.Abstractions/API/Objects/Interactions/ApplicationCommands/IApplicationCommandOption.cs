@@ -96,12 +96,28 @@ public interface IApplicationCommandOption
     Optional<bool> EnableAutocomplete { get; }
 
     /// <summary>
-    /// Gets the localized names of the command.
+    /// Gets the localized names of the option.
     /// </summary>
-    Optional<IReadOnlyDictionary<string, string>> NameLocalizations { get; }
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations { get; }
 
     /// <summary>
-    /// Gets the localized descriptions of the command.
+    /// Gets the localized name of the option.
     /// </summary>
-    Optional<IReadOnlyDictionary<string, string>> DescriptionLocalizations { get; }
+    /// <remarks>
+    /// This field is only supplied by Discord as a response, and is not used to set the actual localized string.
+    /// </remarks>
+    Optional<string> NameLocalized { get; }
+
+    /// <summary>
+    /// Gets the localized descriptions of the option.
+    /// </summary>
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations { get; }
+
+    /// <summary>
+    /// Gets the localized description of the option.
+    /// </summary>
+    /// <remarks>
+    /// This field is only supplied by Discord as a response, and is not used to set the actual localized string.
+    /// </remarks>
+    Optional<string> DescriptionLocalized { get; }
 }

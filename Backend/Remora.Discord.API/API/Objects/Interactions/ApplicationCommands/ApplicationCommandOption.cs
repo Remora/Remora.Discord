@@ -45,6 +45,8 @@ public record ApplicationCommandOption
     Optional<OneOf<ulong, long, float, double>> MinValue = default,
     Optional<OneOf<ulong, long, float, double>> MaxValue = default,
     Optional<bool> EnableAutocomplete = default,
-    Optional<IReadOnlyDictionary<string, string>> NameLocalizations = default,
-    Optional<IReadOnlyDictionary<string, string>> DescriptionLocalizations = default
+    Optional<IReadOnlyDictionary<string, string>?> NameLocalizations = default,
+    Optional<string> NameLocalized = default,
+    Optional<IReadOnlyDictionary<string, string>?> DescriptionLocalizations = default,
+    Optional<string> DescriptionLocalized = default
 ) : IApplicationCommandOption;

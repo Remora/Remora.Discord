@@ -61,4 +61,9 @@ public static class Constants
     /// Gets the name of the rate limit bucket header.
     /// </summary>
     public static string RateLimitBucketHeaderName { get; } = "X-RateLimit-Bucket";
+
+    /// <summary>
+    /// Gets the name of the locale header, used when requesting localized objects.
+    /// </summary>
+    public static string LocaleHeaderName { get; } = "X-Discord-Locale";
 }
