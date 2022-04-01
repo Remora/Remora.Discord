@@ -632,13 +632,34 @@ public class DiscordRestGuildAPI : AbstractDiscordRestAPI, IDiscordRestGuildAPI
     public virtual Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
     (
         Snowflake guildID,
+        Optional<int> limit = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     )
     {
         return this.RestHttpClient.GetAsync<IReadOnlyList<IBan>>
         (
             $"guilds/{guildID}/bans",
-            b => b.WithRateLimitContext(this.RateLimitCache),
+            b =>
+            {
+                if (limit.HasValue)
+                {
+                    b.AddQueryParameter("limit", limit.Value.ToString());
+                }
+
+                if (before.HasValue)
+                {
+                    b.AddQueryParameter("before", before.Value.ToString());
+                }
+
+                if (after.HasValue)
+                {
+                    b.AddQueryParameter("after", after.Value.ToString());
+                }
+
+                b.WithRateLimitContext(this.RateLimitCache);
+            },
             ct: ct
         );
     }
