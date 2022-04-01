@@ -52,11 +52,6 @@ public interface IIntegrationApplication
     string Description { get; }
 
     /// <summary>
-    /// Gets the summary of the application.
-    /// </summary>
-    string Summary { get; }
-
-    /// <summary>
     /// Gets the bot associated with this application.
     /// </summary>
     Optional<IUser> Bot { get; }
