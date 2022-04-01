@@ -1096,8 +1096,6 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     default,
                     default,
-                    default,
-                    default,
                     default
                 )
             };
@@ -1139,8 +1137,6 @@ public class CommandTreeExtensionTests
                     string.Empty,
                     default,
                     default,
-                    default,
-                    default,
                     default
                 ),
                 new ApplicationCommand
@@ -1151,8 +1147,6 @@ public class CommandTreeExtensionTests
                     default,
                     commandNodeB.Key,
                     string.Empty,
-                    default,
-                    default,
                     default,
                     default,
                     default
@@ -1201,8 +1195,6 @@ public class CommandTreeExtensionTests
                     {
                         new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
                     },
-                    default,
-                    default,
                     default,
                     default
                 )
@@ -1254,8 +1246,6 @@ public class CommandTreeExtensionTests
                         new ApplicationCommandOption(SubCommand, commandNodeB.Key, string.Empty),
                         new ApplicationCommandOption(SubCommand, commandNodeC.Key, string.Empty)
                     },
-                    default,
-                    default,
                     default,
                     default
                 )
@@ -1314,8 +1304,6 @@ public class CommandTreeExtensionTests
                             new ApplicationCommandOption(SubCommand, commandNode.Key, string.Empty)
                         })
                     },
-                    default,
-                    default,
                     default,
                     default
                 )
@@ -1380,8 +1368,6 @@ public class CommandTreeExtensionTests
                         new ApplicationCommandOption(SubCommand, commandNodeF.Key, string.Empty),
                     },
                     default,
-                    default,
-                    default,
                     default
                 ),
                 new ApplicationCommand
@@ -1392,8 +1378,6 @@ public class CommandTreeExtensionTests
                     default,
                     commandNodeG.Key,
                     string.Empty,
-                    default,
-                    default,
                     default,
                     default,
                     default
