@@ -56,6 +56,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         Snowflake channelID,
         string topic,
         Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<bool> sendStartNotification = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -69,9 +70,10 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
-                        json.WriteString("topic", topic);
-                        json.Write("privacy_level", privacyLevel);
+                        json.Write("channel_id", channelID.ToString(), this.JsonOptions);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
+                        json.Write("send_start_notification", sendStartNotification, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
@@ -113,8 +115,8 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                 (
                     json =>
                     {
-                        json.Write("topic", topic);
-                        json.Write("privacy_level", privacyLevel);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
                     }
                 )
                 .WithRateLimitContext(this.RateLimitCache),
