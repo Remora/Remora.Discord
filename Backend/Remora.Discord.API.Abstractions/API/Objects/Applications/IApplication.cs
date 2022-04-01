@@ -84,12 +84,6 @@ public interface IApplication : IPartialApplication
     new IPartialUser? Owner { get; }
 
     /// <summary>
-    /// Gets the summary of the game, if the application is a game sold on the Discord storefront.
-    /// </summary>
-    [Obsolete]
-    new string Summary { get; }
-
-    /// <summary>
     /// Gets the hex-encoded key for GameSDK's GetTicket function.
     /// </summary>
     new string VerifyKey { get; }
@@ -153,10 +147,6 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<IPartialUser?> IPartialApplication.Owner => new(this.Owner);
-
-    /// <inheritdoc/>
-    [Obsolete]
-    Optional<string> IPartialApplication.Summary => this.Summary;
 
     /// <inheritdoc/>
     Optional<string> IPartialApplication.VerifyKey => this.VerifyKey;

@@ -43,7 +43,6 @@ public record Application
     Optional<string> TermsOfServiceURL,
     Optional<string> PrivacyPolicyURL,
     IPartialUser? Owner,
-    string Summary,
     string VerifyKey,
     ITeam? Team,
     Optional<Snowflake> GuildID = default,

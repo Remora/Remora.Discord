@@ -63,10 +63,6 @@ public interface IPartialApplication
     /// <inheritdoc cref="IApplication.Owner" />
     Optional<IPartialUser?> Owner { get; }
 
-    /// <inheritdoc cref="IApplication.Summary" />
-    [Obsolete]
-    Optional<string> Summary { get; }
-
     /// <inheritdoc cref="IApplication.VerifyKey" />
     Optional<string> VerifyKey { get; }
 

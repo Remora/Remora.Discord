@@ -43,7 +43,6 @@ public record PartialApplication
     Optional<string> TermsOfServiceURL = default,
     Optional<string> PrivacyPolicyURL = default,
     Optional<IPartialUser?> Owner = default,
-    Optional<string> Summary = default,
     Optional<string> VerifyKey = default,
     Optional<ITeam?> Team = default,
     Optional<Snowflake> GuildID = default,
