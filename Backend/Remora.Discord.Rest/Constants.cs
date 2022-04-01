@@ -61,9 +61,4 @@ public static class Constants
     /// Gets the name of the rate limit bucket header.
     /// </summary>
     public static string RateLimitBucketHeaderName { get; } = "X-RateLimit-Bucket";
-
-    /// <summary>
-    /// Gets the name of the global rate limit header.
-    /// </summary>
-    public static string RateLimitGlobalHeaderName { get; } = "X-RateLimit-Bucket";
 }

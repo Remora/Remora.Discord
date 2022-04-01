@@ -30,6 +30,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
@@ -52,8 +53,9 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestChannelAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -67,7 +69,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IChannel>
         (
             $"channels/{channelID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -159,7 +161,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("rtc_region", rtcRegion, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -335,7 +337,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -395,7 +397,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                     b.AddQueryParameter("limit", limit.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -412,7 +414,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IMessage>
         (
             $"channels/{channelID}/messages/{messageID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -496,7 +498,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("flags", flags, this.JsonOptions);
                         }
                     )
-                    .WithRateLimitContext();
+                    .WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -513,7 +515,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return await this.RestHttpClient.PostAsync<IMessage>
         (
             $"channels/{channelID}/messages/{messageID}/crosspost",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -530,7 +532,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.PutAsync
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -547,7 +549,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -565,7 +567,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}/{user}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -601,7 +603,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                     b.AddQueryParameter("limit", limit.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -618,7 +620,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/messages/{messageID}/reactions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -635,7 +637,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/messages/{messageID}/reactions/{HttpUtility.UrlEncode(emoji)}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -706,7 +708,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     )
-                    .WithRateLimitContext();
+                    .WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -724,7 +726,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/messages/{messageID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -760,7 +762,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         JsonSerializer.Serialize(json, messageIDs, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -791,7 +793,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("type", type, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -806,7 +808,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IReadOnlyList<IInvite>>
         (
             $"channels/{channelID}/invites",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -866,7 +868,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("target_application_id", targetApplicationID, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -883,7 +885,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/permissions/{overwriteID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -906,7 +908,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         p.WriteString("webhook_channel_id", webhookChannelID.ToString());
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -921,7 +923,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.PostAsync
         (
             $"channels/{channelID}/typing",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -936,7 +938,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IReadOnlyList<IMessage>>
         (
             $"channels/{channelID}/pins",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -953,7 +955,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.PutAsync
         (
             $"channels/{channelID}/pins/{messageID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -970,7 +972,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/pins/{messageID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -996,7 +998,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("nick", nickname, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -1012,7 +1014,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/recipients/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1048,7 +1050,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1087,7 +1089,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
                         json.Write("rate_limit_per_user", rateLimitPerUser, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1098,7 +1100,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.PutAsync
         (
             $"channels/{channelID}/thread-members/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1114,7 +1116,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.PutAsync
         (
             $"channels/{channelID}/thread-members/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1125,7 +1127,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/thread-members/@me",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1141,7 +1143,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.DeleteAsync
         (
             $"channels/{channelID}/thread-members/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1157,7 +1159,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IThreadMember>
         (
             $"channels/{channelID}/thread-members/{userID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -1172,7 +1174,7 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
         return this.RestHttpClient.GetAsync<IReadOnlyList<IThreadMember>>
         (
             $"channels/{channelID}/thread-members",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

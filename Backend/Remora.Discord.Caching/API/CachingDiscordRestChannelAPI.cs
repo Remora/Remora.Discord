@@ -27,6 +27,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
@@ -51,9 +52,10 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }

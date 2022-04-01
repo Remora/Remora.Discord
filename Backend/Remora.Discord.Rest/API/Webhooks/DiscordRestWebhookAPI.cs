@@ -29,6 +29,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using OneOf;
 using Remora.Discord.API;
 using Remora.Discord.API.Abstractions.Objects;
@@ -51,9 +52,10 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
     /// Initializes a new instance of the <see cref="DiscordRestWebhookAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestWebhookAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -97,7 +99,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     }
                 )
                 .AddAuditLogReason(reason)
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -112,7 +114,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
         (
             $"channels/{channelID}/webhooks",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -127,7 +129,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.GetAsync<IReadOnlyList<IWebhook>>
         (
             $"guilds/{guildID}/webhooks",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -142,7 +144,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.GetAsync<IWebhook>
         (
             $"webhooks/{webhookID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -158,7 +160,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.GetAsync<IWebhook>
         (
             $"webhooks/{webhookID}/{token}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -195,7 +197,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     }
                 )
                 .AddAuditLogReason(reason)
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -231,7 +233,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     }
                 )
                 .AddAuditLogReason(reason)
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -247,7 +249,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{webhookID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -264,7 +266,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
         return this.RestHttpClient.DeleteAsync
         (
             $"webhooks/{webhookID}/{token}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }
@@ -341,7 +343,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("flags", flags, this.JsonOptions);
                         }
                     )
-                    .WithRateLimitContext();
+                    .WithRateLimitContext(this.RateLimitCache);
             },
             true,
             ct
@@ -368,7 +370,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     b.AddQueryParameter("thread_id", threadID.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -447,7 +449,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                             json.Write("attachments", attachmentList, this.JsonOptions);
                         }
                     )
-                    .WithRateLimitContext();
+                    .WithRateLimitContext(this.RateLimitCache);
             },
             ct: ct
         );
@@ -473,7 +475,7 @@ public class DiscordRestWebhookAPI : AbstractDiscordRestAPI, IDiscordRestWebhook
                     b.AddQueryParameter("thread_id", threadID.Value.ToString());
                 }
 
-                b.WithRateLimitContext();
+                b.WithRateLimitContext(this.RateLimitCache);
             },
             ct
         );

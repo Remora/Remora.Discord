@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Polly;
 using Remora.Discord.Rest.API;
 
@@ -37,8 +38,16 @@ namespace Remora.Discord.Rest.Polly;
 /// </summary>
 internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
 {
-    private readonly ConcurrentDictionary<string, RateLimitBucket> _rateLimitBuckets;
-    private RateLimitBucket _globalRateLimitBucket;
+    /// <summary>
+    /// Maps endpoint names to their corresponding bucket IDs.
+    /// </summary>
+    /// <remarks>
+    /// If an endpoint is not in this dictionary, it either does not use a shared bucket, or it is the first request for
+    /// this endpoint.
+    /// </remarks>
+    private readonly ConcurrentDictionary<string, string> _endpointBuckets;
+
+    private readonly RateLimitBucket _globalRateLimitBucket;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordRateLimitPolicy"/> class.
@@ -50,11 +59,10 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             50,
             50,
             DateTimeOffset.UtcNow + TimeSpan.FromSeconds(1),
-            "global",
-            true
+            "global"
         );
 
-        _rateLimitBuckets = new ConcurrentDictionary<string, RateLimitBucket>();
+        _endpointBuckets = new ConcurrentDictionary<string, string>();
     }
 
     /// <inheritdoc />
@@ -69,6 +77,11 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         if (!context.TryGetValue("endpoint", out var rawEndpoint) || rawEndpoint is not string endpoint)
         {
             throw new InvalidOperationException("No endpoint set.");
+        }
+
+        if (!context.TryGetValue("cache", out var rawCache) || rawCache is not IMemoryCache cache)
+        {
+            throw new InvalidOperationException("No memory cache set.");
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -101,7 +114,12 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
         }
 
         // Then, try to take one from the local bucket
-        if (_rateLimitBuckets.TryGetValue(endpoint, out var rateLimitBucket))
+        if (!_endpointBuckets.TryGetValue(endpoint, out var bucketIdentifier))
+        {
+            bucketIdentifier = endpoint;
+        }
+
+        if (cache.TryGetValue<RateLimitBucket>(bucketIdentifier, out var rateLimitBucket))
         {
             // We don't reset route-specific rate limits ourselves; that's the responsibility of the returned headers
             // from Discord
@@ -125,22 +143,27 @@ internal class DiscordRateLimitPolicy : AsyncPolicy<HttpResponseMessage>
             return response;
         }
 
-        if (newLimits.IsGlobal)
+        if (newLimits.ID is null)
         {
-            if (_globalRateLimitBucket.ResetsAt < newLimits.ResetsAt)
-            {
-                _globalRateLimitBucket = newLimits;
-            }
+            // No shared bucket for this endpoint; clear any old shared information
+            _endpointBuckets.TryRemove(endpoint, out _);
+
+            // use the endpoint and not any mapped identifier, plus an expiration so we don't leak transient rate limits
+            cache.Set(endpoint, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
 
             return response;
         }
 
-        _rateLimitBuckets.AddOrUpdate
-        (
-            endpoint,
-            newLimits,
-            (_, old) => old.ResetsAt < newLimits.ResetsAt ? newLimits : old
-        );
+        // Shared bucket
+        // save the endpoint-to-id mapping
+        _endpointBuckets.AddOrUpdate(endpoint, _ => newLimits.ID, (_, _) => newLimits.ID);
+        cache.Set(newLimits.ID, newLimits, newLimits.ResetsAt + TimeSpan.FromSeconds(1));
+
+        if (newLimits.ID != bucketIdentifier)
+        {
+            // evict the old endpoint-specific or shared bucket
+            cache.Remove(bucketIdentifier);
+        }
 
         return response;
     }

@@ -26,6 +26,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -45,9 +46,10 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
     /// Initializes a new instance of the <see cref="DiscordRestTemplateAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The Json options.</param>
-    public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestTemplateAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -61,7 +63,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         return this.RestHttpClient.GetAsync<ITemplate>
         (
             $"guilds/templates/{templateCode}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -92,7 +94,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
                         j.Write("icon", iconData);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -107,7 +109,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         return this.RestHttpClient.GetAsync<IReadOnlyList<ITemplate>>
         (
             $"guilds/{guildID}/templates",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -132,7 +134,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
                         j.Write("description", description, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -148,7 +150,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         return this.RestHttpClient.PutAsync<ITemplate>
         (
             $"guilds/{guildID}/templates/{templateCode}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -174,7 +176,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
                         j.Write("description", description, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -190,7 +192,7 @@ public class DiscordRestTemplateAPI : AbstractDiscordRestAPI, IDiscordRestTempla
         return this.RestHttpClient.DeleteAsync<ITemplate>
         (
             $"guilds/{guildID}/templates/{templateCode}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

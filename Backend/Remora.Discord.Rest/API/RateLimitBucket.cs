@@ -56,12 +56,7 @@ internal class RateLimitBucket
     /// <summary>
     /// Gets the ID of the bucket.
     /// </summary>
-    public string ID { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether the rate limit bucket is a global bucket.
-    /// </summary>
-    public bool IsGlobal { get; }
+    public string? ID { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RateLimitBucket"/> class.
@@ -70,14 +65,12 @@ internal class RateLimitBucket
     /// <param name="remaining">The remaining requests.</param>
     /// <param name="resetsAt">The time when the bucket resets.</param>
     /// <param name="id">The ID of the bucket.</param>
-    /// <param name="isGlobal">Whether the rate limit bucket is a global bucket.</param>
-    public RateLimitBucket(int limit, int remaining, DateTimeOffset resetsAt, string id, bool isGlobal)
+    public RateLimitBucket(int limit, int remaining, DateTimeOffset resetsAt, string? id)
     {
         this.Limit = limit;
         this.Remaining = remaining;
         this.ResetsAt = resetsAt;
         this.ID = id;
-        this.IsGlobal = isGlobal;
 
         _semaphore = new SemaphoreSlim(1);
     }
@@ -119,26 +112,15 @@ internal class RateLimitBucket
                 return false;
             }
 
-            if (!int.TryParse(rawReset.SingleOrDefault(), out var resetsAtEpoch))
+            if (!double.TryParse(rawReset.SingleOrDefault(), out var resetsAtEpoch))
             {
                 return false;
             }
 
-            if (!headers.TryGetValues(Constants.RateLimitBucketHeaderName, out var rawBucket))
-            {
-                return false;
-            }
-
-            var id = rawBucket.SingleOrDefault();
-            if (id is null)
-            {
-                return false;
-            }
-
-            var isGlobal = headers.Contains(Constants.RateLimitGlobalHeaderName);
+            var id = headers.GetValues(Constants.RateLimitBucketHeaderName).SingleOrDefault();
             var resetsAt = DateTimeOffset.UnixEpoch + TimeSpan.FromSeconds(resetsAtEpoch);
 
-            result = new RateLimitBucket(limit, remaining, resetsAt, id, isGlobal);
+            result = new RateLimitBucket(limit, remaining, resetsAt, id);
             return true;
         }
         catch (InvalidOperationException)

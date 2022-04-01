@@ -24,6 +24,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -43,8 +44,9 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -72,7 +74,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                         json.Write("privacy_level", privacyLevel);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -87,7 +89,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         return this.RestHttpClient.GetAsync<IStageInstance>
         (
             $"stage-instances/{channelID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -115,7 +117,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                         json.Write("privacy_level", privacyLevel);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -131,7 +133,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         return this.RestHttpClient.DeleteAsync
         (
             $"stage-instances/{channelID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }

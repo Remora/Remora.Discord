@@ -26,6 +26,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -44,9 +45,10 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
     /// Initializes a new instance of the <see cref="DiscordRestApplicationAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
-    /// <param name="jsonOptions">The json options.</param>
-    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="jsonOptions">The JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestApplicationAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -60,7 +62,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/commands",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -116,7 +118,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -178,7 +180,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -194,7 +196,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IApplicationCommand>
         (
             $"applications/{applicationID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -243,7 +245,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -259,7 +261,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.DeleteAsync
         (
             $"applications/{applicationID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -275,7 +277,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -340,7 +342,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -397,7 +399,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -414,7 +416,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IApplicationCommand>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -463,7 +465,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         json.Write("default_permission", defaultPermission, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -480,7 +482,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.DeleteAsync
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -497,7 +499,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IReadOnlyList<IGuildApplicationCommandPermissions>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/permissions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -514,7 +516,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return this.RestHttpClient.GetAsync<IGuildApplicationCommandPermissions>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands/{commandID}/permissions",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -540,7 +542,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         JsonSerializer.Serialize(json, permissions, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -568,7 +570,7 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
                         }
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
