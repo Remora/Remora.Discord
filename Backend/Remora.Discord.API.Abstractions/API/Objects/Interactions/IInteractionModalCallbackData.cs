@@ -35,7 +35,7 @@ public interface IInteractionModalCallbackData
     string CustomID { get; }
 
     /// <summary>
-    /// Gets the title for the modal.
+    /// Gets the title for the modal. Max 45 characters.
     /// </summary>
     string Title { get; }
 
