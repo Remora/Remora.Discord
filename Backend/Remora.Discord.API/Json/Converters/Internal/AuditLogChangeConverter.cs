@@ -70,6 +70,7 @@ internal class AuditLogChangeConverter : JsonConverter<IAuditLogChange>
         { "guild_id", typeof(Snowflake) },
         { "hoist", typeof(bool) },
         { "icon_hash", typeof(IImageHash) },
+        { "image_hash", typeof(IImageHash) },
         { "id", typeof(Snowflake) },
         { "invitable", typeof(bool) },
         { "inviter_id", typeof(Snowflake) },
