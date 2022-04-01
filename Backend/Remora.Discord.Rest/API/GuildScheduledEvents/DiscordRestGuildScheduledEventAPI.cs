@@ -125,19 +125,13 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        var imageData = default(Optional<string?>);
-
-        if (image.IsDefined(out var imageStream))
+        var packImage = await ImagePacker.PackImageAsync(image!, ct);
+        if (!packImage.IsSuccess)
         {
-            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
-
-            if (!imageDataResult.IsSuccess)
-            {
-                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
-            }
-
-            imageData = imageDataResult.Entity;
+            return Result<IGuildScheduledEvent>.FromError(packImage);
         }
+
+        Optional<string> imageData = packImage.Entity!;
 
         return await this.RestHttpClient.PostAsync<IGuildScheduledEvent>
         (
@@ -243,19 +237,13 @@ public class DiscordRestGuildScheduledEventAPI : AbstractDiscordRestAPI, IDiscor
             );
         }
 
-        var imageData = default(Optional<string?>);
-
-        if (image.IsDefined(out var imageStream))
+        var packImage = await ImagePacker.PackImageAsync(image!, ct);
+        if (!packImage.IsSuccess)
         {
-            var imageDataResult = await ImagePacker.PackImageAsync(imageStream, ct);
-
-            if (!imageDataResult.IsSuccess)
-            {
-                return Result<IGuildScheduledEvent>.FromError(imageDataResult.Error);
-            }
-
-            imageData = imageDataResult.Entity;
+            return Result<IGuildScheduledEvent>.FromError(packImage);
         }
+
+        Optional<string> imageData = packImage.Entity!;
 
         return await this.RestHttpClient.PatchAsync<IGuildScheduledEvent>
         (

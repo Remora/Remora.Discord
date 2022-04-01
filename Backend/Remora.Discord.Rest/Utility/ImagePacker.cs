@@ -85,28 +85,35 @@ public static class ImagePacker
         CancellationToken ct = default
     )
     {
-        await using var memoryStream = new MemoryStream();
+        byte[] bytes;
+        if (stream is MemoryStream ms)
+        {
+            bytes = ms.ToArray();
+        }
+        else
+        {
+            await using var copy = new MemoryStream();
+            await stream.CopyToAsync(copy, ct);
 
-        await stream.CopyToAsync(memoryStream, ct);
-
-        var imageData = memoryStream.ToArray();
+            bytes = copy.ToArray();
+        }
 
         string? mediaType = null;
-        if (imageData.IsPNG())
+        if (bytes.IsPNG())
         {
             mediaType = "png";
         }
-        else if (imageData.IsJPG())
+        else if (bytes.IsJPG())
         {
             mediaType = "jpeg";
         }
-        else if (imageData.IsGIF())
+        else if (bytes.IsGIF())
         {
             mediaType = "gif";
         }
 
         return mediaType is null
             ? new NotSupportedError("Unknown or unsupported image format.")
-            : $"data:image/{mediaType};base64,{Convert.ToBase64String(imageData)}";
+            : $"data:image/{mediaType};base64,{Convert.ToBase64String(bytes)}";
     }
 }
