@@ -88,7 +88,10 @@ public class DiscordRestChannelAPITests
         {
             var channelId = DiscordSnowflake.New(0);
             var name = "brr";
-            var icon = new MemoryStream(new byte[] { 0xDE, 0xAD, 0xBE, 0xEF });
+            await using var icon = new MemoryStream();
+            await using var binaryWriter = new BinaryWriter(icon);
+            binaryWriter.Write(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A });
+            icon.Position = 0;
 
             var api = CreateAPI
             (
@@ -101,7 +104,7 @@ public class DiscordRestChannelAPITests
                             (
                                 o => o
                                     .WithProperty("name", p => p.Is(name))
-                                    .WithProperty("icon", p => p.Is("3q2+7w==")) // base64(DEADBEEF)
+                                    .WithProperty("icon", p => p.Is("data:image/png;base64,iVBORw0KGgo="))
                             )
                     )
                     .Respond("application/json", SampleRepository.Samples[typeof(IChannel)])
