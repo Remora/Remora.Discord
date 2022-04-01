@@ -61,11 +61,6 @@ public enum ChannelType
     GuildNews = 5,
 
     /// <summary>
-    /// A channel in which game developers can sell their game on Discord.
-    /// </summary>
-    GuildStore = 6,
-
-    /// <summary>
     /// A temporary sub-channel within a <see cref="GuildNews"/> channel.
     /// </summary>
     GuildNewsThread = 10,

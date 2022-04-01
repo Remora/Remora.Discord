@@ -275,32 +275,6 @@ public class DiscordRestChannelAPI : AbstractDiscordRestAPI, IDiscordRestChannel
     }
 
     /// <inheritdoc />
-    public virtual Task<Result<IChannel>> ModifyGuildStoreChannelAsync
-    (
-        Snowflake channelID,
-        Optional<string> name = default,
-        Optional<int?> position = default,
-        Optional<bool?> isNsfw = default,
-        Optional<IReadOnlyList<IPartialPermissionOverwrite>?> permissionOverwrites = default,
-        Optional<Snowflake?> parentId = default,
-        Optional<string> reason = default,
-        CancellationToken ct = default
-    )
-    {
-        return ModifyChannelAsync
-        (
-            channelID,
-            name,
-            position: position,
-            isNsfw: isNsfw,
-            permissionOverwrites: permissionOverwrites,
-            parentId: parentId,
-            reason: reason,
-            ct: ct
-        );
-    }
-
-    /// <inheritdoc />
     public virtual Task<Result<IChannel>> ModifyThreadChannelAsync
     (
         Snowflake channelID,
