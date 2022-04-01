@@ -31,6 +31,11 @@ namespace Remora.Discord.API.Abstractions.Objects;
 public enum GuildFeature
 {
     /// <summary>
+    /// The guild has access to set an animated guild banner image.
+    /// </summary>
+    AnimatedBanner,
+
+    /// <summary>
     /// The guild has access to set an animated icon.
     /// </summary>
     AnimatedIcon,
