@@ -186,9 +186,16 @@ public class ResponderDispatchService : IAsyncDisposable
         _dispatchCancellationSource.Cancel();
         _payloadsToDispatch.Writer.Complete();
 
-        // Wait for everything to actually stop...
-        await _dispatcher;
-        await _finalizer;
+        try
+        {
+            // Wait for everything to actually stop...
+            await _dispatcher;
+            await _finalizer;
+        }
+        catch (OperationCanceledException)
+        {
+            // OCE is always thrown when cancellation is requested.
+        }
 
         // Reset state so we can start again
         _dispatchCancellationSource = null;
