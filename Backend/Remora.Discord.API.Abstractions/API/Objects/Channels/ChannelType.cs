@@ -79,5 +79,10 @@ public enum ChannelType
     /// <summary>
     /// A voice channel for hosting events with an audience.
     /// </summary>
-    GuildStageVoice = 13
+    GuildStageVoice = 13,
+
+    /// <summary>
+    /// A channel in a student hub that contains a list of other guilds.
+    /// </summary>
+    GuildDirectory = 14
 }
