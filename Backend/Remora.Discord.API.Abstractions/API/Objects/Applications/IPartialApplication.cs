@@ -83,4 +83,13 @@ public interface IPartialApplication
 
     /// <inheritdoc cref="IApplication.Flags" />
     Optional<ApplicationFlags> Flags { get; }
+
+    /// <inheritdoc cref="IApplication.Tags" />
+    Optional<IReadOnlyList<string>> Tags { get; }
+
+    /// <inheritdoc cref="IApplication.InstallParams" />
+    Optional<IApplicationInstallParameters> InstallParams { get; }
+
+    /// <inheritdoc cref="IApplication.CustomInstallUrl" />
+    Optional<Uri> CustomInstallUrl { get; }
 }

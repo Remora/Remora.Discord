@@ -118,6 +118,21 @@ public interface IApplication : IPartialApplication
     /// </summary>
     new Optional<ApplicationFlags> Flags { get; }
 
+    /// <summary>
+    /// Gets up to 5 tags describing the content and functionality of the application.
+    /// </summary>
+    new Optional<IReadOnlyList<string>> Tags { get; }
+
+    /// <summary>
+    /// Gets the settings for the application's default in-app authorization link.
+    /// </summary>
+    new Optional<IApplicationInstallParameters> InstallParams { get; }
+
+    /// <summary>
+    /// Gets the application's default custom authorization link.
+    /// </summary>
+    new Optional<Uri> CustomInstallUrl { get; }
+
     /// <inheritdoc/>
     Optional<Snowflake> IPartialApplication.ID => this.ID;
 
@@ -168,4 +183,13 @@ public interface IApplication : IPartialApplication
 
     /// <inheritdoc/>
     Optional<ApplicationFlags> IPartialApplication.Flags => this.Flags;
+
+    /// <inheritdoc/>
+    Optional<IReadOnlyList<string>> IPartialApplication.Tags => throw new NotImplementedException();
+
+    /// <inheritdoc/>
+    Optional<IApplicationInstallParameters> IPartialApplication.InstallParams => throw new NotImplementedException();
+
+    /// <inheritdoc/>
+    Optional<Uri> IPartialApplication.CustomInstallUrl => throw new NotImplementedException();
 }
