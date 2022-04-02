@@ -172,7 +172,7 @@ public class EarlyCacheResponder :
         // Since this event isn't playing nice, we'll have to update by creating an object of our own.
         var cacheResult = await _cacheService.TryGetValueAsync<IGuildMember>(key);
 
-        IGuildMember cachedInstance = cacheResult.Entity;
+        var cachedInstance = cacheResult.Entity;
 
         if (cacheResult.IsSuccess)
         {
