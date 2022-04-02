@@ -141,7 +141,7 @@
 		<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Constructors</li>
-				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/E3579710">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options)<wbr></a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/975B059A">Discord<wbr>Rest<wbr>Webhook<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>IMemoryCache)<wbr></a></li>
 			<li class="header">Method Members</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/50161C32">CreateWebhookAsync<wbr>(Snowflake, <wbr>string, <wbr>Optional<wbr>&lt;Stream?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestWebhookAPI/F99069DE">DeleteWebhookAsync<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></li>
@@ -159,6 +159,7 @@
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/EAED83A5">WithCustomization<wbr>(Action<wbr>&lt;<wbr>Rest<wbr>Request<wbr>Builder&gt;<wbr>)<wbr></a></li>
 			<li class="header">Property Members</li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/C6781EC6">JsonOptions</a></li>
+				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></li>
 				<li><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/ADD2BEE9">RestHttpClient</a></li>
 
 
@@ -250,7 +251,10 @@
 					<tr>
 						<td>username</td>
 						<td>Optional<wbr>&lt;string&gt;<wbr></td>
-						<td>The username to use for this message.</td>
+						<td>
+     The username to use for this message. Note that Discord places some restrictions on valid usernames in order to
+     prevent spam and abuse - check the Discord documentation for up-to-date information on allowed usernames.
+     </td>
 					</tr>
 					<tr>
 						<td>avatarUrl</td>

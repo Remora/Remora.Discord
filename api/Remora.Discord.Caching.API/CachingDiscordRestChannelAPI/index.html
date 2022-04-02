@@ -259,7 +259,7 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI, IDiscordRestC
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI/5018907A">Caching<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>CacheService)<wbr></a></td>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Caching.API/CachingDiscordRestChannelAPI/E2A2F633">Caching<wbr>Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I<wbr>(IRestHttpClient, <wbr>Json<wbr>Serializer<wbr>Options, <wbr>IMemoryCache, <wbr>CacheService)<wbr></a></td>
 									<td>
     Represents the Discord Channel API.
     </td>
@@ -288,6 +288,16 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI, IDiscordRestC
 								<td>
 									<div>
     Gets the <code class="cs">System.Text.Json.JsonSerializerOptions</code> available to the API instance.
+    </div>
+											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI/17E00C50">RateLimitCache</a></td>
+								<td>IMemoryCache</td>
+								<td>
+									<div>
+    Gets the rate limit memory cache.
     </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/AbstractDiscordRestAPI">Abstract<wbr>Discord<wbr>Rest<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
@@ -614,16 +624,6 @@ public class CachingDiscordRestChannelAPI : DiscordRestChannelAPI, IDiscordRestC
 								<td>
 									<div>
     Modifies the given guild news channel.
-    </div>
-											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></em></small></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI/1E8069B5">Modify<wbr>Guild<wbr>Store<wbr>Channel<wbr>Async<wbr>(Snowflake, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>Optional<wbr>&lt;int?&gt;<wbr>, <wbr>Optional<wbr>&lt;bool?&gt;<wbr>, <wbr>Optional<wbr>&lt;IReadOnlyList<wbr>&lt;<wbr>I<wbr>Partial<wbr>Permission<wbr>Overwrite&gt;<wbr>?&gt;<wbr>, <wbr>Optional<wbr>&lt;Snowflake?&gt;<wbr>, <wbr>Optional<wbr>&lt;string&gt;<wbr>, <wbr>CancellationToken)<wbr></a></td>
-								<td>Task<wbr>&lt;Result<wbr>&lt;<a href="/Remora.Discord/api/Remora.Discord.API.Abstractions.Objects/IChannel">IChannel</a>&gt;<wbr>&gt;<wbr></td>
-								<td>
-									<div>
-    Modifies the given guild store channel.
     </div>
 											<div><small><em>Inherited from <a href="/Remora.Discord/api/Remora.Discord.Rest.API/DiscordRestChannelAPI">Discord<wbr>Rest<wbr>Channel<wbr>A<wbr>P<wbr>I</a></em></small></div>
 								</td>
