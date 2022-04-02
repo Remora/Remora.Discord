@@ -62,18 +62,18 @@ public class CacheService
     /// <param name="ct">A cancellation token to cancel the operation.</param>
     /// <typeparam name="TInstance">The instance type.</typeparam>
     /// <returns>A <see cref="ValueTask"/> representing the potentially asynchronous operation.</returns>
-    public ValueTask CacheAsync<TInstance>(string key, TInstance instance, CancellationToken ct = default)
+    public async ValueTask CacheAsync<TInstance>(string key, TInstance instance, CancellationToken ct = default)
         where TInstance : class
     {
         if (_cacheSettings.GetAbsoluteExpirationOrDefault(typeof(TInstance)) is var absoluteExpiration)
         {
             if (absoluteExpiration == TimeSpan.Zero)
             {
-                return default;
+                return;
             }
         }
 
-        Action cacheAction = instance switch
+        Func<Task> cacheAction = instance switch
         {
             IWebhook webhook => () => CacheWebhookAsync(key, webhook),
             ITemplate template => () => CacheTemplateAsync(key, template),
@@ -86,12 +86,10 @@ public class CacheService
             IInvite invite => () => CacheInviteAsync(key, invite),
             IMessage message => () => CacheMessageAsync(key, message),
             IChannel channel => () => CacheChannelAsync(key, channel),
-            _ => () => CacheInstanceAsync(key, instance)
+            _ => () => CacheInstanceAsync(key, instance).AsTask()
         };
 
-        cacheAction();
-
-        return default; // The same as ValueTask.CompletedTask
+        await cacheAction();
     }
 
     /// <summary>
@@ -139,7 +137,7 @@ public class CacheService
 
     private async Task CacheWebhookAsync(string key, IWebhook webhook)
     {
-        CacheInstanceAsync(key, webhook);
+        await CacheInstanceAsync(key, webhook);
 
         if (!webhook.User.IsDefined(out var user))
         {
@@ -152,7 +150,7 @@ public class CacheService
 
     private async Task CacheTemplateAsync(string key, ITemplate template)
     {
-        CacheInstanceAsync(key, template);
+        await CacheInstanceAsync(key, template);
 
         var creatorKey = KeyHelpers.CreateUserCacheKey(template.Creator.ID);
         await CacheAsync(creatorKey, template.Creator);
@@ -160,7 +158,7 @@ public class CacheService
 
     private async Task CacheIntegrationAsync(string key, IIntegration integration)
     {
-        CacheInstanceAsync(key, integration);
+        await CacheInstanceAsync(key, integration);
 
         if (!integration.User.IsDefined(out var user))
         {
@@ -173,7 +171,7 @@ public class CacheService
 
     private async Task CacheBanAsync(string key, IBan ban)
     {
-        CacheInstanceAsync(key, ban);
+        await CacheInstanceAsync(key, ban);
 
         var userKey = KeyHelpers.CreateUserCacheKey(ban.User.ID);
         await CacheAsync(userKey, ban.User);
@@ -181,7 +179,7 @@ public class CacheService
 
     private async Task CacheGuildMemberAsync(string key, IGuildMember member)
     {
-        CacheInstanceAsync(key, member);
+        await CacheInstanceAsync(key, member);
 
         if (!member.User.IsDefined(out var user))
         {
@@ -194,7 +192,7 @@ public class CacheService
 
     private async Task CacheGuildPreviewAsync(string key, IGuildPreview preview)
     {
-        CacheInstanceAsync(key, preview);
+        await CacheInstanceAsync(key, preview);
 
         foreach (var emoji in preview.Emojis)
         {
@@ -210,7 +208,7 @@ public class CacheService
 
     private async Task CacheGuildAsync(string key, IGuild guild)
     {
-        CacheInstanceAsync(key, guild);
+        await CacheInstanceAsync(key, guild);
 
         if (guild.Channels.IsDefined(out var channels))
         {
@@ -274,7 +272,7 @@ public class CacheService
 
     private async Task CacheEmojiAsync(string key, IEmoji emoji)
     {
-        CacheInstanceAsync(key, emoji);
+        await CacheInstanceAsync(key, emoji);
 
         if (!emoji.User.IsDefined(out var creator))
         {
@@ -287,7 +285,7 @@ public class CacheService
 
     private async Task CacheInviteAsync(string key, IInvite invite)
     {
-        CacheInstanceAsync(key, invite);
+        await CacheInstanceAsync(key, invite);
 
         if (!invite.Inviter.IsDefined(out var inviter))
         {
@@ -300,7 +298,7 @@ public class CacheService
 
     private async Task CacheMessageAsync(string key, IMessage message)
     {
-        CacheInstanceAsync(key, message);
+        await CacheInstanceAsync(key, message);
 
         var authorKey = KeyHelpers.CreateUserCacheKey(message.Author.ID);
         await CacheAsync(authorKey, message.Author);
@@ -321,7 +319,7 @@ public class CacheService
 
     private async Task CacheChannelAsync(string key, IChannel channel)
     {
-        CacheInstanceAsync(key, channel);
+        await CacheInstanceAsync(key, channel);
         if (!channel.Recipients.IsDefined(out var recipients))
         {
             return;
