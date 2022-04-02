@@ -47,7 +47,13 @@ public class MemoryCacheProvider : ICacheProvider
 
     /// <inheritdoc cref="ICacheProvider.CacheAsync{TInstance}" />
     public ValueTask CacheAsync<TInstance>
-        (string key, TInstance instance, TimeSpan? absoluteExpiration = null, TimeSpan? slidingExpiration = null, CancellationToken ct = default)
+    (
+        string key,
+        TInstance instance,
+        TimeSpan? absoluteExpiration = null,
+        TimeSpan? slidingExpiration = null,
+        CancellationToken ct = default
+    )
         where TInstance : class
     {
         var options = new MemoryCacheEntryOptions();

@@ -46,13 +46,13 @@ public interface ICacheProvider
     /// value should have a pre-determined lifetime in it's backing-store.</remarks>
     /// <returns>A <see cref="ValueTask"/> representing the result of the potentially asynchronous operation.</returns>
     ValueTask CacheAsync<TInstance>
-        (
-            string key,
-            TInstance instance,
-            TimeSpan? absoluteExpiration = null,
-            TimeSpan? slidingExpiration = null,
-            CancellationToken ct = default
-        )
+    (
+        string key,
+        TInstance instance,
+        TimeSpan? absoluteExpiration = null,
+        TimeSpan? slidingExpiration = null,
+        CancellationToken ct = default
+    )
         where TInstance : class;
 
     /// <summary>
