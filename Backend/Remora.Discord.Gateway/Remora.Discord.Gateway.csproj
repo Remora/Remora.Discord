@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.0.0</Version>
+        <Version>8.0.1</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Fix usage of new responder dispatch.
+            Update dependencies.
         </PackageReleaseNotes>
     </PropertyGroup>
 
