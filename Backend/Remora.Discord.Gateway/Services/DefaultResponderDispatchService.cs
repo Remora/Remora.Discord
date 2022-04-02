@@ -122,7 +122,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
                     return await _finalizerTask;
                 }
 
-                var dispatchResult = DispatchEvent(gatewayEvent);
+                var dispatchResult = InvokeEventDispatch(gatewayEvent);
                 if (!dispatchResult.IsSuccess)
                 {
                     return Result.FromError(dispatchResult);
@@ -203,26 +203,26 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
     /// A result representing the outcome of the dispatch operation. If successful, the result entity contains
     /// a task representing the asynchronous dispatch operation that resolves the execution results of all responders upon completion.
     /// </returns>
-    private Result<Task<IReadOnlyList<Result>>> DispatchEvent(IGatewayEvent gatewayEvent)
+    private Result<Task<IReadOnlyList<Result>>> InvokeEventDispatch(IGatewayEvent gatewayEvent)
     {
         var eventType = gatewayEvent.GetType();
         if (!_eventTypeInterfaces.TryGetValue(eventType, out var eventInterfaceType))
         {
-            var eventInterfaceTypes = eventType.FindInterfaces
-            (
-                (m, _) => m.GetInterface(nameof(IGatewayEvent)) is not null,
-                null
-            );
+            var maybeEventInterfaceType = eventType.GetInterfaces()
+                .FirstOrDefault
+                (
+                    t => t.GetInterface(nameof(IGatewayEvent)) is not null
+                );
 
-            if (eventInterfaceTypes.Length != 1)
+            if (maybeEventInterfaceType is null)
             {
-                return new NotFoundError
+                return new InvalidOperationException
                 (
                     $"Failed to find an interface deriving from {nameof(IGatewayEvent)} on the {eventType.FullName} type."
                 );
             }
 
-            eventInterfaceType = eventInterfaceTypes[0];
+            eventInterfaceType = maybeEventInterfaceType;
             _eventTypeInterfaces[eventType] = eventInterfaceType;
         }
 
@@ -302,7 +302,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
 
                         try
                         {
-                            return await responder.RespondAsync(gatewayEvent, ct);
+                            return await responder.RespondAsync(gatewayEvent, ct).ConfigureAwait(false);
                         }
                         catch (Exception e)
                         {
@@ -322,7 +322,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
     {
         try
         {
-            await foreach (var responderTask in _responderFinalizationQueue.Reader.ReadAllAsync(_dispatchCts.Token))
+            await foreach (var responderTask in _responderFinalizationQueue.Reader.ReadAllAsync(_dispatchCts.Token).ConfigureAwait(false))
             {
                 if (!responderTask.IsCompleted)
                 {
@@ -330,7 +330,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
                     continue;
                 }
 
-                await FinalizeResponderTask(responderTask);
+                await FinalizeResponderTask(responderTask).ConfigureAwait(false);
             }
         }
         catch (OperationCanceledException)
@@ -341,7 +341,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
         // Finalize any remaining responders on the queue
         while (_responderFinalizationQueue.Reader.TryRead(out var responderTask))
         {
-            await FinalizeResponderTask(responderTask);
+            await FinalizeResponderTask(responderTask).ConfigureAwait(false);
         }
 
         return Result.FromSuccess();
@@ -351,7 +351,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
     {
         try
         {
-            var results = await responderTask;
+            var results = await responderTask.ConfigureAwait(false);
 
             foreach (var res in results)
             {
@@ -377,6 +377,11 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
         {
             foreach (var ex in aex.InnerExceptions)
             {
+                if (ex is OperationCanceledException or TaskCanceledException)
+                {
+                    continue;
+                }
+
                 _logger.LogError(ex, "An error occured while running a responder");
             }
         }
