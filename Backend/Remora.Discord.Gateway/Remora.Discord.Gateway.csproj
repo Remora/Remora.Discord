@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>8.0.1</Version>
+        <Version>8.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,7 +13,7 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
+            Prevent ResponderDispatchService.DisposeAsync from throwing.
         </PackageReleaseNotes>
     </PropertyGroup>
 
