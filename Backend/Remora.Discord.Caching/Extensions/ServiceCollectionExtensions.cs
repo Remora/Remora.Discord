@@ -51,8 +51,8 @@ public static class ServiceCollectionExtensions
     /// The cache uses a run-of-the-mill <see cref="IMemoryCache"/>. Cache entry options for any cached type can be
     /// configured using <see cref="IOptions{CacheSettings}"/>.
     ///
-    /// When choosing a cache implementation, it should be noted that <see cref="AddDiscordCaching"/> and
-    /// <see cref="AddDiscordRedisCaching"/> cannot be used together.
+    /// When choosing a cache implementation, it should be noted that choosing this will override the backing store for
+    /// caching REST clients and responders.
     /// </remarks>
     /// <param name="services">The services.</param>
     /// <returns>The services, with caching enabled.</returns>
