@@ -60,7 +60,8 @@ public static class ServiceCollectionExtensions
         services.AddDiscordCaching();
         services.AddStackExchangeRedisCache(configureRedisAction);
 
-        services.Replace(ServiceDescriptor.Singleton<ICacheProvider, RedisCacheProvider>());
+        services.TryAddSingleton<RedisCacheProvider>();
+        services.AddSingleton<ICacheProvider>(s => s.GetRequiredService<RedisCacheProvider>());
         return services;
     }
 }

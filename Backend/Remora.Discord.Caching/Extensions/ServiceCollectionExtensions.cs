@@ -62,6 +62,9 @@ public static class ServiceCollectionExtensions
 
         services.TryAddSingleton<CacheService>();
 
+        services.TryAddSingleton<MemoryCacheProvider>();
+        services.AddSingleton<ICacheProvider>(s => s.GetRequiredService<MemoryCacheProvider>());
+
         services.AddOptions<CacheSettings>();
 
         services
