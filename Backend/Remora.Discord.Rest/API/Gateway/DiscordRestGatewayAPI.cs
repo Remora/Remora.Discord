@@ -24,6 +24,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -39,10 +40,11 @@ public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGateway
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscordRestGatewayAPI"/> class.
     /// </summary>
-    /// <param name="restHttpClient">The specialized Discord Http client.</param>
+    /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestGatewayAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestGatewayAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -52,7 +54,7 @@ public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGateway
         return this.RestHttpClient.GetAsync<IGatewayEndpoint>
         (
             "gateway",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -63,7 +65,7 @@ public class DiscordRestGatewayAPI : AbstractDiscordRestAPI, IDiscordRestGateway
         return this.RestHttpClient.GetAsync<IGatewayEndpoint>
         (
             "gateway/bot",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }

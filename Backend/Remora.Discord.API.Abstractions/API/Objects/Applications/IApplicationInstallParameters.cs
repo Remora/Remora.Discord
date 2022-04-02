@@ -1,5 +1,5 @@
 //
-//  IInviteStageInstance.cs
+//  IApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,35 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents stage information in an invite.
+/// Represents a set of parameters applied to custom application installation.
 /// </summary>
-[PublicAPI, Obsolete("No longer used by Discord.")]
-public interface IInviteStageInstance
+public interface IApplicationInstallParameters
 {
     /// <summary>
-    /// Gets the speaking members of the stage.
+    /// Gets the OAuth2 scopes to add the application to the server with.
     /// </summary>
-    IReadOnlyList<IPartialGuildMember> Members { get; }
+    IReadOnlyList<string> Scopes { get; }
 
     /// <summary>
-    /// Gets the number of stage participants.
+    /// Gets the permissions to request for the created bot role.
     /// </summary>
-    int ParticipantCount { get; }
-
-    /// <summary>
-    /// Gets the number of users speaking in the stage.
-    /// </summary>
-    int SpeakerCount { get; }
-
-    /// <summary>
-    /// Gets the topic of the stage.
-    /// </summary>
-    string Topic { get; }
+    IDiscordPermissionSet Permissions { get; }
 }

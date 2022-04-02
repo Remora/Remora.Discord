@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>3.0.2</Version>
+        <Version>3.0.7</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,8 +14,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Allow modal submissions through.
-            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 

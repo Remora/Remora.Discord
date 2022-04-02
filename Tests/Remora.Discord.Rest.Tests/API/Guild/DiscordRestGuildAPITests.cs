@@ -1305,17 +1305,32 @@ public class DiscordRestGuildAPITests
         public async Task PerformsRequestCorrectly()
         {
             var guildId = DiscordSnowflake.New(0);
+            var limit = 1;
+            var before = new Snowflake(2);
+            var after = new Snowflake(3);
 
             var api = CreateAPI
             (
                 b => b
                     .Expect(HttpMethod.Get, $"{Constants.BaseURL}guilds/{guildId}/bans")
+                    .WithQueryString
+                    (
+                        new[]
+                        {
+                            new KeyValuePair<string, string>("limit", limit.ToString()),
+                            new KeyValuePair<string, string>("before", before.ToString()),
+                            new KeyValuePair<string, string>("after", after.ToString())
+                        }
+                    )
                     .Respond("application/json", "[ ]")
             );
 
             var result = await api.GetGuildBansAsync
             (
-                guildId
+                guildId,
+                limit,
+                before,
+                after
             );
 
             ResultAssert.Successful(result);

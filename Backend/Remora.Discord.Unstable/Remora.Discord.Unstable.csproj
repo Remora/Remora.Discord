@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>6.0.1</Version>
+        <Version>6.0.3</Version>
         <Description>
             $(BaseDescription)
 
@@ -19,7 +19,6 @@
         </Description>
         <PackageReleaseNotes>
             Update dependencies.
-            Update and default to API v10.
         </PackageReleaseNotes>
     </PropertyGroup>
 

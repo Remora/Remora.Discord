@@ -1,5 +1,5 @@
 //
-//  InviteStageInstanceTests.cs
+//  ApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,12 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+using System.Collections.Generic;
 using Remora.Discord.API.Abstractions.Objects;
-using Remora.Discord.API.Tests.TestBases;
 
-namespace Remora.Discord.API.Tests.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <inheritdoc />
-public class InviteStageInstanceTests : ObjectTestBase<IInviteStageInstance>
-{
-}
+/// <inheritdoc cref="IApplicationInstallParameters" />
+public record ApplicationInstallParameters
+(
+    IReadOnlyList<string> Scopes,
+    IDiscordPermissionSet Permissions
+) : IApplicationInstallParameters;

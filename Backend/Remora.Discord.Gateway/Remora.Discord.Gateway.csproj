@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>7.0.1</Version>
+        <Version>8.0.2</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,12 +13,15 @@
             capabilities and user-facing events.
         </Description>
         <PackageReleaseNotes>
-            Update dependencies.
-            Update and default to API v10.
+            Prevent ResponderDispatchService.DisposeAsync from throwing.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Remora.Discord.Rest\Remora.Discord.Rest.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Threading.Channels" Version="6.0.0" />
     </ItemGroup>
 </Project>

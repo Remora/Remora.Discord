@@ -657,10 +657,7 @@ public static class ServiceCollectionExtensions
     private static JsonSerializerOptions AddInviteObjectConverters(this JsonSerializerOptions options)
     {
         options.AddDataObjectConverter<IInvite, Invite>();
-
         options.AddDataObjectConverter<IPartialInvite, PartialInvite>();
-
-        options.AddDataObjectConverter<IInviteStageInstance, InviteStageInstance>();
 
         return options;
     }
@@ -1005,6 +1002,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyName(a => a.IsBotPublic, "bot_public")
             .WithPropertyName(a => a.DoesBotRequireCodeGrant, "bot_require_code_grant")
             .WithPropertyName(a => a.PrimarySKUID, "primary_sku_id");
+
+        options.AddDataObjectConverter<IApplicationInstallParameters, ApplicationInstallParameters>();
 
         options.AddDataObjectConverter<IAuthorizationInformation, AuthorizationInformation>();
 

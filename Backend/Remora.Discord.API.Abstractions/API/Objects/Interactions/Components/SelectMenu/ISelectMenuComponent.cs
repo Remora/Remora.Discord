@@ -48,7 +48,7 @@ public interface ISelectMenuComponent : IMessageComponent, IPartialSelectMenuCom
     new IReadOnlyList<ISelectOption> Options { get; }
 
     /// <summary>
-    /// Gets the placeholder text for the menu.
+    /// Gets the placeholder text for the menu. Max 150 characters.
     /// </summary>
     new Optional<string> Placeholder { get; }
 

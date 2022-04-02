@@ -129,7 +129,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="publicUpdatesChannelID">The ID of the new channel for public updates.</param>
     /// <param name="preferredLocale">The new preferred locale.</param>
     /// <param name="features">The new guild features.</param>
-    /// <param name="description">The new discovery description.</param>
+    /// <param name="description">The new description.</param>
     /// <param name="isPremiumProgressBarEnabled">Whether the guild has the boost progress bar enabled.</param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
@@ -419,11 +419,23 @@ public interface IDiscordRestGuildAPI
     /// Gets a list of bans.
     /// </summary>
     /// <param name="guildID">The ID of the guild.</param>
+    /// <param name="limit">The maximum number of bans to return (max 1000).</param>
+    /// <param name="before">
+    /// The ID of the ban to get bans before. This is a mutually exclusive option with <paramref name="after"/>, though
+    /// Discord accepts both at the same time.
+    /// </param>
+    /// <param name="after">
+    /// The ID of the ban to get bans after. This is a mutually exclusive option with <paramref name="before"/>, though
+    /// Discord accepts both at the same time.
+    /// </param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A retrieval result which may or may not have succeeded.</returns>
     Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
     (
         Snowflake guildID,
+        Optional<int> limit = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     );
 
@@ -512,8 +524,8 @@ public interface IDiscordRestGuildAPI
         Optional<IDiscordPermissionSet> permissions = default,
         Optional<Color> colour = default,
         Optional<bool> isHoisted = default,
-        Optional<Stream> icon = default,
-        Optional<string> unicodeEmoji = default,
+        Optional<Stream?> icon = default,
+        Optional<string?> unicodeEmoji = default,
         Optional<bool> isMentionable = default,
         Optional<string> reason = default,
         CancellationToken ct = default
@@ -768,7 +780,7 @@ public interface IDiscordRestGuildAPI
     /// <param name="requestToSpeakTimestamp">The time when the user requested to speak.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A modification result which may or may not have succeeded.</returns>
-    Task<Result<IVoiceState>> ModifyCurrentUserVoiceStateAsync
+    Task<Result> ModifyCurrentUserVoiceStateAsync
     (
         Snowflake guildID,
         Snowflake channelID,

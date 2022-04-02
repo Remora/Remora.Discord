@@ -22,17 +22,12 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.WebSockets;
-using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Remora.Discord.API;
@@ -44,7 +39,6 @@ using Remora.Discord.API.Abstractions.Gateway.Events;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.API.Gateway.Bidirectional;
 using Remora.Discord.API.Gateway.Commands;
-using Remora.Discord.Gateway.Responders;
 using Remora.Discord.Gateway.Results;
 using Remora.Discord.Gateway.Services;
 using Remora.Discord.Gateway.Transport;
@@ -68,22 +62,13 @@ public class DiscordGatewayClient : IDisposable
     private readonly DiscordGatewayClientOptions _gatewayOptions;
     private readonly ITokenStore _tokenStore;
     private readonly Random _random;
-    private readonly IResponderTypeRepository _responderTypeRepository;
+
+    private readonly ResponderDispatchService _responderDispatch;
 
     /// <summary>
     /// Holds payloads that have been submitted by the application, but have not yet been sent to the gateway.
     /// </summary>
     private readonly ConcurrentQueue<IPayload> _payloadsToSend;
-
-    /// <summary>
-    /// Holds payloads that have been received by the gateway, but not yet distributed to the application.
-    /// </summary>
-    private readonly ConcurrentQueue<IPayload> _receivedPayloads;
-
-    /// <summary>
-    /// Holds the currently running responders.
-    /// </summary>
-    private readonly ConcurrentQueue<Task<IReadOnlyList<Result>>> _runningResponderDispatches;
 
     /// <summary>
     /// Holds the websocket.
@@ -158,7 +143,7 @@ public class DiscordGatewayClient : IDisposable
     /// <param name="random">An entropy source.</param>
     /// <param name="log">The logging instance.</param>
     /// <param name="services">The available services.</param>
-    /// <param name="responderTypeRepository">The responder type repository.</param>
+    /// <param name="responderDispatch">The responder dispatch service.</param>
     public DiscordGatewayClient
     (
         IDiscordRestGatewayAPI gatewayAPI,
@@ -168,7 +153,7 @@ public class DiscordGatewayClient : IDisposable
         Random random,
         ILogger<DiscordGatewayClient> log,
         IServiceProvider services,
-        IResponderTypeRepository responderTypeRepository
+        ResponderDispatchService responderDispatch
     )
     {
         _gatewayAPI = gatewayAPI;
@@ -178,12 +163,9 @@ public class DiscordGatewayClient : IDisposable
         _random = random;
         _log = log;
         _services = services;
-        _responderTypeRepository = responderTypeRepository;
-
-        _runningResponderDispatches = new ConcurrentQueue<Task<IReadOnlyList<Result>>>();
+        _responderDispatch = responderDispatch;
 
         _payloadsToSend = new ConcurrentQueue<IPayload>();
-        _receivedPayloads = new ConcurrentQueue<IPayload>();
 
         _connectionStatus = GatewayConnectionStatus.Offline;
 
@@ -228,6 +210,9 @@ public class DiscordGatewayClient : IDisposable
             _disconnectRequestedSource.Dispose();
             _disconnectRequestedSource = new CancellationTokenSource();
 
+            _log.LogInformation("Starting dispatch service...");
+            _responderDispatch.Start();
+
             while (!stopRequested.IsCancellationRequested)
             {
                 var iterationResult = await RunConnectionIterationAsync(stopRequested);
@@ -253,12 +238,6 @@ public class DiscordGatewayClient : IDisposable
                         // Couldn't disconnect cleanly :(
                         return disconnectResult;
                     }
-                }
-
-                // Finish up the responders
-                foreach (var runningResponder in _runningResponderDispatches)
-                {
-                    await FinalizeResponderDispatchAsync(runningResponder);
                 }
 
                 if (stopRequested.IsCancellationRequested)
@@ -288,6 +267,8 @@ public class DiscordGatewayClient : IDisposable
                 _disconnectRequestedSource.Dispose();
                 _disconnectRequestedSource = new CancellationTokenSource();
             }
+
+            await _responderDispatch.StopAsync();
 
             var userRequestedDisconnect = await _transportService.DisconnectAsync(false, stopRequested);
             if (!userRequestedDisconnect.IsSuccess)
@@ -523,7 +504,7 @@ public class DiscordGatewayClient : IDisposable
                 {
                     _log.LogWarning
                     (
-                        "There's no session start limits available for this connection. Rate limits may be " +
+                        "There are no session start limits available for this connection. Rate limits may be " +
                         "unexpectedly hit"
                     );
                 }
@@ -568,7 +549,16 @@ public class DiscordGatewayClient : IDisposable
                     );
                 }
 
-                UnwrapAndDispatchEvent(receiveHello.Entity, _disconnectRequestedSource.Token);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receiveHello.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
+                if (!dispatch.IsSuccess)
+                {
+                    return dispatch;
+                }
 
                 // Set up the send task
                 var heartbeatInterval = hello.Data.HeartbeatInterval;
@@ -597,25 +587,6 @@ public class DiscordGatewayClient : IDisposable
             }
             case GatewayConnectionStatus.Connected:
             {
-                // Process received events and dispatch them to the application
-                if (_receivedPayloads.TryDequeue(out var payload))
-                {
-                    UnwrapAndDispatchEvent(payload, _disconnectRequestedSource.Token);
-                }
-
-                // Unpack one of the running responders, if any are pending
-                if (_runningResponderDispatches.TryDequeue(out var runningResponder))
-                {
-                    if (runningResponder.IsCompleted)
-                    {
-                        await FinalizeResponderDispatchAsync(runningResponder);
-                    }
-                    else
-                    {
-                        _runningResponderDispatches.Enqueue(runningResponder);
-                    }
-                }
-
                 // Check the send and receive tasks for errors
                 if (_sendTask.IsCompleted)
                 {
@@ -635,15 +606,8 @@ public class DiscordGatewayClient : IDisposable
                     }
                 }
 
-                try
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(10), stopRequested);
-                }
-                catch (OperationCanceledException)
-                {
-                    // will cleanup below
-                }
-
+                // No need to check for errors like crazy
+                await Task.Delay(TimeSpan.FromMilliseconds(100), stopRequested);
                 break;
             }
         }
@@ -678,197 +642,6 @@ public class DiscordGatewayClient : IDisposable
         _connectionStatus = GatewayConnectionStatus.Disconnected;
 
         return Result.FromSuccess();
-    }
-
-    /// <summary>
-    /// Finalizes the given running responder, awaiting it and logging its results.
-    /// </summary>
-    /// <param name="runningResponderDispatch">The running responder dispatch.</param>
-    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    private async Task FinalizeResponderDispatchAsync(Task<IReadOnlyList<Result>> runningResponderDispatch)
-    {
-        try
-        {
-            var responderResults = await runningResponderDispatch;
-            foreach (var responderResult in responderResults)
-            {
-                if (responderResult.IsSuccess)
-                {
-                    continue;
-                }
-
-                switch (responderResult.Error)
-                {
-                    case ExceptionError exe:
-                    {
-                        _log.LogWarning
-                        (
-                            exe.Exception,
-                            "Error in gateway event responder: {Exception}",
-                            exe.Message
-                        );
-
-                        break;
-                    }
-                    default:
-                    {
-                        _log.LogWarning
-                        (
-                            "Error in gateway event responder.\n{Reason}",
-                            responderResult.Error!.Message
-                        );
-
-                        break;
-                    }
-                }
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            // Pass, this is fine
-        }
-        catch (AggregateException aex)
-        {
-            foreach (var e in aex.InnerExceptions)
-            {
-                if (e is OperationCanceledException)
-                {
-                    continue;
-                }
-
-                _log.LogWarning("Error in gateway event responder.\n{Exception}", e);
-            }
-        }
-        catch (Exception e)
-        {
-            _log.LogWarning("Error in gateway event responder.\n{Exception}", e);
-        }
-    }
-
-    /// <summary>
-    /// Unwraps the given payload into its typed representation, dispatching all events for it.
-    /// </summary>
-    /// <param name="payload">The payload.</param>
-    /// <param name="ct">The cancellation token for the dispatched event.</param>
-    private void UnwrapAndDispatchEvent(IPayload payload, CancellationToken ct = default)
-    {
-        var dispatchMethod = GetType().GetMethod
-        (
-            nameof(DispatchEventAsync),
-            BindingFlags.NonPublic | BindingFlags.Instance
-        );
-
-        if (dispatchMethod is null)
-        {
-            throw new MissingMethodException(nameof(DiscordGatewayClient), nameof(DispatchEventAsync));
-        }
-
-        var payloadType = payload.GetType();
-        if (!payloadType.IsGenericType)
-        {
-            _log.LogWarning
-            (
-                "The given payload of type {PayloadType} was not compatible with the event dispatcher",
-                payloadType
-            );
-
-            return;
-        }
-
-        var payloadInterfaceType = payloadType.GetInterfaces().FirstOrDefault
-        (
-            i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IPayload<>)
-        );
-
-        if (payloadInterfaceType is null)
-        {
-            _log.LogWarning
-            (
-                "The given payload of type {PayloadType} was not compatible with the event dispatcher",
-                payloadType
-            );
-
-            return;
-        }
-
-        var boundDispatchMethod = dispatchMethod.MakeGenericMethod(payloadInterfaceType.GetGenericArguments());
-        var dispatchTask = boundDispatchMethod.Invoke(this, new object?[] { payload, ct });
-        if (dispatchTask is null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        _runningResponderDispatches.Enqueue((Task<IReadOnlyList<Result>>)dispatchTask);
-    }
-
-    /// <summary>
-    /// Dispatches the given event to all relevant gateway event responders.
-    /// </summary>
-    /// <param name="gatewayEvent">The event to dispatch.</param>
-    /// <param name="ct">The cancellation token to use.</param>
-    /// <typeparam name="TGatewayEvent">The gateway event.</typeparam>
-    private async Task<IReadOnlyList<Result>> DispatchEventAsync<TGatewayEvent>
-    (
-        IPayload<TGatewayEvent> gatewayEvent,
-        CancellationToken ct = default
-    )
-        where TGatewayEvent : IGatewayEvent
-    {
-        // Batch up the responders according to their groups
-        var responderGroups = new[]
-        {
-            _responderTypeRepository.GetEarlyResponderTypes<TGatewayEvent>(),
-            _responderTypeRepository.GetResponderTypes<TGatewayEvent>(),
-            _responderTypeRepository.GetLateResponderTypes<TGatewayEvent>(),
-        };
-
-        // Run through the groups in order
-        var results = new List<Result>();
-        foreach (var responderGroup in responderGroups)
-        {
-            var groupResults = await Task.WhenAll
-            (
-                responderGroup.Select
-                (
-                    async rt =>
-                    {
-                        using var serviceScope = _services.CreateScope();
-                        var responder = (IResponder<TGatewayEvent>)serviceScope.ServiceProvider
-                            .GetRequiredService(rt);
-
-                        try
-                        {
-                            return await responder.RespondAsync(gatewayEvent.Data, ct);
-                        }
-                        catch (Exception e)
-                        {
-                            return e;
-                        }
-                        finally
-                        {
-                            // Suspicious type conversions are disabled here, since the user-defined responders may
-                            // implement IDisposable or IAsyncDisposable.
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IDisposable disposable)
-                            {
-                                disposable.Dispose();
-                            }
-
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            if (responder is IAsyncDisposable asyncDisposable)
-                            {
-                                await asyncDisposable.DisposeAsync();
-                            }
-                        }
-                    }
-                )
-            ).ConfigureAwait(false);
-
-            results.AddRange(groupResults);
-        }
-
-        return results;
     }
 
     /// <summary>
@@ -910,11 +683,11 @@ public class DiscordGatewayClient : IDisposable
             (
                 _tokenStore.Token,
                 _gatewayOptions.ConnectionProperties,
-                Compress: false,
-                LargeThreshold: _gatewayOptions.LargeThreshold,
-                Shard: shardInformation,
-                Presence: initialPresence,
-                Intents: _gatewayOptions.Intents
+                false,
+                _gatewayOptions.LargeThreshold,
+                shardInformation,
+                initialPresence,
+                _gatewayOptions.Intents
             )
         );
 
@@ -954,7 +727,16 @@ public class DiscordGatewayClient : IDisposable
                 );
             }
 
-            UnwrapAndDispatchEvent(receiveReady.Entity, _disconnectRequestedSource.Token);
+            var dispatch = await _responderDispatch.DispatchAsync
+            (
+                receiveReady.Entity,
+                _disconnectRequestedSource.Token
+            );
+
+            if (!dispatch.IsSuccess)
+            {
+                return dispatch;
+            }
 
             _sessionID = ready.Data.SessionID;
             break;
@@ -1017,14 +799,21 @@ public class DiscordGatewayClient : IDisposable
                 }
                 case IPayload<IResumed>:
                 {
-                    UnwrapAndDispatchEvent(receiveEvent.Entity, _disconnectRequestedSource.Token);
-
                     resuming = false;
                     break;
                 }
             }
 
-            _receivedPayloads.Enqueue(receiveEvent.Entity);
+            var dispatch = await _responderDispatch.DispatchAsync
+            (
+                receiveEvent.Entity,
+                _disconnectRequestedSource.Token
+            );
+
+            if (!dispatch.IsSuccess)
+            {
+                return dispatch;
+            }
         }
 
         return Result.FromSuccess();
@@ -1189,7 +978,16 @@ public class DiscordGatewayClient : IDisposable
                 }
 
                 // Enqueue the payload for dispatch
-                _receivedPayloads.Enqueue(receivedPayload.Entity);
+                var dispatch = await _responderDispatch.DispatchAsync
+                (
+                    receivedPayload.Entity,
+                    _disconnectRequestedSource.Token
+                );
+
+                if (!dispatch.IsSuccess)
+                {
+                    return dispatch;
+                }
 
                 // Signal the governor task that a reconnection is requested, if necessary.
                 switch (receivedPayload.Entity)
@@ -1210,7 +1008,15 @@ public class DiscordGatewayClient : IDisposable
                     }
                     case IPayload<IHeartbeat>:
                     {
-                        SubmitCommand(new HeartbeatAcknowledge());
+                        // 32-bit reads are atomic, so this is fine
+                        var lastSequenceNumber = _lastSequenceNumber;
+
+                        var heartbeat = new Heartbeat
+                        (
+                            lastSequenceNumber == 0 ? null : lastSequenceNumber
+                        );
+
+                        SubmitCommand(heartbeat);
                         continue;
                     }
                     default:

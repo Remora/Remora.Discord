@@ -212,6 +212,11 @@ public enum DiscordError
     UnknownApplicationCommand = 10063,
 
     /// <summary>
+    /// Unknown voice state.
+    /// </summary>
+    UnknownVoiceState = 10065,
+
+    /// <summary>
     /// Unknown application command permissions.
     /// </summary>
     UnknownApplicationCommandPermissions = 10066,
@@ -502,9 +507,9 @@ public enum DiscordError
     CannotSendMessageToUser = 50007,
 
     /// <summary>
-    /// Cannot send messages in a voice channel.
+    /// Cannot send messages in a non-text channel.
     /// </summary>
-    CannotSendMessageToVoiceChannel = 50008,
+    CannotSendMessageToNonTextChannel = 50008,
 
     /// <summary>
     /// Channel verification level is too high for you to gain access.

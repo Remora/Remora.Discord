@@ -353,7 +353,7 @@ public class CDNTests
             : base
             (
                 new Uri("https://cdn.discordapp.com/banners/0/1"),
-                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP }
+                new[] { CDNImageFormat.PNG, CDNImageFormat.JPEG, CDNImageFormat.WebP, CDNImageFormat.GIF }
             )
         {
         }

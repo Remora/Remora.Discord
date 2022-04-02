@@ -210,7 +210,7 @@ public interface IGuild : IPartialGuild
     new string? VanityUrlCode { get; }
 
     /// <summary>
-    /// Gets the description of the guild, if the guild is discoverable.
+    /// Gets the description of the guild.
     /// </summary>
     new string? Description { get; }
 

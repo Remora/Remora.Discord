@@ -37,5 +37,16 @@ public record StageInstanceCreate
     Snowflake ChannelID,
     string Topic,
     StagePrivacyLevel PrivacyLevel,
-    bool IsDiscoveryDisabled
-) : StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled), IStageInstanceCreate;
+    bool IsDiscoveryDisabled,
+    Snowflake? GuildScheduledEventID
+) : StageInstance
+    (
+        ID,
+        GuildID,
+        ChannelID,
+        Topic,
+        PrivacyLevel,
+        IsDiscoveryDisabled,
+        GuildScheduledEventID
+    ),
+    IStageInstanceCreate;

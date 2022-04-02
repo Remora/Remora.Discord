@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -63,6 +64,7 @@ public static class ServiceCollectionExtensions
         Action<IHttpClientBuilder>? buildClient = null
     )
     {
+        serviceCollection.AddMemoryCache();
         serviceCollection.ConfigureDiscordJsonConverters();
 
         serviceCollection
@@ -71,97 +73,113 @@ public static class ServiceCollectionExtensions
         serviceCollection.TryAddTransient<IDiscordRestAuditLogAPI>(s => new DiscordRestAuditLogAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestChannelAPI>(s => new DiscordRestChannelAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestEmojiAPI>(s => new DiscordRestEmojiAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestGatewayAPI>(s => new DiscordRestGatewayAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestGuildAPI>(s => new DiscordRestGuildAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestGuildScheduledEventAPI>(s => new DiscordRestGuildScheduledEventAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestInviteAPI>(s => new DiscordRestInviteAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestUserAPI>(s => new DiscordRestUserAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestVoiceAPI>(s => new DiscordRestVoiceAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestWebhookAPI>(s => new DiscordRestWebhookAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestTemplateAPI>(s => new DiscordRestTemplateAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestInteractionAPI>(s => new DiscordRestInteractionAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestApplicationAPI>(s => new DiscordRestApplicationAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestOAuth2API>(s => new DiscordRestOAuth2API
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestStageInstanceAPI>(s => new DiscordRestStageInstanceAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         serviceCollection.TryAddTransient<IDiscordRestStickerAPI>(s => new DiscordRestStickerAPI
         (
             s.GetRequiredService<IRestHttpClient>(),
-            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord")
+            s.GetRequiredService<IOptionsMonitor<JsonSerializerOptions>>().Get("Discord"),
+            s.GetRequiredService<IMemoryCache>()
         ));
 
         var rateLimitPolicy = DiscordRateLimitPolicy.Create();

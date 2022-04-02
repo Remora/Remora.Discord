@@ -37,5 +37,16 @@ public record StageInstanceDelete
     Snowflake ChannelID,
     string Topic,
     StagePrivacyLevel PrivacyLevel,
-    bool IsDiscoveryDisabled
-) : StageInstance(ID, GuildID, ChannelID, Topic, PrivacyLevel, IsDiscoveryDisabled), IStageInstanceDelete;
+    bool IsDiscoveryDisabled,
+    Snowflake? GuildScheduledEventID
+) : StageInstance
+    (
+        ID,
+        GuildID,
+        ChannelID,
+        Topic,
+        PrivacyLevel,
+        IsDiscoveryDisabled,
+        GuildScheduledEventID
+    ),
+    IStageInstanceDelete;

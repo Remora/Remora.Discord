@@ -26,6 +26,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -45,8 +46,9 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestStickerAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -56,7 +58,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         return this.RestHttpClient.GetAsync<ISticker>
         (
             $"stickers/{id}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -67,7 +69,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         return this.RestHttpClient.GetAsync<INitroStickerPacks>
         (
             "sticker-packs",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -82,7 +84,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         return this.RestHttpClient.GetAsync<IReadOnlyList<ISticker>>
         (
             $"guilds/{guildId}/stickers",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -98,7 +100,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         return this.RestHttpClient.GetAsync<ISticker>
         (
             $"guilds/{guildId}/stickers/{stickerId}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -142,7 +144,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
                 .AddContent(new StringContent(description), nameof(description))
                 .AddContent(new StringContent(tags), nameof(tags))
                 .AddContent(new StreamContent(file.Content), nameof(file), file.Name)
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -191,7 +193,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
                         json.Write("tags", tags, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -208,7 +210,7 @@ public class DiscordRestStickerAPI : AbstractDiscordRestAPI, IDiscordRestSticker
         return this.RestHttpClient.DeleteAsync
         (
             $"guilds/{guildId}/stickers/{stickerId}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }

@@ -36,7 +36,7 @@ public record GuildScheduledEventDelete
     Snowflake? ChannelID,
     Optional<Snowflake?> CreatorID,
     string Name,
-    Optional<string> Description,
+    Optional<string?> Description,
     DateTimeOffset ScheduledStartTime,
     DateTimeOffset? ScheduledEndTime,
     GuildScheduledEventPrivacyLevel PrivacyLevel,

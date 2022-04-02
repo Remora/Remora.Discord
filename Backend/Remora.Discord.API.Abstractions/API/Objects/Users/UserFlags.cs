@@ -47,9 +47,9 @@ public enum UserFlags
     PartneredServerOwner = 1 << 1,
 
     /// <summary>
-    /// The user is part of HypeSquad events.
+    /// The user is a member of a HypeSquad event.
     /// </summary>
-    HypeSquadEvents = 1 << 2,
+    HypeSquad = 1 << 2,
 
     /// <summary>
     /// The user is a hunter (level 1).

@@ -59,7 +59,7 @@ public interface IGuildScheduledEvent
     /// <summary>
     /// Gets the description of the scheduled event, if any.
     /// </summary>
-    Optional<string> Description { get; }
+    Optional<string?> Description { get; }
 
     /// <summary>
     /// Gets the time the scheduled event will start.
