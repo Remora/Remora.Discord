@@ -121,18 +121,18 @@ public class CacheService
     public async ValueTask<Result<TInstance>> EvictAsync<TInstance>(string key, CancellationToken ct = default)
         where TInstance : class
     {
-        var cacheResult = await _cacheProvider.EvictAsync<TInstance>(key, ct);
+        var evictionResult = await _cacheProvider.EvictAsync<TInstance>(key, ct);
 
-        if (!cacheResult.IsSuccess)
+        if (!evictionResult.IsSuccess)
         {
-            return Result<TInstance>.FromError(cacheResult.Error);
+            return Result<TInstance>.FromError(evictionResult.Error);
         }
 
         var options = _cacheSettings.GetEntryOptions<TInstance>();
 
-        await _cacheProvider.CacheAsync(key, cacheResult.Entity, options.AbsoluteExpirationRelativeToNow, options.SlidingExpiration, ct);
+        await _cacheProvider.CacheAsync(key, evictionResult.Entity, options.AbsoluteExpirationRelativeToNow, options.SlidingExpiration, ct);
 
-        return cacheResult.Entity;
+        return evictionResult.Entity;
     }
 
     private async Task CacheWebhookAsync(string key, IWebhook webhook)
