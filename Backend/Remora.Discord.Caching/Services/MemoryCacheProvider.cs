@@ -30,7 +30,7 @@ using Remora.Results;
 namespace Remora.Discord.Caching.Services;
 
 /// <summary>
-/// A <see cref="IMemoryCache"/>-backed cache provider.
+/// An <see cref="IMemoryCache"/>-backed cache provider.
 /// </summary>
 public class MemoryCacheProvider : ICacheProvider
 {
