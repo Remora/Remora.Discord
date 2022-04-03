@@ -162,7 +162,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
         }
 
         var stopResult = await StopAsync();
-        if (!stopResult.IsSuccess && stopResult.Error is not InvalidOperationError)
+        if (!stopResult.IsSuccess)
         {
             _logger.LogError("Failed to stop the dispatch service when disposing:\n{Error}", stopResult.Error);
         }
@@ -181,7 +181,7 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
     {
         if (!this.IsRunning)
         {
-            return new InvalidOperationError("Already stopped");
+            return Result.FromSuccess();
         }
 
         if (_finalizerTask is null)

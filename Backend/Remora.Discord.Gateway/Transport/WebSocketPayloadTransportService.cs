@@ -48,9 +48,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
     private readonly RecyclableMemoryStreamManager _memoryStreamManager;
     private readonly JsonSerializerOptions _jsonOptions;
-
-    private readonly SemaphoreSlim _sendSemaphore;
-    private readonly SemaphoreSlim _receiveSemaphore;
     private readonly Utf8JsonWriter _payloadJsonWriter;
 
     private bool _isDisposed;
@@ -63,7 +60,7 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
     private ClientWebSocket? _clientWebSocket;
 
     /// <inheritdoc />
-    public bool IsConnected { get; private set; }
+    public bool IsConnected => _clientWebSocket?.State is WebSocketState.Open;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebSocketPayloadTransportService"/> class.
@@ -79,8 +76,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         _memoryStreamManager = memoryStreamManager;
         _jsonOptions = jsonOptions;
 
-        _sendSemaphore = new SemaphoreSlim(1);
-        _receiveSemaphore = new SemaphoreSlim(1);
         _receiveToken = new CancellationTokenSource();
         _payloadSendBuffer = new ArrayBufferWriter<byte>(MaxPayloadSize);
         _payloadJsonWriter = new Utf8JsonWriter
@@ -88,6 +83,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             _payloadSendBuffer,
             new JsonWriterOptions { SkipValidation = true } // The JSON Serializer should handle everything correctly
         );
+
+        _payloadSendBuffer.Clear();
     }
 
     /// <inheritdoc />
@@ -133,11 +130,11 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
         _clientWebSocket = socket;
 
-        this.IsConnected = true;
         return Result.FromSuccess();
     }
 
     /// <inheritdoc />
+    /// <remarks>This method is not thread safe.</remarks>
     public async Task<Result> SendPayloadAsync(IPayload payload, CancellationToken ct = default)
     {
         if (_clientWebSocket?.State is not WebSocketState.Open)
@@ -145,18 +142,9 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The transport service is not connected.");
         }
 
-        var semaphoreEntered = false;
-
         try
         {
-            semaphoreEntered = await _sendSemaphore.WaitAsync(100, ct);
-            if (!semaphoreEntered)
-            {
-                return new OperationCanceledException("Could not enter semaphore.");
-            }
-
             JsonSerializer.Serialize(_payloadJsonWriter, payload, _jsonOptions);
-
             var data = _payloadSendBuffer.WrittenMemory;
 
             if (data.Length > MaxPayloadSize)
@@ -183,17 +171,13 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         {
             _payloadSendBuffer.Clear();
             _payloadJsonWriter.Reset();
-
-            if (semaphoreEntered)
-            {
-                _sendSemaphore.Release();
-            }
         }
 
         return Result.FromSuccess();
     }
 
     /// <inheritdoc />
+    /// <remarks>This method is not thread safe.</remarks>
     public async Task<Result<IPayload>> ReceivePayloadAsync(CancellationToken ct = default)
     {
         if (_clientWebSocket?.State is not WebSocketState.Open)
@@ -201,16 +185,8 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return new InvalidOperationError("The transport service is not connected.");
         }
 
-        var semaphoreEntered = false;
-
         try
         {
-            semaphoreEntered = await _receiveSemaphore.WaitAsync(100, ct);
-            if (!semaphoreEntered)
-            {
-                return new OperationCanceledException("Could not enter semaphore.");
-            }
-
             await using var memoryStream = _memoryStreamManager.GetStream();
             using var segmentBufferOwner = MemoryPool<byte>.Shared.Rent(MaxPayloadSize);
 
@@ -241,13 +217,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
         catch (Exception ex)
         {
             return ex;
-        }
-        finally
-        {
-            if (semaphoreEntered)
-            {
-                _receiveSemaphore.Release();
-            }
         }
     }
 
@@ -299,7 +268,6 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
 
         _receiveToken.Cancel();
 
-        this.IsConnected = false;
         return Result.FromSuccess();
     }
 
@@ -321,11 +289,9 @@ public class WebSocketPayloadTransportService : IPayloadTransportService, IAsync
             return;
         }
 
-        await DisconnectAsync(false);
+        await DisconnectAsync(false).ConfigureAwait(false);
 
-        await _payloadJsonWriter.DisposeAsync();
-        _sendSemaphore.Dispose();
-        _receiveSemaphore.Dispose();
+        await _payloadJsonWriter.DisposeAsync().ConfigureAwait(false);
 
         _receiveToken.Cancel();
         _receiveToken.Dispose();
