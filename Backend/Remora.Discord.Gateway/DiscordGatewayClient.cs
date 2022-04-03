@@ -215,7 +215,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         }
 
         await this.DispatchService.EnqueueEventAsync(hello.Data, ct);
-
+        _heartbeatData.LastReceivedAckTime = DateTimeOffset.MinValue;
         _heartbeatData.Interval = hello.Data.HeartbeatInterval;
 
         // Attempt to connect or resume
@@ -225,10 +225,8 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             return connectResult;
         }
 
-        _logger.LogInformation("Connected");
-
-        _heartbeatData.LastReceivedAckTime = DateTimeOffset.MinValue;
         this.Status = GatewayConnectionStatus.Connected;
+        _logger.LogInformation("Connected");
 
         return Result.FromSuccess();
     }
@@ -422,41 +420,42 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         var lastSentTime = _heartbeatData.LastSentTime;
         var now = DateTimeOffset.UtcNow;
 
-        if (lastSentTime is null || now - lastSentTime >= interval - safetyMargin)
+        if (lastSentTime is not null && now - lastSentTime < interval - safetyMargin)
         {
-            if (_heartbeatData.LastReceivedAckTime < _heartbeatData.LastSentTime)
-            {
-                return new GatewayError
-                (
-                    "The server did not respond in time with a heartbeat acknowledgement.",
-                    true,
-                    false
-                );
-            }
-
-            var heartbeatPayload = new Payload<IHeartbeat>
-            (
-                new Heartbeat
-                (
-                    _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
-                )
-            );
-
-            var sendHeartbeat = await this.TransportService.SendPayloadAsync(heartbeatPayload, ct);
-
-            if (!sendHeartbeat.IsSuccess)
-            {
-                return Result<TimeSpan>.FromError
-                (
-                    new GatewayError("Failed to send a heartbeat.", true, false),
-                    sendHeartbeat
-                );
-            }
-
-            _heartbeatData.LastSentTime = now;
+            return lastSentTime.Value + _heartbeatData.Interval - safetyMargin - now;
         }
 
-        return _heartbeatData.LastSentTime!.Value + _heartbeatData.Interval - safetyMargin - now;
+        if (_heartbeatData.LastReceivedAckTime < _heartbeatData.LastSentTime)
+        {
+            return new GatewayError
+            (
+                "The server did not respond in time with a heartbeat acknowledgement.",
+                true,
+                false
+            );
+        }
+
+        var heartbeatPayload = new Payload<IHeartbeat>
+        (
+            new Heartbeat
+            (
+                _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
+            )
+        );
+
+        var sendHeartbeat = await this.TransportService.SendPayloadAsync(heartbeatPayload, ct);
+
+        if (!sendHeartbeat.IsSuccess)
+        {
+            return Result<TimeSpan>.FromError
+            (
+                new GatewayError("Failed to send a heartbeat.", true, false),
+                sendHeartbeat
+            );
+        }
+
+        _heartbeatData.LastSentTime = now;
+        return _heartbeatData.Interval - safetyMargin;
     }
 
     /// <summary>
