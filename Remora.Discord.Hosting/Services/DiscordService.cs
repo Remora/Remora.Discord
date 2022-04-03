@@ -69,10 +69,17 @@ public class DiscordService : BackgroundService
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var runResult = await _gatewayClient.RunAsync(stoppingToken);
+        var lastStopTime = DateTimeOffset.UtcNow;
 
-        if (!runResult.IsSuccess)
+        while (!stoppingToken.IsCancellationRequested)
         {
+            var runResult = await _gatewayClient.RunAsync(stoppingToken);
+
+            if (runResult.IsSuccess)
+            {
+                continue;
+            }
+
             switch (runResult.Error)
             {
                 case ExceptionError exe:
@@ -101,15 +108,25 @@ public class DiscordService : BackgroundService
                 }
                 default:
                 {
-                    _logger.LogError("Unknown error: {Message}", runResult.Error?.Message);
+                    _logger.LogError("Unknown error: {Message} | {@Error}", runResult.Error?.Message, runResult.Error);
                     break;
                 }
             }
+
+            if (DateTimeOffset.UtcNow > lastStopTime + TimeSpan.FromSeconds(30))
+            {
+                lastStopTime = DateTimeOffset.UtcNow;
+                continue;
+            }
+
+            _logger.LogCritical("Consecutive gateway errors have occured. Terminating gateway service");
 
             if (_options.TerminateApplicationOnCriticalGatewayErrors)
             {
                 _lifetime.StopApplication();
             }
+
+            return;
         }
     }
 }
