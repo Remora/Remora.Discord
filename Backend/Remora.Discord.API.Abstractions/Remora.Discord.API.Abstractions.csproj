@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>56.0.0</Version>
+        <Version>57.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -14,14 +14,17 @@
             API.
         </Description>
         <PackageReleaseNotes>
-            Chuck out obsolete members.
-            Update field nullability.
-            Update error code.
-            Various mixed fixes.
-            Add another error code.
-            Update layout of permission enumerations.
-            Update permission name.
-            Update enumeration member name.
+            Implement guild ban pagination.
+            Implement support for guild directories.
+            Implement support for default authorization.
+            Implement support for stage start notifications.
+            Remove store channels.
+            Implement support for animated guild banners.
+            Remove deprecated field.
+            Mark channel name as nullable.
+            Update enumeration name.
+            Lots of rate limit refactoring and improvements.
+            Add image_hash audit log change key.
         </PackageReleaseNotes>
     </PropertyGroup>
 

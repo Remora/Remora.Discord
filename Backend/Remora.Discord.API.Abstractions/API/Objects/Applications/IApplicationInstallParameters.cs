@@ -1,5 +1,5 @@
 //
-//  IIntegrationApplication.cs
+//  IApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -20,39 +20,22 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using JetBrains.Annotations;
-using Remora.Rest.Core;
+using System.Collections.Generic;
 
 namespace Remora.Discord.API.Abstractions.Objects;
 
 /// <summary>
-/// Represents application information for a Discord integration.
+/// Represents a set of parameters applied to custom application installation.
 /// </summary>
-[PublicAPI]
-public interface IIntegrationApplication
+public interface IApplicationInstallParameters
 {
     /// <summary>
-    /// Gets the ID of the application.
+    /// Gets the OAuth2 scopes to add the application to the server with.
     /// </summary>
-    Snowflake ID { get; }
+    IReadOnlyList<string> Scopes { get; }
 
     /// <summary>
-    /// Gets the name of the application.
+    /// Gets the permissions to request for the created bot role.
     /// </summary>
-    string Name { get; }
-
-    /// <summary>
-    /// Gets the application's icon.
-    /// </summary>
-    IImageHash? Icon { get; }
-
-    /// <summary>
-    /// Gets the description of the application.
-    /// </summary>
-    string Description { get; }
-
-    /// <summary>
-    /// Gets the bot associated with this application.
-    /// </summary>
-    Optional<IUser> Bot { get; }
+    IDiscordPermissionSet Permissions { get; }
 }

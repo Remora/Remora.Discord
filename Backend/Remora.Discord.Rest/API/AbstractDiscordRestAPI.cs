@@ -23,6 +23,7 @@
 using System;
 using System.Text.Json;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Rest;
 
 namespace Remora.Discord.Rest.API;
@@ -44,18 +45,26 @@ public abstract class AbstractDiscordRestAPI
     protected JsonSerializerOptions JsonOptions { get; }
 
     /// <summary>
+    /// Gets the rate limit memory cache.
+    /// </summary>
+    protected IMemoryCache RateLimitCache { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="AbstractDiscordRestAPI"/> class.
     /// </summary>
     /// <param name="restHttpClient">The Discord-specialized Http client.</param>
     /// <param name="jsonOptions">The Remora-specialized JSON options.</param>
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
     protected AbstractDiscordRestAPI
     (
         IRestHttpClient restHttpClient,
-        JsonSerializerOptions jsonOptions
+        JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache
     )
     {
         this.RestHttpClient = restHttpClient;
         this.JsonOptions = jsonOptions;
+        this.RateLimitCache = rateLimitCache;
     }
 
     /// <inheritdoc cref="RestHttpClient{TError}.WithCustomization"/>

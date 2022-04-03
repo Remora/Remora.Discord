@@ -385,7 +385,8 @@ public static class CDN
             imageFormat,
             CDNImageFormat.PNG,
             CDNImageFormat.JPEG,
-            CDNImageFormat.WebP
+            CDNImageFormat.WebP,
+            CDNImageFormat.GIF
         );
 
         if (!formatValidation.IsSuccess)

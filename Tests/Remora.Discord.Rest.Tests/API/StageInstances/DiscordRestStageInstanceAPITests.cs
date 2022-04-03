@@ -55,6 +55,7 @@ public class DiscordRestStageInstanceAPITests
             var channelID = DiscordSnowflake.New(1);
             var topic = "aa";
             var privacyLevel = StagePrivacyLevel.GuildOnly;
+            var sendNotification = true;
             var reason = "test";
 
             var api = CreateAPI
@@ -75,7 +76,7 @@ public class DiscordRestStageInstanceAPITests
                     .Respond("application/json", SampleRepository.Samples[typeof(IStageInstance)])
             );
 
-            var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, reason);
+            var result = await api.CreateStageInstanceAsync(channelID, topic, privacyLevel, sendNotification, reason);
             ResultAssert.Successful(result);
         }
     }

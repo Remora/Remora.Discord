@@ -41,6 +41,9 @@ public interface IDiscordRestStageInstanceAPI
     /// <param name="channelID">The ID of the stage channel.</param>
     /// <param name="topic">The topic of the stage instance (1-120 characters).</param>
     /// <param name="privacyLevel">The privacy level of the stage instance.</param>
+    /// <param name="sendStartNotification">
+    /// Indicates whether @everyone should be notified that a stage instance has started.
+    /// </param>
     /// <param name="reason">The reason to mark the action in the audit log with.</param>
     /// <param name="ct">The cancellation token for this operation.</param>
     /// <returns>A result which may or may not have succeeded.</returns>
@@ -49,6 +52,7 @@ public interface IDiscordRestStageInstanceAPI
         Snowflake channelID,
         string topic,
         Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<bool> sendStartNotification = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     );

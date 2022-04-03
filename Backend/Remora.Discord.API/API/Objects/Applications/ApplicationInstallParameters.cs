@@ -1,5 +1,5 @@
 //
-//  IInteractionModalCallbackData.cs
+//  ApplicationInstallParameters.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -21,26 +21,13 @@
 //
 
 using System.Collections.Generic;
+using Remora.Discord.API.Abstractions.Objects;
 
-namespace Remora.Discord.API.Abstractions.Objects;
+namespace Remora.Discord.API.Objects;
 
-/// <summary>
-/// Represents return payload data for an interaction response.
-/// </summary>
-public interface IInteractionModalCallbackData
-{
-    /// <summary>
-    /// Gets the custom ID for the modal.
-    /// </summary>
-    string CustomID { get; }
-
-    /// <summary>
-    /// Gets the title for the modal. Max 45 characters.
-    /// </summary>
-    string Title { get; }
-
-    /// <summary>
-    /// Gets the components for the modal.
-    /// </summary>
-    IReadOnlyList<IMessageComponent> Components { get; }
-}
+/// <inheritdoc cref="IApplicationInstallParameters" />
+public record ApplicationInstallParameters
+(
+    IReadOnlyList<string> Scopes,
+    IDiscordPermissionSet Permissions
+) : IApplicationInstallParameters;

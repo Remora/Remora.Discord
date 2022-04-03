@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>2022.15</Version>
+        <Version>2022.17</Version>
         <Description>
             $(BaseDescription)
 
@@ -16,7 +16,20 @@
             Production packages/projects should probably prefer explicit dependencies instead.
         </Description>
         <PackageReleaseNotes>
-            Fix usage of new responder dispatch.
+            Prevent ResponderDispatchService.DisposeAsync from throwing
+            Set default color to null
+            Register RequireBotDiscordPermissionsCondition
+            Implement guild ban pagination.
+            Implement support for guild directories.
+            Implement support for default authorization.
+            Implement support for stage start notifications.
+            Remove store channels.
+            Implement support for animated guild banners.
+            Remove deprecated field.
+            Mark channel name as nullable.
+            Update enumeration name.
+            Lots of rate limit refactoring and improvements.
+            Add image_hash audit log change key.
         </PackageReleaseNotes>
 
         <!-- No need for build output, since this is a metapackage -->

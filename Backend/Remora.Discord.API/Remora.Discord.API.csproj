@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>53.0.0</Version>
+        <Version>54.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,9 +13,16 @@
             Remora.Discord.API.Abstractions.
         </Description>
         <PackageReleaseNotes>
-            Chuck out obsolete members.
-            Update field nullability.
-            Various mixed fixes.
+            Implement guild ban pagination.
+            Implement support for guild directories.
+            Implement support for default authorization.
+            Implement support for stage start notifications.
+            Remove store channels.
+            Implement support for animated guild banners.
+            Remove deprecated field.
+            Mark channel name as nullable.
+            Update enumeration name.
+            Add image_hash audit log change key.
         </PackageReleaseNotes>
     </PropertyGroup>
 

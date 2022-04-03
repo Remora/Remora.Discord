@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>31.0.0</Version>
+        <Version>32.0.0</Version>
         <Description>
             $(BaseDescription)
 
@@ -13,12 +13,13 @@
             checks and rate limiting support.
         </Description>
         <PackageReleaseNotes>
-            Chuck out obsolete members.
-            Various mixed fixes.
+            Implement guild ban pagination.
+            Lots of rate limit refactoring and improvements.
         </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
       <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
       <PackageReference Include="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
         <PackageReference Include="Remora.Rest" Version="1.2.2" />

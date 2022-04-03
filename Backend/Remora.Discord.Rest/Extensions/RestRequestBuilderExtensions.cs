@@ -21,6 +21,7 @@
 //
 
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Polly;
 using Remora.Rest;
 using Remora.Rest.Core;
@@ -49,6 +50,7 @@ public static class RestRequestBuilderExtensions
     /// Sets up a Polly context with an endpoint for rate limiting purposes.
     /// </summary>
     /// <param name="builder">The request builder.</param>
+    /// <param name="cache">The memory cache in use.</param>
     /// <param name="isExemptFromGlobalLimits">
     /// Whether this request is exempt from global rate limits, and doesn't need to consider them.
     /// </param>
@@ -56,12 +58,14 @@ public static class RestRequestBuilderExtensions
     public static RestRequestBuilder WithRateLimitContext
     (
         this RestRequestBuilder builder,
+        IMemoryCache cache,
         bool isExemptFromGlobalLimits = false
     )
     {
         var context = new Context
         {
             { "endpoint", builder.Endpoint },
+            { "cache", cache },
             { "exempt-from-global-rate-limits", isExemptFromGlobalLimits }
         };
 

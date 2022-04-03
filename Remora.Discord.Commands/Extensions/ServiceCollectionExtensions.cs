@@ -129,6 +129,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddCondition<RequireContextCondition>();
         serviceCollection.AddCondition<RequireOwnerCondition>();
         serviceCollection.AddCondition<RequireDiscordPermissionCondition>();
+        serviceCollection.AddCondition<RequireBotDiscordPermissionsCondition>();
 
         serviceCollection
             .AddParser<ChannelParser>()

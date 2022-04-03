@@ -24,6 +24,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.API.Abstractions.Rest;
 using Remora.Discord.Rest.Extensions;
@@ -43,8 +44,9 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
     /// </summary>
     /// <param name="restHttpClient">The Discord HTTP client.</param>
     /// <param name="jsonOptions">The JSON options.</param>
-    public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions)
-        : base(restHttpClient, jsonOptions)
+    /// <param name="rateLimitCache">The memory cache used for rate limits.</param>
+    public DiscordRestStageInstanceAPI(IRestHttpClient restHttpClient, JsonSerializerOptions jsonOptions, IMemoryCache rateLimitCache)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
     }
 
@@ -54,6 +56,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         Snowflake channelID,
         string topic,
         Optional<StagePrivacyLevel> privacyLevel = default,
+        Optional<bool> sendStartNotification = default,
         Optional<string> reason = default,
         CancellationToken ct = default
     )
@@ -67,12 +70,13 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                 (
                     json =>
                     {
-                        json.WriteString("channel_id", channelID.ToString());
-                        json.WriteString("topic", topic);
-                        json.Write("privacy_level", privacyLevel);
+                        json.Write("channel_id", channelID.ToString(), this.JsonOptions);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
+                        json.Write("send_start_notification", sendStartNotification, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -87,7 +91,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         return this.RestHttpClient.GetAsync<IStageInstance>
         (
             $"stage-instances/{channelID}",
-            b => b.WithRateLimitContext(),
+            b => b.WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -111,11 +115,11 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
                 (
                     json =>
                     {
-                        json.Write("topic", topic);
-                        json.Write("privacy_level", privacyLevel);
+                        json.Write("topic", topic, this.JsonOptions);
+                        json.Write("privacy_level", privacyLevel, this.JsonOptions);
                     }
                 )
-                .WithRateLimitContext(),
+                .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
     }
@@ -131,7 +135,7 @@ public class DiscordRestStageInstanceAPI : AbstractDiscordRestAPI, IDiscordRestS
         return this.RestHttpClient.DeleteAsync
         (
             $"stage-instances/{channelID}",
-            b => b.AddAuditLogReason(reason).WithRateLimitContext(),
+            b => b.AddAuditLogReason(reason).WithRateLimitContext(this.RateLimitCache),
             ct
         );
     }

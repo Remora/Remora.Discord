@@ -28,6 +28,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Caching.Memory;
 using Remora.Discord.API.Abstractions.Objects;
 using Remora.Discord.Caching.Services;
 using Remora.Discord.Rest.API;
@@ -50,9 +51,10 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     (
         IRestHttpClient restHttpClient,
         JsonSerializerOptions jsonOptions,
+        IMemoryCache rateLimitCache,
         CacheService cacheService
     )
-        : base(restHttpClient, jsonOptions)
+        : base(restHttpClient, jsonOptions, rateLimitCache)
     {
         _cacheService = cacheService;
     }
@@ -485,6 +487,9 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
     public override async Task<Result<IReadOnlyList<IBan>>> GetGuildBansAsync
     (
         Snowflake guildID,
+        Optional<int> limit = default,
+        Optional<Snowflake> before = default,
+        Optional<Snowflake> after = default,
         CancellationToken ct = default
     )
     {
@@ -494,7 +499,7 @@ public class CachingDiscordRestGuildAPI : DiscordRestGuildAPI
             return Result<IReadOnlyList<IBan>>.FromSuccess(cachedInstance);
         }
 
-        var getResult = await base.GetGuildBansAsync(guildID, ct);
+        var getResult = await base.GetGuildBansAsync(guildID, limit, before, after, ct);
         if (!getResult.IsSuccess)
         {
             return getResult;
