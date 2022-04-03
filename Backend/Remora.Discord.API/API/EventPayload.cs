@@ -28,34 +28,18 @@ namespace Remora.Discord.API;
 
 /// <summary>
 /// Represents a Discord event payload.
+/// Initializes a new instance of the <see cref="EventPayload{TEventData}"/> class.
 /// </summary>
-/// <typeparam name="TEventData">The event data.</typeparam>
+/// <typeparam name="TEventData">The type of the event data.</typeparam>
+/// <param name="EventName">The name of the event.</param>
+/// <param name="SequenceNumber">The sequence number.</param>
+/// <param name="OperationCode">The operation code of the event.</param>
+/// <param name="Data">The event data.</param>
 [PublicAPI]
-public record EventPayload<TEventData> : Payload<TEventData>, IEventPayload
-    where TEventData : IGatewayEvent
-{
-    /// <inheritdoc />
-    public string? EventName { get; }
-
-    /// <inheritdoc />
-    public int SequenceNumber { get; }
-
-    /// <inheritdoc />
-    public OperationCode OperationCode { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EventPayload{TEventData}"/> class.
-    /// </summary>
-    /// <param name="eventName">The name of the event.</param>
-    /// <param name="sequenceNumber">The sequence number.</param>
-    /// <param name="operationCode">The operation code for the event.</param>
-    /// <param name="data">The event data.</param>
-    public EventPayload(string? eventName, int sequenceNumber, OperationCode operationCode, TEventData data)
-        : base(data)
-    {
-        this.EventName = eventName;
-        this.SequenceNumber = sequenceNumber;
-        this.OperationCode = operationCode;
-        this.SequenceNumber = sequenceNumber;
-    }
-}
+public record EventPayload<TEventData>
+(
+    string? EventName,
+    int SequenceNumber,
+    OperationCode OperationCode,
+    TEventData Data
+) : Payload<TEventData>(Data), IEventPayload where TEventData : IGatewayEvent;
