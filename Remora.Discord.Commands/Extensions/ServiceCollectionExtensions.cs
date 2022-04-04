@@ -72,7 +72,7 @@ public static class ServiceCollectionExtensions
             .Where(n => n.Contains(localizationDirectory))
             .Where(n => n.EndsWith(".mo"));
 
-        var localizationCatalogues = new Dictionary<CultureInfo, ICatalog>();
+        var localizationCatalogues = new Dictionary<CultureInfo, Catalog>();
         foreach (var name in names)
         {
             // try to figure out the localization name
@@ -97,7 +97,7 @@ public static class ServiceCollectionExtensions
             localizationCatalogues.Add(catalog.CultureInfo, catalog);
         }
 
-        serviceCollection.AddSingleton(new LocalizationProvider(localizationCatalogues));
+        serviceCollection.AddSingleton(new NGetTextLocalizationProvider(localizationCatalogues));
         return serviceCollection;
     }
 

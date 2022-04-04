@@ -60,7 +60,7 @@ internal static class EnumExtensions
     /// <returns>The choices.</returns>
     public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices<TEnum>
     (
-        LocalizationProvider localizationProvider
+        ILocalizationProvider localizationProvider
     )
         where TEnum : struct, Enum
         => GetEnumChoices(typeof(TEnum), localizationProvider);
@@ -78,7 +78,7 @@ internal static class EnumExtensions
     public static Result<IReadOnlyList<IApplicationCommandOptionChoice>> GetEnumChoices
     (
         Type enumType,
-        LocalizationProvider localizationProvider
+        ILocalizationProvider localizationProvider
     )
     {
         return ChoiceCache.GetOrAdd

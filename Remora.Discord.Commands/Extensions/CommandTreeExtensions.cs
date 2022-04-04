@@ -156,10 +156,10 @@ public static class CommandTreeExtensions
     public static Result<IReadOnlyList<IBulkApplicationCommandData>> CreateApplicationCommands
     (
         this CommandTree tree,
-        LocalizationProvider? localizationProvider
+        ILocalizationProvider? localizationProvider
     )
     {
-        localizationProvider ??= new LocalizationProvider(new Dictionary<CultureInfo, ICatalog>());
+        localizationProvider ??= new NullLocalizationProvider();
 
         var commands = new List<BulkApplicationCommandData>();
         var commandNames = new Dictionary<int, HashSet<string>>();
@@ -286,7 +286,7 @@ public static class CommandTreeExtensions
     (
         IChildNode node,
         int treeDepth,
-        LocalizationProvider localizationProvider
+        ILocalizationProvider localizationProvider
     )
     {
         if (treeDepth > MaxTreeDepth)
@@ -449,7 +449,7 @@ public static class CommandTreeExtensions
     private static Result<IReadOnlyList<IApplicationCommandOption>> CreateCommandParameterOptions
     (
         CommandNode command,
-        LocalizationProvider localizationProvider
+        ILocalizationProvider localizationProvider
     )
     {
         var parameterOptions = new List<IApplicationCommandOption>();

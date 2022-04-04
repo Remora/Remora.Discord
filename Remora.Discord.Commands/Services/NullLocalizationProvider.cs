@@ -1,5 +1,5 @@
 //
-//  LocalizationProvider.cs
+//  NullLocalizationProvider.cs
 //
 //  Author:
 //       Jarl Gullberg <jarl.gullberg@gmail.com>
@@ -22,29 +22,35 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using NGettext;
 
 namespace Remora.Discord.Commands.Services;
 
 /// <summary>
-/// Acts as a container and provider for localized string catalogues.
+/// Defines a localization provider that merely returns the input.
 /// </summary>
-/// <param name="LocalizationCatalogues">The available localization catalogues.</param>
-public record LocalizationProvider(IReadOnlyDictionary<CultureInfo, ICatalog> LocalizationCatalogues)
+internal class NullLocalizationProvider : ILocalizationProvider
 {
-    /// <summary>
-    /// Gets a mapping of all available localized values for the given input.
-    /// </summary>
-    /// <param name="value">The input value.</param>
-    /// <returns>The available localized strings, mapped to the names of their locales.</returns>
-    public IReadOnlyDictionary<string, string> GetStrings(string value)
+    /// <inheritdoc />
+    public string GetTranslation(CultureInfo cultureInfo, string value)
     {
-        var dictionary = new Dictionary<string, string>();
-        foreach (var (cultureInfo, catalog) in this.LocalizationCatalogues)
-        {
-            dictionary.Add(cultureInfo.Name, catalog.GetString(value));
-        }
+        return value;
+    }
 
-        return dictionary;
+    /// <inheritdoc/>
+    public string GetTranslationOrDefault(CultureInfo cultureInfo, string value, string? defaultValue = null)
+    {
+        return value;
+    }
+
+    /// <inheritdoc />
+    public IReadOnlyDictionary<CultureInfo, string> GetTranslations(string value)
+    {
+        return new Dictionary<CultureInfo, string>();
+    }
+
+    /// <inheritdoc/>
+    public IReadOnlyDictionary<CultureInfo, string> GetTranslationsOrDefault(string value, string? defaultValue = null)
+    {
+        return new Dictionary<CultureInfo, string>();
     }
 }

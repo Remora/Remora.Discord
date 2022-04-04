@@ -41,7 +41,7 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
     where TEnum : struct, Enum
 {
     private readonly ILogger<EnumAutocompleteProvider<TEnum>> _logger;
-    private readonly LocalizationProvider _localizationProvider;
+    private readonly ILocalizationProvider _localizationProvider;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EnumAutocompleteProvider{TEnum}"/> class.
@@ -51,7 +51,7 @@ public class EnumAutocompleteProvider<TEnum> : IAutocompleteProvider<TEnum>
     public EnumAutocompleteProvider
     (
         ILogger<EnumAutocompleteProvider<TEnum>> logger,
-        LocalizationProvider localizationProvider
+        ILocalizationProvider localizationProvider
     )
     {
         _logger = logger;
