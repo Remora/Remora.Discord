@@ -99,6 +99,11 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
     /// <inheritdoc />
     protected override async Task<Result> ConnectAsync(CancellationToken ct)
     {
+        // Reset
+        _heartbeatData.Interval = TimeSpan.Zero;
+        _heartbeatData.LastSentTime = DateTimeOffset.MinValue;
+        _heartbeatData.LastReceivedAckTime = DateTimeOffset.MinValue;
+
         _logger.LogInformation("Retrieving gateway endpoint...");
 
         // Start connecting
@@ -214,7 +219,6 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         }
 
         await this.DispatchService.EnqueueEventAsync(hello.Data, ct);
-        _heartbeatData.LastReceivedAckTime = DateTimeOffset.MinValue;
         _heartbeatData.Interval = hello.Data.HeartbeatInterval;
 
         // Attempt to connect or resume
@@ -359,12 +363,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         // Update the ack timestamp
         if (payload is IPayload<IHeartbeatAcknowledge>)
         {
-            _heartbeatData.LastReceivedAckTime = DateTimeOffset.UtcNow;
-
-            if (_heartbeatData.LastSentTime is not null)
-            {
-                this.Latency = (TimeSpan)(_heartbeatData.LastReceivedAckTime - _heartbeatData.LastSentTime);
-            }
+            UpdateLastReceivedHeartbeatToNow();
         }
 
         // Signal the governor task that a reconnection is requested, if necessary.
@@ -499,6 +498,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
             if (receiveReady.Entity is IPayload<IHeartbeatAcknowledge>)
             {
+                UpdateLastReceivedHeartbeatToNow();
                 continue;
             }
 
@@ -581,13 +581,14 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             {
                 case IPayload<IHeartbeatAcknowledge>:
                 {
+                    UpdateLastReceivedHeartbeatToNow();
                     continue;
                 }
                 case IPayload<IInvalidSession>:
                 {
                     _logger.LogInformation("Resume rejected by the gateway");
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(_random.Next(1000, 5000)), ct);
+                    await Task.Delay(_random.Next(1000, 5000), ct);
                     return await CreateNewSessionAsync(ct);
                 }
                 case IPayload<IResumed>:
@@ -604,5 +605,15 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
         }
 
         return Result.FromSuccess();
+    }
+
+    private void UpdateLastReceivedHeartbeatToNow()
+    {
+        _heartbeatData.LastReceivedAckTime = DateTimeOffset.UtcNow;
+
+        if (_heartbeatData.LastSentTime is not null)
+        {
+            this.Latency = (TimeSpan)(_heartbeatData.LastReceivedAckTime - _heartbeatData.LastSentTime);
+        }
     }
 }
