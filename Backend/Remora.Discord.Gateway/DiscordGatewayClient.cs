@@ -209,12 +209,12 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         if (receiveHello.Entity is not IPayload<IHello> hello)
         {
-            // Not receiving a hello is a non-recoverable error
+            // Let's attempt to reconnect
             return new GatewayError
             (
                 "The first payload from the gateway was not a hello. Rude!",
                 false,
-                true
+                false
             );
         }
 
@@ -521,7 +521,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
                     $"\tExpected: {typeof(IPayload<IReady>).FullName}{Environment.NewLine}" +
                     $"\tActual: {receiveReady.Entity.GetType().FullName}",
                     false,
-                    true
+                    false
                 );
             }
 
@@ -574,7 +574,11 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             var receiveEvent = await this.TransportService.ReceivePayloadAsync(ct);
             if (!receiveEvent.IsSuccess)
             {
-                return Result.FromError(new GatewayError("Failed to receive a payload.", false, false), receiveEvent);
+                return Result.FromError
+                (
+                    new GatewayError("Failed to receive a payload.", false, false),
+                    receiveEvent
+                );
             }
 
             switch (receiveEvent.Entity)
