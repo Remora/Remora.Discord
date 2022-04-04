@@ -49,6 +49,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
 {
     private readonly ILogger<BaseGatewayClient> _logger;
     private readonly Channel<IPayload> _payloadSendQueue;
+    private readonly Channel<IPayload> _priorityPayloadSendQueue;
     private readonly Dictionary<Guid, IGatewayCommand> _preShutdownCommands;
 
     private Task<Result>? _sendTask;
@@ -94,6 +95,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     {
         _logger = logger;
         _payloadSendQueue = Channel.CreateUnbounded<IPayload>();
+        _priorityPayloadSendQueue = Channel.CreateUnbounded<IPayload>();
         _preShutdownCommands = new Dictionary<Guid, IGatewayCommand>();
         this.DispatchService = dispatchService;
         this.TransportService = transportService;
@@ -316,6 +318,23 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
     protected abstract Task<Result<TimeSpan>> SendHeartbeatAsync(CancellationToken ct);
 
     /// <summary>
+    /// Enqueues a command to the priority queue. These will be dispatched
+    /// before all other commands, and block the send task until all have
+    /// been dispatched, so use this only for commands that must be dispatched
+    /// immediately.
+    /// </summary>
+    /// <typeparam name="TCommand">The type of the command.</typeparam>
+    /// <param name="command">The command to dispatch.</param>
+    /// <param name="ct">A <see cref="CancellationToken"/> that can be used to stop the operation.</param>
+    /// <returns>A <see cref="ValueTask"/> representing the potentially asynchronous operation.</returns>
+    protected async ValueTask EnqueuePriorityCommandAsync<TCommand>(TCommand command, CancellationToken ct)
+        where TCommand : IGatewayCommand
+    {
+        var payload = new Payload<TCommand>(command);
+        await _payloadSendQueue.Writer.WriteAsync(payload, ct);
+    }
+
+    /// <summary>
     /// Connects the websocket and begins the send task.
     /// </summary>
     /// <param name="gatewayUri">The URI of the voice gateway.</param>
@@ -518,6 +537,16 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                     return Result.FromError(heartbeatResult);
                 }
 
+                // Dispatch any priority commands
+                while (_priorityPayloadSendQueue.Reader.TryRead(out var priorityPayload))
+                {
+                    var prioritySendResult = await this.TransportService.SendPayloadAsync(priorityPayload, ct);
+                    if (!prioritySendResult.IsSuccess)
+                    {
+                        return prioritySendResult;
+                    }
+                }
+
                 // Check if there are any user-submitted payloads to send
                 if (!_payloadSendQueue.Reader.TryRead(out var payload))
                 {
@@ -528,15 +557,10 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                 }
 
                 var sendResult = await this.TransportService.SendPayloadAsync(payload, ct);
-                if (sendResult.IsSuccess)
+                if (!sendResult.IsSuccess)
                 {
-                    continue;
+                    return sendResult;
                 }
-
-                // Normal closures are okay, we're likely to be shutting down
-                return sendResult.Error is GatewayWebSocketError { CloseStatus: WebSocketCloseStatus.NormalClosure }
-                    ? Result.FromSuccess()
-                    : sendResult;
             }
 
             return Result.FromSuccess();

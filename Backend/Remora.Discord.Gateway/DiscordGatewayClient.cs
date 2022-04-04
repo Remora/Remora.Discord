@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Remora.Discord.API;
 using Remora.Discord.API.Abstractions;
 using Remora.Discord.API.Abstractions.Gateway;
 using Remora.Discord.API.Abstractions.Gateway.Bidirectional;
@@ -387,13 +386,11 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             }
             case IPayload<IHeartbeat>:
             {
-                await EnqueueCommandAsync
+                await EnqueuePriorityCommandAsync
                 (
                     new Heartbeat
                     (
-                        _heartbeatData.LastSequenceNumber == 0
-                            ? null
-                            : _heartbeatData.LastSequenceNumber
+                        _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
                     ),
                     ct
                 );
@@ -435,24 +432,14 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             );
         }
 
-        var heartbeatPayload = new Payload<IHeartbeat>
+        await EnqueuePriorityCommandAsync
         (
             new Heartbeat
             (
                 _heartbeatData.LastSequenceNumber == 0 ? null : _heartbeatData.LastSequenceNumber
-            )
+            ),
+            ct
         );
-
-        var sendHeartbeat = await this.TransportService.SendPayloadAsync(heartbeatPayload, ct);
-
-        if (!sendHeartbeat.IsSuccess)
-        {
-            return Result<TimeSpan>.FromError
-            (
-                new GatewayError("Failed to send a heartbeat.", true, false),
-                sendHeartbeat
-            );
-        }
 
         _heartbeatData.LastSentTime = now;
         return _heartbeatData.Interval - safetyMargin;
@@ -487,7 +474,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
             ? default
             : new Optional<IUpdatePresence>(_gatewayOptions.Presence);
 
-        await EnqueueCommandAsync
+        await EnqueuePriorityCommandAsync
         (
             new Identify
             (
@@ -564,7 +551,7 @@ public sealed class DiscordGatewayClient : BaseGatewayClient
 
         _logger.LogInformation("Resuming existing session...");
 
-        await EnqueueCommandAsync
+        await EnqueuePriorityCommandAsync
         (
             new Resume
             (
