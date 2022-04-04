@@ -30,8 +30,7 @@ namespace Remora.Discord.Gateway.Extensions;
 /// <summary>
 /// Defines extension methods for the <see cref="Result"/> class.
 /// </summary>
-[PublicAPI]
-public static class ResultExtensions
+internal static class ResultExtensions
 {
     /// <summary>
     /// Gets a value indicating whether this result was unsuccessful,
