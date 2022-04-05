@@ -73,42 +73,62 @@ public class DiscordService : BackgroundService
 
         if (!runResult.IsSuccess)
         {
-            switch (runResult.Error)
-            {
-                case ExceptionError exe:
-                {
-                    if (exe.Exception is OperationCanceledException)
-                    {
-                        // No need for further cleanup
-                        return;
-                    }
+            LogResultError(runResult);
 
+            if (_options.TerminateApplicationOnCriticalGatewayErrors)
+            {
+                _lifetime.StopApplication();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Logs the error of a result if present.
+    /// </summary>
+    /// <param name="result">The result.</param>
+    private void LogResultError(IResult result)
+    {
+        if (result.Error is null)
+        {
+            return;
+        }
+
+        switch (result.Error)
+        {
+            case AggregateError ae:
+            {
+                foreach (var subResult in ae.Errors)
+                {
+                    LogResultError(subResult);
+                }
+
+                break;
+            }
+            case ExceptionError exe:
+            {
+                if (exe.Exception is not (OperationCanceledException or TaskCanceledException))
+                {
                     _logger.LogError
                     (
                         exe.Exception,
                         "Exception during gateway connection: {ExceptionMessage}",
                         exe.Message
                     );
+                }
 
-                    break;
-                }
-                case GatewayWebSocketError:
-                case GatewayDiscordError:
-                case GatewayError:
-                {
-                    _logger.LogError("Gateway error: {Message} | {@Error}", runResult.Error.Message, runResult.Error);
-                    break;
-                }
-                default:
-                {
-                    _logger.LogError("Unknown error: {Message} | {@Error}", runResult.Error?.Message, runResult.Error);
-                    break;
-                }
+                break;
             }
-
-            if (_options.TerminateApplicationOnCriticalGatewayErrors)
+            case GatewayWebSocketError:
+            case GatewayDiscordError:
+            case GatewayError:
             {
-                _lifetime.StopApplication();
+                _logger.LogError("Gateway error: {Message} | {@Error}", result.Error.Message, result.Error);
+                break;
+            }
+            default:
+            {
+                _logger.LogError("Unknown error: {Message} | {@Error}", result.Error?.Message, result.Error);
+                break;
             }
         }
     }

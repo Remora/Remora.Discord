@@ -390,7 +390,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             var sendResult = await _sendTask;
             if (!sendResult.IsSuccess && !sendResult.HasCancellationError())
             {
-                _logger.LogError("Failed to stop the send task: {Error}", sendResult.Error);
+                _logger.LogError("A failure occurred when stopping the send task: {Error}", sendResult.Error);
                 failedResults.Add(sendResult);
             }
         }
@@ -400,7 +400,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
             var receiveResult = await _receiveTask;
             if (!receiveResult.IsSuccess && !receiveResult.HasCancellationError())
             {
-                _logger.LogError("Failed to stop the receive task: {Error}", receiveResult.Error);
+                _logger.LogError("A failure occurred when stopping the receive task: {Error}", receiveResult.Error);
                 failedResults.Add(receiveResult);
             }
         }
@@ -414,7 +414,7 @@ public abstract class BaseGatewayClient : IGatewayClient, IAsyncDisposable
                 var dispatchResult = await _responderDispatchTask;
                 if (!dispatchResult.IsSuccess && !dispatchResult.HasCancellationError())
                 {
-                    _logger.LogError("Failed to stop the responder dispatch task: {Error}", dispatchResult.Error);
+                    _logger.LogError("A failure occurred when stopping the responder dispatch task: {Error}", dispatchResult.Error);
                     failedResults.Add(dispatchResult);
                 }
             }
