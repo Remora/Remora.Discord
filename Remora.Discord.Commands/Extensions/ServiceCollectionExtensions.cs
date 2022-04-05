@@ -98,6 +98,11 @@ public static class ServiceCollectionExtensions
         }
 
         serviceCollection.AddSingleton(new NGetTextLocalizationProvider(localizationCatalogues));
+        serviceCollection.AddSingleton<ILocalizationProvider>
+        (
+            s => s.GetRequiredService<NGetTextLocalizationProvider>()
+        );
+
         return serviceCollection;
     }
 
