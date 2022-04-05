@@ -178,27 +178,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/commands",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var command in commands)
-                        {
-                            json.WriteStartObject();
-                            json.WriteString("name", command.Name);
-                            json.Write("type", command.Type, this.JsonOptions);
-
-                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
-                            {
-                                json.Write("description", command.Description, this.JsonOptions);
-                            }
-
-                            json.Write("options", command.Options, this.JsonOptions);
-                            json.Write("default_permission", command.DefaultPermission);
-                            json.WriteEndObject();
-                        }
-                    }
-                )
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, commands, this.JsonOptions), false)
                 .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
@@ -358,27 +339,8 @@ public class DiscordRestApplicationAPI : AbstractDiscordRestAPI, IDiscordRestApp
         return await this.RestHttpClient.PutAsync<IReadOnlyList<IApplicationCommand>>
         (
             $"applications/{applicationID}/guilds/{guildID}/commands",
-            b => b.WithJsonArray
-                (
-                    json =>
-                    {
-                        foreach (var command in commands)
-                        {
-                            json.WriteStartObject();
-                            json.WriteString("name", command.Name);
-                            json.Write("type", command.Type, this.JsonOptions);
-
-                            if (!command.Type.IsDefined(out var type) || type is ApplicationCommandType.ChatInput)
-                            {
-                                json.Write("description", command.Description, this.JsonOptions);
-                            }
-
-                            json.Write("options", command.Options, this.JsonOptions);
-                            json.Write("default_permission", command.DefaultPermission);
-                            json.WriteEndObject();
-                        }
-                    }
-                )
+            b => b
+                .WithJsonArray(json => JsonSerializer.Serialize(json, commands, this.JsonOptions), false)
                 .WithRateLimitContext(this.RateLimitCache),
             ct: ct
         );
