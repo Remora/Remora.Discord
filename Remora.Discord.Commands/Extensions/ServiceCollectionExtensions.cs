@@ -52,13 +52,13 @@ namespace Remora.Discord.Commands.Extensions;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Adds localization information from the given assembly to the service provider.
+    /// Adds NGetText localization information from the given assembly to the service provider.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
     /// <param name="localizationDirectory">The resource directory where localizations are stored.</param>
     /// <param name="localizationAssembly">The assembly to load localizations from.</param>
     /// <returns>The service collection, with localizations added.</returns>
-    public static IServiceCollection AddLocalizations
+    public static IServiceCollection AddNGetTextLocalizations
     (
         this IServiceCollection serviceCollection,
         string localizationDirectory = ".remora.locales.",
