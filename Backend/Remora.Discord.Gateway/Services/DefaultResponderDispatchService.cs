@@ -91,7 +91,16 @@ public class DefaultResponderDispatchService : IResponderDispatchService, IAsync
     public async ValueTask EnqueueEventAsync<TGatewayEvent>(TGatewayEvent gatewayEvent, CancellationToken ct = default)
         where TGatewayEvent : IGatewayEvent
     {
-        await _eventDispatchQueue.Writer.WriteAsync(gatewayEvent, ct);
+        try
+        {
+            await _eventDispatchQueue.Writer.WriteAsync(gatewayEvent, ct);
+        }
+        catch (TaskCanceledException)
+        {
+            // Presumably the consumer is aware that they've cancelled
+            // the task. Given this method is not long-running,
+            // masking this exception should be alright.
+        }
     }
 
     /// <inheritdoc />
