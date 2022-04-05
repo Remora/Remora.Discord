@@ -260,7 +260,7 @@ public static class CommandTreeExtensions
                 new BulkApplicationCommandData
                 (
                     option.Name,
-                    option.Description,
+                    string.IsNullOrWhiteSpace(option.Description) ? default(Optional<string>) : option.Description,
                     option.Options,
                     defaultPermission,
                     commandType,
@@ -350,14 +350,18 @@ public static class CommandTreeExtensions
                     ? command.Key
                     : command.Key.ToLowerInvariant();
 
+                var description = commandType is not ApplicationCommandType.ChatInput
+                    ? string.Empty
+                    : command.Shape.Description;
+
                 var localizedNames = localizationProvider.GetStrings(name);
-                var localizedDescriptions = localizationProvider.GetStrings(command.Shape.Description);
+                var localizedDescriptions = localizationProvider.GetStrings(description);
 
                 return new ApplicationCommandOption
                 (
                     SubCommand, // Might not actually be a sub-command, but the caller will handle that + TODO: Should this just use commandType directly?
                     name,
-                    command.Shape.Description,
+                    description,
                     Options: new(buildOptionsResult.Entity),
                     NameLocalizations: localizedNames.Count > 0 ? new(localizedNames) : default,
                     DescriptionLocalizations: localizedDescriptions.Count > 0 ? new(localizedDescriptions) : default
@@ -679,7 +683,7 @@ public static class CommandTreeExtensions
                         );
                 }
 
-                return description == string.Empty || description == Remora.Commands.Constants.DefaultDescription
+                return description == string.Empty
                     ? Result.FromSuccess()
                     : new UnsupportedFeatureError("Descriptions are not allowed on context menu commands.", node);
             }
