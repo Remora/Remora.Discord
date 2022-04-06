@@ -22,6 +22,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -112,7 +113,7 @@ internal class RateLimitBucket
                 return false;
             }
 
-            if (!double.TryParse(rawReset.SingleOrDefault(), out var resetsAtEpoch))
+            if (!double.TryParse(rawReset.SingleOrDefault(), NumberStyles.Float | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var resetsAtEpoch))
             {
                 return false;
             }
