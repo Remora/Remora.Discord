@@ -938,7 +938,8 @@ public static class ServiceCollectionExtensions
             .WithPropertyConverter(r => r.Members, new SnowflakeDictionaryConverter<IPartialGuildMember>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Roles, new SnowflakeDictionaryConverter<IRole>(Constants.DiscordEpoch))
             .WithPropertyConverter(r => r.Channels, new SnowflakeDictionaryConverter<IPartialChannel>(Constants.DiscordEpoch))
-            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch));
+            .WithPropertyConverter(r => r.Messages, new SnowflakeDictionaryConverter<IPartialMessage>(Constants.DiscordEpoch))
+            .WithPropertyConverter(r => r.Attachments, new SnowflakeDictionaryConverter<IAttachment>(Constants.DiscordEpoch));
 
         options.AddDataObjectConverter<IGuildApplicationCommandPermissions, GuildApplicationCommandPermissions>();
         options.AddDataObjectConverter
